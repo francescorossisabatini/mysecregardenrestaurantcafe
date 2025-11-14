@@ -70,6 +70,13 @@ const translations = {
     "menu.view": "Speisekarte Ansehen",
     "menu.togo": "TO GO Bestellen",
     
+    // Products
+    "products.title": "Unsere Produkte",
+    "products.subtitle": "Entdecken Sie unsere sorgfältig ausgewählten Produkte – von frischen Bio-Zutaten bis zu hausgemachten Spezialitäten",
+    "products.featured": "Empfohlene Produkte",
+    "products.all": "Alle Produkte",
+    "products.clickToLearnMore": "Klicken Sie für weitere Informationen",
+    
     // Reviews
     "reviews.title": "IHR über uns",
     
@@ -152,6 +159,13 @@ const translations = {
     "menu.desserts": "Sweets",
     "menu.view": "View Menu",
     "menu.togo": "Order TO GO",
+    
+    // Products
+    "products.title": "Our Products",
+    "products.subtitle": "Discover our carefully selected products – from fresh organic ingredients to homemade specialties",
+    "products.featured": "Featured Products",
+    "products.all": "All Products",
+    "products.clickToLearnMore": "Click for more information",
     
     // Reviews
     "reviews.title": "What YOU say",
