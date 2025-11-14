@@ -37,9 +37,18 @@ export const Products = () => {
               {featuredProducts.map((product) => (
                 <Card
                   key={product.id}
-                  className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-fade-in"
+                  className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-fade-in overflow-hidden group"
                   onClick={() => setSelectedProduct(product)}
                 >
+                  {product.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      <img 
+                        src={product.image} 
+                        alt={product.name[language]}
+                        className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
                       <CardTitle className="text-xl">
@@ -74,9 +83,18 @@ export const Products = () => {
               {otherProducts.map((product) => (
                 <Card
                   key={product.id}
-                  className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-fade-in"
+                  className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 animate-fade-in overflow-hidden group"
                   onClick={() => setSelectedProduct(product)}
                 >
+                  {product.image && (
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      <img 
+                        src={product.image} 
+                        alt={product.name[language]}
+                        className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
                       <CardTitle className="text-xl">
@@ -107,6 +125,15 @@ export const Products = () => {
         <DialogContent className="max-w-2xl">
           {selectedProduct && (
             <>
+              {selectedProduct.image && (
+                <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted mb-4">
+                  <img 
+                    src={selectedProduct.image} 
+                    alt={selectedProduct.name[language]}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              )}
               <DialogHeader>
                 <div className="flex items-start justify-between mb-2">
                   <DialogTitle className="text-2xl">
