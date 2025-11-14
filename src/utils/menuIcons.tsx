@@ -1,4 +1,4 @@
-import { Leaf, Wheat, Milk, Fish, Egg, Flame, Feather, Sparkles, Salad } from "lucide-react";
+import { Leaf, Wheat, Milk, Egg, Flame, Feather, Sparkles, Salad, CircleAlert, Nut } from "lucide-react";
 
 export interface DietaryIcon {
   icon: JSX.Element;
@@ -28,14 +28,6 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
     icons.push({
       icon: <Leaf className="w-4 h-4 text-green-500" />,
       label: 'Vegetarian'
-    });
-  }
-  
-  // Pescatarian
-  if (text.includes('pescatarian') || text.includes('pescatarisch') || text.includes('pescetarian')) {
-    icons.push({
-      icon: <Fish className="w-4 h-4 text-blue-500" />,
-      label: 'Pescatarian'
     });
   }
   
@@ -84,7 +76,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   // Contains garlic
   if (text.includes('garlic') || text.includes('knoblauch') || text.includes('aglio')) {
     icons.push({
-      icon: <Sparkles className="w-4 h-4 text-purple-600" />,
+      icon: <CircleAlert className="w-4 h-4 text-purple-600" />,
       label: 'Contains Garlic'
     });
   }
@@ -92,7 +84,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   // Contains onion
   if (text.includes('onion') || text.includes('zwiebel') || text.includes('cipolla')) {
     icons.push({
-      icon: <Sparkles className="w-4 h-4 text-purple-500" />,
+      icon: <CircleAlert className="w-4 h-4 text-amber-600" />,
       label: 'Contains Onion'
     });
   }
@@ -101,7 +93,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   if (text.includes('peanut') || text.includes('erdnuss') || text.includes('erdnüss') || 
       text.includes('arachid')) {
     icons.push({
-      icon: <Egg className="w-4 h-4 text-amber-700" />,
+      icon: <Nut className="w-4 h-4 text-orange-700" />,
       label: 'Contains Peanuts'
     });
   }
