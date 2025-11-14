@@ -1,8 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UtensilsCrossed } from "lucide-react";
+import { WeeklyMenuDialog } from "@/components/WeeklyMenuDialog";
+import { useState } from "react";
 
 export const MenuHighlight = () => {
+  const [showMenu, setShowMenu] = useState(false);
   return (
     <section id="menu" className="py-16 md:py-24 bg-primary text-primary-foreground relative overflow-hidden">
       {/* Decorative Elements */}
@@ -46,6 +49,7 @@ export const MenuHighlight = () => {
             <Button
               size="lg"
               className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
+              onClick={() => setShowMenu(true)}
             >
               Speisekarte Ansehen
             </Button>
@@ -59,6 +63,8 @@ export const MenuHighlight = () => {
           </div>
         </div>
       </div>
+
+      <WeeklyMenuDialog open={showMenu} onOpenChange={setShowMenu} />
     </section>
   );
 };
