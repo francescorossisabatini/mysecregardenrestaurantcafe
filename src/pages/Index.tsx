@@ -3,7 +3,7 @@ import { About } from "@/components/About";
 import { Philosophy } from "@/components/Philosophy";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { MenuHighlight } from "@/components/MenuHighlight";
-import { Products } from "@/components/Products";
+import { ProductsNarrative } from "@/components/ProductsNarrative";
 import { Reviews } from "@/components/Reviews";
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { Contact } from "@/components/Contact";
@@ -16,7 +16,7 @@ const Index = () => {
       <DailyMenuHighlight />
       <MenuHighlight />
       <Reviews />
-      <Products />
+      <ProductsNarrative />
       <About />
       <Philosophy />
       <InstagramFeed />
