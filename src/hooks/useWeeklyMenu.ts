@@ -22,12 +22,9 @@ export function useWeeklyMenu() {
 
   const loadMenu = async () => {
     const sheetId = import.meta.env.VITE_GOOGLE_SHEETS_ID;
-    console.log('🔍 Google Sheets ID:', sheetId);
-    console.log('🔍 Tutte le env vars:', import.meta.env);
     
     // If no sheet ID is configured, use fallback data
     if (!sheetId) {
-      console.log('⚠️ Nessun Sheet ID configurato, uso dati fallback');
       setMenu(fallbackMenu);
       setIsLoading(false);
       return;
