@@ -1,11 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { UtensilsCrossed, Leaf, Wheat } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { weeklyMenu } from "@/data/menuData";
+import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 
 export const MenuHighlight = () => {
   const { t, language } = useLanguage();
+  const { menu, isLoading } = useWeeklyMenu();
   
   return (
     <section id="menu" className="py-16 md:py-24 bg-background relative overflow-hidden">
@@ -33,11 +35,35 @@ export const MenuHighlight = () => {
           {/* Weekly Menu */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-center mb-8 text-foreground">
-              {t("menu.weeklyMenu")} {weeklyMenu.period}
+              {t("menu.weeklyMenu")} {isLoading ? <Skeleton className="inline-block w-32 h-6" /> : menu.period}
             </h3>
 
-            <div className="grid gap-6 md:gap-8">
-              {weeklyMenu.days.map((day, index) => (
+            {isLoading ? (
+              <div className="grid gap-6 md:gap-8">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Card key={i} className="p-6 md:p-8 bg-card border-border">
+                    <Skeleton className="h-8 w-32 mb-6" />
+                    <div className="space-y-6">
+                      <div>
+                        <Skeleton className="h-6 w-24 mb-2" />
+                        <Skeleton className="h-4 w-full mb-1" />
+                        <Skeleton className="h-3 w-32" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-6 w-32 mb-2" />
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-6 w-28 mb-2" />
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-6 md:gap-8">
+                {menu.days.map((day, index) => (
                 <Card key={index} className="p-6 md:p-8 bg-card border-border">
                   <h4 className="text-xl md:text-2xl font-bold mb-6 text-primary">
                     {day.day[language]}
@@ -90,7 +116,8 @@ export const MenuHighlight = () => {
                   </div>
                 </Card>
               ))}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Pricing Info */}
