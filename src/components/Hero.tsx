@@ -93,6 +93,14 @@ export const Hero = () => {
             >
               <a href="#about">{t("hero.about")}</a>
             </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/80 hover:bg-background text-foreground shadow-soft backdrop-blur-sm border-primary/20"
+              asChild
+            >
+              <a href="#products">{t("hero.products")}</a>
+            </Button>
           </div>
         </div>
 

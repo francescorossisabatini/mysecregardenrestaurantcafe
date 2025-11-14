@@ -17,6 +17,7 @@ const translations = {
     "hero.hours": "Geöffnet Mo-Sa von 11-19 Uhr",
     "hero.menu": "Zur Speisekarte",
     "hero.about": "Über Uns",
+    "hero.products": "Unsere Produkte",
     
     // About
     "about.title": "WIR über uns",
@@ -107,6 +108,7 @@ const translations = {
     "hero.hours": "Open Mon-Sat from 11am-7pm",
     "hero.menu": "View Menu",
     "hero.about": "About Us",
+    "hero.products": "Our Products",
     
     // About
     "about.title": "About US",
