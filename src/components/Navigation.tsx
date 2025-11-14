@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { Menu, X } from "lucide-react";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -27,48 +29,94 @@ export const Navigation = () => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
+      setIsMobileMenuOpen(false);
     }
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-md py-3"
-          : "bg-transparent py-4"
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          {/* Navigation Links - Left */}
-          <div className="flex items-center gap-6">
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-background/95 backdrop-blur-md shadow-md py-2"
+            : "bg-transparent py-3"
+        }`}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            {/* Mobile Menu Button - Left */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={`p-2 rounded-lg transition-colors lg:hidden ${
+                isScrolled 
+                  ? "text-foreground hover:bg-muted" 
+                  : "text-primary-foreground hover:bg-primary-foreground/10"
+              }`}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
+            {/* Desktop Navigation - Center/Left (hidden on mobile) */}
+            <div className="hidden lg:flex items-center gap-6">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    isScrolled ? "text-foreground" : "text-primary-foreground"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Logo & Language - Right */}
+            <div className="flex items-center gap-3">
+              <div className={isScrolled ? "" : "opacity-90"}>
+                <LanguageSwitcher />
+              </div>
+              <div className={`transition-all duration-300 ${
+                isScrolled ? "scale-90" : "scale-100"
+              }`}>
+                <Logo className={isScrolled ? "w-12 h-12" : "w-16 h-16"} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Menu Drawer */}
+      <div
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-background shadow-xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full pt-20 pb-6 px-6">
+          <nav className="flex-1 space-y-2">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground" : "text-primary-foreground"
-                }`}
+                className="block py-3 px-4 text-lg font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
               >
                 {item.label}
               </a>
             ))}
-          </div>
-
-          {/* Logo & Language - Right */}
-          <div className="flex items-center gap-4">
-            <div className={isScrolled ? "" : "opacity-90"}>
-              <LanguageSwitcher />
-            </div>
-            <div className={`transition-all duration-300 ${
-              isScrolled ? "scale-90" : "scale-100"
-            }`}>
-              <Logo className={isScrolled ? "w-16 h-16" : "w-20 h-20"} />
-            </div>
-          </div>
+          </nav>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
