@@ -20,19 +20,26 @@ interface CachedMenu {
 }
 
 export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> {
+  console.log('📊 Tentativo caricamento da Google Sheets, ID:', sheetId);
+  
   // Check cache first
   const cached = localStorage.getItem(CACHE_KEY);
   if (cached) {
     const { data, timestamp }: CachedMenu = JSON.parse(cached);
     if (Date.now() - timestamp < CACHE_DURATION) {
+      console.log('✅ Menu caricato dalla cache');
       return data;
     }
+    console.log('⚠️ Cache scaduta, ricarico...');
   }
 
   try {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Menu`;
+    console.log('🌐 URL richiesta:', url);
     const response = await fetch(url);
+    console.log('📥 Risposta ricevuta, status:', response.status);
     const text = await response.text();
+    console.log('📄 Primi 200 caratteri della risposta:', text.substring(0, 200));
     
     // Parse Google Sheets JSON response (it's wrapped in a function call)
     const jsonText = text.substring(47).slice(0, -2);
@@ -74,6 +81,7 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     }
     
     const menuData: WeeklyMenu = { period, days };
+    console.log('✅ Menu caricato con successo dal Google Sheet:', menuData);
     
     // Cache the data
     localStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -83,7 +91,8 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     
     return menuData;
   } catch (error) {
-    console.error('Error fetching menu from Google Sheets:', error);
+    console.error('❌ ERRORE nel caricamento da Google Sheets:', error);
+    console.error('❌ Dettagli errore:', error instanceof Error ? error.message : 'Unknown error');
     throw error;
   }
 }

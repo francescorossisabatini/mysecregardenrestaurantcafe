@@ -22,9 +22,12 @@ export function useWeeklyMenu() {
 
   const loadMenu = async () => {
     const sheetId = import.meta.env.VITE_GOOGLE_SHEETS_ID;
+    console.log('🔑 Sheet ID trovato:', sheetId ? 'SI ✅' : 'NO ❌');
+    console.log('🔑 Valore Sheet ID:', sheetId);
     
     // If no sheet ID is configured, use fallback data
     if (!sheetId) {
+      console.log('⚠️ Nessun Sheet ID, uso dati fallback');
       setMenu(fallbackMenu);
       setIsLoading(false);
       return;
@@ -33,10 +36,12 @@ export function useWeeklyMenu() {
     try {
       setIsLoading(true);
       setError(null);
+      console.log('⏳ Inizio caricamento menu...');
       const data = await fetchMenuFromSheets(sheetId);
+      console.log('✅ Menu caricato e impostato');
       setMenu(data);
     } catch (err) {
-      console.error('Failed to load menu from Google Sheets, using fallback:', err);
+      console.error('❌ Fallito caricamento da Google Sheets, uso fallback:', err);
       setError('Failed to load latest menu');
       setMenu(fallbackMenu);
     } finally {
