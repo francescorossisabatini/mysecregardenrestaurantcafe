@@ -19,6 +19,12 @@ const translations = {
     "hero.about": "Über Uns",
     "hero.products": "Unsere Produkte",
     
+    // Navigation
+    "nav.menu": "Speisekarte",
+    "nav.products": "Produkte",
+    "nav.about": "Über Uns",
+    "nav.contact": "Kontakt",
+    
     // About
     "about.title": "WIR über uns",
     "about.intro": "Wir servieren Geschmack, der entzückt. Erleben Sie eine spannende vegetarische & vegane Küche mit schmackhaften Gerichten aus aller Welt.",
@@ -109,6 +115,12 @@ const translations = {
     "hero.menu": "View Menu",
     "hero.about": "About Us",
     "hero.products": "Our Products",
+    
+    // Navigation
+    "nav.menu": "Menu",
+    "nav.products": "Products",
+    "nav.about": "About",
+    "nav.contact": "Contact",
     
     // About
     "about.title": "About US",
