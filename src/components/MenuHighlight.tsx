@@ -1,9 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UtensilsCrossed, Leaf, Wheat } from "lucide-react";
+import { UtensilsCrossed } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
+import { getDietaryIcons } from "@/utils/menuIcons";
 
 export const MenuHighlight = () => {
   const { t, language } = useLanguage();
@@ -76,10 +77,13 @@ export const MenuHighlight = () => {
                         <Badge variant="outline" className="bg-accent/10 text-accent-foreground border-accent/20">
                           {t("menu.soup")}
                         </Badge>
-                        <div className="flex gap-1">
-                          <Leaf className="w-4 h-4 text-green-600" />
-                          <Wheat className="w-4 h-4 text-amber-600 line-through" />
-                        </div>
+                        {getDietaryIcons({ de: day.soup.de, en: day.soup.en }).length > 0 && (
+                          <div className="flex gap-1">
+                            {getDietaryIcons({ de: day.soup.de, en: day.soup.en }).map((item, i) => (
+                              <div key={i} title={item.label}>{item.icon}</div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.soup[language]}</p>
                       <p className="text-xs text-muted-foreground mt-1">{t("menu.soupPrice")}</p>
@@ -91,10 +95,13 @@ export const MenuHighlight = () => {
                         <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-green-300 dark:border-green-700">
                           {t("menu.greenDish")}
                         </Badge>
-                        <div className="flex gap-1">
-                          <Leaf className="w-4 h-4 text-green-600" />
-                          <Wheat className="w-4 h-4 text-amber-600 line-through" />
-                        </div>
+                        {getDietaryIcons({ de: day.green.de, en: day.green.en }).length > 0 && (
+                          <div className="flex gap-1">
+                            {getDietaryIcons({ de: day.green.de, en: day.green.en }).map((item, i) => (
+                              <div key={i} title={item.label}>{item.icon}</div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.green[language]}</p>
                     </div>
@@ -105,10 +112,14 @@ export const MenuHighlight = () => {
                         <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border-blue-300 dark:border-blue-700">
                           {t("menu.blueDish")}
                         </Badge>
-                        {day.blueNote && (
-                          <span className="text-xs text-muted-foreground italic">
-                            ({day.blueNote[language]})
-                          </span>
+                        {(getDietaryIcons({ de: day.blue.de, en: day.blue.en }).length > 0 || 
+                          getDietaryIcons(day.blueNote).length > 0) && (
+                          <div className="flex gap-1">
+                            {[...getDietaryIcons({ de: day.blue.de, en: day.blue.en }), 
+                              ...getDietaryIcons(day.blueNote)].map((item, i) => (
+                              <div key={i} title={item.label}>{item.icon}</div>
+                            ))}
+                          </div>
                         )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.blue[language]}</p>
