@@ -28,6 +28,18 @@ export const MenuHighlight = () => {
             <p className="text-base text-muted-foreground max-w-3xl mx-auto mb-8">
               {t("menu.description")}
             </p>
+
+            {/* Placeholder Image */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <div className="relative aspect-[21/9] rounded-lg overflow-hidden bg-muted/50 border-2 border-dashed border-muted-foreground/20">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl mb-2">🍽️</div>
+                    <p className="text-muted-foreground text-sm">Weekly Menu Image Placeholder</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Weekly Menu */}
