@@ -46,11 +46,11 @@ export const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-12 text-center animate-fade-in">
         {/* Language Switcher - Top Right */}
-        <div className="absolute top-4 right-4 md:top-8 md:right-8">
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-20">
           <LanguageSwitcher />
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6 pt-12 md:pt-0">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground drop-shadow-lg">
             <span className="font-dancing text-5xl md:text-7xl lg:text-8xl">{t("hero.title")}</span>
           </h1>
