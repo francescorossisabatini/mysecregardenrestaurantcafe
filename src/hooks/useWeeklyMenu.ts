@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchMenuFromSheets, clearMenuCache } from '@/services/googleSheetsService';
 import { weeklyMenu as fallbackMenu } from '@/data/menuData';
+import { GOOGLE_SHEETS_CONFIG } from '@/config/googleSheets';
 
 interface MenuDay {
   day: { de: string; en: string };
@@ -21,7 +22,7 @@ export function useWeeklyMenu() {
   const [error, setError] = useState<string | null>(null);
 
   const loadMenu = async () => {
-    const sheetId = import.meta.env.VITE_GOOGLE_SHEETS_ID;
+    const sheetId = GOOGLE_SHEETS_CONFIG.menuSheetId;
     console.log('🔑 Sheet ID trovato:', sheetId ? 'SI ✅' : 'NO ❌');
     console.log('🔑 Valore Sheet ID:', sheetId);
     
