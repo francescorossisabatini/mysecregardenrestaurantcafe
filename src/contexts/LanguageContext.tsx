@@ -73,6 +73,13 @@ const translations = {
     // Reviews
     "reviews.title": "IHR über uns",
     
+    // Instagram
+    "instagram.title": "Folge uns auf Instagram",
+    "instagram.subtitle": "Entdecke unsere neuesten Kreationen und den Alltag im Secret Garden",
+    "instagram.configure": "Instagram Feed wird hier angezeigt",
+    "instagram.visitPage": "Besuche unsere Instagram Seite",
+    "instagram.follow": "Folge uns auf Instagram:",
+    
     // Contact
     "contact.title": "Kontakt",
     "contact.address": "Adresse",
@@ -148,6 +155,13 @@ const translations = {
     
     // Reviews
     "reviews.title": "What YOU say",
+    
+    // Instagram
+    "instagram.title": "Follow us on Instagram",
+    "instagram.subtitle": "Discover our latest creations and daily life at Secret Garden",
+    "instagram.configure": "Instagram feed will be displayed here",
+    "instagram.visitPage": "Visit our Instagram page",
+    "instagram.follow": "Follow us on Instagram:",
     
     // Contact
     "contact.title": "Contact",
