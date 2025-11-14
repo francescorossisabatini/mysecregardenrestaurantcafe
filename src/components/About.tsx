@@ -22,32 +22,19 @@ export const About = () => {
             </p>
 
             <p className="leading-relaxed">
-              Wir lieben <strong className="text-primary">bio</strong>,{" "}
-              <strong className="text-primary">fair</strong>,{" "}
-              <strong className="text-primary">regional</strong> und{" "}
-              <strong className="text-primary">saisonal</strong>. In der Früh 
-              liefern Dogi vom Naschmarkt und Biogast feldfrisches Gemüse, knackige 
-              Salate und biologisches Getreide, aus dem unsere Köche mit Talent, 
-              Erfindungsreichtum und aromatischen Kräutern und authentischen Gewürzen 
-              für Sie gesunde Mahlzeiten zaubern, die satt machen und Kraft für den Tag geben.
+              {t("about.p1")}
             </p>
 
             <p className="leading-relaxed">
-              In unseren umweltfreundlichen <strong className="text-primary">"TO GO"</strong>-Boxen 
-              lassen sich unsere Speisen auch schnell und unkompliziert überallhin mitnehmen und genießen.
+              {t("about.p2")}
             </p>
 
             <p className="leading-relaxed">
-              Von Montag bis Samstag gibt's von 11:00 bis 19:00 Uhr warmes Essen, 
-              reichhaltige Salate, Spezialitätenkaffee, auch mit veganen Milchsorten, 
-              und raffinierte Heißgetränke, sowie hausgemachte Torten und roh-köstliche 
-              süße Verführungen. Bei allem kommt auch die glutenfreie Ernährung nicht zu kurz!
+              {t("about.p3")}
             </p>
 
             <p className="leading-relaxed text-lg">
-              Neben unseren zwei gemütlichen Gasträumen lockt unser{" "}
-              <strong className="text-accent">ruhiger, begrünter Innenhof im Biedermeierstil</strong>, 
-              nur 80 m von der belebten Mariahilferstraße entfernt. Schaut doch herein! 🙂
+              {t("about.p4")}
             </p>
           </div>
 
