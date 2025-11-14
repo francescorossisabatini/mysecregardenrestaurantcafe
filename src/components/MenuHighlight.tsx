@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UtensilsCrossed } from "lucide-react";
+import { UtensilsCrossed, Leaf, Wheat, Milk, Salad, Flame, Feather, CircleAlert, Nut, Egg } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getDietaryIcons } from "@/utils/menuIcons";
@@ -130,6 +130,59 @@ export const MenuHighlight = () => {
               </div>
             )}
           </div>
+
+          {/* Icon Legend */}
+          <Card className="p-6 mb-6 bg-muted/30 border-muted">
+            <h3 className="text-lg font-semibold text-foreground mb-4 text-center">
+              {language === 'de' ? 'Legende der Symbole' : 'Symbol Legend'}
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <Leaf className="w-4 h-4 text-green-600 flex-shrink-0" />
+                <span className="text-foreground">Vegan</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Leaf className="w-4 h-4 text-green-500 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Vegetarisch' : 'Vegetarian'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Wheat className="w-4 h-4 text-amber-600 line-through flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Glutenfrei' : 'Gluten-free'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Milk className="w-4 h-4 text-blue-600 line-through flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Laktosefrei' : 'Lactose-free'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Salad className="w-4 h-4 text-green-600 flex-shrink-0" />
+                <span className="text-foreground">Low Carb</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4 text-orange-600 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Scharf' : 'Spicy'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Feather className="w-4 h-4 text-sky-500 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Leicht' : 'Light'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CircleAlert className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Enthält Knoblauch' : 'Contains Garlic'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CircleAlert className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Enthält Zwiebeln' : 'Contains Onion'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Nut className="w-4 h-4 text-orange-700 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Enthält Erdnüsse' : 'Contains Peanuts'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Egg className="w-4 h-4 text-yellow-600 flex-shrink-0" />
+                <span className="text-foreground">{language === 'de' ? 'Enthält Eier' : 'Contains Eggs'}</span>
+              </div>
+            </div>
+          </Card>
 
           {/* Pricing Info */}
           <Card className="p-6 bg-primary/5 border-primary/20 text-center">
