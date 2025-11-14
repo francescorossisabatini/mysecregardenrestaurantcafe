@@ -1,4 +1,4 @@
-import { Leaf, Wheat, Milk, Fish, Egg, Flame, Drumstick, Feather, Sparkles, Salad } from "lucide-react";
+import { Leaf, Wheat, Milk, Fish, Egg, Flame, Feather, Sparkles, Salad } from "lucide-react";
 
 export interface DietaryIcon {
   icon: JSX.Element;
@@ -62,15 +62,6 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
     icons.push({
       icon: <Salad className="w-4 h-4 text-green-600" />,
       label: 'Low Carb'
-    });
-  }
-  
-  // High protein
-  if (text.includes('high protein') || text.includes('high-protein') || 
-      text.includes('proteinreich') || text.includes('protein')) {
-    icons.push({
-      icon: <Drumstick className="w-4 h-4 text-red-600" />,
-      label: 'High Protein'
     });
   }
   
