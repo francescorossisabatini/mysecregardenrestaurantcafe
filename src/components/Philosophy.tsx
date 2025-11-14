@@ -1,7 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { Quote, Sparkles, Heart, Flower2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Philosophy = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-16 md:py-24 bg-background relative overflow-hidden">
       {/* Decorative Background */}
@@ -18,7 +21,7 @@ export const Philosophy = () => {
               <Flower2 className="w-8 h-8 text-primary" />
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              Philosophie
+              {t("philosophy.title")}
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>
