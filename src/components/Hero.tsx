@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const images = [
   "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg",
@@ -11,6 +13,7 @@ const images = [
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -42,22 +45,27 @@ export const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-12 text-center animate-fade-in">
+        {/* Language Switcher - Top Right */}
+        <div className="absolute top-4 right-4 md:top-8 md:right-8">
+          <LanguageSwitcher />
+        </div>
+
         <div className="max-w-3xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground drop-shadow-lg">
-            My Secret Garden
+            {t("hero.title")}
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/95 font-light">
-            Vegetarisches & Veganes Restaurant
+            {t("hero.subtitle")}
           </p>
 
           <div className="space-y-3 text-primary-foreground/90 text-sm md:text-base pt-4">
             <div className="flex items-center justify-center gap-2">
               <MapPin className="w-5 h-5" />
-              <span>Mariahilferstraße 45 – Im Raimundhof – 1060 Wien</span>
+              <span>{t("hero.address")}</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <Clock className="w-5 h-5" />
-              <span>Geöffnet Mo-Sa von 11-19 Uhr</span>
+              <span>{t("hero.hours")}</span>
             </div>
             <a
               href="tel:015862839"
@@ -75,7 +83,7 @@ export const Hero = () => {
               className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
               asChild
             >
-              <a href="#menu">Zur Speisekarte</a>
+              <a href="#menu">{t("hero.menu")}</a>
             </Button>
             <Button
               size="lg"
@@ -83,7 +91,7 @@ export const Hero = () => {
               className="bg-card/90 hover:bg-card text-card-foreground shadow-soft backdrop-blur-sm"
               asChild
             >
-              <a href="#about">Über Uns</a>
+              <a href="#about">{t("hero.about")}</a>
             </Button>
           </div>
         </div>

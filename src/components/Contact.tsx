@@ -1,15 +1,18 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Contact = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-16 md:py-24 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              Kontakt
+              {t("contact.title")}
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>
@@ -21,7 +24,7 @@ export const Contact = () => {
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">Adresse</h3>
+                  <h3 className="font-semibold text-foreground mb-2">{t("contact.address")}</h3>
                   <p className="text-muted-foreground">
                     Mariahilferstraße 45<br />
                     Im Raimundhof<br />
@@ -37,7 +40,7 @@ export const Contact = () => {
                   <Phone className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">Telefon</h3>
+                  <h3 className="font-semibold text-foreground mb-2">{t("contact.phone")}</h3>
                   <a
                     href="tel:015862839"
                     className="text-muted-foreground hover:text-accent transition-colors"
@@ -54,11 +57,11 @@ export const Contact = () => {
                   <Clock className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">Öffnungszeiten</h3>
+                  <h3 className="font-semibold text-foreground mb-2">{t("contact.hours")}</h3>
                   <p className="text-muted-foreground">
-                    Montag - Samstag<br />
-                    11:00 - 19:00 Uhr<br />
-                    <span className="text-sm">Feiertags geschlossen</span>
+                    {t("contact.hours.days")}<br />
+                    {t("contact.hours.time")}<br />
+                    <span className="text-sm">{t("contact.hours.closed")}</span>
                   </p>
                 </div>
               </div>
@@ -70,7 +73,7 @@ export const Contact = () => {
                   <Mail className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">Social Media</h3>
+                  <h3 className="font-semibold text-foreground mb-2">{t("contact.social")}</h3>
                   <p className="text-muted-foreground">
                     Folgen Sie uns für Updates<br />
                     und Tagesmenüs
@@ -86,7 +89,7 @@ export const Contact = () => {
               className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
               asChild
             >
-              <a href="tel:015862839">Jetzt Anrufen</a>
+              <a href="tel:015862839">{t("contact.call")}</a>
             </Button>
           </div>
         </div>

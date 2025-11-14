@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const reviews = [
   {
@@ -25,13 +26,15 @@ const reviews = [
 ];
 
 export const Reviews = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              IHR über uns
+              {t("reviews.title")}
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
             <div className="flex justify-center gap-1 mt-6">
