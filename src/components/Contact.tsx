@@ -1,0 +1,96 @@
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MapPin, Phone, Clock, Mail } from "lucide-react";
+
+export const Contact = () => {
+  return (
+    <section className="py-16 md:py-24 bg-gradient-subtle">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
+              Kontakt
+            </h2>
+            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 p-3 rounded-lg">
+                  <MapPin className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">Adresse</h3>
+                  <p className="text-muted-foreground">
+                    Mariahilferstraße 45<br />
+                    Im Raimundhof<br />
+                    1060 Wien, Österreich
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="bg-accent/10 p-3 rounded-lg">
+                  <Phone className="w-6 h-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">Telefon</h3>
+                  <a
+                    href="tel:015862839"
+                    className="text-muted-foreground hover:text-accent transition-colors"
+                  >
+                    01 586 28 39
+                  </a>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="bg-primary/10 p-3 rounded-lg">
+                  <Clock className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">Öffnungszeiten</h3>
+                  <p className="text-muted-foreground">
+                    Montag - Samstag<br />
+                    11:00 - 19:00 Uhr<br />
+                    <span className="text-sm">Feiertags geschlossen</span>
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="bg-accent/10 p-3 rounded-lg">
+                  <Mail className="w-6 h-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">Social Media</h3>
+                  <p className="text-muted-foreground">
+                    Folgen Sie uns für Updates<br />
+                    und Tagesmenüs
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <Button
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
+              asChild
+            >
+              <a href="tel:015862839">Jetzt Anrufen</a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
