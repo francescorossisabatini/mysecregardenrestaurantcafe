@@ -30,15 +30,11 @@ export const Philosophy = () => {
           <Card className="p-8 md:p-10 mb-8 bg-gradient-subtle border-primary/20 shadow-elevated">
             <div className="space-y-6 text-foreground/90 leading-relaxed">
               <p className="text-lg md:text-xl font-medium text-primary">
-                Es liegt uns am Herzen, dass die Welt zu einem{" "}
-                <strong>besseren</strong> und <strong>schöneren</strong> Ort wird. 
-                Wir wollen mit unserer Arbeit, unserem Lebensstil und unserem 
-                Bewusstsein dazu beitragen.
+                {t("philosophy.intro")}
               </p>
 
               <p className="text-base md:text-lg">
-                Das Team und die Atmosphäre in unserem Restaurant sind von der 
-                Philosophie und dem Meditationsweg{" "}
+                {t("philosophy.meditation")}{" "}
                 <a 
                   href="https://www.srichinmoy.org/" 
                   target="_blank" 
@@ -47,16 +43,11 @@ export const Philosophy = () => {
                 >
                   Sri Chinmoys
                 </a>{" "}
-                inspiriert.
+                {t("philosophy.inspired")}
               </p>
 
               <p className="text-base md:text-lg">
-                Wir nutzen Meditation um{" "}
-                <strong className="text-primary">Harmonie und Bewusst-Sein</strong>{" "}
-                in unsere Aktivitäten zu bringen.{" "}
-                <strong className="text-primary">Familiäre Atmosphäre und Herzlichkeit</strong>{" "}
-                wird großgeschrieben und unser spiritueller Background sorgt für 
-                das Plus an Lebensfreude.
+                {t("philosophy.harmony")}
               </p>
             </div>
           </Card>
@@ -66,41 +57,36 @@ export const Philosophy = () => {
             <Quote className="absolute top-4 right-4 w-16 h-16 opacity-10" />
             <div className="relative z-10 space-y-4">
               <p className="text-lg md:text-xl leading-relaxed italic">
-                Im <strong>Secret Garden</strong> streben wir danach
+                {t("philosophy.quote.intro")}
               </p>
               <p className="text-xl md:text-2xl font-semibold leading-relaxed">
-                eine Oase des Friedens und bewussten Genusses zu schaffen.
+                {t("philosophy.quote.main")}
               </p>
               <div className="space-y-2 text-base md:text-lg">
-                <p>Einen Rückzugsort</p>
-                <p>von der Hektik und Schnelllebigkeit des Alltags,</p>
-                <p>an dem man die Seele baumeln lassen kann</p>
+                <p>{t("philosophy.quote.line1")}</p>
+                <p>{t("philosophy.quote.line2")}</p>
+                <p>{t("philosophy.quote.line3")}</p>
                 <p className="font-semibold">
-                  und Nahrung für Körper und Geist findet.
+                  {t("philosophy.quote.line4")}
                 </p>
               </div>
               <p className="text-xl md:text-2xl font-bold pt-4">
-                Ein <em>Herzens-Garten</em> voller Geheimnisse …
+                {t("philosophy.quote.heart")}
               </p>
-              <p className="text-lg">und Offenbarungen!</p>
+              <p className="text-lg">{t("philosophy.quote.revelation")}</p>
             </div>
           </Card>
 
           {/* Sri Chinmoy Quote */}
-          <Card className="p-8 bg-card/80 backdrop-blur-sm border-accent/30 shadow-soft">
+          <Card className="p-8 md:p-10 mb-8 bg-accent/5 border-accent/20 shadow-soft">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-accent" />
-                </div>
-              </div>
-              <div className="space-y-3">
-                <p className="text-lg md:text-xl italic text-foreground/90 leading-relaxed">
-                  "In Heaven, peace has another name: light.<br />
-                  On earth, peace has another name: love."
+              <Quote className="w-12 h-12 text-accent flex-shrink-0 mt-1" />
+              <div>
+                <p className="text-base md:text-lg text-foreground/90 leading-relaxed mb-3 italic">
+                  {t("philosophy.sri.quote")}
                 </p>
                 <p className="text-sm font-semibold text-muted-foreground">
-                  — Sri Chinmoy
+                  — {t("philosophy.sri.author")}
                 </p>
               </div>
             </div>
@@ -112,9 +98,9 @@ export const Philosophy = () => {
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Heart className="w-7 h-7 text-accent animate-pulse" />
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2">Mit Liebe</h3>
+              <h3 className="font-bold text-lg text-foreground mb-2">{t("philosophy.feature1.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Jedes Gericht wird mit Liebe und positiver Energie zubereitet
+                {t("philosophy.feature1.desc")}
               </p>
             </Card>
 
@@ -122,9 +108,9 @@ export const Philosophy = () => {
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Sparkles className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2">Bewusst</h3>
+              <h3 className="font-bold text-lg text-foreground mb-2">{t("philosophy.feature2.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Meditation und Achtsamkeit fließen in alles, was wir tun
+                {t("philosophy.feature2.desc")}
               </p>
             </Card>
 
@@ -132,9 +118,9 @@ export const Philosophy = () => {
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Flower2 className="w-7 h-7 text-accent" />
               </div>
-              <h3 className="font-bold text-lg text-foreground mb-2">Harmonisch</h3>
+              <h3 className="font-bold text-lg text-foreground mb-2">{t("philosophy.feature3.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Familiäre Atmosphäre und Herzlichkeit als Grundlage
+                {t("philosophy.feature3.desc")}
               </p>
             </Card>
           </div>

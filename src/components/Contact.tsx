@@ -75,8 +75,7 @@ export const Contact = () => {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{t("contact.social")}</h3>
                   <p className="text-muted-foreground">
-                    Folgen Sie uns für Updates<br />
-                    und Tagesmenüs
+                    {t("contact.social.desc")}
                   </p>
                 </div>
               </div>

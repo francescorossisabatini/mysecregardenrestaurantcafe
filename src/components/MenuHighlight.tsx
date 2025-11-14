@@ -2,49 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UtensilsCrossed, Leaf, Wheat } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const weeklyMenu = {
-  period: "10-15. November",
-  days: [
-    {
-      day: { de: "Montag", en: "Monday" },
-      soup: "Erdäpfel-Champignoncremesuppe",
-      green: "Grünes Pattaya-Curry mit Zucchini, Kohlrabi, Brokkoli, Erbsen, Kartoffeln und Spinat in milden Limetten-Kokosmilchsauce mit frischem Koriander und Ingwer; dazu Bio-Basmati-Vollkornreis und bunter Salat.",
-      blue: "Afrikanischer Raglan-Eintopf mit Schwarzaugenbohnen und Süßkartoffeln; dazu Bio-Quinoa, Cashew-Aioli und bunter Salat mit Zitronen-Tahinidressing.",
-    },
-    {
-      day: { de: "Dienstag", en: "Tuesday" },
-      soup: "Brokkolicremesuppe",
-      green: "Spinat & Kichererbsen-Curry mit Karotten und Süßkartoffeln in cremiger Tomaten-Kokosmilchsauce mit authentischen indischen Gewürzen; dazu duftiger Jasminreis und bunter Salat.",
-      blue: "Mexican Bowl mit Salat, Bio-Basmati Vollkornreis, Kidneybohnepaste, Bio-Röstmais, Nachos, Pico de Gallo und Avocadodip.",
-    },
-    {
-      day: { de: "Mittwoch", en: "Wednesday" },
-      soup: "Gelbe Linsensuppe mit Dill",
-      green: "Baigan Takari Curry: Melanzani und buntem Paprika in cremiger Tomaten-Kokosmilchsauce mit Garam Masala Gewürzmischung, frischem Koriander und Ingwer; dazu Bio-Basmati Vollkornreis und bunter Salat.",
-      blue: "Penne al forno aus glutenfreien Italienischen Bio-Nudeln mit aromatischen Bio-Soja, Spinat, Karotten und frischem Basilikum in zitroniger Tomaten-Kapern-Sauce; dazu bunter Salat mit Tahini-Dressing.",
-    },
-    {
-      day: { de: "Donnerstag", en: "Thursday" },
-      soup: "Chinesische Pak Choy Suppe mit Austernpilzen",
-      green: "Bengalisches Curry aus Hokkaidokürbis, Erdäpfeln, grünen Erbsen und Kichererbsen in aromatischer Garam-Masala-Sauce mit authentischen indischen Gewürzen und frischem Ingwer; dazu duftiger Jasminreis und bunter Salat.",
-      blue: "Türkische Brathähnchenbowl mit gerösteten Karotten, Brokkoli, Pilaw, Korinthen und Pinienkernen, Dill-Joghurt-Sauce und unserem Haussalat mit Zitronen-Tahini-Dressing.",
-      blueNote: { de: "vegetarisch & glutenfrei", en: "vegetarian & gluten-free" },
-    },
-    {
-      day: { de: "Freitag", en: "Friday" },
-      soup: "Blumenkohl-Mandelcremesuppe",
-      green: "Balinesisches Erdnusscurry mit Karotten, Brokkoli, Erdäpfeln, gelbe Bohnen und Champignons in duftender Erdnuss-Kokossauce; dazu Bio-Basmati Vollkornreis und bunter Salat.",
-      blue: "Griechisches Moussaka: überbackene Erdäpfel, Bio-Soja-Faschiertes, Melanzani, Tomaten und vegane Bechamel-Sauce; dazu bunter Salat.",
-    },
-    {
-      day: { de: "Samstag", en: "Saturday" },
-      soup: "Fenchel-Erdäpfelcremesuppe",
-      green: "Karibisches Curry: Rote und gelbe Paprika, Süßkartoffel, Karotten und Zucchini in fruchtiger Orangen-Kokosmilchsauce mit Limettenblättern und Zitronengras; dazu Bio-Basmati-Vollkornreis und bunter Salat.",
-      blue: "Ofen-Champignons auf grünen Erbsenpüree und Ofenkartoffeln mit geröstetem Brokkoli und Tahini-Dressing, bestreut mit Haselnusskrokant; dazu bunter Salat.",
-    },
-  ],
-};
+import { weeklyMenu } from "@/data/menuData";
 
 export const MenuHighlight = () => {
   const { t, language } = useLanguage();
@@ -97,7 +55,7 @@ export const MenuHighlight = () => {
                           <Wheat className="w-4 h-4 text-amber-600 line-through" />
                         </div>
                       </div>
-                      <p className="text-sm md:text-base text-foreground">{day.soup}</p>
+                      <p className="text-sm md:text-base text-foreground">{day.soup[language]}</p>
                       <p className="text-xs text-muted-foreground mt-1">{t("menu.soupPrice")}</p>
                     </div>
 
@@ -112,7 +70,7 @@ export const MenuHighlight = () => {
                           <Wheat className="w-4 h-4 text-amber-600 line-through" />
                         </div>
                       </div>
-                      <p className="text-sm md:text-base text-foreground">{day.green}</p>
+                      <p className="text-sm md:text-base text-foreground">{day.green[language]}</p>
                     </div>
 
                     {/* Blue Dish */}
@@ -127,7 +85,7 @@ export const MenuHighlight = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm md:text-base text-foreground">{day.blue}</p>
+                      <p className="text-sm md:text-base text-foreground">{day.blue[language]}</p>
                     </div>
                   </div>
                 </Card>
