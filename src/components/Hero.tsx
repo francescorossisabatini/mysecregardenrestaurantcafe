@@ -52,7 +52,7 @@ export const Hero = () => {
 
         <div className="max-w-3xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground drop-shadow-lg">
-            {t("hero.title")}
+            <span className="font-dancing text-5xl md:text-7xl lg:text-8xl">{t("hero.title")}</span>
           </h1>
           <p className="text-xl md:text-2xl text-primary-foreground/95 font-light">
             {t("hero.subtitle")}

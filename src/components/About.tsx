@@ -21,7 +21,7 @@ export const About = () => {
             </div>
             <h2 className="text-4xl md:text-6xl font-playfair font-bold text-primary mb-2">
               <span className="text-foreground">{t("about.title").split(" ")[0]}</span>{" "}
-              <span className="text-primary">{t("about.title").split(" ")[1]}</span>{" "}
+              <span className="font-dancing text-5xl md:text-7xl text-primary">{t("about.title").split(" ")[1]}</span>{" "}
               <span className="text-foreground">{t("about.title").split(" ")[2]}</span>
             </h2>
             <div className="w-32 h-1 bg-accent mx-auto rounded-full mt-6" />

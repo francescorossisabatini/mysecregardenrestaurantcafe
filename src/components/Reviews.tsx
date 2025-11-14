@@ -34,7 +34,7 @@ export const Reviews = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              {t("reviews.title")}
+              <span className="font-dancing text-4xl md:text-6xl">{t("reviews.title")}</span>
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
             <div className="flex justify-center gap-1 mt-6">
