@@ -12,7 +12,7 @@ interface WeeklyMenu {
 }
 
 const CACHE_KEY = 'weekly_menu_cache';
-const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+const CACHE_DURATION = 30 * 1000; // 30 seconds
 
 interface CachedMenu {
   data: WeeklyMenu;

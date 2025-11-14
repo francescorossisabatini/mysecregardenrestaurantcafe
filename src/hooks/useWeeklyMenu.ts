@@ -53,11 +53,11 @@ export function useWeeklyMenu() {
   useEffect(() => {
     loadMenu();
 
-    // Auto-refresh every 10 minutes
+    // Auto-refresh every 30 seconds
     const interval = setInterval(() => {
       clearMenuCache();
       loadMenu();
-    }, 10 * 60 * 1000);
+    }, 30 * 1000);
 
     return () => clearInterval(interval);
   }, []);
