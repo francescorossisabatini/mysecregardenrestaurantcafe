@@ -12,7 +12,7 @@ export const Contact = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              {t("contact.title")}
+              <span className="font-dancing text-4xl md:text-6xl">{t("contact.title")}</span>
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>

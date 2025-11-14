@@ -21,7 +21,7 @@ export const Philosophy = () => {
               <Flower2 className="w-8 h-8 text-primary" />
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              {t("philosophy.title")}
+              <span className="font-dancing text-4xl md:text-6xl">{t("philosophy.title")}</span>
             </h2>
             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>
