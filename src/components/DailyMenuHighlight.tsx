@@ -25,18 +25,11 @@ export const DailyMenuHighlight = () => {
 
   // Find today's menu
   const todayDayName = getTodayDayName();
-  
-  console.log('🗓️ Today day name:', todayDayName);
-  console.log('📋 Available menu days:', menu.days.map(d => d.day));
-  
   const todayMenu = menu.days.find(day => {
     const matchDE = day.day.de?.toLowerCase().trim() === todayDayName.de.toLowerCase().trim();
     const matchEN = day.day.en?.toLowerCase().trim() === todayDayName.en.toLowerCase().trim();
-    console.log(`Checking day: ${day.day.de}/${day.day.en} - Match: ${matchDE || matchEN}`);
     return matchDE || matchEN;
   });
-  
-  console.log('✅ Today menu found:', todayMenu);
 
   return (
     <section className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5">
