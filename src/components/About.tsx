@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Leaf, Heart, Coffee, Sprout } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Logo } from "@/components/Logo";
+import mandalaMinimal from "@/assets/mandala-minimal.png";
 
 export const About = () => {
   const { t } = useLanguage();
@@ -11,6 +12,14 @@ export const About = () => {
       {/* Decorative circles */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl" />
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
+      
+      {/* Floral Decoration */}
+      <img 
+        src={mandalaMinimal} 
+        alt="" 
+        className="absolute top-1/3 right-10 w-40 h-40 opacity-5"
+        aria-hidden="true"
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto">

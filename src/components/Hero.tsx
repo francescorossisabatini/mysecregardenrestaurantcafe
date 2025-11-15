@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import blossomMinimal from "@/assets/blossom-minimal.png";
 
 const images = [
   "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg",
@@ -41,6 +42,20 @@ export const Hero = () => {
           </div>
         ))}
       </div>
+
+      {/* Floral Decorations */}
+      <img 
+        src={blossomMinimal} 
+        alt="" 
+        className="absolute top-24 right-10 w-32 h-32 opacity-20 z-10"
+        aria-hidden="true"
+      />
+      <img 
+        src={blossomMinimal} 
+        alt="" 
+        className="absolute bottom-32 left-10 w-24 h-24 opacity-20 z-10 scale-x-[-1]"
+        aria-hidden="true"
+      />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-12 text-center animate-fade-in">

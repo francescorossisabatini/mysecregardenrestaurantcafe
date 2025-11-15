@@ -115,6 +115,10 @@ Accent: Natural green for spiritual garden energy
 
   body {
     @apply bg-background text-foreground font-lato;
+    background-image: 
+      radial-gradient(circle at 20% 50%, hsl(var(--accent) / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
   }
   
   h1, h2, h3, h4, h5, h6 {
