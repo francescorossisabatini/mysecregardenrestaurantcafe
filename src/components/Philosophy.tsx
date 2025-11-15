@@ -14,17 +14,17 @@ export const Philosophy = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent rounded-full blur-3xl" />
       </div>
       
-      {/* Decorative Flowers and Lines */}
-      <div className="absolute top-0 left-0 right-0 h-24 text-teal-500 opacity-50">
+      {/* Decorative Flowers and Lines - Maggiore contrasto */}
+      <div className="absolute top-0 left-0 right-0 h-24 text-teal-600 opacity-60">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-20 right-12 w-28 h-28 text-blue-500 opacity-70">
+      <div className="absolute top-20 right-12 w-28 h-28 text-blue-600 opacity-80">
         <OrchidFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-12 w-32 h-32 text-emerald-500 opacity-70">
+      <div className="absolute bottom-20 left-12 w-32 h-32 text-emerald-600 opacity-80">
         <DetailedFlower className="w-full h-full" />
       </div>
-      <div className="absolute top-1/2 right-1/4 w-24 h-24 text-cyan-600 opacity-65">
+      <div className="absolute top-1/2 right-1/4 w-24 h-24 text-cyan-700 opacity-75">
         <OrchidFlower className="w-full h-full" />
       </div>
 

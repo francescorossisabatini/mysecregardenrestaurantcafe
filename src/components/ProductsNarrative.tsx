@@ -32,17 +32,17 @@ export const ProductsNarrative = () => {
 
   return (
     <section id="products" className="py-16 md:py-24 bg-background relative overflow-hidden">
-      {/* Decorative Flowers and Lines */}
-      <div className="absolute top-0 left-0 right-0 h-28 text-teal-500 opacity-50">
+      {/* Decorative Flowers and Lines - Maggiore contrasto */}
+      <div className="absolute top-0 left-0 right-0 h-28 text-teal-600 opacity-60">
         <FlowingLines className="w-full h-full" />
       </div>
-      <div className="absolute top-20 left-16 w-28 h-28 text-emerald-500 opacity-70">
+      <div className="absolute top-20 left-16 w-28 h-28 text-emerald-600 opacity-80">
         <RoseFlower className="w-full h-full" />
       </div>
-      <div className="absolute top-1/2 right-16 w-32 h-32 text-blue-500 opacity-70">
+      <div className="absolute top-1/2 right-16 w-32 h-32 text-blue-600 opacity-80">
         <OrchidFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-1/3 w-24 h-24 text-cyan-500 opacity-65">
+      <div className="absolute bottom-20 left-1/3 w-24 h-24 text-cyan-700 opacity-75">
         <DetailedFlower className="w-full h-full" />
       </div>
       

@@ -28,10 +28,10 @@ Accent: Natural green for spiritual garden energy
     --secondary-foreground: 220 40% 20%;
 
     --muted: 210 25% 92%;
-    --muted-foreground: 220 20% 50%;
+    --muted-foreground: 220 30% 40%; /* Migliorato contrasto per accessibilità */
 
-    /* Accent: Natural green for spiritual energy */
-    --accent: 140 55% 45%;
+    /* Accent: Natural green for spiritual energy - Contrasto migliorato */
+    --accent: 140 60% 40%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -79,7 +79,7 @@ Accent: Natural green for spiritual garden energy
     --secondary-foreground: 210 25% 95%;
 
     --muted: 220 30% 22%;
-    --muted-foreground: 210 20% 65%;
+    --muted-foreground: 210 20% 70%; /* Migliorato contrasto per accessibilità dark mode */
 
     /* Accent: Brighter green for dark mode */
     --accent: 140 50% 50%;
