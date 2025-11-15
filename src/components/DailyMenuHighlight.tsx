@@ -5,6 +5,7 @@ import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getDietaryIcons } from "@/utils/menuIcons";
+import { LotusIcon, BlossomIcon } from "@/components/FloralDecoration";
 
 export const DailyMenuHighlight = () => {
   const { t, language } = useLanguage();
@@ -32,8 +33,16 @@ export const DailyMenuHighlight = () => {
   });
 
   return (
-    <section className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      <div className="container mx-auto px-4">
+    <section className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
+      {/* Floral Decorations - Purple/Blue tones */}
+      <div className="absolute top-10 left-10 w-32 h-32 text-purple-400/30">
+        <LotusIcon className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-10 right-10 w-28 h-28 text-blue-400/30 rotate-45">
+        <LotusIcon className="w-full h-full" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
