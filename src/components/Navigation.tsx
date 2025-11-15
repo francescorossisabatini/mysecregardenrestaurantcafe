@@ -3,6 +3,7 @@ import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Menu, X } from "lucide-react";
+import { DetailedFlower, RoseFlower } from "@/components/FloralDecorations";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -98,18 +99,32 @@ export const Navigation = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-background shadow-xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 shadow-xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden overflow-hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full pt-20 pb-6 px-6">
+        {/* Decorazioni floreali verdi */}
+        <div className="absolute top-8 right-4 w-20 h-20 text-emerald-600 dark:text-emerald-400 opacity-40">
+          <DetailedFlower className="w-full h-full" />
+        </div>
+        <div className="absolute top-1/3 left-4 w-16 h-16 text-teal-600 dark:text-teal-400 opacity-40">
+          <RoseFlower className="w-full h-full" />
+        </div>
+        <div className="absolute bottom-16 right-6 w-18 h-18 text-emerald-500 dark:text-emerald-300 opacity-40">
+          <DetailedFlower className="w-full h-full" />
+        </div>
+        <div className="absolute bottom-1/3 left-6 w-14 h-14 text-teal-500 dark:text-teal-300 opacity-35">
+          <RoseFlower className="w-full h-full" />
+        </div>
+        
+        <div className="relative z-10 flex flex-col h-full pt-20 pb-6 px-6">
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className="block py-3 px-4 text-lg font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+                className="block py-3 px-4 text-lg font-medium text-foreground hover:bg-white/50 dark:hover:bg-black/20 rounded-lg transition-colors backdrop-blur-sm"
               >
                 {item.label}
               </a>
