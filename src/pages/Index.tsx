@@ -2,7 +2,7 @@ import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Philosophy } from "@/components/Philosophy";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
-import { MenuHighlight } from "@/components/MenuHighlight";
+import { FullMenu } from "@/components/FullMenu";
 import { ProductsNarrative } from "@/components/ProductsNarrative";
 import { Reviews } from "@/components/Reviews";
 import { InstagramFeed } from "@/components/InstagramFeed";
@@ -16,7 +16,7 @@ const Index = () => {
       <Navigation />
       <Hero />
       <DailyMenuHighlight />
-      <MenuHighlight />
+      <FullMenu />
       <Reviews />
       <ProductsNarrative />
       <About />
