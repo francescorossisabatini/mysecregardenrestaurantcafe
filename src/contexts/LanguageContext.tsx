@@ -21,7 +21,7 @@ const translations = {
     
     // Navigation
     "nav.menu": "Speisekarte",
-    "nav.products": "Produkte",
+    "nav.products": "Unsere Produkte",
     "nav.about": "Über Uns",
     "nav.contact": "Kontakt",
     
