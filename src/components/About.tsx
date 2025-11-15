@@ -17,7 +17,7 @@ export const About = () => {
       <img 
         src={mandalaMinimal} 
         alt="" 
-        className="absolute top-1/3 right-10 w-40 h-40 opacity-5"
+        className="absolute top-1/3 right-10 w-48 h-48 opacity-10 mix-blend-multiply dark:invert dark:opacity-10"
         aria-hidden="true"
       />
       
