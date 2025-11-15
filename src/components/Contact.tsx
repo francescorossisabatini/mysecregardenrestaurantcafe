@@ -7,7 +7,7 @@ export const Contact = () => {
   const { t } = useLanguage();
   
   return (
-    <section className="py-16 md:py-24 bg-gradient-subtle">
+    <section id="contact" className="py-16 md:py-24 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
