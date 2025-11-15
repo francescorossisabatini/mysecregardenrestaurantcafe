@@ -9,14 +9,14 @@ export const Contact = () => {
   
   return (
     <section id="contact" className="py-16 md:py-24 bg-gradient-subtle relative overflow-hidden">
-      {/* Decorative Flowers and Lines */}
-      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-500 opacity-50">
+      {/* Decorative Flowers and Lines - Maggiore contrasto */}
+      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-600 opacity-60">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-16 left-12 w-24 h-24 text-teal-500 opacity-70">
+      <div className="absolute top-16 left-12 w-24 h-24 text-teal-600 opacity-80">
         <DetailedFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-16 right-12 w-28 h-28 text-blue-500 opacity-70">
+      <div className="absolute bottom-16 right-12 w-28 h-28 text-blue-600 opacity-80">
         <DetailedFlower className="w-full h-full" />
       </div>
       

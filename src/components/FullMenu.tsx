@@ -119,11 +119,11 @@ export const FullMenu = () => {
         }}
       />
 
-      {/* Decorative lines */}
-      <div className="absolute top-10 left-10 w-64 h-32 text-emerald-500 opacity-40">
+      {/* Decorative lines - Maggiore contrasto */}
+      <div className="absolute top-10 left-10 w-64 h-32 text-emerald-600 opacity-50">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute bottom-10 right-10 w-80 h-40 text-teal-500 opacity-40">
+      <div className="absolute bottom-10 right-10 w-80 h-40 text-teal-600 opacity-50">
         <FlowingLines className="w-full h-full" />
       </div>
 

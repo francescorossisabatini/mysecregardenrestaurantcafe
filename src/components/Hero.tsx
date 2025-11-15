@@ -43,17 +43,17 @@ export const Hero = () => {
         ))}
       </div>
 
-      {/* Decorative Flowers and Lines */}
-      <div className="absolute top-0 left-0 right-0 h-32 text-emerald-500 z-10 opacity-60">
+      {/* Decorative Flowers and Lines - Maggiore contrasto per accessibilità */}
+      <div className="absolute top-0 left-0 right-0 h-32 text-emerald-600 z-10 opacity-70">
         <FlowingLines className="w-full h-full" />
       </div>
-      <div className="absolute top-16 right-8 w-24 h-24 text-blue-500 z-10 opacity-70">
+      <div className="absolute top-16 right-8 w-24 h-24 text-blue-600 z-10 opacity-80">
         <DetailedFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-32 left-8 w-28 h-28 text-teal-500 z-10 opacity-70">
+      <div className="absolute bottom-32 left-8 w-28 h-28 text-teal-600 z-10 opacity-80">
         <RoseFlower className="w-full h-full" />
       </div>
-      <div className="absolute top-1/3 right-1/4 w-20 h-20 text-cyan-500 z-10 opacity-65">
+      <div className="absolute top-1/3 right-1/4 w-20 h-20 text-cyan-600 z-10 opacity-75">
         <DetailedFlower className="w-full h-full" />
       </div>
 
@@ -92,7 +92,7 @@ export const Hero = () => {
               className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-lg px-12"
               asChild
             >
-              <a href="#menu">{t("hero.menu")}</a>
+              <a href="#full-menu">{t("hero.menu")}</a>
             </Button>
           </div>
         </div>

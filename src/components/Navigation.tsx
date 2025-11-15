@@ -18,7 +18,7 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
-    { href: "#menu", label: t("nav.menu") },
+    { href: "#full-menu", label: t("nav.menu") },
     { href: "#products", label: t("nav.products") },
     { href: "#about", label: t("nav.about") },
     { href: "#contact", label: t("nav.contact") },
