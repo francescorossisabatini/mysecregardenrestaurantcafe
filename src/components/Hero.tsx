@@ -47,13 +47,13 @@ export const Hero = () => {
       <img 
         src={blossomMinimal} 
         alt="" 
-        className="absolute top-24 right-10 w-32 h-32 opacity-20 z-10"
+        className="absolute top-24 right-10 w-40 h-40 opacity-30 z-10 mix-blend-multiply dark:mix-blend-screen dark:opacity-20"
         aria-hidden="true"
       />
       <img 
         src={blossomMinimal} 
         alt="" 
-        className="absolute bottom-32 left-10 w-24 h-24 opacity-20 z-10 scale-x-[-1]"
+        className="absolute bottom-32 left-10 w-32 h-32 opacity-30 z-10 scale-x-[-1] mix-blend-multiply dark:mix-blend-screen dark:opacity-20"
         aria-hidden="true"
       />
 

@@ -19,19 +19,19 @@ export const Philosophy = () => {
       <img 
         src={lotusMinimal} 
         alt="" 
-        className="absolute top-10 right-10 w-24 h-24 opacity-10 rotate-12"
+        className="absolute top-10 right-10 w-32 h-32 opacity-20 rotate-12 mix-blend-multiply dark:invert dark:opacity-10"
         aria-hidden="true"
       />
       <img 
         src={mandalaMinimal} 
         alt="" 
-        className="absolute bottom-20 left-10 w-32 h-32 opacity-5"
+        className="absolute bottom-20 left-10 w-40 h-40 opacity-15 mix-blend-multiply dark:invert dark:opacity-10"
         aria-hidden="true"
       />
       <img 
         src={lotusMinimal} 
         alt="" 
-        className="absolute top-1/2 left-5 w-16 h-16 opacity-10 -rotate-45"
+        className="absolute top-1/2 left-5 w-20 h-20 opacity-15 -rotate-45 mix-blend-multiply dark:invert dark:opacity-10"
         aria-hidden="true"
       />
 
