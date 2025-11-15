@@ -2,19 +2,22 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { MinimalGrowth, OrganicLines } from "@/components/AbstractPlantDecoration";
+import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 
 export const Contact = () => {
   const { t } = useLanguage();
   
   return (
     <section id="contact" className="py-16 md:py-24 bg-gradient-subtle relative overflow-hidden">
-      {/* Abstract Plant Decorations */}
-      <div className="absolute top-20 left-16 w-28 h-28 text-emerald-300/40">
-        <MinimalGrowth className="w-full h-full" />
+      {/* Decorative Flowers and Lines */}
+      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-500 opacity-50">
+        <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 right-16 w-52 h-26 text-teal-300/40">
-        <OrganicLines className="w-full h-full" />
+      <div className="absolute top-16 left-12 w-24 h-24 text-teal-500 opacity-70">
+        <DetailedFlower className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-16 right-12 w-28 h-28 text-blue-500 opacity-70">
+        <DetailedFlower className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">

@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getDietaryIcons } from "@/utils/menuIcons";
-import { OrganicLines } from "@/components/AbstractPlantDecoration";
+import { ContinuousVine, FlowingLines } from "@/components/FloralDecorations";
 
 export const FullMenu = () => {
   const { t, language } = useLanguage();
@@ -120,11 +120,11 @@ export const FullMenu = () => {
       />
 
       {/* Decorative lines */}
-      <div className="absolute top-10 left-10 w-64 h-32 text-primary/10">
-        <OrganicLines className="w-full h-full" />
+      <div className="absolute top-10 left-10 w-64 h-32 text-emerald-500 opacity-40">
+        <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute bottom-10 right-10 w-64 h-32 text-accent/10">
-        <OrganicLines className="w-full h-full" />
+      <div className="absolute bottom-10 right-10 w-80 h-40 text-teal-500 opacity-40">
+        <FlowingLines className="w-full h-full" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

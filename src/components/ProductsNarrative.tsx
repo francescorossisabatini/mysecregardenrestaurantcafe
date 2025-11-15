@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ShoppingBag } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { AbstractBranch, GeometricLeaf, WavyPattern } from "@/components/AbstractPlantDecoration";
+import { RoseFlower, OrchidFlower, FlowingLines, DetailedFlower } from "@/components/FloralDecorations";
 
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
@@ -32,15 +32,18 @@ export const ProductsNarrative = () => {
 
   return (
     <section id="products" className="py-16 md:py-24 bg-background relative overflow-hidden">
-      {/* Abstract Plant Decorations */}
-      <div className="absolute top-16 right-20 w-32 h-32 text-pink-300/40">
-        <GeometricLeaf className="w-full h-full" />
+      {/* Decorative Flowers and Lines */}
+      <div className="absolute top-0 left-0 right-0 h-28 text-teal-500 opacity-50">
+        <FlowingLines className="w-full h-full" />
       </div>
-      <div className="absolute top-1/2 left-16 w-36 h-36 text-purple-300/40">
-        <AbstractBranch className="w-full h-full" />
+      <div className="absolute top-20 left-16 w-28 h-28 text-emerald-500 opacity-70">
+        <RoseFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-24 right-1/4 w-60 h-30 text-violet-300/40">
-        <WavyPattern className="w-full h-full" />
+      <div className="absolute top-1/2 right-16 w-32 h-32 text-blue-500 opacity-70">
+        <OrchidFlower className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-20 left-1/3 w-24 h-24 text-cyan-500 opacity-65">
+        <DetailedFlower className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">

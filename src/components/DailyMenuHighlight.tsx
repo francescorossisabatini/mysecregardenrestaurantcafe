@@ -5,7 +5,7 @@ import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getDietaryIcons } from "@/utils/menuIcons";
-import { MinimalGrowth } from "@/components/AbstractPlantDecoration";
+import { DetailedFlower } from "@/components/FloralDecorations";
 
 export const DailyMenuHighlight = () => {
   const { t, language } = useLanguage();
@@ -34,9 +34,12 @@ export const DailyMenuHighlight = () => {
 
   return (
     <section className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
-      {/* Abstract Plant Decorations */}
-      <div className="absolute top-12 left-12 w-28 h-28 text-purple-300/40">
-        <MinimalGrowth className="w-full h-full" />
+      {/* Decorative Flowers */}
+      <div className="absolute top-8 left-8 w-20 h-20 text-blue-500 opacity-70">
+        <DetailedFlower className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-8 right-8 w-20 h-20 text-teal-500 opacity-70">
+        <DetailedFlower className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
