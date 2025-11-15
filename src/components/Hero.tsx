@@ -70,30 +70,14 @@ export const Hero = () => {
             </a>
           </div>
 
-          <div className="pt-6 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="pt-6 flex justify-center">
             <Button
               size="lg"
               variant="default"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-lg px-12"
               asChild
             >
               <a href="#menu">{t("hero.menu")}</a>
-            </Button>
-            <Button
-              size="lg"
-              variant="secondary"
-              className="bg-card/90 hover:bg-card text-card-foreground shadow-soft backdrop-blur-sm"
-              asChild
-            >
-              <a href="#about">{t("hero.about")}</a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-background/80 hover:bg-background text-foreground shadow-soft backdrop-blur-sm border-primary/20"
-              asChild
-            >
-              <a href="#products">{t("hero.products")}</a>
             </Button>
           </div>
         </div>
