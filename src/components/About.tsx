@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Leaf, Heart, Coffee, Sprout } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Logo } from "@/components/Logo";
-import { AbstractBranch, OrganicLines } from "@/components/AbstractPlantDecoration";
+import { RoseFlower, ContinuousVine } from "@/components/FloralDecorations";
 
 export const About = () => {
   const { t } = useLanguage();
@@ -13,12 +13,12 @@ export const About = () => {
       <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl" />
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
       
-      {/* Abstract Plant Decorations */}
-      <div className="absolute top-1/4 right-20 w-36 h-36 text-rose-300/35">
-        <AbstractBranch className="w-full h-full" />
+      {/* Decorative Flowers and Lines */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 text-emerald-500 opacity-50 rotate-180">
+        <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute bottom-1/3 left-16 w-48 h-24 text-purple-300/35">
-        <OrganicLines className="w-full h-full" />
+      <div className="absolute top-1/4 right-16 w-32 h-32 text-teal-500 opacity-70">
+        <RoseFlower className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">

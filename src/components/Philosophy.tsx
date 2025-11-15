@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Quote, Sparkles, Heart, Flower2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { MinimalGrowth, GeometricLeaf } from "@/components/AbstractPlantDecoration";
+import { OrchidFlower, DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 
 export const Philosophy = () => {
   const { t } = useLanguage();
@@ -14,12 +14,18 @@ export const Philosophy = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent rounded-full blur-3xl" />
       </div>
       
-      {/* Abstract Plant Decorations */}
-      <div className="absolute top-16 right-16 w-28 h-28 text-indigo-300/40">
-        <MinimalGrowth className="w-full h-full" />
+      {/* Decorative Flowers and Lines */}
+      <div className="absolute top-0 left-0 right-0 h-24 text-teal-500 opacity-50">
+        <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute bottom-32 left-16 w-32 h-32 text-purple-300/40">
-        <GeometricLeaf className="w-full h-full" />
+      <div className="absolute top-20 right-12 w-28 h-28 text-blue-500 opacity-70">
+        <OrchidFlower className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-20 left-12 w-32 h-32 text-emerald-500 opacity-70">
+        <DetailedFlower className="w-full h-full" />
+      </div>
+      <div className="absolute top-1/2 right-1/4 w-24 h-24 text-cyan-600 opacity-65">
+        <OrchidFlower className="w-full h-full" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
