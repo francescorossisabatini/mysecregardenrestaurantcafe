@@ -2,13 +2,22 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LotusIcon, BlossomIcon } from "@/components/FloralDecoration";
 
 export const Contact = () => {
   const { t } = useLanguage();
   
   return (
-    <section id="contact" className="py-16 md:py-24 bg-gradient-subtle">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-16 md:py-24 bg-gradient-subtle relative overflow-hidden">
+      {/* Floral Decorations - Green/Teal tones */}
+      <div className="absolute top-20 left-10 w-36 h-24 text-emerald-400/30">
+        <BlossomIcon className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-20 right-10 w-32 h-32 text-teal-400/30 -rotate-12">
+        <LotusIcon className="w-full h-full" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">

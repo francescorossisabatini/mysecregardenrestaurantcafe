@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ShoppingBag } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LotusIcon, BlossomIcon, MandalaIcon } from "@/components/FloralDecoration";
 
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
@@ -30,8 +31,22 @@ export const ProductsNarrative = () => {
   ];
 
   return (
-    <section id="products" className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="products" className="py-16 md:py-24 bg-background relative overflow-hidden">
+      {/* Floral Decorations - Pink/Purple/Violet tones */}
+      <div className="absolute top-10 left-20 w-36 h-36 text-pink-400/30">
+        <MandalaIcon className="w-full h-full" />
+      </div>
+      <div className="absolute top-1/3 right-10 w-40 h-28 text-purple-400/30 scale-x-[-1]">
+        <BlossomIcon className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-32 left-1/4 w-32 h-32 text-violet-400/30 rotate-45">
+        <LotusIcon className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-10 right-20 w-28 h-28 text-fuchsia-400/25">
+        <MandalaIcon className="w-full h-full" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
