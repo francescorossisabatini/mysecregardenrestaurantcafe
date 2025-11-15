@@ -77,7 +77,7 @@ export const Hero = () => {
               className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-lg px-12"
               asChild
             >
-              <a href="#menu">{t("hero.menu")}</a>
+              <a href="#heute">{t("hero.menu")}</a>
             </Button>
           </div>
         </div>
