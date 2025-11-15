@@ -1,5 +1,5 @@
 import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
+import { AboutNarrative } from "@/components/AboutNarrative";
 import { Philosophy } from "@/components/Philosophy";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { FullMenu } from "@/components/FullMenu";
@@ -19,7 +19,7 @@ const Index = () => {
       <FullMenu />
       <Reviews />
       <ProductsNarrative />
-      <About />
+      <AboutNarrative />
       <Philosophy />
       <InstagramFeed />
       <Contact />
