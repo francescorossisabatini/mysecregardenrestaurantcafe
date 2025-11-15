@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Quote, Sparkles, Heart, Flower2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { LotusIcon, MandalaIcon } from "@/components/FloralDecoration";
+import { MinimalGrowth, GeometricLeaf } from "@/components/AbstractPlantDecoration";
 
 export const Philosophy = () => {
   const { t } = useLanguage();
@@ -14,18 +14,12 @@ export const Philosophy = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent rounded-full blur-3xl" />
       </div>
       
-      {/* Floral Decorations - Various spiritual colors */}
-      <div className="absolute top-10 right-10 w-32 h-32 text-indigo-400/30 rotate-12">
-        <LotusIcon className="w-full h-full" />
+      {/* Abstract Plant Decorations */}
+      <div className="absolute top-16 right-16 w-28 h-28 text-indigo-300/40">
+        <MinimalGrowth className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-10 w-40 h-40 text-purple-400/25">
-        <MandalaIcon className="w-full h-full" />
-      </div>
-      <div className="absolute top-1/2 left-5 w-24 h-24 text-violet-400/30 -rotate-45">
-        <LotusIcon className="w-full h-full" />
-      </div>
-      <div className="absolute top-1/3 right-1/4 w-28 h-28 text-fuchsia-400/25 rotate-90">
-        <MandalaIcon className="w-full h-full" />
+      <div className="absolute bottom-32 left-16 w-32 h-32 text-purple-300/40">
+        <GeometricLeaf className="w-full h-full" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
