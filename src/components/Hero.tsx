@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { BlossomIcon, LotusIcon } from "@/components/FloralDecoration";
+import { OrganicLines, WavyPattern } from "@/components/AbstractPlantDecoration";
 
 const images = [
   "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg",
@@ -43,15 +43,12 @@ export const Hero = () => {
         ))}
       </div>
 
-      {/* Floral Decorations - Various colors */}
-      <div className="absolute top-24 right-10 w-48 h-32 text-violet-400/40 z-10 animate-fade-in">
-        <BlossomIcon className="w-full h-full" />
+      {/* Abstract Plant Decorations */}
+      <div className="absolute top-20 right-10 w-64 h-32 text-violet-300/50 z-10">
+        <WavyPattern className="w-full h-full" />
       </div>
-      <div className="absolute bottom-32 left-10 w-40 h-28 text-pink-400/40 z-10 scale-x-[-1] animate-fade-in">
-        <BlossomIcon className="w-full h-full" />
-      </div>
-      <div className="absolute top-1/3 left-1/4 w-24 h-24 text-cyan-400/30 z-10">
-        <LotusIcon className="w-full h-full" />
+      <div className="absolute bottom-40 left-10 w-56 h-28 text-pink-300/50 z-10">
+        <OrganicLines className="w-full h-full" />
       </div>
 
       {/* Content */}

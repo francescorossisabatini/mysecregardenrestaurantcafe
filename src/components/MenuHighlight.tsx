@@ -5,7 +5,7 @@ import { UtensilsCrossed, Leaf, Wheat, Milk, Salad, Flame, Feather, CircleAlert,
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getDietaryIcons } from "@/utils/menuIcons";
-import { MandalaIcon, BlossomIcon } from "@/components/FloralDecoration";
+import { WavyPattern, OrganicLines } from "@/components/AbstractPlantDecoration";
 
 export const MenuHighlight = () => {
   const { t, language } = useLanguage();
@@ -13,15 +13,12 @@ export const MenuHighlight = () => {
   
   return (
     <section id="menu" className="py-16 md:py-24 bg-background relative overflow-hidden">
-      {/* Floral Decorations - Blue/Green tones */}
-      <div className="absolute top-20 right-20 w-40 h-40 text-cyan-500/25">
-        <MandalaIcon className="w-full h-full" />
+      {/* Abstract Plant Decorations */}
+      <div className="absolute top-20 right-16 w-56 h-28 text-cyan-300/40">
+        <WavyPattern className="w-full h-full" />
       </div>
-      <div className="absolute top-1/2 left-10 w-36 h-24 text-teal-400/30">
-        <BlossomIcon className="w-full h-full" />
-      </div>
-      <div className="absolute bottom-20 right-1/4 w-28 h-28 text-blue-500/25 -rotate-12">
-        <MandalaIcon className="w-full h-full" />
+      <div className="absolute bottom-20 left-16 w-52 h-26 text-teal-300/40">
+        <OrganicLines className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
