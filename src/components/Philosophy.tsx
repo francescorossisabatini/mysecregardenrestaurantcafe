@@ -1,8 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Quote, Sparkles, Heart, Flower2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import lotusMinimal from "@/assets/lotus-minimal.png";
-import mandalaMinimal from "@/assets/mandala-minimal.png";
+import { LotusIcon, MandalaIcon } from "@/components/FloralDecoration";
 
 export const Philosophy = () => {
   const { t } = useLanguage();
@@ -16,24 +15,15 @@ export const Philosophy = () => {
       </div>
       
       {/* Floral Decorations */}
-      <img 
-        src={lotusMinimal} 
-        alt="" 
-        className="absolute top-10 right-10 w-32 h-32 opacity-20 rotate-12 mix-blend-multiply dark:invert dark:opacity-10"
-        aria-hidden="true"
-      />
-      <img 
-        src={mandalaMinimal} 
-        alt="" 
-        className="absolute bottom-20 left-10 w-40 h-40 opacity-15 mix-blend-multiply dark:invert dark:opacity-10"
-        aria-hidden="true"
-      />
-      <img 
-        src={lotusMinimal} 
-        alt="" 
-        className="absolute top-1/2 left-5 w-20 h-20 opacity-15 -rotate-45 mix-blend-multiply dark:invert dark:opacity-10"
-        aria-hidden="true"
-      />
+      <div className="absolute top-10 right-10 w-32 h-32 text-primary/30 rotate-12">
+        <LotusIcon className="w-full h-full" />
+      </div>
+      <div className="absolute bottom-20 left-10 w-40 h-40 text-accent/25">
+        <MandalaIcon className="w-full h-full" />
+      </div>
+      <div className="absolute top-1/2 left-5 w-24 h-24 text-primary/30 -rotate-45">
+        <LotusIcon className="w-full h-full" />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
