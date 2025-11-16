@@ -36,10 +36,10 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-background/95 backdrop-blur-md shadow-md py-2"
-            : "bg-background/40 backdrop-blur-sm py-3"
+            ? "bg-background/95 backdrop-blur-md shadow-md py-1.5"
+            : "bg-background/40 backdrop-blur-sm py-2"
         }`}
       >
         <div className="container mx-auto px-4">
@@ -47,14 +47,14 @@ export const Navigation = () => {
             {/* Mobile Menu Button - Left */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-lg transition-colors lg:hidden ${
+              className={`p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation ${
                 isScrolled 
                   ? "text-foreground hover:bg-muted" 
                   : "text-primary-foreground hover:bg-primary-foreground/10"
               }`}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
             {/* Desktop Navigation - Center/Left (hidden on mobile) */}
@@ -74,14 +74,14 @@ export const Navigation = () => {
             </div>
 
             {/* Logo & Language - Right */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="relative z-10">
                 <LanguageSwitcher />
               </div>
               <div className={`transition-all duration-300 ${
                 isScrolled ? "scale-90" : "scale-100"
               }`}>
-                <Logo className={isScrolled ? "w-12 h-12" : "w-16 h-16"} />
+                <Logo className={isScrolled ? "w-10 h-10" : "w-12 h-12"} />
               </div>
             </div>
           </div>
@@ -91,18 +91,18 @@ export const Navigation = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[90] lg:hidden"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 dark:from-emerald-900 dark:via-emerald-950 dark:to-teal-900 shadow-xl z-[95] transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 dark:from-emerald-900 dark:via-emerald-950 dark:to-teal-900 shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full pt-20 pb-6 px-6">
+        <div className="flex flex-col h-full pt-16 pb-6 px-6">
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => (
               <a
