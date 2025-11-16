@@ -101,27 +101,46 @@ export const Philosophy = () => {
           </Card>
 
           {/* Heart Garden Quote */}
-          <Card className="p-8 md:p-10 mb-8 bg-primary text-primary-foreground relative overflow-hidden">
-            <Quote className="absolute top-4 right-4 w-16 h-16 opacity-10" />
-            <div className="relative z-10 space-y-4">
-              <p className="text-lg md:text-xl leading-relaxed italic">
+          <Card className="p-8 md:p-12 mb-8 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden shadow-elevated">
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl" />
+              <div className="absolute bottom-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl" />
+            </div>
+            <Quote className="absolute top-6 right-6 w-20 h-20 opacity-10" />
+            <div className="relative z-10 space-y-6">
+              <div className="text-center mb-6">
+                <Heart className="w-12 h-12 mx-auto mb-4 opacity-90" />
+              </div>
+              
+              <p className="text-lg md:text-xl leading-relaxed italic text-center opacity-95">
                 {t("philosophy.quote.intro")}
               </p>
-              <p className="text-xl md:text-2xl font-semibold leading-relaxed">
+              
+              <div className="border-t border-primary-foreground/20 my-6" />
+              
+              <p className="text-xl md:text-2xl font-semibold leading-relaxed text-center">
                 {t("philosophy.quote.main")}
               </p>
-              <div className="space-y-2 text-base md:text-lg">
-                <p>{t("philosophy.quote.line1")}</p>
-                <p>{t("philosophy.quote.line2")}</p>
-                <p>{t("philosophy.quote.line3")}</p>
-                <p className="font-semibold">
+              
+              <div className="space-y-3 text-base md:text-lg leading-relaxed pl-4 border-l-4 border-primary-foreground/30">
+                <p className="opacity-95">{t("philosophy.quote.line1")}</p>
+                <p className="opacity-95">{t("philosophy.quote.line2")}</p>
+                <p className="opacity-95">{t("philosophy.quote.line3")}</p>
+                <p className="font-semibold opacity-100">
                   {t("philosophy.quote.line4")}
                 </p>
               </div>
-              <p className="text-xl md:text-2xl font-bold pt-4">
-                {t("philosophy.quote.heart")}
-              </p>
-              <p className="text-lg">{t("philosophy.quote.revelation")}</p>
+              
+              <div className="border-t border-primary-foreground/20 my-6" />
+              
+              <div className="text-center space-y-3">
+                <p className="text-2xl md:text-3xl font-bold tracking-wide">
+                  {t("philosophy.quote.heart")}
+                </p>
+                <p className="text-lg md:text-xl opacity-95 italic">
+                  {t("philosophy.quote.revelation")}
+                </p>
+              </div>
             </div>
           </Card>
 
