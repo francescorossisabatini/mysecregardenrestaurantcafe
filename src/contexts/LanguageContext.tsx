@@ -15,7 +15,8 @@ const translations = {
     "hero.subtitle": "Vegetarisches & Veganes Restaurant",
     "hero.address": "Mariahilferstraße 45 – Im Raimundhof – 1060 Wien",
     "hero.hours": "Geöffnet Mo-Sa von 11-19 Uhr",
-    "hero.menu": "Zur Speisekarte",
+    "hero.dailyMenu": "Menü von Heute",
+    "hero.fullMenu": "Gesamte Speisekarte",
     "hero.about": "Über Uns",
     "hero.products": "Unsere Produkte",
     
@@ -115,7 +116,8 @@ const translations = {
     "hero.subtitle": "Vegetarian & Vegan Restaurant",
     "hero.address": "Mariahilferstraße 45 – Im Raimundhof – 1060 Vienna",
     "hero.hours": "Open Mon-Sat from 11am-7pm",
-    "hero.menu": "View Menu",
+    "hero.dailyMenu": "Today's Menu",
+    "hero.fullMenu": "Full Menu",
     "hero.about": "About Us",
     "hero.products": "Our Products",
     
