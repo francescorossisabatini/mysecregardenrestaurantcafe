@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Quote, Sparkles, Heart, Flower2, Leaf } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { OrchidFlower, DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
+import sriChinmoyImage from "@/assets/sri-chinmoy.jpg";
 
 export const Philosophy = () => {
   const { t } = useLanguage();
@@ -48,9 +49,21 @@ export const Philosophy = () => {
             </div>
             <div className="relative z-10 space-y-6">
               <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/20 rounded-full mb-4">
-                  <Heart className="w-10 h-10 text-primary animate-pulse" />
+                {/* Sri Chinmoy Portrait */}
+                <div className="relative inline-block mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 rounded-full blur-md opacity-40 animate-pulse"></div>
+                  <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white/80 dark:border-white/20 shadow-2xl">
+                    <img 
+                      src={sriChinmoyImage} 
+                      alt="Sri Chinmoy - Spiritual Master and Inspiration for My Secret Garden"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 inline-flex items-center justify-center w-12 h-12 bg-primary rounded-full shadow-lg">
+                    <Heart className="w-6 h-6 text-primary-foreground animate-pulse" />
+                  </div>
                 </div>
+                
                 <h3 className="text-2xl md:text-3xl font-bold text-primary mb-3">
                   {t("philosophy.sri.title")}
                 </h3>
