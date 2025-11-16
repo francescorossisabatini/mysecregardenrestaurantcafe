@@ -189,8 +189,13 @@ export const FullMenu = () => {
                               <p className="text-sm text-muted-foreground leading-relaxed">
                                 {day.green[language]}
                               </p>
+                              {day.greenNote && day.greenNote[language] && (
+                                <p className="text-xs text-muted-foreground mt-1 italic">
+                                  {day.greenNote[language]}
+                                </p>
+                              )}
                               <div className="flex gap-2 mt-2">
-                                {getDietaryIcons(day.green).map((dietaryIcon, i) => (
+                                {[...getDietaryIcons(day.green), ...getDietaryIcons(day.greenNote)].map((dietaryIcon, i) => (
                                   <div key={i} className="flex items-center gap-1" title={dietaryIcon.label}>
                                     {dietaryIcon.icon}
                                   </div>

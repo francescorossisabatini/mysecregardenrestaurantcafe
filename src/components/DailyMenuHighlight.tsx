@@ -109,15 +109,20 @@ export const DailyMenuHighlight = () => {
                       <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-green-300 dark:border-green-700">
                         {t("menu.greenDish")}
                       </Badge>
-                      {getDietaryIcons({ de: todayMenu.green.de, en: todayMenu.green.en }).length > 0 && (
+                      {(getDietaryIcons({ de: todayMenu.green.de, en: todayMenu.green.en }).length > 0 || 
+                        getDietaryIcons(todayMenu.greenNote).length > 0) && (
                         <div className="flex gap-1">
-                          {getDietaryIcons({ de: todayMenu.green.de, en: todayMenu.green.en }).map((item, i) => (
+                          {[...getDietaryIcons({ de: todayMenu.green.de, en: todayMenu.green.en }), 
+                            ...getDietaryIcons(todayMenu.greenNote)].map((item, i) => (
                             <div key={i} title={item.label}>{item.icon}</div>
                           ))}
                         </div>
                       )}
                     </div>
                     <p className="text-base md:text-lg text-foreground font-medium">{todayMenu.green[language]}</p>
+                    {todayMenu.greenNote && todayMenu.greenNote[language] && (
+                      <p className="text-xs text-muted-foreground mt-1 italic">{todayMenu.greenNote[language]}</p>
+                    )}
                   </div>
                 )}
 
@@ -139,6 +144,9 @@ export const DailyMenuHighlight = () => {
                       )}
                     </div>
                     <p className="text-base md:text-lg text-foreground font-medium">{todayMenu.blue[language]}</p>
+                    {todayMenu.blueNote && todayMenu.blueNote[language] && (
+                      <p className="text-xs text-muted-foreground mt-1 italic">{todayMenu.blueNote[language]}</p>
+                    )}
                   </div>
                 )}
               </div>
