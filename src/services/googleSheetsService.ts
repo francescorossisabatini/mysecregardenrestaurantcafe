@@ -2,6 +2,7 @@ interface MenuDay {
   day: { de: string; en: string };
   soup: { de: string; en: string };
   green: { de: string; en: string };
+  greenNote?: { de: string; en: string };
   blue: { de: string; en: string };
   blueNote?: { de: string; en: string };
 }
@@ -69,13 +70,17 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
           de: row[4]?.v || '', 
           en: row[5]?.v || '' 
         },
+        greenNote: row[6]?.v || row[7]?.v ? {
+          de: row[6]?.v || '',
+          en: row[7]?.v || ''
+        } : undefined,
         blue: { 
-          de: row[6]?.v || '', 
-          en: row[7]?.v || '' 
+          de: row[8]?.v || '', 
+          en: row[9]?.v || '' 
         },
-        blueNote: row[8]?.v || row[9]?.v ? {
-          de: row[8]?.v || '',
-          en: row[9]?.v || ''
+        blueNote: row[10]?.v || row[11]?.v ? {
+          de: row[10]?.v || '',
+          en: row[11]?.v || ''
         } : undefined
       });
     }

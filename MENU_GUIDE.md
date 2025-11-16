@@ -16,9 +16,9 @@ Il menu settimanale del ristorante viene gestito tramite un foglio Google Sheets
 
 Crea le seguenti colonne nella prima riga (header):
 
-| A | B | C | D | E | F | G | H | I | J |
-|---|---|---|---|---|---|---|---|---|---|
-| Giorno DE | Giorno EN | Zuppa DE | Zuppa EN | Verde DE | Verde EN | Blu DE | Blu EN | Nota Blu DE | Nota Blu EN |
+| A | B | C | D | E | F | G | H | I | J | K | L |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Giorno DE | Giorno EN | Zuppa DE | Zuppa EN | Verde DE | Verde EN | Nota Verde DE | Nota Verde EN | Blu DE | Blu EN | Nota Blu DE | Nota Blu EN |
 
 **Prima riga (sotto l'header):** inserisci il periodo del menu
 - Nella cella A1: scrivi il periodo (es. "10-15. November")
@@ -30,16 +30,16 @@ Crea le seguenti colonne nella prima riga (header):
 
 ```
 Riga 1 (Periodo):
-10-15. November | | | | | | | | | |
+10-15. November | | | | | | | | | | | |
 
 Riga 2 (Header):
-Giorno DE | Giorno EN | Zuppa DE | Zuppa EN | Verde DE | Verde EN | Blu DE | Blu EN | Nota Blu DE | Nota Blu EN
+Giorno DE | Giorno EN | Zuppa DE | Zuppa EN | Verde DE | Verde EN | Nota Verde DE | Nota Verde EN | Blu DE | Blu EN | Nota Blu DE | Nota Blu EN
 
 Riga 3 (Lunedì):
-Montag | Monday | Kürbissuppe mit... | Pumpkin soup with... | Zucchini gefüllt... | Stuffed zucchini... | Lachs mit... | Salmon with... | | |
+Montag | Monday | Kürbissuppe mit... | Pumpkin soup with... | Zucchini gefüllt... | Stuffed zucchini... | | | Lachs mit... | Salmon with... | | |
 
 Riga 4 (Martedì):
-Dienstag | Tuesday | ... | ... | ... | ... | ... | ... | vegetarisch & glutenfrei | vegetarian & gluten-free |
+Dienstag | Tuesday | ... | ... | ... | ... | mit Nüssen | contains nuts | ... | ... | vegetarisch & glutenfrei | vegetarian & gluten-free |
 ```
 
 ### 4. Rendere il Foglio Pubblico
@@ -79,7 +79,8 @@ Dienstag | Tuesday | ... | ... | ... | ... | ... | ... | vegetarisch & glutenfre
 ### Note Importanti:
 
 - ✅ Modifica **solo** le descrizioni dei piatti (colonne Zuppa, Verde, Blu)
-- ✅ Puoi modificare la nota per il piatto blu (es. "vegetarisch", "glutenfrei")
+- ✅ Puoi modificare le note sia per il piatto verde che per il piatto blu (es. "vegetarisch", "glutenfrei", "mit Nüssen", "contains nuts")
+- ✅ Le note vengono usate per specificare allergeni o informazioni dietetiche speciali
 - ❌ Non modificare i nomi delle colonne (header)
 - ❌ Non cancellare righe o colonne
 - ❌ Non modificare la struttura del foglio

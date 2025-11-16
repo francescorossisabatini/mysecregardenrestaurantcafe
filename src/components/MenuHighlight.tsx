@@ -104,15 +104,20 @@ export const MenuHighlight = () => {
                         <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-green-300 dark:border-green-700">
                           {t("menu.greenDish")}
                         </Badge>
-                        {getDietaryIcons({ de: day.green.de, en: day.green.en }).length > 0 && (
+                        {(getDietaryIcons({ de: day.green.de, en: day.green.en }).length > 0 || 
+                          getDietaryIcons(day.greenNote).length > 0) && (
                           <div className="flex gap-1">
-                            {getDietaryIcons({ de: day.green.de, en: day.green.en }).map((item, i) => (
+                            {[...getDietaryIcons({ de: day.green.de, en: day.green.en }), 
+                              ...getDietaryIcons(day.greenNote)].map((item, i) => (
                               <div key={i} title={item.label}>{item.icon}</div>
                             ))}
                           </div>
                         )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.green[language]}</p>
+                      {day.greenNote && day.greenNote[language] && (
+                        <p className="text-xs text-muted-foreground mt-1 italic">{day.greenNote[language]}</p>
+                      )}
                     </div>
 
                     {/* Blue Dish */}
@@ -132,6 +137,9 @@ export const MenuHighlight = () => {
                         )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.blue[language]}</p>
+                      {day.blueNote && day.blueNote[language] && (
+                        <p className="text-xs text-muted-foreground mt-1 italic">{day.blueNote[language]}</p>
+                      )}
                     </div>
                   </div>
                 </Card>

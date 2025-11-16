@@ -7,6 +7,7 @@ interface MenuDay {
   day: { de: string; en: string };
   soup: { de: string; en: string };
   green: { de: string; en: string };
+  greenNote?: { de: string; en: string };
   blue: { de: string; en: string };
   blueNote?: { de: string; en: string };
 }
