@@ -131,48 +131,6 @@ export const AboutNarrative = () => {
             </div>
           </div>
 
-          {/* Services Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 text-center hover:shadow-elevated transition-all bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 border-emerald-200 dark:border-emerald-800 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Sun className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h4 className="text-xl font-serif mb-3 text-foreground">
-                {language === "de" ? "Täglich Frisch" : "Daily Fresh"}
-              </h4>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {language === "de" 
-                  ? "Von Montag bis Samstag servieren wir täglich frisch zubereitete Gerichte von 11:00 bis 19:00 Uhr" 
-                  : "Monday to Saturday we serve freshly prepared dishes daily from 11:00 to 19:00"}
-              </p>
-            </Card>
-
-            <Card className="p-8 text-center hover:shadow-elevated transition-all bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950 dark:to-cyan-950 border-teal-200 dark:border-teal-800 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Heart className="w-8 h-8 text-teal-600 dark:text-teal-400" />
-              </div>
-              <h4 className="text-xl font-serif mb-3 text-foreground">
-                {language === "de" ? "Mit Liebe Gekocht" : "Cooked with Love"}
-              </h4>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {t("about.p3")}
-              </p>
-            </Card>
-
-            <Card className="p-8 text-center hover:shadow-elevated transition-all bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200 dark:border-blue-800 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Leaf className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h4 className="text-xl font-serif mb-3 text-foreground">
-                {language === "de" ? "Glutenfrei Möglich" : "Gluten-Free Options"}
-              </h4>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {language === "de" 
-                  ? "Bei allem kommt auch die glutenfreie Ernährung nicht zu kurz – wir haben für jeden etwas!" 
-                  : "All our dishes can be prepared gluten-free – we have something for everyone!"}
-              </p>
-            </Card>
-          </div>
 
         </div>
       </div>
