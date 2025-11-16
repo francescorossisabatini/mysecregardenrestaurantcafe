@@ -36,10 +36,10 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           isScrolled
             ? "bg-background/95 backdrop-blur-md shadow-md py-2"
-            : "bg-transparent py-3"
+            : "bg-background/40 backdrop-blur-sm py-3"
         }`}
       >
         <div className="container mx-auto px-4">
@@ -75,7 +75,7 @@ export const Navigation = () => {
 
             {/* Logo & Language - Right */}
             <div className="flex items-center gap-3">
-              <div className={isScrolled ? "" : "opacity-90"}>
+              <div className="relative z-10">
                 <LanguageSwitcher />
               </div>
               <div className={`transition-all duration-300 ${
@@ -91,14 +91,14 @@ export const Navigation = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[90] lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 dark:from-emerald-900 dark:via-emerald-950 dark:to-teal-900 shadow-xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 dark:from-emerald-900 dark:via-emerald-950 dark:to-teal-900 shadow-xl z-[95] transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

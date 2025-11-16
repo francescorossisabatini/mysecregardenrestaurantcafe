@@ -10,11 +10,11 @@ export const LanguageSwitcher = () => {
         variant={language === "de" ? "default" : "outline"}
         size="sm"
         onClick={() => setLanguage("de")}
-        className={
+        className={`min-h-[44px] min-w-[44px] touch-manipulation ${
           language === "de"
-            ? "bg-accent text-accent-foreground hover:bg-accent/90"
-            : "bg-background/80 backdrop-blur-sm text-foreground hover:bg-background"
-        }
+            ? "bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg"
+            : "bg-background/95 backdrop-blur-sm text-foreground hover:bg-background border-2 border-border"
+        }`}
         aria-pressed={language === "de"}
         aria-label="Switch to German"
       >
@@ -24,11 +24,11 @@ export const LanguageSwitcher = () => {
         variant={language === "en" ? "default" : "outline"}
         size="sm"
         onClick={() => setLanguage("en")}
-        className={
+        className={`min-h-[44px] min-w-[44px] touch-manipulation ${
           language === "en"
-            ? "bg-accent text-accent-foreground hover:bg-accent/90"
-            : "bg-background/80 backdrop-blur-sm text-foreground hover:bg-background"
-        }
+            ? "bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg"
+            : "bg-background/95 backdrop-blur-sm text-foreground hover:bg-background border-2 border-border"
+        }`}
         aria-pressed={language === "en"}
         aria-label="Switch to English"
       >
