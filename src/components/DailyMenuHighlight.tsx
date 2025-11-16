@@ -33,7 +33,7 @@ export const DailyMenuHighlight = () => {
   });
 
   return (
-    <section className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
+    <section id="daily-menu" className="py-8 md:py-12 bg-gradient-to-br from-primary/5 via-background to-accent/5 relative overflow-hidden">
       {/* Decorative Flowers - Maggiore contrasto */}
       <div className="absolute top-8 left-8 w-20 h-20 text-blue-600 opacity-80">
         <DetailedFlower className="w-full h-full" />

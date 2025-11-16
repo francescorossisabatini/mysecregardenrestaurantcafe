@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Phone, MapPin, Clock } from "lucide-react";
+import { Phone, MapPin, Clock, Calendar, Utensils } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DetailedFlower, RoseFlower, FlowingLines } from "@/components/FloralDecorations";
@@ -85,14 +85,28 @@ export const Hero = () => {
             </a>
           </div>
 
-          <div className="pt-6 flex justify-center">
+          <div className="pt-6 flex flex-col sm:flex-row justify-center gap-4">
             <Button
               size="lg"
               variant="default"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-lg px-12 min-h-[56px] touch-manipulation relative z-20"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-elevated text-lg px-8 min-h-[56px] touch-manipulation relative z-20"
               asChild
             >
-              <a href="#full-menu" className="flex items-center justify-center">{t("hero.menu")}</a>
+              <a href="#daily-menu" className="flex items-center justify-center gap-2">
+                <Calendar className="w-5 h-5" />
+                {t("hero.dailyMenu")}
+              </a>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/80 backdrop-blur-sm hover:bg-accent/90 hover:text-accent-foreground border-2 text-lg px-8 min-h-[56px] touch-manipulation relative z-20"
+              asChild
+            >
+              <a href="#full-menu" className="flex items-center justify-center gap-2">
+                <Utensils className="w-5 h-5" />
+                {t("hero.fullMenu")}
+              </a>
             </Button>
           </div>
         </div>
