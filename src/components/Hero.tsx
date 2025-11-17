@@ -1,131 +1,127 @@
-import { Button } from "@/components/ui/button";
-import { Phone, MapPin, Clock, Calendar, Utensils } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { DetailedFlower, RoseFlower, FlowingLines } from "@/components/FloralDecorations";
+import { BotanicalDecoration } from "./BotanicalDecoration";
+import heroGarden from "@/assets/hero-garden.jpg";
+import heroFood from "@/assets/hero-food.jpg";
+import heroInterior from "@/assets/hero-interior.jpg";
 
-const images = [
-  "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg",
-  "https://www.secretgardenrestaurant.at/wp-content/uploads/2024/12/SecretGardenTeam3-1500x630.jpg",
-  "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/04/header-1500x630.jpg",
-  "https://www.secretgardenrestaurant.at/wp-content/uploads/2020/09/Gastgarten.jpg",
-];
+const heroImages = [heroGarden, heroFood, heroInterior];
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const { t } = useLanguage();
+  const { language } = useLanguage();
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
+      setCurrentImage((prev) => (prev + 1) % heroImages.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Carousel */}
-      <div className="absolute inset-0">
-        {images.map((img, idx) => (
-          <div
-            key={idx}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              idx === currentImage ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img
-              src={img}
-              alt="Secret Garden Restaurant"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-background/95" />
-          </div>
-        ))}
-      </div>
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-      {/* Decorative Flowers and Lines - Con z-index corretto per non sovrapporre elementi interattivi */}
-      <div className="absolute top-0 left-0 right-0 h-32 text-emerald-600 z-[5] opacity-70 pointer-events-none">
-        <FlowingLines className="w-full h-full" />
-      </div>
-      <div className="absolute top-16 right-8 w-24 h-24 text-blue-600 z-[5] opacity-80 pointer-events-none hidden md:block">
-        <DetailedFlower className="w-full h-full" />
-      </div>
-      <div className="absolute bottom-32 left-8 w-28 h-28 text-teal-600 z-[5] opacity-80 pointer-events-none hidden md:block">
-        <RoseFlower className="w-full h-full" />
-      </div>
-      <div className="absolute top-1/3 right-1/4 w-20 h-20 text-cyan-600 z-[5] opacity-75 pointer-events-none hidden lg:block">
-        <DetailedFlower className="w-full h-full" />
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background carousel */}
+      {heroImages.map((img, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 transition-opacity duration-1000"
+          style={{
+            opacity: currentImage === index ? 1 : 0,
+            backgroundImage: `url(${img})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      ))}
+
+      {/* Dark overlay (35%) */}
+      <div className="absolute inset-0 bg-primary/35" />
+
+      {/* Botanical pattern overlay (15% opacity) */}
+      <div className="absolute inset-0 opacity-15">
+        <BotanicalDecoration 
+          variant="flower" 
+          className="absolute top-20 left-20 w-32 h-32 text-background" 
+        />
+        <BotanicalDecoration 
+          variant="leaf" 
+          className="absolute top-40 right-32 w-24 h-24 text-background" 
+        />
+        <BotanicalDecoration 
+          variant="flower" 
+          className="absolute bottom-32 left-40 w-28 h-28 text-background" 
+        />
+        <BotanicalDecoration 
+          variant="leaf" 
+          className="absolute bottom-20 right-20 w-20 h-20 text-background" 
+        />
       </div>
 
       {/* Content */}
-      <div className="relative z-20 container mx-auto px-4 py-12 text-center animate-fade-in">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground drop-shadow-lg">
-            <span className="font-dancing text-5xl md:text-7xl lg:text-8xl">{t("hero.title")}</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/95 font-light">
-            {t("hero.subtitle")}
-          </p>
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-background">
+        <h1 className="text-6xl md:text-8xl font-caveat font-bold mb-4 drop-shadow-lg">
+          My Secret Garden
+        </h1>
+        <p className="text-2xl md:text-3xl font-lora mb-3 drop-shadow-md">
+          {language === "de" 
+            ? "Vegetarische & Vegane Soul Food in Wien" 
+            : "Vegan & Vegetarian Soul Food in Vienna"}
+        </p>
+        <p className="text-lg md:text-xl font-lora mb-8 drop-shadow-md opacity-90">
+          {language === "de"
+            ? "Im Raimundhof – Mariahilferstraße 45"
+            : "Inside the Raimundhof – Mariahilferstraße 45"}
+        </p>
 
-          <div className="space-y-3 text-primary-foreground/90 text-sm md:text-base pt-4">
-            <div className="flex items-center justify-center gap-2">
-              <MapPin className="w-5 h-5" />
-              <span>{t("hero.address")}</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <Clock className="w-5 h-5" />
-              <span>{t("hero.hours")}</span>
-            </div>
-            <a
-              href="tel:015862839"
-              className="flex items-center justify-center gap-2 hover:text-accent transition-colors"
-            >
-              <Phone className="w-5 h-5" />
-              <span>01 586 28 39</span>
-            </a>
-          </div>
-
-          <div className="pt-6 flex flex-col sm:flex-row justify-center gap-4">
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-elevated text-lg px-8 min-h-[56px] touch-manipulation relative z-20"
-              asChild
-            >
-              <a href="#daily-menu" className="flex items-center justify-center gap-2">
-                <Calendar className="w-5 h-5" />
-                {t("hero.dailyMenu")}
-              </a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-background/80 backdrop-blur-sm hover:bg-accent/90 hover:text-accent-foreground border-2 text-lg px-8 min-h-[56px] touch-manipulation relative z-20"
-              asChild
-            >
-              <a href="#full-menu" className="flex items-center justify-center gap-2">
-                <Utensils className="w-5 h-5" />
-                {t("hero.fullMenu")}
-              </a>
-            </Button>
-          </div>
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+          <Button
+            size="lg"
+            onClick={() => scrollToSection("daily-menu")}
+            className="bg-accent hover:bg-accent-light text-accent-foreground font-lora text-lg px-8 py-6 shadow-elevated"
+          >
+            {language === "de" ? "Menu del Giorno" : "Daily Menu"}
+          </Button>
+          <Button
+            size="lg"
+            onClick={() => scrollToSection("full-menu")}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-lora text-lg px-8 py-6 shadow-elevated"
+          >
+            {language === "de" ? "Menu Completo" : "Full Menu"}
+          </Button>
         </div>
 
-        {/* Carousel Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {images.map((_, idx) => (
+        {/* Carousel dots */}
+        <div className="flex gap-2 justify-center mt-12">
+          {heroImages.map((_, index) => (
             <button
-              key={idx}
-              onClick={() => setCurrentImage(idx)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                idx === currentImage
-                  ? "bg-accent w-8"
-                  : "bg-primary-foreground/40 hover:bg-primary-foreground/60"
+              key={index}
+              onClick={() => setCurrentImage(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                currentImage === index 
+                  ? "bg-background w-8" 
+                  : "bg-background/50 hover:bg-background/70"
               }`}
-              aria-label={`Go to image ${idx + 1}`}
+              aria-label={`View image ${index + 1}`}
             />
           ))}
         </div>
+      </div>
+
+      {/* Decorative vine at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <BotanicalDecoration 
+          variant="vine" 
+          className="w-full h-12 text-background" 
+        />
       </div>
     </section>
   );

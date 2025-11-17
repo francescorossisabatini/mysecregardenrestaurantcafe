@@ -2,52 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system based on Secret Garden logo colors.
+/* Botanical brand identity for My Secret Garden
 All colors MUST be HSL format.
-Primary: Deep blue from logo
-Accent: Natural green for spiritual garden energy
+Primary: Spiritual deep blue #243260
+Accent: Natural green gradient #74A84B → #A0C86F
+Background: Warm cream #F5F1E3
 */
 
 @layer base {
   :root {
-    /* Light mode - inspired by logo's blue and spiritual garden energy */
-    --background: 210 25% 98%;
-    --foreground: 220 40% 20%;
+    /* Light mode - botanical brand identity */
+    --background: 45 45% 93%; /* #F5F1E3 warm cream */
+    --foreground: 25 7% 12%; /* #1E1C1A soft black */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 40% 20%;
+    --card: 45 50% 96%;
+    --card-foreground: 25 7% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 20%;
+    --popover: 45 50% 96%;
+    --popover-foreground: 25 7% 12%;
 
-    /* Primary: Deep blue from Secret Garden logo */
-    --primary: 220 75% 35%;
+    /* Primary: Spiritual deep blue #243260 */
+    --primary: 226 45% 26%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 30% 90%;
-    --secondary-foreground: 220 40% 20%;
+    --secondary: 45 40% 88%;
+    --secondary-foreground: 25 7% 12%;
 
-    --muted: 210 25% 92%;
-    --muted-foreground: 220 30% 40%; /* Migliorato contrasto per accessibilità */
+    --muted: 45 35% 90%;
+    --muted-foreground: 25 7% 35%;
 
-    /* Accent: Natural green for spiritual energy - Contrasto migliorato */
-    --accent: 140 60% 40%;
+    /* Accent: Natural green #74A84B */
+    --accent: 92 39% 48%;
     --accent-foreground: 0 0% 100%;
+    
+    /* Accent secondary: Light green #A0C86F */
+    --accent-light: 85 42% 61%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 25% 88%;
-    --input: 210 25% 88%;
-    --ring: 220 75% 35%;
+    --border: 45 25% 85%;
+    --input: 45 25% 85%;
+    --ring: 226 45% 26%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
     
-    /* Custom design tokens - inspired by logo */
-    --gradient-hero: linear-gradient(135deg, hsl(220 75% 35%) 0%, hsl(220 65% 45%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(210 30% 98%) 0%, hsl(140 30% 96%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(220 75% 35% / 0.15);
-    --shadow-elevated: 0 10px 40px -10px hsl(220 75% 35% / 0.25);
+    /* Custom design tokens - botanical theme */
+    --gradient-green: linear-gradient(135deg, hsl(92 39% 48%) 0%, hsl(85 42% 61%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(226 45% 26%) 0%, hsl(226 35% 36%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(45 50% 96%) 0%, hsl(85 35% 94%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(92 39% 48% / 0.15);
+    --shadow-elevated: 0 10px 40px -10px hsl(226 45% 26% / 0.25);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
@@ -61,39 +66,42 @@ Accent: Natural green for spiritual garden energy
   }
 
   .dark {
-    /* Dark mode - maintaining spiritual atmosphere */
-    --background: 220 35% 12%;
-    --foreground: 210 25% 95%;
+    /* Dark mode - maintaining botanical atmosphere */
+    --background: 226 35% 15%;
+    --foreground: 45 30% 90%;
 
-    --card: 220 30% 15%;
-    --card-foreground: 210 25% 95%;
+    --card: 226 30% 18%;
+    --card-foreground: 45 30% 90%;
 
-    --popover: 220 30% 15%;
-    --popover-foreground: 210 25% 95%;
+    --popover: 226 30% 18%;
+    --popover-foreground: 45 30% 90%;
 
     /* Primary: Lighter blue for dark mode */
-    --primary: 220 65% 55%;
-    --primary-foreground: 220 35% 12%;
+    --primary: 226 40% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 30% 20%;
-    --secondary-foreground: 210 25% 95%;
+    --secondary: 226 25% 22%;
+    --secondary-foreground: 45 30% 90%;
 
-    --muted: 220 30% 22%;
-    --muted-foreground: 210 20% 70%; /* Migliorato contrasto per accessibilità dark mode */
+    --muted: 226 25% 24%;
+    --muted-foreground: 45 20% 70%;
 
     /* Accent: Brighter green for dark mode */
-    --accent: 140 50% 50%;
+    --accent: 92 45% 55%;
     --accent-foreground: 0 0% 100%;
+    
+    --accent-light: 85 45% 65%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 30% 25%;
-    --input: 220 30% 25%;
-    --ring: 220 65% 55%;
+    --border: 226 25% 28%;
+    --input: 226 25% 28%;
+    --ring: 226 40% 45%;
     
-    --gradient-hero: linear-gradient(135deg, hsl(220 65% 25%) 0%, hsl(220 55% 35%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(220 35% 10%) 0%, hsl(220 30% 15%) 100%);
+    --gradient-green: linear-gradient(135deg, hsl(92 45% 55%) 0%, hsl(85 45% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(226 40% 20%) 0%, hsl(226 35% 30%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(226 35% 12%) 0%, hsl(226 30% 18%) 100%);
     --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
     
@@ -114,21 +122,25 @@ Accent: Natural green for spiritual garden energy
   }
 
   body {
-    @apply text-foreground font-lato;
-    background: linear-gradient(to bottom right, hsl(140 55% 95%), hsl(140 60% 97%), hsl(173 60% 90%));
-    background-attachment: fixed;
+    @apply text-foreground font-lora;
+    background: hsl(var(--background));
   }
   
   .dark body {
-    background: linear-gradient(to bottom right, hsl(140 60% 18%), hsl(140 80% 10%), hsl(173 80% 20%));
+    background: hsl(var(--background));
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-playfair;
+    @apply font-caveat;
   }
   
-  /* Special decorative text using script font */
-  .font-script {
-    @apply font-dancing;
+  /* Elegant serif for body text */
+  .font-serif {
+    @apply font-lora;
+  }
+  
+  /* Handwritten titles */
+  .font-handwritten {
+    @apply font-caveat;
   }
 }

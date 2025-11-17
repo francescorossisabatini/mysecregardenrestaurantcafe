@@ -1,11 +1,9 @@
 import { Hero } from "@/components/Hero";
-import { AboutNarrative } from "@/components/AboutNarrative";
-import { Philosophy } from "@/components/Philosophy";
+import { AboutSection } from "@/components/AboutSection";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { FullMenu } from "@/components/FullMenu";
 import { ProductsNarrative } from "@/components/ProductsNarrative";
 import { Reviews } from "@/components/Reviews";
-import { InstagramFeed } from "@/components/InstagramFeed";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -19,9 +17,7 @@ const Index = () => {
       <FullMenu />
       <Reviews />
       <ProductsNarrative />
-      <AboutNarrative />
-      <Philosophy />
-      <InstagramFeed />
+      <AboutSection />
       <Contact />
       <Footer />
     </div>

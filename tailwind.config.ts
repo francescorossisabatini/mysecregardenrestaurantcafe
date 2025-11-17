@@ -14,9 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        'playfair': ['Playfair Display', 'serif'],
-        'lato': ['Lato', 'sans-serif'],
-        'dancing': ['Dancing Script', 'cursive'],
+        'caveat': ['Caveat', 'cursive'],
+        'lora': ['Lora', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -43,6 +42,7 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          light: "hsl(var(--accent-light))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -108,6 +108,7 @@ export default {
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-subtle': 'var(--gradient-subtle)',
+        'gradient-green': 'var(--gradient-green)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
