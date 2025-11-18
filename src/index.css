@@ -37,6 +37,9 @@ Background: Warm cream #F5F1E3
     
     /* Accent secondary: Light green #A0C86F */
     --accent-light: 85 42% 61%;
+    
+    /* Cream background for special sections */
+    --cream: 45 50% 94%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -91,6 +94,9 @@ Background: Warm cream #F5F1E3
     --accent-foreground: 0 0% 100%;
     
     --accent-light: 85 45% 65%;
+    
+    /* Cream background for special sections (darker in dark mode) */
+    --cream: 226 20% 25%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
