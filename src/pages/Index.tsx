@@ -3,6 +3,7 @@ import { AboutSection } from "@/components/AboutSection";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { FullMenu } from "@/components/FullMenu";
 import { ProductsNarrative } from "@/components/ProductsNarrative";
+import { InstagramFeed } from "@/components/InstagramFeed";
 import { Reviews } from "@/components/Reviews";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -22,6 +23,7 @@ const Index = () => {
       <PhotoStripe imageUrl={poppyImg} variant="blue" />
       <Reviews />
       <ProductsNarrative />
+      <InstagramFeed />
       <AboutSection />
       <Contact />
       <Footer />

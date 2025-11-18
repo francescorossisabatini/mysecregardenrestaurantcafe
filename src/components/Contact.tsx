@@ -94,6 +94,22 @@ export const Contact = () => {
             </Card>
           </div>
 
+          {/* Google Maps Embed */}
+          <Card className="p-4 mb-8 bg-card/80 backdrop-blur-sm overflow-hidden">
+            <div className="aspect-video w-full rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.1234567890123!2d16.3499999!3d48.1999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d079e3c0c3b3f%3A0x5f5f5f5f5f5f5f5f!2sMy%20Secret%20Garden!5e0!3m2!1sde!2sat!4v1234567890123!5m2!1sde!2sat"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="My Secret Garden Location"
+              />
+            </div>
+          </Card>
+
           <div className="text-center">
             <Button
               size="lg"

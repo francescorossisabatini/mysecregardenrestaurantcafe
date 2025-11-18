@@ -4,7 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 
 export const InstagramFeed = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   
   // Per integrare il vero feed Instagram, segui questi passaggi:
   // 1. Vai su https://snapwidget.com/widgets/instagram-feed
@@ -14,26 +14,26 @@ export const InstagramFeed = () => {
   // 5. Copia l'iframe o script generato e sostituiscilo qui sotto
 
   return (
-    <section className="py-16 md:py-24 bg-background relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-[#F5F1E3] relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-20 right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-32 h-32 bg-accent/5 rounded-full blur-2xl" />
+      <div className="absolute top-10 right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 left-10 w-24 h-24 bg-accent/5 rounded-full blur-2xl" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-              <Instagram className="w-8 h-8 text-primary" />
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-primary/10 rounded-full mb-4">
+              <Instagram className="w-7 h-7 text-primary" />
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              <span className="font-dancing text-4xl md:text-6xl">{t("instagram.title")}</span>
+            <h2 className="text-3xl md:text-4xl font-caveat font-bold text-[#243260] mb-3">
+              {language === "de" ? "Impressionen aus unserem Secret Garden" : "Impressions from our Secret Garden"}
             </h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              {t("instagram.subtitle")}
+            <p className="text-base text-muted-foreground mb-4">
+              {language === "de" ? "Folgen Sie uns auf Instagram für die neuesten Einblicke" : "Follow us on Instagram for the latest insights"}
             </p>
-            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
+            <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
           </div>
 
           {/* Instagram Feed Container */}
@@ -65,23 +65,25 @@ export const InstagramFeed = () => {
               />
             */}
             
-            {/* Placeholder temporaneo */}
-            <Card className="p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 shadow-elevated">
-              <div className="grid md:grid-cols-3 gap-4 mb-8">
+            {/* Instagram Grid Placeholder */}
+            <Card className="p-6 md:p-8 bg-background/50 border-primary/20 shadow-lg">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <div 
                     key={i} 
-                    className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg animate-pulse"
+                    className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg animate-pulse shadow-sm"
                   />
                 ))}
               </div>
               
               <div className="text-center">
-                <p className="text-lg text-muted-foreground mb-4">
-                  {t("instagram.configure")}
+                <p className="text-sm md:text-base text-muted-foreground mb-4">
+                  {language === "de" 
+                    ? "Besuchen Sie unsere Instagram-Seite für aktuelle Fotos und Updates" 
+                    : "Visit our Instagram page for current photos and updates"}
                 </p>
                 <Button
-                  size="lg"
+                  size="default"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground"
                   asChild
                 >
@@ -91,8 +93,8 @@ export const InstagramFeed = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2"
                   >
-                    <Instagram className="w-5 h-5" />
-                    {t("instagram.visitPage")}
+                    <Instagram className="w-4 h-4" />
+                    {language === "de" ? "Besuchen Sie uns auf Instagram" : "Visit us on Instagram"}
                   </a>
                 </Button>
               </div>
@@ -101,8 +103,8 @@ export const InstagramFeed = () => {
 
           {/* Call to Action */}
           <div className="text-center">
-            <p className="text-base text-muted-foreground">
-              {t("instagram.follow")} 
+            <p className="text-sm md:text-base text-muted-foreground">
+              {language === "de" ? "Folgen Sie uns:" : "Follow us:"} 
               <a 
                 href="https://www.instagram.com/mysecretgardencafewien/" 
                 target="_blank" 
