@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BotanicalDecoration } from "./BotanicalDecoration";
-import heroGarden from "@/assets/hero-garden.jpg";
-import heroFood from "@/assets/hero-food.jpg";
-import heroInterior from "@/assets/hero-interior.jpg";
+import heroGarden from "@/assets/garden-real.jpg";
+import heroFood from "@/assets/food-bowl-real.jpg";
+import heroInterior from "@/assets/interior-real.jpg";
 
 const heroImages = [heroGarden, heroFood, heroInterior];
 
