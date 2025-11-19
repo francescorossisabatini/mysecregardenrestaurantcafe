@@ -109,11 +109,13 @@ export const AboutSection = () => {
                 variant="corner" 
                 className="absolute top-0 right-0 w-16 h-16 text-accent/20 z-10" 
               />
-              <img
-                src={gardenImg}
-                alt="Secret Garden Restaurant"
-                className="w-full h-auto rounded-lg"
-              />
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={gardenImg}
+                  alt="Secret Garden Restaurant"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
             </Card>
           </div>
 
@@ -123,15 +125,17 @@ export const AboutSection = () => {
               {language === "de" ? "Unsere Inspiration: Sri Chinmoy" : "Our Inspiration: Sri Chinmoy"}
             </h3>
 
-            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start mb-8">
+            <div className="grid md:grid-cols-[220px_1fr] gap-8 items-start mb-8">
               {/* Sri Chinmoy portrait */}
-              <div className="mx-auto md:mx-0">
+              <div className="mx-auto md:mx-0 w-full max-w-[220px]">
                 <Card className="overflow-hidden border-2 border-[#243260]/30 shadow-lg">
-                  <img
-                    src={sriChinmoyImg}
-                    alt="Sri Chinmoy"
-                    className="w-full h-auto"
-                  />
+                  <div className="aspect-[3/4] overflow-hidden">
+                    <img
+                      src={sriChinmoyImg}
+                      alt="Sri Chinmoy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </Card>
               </div>
 
