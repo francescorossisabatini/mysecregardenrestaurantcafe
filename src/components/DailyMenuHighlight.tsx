@@ -46,7 +46,7 @@ export const DailyMenuHighlight = () => {
             className="w-64 h-8 mx-auto mb-4 text-accent/20" 
           />
           <h2 className="text-5xl md:text-6xl font-caveat font-bold text-primary mb-3">
-            {language === "de" ? "Menu del Giorno" : "Daily Menu"}
+            {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </h2>
           <p className="text-xl font-lora text-muted-foreground">
             {menu.period}
