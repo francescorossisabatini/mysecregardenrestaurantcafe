@@ -88,14 +88,14 @@ export const Hero = () => {
             onClick={() => scrollToSection("daily-menu")}
             className="bg-accent hover:bg-accent-light text-accent-foreground font-lora text-lg px-8 py-6 shadow-elevated"
           >
-            {language === "de" ? "Menu del Giorno" : "Daily Menu"}
+            {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </Button>
           <Button
             size="lg"
             onClick={() => scrollToSection("full-menu")}
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-lora text-lg px-8 py-6 shadow-elevated"
           >
-            {language === "de" ? "Menu Completo" : "Full Menu"}
+            {language === "de" ? "Speisekarte" : "Full Menu"}
           </Button>
         </div>
 
