@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -75,14 +76,14 @@ export const Navigation = () => {
 
             {/* Logo & Language - Right */}
             <div className="flex items-center gap-3">
-              <a
-                href="/privacy"
-                className={`hidden sm:block text-xs font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground/70" : "text-primary-foreground/70"
+              <Link
+                to="/privacy"
+                className={`hidden lg:block text-sm font-medium transition-colors hover:text-primary ${
+                  isScrolled ? "text-foreground" : "text-primary-foreground"
                 }`}
               >
                 {t("nav.privacy")}
-              </a>
+              </Link>
               <div className="relative z-10">
                 <LanguageSwitcher />
               </div>
@@ -122,6 +123,13 @@ export const Navigation = () => {
                 {item.label}
               </a>
             ))}
+            <Link
+              to="/privacy"
+              className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {t("nav.privacy")}
+            </Link>
           </nav>
         </div>
       </div>
