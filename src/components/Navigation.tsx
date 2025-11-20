@@ -87,11 +87,14 @@ export const Navigation = () => {
               <div className="relative z-10">
                 <LanguageSwitcher />
               </div>
-              <div className={`transition-all duration-300 ${
-                isScrolled ? "scale-90" : "scale-100"
-              }`}>
+              <Link 
+                to="/"
+                className={`transition-all duration-300 ${
+                  isScrolled ? "scale-90" : "scale-100"
+                }`}
+              >
                 <Logo className={isScrolled ? "w-10 h-10" : "w-12 h-12"} />
-              </div>
+              </Link>
             </div>
           </div>
         </div>
