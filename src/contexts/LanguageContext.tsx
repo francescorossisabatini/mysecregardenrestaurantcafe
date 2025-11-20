@@ -25,6 +25,7 @@ const translations = {
     "nav.products": "Unsere Produkte",
     "nav.about": "Über Uns",
     "nav.contact": "Kontakt",
+    "nav.privacy": "Datenschutz",
     
     // About
     "about.title": "WIR über uns",
@@ -126,6 +127,7 @@ const translations = {
     "nav.products": "Products",
     "nav.about": "About",
     "nav.contact": "Contact",
+    "nav.privacy": "Privacy",
     
     // About
     "about.title": "About US",

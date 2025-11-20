@@ -74,7 +74,15 @@ export const Navigation = () => {
             </div>
 
             {/* Logo & Language - Right */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
+              <a
+                href="/privacy"
+                className={`hidden sm:block text-xs font-medium transition-colors hover:text-primary ${
+                  isScrolled ? "text-foreground/70" : "text-primary-foreground/70"
+                }`}
+              >
+                {t("nav.privacy")}
+              </a>
               <div className="relative z-10">
                 <LanguageSwitcher />
               </div>
