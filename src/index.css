@@ -38,6 +38,10 @@ Background: Warm cream #F5F1E3
     /* Accent secondary: Light green #A0C86F */
     --accent-light: 85 42% 61%;
     
+    /* Blue accent for menu items */
+    --blue: 210 85% 55%;
+    --blue-foreground: 0 0% 100%;
+    
     /* Cream background for special sections */
     --cream: 45 50% 94%;
 
@@ -94,6 +98,10 @@ Background: Warm cream #F5F1E3
     --accent-foreground: 0 0% 100%;
     
     --accent-light: 85 45% 65%;
+    
+    /* Blue accent for menu items (brighter in dark mode) */
+    --blue: 210 80% 65%;
+    --blue-foreground: 0 0% 100%;
     
     /* Cream background for special sections (darker in dark mode) */
     --cream: 226 20% 25%;

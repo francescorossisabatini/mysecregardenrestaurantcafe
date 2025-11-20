@@ -102,16 +102,16 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
               {/* Green Dish */}
               <div className="mb-4 pb-4 border-b border-border">
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-primary text-primary-foreground">
+                  <Badge className="bg-accent text-accent-foreground text-sm font-semibold">
                     Tagesgericht GRÜN
                   </Badge>
                   <div className="flex gap-1">
-                    <Leaf className="w-4 h-4 text-primary" />
-                    <Wheat className="w-4 h-4 text-primary" />
+                    <Leaf className="w-4 h-4 text-accent" />
+                    <Wheat className="w-4 h-4 text-accent" />
                   </div>
                 </div>
-                <p className="text-foreground/90 leading-relaxed">{dayMenu.green}</p>
-                <p className="text-xs text-muted-foreground italic mt-1">
+                <p className="text-foreground font-medium leading-relaxed">{dayMenu.green}</p>
+                <p className="text-xs text-accent/80 font-semibold mt-2">
                   vegan & glutenfrei
                 </p>
               </div>
@@ -119,18 +119,18 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
               {/* Blue Dish */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-accent text-accent-foreground">
+                  <Badge className="bg-blue text-blue-foreground text-sm font-semibold">
                     Tagesgericht BLAU
                   </Badge>
                   {dayMenu.blueNote !== "vegetarisch & glutenfrei" && (
                     <div className="flex gap-1">
-                      <Leaf className="w-4 h-4 text-primary" />
-                      <Wheat className="w-4 h-4 text-primary" />
+                      <Leaf className="w-4 h-4 text-blue" />
+                      <Wheat className="w-4 h-4 text-blue" />
                     </div>
                   )}
                 </div>
-                <p className="text-foreground/90 leading-relaxed">{dayMenu.blue}</p>
-                <p className="text-xs text-muted-foreground italic mt-1">
+                <p className="text-foreground font-medium leading-relaxed">{dayMenu.blue}</p>
+                <p className="text-xs text-blue font-semibold mt-2">
                   {dayMenu.blueNote || "vegan & glutenfrei"}
                 </p>
               </div>
