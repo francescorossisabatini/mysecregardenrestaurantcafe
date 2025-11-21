@@ -70,18 +70,10 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
           de: row[4]?.v || '', 
           en: row[5]?.v || '' 
         },
-        greenNote: row[6]?.v || row[7]?.v ? {
-          de: row[6]?.v || '',
-          en: row[7]?.v || ''
-        } : undefined,
         blue: { 
-          de: row[8]?.v || '', 
-          en: row[9]?.v || '' 
-        },
-        blueNote: row[10]?.v || row[11]?.v ? {
-          de: row[10]?.v || '',
-          en: row[11]?.v || ''
-        } : undefined
+          de: row[6]?.v || '', 
+          en: row[7]?.v || '' 
+        }
       });
     }
     
