@@ -80,57 +80,59 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
               className="p-6 hover:shadow-soft transition-all animate-fade-in"
               style={{ animationDelay: `${idx * 50}ms` }}
             >
-              <h3 className="text-xl font-bold text-primary mb-4">{dayMenu.day}</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-6 pb-3 border-b-2 border-primary/20">
+                {dayMenu.day}
+              </h3>
 
               {/* Soup */}
-              <div className="mb-4 pb-4 border-b border-border">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    Suppe
+              <div className="mb-6 pb-4 border-b border-border/50">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge variant="outline" className="text-sm px-3 py-1 font-semibold border-2">
+                    Suppe des Tages
                   </Badge>
-                  <div className="flex gap-1">
-                    <Leaf className="w-4 h-4 text-primary" />
-                    <Wheat className="w-4 h-4 text-primary" />
+                  <div className="flex gap-1.5">
+                    <Leaf className="w-5 h-5 text-primary" />
+                    <Wheat className="w-5 h-5 text-primary" />
                   </div>
                 </div>
-                <p className="text-foreground/90">{dayMenu.soup}</p>
-                <p className="text-xs text-muted-foreground italic mt-1">
+                <p className="text-foreground text-base leading-relaxed mb-2">{dayMenu.soup}</p>
+                <p className="text-xs text-muted-foreground font-medium">
                   vegan & glutenfrei
                 </p>
               </div>
 
               {/* Green Dish */}
-              <div className="mb-4 pb-4 border-b border-border">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-accent text-accent-foreground text-sm font-semibold">
-                    Tagesgericht GRÜN
+              <div className="mb-6 pb-4 bg-accent/5 p-4 rounded-lg border-l-4 border-accent">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-accent text-accent-foreground text-base px-4 py-1.5 font-bold">
+                    TAGESGERICHT GRÜN
                   </Badge>
-                  <div className="flex gap-1">
-                    <Leaf className="w-4 h-4 text-accent" />
-                    <Wheat className="w-4 h-4 text-accent" />
+                  <div className="flex gap-1.5">
+                    <Leaf className="w-5 h-5 text-accent" />
+                    <Wheat className="w-5 h-5 text-accent" />
                   </div>
                 </div>
-                <p className="text-foreground font-medium leading-relaxed">{dayMenu.green}</p>
-                <p className="text-xs text-accent/80 font-semibold mt-2">
+                <p className="text-foreground font-medium text-base leading-relaxed mb-2">{dayMenu.green}</p>
+                <p className="text-sm text-accent font-bold">
                   vegan & glutenfrei
                 </p>
               </div>
 
               {/* Blue Dish */}
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-blue text-blue-foreground text-sm font-semibold">
-                    Tagesgericht BLAU
+              <div className="bg-blue/5 p-4 rounded-lg border-l-4 border-blue">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-blue text-blue-foreground text-base px-4 py-1.5 font-bold">
+                    TAGESGERICHT BLAU
                   </Badge>
                   {dayMenu.blueNote !== "vegetarisch & glutenfrei" && (
-                    <div className="flex gap-1">
-                      <Leaf className="w-4 h-4 text-blue" />
-                      <Wheat className="w-4 h-4 text-blue" />
+                    <div className="flex gap-1.5">
+                      <Leaf className="w-5 h-5 text-blue" />
+                      <Wheat className="w-5 h-5 text-blue" />
                     </div>
                   )}
                 </div>
-                <p className="text-foreground font-medium leading-relaxed">{dayMenu.blue}</p>
-                <p className="text-xs text-blue font-semibold mt-2">
+                <p className="text-foreground font-medium text-base leading-relaxed mb-2">{dayMenu.blue}</p>
+                <p className="text-sm text-blue font-bold">
                   {dayMenu.blueNote || "vegan & glutenfrei"}
                 </p>
               </div>
