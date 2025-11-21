@@ -88,21 +88,25 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
               </div>
 
               {/* Blue Dish */}
-              <div className="bg-blue/5 p-4 rounded-lg border-l-4 border-blue">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge className="bg-blue text-blue-foreground text-base px-4 py-1.5 font-bold">
-                    {language === 'de' ? 'TAGESGERICHT BLAU' : 'DAILY DISH BLUE'}
-                  </Badge>
-                  <div className="flex gap-1.5">
-                    <Leaf className="w-5 h-5 text-blue" />
-                    <Wheat className="w-5 h-5 text-blue" />
+              {dayMenu.blue && (dayMenu.blue.de || dayMenu.blue.en) && (
+                <div className="bg-blue/5 p-4 rounded-lg border-l-4 border-blue">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className="bg-blue text-blue-foreground text-base px-4 py-1.5 font-bold">
+                      {language === 'de' ? 'TAGESGERICHT BLAU' : 'DAILY DISH BLUE'}
+                    </Badge>
+                    <div className="flex gap-1.5">
+                      <Leaf className="w-5 h-5 text-blue" />
+                      <Wheat className="w-5 h-5 text-blue" />
+                    </div>
                   </div>
+                  <p className="text-foreground font-medium text-base leading-relaxed mb-2">
+                    {dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en}
+                  </p>
+                  <p className="text-sm text-blue font-bold">
+                    {language === 'de' ? 'vegan & glutenfrei' : 'vegan & gluten-free'}
+                  </p>
                 </div>
-                <p className="text-foreground font-medium text-base leading-relaxed mb-2">{dayMenu.blue[language]}</p>
-                <p className="text-sm text-blue font-bold">
-                  {language === 'de' ? 'vegan & glutenfrei' : 'vegan & gluten-free'}
-                </p>
-              </div>
+              )}
             </Card>
           ))}
         </div>

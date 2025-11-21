@@ -21,26 +21,17 @@ interface CachedMenu {
 }
 
 export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> {
-  console.log('📊 Tentativo caricamento da Google Sheets, ID:', sheetId);
+  console.log('📊 Caricamento da Google Sheets, ID:', sheetId);
   
-  // Check cache first
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (cached) {
-    const { data, timestamp }: CachedMenu = JSON.parse(cached);
-    if (Date.now() - timestamp < CACHE_DURATION) {
-      console.log('✅ Menu caricato dalla cache');
-      return data;
-    }
-    console.log('⚠️ Cache scaduta, ricarico...');
-  }
-
+  // Clear cache to ensure fresh data
+  clearMenuCache();
+  
   try {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Menu`;
     console.log('🌐 URL richiesta:', url);
     const response = await fetch(url);
     console.log('📥 Risposta ricevuta, status:', response.status);
     const text = await response.text();
-    console.log('📄 Primi 200 caratteri della risposta:', text.substring(0, 200));
     
     // Parse Google Sheets JSON response (it's wrapped in a function call)
     const jsonText = text.substring(47).slice(0, -2);
@@ -50,6 +41,7 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     
     // First row contains the period
     const period = rows[0]?.c?.[0]?.v || '';
+    console.log('📅 Periodo:', period);
     
     // Parse menu days (skip first 2 rows: period and headers)
     const days: MenuDay[] = [];
@@ -57,7 +49,7 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
       const row = rows[i]?.c;
       if (!row || !row[0]?.v) continue; // Skip empty rows
       
-      days.push({
+      const dayData = {
         day: { 
           de: row[0]?.v || '', 
           en: row[1]?.v || '' 
@@ -74,11 +66,19 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
           de: row[6]?.v || '', 
           en: row[7]?.v || '' 
         }
+      };
+      
+      console.log(`🍽️ ${dayData.day.de}:`, {
+        soup: !!dayData.soup.de,
+        green: !!dayData.green.de,
+        blue: !!dayData.blue.de
       });
+      
+      days.push(dayData);
     }
     
     const menuData: WeeklyMenu = { period, days };
-    console.log('✅ Menu caricato con successo dal Google Sheet:', menuData);
+    console.log('✅ Menu caricato con successo, giorni:', days.length);
     
     // Cache the data
     localStorage.setItem(CACHE_KEY, JSON.stringify({
