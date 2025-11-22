@@ -39,47 +39,63 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     
     const rows = json.table.rows;
     
-    // First row contains the period
-    const period = rows[0]?.c?.[0]?.v || '';
-    console.log('📅 Periodo:', period);
-    
-    // Parse menu days (skip first 2 rows: period and headers)
+    let period = '';
     const days: MenuDay[] = [];
-    for (let i = 2; i < rows.length; i++) {
-      const row = rows[i]?.c;
-      if (!row || !row[0]?.v) continue; // Skip empty rows
-      
-      const dayData = {
-        day: { 
-          de: row[0]?.v || '', 
-          en: row[1]?.v || '' 
-        },
-        soup: { 
-          de: row[2]?.v || '', 
-          en: row[3]?.v || '' 
-        },
-        green: { 
-          de: row[4]?.v || '', 
-          en: row[5]?.v || '' 
-        },
-        blue: { 
-          de: row[6]?.v || '', 
-          en: row[7]?.v || '' 
-        }
-      };
-      
-      console.log(`🍽️ ${dayData.day.de}:`, {
-        soup: !!dayData.soup.de,
-        green: !!dayData.green.de,
-        blue: !!dayData.blue.de
-      });
-      
-      days.push(dayData);
+
+    for (const rowObj of rows) {
+      const row = rowObj?.c;
+      if (!row) continue;
+
+      const c0 = row[0]?.v as string | undefined;
+      const c1 = row[1]?.v as string | undefined;
+      const c2 = row[2]?.v as string | undefined;
+
+      // Detect period: first row with only first cell filled
+      if (!period && c0 && !c1 && !c2) {
+        period = c0;
+        console.log('📅 Periodo rilevato:', period);
+        continue;
+      }
+
+      // Skip header row (e.g. "Giorno DE", "Giorno EN", ...)
+      if (c0 === 'Giorno DE' || c1 === 'Giorno EN' || c2 === 'Zuppa DE') {
+        continue;
+      }
+
+      // Data rows: both day columns filled
+      if (c0 && c1) {
+        const dayData: MenuDay = {
+          day: {
+            de: c0 || '',
+            en: c1 || '',
+          },
+          soup: {
+            de: c2 || '',
+            en: (row[3]?.v as string) || '',
+          },
+          green: {
+            de: (row[4]?.v as string) || '',
+            en: (row[5]?.v as string) || '',
+          },
+          blue: {
+            de: (row[6]?.v as string) || '',
+            en: (row[7]?.v as string) || '',
+          },
+        };
+
+        console.log(`🍽️ ${dayData.day.de}:`, {
+          soup: !!dayData.soup.de,
+          green: !!dayData.green.de,
+          blue: !!dayData.blue.de,
+        });
+
+        days.push(dayData);
+      }
     }
     
     const menuData: WeeklyMenu = { period, days };
     console.log('✅ Menu caricato con successo, giorni:', days.length);
-    
+
     // Cache the data
     localStorage.setItem(CACHE_KEY, JSON.stringify({
       data: menuData,

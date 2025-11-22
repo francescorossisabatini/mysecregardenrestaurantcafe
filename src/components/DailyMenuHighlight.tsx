@@ -1,6 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { DailyMenuCard } from "./DailyMenuCard";
 import { Loader2 } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 
@@ -29,60 +28,69 @@ export const DailyMenuHighlight = () => {
   return (
     <section id="daily-menu" className="py-20 px-4 bg-gradient-subtle relative">
       {/* Decorative elements */}
-      <BotanicalDecoration 
-        variant="flower" 
-        className="absolute top-10 left-10 w-24 h-24 text-accent/10" 
+      <BotanicalDecoration
+        variant="flower"
+        className="absolute top-10 left-10 w-24 h-24 text-accent/10"
       />
-      <BotanicalDecoration 
-        variant="leaf" 
-        className="absolute bottom-10 right-10 w-20 h-20 text-primary/10" 
+      <BotanicalDecoration
+        variant="leaf"
+        className="absolute bottom-10 right-10 w-20 h-20 text-primary/10"
       />
 
-      <div className="container mx-auto max-w-6xl">
-        {/* Title with botanical decoration */}
-        <div className="text-center mb-16 relative">
-          <BotanicalDecoration 
-            variant="vine" 
-            className="w-64 h-8 mx-auto mb-4 text-accent/20" 
-          />
+      <div className="container mx-auto max-w-4xl relative z-[1]">
+        {/* Title with day and period */}
+        <div className="text-center mb-10">
           <h2 className="text-5xl md:text-6xl font-caveat font-bold text-primary mb-3">
             {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </h2>
-          <p className="text-xl font-lora text-muted-foreground">
-            {menu.period}
+          <p className="text-lg font-lora text-muted-foreground">
+            {todayMenu.day[language]} · {menu.period}
           </p>
         </div>
 
-        {/* Daily menu cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          <DailyMenuCard
-            title={language === "de" ? "Suppe" : "Soup"}
-            items={[todayMenu.soup[language]]}
-          />
-          <DailyMenuCard
-            title={language === "de" ? "Grünes Menü" : "Green Menu"}
-            items={[
-              todayMenu.green[language],
-              ...(todayMenu.greenNote ? [todayMenu.greenNote[language]] : [])
-            ]}
-          />
-          <DailyMenuCard
-            title={language === "de" ? "Blaues Menü" : "Blue Menu"}
-            items={[
-              todayMenu.blue[language],
-              ...(todayMenu.blueNote ? [todayMenu.blueNote[language]] : [])
-            ]}
-          />
+        {/* Single card with all sections for today */}
+        <div className="bg-card border border-border/60 rounded-3xl shadow-soft p-8 md:p-10 space-y-8">
+          {/* Soup */}
+          <div className="pb-6 border-b border-border/50">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
+              {language === "de" ? "Suppe des Tages" : "Soup of the Day"}
+            </p>
+            <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
+              {todayMenu.soup[language]}
+            </p>
+          </div>
+
+          {/* Green dish */}
+          <div className="pb-6 border-b border-border/50">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-2">
+              {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
+            </p>
+            <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
+              {todayMenu.green[language]}
+            </p>
+          </div>
+
+          {/* Blue dish */}
+          {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-2">
+                {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
+              </p>
+              <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
+                {todayMenu.blue[language] || todayMenu.blue.de || todayMenu.blue.en}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* View full menu link */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-10">
           <a
             href="#full-menu"
             className="inline-block font-lora text-lg text-primary hover:text-accent transition-colors underline decoration-2 underline-offset-4"
           >
-            {language === "de" 
-              ? "→ Komplettes Wochenmenü ansehen" 
+            {language === "de"
+              ? "→ Komplettes Wochenmenü ansehen"
               : "→ View complete weekly menu"}
           </a>
         </div>
