@@ -32,10 +32,12 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     const response = await fetch(url);
     console.log('📥 Risposta ricevuta, status:', response.status);
     const text = await response.text();
+    console.log('📄 Testo risposta (primi 200 caratteri):', text.substring(0, 200));
     
     // Parse Google Sheets JSON response (it's wrapped in a function call)
     const jsonText = text.substring(47).slice(0, -2);
     const json = JSON.parse(jsonText);
+    console.log('📊 JSON parsato:', JSON.stringify(json, null, 2));
     
     const rows = json.table.rows;
     
