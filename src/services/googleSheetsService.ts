@@ -93,6 +93,11 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
       }
     }
     
+    if (!period || days.length === 0) {
+      console.warn('⚠️ Nessun dato menu valido trovato nel foglio, uso fallback');
+      throw new Error('NO_MENU_DATA');
+    }
+    
     const menuData: WeeklyMenu = { period, days };
     console.log('✅ Menu caricato con successo, giorni:', days.length);
 
