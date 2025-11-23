@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UtensilsCrossed, Leaf, Wheat, Milk, Salad, Flame, Feather, CircleAlert, Nut, Egg } from "lucide-react";
+import { UtensilsCrossed } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { getDietaryIcons } from "@/utils/menuIcons";
 import { WavyPattern, OrganicLines } from "@/components/AbstractPlantDecoration";
 
 export const MenuHighlight = () => {
@@ -86,13 +85,6 @@ export const MenuHighlight = () => {
                         <Badge variant="outline" className="bg-accent/10 text-accent-foreground border-accent/20">
                           {t("menu.soup")}
                         </Badge>
-                        {getDietaryIcons({ de: day.soup.de, en: day.soup.en }).length > 0 && (
-                          <div className="flex gap-1">
-                            {getDietaryIcons({ de: day.soup.de, en: day.soup.en }).map((item, i) => (
-                              <div key={i} title={item.label}>{item.icon}</div>
-                            ))}
-                          </div>
-                        )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.soup[language]}</p>
                       <p className="text-xs text-muted-foreground mt-1">{t("menu.soupPrice")}</p>
@@ -102,17 +94,8 @@ export const MenuHighlight = () => {
                     <div>
                       <div className="flex items-center gap-2 mb-2">
                         <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-green-300 dark:border-green-700">
-                          {t("menu.greenDish")}
+                          {t("menu.greenDish")} 
                         </Badge>
-                        {(getDietaryIcons({ de: day.green.de, en: day.green.en }).length > 0 || 
-                          getDietaryIcons(day.greenNote).length > 0) && (
-                          <div className="flex gap-1">
-                            {[...getDietaryIcons({ de: day.green.de, en: day.green.en }), 
-                              ...getDietaryIcons(day.greenNote)].map((item, i) => (
-                              <div key={i} title={item.label}>{item.icon}</div>
-                            ))}
-                          </div>
-                        )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.green[language]}</p>
                       {day.greenNote && day.greenNote[language] && (
@@ -126,15 +109,6 @@ export const MenuHighlight = () => {
                         <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border-blue-300 dark:border-blue-700">
                           {t("menu.blueDish")}
                         </Badge>
-                        {(getDietaryIcons({ de: day.blue.de, en: day.blue.en }).length > 0 || 
-                          getDietaryIcons(day.blueNote).length > 0) && (
-                          <div className="flex gap-1">
-                            {[...getDietaryIcons({ de: day.blue.de, en: day.blue.en }), 
-                              ...getDietaryIcons(day.blueNote)].map((item, i) => (
-                              <div key={i} title={item.label}>{item.icon}</div>
-                            ))}
-                          </div>
-                        )}
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.blue[language]}</p>
                       {day.blueNote && day.blueNote[language] && (
@@ -148,58 +122,6 @@ export const MenuHighlight = () => {
             )}
           </div>
 
-          {/* Icon Legend */}
-          <Card className="p-6 mb-6 bg-muted/30 border-muted">
-            <h3 className="text-lg font-semibold text-foreground mb-4 text-center">
-              {language === 'de' ? 'Legende der Symbole' : 'Symbol Legend'}
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <Leaf className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Vegan</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Leaf className="w-4 h-4 text-green-500 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Vegetarisch' : 'Vegetarian'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Wheat className="w-4 h-4 text-amber-600 line-through flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Glutenfrei' : 'Gluten-free'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Milk className="w-4 h-4 text-blue-600 line-through flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Laktosefrei' : 'Lactose-free'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Salad className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="text-foreground">Low Carb</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Flame className="w-4 h-4 text-orange-600 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Scharf' : 'Spicy'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Feather className="w-4 h-4 text-sky-500 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Leicht' : 'Light'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CircleAlert className="w-4 h-4 text-purple-600 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Enthält Knoblauch' : 'Contains Garlic'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CircleAlert className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Enthält Zwiebeln' : 'Contains Onion'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Nut className="w-4 h-4 text-orange-700 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Enthält Erdnüsse' : 'Contains Peanuts'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Egg className="w-4 h-4 text-yellow-600 flex-shrink-0" />
-                <span className="text-foreground">{language === 'de' ? 'Enthält Eier' : 'Contains Eggs'}</span>
-              </div>
-            </div>
-          </Card>
 
           {/* Pricing Info */}
           <Card className="p-6 bg-primary/5 border-primary/20 text-center">

@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { getDietaryIcons } from "@/utils/menuIcons";
 import { ContinuousVine, FlowingLines } from "@/components/FloralDecorations";
 
 export const FullMenu = () => {
@@ -184,7 +183,7 @@ export const FullMenu = () => {
                           <div className="flex justify-between items-start gap-4">
                             <div className="flex-1">
                               <p className="text-sm font-medium mb-1 text-accent">
-                                {language === "de" ? "Tagesgericht" : "Daily Special"}
+                                {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
                               </p>
                               <p className="text-sm text-muted-foreground leading-relaxed">
                                 {day.green[language]}
@@ -194,13 +193,6 @@ export const FullMenu = () => {
                                   {day.greenNote[language]}
                                 </p>
                               )}
-                              <div className="flex gap-2 mt-2">
-                                {[...getDietaryIcons(day.green), ...getDietaryIcons(day.greenNote)].map((dietaryIcon, i) => (
-                                  <div key={i} className="flex items-center gap-1" title={dietaryIcon.label}>
-                                    {dietaryIcon.icon}
-                                  </div>
-                                ))}
-                              </div>
                             </div>
                             <span className="text-sm font-light whitespace-nowrap">
                               15,20 €
@@ -208,7 +200,30 @@ export const FullMenu = () => {
                           </div>
                         </div>
                       )}
-                      
+
+                      {day.blue && day.blue[language] && (
+                        <div className="pl-6 mt-2">
+                          <div className="flex justify-between items-start gap-4">
+                            <div className="flex-1">
+                              <p className="text-sm font-medium mb-1 text-primary">
+                                {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
+                              </p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                {day.blue[language]}
+                              </p>
+                              {day.blueNote && day.blueNote[language] && (
+                                <p className="text-xs text-muted-foreground mt-1 italic">
+                                  {day.blueNote[language]}
+                                </p>
+                              )}
+                            </div>
+                            <span className="text-sm font-light whitespace-nowrap">
+                              15,20 €
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
                       {idx < menu.days.length - 1 && (
                         <Separator className="mt-6 bg-foreground/5" />
                       )}
