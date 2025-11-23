@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, Wheat } from "lucide-react";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -59,15 +58,8 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                   <Badge variant="outline" className="text-sm px-3 py-1 font-semibold border-2">
                     {language === 'de' ? 'Suppe des Tages' : 'Soup of the Day'}
                   </Badge>
-                  <div className="flex gap-1.5">
-                    <Leaf className="w-5 h-5 text-primary" />
-                    <Wheat className="w-5 h-5 text-primary" />
-                  </div>
                 </div>
-                <p className="text-foreground text-base leading-relaxed mb-2">{dayMenu.soup[language]}</p>
-                <p className="text-xs text-muted-foreground font-medium">
-                  {language === 'de' ? 'vegan & glutenfrei' : 'vegan & gluten-free'}
-                </p>
+                <p className="text-foreground text-base leading-relaxed mb-0">{dayMenu.soup[language]}</p>
               </div>
 
               {/* Green Dish */}
@@ -76,34 +68,20 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                   <Badge className="bg-accent text-accent-foreground text-base px-4 py-1.5 font-bold">
                     {language === 'de' ? 'TAGESGERICHT GRÜN' : 'DAILY DISH GREEN'}
                   </Badge>
-                  <div className="flex gap-1.5">
-                    <Leaf className="w-5 h-5 text-accent" />
-                    <Wheat className="w-5 h-5 text-accent" />
-                  </div>
                 </div>
-                <p className="text-foreground font-medium text-base leading-relaxed mb-2">{dayMenu.green[language]}</p>
-                <p className="text-sm text-accent font-bold">
-                  {language === 'de' ? 'vegan & glutenfrei' : 'vegan & gluten-free'}
-                </p>
+                <p className="text-foreground font-medium text-base leading-relaxed mb-0">{dayMenu.green[language]}</p>
               </div>
 
               {/* Blue Dish */}
               {dayMenu.blue && (dayMenu.blue.de || dayMenu.blue.en) && (
-                <div className="bg-blue/5 p-4 rounded-lg border-l-4 border-blue">
+                <div className="bg-accent/5 p-4 rounded-lg border-l-4 border-primary/60">
                   <div className="flex items-center gap-2 mb-3">
-                    <Badge className="bg-blue text-blue-foreground text-base px-4 py-1.5 font-bold">
+                    <Badge className="bg-primary text-primary-foreground text-base px-4 py-1.5 font-bold">
                       {language === 'de' ? 'TAGESGERICHT BLAU' : 'DAILY DISH BLUE'}
                     </Badge>
-                    <div className="flex gap-1.5">
-                      <Leaf className="w-5 h-5 text-blue" />
-                      <Wheat className="w-5 h-5 text-blue" />
-                    </div>
                   </div>
-                  <p className="text-foreground font-medium text-base leading-relaxed mb-2">
+                  <p className="text-foreground font-medium text-base leading-relaxed mb-0">
                     {dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en}
-                  </p>
-                  <p className="text-sm text-blue font-bold">
-                    {language === 'de' ? 'vegan & glutenfrei' : 'vegan & gluten-free'}
                   </p>
                 </div>
               )}

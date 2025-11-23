@@ -39,20 +39,20 @@ export const DailyMenuHighlight = () => {
 
       <div className="container mx-auto max-w-4xl relative z-[1]">
         {/* Title with day and period */}
-        <div className="text-center mb-10">
-          <h2 className="text-5xl md:text-6xl font-caveat font-bold text-primary mb-3">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-4xl md:text-6xl font-caveat font-bold text-primary mb-3">
             {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </h2>
-          <p className="text-lg font-lora text-muted-foreground">
+          <p className="text-base md:text-lg font-lora text-muted-foreground">
             {todayMenu.day[language]} · {menu.period}
           </p>
         </div>
 
         {/* Single card with all sections for today */}
-        <div className="bg-card border border-border/60 rounded-3xl shadow-soft p-8 md:p-10 space-y-8">
+        <div className="bg-card border border-border/60 rounded-3xl shadow-soft p-6 md:p-10 space-y-8">
           {/* Soup */}
           <div className="pb-6 border-b border-border/50">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
+            <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
               {language === "de" ? "Suppe des Tages" : "Soup of the Day"}
             </p>
             <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
@@ -62,7 +62,7 @@ export const DailyMenuHighlight = () => {
 
           {/* Green dish */}
           <div className="pb-6 border-b border-border/50">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-2">
+            <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-2">
               {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
             </p>
             <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
@@ -72,8 +72,8 @@ export const DailyMenuHighlight = () => {
 
           {/* Blue dish */}
           {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-2">
+            <div className="pb-6 border-b border-border/40">
+              <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-2">
                 {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
               </p>
               <p className="font-lora text-base md:text-lg text-foreground leading-relaxed">
@@ -81,6 +81,18 @@ export const DailyMenuHighlight = () => {
               </p>
             </div>
           )}
+
+          {/* Prices */}
+          <div className="pt-2 md:pt-4">
+            <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
+              {language === "de" ? "Preise" : "Prices"}
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              {language === "de"
+                ? "Tagesgerichte 15,20 € · Suppe klein 4,50 € / groß 6,50 € · Bio-Weckerl 1,90 €"
+                : "Daily dishes €15.20 · Soup small €4.50 / large €6.50 · Organic roll €1.90"}
+            </p>
+          </div>
         </div>
 
         {/* View full menu link */}
