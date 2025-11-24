@@ -334,6 +334,18 @@ export const FullMenu = () => {
               </div>
             </div>
           </Card>
+
+          {/* Photo Gallery link */}
+          <div className="text-center mt-10">
+            <a
+              href="#food-gallery"
+              className="inline-block font-lora text-lg text-primary hover:text-accent transition-colors underline decoration-2 underline-offset-4"
+            >
+              {language === "de"
+                ? "→ Foto-Galerie ansehen"
+                : "→ View photo gallery"}
+            </a>
+          </div>
         </div>
       </div>
     </section>
