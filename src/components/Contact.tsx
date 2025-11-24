@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
+import gardenImg from "@/assets/garden-real.jpg";
 
 export const Contact = () => {
   const { t } = useLanguage();
@@ -94,21 +95,38 @@ export const Contact = () => {
             </Card>
           </div>
 
-          {/* Google Maps Embed */}
-          <Card className="p-4 mb-8 bg-card/80 backdrop-blur-sm overflow-hidden">
-            <div className="aspect-video w-full rounded-lg overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Secret Garden Restaurant Location"
-              />
-            </div>
-          </Card>
+          {/* Google Maps + Entrance Photo */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Map */}
+            <Card className="p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
+              <div className="aspect-video w-full rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Secret Garden Restaurant Location"
+                />
+              </div>
+            </Card>
+
+            {/* Entrance Photo */}
+            <Card className="p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
+              <div className="aspect-video w-full rounded-lg overflow-hidden">
+                <img
+                  src={gardenImg}
+                  alt="Entrance to Secret Garden in Raimundhof"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-center mt-3 text-sm font-lora text-muted-foreground">
+                {t("contact.garden")}
+              </p>
+            </Card>
+          </div>
 
           <div className="text-center">
             <Button

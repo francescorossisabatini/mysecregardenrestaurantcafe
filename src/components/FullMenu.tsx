@@ -3,10 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { ContinuousVine, FlowingLines } from "@/components/FloralDecorations";
+import { BotanicalDecoration } from "./BotanicalDecoration";
+import foodDetailImg from "@/assets/food-detail-real.jpg";
+import gardenImg from "@/assets/garden-real.jpg";
+import interiorImg from "@/assets/interior-real.jpg";
 
 export const FullMenu = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const { menu } = useWeeklyMenu();
 
   const fixedDishes = {
@@ -109,54 +112,66 @@ export const FullMenu = () => {
   const currentDrinks = fixedDishes.drinks[language];
 
   return (
-    <section id="full-menu" className="py-16 md:py-24 bg-gradient-subtle relative overflow-hidden">
-      {/* Paper texture overlay */}
-      <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat'
-        }}
-      />
-
-      {/* Decorative lines - Maggiore contrasto */}
-      <div className="absolute top-10 left-10 w-64 h-32 text-emerald-600 opacity-50">
-        <ContinuousVine className="w-full h-full" />
-      </div>
-      <div className="absolute bottom-10 right-10 w-80 h-40 text-teal-600 opacity-50">
-        <FlowingLines className="w-full h-full" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Header - Paper style */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-serif text-foreground mb-4 tracking-wide">
-              SPEISEKARTE
-            </h2>
-            <div className="w-32 h-px bg-foreground/20 mx-auto my-8" />
-            <p className="text-lg text-muted-foreground font-light italic">
-              {language === "de" ? "Unser Angebot auf einen Blick" : "Our menu at a glance"}
+    <section id="full-menu" className="relative bg-background">
+      {/* Hero-style header with photo */}
+      <div className="relative h-[400px] overflow-hidden">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${foodDetailImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="absolute inset-0 bg-primary/50" />
+        
+        {/* Title overlay */}
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
+          <BotanicalDecoration
+            variant="vine"
+            className="w-64 h-8 mx-auto mb-6 text-background/30"
+          />
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-background drop-shadow-lg mb-4">
+            {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+          </h2>
+          {menu?.period && (
+            <p className="text-xl md:text-2xl font-lora text-background/95 drop-shadow-md">
+              {menu.period}
             </p>
-          </div>
+          )}
+        </div>
+      </div>
 
-          {/* Menu Card - Paper texture */}
-          <Card className="border-2 border-foreground/10 bg-card/95 backdrop-blur-sm shadow-2xl">
+      {/* Content section */}
+      <div className="container mx-auto max-w-6xl px-4 py-16 relative">
+        <BotanicalDecoration
+          variant="flower"
+          className="absolute top-10 right-10 w-32 h-32 text-primary/10"
+        />
+        <BotanicalDecoration
+          variant="leaf"
+          className="absolute bottom-10 left-10 w-28 h-28 text-accent/10"
+        />
+
+        <div className="max-w-5xl mx-auto">
+          {/* Menu Card */}
+          <Card className="border-2 border-border/20 bg-card shadow-elevated">
             <div className="p-8 md:p-12 space-y-12">
               
               {/* Weekly Menu Section */}
               <div>
-                <h3 className="text-3xl font-serif text-center mb-2 tracking-wide">
+                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary text-center mb-2">
                   {language === "de" ? "Wochenkarte" : "Weekly Menu"}
                 </h3>
-                <p className="text-center text-sm text-muted-foreground mb-6 italic">
+                <p className="text-center text-sm text-muted-foreground mb-8 font-lora">
                   {menu.period}
                 </p>
-                <Separator className="my-8 bg-foreground/10" />
+                <Separator className="my-8 bg-border/30" />
                 
                 <div className="space-y-8">
                   {menu.days.map((day, idx) => (
                     <div key={idx} className="space-y-3">
-                      <h4 className="font-serif text-xl text-primary">
+                      <h4 className="font-lora text-xl text-primary font-semibold">
                         {day.day[language]}
                       </h4>
                       
@@ -225,20 +240,34 @@ export const FullMenu = () => {
                       )}
 
                       {idx < menu.days.length - 1 && (
-                        <Separator className="mt-6 bg-foreground/5" />
+                        <Separator className="mt-6 bg-border/20" />
                       )}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <Separator className="my-12 bg-foreground/10" />
+              <Separator className="my-12 bg-border/30" />
 
-              {/* Fixed Warm Dishes */}
+              {/* Fixed Warm Dishes with photo header */}
               <div>
-                <h3 className="text-3xl font-serif text-center mb-8 tracking-wide">
-                  {language === "de" ? "Warme Speisen" : "Warm Dishes"}
-                </h3>
+                {/* Section photo header */}
+                <div className="relative h-48 rounded-2xl overflow-hidden mb-8 -mx-4 md:-mx-6">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${gardenImg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-accent/60" />
+                  <div className="relative z-10 h-full flex items-center justify-center">
+                    <h3 className="text-3xl md:text-4xl font-caveat font-bold text-background drop-shadow-lg">
+                      {language === "de" ? "Warme Speisen" : "Warm Dishes"}
+                    </h3>
+                  </div>
+                </div>
                 
                 <div className="space-y-6">
                   {currentDishes.map((dish, idx) => (
@@ -250,7 +279,7 @@ export const FullMenu = () => {
                         </p>
                         <div className="flex gap-2 flex-wrap">
                           {dish.tags.map((tag, i) => (
-                            <Badge key={i} variant="outline" className="text-xs font-light border-foreground/20">
+                            <Badge key={i} variant="outline" className="text-xs font-light border-border/40">
                               {tag}
                             </Badge>
                           ))}
@@ -262,13 +291,27 @@ export const FullMenu = () => {
                 </div>
               </div>
 
-              <Separator className="my-12 bg-foreground/10" />
+              <Separator className="my-12 bg-border/30" />
 
-              {/* Salads Section */}
+              {/* Salads Section with photo header */}
               <div>
-                <h3 className="text-3xl font-serif text-center mb-8 tracking-wide">
-                  {language === "de" ? "Frische Salate" : "Fresh Salads"}
-                </h3>
+                {/* Section photo header */}
+                <div className="relative h-48 rounded-2xl overflow-hidden mb-8 -mx-4 md:-mx-6">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${interiorImg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-primary/60" />
+                  <div className="relative z-10 h-full flex items-center justify-center">
+                    <h3 className="text-3xl md:text-4xl font-caveat font-bold text-background drop-shadow-lg">
+                      {language === "de" ? "Frische Salate" : "Fresh Salads"}
+                    </h3>
+                  </div>
+                </div>
                 
                 <div className="space-y-6">
                   {currentSalads.map((salad, idx) => (
@@ -287,7 +330,7 @@ export const FullMenu = () => {
                         </p>
                         <div className="flex gap-2 flex-wrap">
                           {salad.tags.map((tag, i) => (
-                            <Badge key={i} variant="outline" className="text-xs font-light border-foreground/20">
+                            <Badge key={i} variant="outline" className="text-xs font-light border-border/40">
                               {tag}
                             </Badge>
                           ))}
@@ -299,11 +342,11 @@ export const FullMenu = () => {
                 </div>
               </div>
 
-              <Separator className="my-12 bg-foreground/10" />
+              <Separator className="my-12 bg-border/30" />
 
               {/* Drinks Section */}
               <div>
-                <h3 className="text-3xl font-serif text-center mb-8 tracking-wide">
+                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary text-center mb-8">
                   {language === "de" ? "Kalte Getränke" : "Cold Drinks"}
                 </h3>
                 
@@ -325,7 +368,7 @@ export const FullMenu = () => {
               </div>
 
               {/* Footer note */}
-              <div className="text-center pt-8 border-t border-foreground/10">
+              <div className="text-center pt-8 border-t border-border/20">
                 <p className="text-xs text-muted-foreground italic">
                   {language === "de" 
                     ? "Alle Preise in Euro · Änderungen vorbehalten" 
