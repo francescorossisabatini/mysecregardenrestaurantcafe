@@ -44,18 +44,22 @@ export const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="py-20 px-4 bg-background relative">
-      {/* Decorative elements */}
-      <BotanicalDecoration 
-        variant="flower" 
-        className="absolute top-20 right-10 w-32 h-32 text-accent/10" 
-      />
-      <BotanicalDecoration 
-        variant="leaf" 
-        className="absolute bottom-20 left-10 w-28 h-28 text-primary/10" 
-      />
+    <section id="about" className="relative overflow-hidden">
+      {/* Large background image with overlay */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${gardenImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="absolute inset-0 bg-background/90" />
+      </div>
 
-      <div className="container mx-auto max-w-6xl">
+      {/* Content */}
+      <div className="relative z-10 container mx-auto max-w-6xl py-20 px-4">
         {/* Title */}
         <div className="text-center mb-16">
           <BotanicalDecoration 
@@ -67,68 +71,47 @@ export const AboutSection = () => {
           </h2>
         </div>
 
-        {/* Combined About Restaurant & Sri Chinmoy Section */}
-        <div className="bg-cream/40 rounded-lg p-8 md:p-12 relative">
+        {/* Main content card */}
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-elevated relative">
           <BotanicalDecoration 
             variant="flower" 
             className="absolute top-4 right-4 w-20 h-20 text-primary/10" 
           />
-          <BotanicalDecoration 
-            variant="leaf" 
-            className="absolute bottom-4 left-4 w-16 h-16 text-accent/10" 
-          />
 
-          {/* About the Restaurant with photo */}
-          <div className="grid md:grid-cols-[1fr_300px] gap-8 items-start mb-12">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary mb-6">
-                {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
-              </h3>
-              <p className="font-lora text-base md:text-lg leading-relaxed text-foreground mb-6">
-                {aboutRestaurant[language]}
-              </p>
+          {/* About the Restaurant */}
+          <div className="mb-12">
+            <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary mb-6">
+              {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
+            </h3>
+            <p className="font-lora text-base md:text-lg leading-relaxed text-foreground mb-6">
+              {aboutRestaurant[language]}
+            </p>
 
-              {/* Values */}
-              <div className="space-y-3">
-                {values.map((value, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                      <value.icon className="w-5 h-5 text-accent" />
-                    </div>
-                    <span className="font-lora text-base text-foreground">
-                      {value.title[language]}
-                    </span>
+            {/* Values */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {values.map((value, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <value.icon className="w-6 h-6 text-accent" />
                   </div>
-                ))}
-              </div>
+                  <span className="font-lora text-base text-foreground">
+                    {value.title[language]}
+                  </span>
+                </div>
+              ))}
             </div>
-
-            {/* Garden photo */}
-            <Card className="relative overflow-hidden border-2 border-primary/20 hover:shadow-elevated transition-all">
-              <BotanicalDecoration 
-                variant="corner" 
-                className="absolute top-0 right-0 w-16 h-16 text-accent/20 z-10" 
-              />
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={gardenImg}
-                  alt="Secret Garden Restaurant"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-            </Card>
           </div>
 
           {/* Our Inspiration: Sri Chinmoy */}
           <div className="border-t-2 border-primary/10 pt-10">
-            <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary mb-8 text-center">
+            <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary mb-8">
               {language === "de" ? "Unsere Inspiration: Sri Chinmoy" : "Our Inspiration: Sri Chinmoy"}
             </h3>
 
-            <div className="grid md:grid-cols-[220px_1fr] gap-8 items-start mb-8">
+            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
               {/* Sri Chinmoy portrait */}
-              <div className="mx-auto md:mx-0 w-full max-w-[220px]">
-                <Card className="overflow-hidden border-2 border-[#243260]/30 shadow-lg">
+              <div className="mx-auto md:mx-0 w-full max-w-[200px]">
+                <Card className="overflow-hidden border-2 border-primary/30 shadow-lg">
                   <div className="aspect-[3/4] overflow-hidden">
                     <img
                       src={sriChinmoyImg}
@@ -137,24 +120,28 @@ export const AboutSection = () => {
                     />
                   </div>
                 </Card>
+                <p className="text-center mt-3 text-sm font-lora text-muted-foreground italic">
+                  Sri Chinmoy<br />
+                  {language === "de" ? "1931-2007" : "1931-2007"}
+                </p>
               </div>
 
-              {/* Inspiration text */}
+              {/* Inspiration text and quote */}
               <div>
                 <p className="font-lora text-base md:text-lg leading-relaxed text-foreground mb-6">
                   {aboutInspiration[language]}
                 </p>
 
                 {/* Quote box */}
-                <Card className="bg-cream border-2 border-[#243260]/40 p-5 relative overflow-hidden">
+                <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-primary/20 p-6 relative overflow-hidden">
                   <BotanicalDecoration 
                     variant="flower" 
-                    className="absolute top-1 right-1 w-10 h-10 text-[#243260]/10" 
+                    className="absolute top-2 right-2 w-12 h-12 text-primary/10" 
                   />
-                  <p className="font-lora text-sm md:text-base italic text-foreground text-center mb-2">
+                  <p className="font-lora text-base md:text-lg italic text-foreground mb-3 relative z-10">
                     {quote[language]}
                   </p>
-                  <p className="font-caveat text-lg text-[#243260] text-center">
+                  <p className="font-caveat text-xl text-primary relative z-10">
                     – Sri Chinmoy
                   </p>
                 </Card>
