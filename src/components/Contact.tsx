@@ -23,22 +23,22 @@ export const Contact = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              <span className="font-dancing text-4xl md:text-6xl">{t("contact.title")}</span>
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-3 sm:mb-4">
+              <span className="font-dancing text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{t("contact.title")}</span>
             </h2>
-            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
+            <div className="w-20 sm:w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/10 p-3 rounded-lg">
-                  <MapPin className="w-6 h-6 text-primary" />
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-7 md:mb-8">
+            <Card className="p-4 sm:p-5 md:p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-lg flex-shrink-0">
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{t("contact.address")}</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground mb-1 sm:mb-2">{t("contact.address")}</h3>
+                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                     Mariahilferstraße 45<br />
                     Im Raimundhof<br />
                     1060 Wien, Österreich
@@ -47,16 +47,16 @@ export const Contact = () => {
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="bg-accent/10 p-3 rounded-lg">
-                  <Phone className="w-6 h-6 text-accent" />
+            <Card className="p-4 sm:p-5 md:p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="bg-accent/10 p-2 sm:p-3 rounded-lg flex-shrink-0">
+                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{t("contact.phone")}</h3>
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground mb-1 sm:mb-2">{t("contact.phone")}</h3>
                   <a
                     href="tel:015862839"
-                    className="text-muted-foreground hover:text-accent transition-colors"
+                    className="text-xs sm:text-sm md:text-base text-muted-foreground hover:text-accent transition-colors"
                   >
                     01 586 28 39
                   </a>
@@ -64,30 +64,30 @@ export const Contact = () => {
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/10 p-3 rounded-lg">
-                  <Clock className="w-6 h-6 text-primary" />
+            <Card className="p-4 sm:p-5 md:p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="bg-primary/10 p-2 sm:p-3 rounded-lg flex-shrink-0">
+                  <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{t("contact.hours")}</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground mb-1 sm:mb-2">{t("contact.hours")}</h3>
+                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                     {t("contact.hours.days")}<br />
                     {t("contact.hours.time")}<br />
-                    <span className="text-sm">{t("contact.hours.closed")}</span>
+                    <span className="text-xs sm:text-sm">{t("contact.hours.closed")}</span>
                   </p>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="bg-accent/10 p-3 rounded-lg">
-                  <Mail className="w-6 h-6 text-accent" />
+            <Card className="p-4 sm:p-5 md:p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="bg-accent/10 p-2 sm:p-3 rounded-lg flex-shrink-0">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{t("contact.social")}</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="font-semibold text-sm sm:text-base text-foreground mb-1 sm:mb-2">{t("contact.social")}</h3>
+                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                     {t("contact.social.desc")}
                   </p>
                 </div>
@@ -96,9 +96,9 @@ export const Contact = () => {
           </div>
 
           {/* Google Maps + Entrance Photo */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-7 md:mb-8">
             {/* Map */}
-            <Card className="p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
+            <Card className="p-3 sm:p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
               <div className="aspect-video w-full rounded-lg overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
@@ -114,7 +114,7 @@ export const Contact = () => {
             </Card>
 
             {/* Entrance Photo */}
-            <Card className="p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
+            <Card className="p-3 sm:p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
               <div className="aspect-video w-full rounded-lg overflow-hidden">
                 <img
                   src={gardenImg}
@@ -122,7 +122,7 @@ export const Contact = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-center mt-3 text-sm font-lora text-muted-foreground">
+              <p className="text-center mt-2 sm:mt-3 text-xs sm:text-sm font-lora text-muted-foreground">
                 {t("contact.garden")}
               </p>
             </Card>
@@ -131,7 +131,7 @@ export const Contact = () => {
           <div className="text-center">
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
               <a href="tel:015862839">{t("contact.call")}</a>

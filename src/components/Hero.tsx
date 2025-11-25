@@ -27,7 +27,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
       {/* Background carousel - fullscreen */}
       {heroImages.map((img, index) => (
         <div
@@ -44,25 +44,25 @@ export const Hero = () => {
       ))}
 
       {/* Subtle dark overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/35 via-primary/30 to-primary/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/45" />
 
       {/* Content - centered */}
-      <div className="relative z-10 container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8 animate-fade-in">
+      <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
+        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-8 animate-fade-in">
           {/* Restaurant name with handwriting style */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight">
             My Secret Garden
           </h1>
 
           {/* Subtitle */}
-          <p className="text-2xl md:text-3xl lg:text-4xl font-lora text-background drop-shadow-xl">
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-lora text-background drop-shadow-xl">
             {language === "de"
               ? "Vegan & Vegetarische Soul Food in Wien"
               : "Vegan & Vegetarian Soul Food in Vienna"}
           </p>
 
           {/* Address */}
-          <p className="text-lg md:text-xl font-lora text-background/95 drop-shadow-lg">
+          <p className="text-base sm:text-lg md:text-xl font-lora text-background/95 drop-shadow-lg">
             {language === "de" ? "Im Raimundhof" : "Inside Raimundhof"} –
             Mariahilferstraße 45
           </p>
