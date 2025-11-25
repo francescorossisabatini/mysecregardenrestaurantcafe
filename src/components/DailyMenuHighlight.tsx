@@ -24,7 +24,12 @@ export const DailyMenuHighlight = () => {
 
   // Get today's menu or the first available day
   const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
-  const todayMenu = menu.days[today - 1] || menu.days[0]; // Adjust for Monday = index 0
+  // Monday (1) = index 0, Tuesday (2) = index 1, etc. For Sunday (0) or invalid, use first day
+  const dayIndex = today >= 1 && today <= 6 ? today - 1 : 0;
+  const todayMenu = menu.days[dayIndex] || menu.days[0];
+
+  console.log('📅 Today is day:', today, '-> using index:', dayIndex);
+  console.log('📋 Today menu:', todayMenu);
 
   return (
     <section id="daily-menu" className="relative overflow-hidden">
@@ -90,15 +95,20 @@ export const DailyMenuHighlight = () => {
                   </p>
                 </div>
 
-                {/* Blue dish */}
+                {/* Blue dish - check if data exists */}
                 {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
                   <div className="pb-4 sm:pb-5 border-b border-border/40">
                     <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-primary mb-1.5 sm:mb-2">
                       {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
                     </p>
                     <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
-                      {todayMenu.blue[language] || todayMenu.blue.de || todayMenu.blue.en}
+                      {todayMenu.blue[language]}
                     </p>
+                    {todayMenu.blueNote && todayMenu.blueNote[language] && (
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1 italic">
+                        {todayMenu.blueNote[language]}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -113,18 +123,6 @@ export const DailyMenuHighlight = () => {
                       : "Daily dishes €15.20 · Soup small €4.50 / large €6.50 · Organic roll €1.90"}
                   </p>
                 </div>
-              </div>
-
-              {/* Photo Gallery link */}
-              <div className="mt-6 sm:mt-8">
-                <a
-                  href="#food-gallery"
-                  className="inline-block font-lora text-sm sm:text-base text-primary hover:text-accent transition-colors underline decoration-2 underline-offset-4"
-                >
-                  {language === "de"
-                    ? "→ Foto-Galerie ansehen"
-                    : "→ View photo gallery"}
-                </a>
               </div>
             </div>
           </div>

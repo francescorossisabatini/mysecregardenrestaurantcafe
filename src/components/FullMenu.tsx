@@ -249,25 +249,11 @@ export const FullMenu = () => {
 
               <Separator className="my-12 bg-border/30" />
 
-              {/* Fixed Warm Dishes with photo header */}
+              {/* Fixed Warm Dishes */}
               <div>
-                {/* Section photo header */}
-                <div className="relative h-48 rounded-2xl overflow-hidden mb-8 -mx-4 md:-mx-6">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url(${gardenImg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-accent/60" />
-                  <div className="relative z-10 h-full flex items-center justify-center">
-                    <h3 className="text-3xl md:text-4xl font-caveat font-bold text-background drop-shadow-lg">
-                      {language === "de" ? "Warme Speisen" : "Warm Dishes"}
-                    </h3>
-                  </div>
-                </div>
+                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-6">
+                  {language === "de" ? "Warme Speisen" : "Warm Dishes"}
+                </h3>
                 
                 <div className="space-y-6">
                   {currentDishes.map((dish, idx) => (
@@ -293,25 +279,11 @@ export const FullMenu = () => {
 
               <Separator className="my-12 bg-border/30" />
 
-              {/* Salads Section with photo header */}
+              {/* Salads Section */}
               <div>
-                {/* Section photo header */}
-                <div className="relative h-48 rounded-2xl overflow-hidden mb-8 -mx-4 md:-mx-6">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url(${interiorImg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-primary/60" />
-                  <div className="relative z-10 h-full flex items-center justify-center">
-                    <h3 className="text-3xl md:text-4xl font-caveat font-bold text-background drop-shadow-lg">
-                      {language === "de" ? "Frische Salate" : "Fresh Salads"}
-                    </h3>
-                  </div>
-                </div>
+                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-6">
+                  {language === "de" ? "Frische Salate" : "Fresh Salads"}
+                </h3>
                 
                 <div className="space-y-6">
                   {currentSalads.map((salad, idx) => (
