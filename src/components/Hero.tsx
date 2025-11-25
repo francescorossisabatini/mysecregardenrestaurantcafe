@@ -72,15 +72,14 @@ export const Hero = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-background text-primary hover:bg-background/90 shadow-2xl font-lora text-base md:text-lg px-8 py-6"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xl font-semibold text-base md:text-lg px-8 py-6 border-2 border-primary"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
             <Button
               size="lg"
-              variant="outline"
               onClick={() => scrollToSection("full-menu")}
-              className="border-2 border-background text-background hover:bg-background/20 shadow-2xl font-lora text-base md:text-lg px-8 py-6 backdrop-blur-sm"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-2xl font-semibold text-base md:text-lg px-8 py-6 border-2 border-accent"
             >
               {language === "de" ? "Wochenkarte" : "Weekly Menu"}
             </Button>
