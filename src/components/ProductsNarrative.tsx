@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Leaf } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import interiorImg from "@/assets/interior-real.jpg";
@@ -6,14 +6,8 @@ import interiorImg from "@/assets/interior-real.jpg";
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
 
-  const features = [
-    { de: "Biologische Zutaten", en: "Organic ingredients" },
-    { de: "Hausgemachte Zubereitungen", en: "Homemade preparations" },
-    { de: "Natürliche Gewürze", en: "Natural spices" },
-  ];
-
   return (
-    <section id="products" className="relative py-20 overflow-hidden">
+    <section id="products" className="relative overflow-hidden">
       {/* Background image with overlay */}
       <div className="absolute inset-0">
         <div
@@ -24,35 +18,59 @@ export const ProductsNarrative = () => {
             backgroundPosition: "center",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/85 via-accent/80 to-accent/85" />
+        <div className="absolute inset-0 bg-background/90" />
       </div>
 
-      {/* Decorative corner */}
-      <div className="absolute top-4 right-4 w-24 h-24 opacity-20">
-        <BotanicalDecoration variant="corner" className="w-full h-full text-background" />
-      </div>
-      
-      <div className="container mx-auto px-4 max-w-4xl relative z-10">
-        <div className="text-center">
-          <h2 className="text-4xl md:text-5xl font-caveat font-bold text-background drop-shadow-lg mb-6">
-            {language === 'de' ? 'Unsere Produkte' : 'Our Products'}
-          </h2>
-          
-          <div className="bg-background/90 backdrop-blur-sm rounded-2xl p-8 md:p-10 shadow-elevated">
-            <p className="text-foreground font-lora text-base md:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-              {language === 'de' 
-                ? 'Unsere Gerichte werden täglich mit natürlichen und biologischen Zutaten zubereitet: frischem Gemüse, Vollkorngetreide und ausgewählten Gewürzen.'
-                : 'Our dishes are prepared daily with natural and organic ingredients: fresh vegetables, whole grains and selected spices.'}
+      {/* Content */}
+      <div className="relative z-10 container mx-auto max-w-4xl py-12 sm:py-16 md:py-20 px-4">
+        <div className="bg-card/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-elevated relative">
+          <BotanicalDecoration 
+            variant="flower" 
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 w-16 h-16 sm:w-20 sm:h-20 text-primary/10" 
+          />
+
+          {/* Title */}
+          <div className="text-center mb-6 sm:mb-7 md:mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-caveat font-bold text-primary mb-3 sm:mb-4">
+              {language === "de" ? "Unsere Produkte" : "Our Products"}
+            </h2>
+          </div>
+
+          {/* Content */}
+          <div className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
+            {/* Intro */}
+            <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
+              {language === "de"
+                ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
+                : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
             </p>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8">
-              {features.map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-3 text-foreground">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                    <Check className="w-4 h-4 text-accent-foreground" />
+            {/* Key Points */}
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+              {[
+                {
+                  de: "Bio & regionale Zutaten",
+                  en: "Organic & regional ingredients"
+                },
+                {
+                  de: "Hausgemachte Zubereitungen",
+                  en: "Homemade preparations"
+                },
+                {
+                  de: "Natürliche Gewürze",
+                  en: "Natural spices"
+                },
+                {
+                  de: "Glutenfreie Optionen",
+                  en: "Gluten-free options"
+                }
+              ].map((point, index) => (
+                <div key={index} className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
                   </div>
-                  <span className="font-lora text-sm md:text-base font-medium">
-                    {language === 'de' ? feature.de : feature.en}
+                  <span className="font-lora text-sm sm:text-base text-foreground">
+                    {language === "de" ? point.de : point.en}
                   </span>
                 </div>
               ))}

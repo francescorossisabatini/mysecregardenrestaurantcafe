@@ -109,6 +109,7 @@ const translations = {
     "contact.hours.closed": "Feiertags geschlossen",
     "contact.social": "Social Media",
     "contact.social.desc": "Folgen Sie uns für Updates und Tagesmenüs",
+    "contact.garden": "Eingang zum Secret Garden im Raimundhof",
     "contact.call": "Jetzt Anrufen",
   },
   en: {
@@ -211,6 +212,7 @@ const translations = {
     "contact.hours.closed": "Closed on holidays",
     "contact.social": "Social Media",
     "contact.social.desc": "Follow us for updates and daily menus",
+    "contact.garden": "Entrance to Secret Garden in Raimundhof",
     "contact.call": "Call Now",
   },
 };
