@@ -147,37 +147,45 @@ export const FullMenu = () => {
               </p>
             </div>
 
-            {/* Clickable menu card */}
-            <div
-              onClick={() => setIsMenuModalOpen(true)}
-              className="relative bg-[#F5F1E3] border-2 border-[#1E1C1A] rounded-lg shadow-elevated cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl overflow-hidden"
-              style={{ aspectRatio: '16 / 10' }}
-            >
-              {/* Decorative corners */}
-              <BotanicalDecoration
-                variant="flower"
-                className="absolute top-4 left-4 w-12 h-12 text-primary/10"
-              />
-              <BotanicalDecoration
-                variant="flower"
-                className="absolute bottom-4 right-4 w-12 h-12 text-primary/10"
-              />
+          {/* Clickable menu card */}
+          <div
+            onClick={() => setIsMenuModalOpen(true)}
+            className="relative bg-[#F5F1E3] border-4 border-primary/30 rounded-lg shadow-elevated cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl overflow-hidden"
+            style={{ aspectRatio: '16 / 10' }}
+          >
+            {/* Decorative botanical borders */}
+            <BotanicalDecoration
+              variant="flower"
+              className="absolute top-2 left-2 w-16 h-16 text-primary/15"
+            />
+            <BotanicalDecoration
+              variant="leaf"
+              className="absolute top-2 right-2 w-16 h-16 text-accent/15"
+            />
+            <BotanicalDecoration
+              variant="flower"
+              className="absolute bottom-2 left-2 w-16 h-16 text-accent/15"
+            />
+            <BotanicalDecoration
+              variant="leaf"
+              className="absolute bottom-2 right-2 w-16 h-16 text-primary/15"
+            />
 
-              {/* Content */}
-              <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
-                <p className="text-xs md:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
-                  {language === "de" ? "Diese Woche" : "This Week"}
-                </p>
-                <h3 className="text-4xl md:text-6xl font-caveat font-bold text-primary mb-3">
-                  {language === "de" ? "Wochenkarte" : "Weekly Menu"}
-                </h3>
-                <p className="text-sm md:text-base text-foreground/70 font-lora max-w-md">
-                  {language === "de" 
-                    ? "Klicken, um die Wochenkarte wie eine physische Speisekarte zu öffnen." 
-                    : "Click to open the weekly menu like a physical menu card."}
-                </p>
-              </div>
+            {/* Content */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
+              <p className="text-xs md:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
+                {language === "de" ? "Diese Woche" : "This Week"}
+              </p>
+              <h3 className="text-4xl md:text-6xl font-caveat font-bold text-primary mb-3">
+                {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+              </h3>
+              <p className="text-sm md:text-base text-foreground/70 font-lora max-w-md">
+                {language === "de" 
+                  ? "Tippe, um das komplette Menü zu öffnen" 
+                  : "Tap to open the complete menu"}
+              </p>
             </div>
+          </div>
           </div>
 
           {/* Rest of menu sections */}
