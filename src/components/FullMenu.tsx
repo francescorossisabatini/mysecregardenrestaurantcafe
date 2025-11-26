@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { BotanicalDecoration } from "./BotanicalDecoration";
+import { WeeklyMenuModal } from "./WeeklyMenuModal";
 import foodDetailImg from "@/assets/food-detail-real.jpg";
 import gardenImg from "@/assets/garden-real.jpg";
 import interiorImg from "@/assets/interior-real.jpg";
@@ -11,6 +13,7 @@ import interiorImg from "@/assets/interior-real.jpg";
 export const FullMenu = () => {
   const { language } = useLanguage();
   const { menu } = useWeeklyMenu();
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
 
   const fixedDishes = {
     warm: {
@@ -112,142 +115,75 @@ export const FullMenu = () => {
   const currentDrinks = fixedDishes.drinks[language];
 
   return (
-    <section id="full-menu" className="relative bg-background">
-      {/* Hero-style header with photo */}
-      <div className="relative h-[400px] overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${foodDetailImg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-primary/50" />
-        
-        {/* Title overlay */}
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center">
+    <>
+      <WeeklyMenuModal 
+        isOpen={isMenuModalOpen} 
+        onClose={() => setIsMenuModalOpen(false)}
+        menu={menu}
+      />
+      
+      <section id="full-menu" className="relative bg-background py-16 md:py-24">
+
+        <div className="container mx-auto max-w-6xl px-4 relative">
           <BotanicalDecoration
-            variant="vine"
-            className="w-64 h-8 mx-auto mb-6 text-background/30"
+            variant="flower"
+            className="absolute top-10 right-10 w-32 h-32 text-primary/10"
           />
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-background drop-shadow-lg mb-4">
-            {language === "de" ? "Wochenkarte" : "Weekly Menu"}
-          </h2>
-          {menu?.period && (
-            <p className="text-xl md:text-2xl font-lora text-background/95 drop-shadow-md">
-              {menu.period}
-            </p>
-          )}
-        </div>
-      </div>
+          <BotanicalDecoration
+            variant="leaf"
+            className="absolute bottom-10 left-10 w-28 h-28 text-accent/10"
+          />
 
-      {/* Content section */}
-      <div className="container mx-auto max-w-6xl px-4 py-16 relative">
-        <BotanicalDecoration
-          variant="flower"
-          className="absolute top-10 right-10 w-32 h-32 text-primary/10"
-        />
-        <BotanicalDecoration
-          variant="leaf"
-          className="absolute bottom-10 left-10 w-28 h-28 text-accent/10"
-        />
+          {/* Wochenkarte clickable card section */}
+          <div className="max-w-4xl mx-auto mb-16 md:mb-24">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl md:text-5xl font-caveat font-bold text-primary mb-3">
+                {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+              </h2>
+              <p className="text-sm md:text-base text-muted-foreground font-lora">
+                {language === "de" 
+                  ? "Unsere aktuelle Wochenkarte – wie auf der Speisekarte im Restaurant." 
+                  : "Our current weekly menu – as shown on the restaurant menu."}
+              </p>
+            </div>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Menu Card */}
-          <Card className="border-2 border-border/20 bg-card shadow-elevated">
-            <div className="p-8 md:p-12 space-y-12">
-              
-              {/* Weekly Menu Section */}
-              <div>
-                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary text-center mb-2">
+            {/* Clickable menu card */}
+            <div
+              onClick={() => setIsMenuModalOpen(true)}
+              className="relative bg-[#F5F1E3] border-2 border-[#1E1C1A] rounded-lg shadow-elevated cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl overflow-hidden"
+              style={{ aspectRatio: '16 / 10' }}
+            >
+              {/* Decorative corners */}
+              <BotanicalDecoration
+                variant="flower"
+                className="absolute top-4 left-4 w-12 h-12 text-primary/10"
+              />
+              <BotanicalDecoration
+                variant="flower"
+                className="absolute bottom-4 right-4 w-12 h-12 text-primary/10"
+              />
+
+              {/* Content */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
+                <p className="text-xs md:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
+                  {language === "de" ? "Diese Woche" : "This Week"}
+                </p>
+                <h3 className="text-4xl md:text-6xl font-caveat font-bold text-primary mb-3">
                   {language === "de" ? "Wochenkarte" : "Weekly Menu"}
                 </h3>
-                <p className="text-center text-sm text-muted-foreground mb-8 font-lora">
-                  {menu.period}
+                <p className="text-sm md:text-base text-foreground/70 font-lora max-w-md">
+                  {language === "de" 
+                    ? "Klicken, um die Wochenkarte wie eine physische Speisekarte zu öffnen." 
+                    : "Click to open the weekly menu like a physical menu card."}
                 </p>
-                <Separator className="my-8 bg-border/30" />
-                
-                <div className="space-y-8">
-                  {menu.days.map((day, idx) => (
-                    <div key={idx} className="space-y-3">
-                      <h4 className="font-lora text-xl text-primary font-semibold">
-                        {day.day[language]}
-                      </h4>
-                      
-                      {day.soup[language] && (
-                        <div className="pl-6">
-                          <div className="flex justify-between items-start gap-4">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium mb-1">
-                                {language === "de" ? "Tagessuppe" : "Soup of the Day"}
-                              </p>
-                              <p className="text-sm text-muted-foreground leading-relaxed">
-                                {day.soup[language]}
-                              </p>
-                            </div>
-                            <span className="text-sm font-light whitespace-nowrap">
-                              4,50 / 6,50 €
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {day.green[language] && (
-                        <div className="pl-6">
-                          <div className="flex justify-between items-start gap-4">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium mb-1 text-accent">
-                                {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
-                              </p>
-                              <p className="text-sm text-muted-foreground leading-relaxed">
-                                {day.green[language]}
-                              </p>
-                              {day.greenNote && day.greenNote[language] && (
-                                <p className="text-xs text-muted-foreground mt-1 italic">
-                                  {day.greenNote[language]}
-                                </p>
-                              )}
-                            </div>
-                            <span className="text-sm font-light whitespace-nowrap">
-                              15,20 €
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {day.blue && day.blue[language] && (
-                        <div className="pl-6 mt-2">
-                          <div className="flex justify-between items-start gap-4">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium mb-1 text-primary">
-                                {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
-                              </p>
-                              <p className="text-sm text-muted-foreground leading-relaxed">
-                                {day.blue[language]}
-                              </p>
-                              {day.blueNote && day.blueNote[language] && (
-                                <p className="text-xs text-muted-foreground mt-1 italic">
-                                  {day.blueNote[language]}
-                                </p>
-                              )}
-                            </div>
-                            <span className="text-sm font-light whitespace-nowrap">
-                              15,20 €
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {idx < menu.days.length - 1 && (
-                        <Separator className="mt-6 bg-border/20" />
-                      )}
-                    </div>
-                  ))}
-                </div>
               </div>
+            </div>
+          </div>
 
-              <Separator className="my-12 bg-border/30" />
+          {/* Rest of menu sections */}
+          <div className="max-w-5xl mx-auto">
+            <Card className="border-2 border-border/20 bg-card shadow-elevated">
+              <div className="p-8 md:p-12 space-y-12">
 
               {/* Fixed Warm Dishes */}
               <div>
@@ -361,8 +297,9 @@ export const FullMenu = () => {
                 : "→ View photo gallery"}
             </a>
           </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
