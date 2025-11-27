@@ -65,7 +65,11 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 bg-cream shadow-lg border-b border-border py-3"
+        className="fixed top-0 left-0 right-0 z-50 shadow-sm border-b border-border/40 py-2"
+        style={{
+          background: 'rgba(245, 241, 227, 0.95)',
+          backdropFilter: 'blur(8px)'
+        }}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
@@ -83,7 +87,7 @@ export const Navigation = () => {
               to="/"
               className="transition-all duration-300"
             >
-              <Logo className="w-11 h-11" lightText={true} />
+              <Logo className="w-11 h-11" showTagline={false} />
             </Link>
 
             {/* Desktop Navigation - Right (hidden on mobile) */}
