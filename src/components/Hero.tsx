@@ -79,17 +79,16 @@ export const Hero = () => {
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons - Minimal Hierarchy */}
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center pt-10 max-w-2xl mx-auto">
+          {/* CTA Buttons - Minimal & Delicate */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-12 max-w-xl mx-auto">
             {/* PRIMARY CTA - Anrufen */}
             <Button
               size="lg"
               asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-lg px-10 py-6 rounded-lg transition-colors duration-200 order-1 sm:order-2"
+              className="bg-accent/90 text-accent-foreground hover:bg-accent border border-accent-light/20 font-medium text-base px-10 py-5 rounded-md transition-all duration-300 hover:shadow-md order-1 sm:order-2"
             >
-              <a href="tel:+4315970547" className="flex items-center gap-2">
-                <span className="text-xl">📞</span>
-                <span>{language === "de" ? "Anrufen" : "Call"}</span>
+              <a href="tel:+4315970547">
+                {language === "de" ? "Anrufen" : "Call"}
               </a>
             </Button>
             
@@ -97,7 +96,7 @@ export const Hero = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-base px-8 py-5 rounded-lg transition-colors duration-200 order-2 sm:order-1"
+              className="bg-primary/90 text-primary-foreground hover:bg-primary border border-primary-foreground/10 font-normal text-sm px-8 py-4 rounded-md transition-all duration-300 order-2 sm:order-1"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
@@ -107,7 +106,7 @@ export const Hero = () => {
               size="lg"
               variant="outline"
               onClick={() => scrollToSection("full-menu")}
-              className="bg-background/30 backdrop-blur-sm text-foreground hover:bg-background/50 border border-background/50 font-normal text-base px-7 py-5 rounded-lg transition-colors duration-200 order-3 sm:order-3"
+              className="bg-transparent backdrop-blur-sm text-background hover:bg-background/10 border border-background/40 hover:border-background/60 font-light text-sm px-7 py-4 rounded-md transition-all duration-300 order-3 sm:order-3"
             >
               {language === "de" ? "Speisekarte" : "Menu"}
             </Button>
