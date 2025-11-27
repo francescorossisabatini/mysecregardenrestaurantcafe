@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
@@ -14,6 +14,24 @@ import { SectionDivider } from "@/components/SectionDivider";
 
 const Index = () => {
   const location = useLocation();
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    // Check if preloader was shown
+    const preloaderShown = sessionStorage.getItem("preloader_shown");
+    
+    if (!preloaderShown) {
+      // Delay content appearance after preloader
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, 2200); // Slightly after preloader fades
+      
+      return () => clearTimeout(timer);
+    } else {
+      // No preloader, show immediately
+      setShowContent(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (location.hash === "#full-menu") {
@@ -35,10 +53,16 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Preloader />
-      <Navigation />
       
-      {/* Hero Section */}
-      <Hero />
+      {/* Navigation with fade-in */}
+      <div className={`transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`}>
+        <Navigation />
+      </div>
+      
+      {/* Hero Section with fade-in */}
+      <div className={`transition-opacity duration-1500 ${showContent ? "opacity-100" : "opacity-0"}`}>
+        <Hero />
+      </div>
       
       {/* Daily Menu */}
       <DailyMenuHighlight />
