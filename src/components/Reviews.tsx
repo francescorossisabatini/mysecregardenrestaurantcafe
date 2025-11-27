@@ -22,52 +22,42 @@ const reviews = [
 
 export const Reviews = () => {
   const { t } = useLanguage();
-  
-  return (
-    <section className="py-16 md:py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-primary mb-4">
-              <span className="font-dancing text-4xl md:text-6xl">{t("reviews.title")}</span>
-            </h2>
-            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
-            <div className="flex justify-center gap-1 mt-6">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 fill-accent text-accent" />
-              ))}
-            </div>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {reviews.map((review, idx) => (
-              <div key={idx}>
-                <Card
-                  className="p-6 hover:shadow-elevated transition-all animate-slide-up bg-card/80 backdrop-blur-sm"
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                >
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-accent text-accent" />
-                    ))}
-                  </div>
-                  <p className="text-foreground/90 mb-4 leading-relaxed italic text-sm">
-                    "{review.text}"
-                  </p>
-                  <div className="border-t border-border pt-4">
-                    <p className="font-semibold text-primary text-sm">{review.author}</p>
-                    <p className="text-xs text-muted-foreground">{review.role}</p>
-                  </div>
-                </Card>
-                {idx < reviews.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -translate-y-1/2" 
-                       style={{ left: `${((idx + 1) / reviews.length) * 100}%` }}>
-                    <Star className="w-4 h-4 text-accent/30" />
-                  </div>
-                )}
-              </div>
+  return (
+    <section id="reviews" className="py-32 relative overflow-hidden">
+      <div className="container mx-auto px-4 max-w-4xl relative z-10">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
+            {t("reviews.title")}
+          </h2>
+          <div className="flex justify-center gap-2 text-yellow-500 mb-4">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-8 h-8 fill-current" />
             ))}
           </div>
+        </div>
+
+        <div className="space-y-16">
+          {reviews.map((review, index) => (
+            <div 
+              key={index}
+              className="text-center animate-smooth-reveal"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
+              <div className="flex gap-1 mb-6 justify-center text-yellow-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-current" />
+                ))}
+              </div>
+              <blockquote className="text-2xl md:text-3xl font-lora text-foreground/90 leading-relaxed italic mb-6">
+                "{review.text}"
+              </blockquote>
+              <div className="space-y-1">
+                <p className="font-semibold text-lg text-foreground">{review.author}</p>
+                <p className="text-sm text-muted-foreground">{review.role}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
