@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SpiritualAnimations } from "./SpiritualAnimations";
 import heroGarden from "@/assets/garden-real.jpg";
 import heroFood from "@/assets/food-bowl-real.jpg";
 import heroInterior from "@/assets/interior-real.jpg";
@@ -22,13 +21,35 @@ const heroImages = [
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
+  const [showContent, setShowContent] = useState(false);
   const { language } = useLanguage();
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 4000); // Faster transitions for more dynamism
+    }, 4000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    // Show content after a delay or on scroll
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowContent(true);
+      }
+    };
+
+    // Also show content after a delay even without scroll
+    const timer = setTimeout(() => {
+      setShowContent(true);
+    }, 5500); // After navbar appears
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -58,9 +79,11 @@ export const Hero = () => {
       {/* Subtle overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
-      {/* Content - centered */}
+      {/* Content - centered with scroll reveal */}
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
-        <div className="max-w-3xl mx-auto text-center space-y-6 md:space-y-12 animate-subtle-fade-in">
+        <div className={`max-w-3xl mx-auto text-center space-y-6 md:space-y-12 transition-all duration-1500 ${
+          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}>
           {/* Restaurant name with handwriting style */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight">
             My Secret Garden
