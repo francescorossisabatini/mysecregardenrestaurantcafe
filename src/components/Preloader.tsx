@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
 
 export const Preloader = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState<boolean>(() => {
+    // Show only on first visit per session
+    return typeof window !== "undefined" && !sessionStorage.getItem("preloader_shown");
+  });
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
+
     // Show content after a brief delay
     const contentTimer = setTimeout(() => {
       setShowContent(true);
@@ -14,13 +19,18 @@ export const Preloader = () => {
     // Extended duration to ensure all page elements and transitions load properly
     const fadeOutTimer = setTimeout(() => {
       setIsVisible(false);
+      try {
+        sessionStorage.setItem("preloader_shown", "true");
+      } catch (e) {
+        // ignore if storage not available
+      }
     }, 3000);
 
     return () => {
       clearTimeout(contentTimer);
       clearTimeout(fadeOutTimer);
     };
-  }, []);
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
