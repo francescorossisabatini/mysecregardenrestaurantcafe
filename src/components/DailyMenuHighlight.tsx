@@ -2,7 +2,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { Loader2 } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
-import foodBowlImg from "@/assets/food-bowl-real.jpg";
+import { SpiritualAnimations } from "./SpiritualAnimations";
+import foodGarden from "@/assets/food-garden.jpg";
 
 export const DailyMenuHighlight = () => {
   const { language } = useLanguage();
@@ -28,14 +29,23 @@ export const DailyMenuHighlight = () => {
   const todayMenu = menu.days[dayIndex] || menu.days[0];
 
   return (
-    <section id="daily-menu" className="relative bg-background py-12 sm:py-16 md:py-20">
-      {/* Background decoration */}
-      <BotanicalDecoration
-        variant="vine"
-        className="absolute top-0 left-0 w-full h-12 text-primary/10 opacity-50"
-      />
+    <section 
+      id="daily-menu" 
+      className="relative py-12 sm:py-16 md:py-20 overflow-hidden"
+      style={{
+        backgroundImage: `url(${foodGarden})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/95" />
+      
+      {/* Spiritual animations */}
+      <SpiritualAnimations variant="leaves" />
 
-      <div className="container mx-auto max-w-6xl px-4">
+      <div className="container mx-auto max-w-6xl px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-caveat font-bold text-primary mb-2 md:mb-3">

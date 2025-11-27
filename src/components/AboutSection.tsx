@@ -2,7 +2,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card } from "@/components/ui/card";
 import { Leaf, Heart, Droplets } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
+import { SpiritualAnimations } from "./SpiritualAnimations";
 import gardenImg from "@/assets/garden-real.jpg";
+import gardenReal from "@/assets/garden-real.jpg";
 import sriChinmoyImg from "@/assets/sri-chinmoy.jpg";
 
 export const AboutSection = () => {
@@ -44,8 +46,23 @@ export const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="relative overflow-hidden bg-background">
-      <div className="container mx-auto max-w-7xl py-12 sm:py-16 md:py-20 px-4">
+    <section 
+      id="about" 
+      className="relative overflow-hidden py-12 sm:py-16 md:py-20"
+      style={{
+        backgroundImage: `url(${gardenReal})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/97 via-background/93 to-background/97" />
+      
+      {/* Spiritual animations */}
+      <SpiritualAnimations variant="butterfly" />
+      
+      <div className="container mx-auto max-w-7xl px-4 relative z-10">
         {/* Title */}
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <BotanicalDecoration 
