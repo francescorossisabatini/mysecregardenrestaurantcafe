@@ -1,80 +1,85 @@
 import { Check, Leaf } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BotanicalDecoration } from "./BotanicalDecoration";
+import { Card } from "@/components/ui/card";
 import interiorImg from "@/assets/interior-real.jpg";
 
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="products" className="relative overflow-hidden">
-      {/* Background image with overlay */}
-      <div className="absolute inset-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${interiorImg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-background/90" />
-      </div>
+    <section id="products" className="relative overflow-hidden bg-background">
+      <div className="container mx-auto max-w-7xl py-12 sm:py-16 md:py-20 px-4">
+        {/* Title */}
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-3 sm:mb-4">
+            {language === "de" ? "Unsere Produkte" : "Our Products"}
+          </h2>
+        </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto max-w-4xl py-12 sm:py-16 md:py-20 px-4">
-        <div className="bg-card/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-elevated relative">
-          <BotanicalDecoration 
-            variant="flower" 
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 w-16 h-16 sm:w-20 sm:h-20 text-primary/10" 
-          />
+        {/* Side-by-side layout */}
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
+          {/* Content */}
+          <div className="order-2 md:order-1">
+            <Card className="bg-card/95 backdrop-blur-sm p-6 sm:p-8 shadow-elevated border-2 border-primary/10 relative">
+              <BotanicalDecoration 
+                variant="flower" 
+                className="absolute top-3 right-3 w-16 h-16 text-primary/10" 
+              />
+              
+              <div className="space-y-5 sm:space-y-6 relative z-10">
+                {/* Intro */}
+                <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
+                  {language === "de"
+                    ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
+                    : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
+                </p>
 
-          {/* Title */}
-          <div className="text-center mb-6 sm:mb-7 md:mb-8">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-caveat font-bold text-primary mb-3 sm:mb-4">
-              {language === "de" ? "Unsere Produkte" : "Our Products"}
-            </h2>
+                {/* Key Points */}
+                <div className="grid gap-3 sm:gap-4">
+                  {[
+                    {
+                      de: "Bio & regionale Zutaten",
+                      en: "Organic & regional ingredients"
+                    },
+                    {
+                      de: "Hausgemachte Zubereitungen",
+                      en: "Homemade preparations"
+                    },
+                    {
+                      de: "Natürliche Gewürze",
+                      en: "Natural spices"
+                    },
+                    {
+                      de: "Glutenfreie Optionen",
+                      en: "Gluten-free options"
+                    }
+                  ].map((point, index) => (
+                    <div key={index} className="flex items-center gap-3 bg-accent/5 p-3 rounded-lg border border-accent/20">
+                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                        <Leaf className="w-5 h-5 text-accent" />
+                      </div>
+                      <span className="font-lora text-sm sm:text-base text-foreground">
+                        {language === "de" ? point.de : point.en}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
           </div>
 
-          {/* Content */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6 relative z-10">
-            {/* Intro */}
-            <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
-              {language === "de"
-                ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
-                : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
-            </p>
-
-            {/* Key Points */}
-            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-              {[
-                {
-                  de: "Bio & regionale Zutaten",
-                  en: "Organic & regional ingredients"
-                },
-                {
-                  de: "Hausgemachte Zubereitungen",
-                  en: "Homemade preparations"
-                },
-                {
-                  de: "Natürliche Gewürze",
-                  en: "Natural spices"
-                },
-                {
-                  de: "Glutenfreie Optionen",
-                  en: "Gluten-free options"
-                }
-              ].map((point, index) => (
-                <div key={index} className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
-                  </div>
-                  <span className="font-lora text-sm sm:text-base text-foreground">
-                    {language === "de" ? point.de : point.en}
-                  </span>
-                </div>
-              ))}
-            </div>
+          {/* Image */}
+          <div className="order-1 md:order-2">
+            <Card className="overflow-hidden shadow-elevated border-2 border-accent/20">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={interiorImg}
+                  alt="Secret Garden Restaurant Interior"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </Card>
           </div>
         </div>
       </div>

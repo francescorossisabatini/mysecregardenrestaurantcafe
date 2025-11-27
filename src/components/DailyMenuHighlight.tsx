@@ -23,109 +23,124 @@ export const DailyMenuHighlight = () => {
   }
 
   // Get today's menu or the first available day
-  const today = new Date().getDay(); // 0 = Sunday, 1 = Monday, etc.
-  // Monday (1) = index 0, Tuesday (2) = index 1, etc. For Sunday (0) or invalid, use first day
+  const today = new Date().getDay();
   const dayIndex = today >= 1 && today <= 6 ? today - 1 : 0;
   const todayMenu = menu.days[dayIndex] || menu.days[0];
 
-  console.log('📅 Today is day:', today, '-> using index:', dayIndex);
-  console.log('📋 Today menu:', todayMenu);
-
   return (
-    <section id="daily-menu" className="relative overflow-hidden">
-      {/* Split layout: Image on left, content on right (desktop) */}
-      <div className="container mx-auto max-w-7xl px-0">
-        <div className="grid md:grid-cols-2 gap-0">
-          {/* Left side: Large food photo */}
-          <div className="relative h-[300px] sm:h-[400px] md:h-[600px] lg:h-[700px] overflow-hidden">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url(${foodBowlImg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/20" />
-            
-            {/* Decorative elements on photo */}
-            <BotanicalDecoration
-              variant="flower"
-              className="absolute top-10 left-10 w-24 h-24 text-background/20"
-            />
-          </div>
+    <section id="daily-menu" className="relative bg-background py-12 sm:py-16 md:py-20">
+      {/* Background decoration */}
+      <BotanicalDecoration
+        variant="vine"
+        className="absolute top-0 left-0 w-full h-12 text-primary/10 opacity-50"
+      />
 
-          {/* Right side: Menu content */}
-          <div className="relative bg-background py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 flex flex-col justify-center">
-            <BotanicalDecoration
-              variant="leaf"
-              className="absolute top-6 right-6 md:top-10 md:right-10 w-16 h-16 md:w-20 md:h-20 text-primary/10"
-            />
+      <div className="container mx-auto max-w-6xl px-4">
+        {/* Section Header */}
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-caveat font-bold text-primary mb-2 md:mb-3">
+            {language === "de" ? "Tagesmenü" : "Daily Menu"}
+          </h2>
+          <p className="text-base sm:text-lg md:text-xl font-lora text-muted-foreground">
+            {todayMenu.day[language]} · {menu.period}
+          </p>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">
+            {language === "de"
+              ? "Jeden Tag frisch für Sie zubereitet"
+              : "Freshly prepared for you every day"}
+          </p>
+        </div>
 
-            <div className="relative z-[1] max-w-xl mx-auto w-full">
-              {/* Title with day and period */}
-              <div className="mb-6 md:mb-8">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-caveat font-bold text-primary mb-2 md:mb-3">
-                  {language === "de" ? "Tagesmenü" : "Daily Menu"}
-                </h2>
-                <p className="text-sm sm:text-base md:text-lg font-lora text-muted-foreground">
-                  {todayMenu.day[language]} · {menu.period}
+        {/* Menu Cards Grid */}
+        <div className="grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto">
+          {/* Soup Card */}
+          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <BotanicalDecoration variant="leaf" className="w-6 h-6 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg sm:text-xl font-caveat font-bold text-primary mb-1">
+                  {language === "de" ? "Suppe des Tages" : "Soup of the Day"}
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
+                  {language === "de" ? "Vegan & Glutenfrei" : "Vegan & Gluten-Free"}
                 </p>
               </div>
+            </div>
+            <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+              {todayMenu.soup[language]}
+            </p>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-3 pt-3 border-t border-primary/20">
+              {language === "de"
+                ? "Klein 4,50 € / Groß 6,50 € · Bio-Weckerl +1,90 €"
+                : "Small €4.50 / Large €6.50 · Organic roll +€1.90"}
+            </p>
+          </div>
 
-              {/* Menu items */}
-              <div className="space-y-4 sm:space-y-6">
-                {/* Soup */}
-                <div className="pb-4 sm:pb-5 border-b border-border/50">
-                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-muted-foreground mb-1.5 sm:mb-2">
-                    {language === "de" ? "Suppe des Tages" : "Soup of the Day"}
-                  </p>
-                  <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
-                    {todayMenu.soup[language]}
-                  </p>
-                </div>
-
-                {/* Green dish */}
-                <div className="pb-4 sm:pb-5 border-b border-border/50">
-                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-accent mb-1.5 sm:mb-2">
-                    {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
-                  </p>
-                  <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
-                    {todayMenu.green[language]}
-                  </p>
-                </div>
-
-                {/* Blue dish - check if data exists */}
-                {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
-                  <div className="pb-4 sm:pb-5 border-b border-border/40">
-                    <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-primary mb-1.5 sm:mb-2">
-                      {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
-                    </p>
-                    <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
-                      {todayMenu.blue[language]}
-                    </p>
-                    {todayMenu.blueNote && todayMenu.blueNote[language] && (
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-1 italic">
-                        {todayMenu.blueNote[language]}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Prices */}
-                <div className="pt-2 sm:pt-3">
-                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-muted-foreground mb-1">
-                    {language === "de" ? "Preise" : "Prices"}
-                  </p>
-                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {language === "de"
-                      ? "Tagesgerichte 15,20 € · Suppe klein 4,50 € / groß 6,50 € · Bio-Weckerl 1,90 €"
-                      : "Daily dishes €15.20 · Soup small €4.50 / large €6.50 · Organic roll €1.90"}
-                  </p>
-                </div>
+          {/* Green Dish Card */}
+          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-accent/20">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <BotanicalDecoration variant="flower" className="w-6 h-6 text-accent" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg sm:text-xl font-caveat font-bold text-accent mb-1">
+                  {language === "de" ? "Tagesgericht Grün" : "Daily Dish Green"}
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
+                  {language === "de" ? "Vegan & Glutenfrei" : "Vegan & Gluten-Free"}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-lg sm:text-xl font-bold text-accent">15,20 €</p>
               </div>
             </div>
+            <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+              {todayMenu.green[language]}
+            </p>
           </div>
+
+          {/* Blue Dish Card (if available) */}
+          {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
+            <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/20">
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <BotanicalDecoration variant="flower" className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-caveat font-bold text-primary mb-1">
+                    {language === "de" ? "Tagesgericht Blau" : "Daily Dish Blue"}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
+                    {language === "de"
+                      ? "Kann Milch, Ei oder Gluten enthalten"
+                      : "May contain dairy, egg or gluten"}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg sm:text-xl font-bold text-primary">15,20 €</p>
+                </div>
+              </div>
+              <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+                {todayMenu.blue[language]}
+              </p>
+              {todayMenu.blueNote && todayMenu.blueNote[language] && (
+                <p className="text-xs sm:text-sm text-muted-foreground mt-3 italic">
+                  {todayMenu.blueNote[language]}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Footer Note */}
+        <div className="text-center mt-8 sm:mt-10">
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {language === "de"
+              ? "Alle Gerichte werden mit frischen Bio-Zutaten zubereitet"
+              : "All dishes are prepared with fresh organic ingredients"}
+          </p>
         </div>
       </div>
     </section>
