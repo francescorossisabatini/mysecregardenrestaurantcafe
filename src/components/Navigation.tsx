@@ -65,17 +65,14 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 shadow-lg py-3"
-        style={{
-          background: 'linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 100%)'
-        }}
+        className="fixed top-0 left-0 right-0 z-50 bg-cream shadow-lg border-b border-border py-3"
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Mobile Menu Button - Left */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation text-white hover:bg-white/10"
+              className="p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -96,14 +93,14 @@ export const Navigation = () => {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-sm font-medium text-white/90 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 hover:after:w-full py-1"
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
                 >
                   {item.label}
                 </a>
               ))}
               <Link
                 to="/privacy"
-                className="text-sm font-medium text-white/90 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 hover:after:w-full py-1"
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
