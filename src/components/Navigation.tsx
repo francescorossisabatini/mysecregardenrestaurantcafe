@@ -146,6 +146,11 @@ export const Navigation = () => {
               {language === "de" ? "Datenschutz" : "Privacy"}
             </Link>
           </nav>
+
+          {/* Mobile language switcher at the bottom */}
+          <div className="mt-4 flex justify-start">
+            <LanguageSwitcher />
+          </div>
         </div>
       </div>
     </>
