@@ -82,25 +82,27 @@ export const Hero = () => {
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons - Hierarchical Order */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 max-w-2xl mx-auto">
+          {/* CTA Buttons - Modern Design */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-6 max-w-2xl mx-auto">
             {/* Primary CTA - Daily Menu */}
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xl font-bold text-base md:text-lg px-10 py-7 border-2 border-primary transform hover:scale-105 transition-all"
+              className="group relative bg-primary text-primary-foreground hover:bg-primary font-semibold text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-primary/30 hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
-              {language === "de" ? "Tagesmenü" : "Daily Menu"}
+              <span className="relative z-10">{language === "de" ? "Tagesmenü" : "Daily Menu"}</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
             
             {/* Secondary CTA - Call */}
             <Button
               size="lg"
               asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-2xl font-semibold text-base md:text-lg px-10 py-7 border-2 border-accent transform hover:scale-105 transition-all"
+              className="group relative bg-accent text-accent-foreground hover:bg-accent font-semibold text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-accent/30 hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
               <a href="tel:+4315970547">
-                {language === "de" ? "Anrufen" : "Call Us"}
+                <span className="relative z-10">{language === "de" ? "Anrufen" : "Call Us"}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent to-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>
             </Button>
             
@@ -108,9 +110,9 @@ export const Hero = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("full-menu")}
-              className="bg-background/90 backdrop-blur-sm text-foreground hover:bg-background border-2 border-primary/50 shadow-xl font-medium text-base md:text-lg px-8 py-7 transform hover:scale-105 transition-all"
+              className="group relative bg-background/95 backdrop-blur-md text-foreground hover:bg-background font-medium text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl border border-border/20 hover:border-primary/30 transition-all duration-300"
             >
-              {language === "de" ? "Speisekarte" : "Full Menu"}
+              <span className="relative z-10">{language === "de" ? "Speisekarte" : "Full Menu"}</span>
             </Button>
           </div>
 
