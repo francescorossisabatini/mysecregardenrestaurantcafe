@@ -14,7 +14,7 @@ export const Preloader = () => {
     // Extended duration to ensure all page elements and transitions load properly
     const fadeOutTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 4500);
+    }, 3000);
 
     return () => {
       clearTimeout(contentTimer);
@@ -84,7 +84,7 @@ export const Preloader = () => {
           showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
-        <Logo className="w-32 h-32" />
+        <Logo className="w-32 h-32" showTagline={false} />
         
         <p
           className={`text-sm text-muted-foreground font-light tracking-wide transition-all duration-1000 delay-300 ${
