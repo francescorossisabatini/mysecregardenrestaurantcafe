@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -8,7 +8,9 @@ import { Menu, X } from "lucide-react";
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,18 +21,44 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
-    { href: "#full-menu", label: t("nav.menu") },
-    { href: "#products", label: t("nav.products") },
-    { href: "#about", label: t("nav.about") },
-    { href: "#contact", label: t("nav.contact") },
+    { 
+      href: "#daily-menu", 
+      label: language === "de" ? "Tagesmenü" : "Daily Menu" 
+    },
+    { 
+      href: "#full-menu", 
+      label: language === "de" ? "Wochenkarte" : "Weekly Menu" 
+    },
+    { 
+      href: "#about", 
+      label: language === "de" ? "Über uns" : "About us" 
+    },
+    { 
+      href: "#contact", 
+      label: language === "de" ? "Kontakt" : "Contact" 
+    },
   ];
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
+
+    // If we're on a different page, navigate to home first
+    if (location.pathname !== "/") {
+      navigate("/");
+      // Wait for navigation and then scroll
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    } else {
+      // Already on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   };
 
@@ -64,7 +92,7 @@ export const Navigation = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`text-sm font-medium transition-colors hover:text-primary ${
                     isScrolled ? "text-foreground" : "text-primary-foreground"
                   }`}
@@ -82,7 +110,7 @@ export const Navigation = () => {
                   isScrolled ? "text-foreground" : "text-primary-foreground"
                 }`}
               >
-                {t("nav.privacy")}
+                {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
               <div className="relative z-10">
                 <LanguageSwitcher />
@@ -120,7 +148,7 @@ export const Navigation = () => {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => scrollToSection(e, item.href)}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
               >
                 {item.label}
@@ -131,7 +159,7 @@ export const Navigation = () => {
               className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t("nav.privacy")}
+              {language === "de" ? "Datenschutz" : "Privacy"}
             </Link>
           </nav>
         </div>

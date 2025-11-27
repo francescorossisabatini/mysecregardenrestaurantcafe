@@ -53,7 +53,7 @@ export const AboutSection = () => {
             className="w-48 sm:w-56 md:w-64 h-6 sm:h-7 md:h-8 mx-auto mb-3 md:mb-4 text-primary/20" 
           />
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-4 md:mb-6">
-            {sectionTitle[language]}
+            {language === "de" ? "Über uns" : "About us"}
           </h2>
         </div>
 
