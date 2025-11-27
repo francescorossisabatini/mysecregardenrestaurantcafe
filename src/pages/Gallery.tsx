@@ -1,8 +1,9 @@
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Instagram } from "lucide-react";
+import { Instagram, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import { SpiritualAnimations } from "@/components/SpiritualAnimations";
 
 // Import all images
@@ -24,96 +25,190 @@ import team from "@/assets/team-real.jpg";
 
 const Gallery = () => {
   const { language } = useLanguage();
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
-  // Gallery images with layout sizes for masonry grid
+  // Gallery images for carousel
   const galleryImages = [
-    { src: entranceGarden, alt: "Entrance Garden", size: "large" },
-    { src: foodBowl, alt: "Food Bowl", size: "medium" },
-    { src: garden, alt: "Secret Garden", size: "large" },
-    { src: koreanBowl, alt: "Korean Bowl", size: "medium" },
-    { src: interior, alt: "Interior", size: "large" },
-    { src: minnesotaBowl, alt: "Minnesota Bowl", size: "medium" },
-    { src: foodDetail, alt: "Food Detail", size: "small" },
-    { src: poppyFlower, alt: "Poppy Flower", size: "small" },
-    { src: alpenpolenta, alt: "Alpenpolenta", size: "medium" },
-    { src: heroFood, alt: "Signature Dish", size: "large" },
-    { src: foodGarden, alt: "Garden Food", size: "medium" },
-    { src: heroGarden, alt: "Garden View", size: "large" },
-    { src: heroInterior, alt: "Interior Atmosphere", size: "medium" },
-    { src: team, alt: "Our Team", size: "small" },
+    { src: entranceGarden, alt: language === "de" ? "Garteneingang" : "Garden Entrance", position: "center 40%" },
+    { src: foodBowl, alt: language === "de" ? "Bowl des Tages" : "Daily Bowl", position: "center center" },
+    { src: garden, alt: language === "de" ? "Geheimer Garten" : "Secret Garden", position: "center 45%" },
+    { src: koreanBowl, alt: language === "de" ? "Koreanische Bowl" : "Korean Bowl", position: "center center" },
+    { src: interior, alt: language === "de" ? "Innenbereich" : "Interior Space", position: "center 55%" },
+    { src: minnesotaBowl, alt: language === "de" ? "Minnesota Bowl" : "Minnesota Bowl", position: "center center" },
+    { src: foodDetail, alt: language === "de" ? "Kulinarische Details" : "Culinary Details", position: "center center" },
+    { src: poppyFlower, alt: language === "de" ? "Mohnblume im Garten" : "Poppy in Garden", position: "center 40%" },
+    { src: alpenpolenta, alt: language === "de" ? "Alpenpolenta" : "Alpine Polenta", position: "center center" },
+    { src: heroFood, alt: language === "de" ? "Signature Gericht" : "Signature Dish", position: "center center" },
+    { src: foodGarden, alt: language === "de" ? "Essen im Garten" : "Garden Dining", position: "center 45%" },
+    { src: heroGarden, alt: language === "de" ? "Gartenblick" : "Garden View", position: "center 45%" },
+    { src: heroInterior, alt: language === "de" ? "Gemütliche Atmosphäre" : "Cozy Atmosphere", position: "center 55%" },
+    { src: team, alt: language === "de" ? "Unser Team" : "Our Team", position: "center 40%" },
   ];
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % galleryImages.length);
+    }, 5000);
+    
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, galleryImages.length]);
+
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImage((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      nextImage();
+    }
+    if (touchStart - touchEnd < -75) {
+      prevImage();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-br from-cream via-background to-accent/5">
-        <SpiritualAnimations variant="meditation-lines" />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-10 stagger-children in-view">
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-caveat font-bold text-primary leading-tight">
-              {language === "de" ? "Galerie" : "Gallery"}
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-lora text-muted-foreground leading-relaxed">
-              {language === "de"
-                ? "Entdecken Sie unsere kulinarischen Kreationen und die friedliche Atmosphäre unseres Gartens"
-                : "Discover our culinary creations and the peaceful atmosphere of our garden"}
-            </p>
+      {/* Immersive Full-Screen Gallery Carousel */}
+      <section 
+        className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Background carousel - fullscreen with smooth transitions */}
+        {galleryImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-all duration-[2500ms] ease-in-out ${
+              currentImage === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
+            }`}
+            style={{
+              backgroundImage: `url(${image.src})`,
+              backgroundSize: "cover",
+              backgroundPosition: image.position,
+            }}
+          />
+        ))}
+
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-6 py-16">
+          <div className="max-w-5xl mx-auto">
+            {/* Title Section */}
+            <div className="text-center space-y-4 mb-12 md:mb-16">
+              <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[11rem] font-caveat font-bold text-background drop-shadow-2xl leading-[0.9]">
+                {language === "de" ? "Galerie" : "Gallery"}
+              </h1>
+              <p className="text-lg sm:text-xl md:text-2xl font-lora text-background/90 drop-shadow-lg max-w-3xl mx-auto">
+                {language === "de"
+                  ? "Entdecken Sie unsere kulinarischen Kreationen und die friedliche Atmosphäre"
+                  : "Discover our culinary creations and peaceful atmosphere"}
+              </p>
+            </div>
+
+            {/* Image Counter & Caption */}
+            <div className="flex flex-col items-center gap-4 mb-8">
+              <div className="bg-background/10 backdrop-blur-md px-6 py-3 rounded-full border border-background/20">
+                <p className="text-background font-lora text-sm md:text-base font-medium">
+                  {currentImage + 1} / {galleryImages.length}
+                </p>
+              </div>
+              <div className="bg-background/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-background/20 max-w-md">
+                <p className="text-background font-lora text-base md:text-lg text-center drop-shadow-lg">
+                  {galleryImages[currentImage].alt}
+                </p>
+              </div>
+            </div>
+
+            {/* Desktop Navigation Controls */}
+            <div className="hidden md:flex justify-center items-center gap-6 mb-8">
+              <button
+                onClick={prevImage}
+                className="bg-background/15 backdrop-blur-md hover:bg-background/25 text-background border border-background/30 p-4 rounded-full transition-all duration-300 hover:scale-110"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              
+              <button
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="bg-background/15 backdrop-blur-md hover:bg-background/25 text-background border border-background/30 px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              >
+                {isAutoPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                <span className="font-lora text-sm">
+                  {isAutoPlaying ? (language === "de" ? "Pause" : "Pause") : (language === "de" ? "Abspielen" : "Play")}
+                </span>
+              </button>
+
+              <button
+                onClick={nextImage}
+                className="bg-background/15 backdrop-blur-md hover:bg-background/25 text-background border border-background/30 p-4 rounded-full transition-all duration-300 hover:scale-110"
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Carousel Dots Navigation */}
+            <div className="flex gap-2 justify-center flex-wrap max-w-2xl mx-auto">
+              {galleryImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImage(index)}
+                  className={`transition-all duration-300 ${
+                    currentImage === index
+                      ? "bg-background w-12 h-3 rounded-full shadow-lg"
+                      : "bg-background/50 hover:bg-background/70 w-3 h-3 rounded-full"
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Swipe Hint */}
+            <div className="md:hidden mt-8 text-center">
+              <p className="text-background/70 font-lora text-sm drop-shadow">
+                {language === "de" ? "← Wischen →" : "← Swipe →"}
+              </p>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Gallery Grid - Immersive Masonry Layout */}
-      <section className="py-16 md:py-28 px-4">
-        <div className="container mx-auto max-w-7xl">
-          {/* Masonry-style grid with varying sizes */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {galleryImages.map((image, index) => {
-              // Define different aspect ratios and spans for visual interest
-              const isLarge = image.size === "large";
-              const isMedium = image.size === "medium";
-              const isSmall = image.size === "small";
-              
-              return (
-                <div
-                  key={index}
-                  className={`group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-700 cursor-pointer
-                    ${isLarge ? "col-span-2 row-span-2" : ""}
-                    ${isMedium ? "col-span-1 row-span-1" : ""}
-                    ${isSmall ? "col-span-1 row-span-1" : ""}
-                  `}
-                  style={{ 
-                    animation: `smooth-reveal 1800ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`,
-                    animationDelay: `${index * 80}ms`,
-                    opacity: 0
-                  }}
-                >
-                  <div className="relative w-full h-full min-h-[200px] md:min-h-[250px]">
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-110 group-hover:brightness-110"
-                      loading="lazy"
-                    />
-                    {/* Gradient overlay on hover with smooth transition */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
-                    
-                    {/* Image caption - appears on hover */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-700">
-                      <p className="text-background font-lora text-sm md:text-base font-medium drop-shadow-lg">
-                        {image.alt}
-                      </p>
-                    </div>
-                    
-                    {/* Decorative corner accent */}
-                    <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {/* Mobile Touch Navigation Zones */}
+        <div className="md:hidden absolute inset-0 z-20 flex">
+          <button
+            onClick={prevImage}
+            className="flex-1 opacity-0 active:opacity-10 active:bg-background/20 transition-opacity"
+            aria-label="Previous image"
+          />
+          <button
+            onClick={nextImage}
+            className="flex-1 opacity-0 active:opacity-10 active:bg-background/20 transition-opacity"
+            aria-label="Next image"
+          />
         </div>
       </section>
 
