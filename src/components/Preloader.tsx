@@ -36,7 +36,7 @@ export const Preloader = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#F5F1E3] transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-background transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
