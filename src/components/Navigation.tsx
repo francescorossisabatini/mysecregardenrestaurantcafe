@@ -128,6 +128,14 @@ export const Navigation = () => {
             {/* Logo - Left on Desktop */}
             <Link 
               to="/"
+              onClick={(e) => {
+                // If already on home page, scroll to top
+                if (location.pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+                // Otherwise Link will handle navigation to home
+              }}
               className="transition-all duration-300"
             >
               <Logo className="w-8 h-8" showTagline={false} />
