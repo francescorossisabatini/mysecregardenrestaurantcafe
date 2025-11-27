@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { BotanicalDecoration } from "./BotanicalDecoration";
 import { WeeklyMenuModal } from "./WeeklyMenuModal";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
 
@@ -123,15 +122,6 @@ export const FullMenu = () => {
       <section id="full-menu" className="relative bg-background py-16 md:py-20">
 
         <div className="container mx-auto max-w-6xl px-4 relative">
-          <BotanicalDecoration
-            variant="flower"
-            className="absolute top-10 right-10 w-32 h-32 text-primary/10"
-          />
-          <BotanicalDecoration
-            variant="leaf"
-            className="absolute bottom-10 left-10 w-28 h-28 text-accent/10"
-          />
-
           {/* Wochenkarte clickable card section */}
           <div className="max-w-4xl mx-auto mb-16 md:mb-24">
             <div className="text-center mb-8">
@@ -148,72 +138,36 @@ export const FullMenu = () => {
           {/* Clickable menu card with Sri Chinmoy artwork */}
           <div
             onClick={() => setIsMenuModalOpen(true)}
-            className="relative border-4 border-primary/40 rounded-2xl shadow-elevated cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:border-primary/60 overflow-hidden group"
+            className="relative border-2 border-primary/30 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary/50 group"
             style={{ aspectRatio: '16 / 10' }}
           >
             {/* Background image - Sri Chinmoy's floral artwork */}
             <div 
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${sriChinmoyFlowers})` }}
             />
             
-            {/* Artistic gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-background/70 via-background/85 to-primary/90" />
+            {/* Subtle overlay */}
+            <div className="absolute inset-0 bg-background/75" />
 
-            {/* Decorative animated elements */}
-            <div className="absolute top-4 left-4 w-20 h-20 opacity-20 animate-float-slow">
-              <svg viewBox="0 0 100 100" className="text-accent">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="2" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
-            </div>
-            
-            <div className="absolute bottom-4 right-4 w-24 h-24 opacity-20 animate-float-medium">
-              <svg viewBox="0 0 100 100" className="text-primary">
-                <path d="M50 10 Q 70 30 65 60 Q 60 80 50 90 Q 40 80 35 60 Q 30 30 50 10" fill="none" stroke="currentColor" strokeWidth="2" />
-              </svg>
-            </div>
-
-            {/* Content - Artistic Layout */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center space-y-4">
-              {/* Decorative top line */}
-              <div className="flex items-center gap-3 opacity-60">
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-                <span className="text-xs md:text-sm text-primary/90 font-semibold uppercase tracking-[0.3em]">
-                  {language === "de" ? "Diese Woche" : "This Week"}
-                </span>
-                <div className="w-12 h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-              </div>
+            {/* Content - Minimal Layout */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center space-y-6">
+              {/* Small label */}
+              <p className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest opacity-60">
+                {language === "de" ? "Diese Woche" : "This Week"}
+              </p>
               
-              {/* Main Title - Artistic with gradient */}
-              <div className="relative">
-                <h3 className="text-5xl md:text-7xl lg:text-8xl font-caveat font-bold mb-2 relative">
-                  <span className="absolute inset-0 text-primary blur-sm opacity-50"></span>
-                  <span className="relative bg-gradient-to-br from-primary via-accent to-primary bg-clip-text text-transparent drop-shadow-lg">
-                    {language === "de" ? "Wochenkarte" : "Weekly Menu"}
-                  </span>
-                </h3>
-                
-                {/* Decorative flourish under title */}
-                <div className="flex justify-center items-center gap-2 mt-2">
-                  <div className="w-6 h-px bg-accent"></div>
-                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                  <div className="w-12 h-px bg-gradient-to-r from-accent to-primary"></div>
-                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse delay-150"></div>
-                  <div className="w-6 h-px bg-primary"></div>
-                </div>
-              </div>
+              {/* Main Title - Simple */}
+              <h3 className="text-5xl md:text-7xl font-caveat text-primary">
+                {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+              </h3>
               
-              {/* Subtitle with icon */}
-              <div className="flex items-center gap-3 bg-background/20 backdrop-blur-sm px-6 py-3 rounded-full border border-primary/20">
-                <span className="text-2xl animate-bounce">✨</span>
-                <p className="text-sm md:text-base text-foreground/90 font-lora font-medium">
-                  {language === "de" 
-                    ? "Tippe für das komplette Menü" 
-                    : "Tap for the complete menu"}
-                </p>
-                <span className="text-2xl animate-bounce delay-300">✨</span>
-              </div>
+              {/* Subtitle */}
+              <p className="text-sm md:text-base text-foreground/70 font-lora">
+                {language === "de" 
+                  ? "Tippe für das komplette Menü" 
+                  : "Tap for the complete menu"}
+              </p>
             </div>
           </div>
           </div>
