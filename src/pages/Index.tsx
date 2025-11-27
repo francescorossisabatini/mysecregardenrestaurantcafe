@@ -22,7 +22,7 @@ const Index = () => {
       setTimeout(() => {
         const element = document.getElementById("full-menu");
         if (element) {
-          const offset = 40; // navbar height (slightly smaller so section scrolls a bit more down)
+          const offset = -20; // negative offset to scroll section more into view
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - offset;
           window.scrollTo({
