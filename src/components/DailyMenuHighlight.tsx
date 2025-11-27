@@ -31,7 +31,7 @@ export const DailyMenuHighlight = () => {
   return (
     <section
       id="daily-menu"
-      className="relative py-12 sm:py-16 md:py-20 overflow-hidden bg-cream"
+      className="relative py-16 md:py-20 overflow-hidden bg-cream"
     >
       {/* Overlay - lighter to see images better */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
