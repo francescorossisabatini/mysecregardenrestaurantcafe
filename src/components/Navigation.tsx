@@ -65,64 +65,48 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-background/95 backdrop-blur-md shadow-md py-1.5"
-            : "bg-background/40 backdrop-blur-sm py-2"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 bg-[#243260] shadow-lg py-3"
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Mobile Menu Button - Left */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation ${
-                isScrolled 
-                  ? "text-foreground hover:bg-muted" 
-                  : "text-primary-foreground hover:bg-primary-foreground/10"
-              }`}
+              className="p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation text-white hover:bg-white/10"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            {/* Desktop Navigation - Center/Left (hidden on mobile) */}
-            <div className="hidden lg:flex items-center gap-6">
+            {/* Logo - Left on Desktop */}
+            <Link 
+              to="/"
+              className="transition-all duration-300"
+            >
+              <Logo className="w-11 h-11" />
+            </Link>
+
+            {/* Desktop Navigation - Right (hidden on mobile) */}
+            <div className="hidden lg:flex items-center gap-8">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isScrolled ? "text-foreground" : "text-primary-foreground"
-                  }`}
+                  className="text-sm font-medium text-white/90 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 hover:after:w-full py-1"
                 >
                   {item.label}
                 </a>
               ))}
-            </div>
-
-            {/* Logo & Language - Right */}
-            <div className="flex items-center gap-3">
               <Link
                 to="/privacy"
-                className={`hidden lg:block text-sm font-medium transition-colors hover:text-primary ${
-                  isScrolled ? "text-foreground" : "text-primary-foreground"
-                }`}
+                className="text-sm font-medium text-white/90 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 hover:after:w-full py-1"
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
-              <div className="relative z-10">
+              <div className="relative z-10 ml-2">
                 <LanguageSwitcher />
               </div>
-              <Link 
-                to="/"
-                className={`transition-all duration-300 ${
-                  isScrolled ? "scale-90" : "scale-100"
-                }`}
-              >
-                <Logo className={isScrolled ? "w-10 h-10" : "w-12 h-12"} />
-              </Link>
             </div>
           </div>
         </div>

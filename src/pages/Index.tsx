@@ -8,6 +8,7 @@ import { Reviews } from "@/components/Reviews";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { Preloader } from "@/components/Preloader";
 import { PhotoStripe } from "@/components/PhotoStripe";
 import foodDetailImg from "@/assets/food-detail-real.jpg";
 import poppyImg from "@/assets/poppy-flower-real.jpg";
@@ -15,6 +16,7 @@ import poppyImg from "@/assets/poppy-flower-real.jpg";
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <Preloader />
       <Navigation />
       <Hero />
       <DailyMenuHighlight />
