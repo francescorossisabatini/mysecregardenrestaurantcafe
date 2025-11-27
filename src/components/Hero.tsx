@@ -96,7 +96,7 @@ export const Hero = () => {
               onClick={() => scrollToSection("full-menu")}
               className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-2xl font-semibold text-base md:text-lg px-8 py-6 border-2 border-accent"
             >
-              {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+              {language === "de" ? "Speisekarte" : "Full Menu"}
             </Button>
           </div>
 

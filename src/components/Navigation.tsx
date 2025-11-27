@@ -27,7 +27,7 @@ export const Navigation = () => {
     },
     { 
       href: "#full-menu", 
-      label: language === "de" ? "Wochenkarte" : "Weekly Menu" 
+      label: language === "de" ? "Speisekarte" : "Full Menu" 
     },
     { 
       href: "#about", 
