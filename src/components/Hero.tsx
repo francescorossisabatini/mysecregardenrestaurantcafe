@@ -21,7 +21,11 @@ const heroImages = [
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(2); // Start from third image (heroGarden)
-  const [showContent, setShowContent] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showAddress, setShowAddress] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
+  const [showDots, setShowDots] = useState(false);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -37,22 +41,32 @@ export const Hero = () => {
   }, []);
 
   useEffect(() => {
-    // Show content after a delay or on scroll
+    // Staggered animations - each element appears with a delay
+    const timer1 = setTimeout(() => setShowTitle(true), 800);
+    const timer2 = setTimeout(() => setShowSubtitle(true), 1400);
+    const timer3 = setTimeout(() => setShowAddress(true), 2000);
+    const timer4 = setTimeout(() => setShowButtons(true), 2600);
+    const timer5 = setTimeout(() => setShowDots(true), 3200);
+
+    // Also trigger on scroll
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        setShowContent(true);
+        setShowTitle(true);
+        setShowSubtitle(true);
+        setShowAddress(true);
+        setShowButtons(true);
+        setShowDots(true);
       }
     };
-
-    // Also show content after a delay even without scroll
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 5500); // After navbar appears
 
     window.addEventListener('scroll', handleScroll);
     
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      clearTimeout(timer4);
+      clearTimeout(timer5);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -84,31 +98,41 @@ export const Hero = () => {
       {/* Subtle overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
-      {/* Content - centered with slow, delicate reveal */}
+      {/* Content - centered with smooth, staggered reveal */}
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
-        <div className={`max-w-3xl mx-auto text-center space-y-6 md:space-y-12 transition-all duration-[2500ms] ease-out ${
-          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        }`}>
-          {/* Restaurant name with handwriting style */}
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight">
+        <div className="max-w-3xl mx-auto text-center space-y-6 md:space-y-12">
+          {/* Restaurant name with handwriting style - appears first */}
+          <h1 className={`text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight transition-all duration-[2000ms] ${
+            showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             My Secret Garden
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-lora text-background drop-shadow-xl">
+          {/* Subtitle - appears second */}
+          <p className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
+            showSubtitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             {language === "de"
               ? "Vegan & Vegetarische Soul Food in Wien"
               : "Vegan & Vegetarian Soul Food in Vienna"}
           </p>
 
-          {/* Address */}
-          <p className="text-base sm:text-lg md:text-xl font-lora text-background/95 drop-shadow-lg">
+          {/* Address - appears third */}
+          <p className={`text-base sm:text-lg md:text-xl font-lora text-background/95 drop-shadow-lg transition-all duration-[2000ms] ${
+            showAddress ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             {language === "de" ? "Im Raimundhof" : "Inside Raimundhof"} –
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons - Minimal & Delicate */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-12 max-w-xl mx-auto">
+          {/* CTA Buttons - appear fourth */}
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center pt-12 max-w-xl mx-auto transition-all duration-[2000ms] ${
+            showButtons ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             {/* PRIMARY CTA - Anrufen */}
             <Button
               size="lg"
@@ -140,8 +164,11 @@ export const Hero = () => {
             </Button>
           </div>
 
-          {/* Carousel dots */}
-          <div className="flex gap-3 justify-center pt-8">
+          {/* Carousel dots - appear last */}
+          <div className={`flex gap-3 justify-center pt-8 transition-all duration-[2000ms] ${
+            showDots ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             {heroImages.map((_, index) => (
               <button
                 key={index}
