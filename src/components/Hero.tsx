@@ -19,6 +19,17 @@ const heroImages = [
   heroInterior,
 ];
 
+// Position optimization for mobile - ensures subjects are properly centered
+const imagePositions = [
+  "center 40%", // entranceGarden - garden entrance
+  "center center", // minnesotaBowl - food bowl
+  "center 45%", // heroGarden - garden view
+  "center center", // koreanBowl - food bowl
+  "center center", // heroFood - food bowl
+  "center center", // alpenpolenta - food
+  "center 55%", // heroInterior - interior view
+];
+
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(2); // Start from third image (heroGarden)
   const [showTitle, setShowTitle] = useState(false);
@@ -90,7 +101,7 @@ export const Hero = () => {
           style={{
             backgroundImage: `url(${img})`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundPosition: imagePositions[index],
           }}
         />
       ))}
