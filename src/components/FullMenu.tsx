@@ -120,7 +120,7 @@ export const FullMenu = () => {
         menu={menu}
       />
       
-      <section id="full-menu" className="relative bg-gradient-subtle py-16 md:py-24">
+      <section id="full-menu" className="relative bg-background py-16 md:py-20">
 
         <div className="container mx-auto max-w-6xl px-4 relative">
           <BotanicalDecoration

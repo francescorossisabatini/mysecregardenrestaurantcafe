@@ -10,9 +10,7 @@ import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { Preloader } from "@/components/Preloader";
-import { PhotoStripe } from "@/components/PhotoStripe";
-import foodDetailImg from "@/assets/food-detail-real.jpg";
-import poppyImg from "@/assets/poppy-flower-real.jpg";
+import { SectionDivider } from "@/components/SectionDivider";
 
 const Index = () => {
   const location = useLocation();
@@ -38,14 +36,37 @@ const Index = () => {
     <div className="min-h-screen">
       <Preloader />
       <Navigation />
+      
+      {/* Hero Section */}
       <Hero />
+      
+      {/* Daily Menu */}
       <DailyMenuHighlight />
-      <PhotoStripe imageUrl={foodDetailImg} variant="green" />
+      
+      {/* Modern Section Divider */}
+      <SectionDivider variant="accent" />
+      
+      {/* Full Menu / Wochenkarte */}
       <FullMenu />
-      <PhotoStripe imageUrl={poppyImg} variant="blue" />
+      
+      {/* Subtle Divider */}
+      <SectionDivider variant="default" />
+      
+      {/* Reviews */}
       <Reviews />
+      
+      {/* Elegant Divider */}
+      <SectionDivider variant="subtle" />
+      
+      {/* About Section */}
       <AboutSection />
+      
+      {/* Products */}
       <ProductsNarrative />
+      
+      {/* Contact with natural transition */}
+      <SectionDivider variant="accent" showDecoration={false} />
+      
       <Contact />
       <Footer />
     </div>

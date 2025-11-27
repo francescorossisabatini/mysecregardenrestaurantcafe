@@ -14,7 +14,7 @@ export const ProductsNarrative = () => {
   return (
     <section 
       ref={ref as any}
-      className={`relative overflow-hidden pb-12 sm:pb-16 md:pb-20 transition-all duration-1000 ${
+      className={`relative overflow-hidden py-16 md:py-20 transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{

@@ -9,7 +9,7 @@ export const Contact = () => {
   const { t } = useLanguage();
   
   return (
-    <section id="contact" className="py-16 md:py-24 bg-gradient-subtle relative overflow-hidden">
+    <section id="contact" className="py-16 md:py-20 bg-gradient-subtle relative overflow-hidden">
       {/* Decorative Flowers and Lines - Maggiore contrasto */}
       <div className="absolute top-0 left-0 right-0 h-24 text-emerald-600 opacity-60">
         <ContinuousVine className="w-full h-full" />
