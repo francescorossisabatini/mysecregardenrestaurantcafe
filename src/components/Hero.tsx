@@ -43,8 +43,8 @@ export const Hero = () => {
         />
       ))}
 
-      {/* Subtle dark overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/45" />
+      {/* Stronger overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/40 to-black/50" />
 
       {/* Content - centered */}
       <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
