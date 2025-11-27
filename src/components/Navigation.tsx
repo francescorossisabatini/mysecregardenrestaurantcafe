@@ -6,7 +6,8 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Menu, X } from "lucide-react";
 
 export const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
@@ -14,11 +15,23 @@ export const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      const heroHeight = window.innerHeight; // 100vh
+      
+      // Show navbar when scrolled past hero section (going down)
+      // Hide navbar when back in hero section
+      if (currentScrollY > heroHeight * 0.8) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navItems = [
     // Primary navigation - most important
@@ -97,7 +110,9 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10 py-1.5"
+        className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10 py-1.5 transition-all duration-500 ease-in-out ${
+          showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
