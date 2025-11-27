@@ -31,7 +31,7 @@ const imagePositions = [
 ];
 
 export const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(2); // Start from third image (heroGarden)
+  const [currentImage, setCurrentImage] = useState(1); // Start from second image (minnesotaBowl)
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
