@@ -9,12 +9,12 @@ export const Preloader = () => {
     // Show content after a brief delay
     const contentTimer = setTimeout(() => {
       setShowContent(true);
-    }, 200);
+    }, 300);
 
-    // Start fade out after 2 seconds
+    // Start fade out after 3.5 seconds to allow all transitions to load
     const fadeOutTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 2200);
+    }, 3500);
 
     return () => {
       clearTimeout(contentTimer);
