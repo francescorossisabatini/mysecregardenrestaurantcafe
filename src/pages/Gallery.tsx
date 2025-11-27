@@ -25,18 +25,22 @@ import team from "@/assets/team-real.jpg";
 const Gallery = () => {
   const { language } = useLanguage();
 
+  // Gallery images with layout sizes for masonry grid
   const galleryImages = [
-    { src: entranceGarden, alt: "Entrance Garden" },
-    { src: foodBowl, alt: "Food Bowl" },
-    { src: koreanBowl, alt: "Korean Bowl" },
-    { src: minnesotaBowl, alt: "Minnesota Bowl" },
-    { src: alpenpolenta, alt: "Alpenpolenta" },
-    { src: foodDetail, alt: "Food Detail" },
-    { src: heroFood, alt: "Signature Dish" },
-    { src: foodGarden, alt: "Garden Food" },
-    { src: garden, alt: "Secret Garden" },
-    { src: interior, alt: "Interior" },
-    { src: poppyFlower, alt: "Poppy Flower" },
+    { src: entranceGarden, alt: "Entrance Garden", size: "large" },
+    { src: foodBowl, alt: "Food Bowl", size: "medium" },
+    { src: garden, alt: "Secret Garden", size: "large" },
+    { src: koreanBowl, alt: "Korean Bowl", size: "medium" },
+    { src: interior, alt: "Interior", size: "large" },
+    { src: minnesotaBowl, alt: "Minnesota Bowl", size: "medium" },
+    { src: foodDetail, alt: "Food Detail", size: "small" },
+    { src: poppyFlower, alt: "Poppy Flower", size: "small" },
+    { src: alpenpolenta, alt: "Alpenpolenta", size: "medium" },
+    { src: heroFood, alt: "Signature Dish", size: "large" },
+    { src: foodGarden, alt: "Garden Food", size: "medium" },
+    { src: heroGarden, alt: "Garden View", size: "large" },
+    { src: heroInterior, alt: "Interior Atmosphere", size: "medium" },
+    { src: team, alt: "Our Team", size: "small" },
   ];
 
   return (
@@ -61,29 +65,54 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Gallery Grid - Gestalt: Proximity & Similarity */}
+      {/* Gallery Grid - Immersive Masonry Layout */}
       <section className="py-16 md:py-28 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {galleryImages.map((image, index) => (
-              <div
-                key={index}
-                className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-[2000ms]"
-                style={{ 
-                  animation: `smooth-reveal 1800ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`,
-                  animationDelay: `${index * 100}ms`,
-                  opacity: 0
-                }}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            ))}
+          {/* Masonry-style grid with varying sizes */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            {galleryImages.map((image, index) => {
+              // Define different aspect ratios and spans for visual interest
+              const isLarge = image.size === "large";
+              const isMedium = image.size === "medium";
+              const isSmall = image.size === "small";
+              
+              return (
+                <div
+                  key={index}
+                  className={`group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-700 cursor-pointer
+                    ${isLarge ? "col-span-2 row-span-2" : ""}
+                    ${isMedium ? "col-span-1 row-span-1" : ""}
+                    ${isSmall ? "col-span-1 row-span-1" : ""}
+                  `}
+                  style={{ 
+                    animation: `smooth-reveal 1800ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`,
+                    animationDelay: `${index * 80}ms`,
+                    opacity: 0
+                  }}
+                >
+                  <div className="relative w-full h-full min-h-[200px] md:min-h-[250px]">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-110 group-hover:brightness-110"
+                      loading="lazy"
+                    />
+                    {/* Gradient overlay on hover with smooth transition */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+                    
+                    {/* Image caption - appears on hover */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-700">
+                      <p className="text-background font-lora text-sm md:text-base font-medium drop-shadow-lg">
+                        {image.alt}
+                      </p>
+                    </div>
+                    
+                    {/* Decorative corner accent */}
+                    <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
