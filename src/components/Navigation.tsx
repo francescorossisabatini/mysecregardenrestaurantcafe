@@ -21,23 +21,35 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
+    // Primary navigation - most important
+    { 
+      href: "#full-menu", 
+      label: language === "de" ? "Speisekarte" : "Menu",
+      isPrimary: true
+    },
+    // Secondary navigation - content sections
     { 
       href: "/gallery", 
       label: language === "de" ? "Galerie" : "Gallery",
-      isExternal: true
+      isExternal: true,
+      isSecondary: true
     },
     { 
       href: "#about", 
-      label: language === "de" ? "Über uns" : "About us" 
+      label: language === "de" ? "Über uns" : "About",
+      isSecondary: true
     },
     { 
       href: "#contact", 
-      label: language === "de" ? "Kontakt" : "Contact" 
+      label: language === "de" ? "Kontakt" : "Contact",
+      isSecondary: true
     },
+    // Tertiary navigation - external/auxiliary
     {
       href: "https://www.instagram.com/mysecretgardencafewien/",
       label: "Instagram",
-      isExternal: true
+      isExternal: true,
+      isTertiary: true
     },
   ];
 
@@ -99,18 +111,37 @@ export const Navigation = () => {
               <Logo className="w-11 h-11" showTagline={false} />
             </Link>
 
-            {/* Desktop Navigation - Right (hidden on mobile) */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
-                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
-                >
-                  {item.label}
-                </a>
-              ))}
+            {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
+            <div className="hidden lg:flex items-center gap-6">
+              {navItems.map((item) => {
+                // Gestalt: Similarity & Emphasis through visual weight
+                const baseClasses = "transition-colors relative py-1";
+                const afterClasses = "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:transition-all after:duration-300 hover:after:w-full";
+                
+                let itemClasses = baseClasses + " " + afterClasses;
+                
+                if (item.isPrimary) {
+                  // Primary: Bold, larger, primary color
+                  itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:bg-primary";
+                } else if (item.isSecondary) {
+                  // Secondary: Medium weight, normal size
+                  itemClasses += " text-sm font-semibold text-foreground/80 hover:text-foreground after:bg-foreground";
+                } else if (item.isTertiary) {
+                  // Tertiary: Light weight, smaller, muted
+                  itemClasses += " text-sm font-medium text-muted-foreground hover:text-foreground after:bg-muted-foreground";
+                }
+                
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
+                    className={itemClasses}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               <Link
                 to="/privacy"
                 className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
@@ -141,16 +172,29 @@ export const Navigation = () => {
       >
         <div className="flex flex-col h-full pt-16 pb-6 px-6">
           <nav className="flex-1 space-y-2">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
-                className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              // Gestalt hierarchy for mobile menu
+              let itemClasses = "block py-3 px-4 text-lg rounded-lg transition-all duration-200 text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60";
+              
+              if (item.isPrimary) {
+                itemClasses += " font-bold text-xl border-l-4 border-primary";
+              } else if (item.isSecondary) {
+                itemClasses += " font-semibold";
+              } else if (item.isTertiary) {
+                itemClasses += " font-medium text-base opacity-80";
+              }
+              
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
+                  className={itemClasses}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
             <Link
               to="/privacy"
               className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"

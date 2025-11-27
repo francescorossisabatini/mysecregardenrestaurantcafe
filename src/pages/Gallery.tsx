@@ -35,9 +35,7 @@ const Gallery = () => {
     { src: heroFood, alt: "Signature Dish" },
     { src: foodGarden, alt: "Garden Food" },
     { src: garden, alt: "Secret Garden" },
-    { src: heroGarden, alt: "Garden View" },
     { src: interior, alt: "Interior" },
-    { src: heroInterior, alt: "Restaurant Interior" },
     { src: poppyFlower, alt: "Poppy Flower" },
   ];
 
