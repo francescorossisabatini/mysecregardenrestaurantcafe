@@ -130,13 +130,13 @@ export const Navigation = () => {
                 const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
                   ? location.pathname === item.href
                   : false;
-                
+
                 // Gestalt: Similarity & Emphasis through visual weight
                 const baseClasses = "transition-colors relative py-1";
                 const afterClasses = "after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-300";
-                
+
                 let itemClasses = baseClasses + " " + afterClasses;
-                
+
                 if (item.isPrimary) {
                   // Primary: Bold, larger, primary color
                   if (isActive) {
@@ -144,7 +144,20 @@ export const Navigation = () => {
                   } else {
                     itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
                   }
-                } else if (item.isSecondary) {
+
+                  // Speisekarte: use native hash navigation via Link
+                  return (
+                    <Link
+                      key={item.href}
+                      to="/#full-menu"
+                      className={itemClasses}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
+                if (item.isSecondary) {
                   // Secondary: Medium weight, normal size
                   if (isActive) {
                     itemClasses += " text-sm font-semibold text-foreground after:w-full after:h-0.5 after:bg-foreground";
@@ -159,7 +172,7 @@ export const Navigation = () => {
                     itemClasses += " text-sm font-medium text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
                   }
                 }
-                
+
                 return (
                   <>
                     {item.href.startsWith('http') ? (
@@ -264,6 +277,16 @@ export const Navigation = () => {
                     >
                       {item.label}
                     </a>
+                  ) : item.isPrimary ? (
+                    // Primary item (Speisekarte) - use Link with hash
+                    <Link
+                      key={item.href}
+                      to="/#full-menu"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={itemClasses}
+                    >
+                      {item.label}
+                    </Link>
                   ) : item.href.startsWith('#') ? (
                     // Hash link - use <a> but with custom handler
                     <a
