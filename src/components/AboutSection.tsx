@@ -13,11 +13,6 @@ export const AboutSection = () => {
   const { language } = useLanguage();
   const { ref, isVisible } = useScrollReveal(0.1);
 
-  const sectionTitle = {
-    de: "Über uns & unsere Inspiration",
-    en: "About us & our Inspiration"
-  };
-
   const aboutRestaurant = {
     de: "My Secret Garden ist ein friedliches vegetarisches & veganes Restaurant im Raimundhof in Wien. Wir bieten eine entspannte Atmosphäre in einem ruhigen Innenhof-Garten und bereiten täglich frische, hausgemachte Gerichte mit natürlichen und biologischen Zutaten zu. Unsere Küche vereint einfache, nährende Speisen, die Körper und Geist stärken.",
     en: "My Secret Garden is a peaceful vegetarian & vegan restaurant inside Vienna's Raimundhof. We offer a relaxed atmosphere in a quiet courtyard garden and prepare fresh, homemade dishes daily with natural and organic ingredients. Our cuisine combines simple, nourishing meals that strengthen body and mind."
@@ -52,7 +47,7 @@ export const AboutSection = () => {
     <section 
       ref={ref as any}
       id="about" 
-      className={`relative overflow-hidden py-20 md:py-28 transition-all duration-[2000ms] ${
+      className={`relative overflow-hidden min-h-screen flex items-center transition-all duration-1000 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
@@ -60,65 +55,50 @@ export const AboutSection = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
-        transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       }}
     >
-      {/* Overlay - lighter to see images better */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/80 to-background/85" />
       
       {/* Spiritual animations */}
-      <SpiritualAnimations variant="butterfly" />
+      <SpiritualAnimations variant="butterfly" className="opacity-80" />
       
-      <div className="container mx-auto max-w-7xl px-4 relative z-10">
+      <div className="container mx-auto max-w-5xl py-20 px-4 md:px-8 relative z-10">
         {/* Title */}
-        <div className={`text-center mb-12 md:mb-20 transition-all duration-[1800ms] ${
-          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
-        }`}
-        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
-          <BotanicalDecoration 
-            variant="vine" 
-            className="w-48 sm:w-56 md:w-64 h-6 sm:h-7 md:h-8 mx-auto mb-4 md:mb-6 text-primary/20" 
-          />
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat font-bold text-primary leading-tight">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
             {language === "de" ? "Über uns" : "About us"}
           </h2>
         </div>
 
-        {/* About the Restaurant - Side by side layout */}
-        <div className={`grid md:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-24 items-center transition-all duration-[1800ms] delay-200 ${
-          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
-        }`}
-        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
+        {/* Grid Layout - Minimal and Open */}
+        <div className="grid md:grid-cols-5 gap-12 items-center mb-20">
           {/* Image */}
-          <div className="order-2 md:order-1">
-            <Card className="overflow-hidden shadow-elevated border-2 border-primary/20">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={gardenImg}
-                  alt="Secret Garden Restaurant Interior"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            </Card>
+          <div className="md:col-span-2">
+            <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-2xl">
+              <img
+                src={gardenImg}
+                alt="Secret Garden Restaurant"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
           </div>
 
           {/* Content */}
-          <div className="order-1 md:order-2">
-            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-5 md:mb-7 leading-tight">
+          <div className="md:col-span-3 space-y-8">
+            <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary">
               {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
             </h3>
-            <p className="font-lora text-base sm:text-lg md:text-xl leading-relaxed text-foreground mb-8">
+            <p className="font-lora text-lg leading-relaxed text-foreground/90">
               {aboutRestaurant[language]}
             </p>
 
-            {/* Values */}
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+            {/* Values - Simple list */}
+            <div className="space-y-4">
               {values.map((value, index) => (
-                <div key={index} className="flex items-center gap-3 bg-card/50 p-3 rounded-lg border border-border">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <value.icon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
-                  </div>
-                  <span className="font-lora text-sm sm:text-base text-foreground">
+                <div key={index} className="flex items-center gap-4">
+                  <value.icon className="w-6 h-6 text-accent flex-shrink-0" />
+                  <span className="font-lora text-lg text-foreground/90">
                     {value.title[language]}
                   </span>
                 </div>
@@ -127,60 +107,42 @@ export const AboutSection = () => {
           </div>
         </div>
 
-        {/* Our Inspiration: Sri Chinmoy - Card layout */}
-        <Card className={`bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-primary/20 p-8 sm:p-10 md:p-16 shadow-elevated relative overflow-hidden transition-all duration-[1800ms] delay-400 ${
-          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
-        }`}
-        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
-          <BotanicalDecoration 
-            variant="flower" 
-            className="absolute top-4 right-4 w-20 h-20 text-primary/10" 
-          />
-
-          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-8 sm:mb-10 text-center leading-tight">
-            {language === "de" ? "Unsere Inspiration: Sri Chinmoy" : "Our Inspiration: Sri Chinmoy"}
-          </h3>
-
-          <div className="grid md:grid-cols-[200px_1fr] lg:grid-cols-[220px_1fr] gap-8 sm:gap-10 items-start">
-            {/* Sri Chinmoy portrait */}
-            <div className="mx-auto md:mx-0">
-              <Card className="overflow-hidden border-2 border-primary/30 shadow-lg">
-                <div className="aspect-[3/4] overflow-hidden">
-                  <img
-                    src={sriChinmoyImg}
-                    alt="Sri Chinmoy"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </Card>
-              <p className="text-center mt-3 text-sm font-lora text-muted-foreground italic">
-                Sri Chinmoy<br />
-                1931-2007
-              </p>
+        {/* Sri Chinmoy Section */}
+        <div className="grid md:grid-cols-5 gap-12 items-start mb-20">
+          {/* Portrait */}
+          <div className="md:col-span-2 text-center md:text-left">
+            <div className="aspect-[3/4] overflow-hidden rounded-lg shadow-2xl inline-block">
+              <img
+                src={sriChinmoyImg}
+                alt="Sri Chinmoy"
+                className="w-full h-full object-cover"
+              />
             </div>
-
-            {/* Inspiration text and quote */}
-            <div>
-              <p className="font-lora text-base sm:text-lg md:text-xl leading-relaxed text-foreground mb-8">
-                {aboutInspiration[language]}
-              </p>
-
-              {/* Quote box */}
-              <Card className="bg-card border-2 border-primary/20 p-6 sm:p-8 relative overflow-hidden">
-                <BotanicalDecoration 
-                  variant="flower" 
-                  className="absolute top-2 right-2 w-12 h-12 text-primary/10" 
-                />
-                <p className="font-lora text-lg sm:text-xl md:text-2xl italic text-foreground mb-4 relative z-10 leading-relaxed">
-                  {quote[language]}
-                </p>
-                <p className="font-caveat text-2xl sm:text-3xl text-primary relative z-10">
-                  – Sri Chinmoy
-                </p>
-              </Card>
-            </div>
+            <p className="mt-4 text-sm font-lora text-muted-foreground italic">
+              Sri Chinmoy · 1931-2007
+            </p>
           </div>
-        </Card>
+
+          {/* Inspiration Text */}
+          <div className="md:col-span-3 space-y-8">
+            <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent">
+              {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
+            </h3>
+            <p className="font-lora text-lg leading-relaxed text-foreground/90">
+              {aboutInspiration[language]}
+            </p>
+          </div>
+        </div>
+
+        {/* Quote Section - Centered */}
+        <div className="text-center max-w-3xl mx-auto">
+          <blockquote className="text-3xl md:text-4xl font-caveat text-primary leading-relaxed italic">
+            {quote[language]}
+          </blockquote>
+          <p className="mt-6 text-lg text-muted-foreground font-lora">
+            — Sri Chinmoy
+          </p>
+        </div>
       </div>
     </section>
   );

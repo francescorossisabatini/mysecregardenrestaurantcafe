@@ -14,8 +14,8 @@ export const ProductsNarrative = () => {
   return (
     <section 
       ref={ref as any}
-      className={`relative overflow-hidden py-16 md:py-20 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      className={`relative overflow-hidden min-h-screen flex items-center transition-all duration-1000 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
         backgroundImage: `url(${koreanBowl})`,
@@ -24,83 +24,69 @@ export const ProductsNarrative = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay - lighter to see images better */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/80 to-background/85" />
       
       {/* Spiritual animations */}
-      <SpiritualAnimations variant="leaves" className="opacity-100" />
+      <SpiritualAnimations variant="leaves" className="opacity-80" />
       
-      <div className="container mx-auto max-w-7xl py-0 px-4 relative z-10">
+      <div className="container mx-auto max-w-5xl py-20 px-4 md:px-8 relative z-10">
         {/* Title */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-3 sm:mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
             {language === "de" ? "Unsere Produkte" : "Our Products"}
           </h2>
         </div>
 
-        {/* Side-by-side layout */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
-          {/* Content */}
-          <div className="order-2 md:order-1">
-            <Card className="bg-card/95 backdrop-blur-sm p-6 sm:p-8 shadow-elevated border-2 border-primary/10 relative">
-              <BotanicalDecoration 
-                variant="flower" 
-                className="absolute top-3 right-3 w-16 h-16 text-primary/10" 
+        {/* Grid Layout - Minimal */}
+        <div className="grid md:grid-cols-5 gap-12 items-center">
+          {/* Image - Larger on left */}
+          <div className="md:col-span-2">
+            <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-2xl">
+              <img
+                src={interiorImg}
+                alt="Secret Garden Restaurant Interior"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
-              
-              <div className="space-y-5 sm:space-y-6 relative z-10">
-                {/* Intro */}
-                <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground">
-                  {language === "de"
-                    ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
-                    : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
-                </p>
-
-                {/* Key Points */}
-                <div className="grid gap-3 sm:gap-4">
-                  {[
-                    {
-                      de: "Bio & regionale Zutaten",
-                      en: "Organic & regional ingredients"
-                    },
-                    {
-                      de: "Hausgemachte Zubereitungen",
-                      en: "Homemade preparations"
-                    },
-                    {
-                      de: "Natürliche Gewürze",
-                      en: "Natural spices"
-                    },
-                    {
-                      de: "Glutenfreie Optionen",
-                      en: "Gluten-free options"
-                    }
-                  ].map((point, index) => (
-                    <div key={index} className="flex items-center gap-3 bg-accent/5 p-3 rounded-lg border border-accent/20">
-                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                        <Leaf className="w-5 h-5 text-accent" />
-                      </div>
-                      <span className="font-lora text-sm sm:text-base text-foreground">
-                        {language === "de" ? point.de : point.en}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Card>
+            </div>
           </div>
 
-          {/* Image */}
-          <div className="order-1 md:order-2">
-            <Card className="overflow-hidden shadow-elevated border-2 border-accent/20">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={interiorImg}
-                  alt="Secret Garden Restaurant Interior"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            </Card>
+          {/* Content */}
+          <div className="md:col-span-3 space-y-8">
+            <p className="font-lora text-lg leading-relaxed text-foreground/90">
+              {language === "de"
+                ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
+                : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
+            </p>
+
+            {/* Key Points - Simple list */}
+            <div className="space-y-4">
+              {[
+                {
+                  de: "Bio & regionale Zutaten",
+                  en: "Organic & regional ingredients"
+                },
+                {
+                  de: "Hausgemachte Zubereitungen",
+                  en: "Homemade preparations"
+                },
+                {
+                  de: "Natürliche Gewürze",
+                  en: "Natural spices"
+                },
+                {
+                  de: "Glutenfreie Optionen",
+                  en: "Gluten-free options"
+                }
+              ].map((point, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <Leaf className="w-6 h-6 text-accent flex-shrink-0" />
+                  <span className="font-lora text-lg text-foreground/90">
+                    {language === "de" ? point.de : point.en}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
