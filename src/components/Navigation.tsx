@@ -22,10 +22,6 @@ export const Navigation = () => {
 
   const navItems = [
     { 
-      href: "#full-menu", 
-      label: language === "de" ? "Speisekarte" : "Full Menu" 
-    },
-    { 
       href: "/gallery", 
       label: language === "de" ? "Galerie" : "Gallery",
       isExternal: true
