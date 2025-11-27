@@ -55,15 +55,12 @@ export const Hero = () => {
         />
       ))}
 
-      {/* Stronger overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/45 to-black/55" />
-      
-      {/* Spiritual animations */}
-      <SpiritualAnimations variant="meditation-lines" />
+      {/* Subtle overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
       {/* Content - centered */}
-      <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-8 animate-fade-in">
+      <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
+        <div className="max-w-3xl mx-auto text-center space-y-6 md:space-y-12 animate-subtle-fade-in">
           {/* Restaurant name with handwriting style */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight">
             My Secret Garden
@@ -82,37 +79,37 @@ export const Hero = () => {
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons - Gestalt Hierarchy */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 max-w-3xl mx-auto">
-            {/* PRIMARY CTA - Anrufen (Most Important) - Gestalt: Prominence */}
+          {/* CTA Buttons - Minimal Hierarchy */}
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center pt-10 max-w-2xl mx-auto">
+            {/* PRIMARY CTA - Anrufen */}
             <Button
               size="lg"
               asChild
-              className="group relative bg-accent text-accent-foreground hover:bg-accent/90 shadow-elevated font-bold text-lg md:text-xl px-12 py-8 rounded-2xl transition-all duration-300 hover:scale-105 order-1 sm:order-2"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold text-lg px-10 py-6 rounded-lg transition-colors duration-200 order-1 sm:order-2"
             >
-              <a href="tel:+4315970547" className="flex items-center gap-3">
-                <span className="text-2xl">📞</span>
-                <span>{language === "de" ? "Jetzt Anrufen" : "Call Now"}</span>
+              <a href="tel:+4315970547" className="flex items-center gap-2">
+                <span className="text-xl">📞</span>
+                <span>{language === "de" ? "Anrufen" : "Call"}</span>
               </a>
             </Button>
             
-            {/* SECONDARY CTA - Tagesmenü - Gestalt: Similarity & Grouping */}
+            {/* SECONDARY CTA - Tagesmenü */}
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft font-semibold text-base md:text-lg px-8 py-6 rounded-xl transition-all duration-300 hover:scale-[1.02] order-2 sm:order-1"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-base px-8 py-5 rounded-lg transition-colors duration-200 order-2 sm:order-1"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
             
-            {/* TERTIARY CTA - Speisekarte - Gestalt: Background/Figure */}
+            {/* TERTIARY CTA - Speisekarte */}
             <Button
               size="lg"
               variant="outline"
               onClick={() => scrollToSection("full-menu")}
-              className="bg-background/40 backdrop-blur-sm text-foreground hover:bg-background/60 border-2 border-background/60 hover:border-background shadow-sm font-medium text-base px-6 py-5 rounded-lg transition-all duration-300 order-3 sm:order-3"
+              className="bg-background/30 backdrop-blur-sm text-foreground hover:bg-background/50 border border-background/50 font-normal text-base px-7 py-5 rounded-lg transition-colors duration-200 order-3 sm:order-3"
             >
-              {language === "de" ? "Speisekarte" : "Full Menu"}
+              {language === "de" ? "Speisekarte" : "Menu"}
             </Button>
           </div>
 

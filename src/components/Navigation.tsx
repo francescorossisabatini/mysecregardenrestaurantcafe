@@ -97,7 +97,7 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm shadow-sm border-b border-border/40 py-2"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/30 py-3"
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
@@ -230,7 +230,7 @@ export const Navigation = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 dark:from-emerald-900 dark:via-emerald-950 dark:to-teal-900 shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-background/95 backdrop-blur-lg border-r border-border/30 z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -242,22 +242,22 @@ export const Navigation = () => {
                 ? location.pathname === item.href
                 : false;
               
-              // Gestalt hierarchy for mobile menu
-              let itemClasses = "block py-3 px-4 text-lg rounded-lg transition-all duration-200 text-emerald-900 dark:text-emerald-100";
+              // Minimal hierarchy for mobile menu
+              let itemClasses = "block py-3 px-4 text-base rounded-md transition-colors duration-200 text-foreground";
               
               if (isActive) {
-                itemClasses += " bg-emerald-300/80 dark:bg-emerald-700/80";
+                itemClasses += " bg-muted/50";
               } else {
-                itemClasses += " hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60";
+                itemClasses += " hover:bg-muted/30";
               }
               
               if (item.isPrimary) {
-                 itemClasses += " font-bold text-xl border-l-4 border-primary";
-               } else if (item.isSecondary) {
-                 itemClasses += " font-semibold";
-               } else if (item.isTertiary) {
-                 itemClasses += " font-medium text-base opacity-80";
-               }
+                 itemClasses += " font-semibold text-lg";
+                } else if (item.isSecondary) {
+                 itemClasses += " font-medium";
+                } else if (item.isTertiary) {
+                 itemClasses += " font-normal opacity-70";
+                }
                
                return (
                  <>
@@ -309,7 +309,7 @@ export const Navigation = () => {
             })}
             <Link
               to="/privacy"
-              className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
+              className="block py-3 px-4 text-base font-normal text-foreground hover:bg-muted/30 rounded-md transition-colors duration-200 opacity-70"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {language === "de" ? "Datenschutz" : "Privacy"}
