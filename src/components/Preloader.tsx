@@ -10,7 +10,7 @@ export const Preloader = () => {
   useEffect(() => {
     if (!isVisible) return;
 
-    // Fade out after immersive moment
+    // Longer immersive moment - fade out after 4 seconds
     const fadeOutTimer = setTimeout(() => {
       setIsVisible(false);
       try {
@@ -18,7 +18,7 @@ export const Preloader = () => {
       } catch (e) {
         // ignore if storage not available
       }
-    }, 2000);
+    }, 4000);
 
     return () => {
       clearTimeout(fadeOutTimer);

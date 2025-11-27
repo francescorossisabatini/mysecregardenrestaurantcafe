@@ -21,10 +21,10 @@ const Index = () => {
     const preloaderShown = sessionStorage.getItem("preloader_shown");
     
     if (!preloaderShown) {
-      // Delay content appearance after preloader
+      // Delay content appearance after preloader - longer delay
       const timer = setTimeout(() => {
         setShowContent(true);
-      }, 2200); // Slightly after preloader fades
+      }, 4500); // After preloader fades + extra delay
       
       return () => clearTimeout(timer);
     } else {
@@ -54,13 +54,13 @@ const Index = () => {
     <div className="min-h-screen">
       <Preloader />
       
-      {/* Navigation with fade-in */}
-      <div className={`transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`}>
+      {/* Navigation with slow fade-in */}
+      <div className={`transition-all duration-2000 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
         <Navigation />
       </div>
       
-      {/* Hero Section with fade-in */}
-      <div className={`transition-opacity duration-1500 ${showContent ? "opacity-100" : "opacity-0"}`}>
+      {/* Hero Section with slower fade-in and slide up */}
+      <div className={`transition-all duration-2500 delay-300 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
         <Hero />
       </div>
       
