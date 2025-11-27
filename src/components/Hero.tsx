@@ -111,17 +111,17 @@ export const Hero = () => {
 
       {/* Content - centered with smooth, staggered reveal */}
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
-        <div className="max-w-3xl mx-auto text-center space-y-6 md:space-y-12">
-          {/* Restaurant name with handwriting style - appears first */}
-          <h1 className={`text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight transition-all duration-[2000ms] ${
+        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-8">
+          {/* Restaurant name with handwriting style - appears first - HERO ELEMENT */}
+          <h1 className={`text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-6 md:mb-10 transition-all duration-[2000ms] ${
             showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
             My Secret Garden
           </h1>
 
-          {/* Subtitle - appears second */}
-          <p className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
+          {/* Subtitle - appears second - SECONDARY */}
+          <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
             showSubtitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -130,8 +130,8 @@ export const Hero = () => {
               : "Vegan & Vegetarian Soul Food in Vienna"}
           </p>
 
-          {/* Address - appears third */}
-          <p className={`text-base sm:text-lg md:text-xl font-lora text-background/95 drop-shadow-lg transition-all duration-[2000ms] ${
+          {/* Address - appears third - TERTIARY */}
+          <p className={`text-sm sm:text-base md:text-lg font-lora text-background/90 drop-shadow-lg transition-all duration-[2000ms] ${
             showAddress ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
