@@ -168,14 +168,40 @@ export const Navigation = () => {
                 }
                 
                 return (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                    className={itemClasses}
-                  >
-                    {item.label}
-                  </a>
+                  <>
+                    {item.href.startsWith('http') ? (
+                      // External link - use <a> tag
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                        className={itemClasses}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.label}
+                      </a>
+                    ) : item.href.startsWith('#') ? (
+                      // Hash link - use <a> but with custom handler
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                        className={itemClasses}
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      // Internal page - use Link
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        className={itemClasses}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </>
                 );
               })}
               <Link
@@ -232,14 +258,41 @@ export const Navigation = () => {
               }
               
               return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                  className={itemClasses}
-                >
-                  {item.label}
-                </a>
+                <>
+                  {item.href.startsWith('http') ? (
+                    // External link - use <a> tag
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                      className={itemClasses}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.label}
+                    </a>
+                  ) : item.href.startsWith('#') ? (
+                    // Hash link - use <a> but with custom handler
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                      className={itemClasses}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    // Internal page - use Link
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={itemClasses}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </>
               );
             })}
             <Link
