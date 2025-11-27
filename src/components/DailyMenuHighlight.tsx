@@ -55,10 +55,10 @@ export const DailyMenuHighlight = () => {
           </p>
         </div>
 
-        {/* Menu Cards Grid */}
-        <div className="grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto">
+        {/* Menu Cards Grid - Horizontal on Desktop, Vertical on Mobile */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-6xl mx-auto">
           {/* Soup Card */}
-          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10">
+          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10 flex flex-col">
             <div className="flex items-start gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <BotanicalDecoration variant="leaf" className="w-6 h-6 text-primary" />
@@ -72,7 +72,7 @@ export const DailyMenuHighlight = () => {
                 </p>
               </div>
             </div>
-            <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+            <p className="font-lora text-sm sm:text-base text-foreground leading-relaxed flex-1">
               {todayMenu.soup[language]}
             </p>
             <p className="text-xs sm:text-sm text-muted-foreground mt-3 pt-3 border-t border-primary/20">
@@ -83,7 +83,7 @@ export const DailyMenuHighlight = () => {
           </div>
 
           {/* Green Dish Card */}
-          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-accent/20">
+          <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-accent/20 flex flex-col">
             <div className="flex items-start gap-3 mb-3">
               <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
                 <BotanicalDecoration variant="flower" className="w-6 h-6 text-accent" />
@@ -100,14 +100,14 @@ export const DailyMenuHighlight = () => {
                 <p className="text-lg sm:text-xl font-bold text-accent">15,20 €</p>
               </div>
             </div>
-            <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+            <p className="font-lora text-sm sm:text-base text-foreground leading-relaxed flex-1">
               {todayMenu.green[language]}
             </p>
           </div>
 
           {/* Blue Dish Card (if available) */}
           {todayMenu.blue && (todayMenu.blue.de || todayMenu.blue.en) && (
-            <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/20">
+            <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/20 flex flex-col">
               <div className="flex items-start gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <BotanicalDecoration variant="flower" className="w-6 h-6 text-primary" />
@@ -126,7 +126,7 @@ export const DailyMenuHighlight = () => {
                   <p className="text-lg sm:text-xl font-bold text-primary">15,20 €</p>
                 </div>
               </div>
-              <p className="font-lora text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
+              <p className="font-lora text-sm sm:text-base text-foreground leading-relaxed flex-1">
                 {todayMenu.blue[language]}
               </p>
               {todayMenu.blueNote && todayMenu.blueNote[language] && (
