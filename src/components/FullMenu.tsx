@@ -6,9 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { WeeklyMenuModal } from "./WeeklyMenuModal";
-import foodDetailImg from "@/assets/food-detail-real.jpg";
-import gardenImg from "@/assets/garden-real.jpg";
-import interiorImg from "@/assets/interior-real.jpg";
+import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
 
 export const FullMenu = () => {
   const { language } = useLanguage();
@@ -122,7 +120,7 @@ export const FullMenu = () => {
         menu={menu}
       />
       
-      <section id="full-menu" className="relative bg-background py-16 md:py-24">
+      <section id="full-menu" className="relative bg-gradient-subtle py-16 md:py-24">
 
         <div className="container mx-auto max-w-6xl px-4 relative">
           <BotanicalDecoration
@@ -147,39 +145,30 @@ export const FullMenu = () => {
               </p>
             </div>
 
-          {/* Clickable menu card */}
+          {/* Clickable menu card with Sri Chinmoy artwork */}
           <div
             onClick={() => setIsMenuModalOpen(true)}
-            className="relative bg-[#F5F1E3] border-4 border-primary/30 rounded-lg shadow-elevated cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl overflow-hidden"
+            className="relative border-4 border-primary/40 rounded-2xl shadow-vibrant cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:border-primary/60 overflow-hidden group"
             style={{ aspectRatio: '16 / 10' }}
           >
-            {/* Decorative botanical borders */}
-            <BotanicalDecoration
-              variant="flower"
-              className="absolute top-2 left-2 w-16 h-16 text-primary/15"
+            {/* Background image - Sri Chinmoy's floral artwork */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+              style={{ backgroundImage: `url(${sriChinmoyFlowers})` }}
             />
-            <BotanicalDecoration
-              variant="leaf"
-              className="absolute top-2 right-2 w-16 h-16 text-accent/15"
-            />
-            <BotanicalDecoration
-              variant="flower"
-              className="absolute bottom-2 left-2 w-16 h-16 text-accent/15"
-            />
-            <BotanicalDecoration
-              variant="leaf"
-              className="absolute bottom-2 right-2 w-16 h-16 text-primary/15"
-            />
+            
+            {/* Gradient overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background/90" />
 
             {/* Content */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
-              <p className="text-xs md:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
+              <p className="text-xs md:text-sm text-primary/80 font-semibold mb-2 uppercase tracking-wider">
                 {language === "de" ? "Diese Woche" : "This Week"}
               </p>
-              <h3 className="text-4xl md:text-6xl font-caveat font-bold text-primary mb-3">
+              <h3 className="text-4xl md:text-6xl lg:text-7xl font-caveat font-bold bg-gradient-primary bg-clip-text text-transparent mb-3">
                 {language === "de" ? "Wochenkarte" : "Weekly Menu"}
               </h3>
-              <p className="text-sm md:text-base text-foreground/70 font-lora max-w-md">
+              <p className="text-sm md:text-base text-foreground/90 font-lora max-w-md font-semibold">
                 {language === "de" 
                   ? "Tippe, um das komplette Menü zu öffnen" 
                   : "Tap to open the complete menu"}
