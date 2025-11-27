@@ -114,21 +114,38 @@ export const Navigation = () => {
             {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
             <div className="hidden lg:flex items-center gap-6">
               {navItems.map((item) => {
+                // Check if current page matches this nav item
+                const isActive = item.isExternal && !item.href.startsWith('http')
+                  ? location.pathname === item.href
+                  : location.pathname === '/' && item.href.startsWith('#');
+                
                 // Gestalt: Similarity & Emphasis through visual weight
                 const baseClasses = "transition-colors relative py-1";
-                const afterClasses = "after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:transition-all after:duration-300 hover:after:w-full";
+                const afterClasses = "after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-300";
                 
                 let itemClasses = baseClasses + " " + afterClasses;
                 
                 if (item.isPrimary) {
                   // Primary: Bold, larger, primary color
-                  itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:bg-primary";
+                  if (isActive) {
+                    itemClasses += " text-base font-bold text-primary after:w-full after:h-0.5 after:bg-primary";
+                  } else {
+                    itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
+                  }
                 } else if (item.isSecondary) {
                   // Secondary: Medium weight, normal size
-                  itemClasses += " text-sm font-semibold text-foreground/80 hover:text-foreground after:bg-foreground";
+                  if (isActive) {
+                    itemClasses += " text-sm font-semibold text-foreground after:w-full after:h-0.5 after:bg-foreground";
+                  } else {
+                    itemClasses += " text-sm font-semibold text-foreground/80 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
+                  }
                 } else if (item.isTertiary) {
                   // Tertiary: Light weight, smaller, muted
-                  itemClasses += " text-sm font-medium text-muted-foreground hover:text-foreground after:bg-muted-foreground";
+                  if (isActive) {
+                    itemClasses += " text-sm font-medium text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
+                  } else {
+                    itemClasses += " text-sm font-medium text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
+                  }
                 }
                 
                 return (
@@ -173,8 +190,19 @@ export const Navigation = () => {
         <div className="flex flex-col h-full pt-16 pb-6 px-6">
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => {
+              // Check if current page matches this nav item
+              const isActive = item.isExternal && !item.href.startsWith('http')
+                ? location.pathname === item.href
+                : location.pathname === '/' && item.href.startsWith('#');
+              
               // Gestalt hierarchy for mobile menu
-              let itemClasses = "block py-3 px-4 text-lg rounded-lg transition-all duration-200 text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60";
+              let itemClasses = "block py-3 px-4 text-lg rounded-lg transition-all duration-200 text-emerald-900 dark:text-emerald-100";
+              
+              if (isActive) {
+                itemClasses += " bg-emerald-300/80 dark:bg-emerald-700/80";
+              } else {
+                itemClasses += " hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60";
+              }
               
               if (item.isPrimary) {
                 itemClasses += " font-bold text-xl border-l-4 border-primary";
