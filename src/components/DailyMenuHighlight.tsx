@@ -9,7 +9,7 @@ import foodGarden from "@/assets/food-garden.jpg";
 export const DailyMenuHighlight = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
-  const { ref, isVisible } = useScrollReveal(0.1);
+  const { ref, isVisible } = useScrollReveal(0.2);
 
   if (isLoading) {
     return (
@@ -67,8 +67,8 @@ export const DailyMenuHighlight = () => {
         </div>
 
         {/* Menu Cards Grid */}
-        <div className={`grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto transition-all duration-500 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        <div className={`grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto transition-all duration-700 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}>
           {/* Soup Card */}
           <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10">
