@@ -44,15 +44,15 @@ const Gallery = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-cream via-background to-accent/5">
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-br from-cream via-background to-accent/5">
         <SpiritualAnimations variant="meditation-lines" />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h1 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
+          <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-10 stagger-children in-view">
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-caveat font-bold text-primary leading-tight">
               {language === "de" ? "Galerie" : "Gallery"}
             </h1>
-            <p className="text-lg md:text-xl font-lora text-muted-foreground">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-lora text-muted-foreground leading-relaxed">
               {language === "de"
                 ? "Entdecken Sie unsere kulinarischen Kreationen und die friedliche Atmosphäre unseres Gartens"
                 : "Discover our culinary creations and the peaceful atmosphere of our garden"}
@@ -62,14 +62,18 @@ const Gallery = () => {
       </section>
 
       {/* Gallery Grid - Gestalt: Proximity & Similarity */}
-      <section className="py-12 md:py-20 px-4">
+      <section className="py-16 md:py-28 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {galleryImages.map((image, index) => (
               <div
                 key={index}
-                className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-500 animate-fade-in"
-                style={{ animationDelay: `${index * 50}ms` }}
+                className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-[2000ms]"
+                style={{ 
+                  animation: `smooth-reveal 1800ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`,
+                  animationDelay: `${index * 100}ms`,
+                  opacity: 0
+                }}
               >
                 <img
                   src={image.src}
@@ -85,16 +89,16 @@ const Gallery = () => {
       </section>
 
       {/* Instagram Call to Action */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
+      <section className="py-20 md:py-32 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center space-y-6">
+          <div className="max-w-3xl mx-auto text-center space-y-8 md:space-y-12 stagger-children in-view">
             <div className="inline-block p-4 bg-primary/10 rounded-full">
-              <Instagram className="w-12 h-12 text-primary" />
+              <Instagram className="w-12 h-12 md:w-16 md:h-16 text-primary" />
             </div>
-            <h2 className="text-3xl md:text-5xl font-caveat font-bold text-primary">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-caveat font-bold text-primary leading-tight">
               {language === "de" ? "Folgen Sie uns auf Instagram" : "Follow us on Instagram"}
             </h2>
-            <p className="text-lg font-lora text-muted-foreground">
+            <p className="text-lg sm:text-xl md:text-2xl font-lora text-muted-foreground leading-relaxed">
               {language === "de"
                 ? "Bleiben Sie auf dem Laufenden mit unseren neuesten Kreationen, Tagesmenüs und Einblicken in unseren Garten."
                 : "Stay up to date with our latest creations, daily menus and insights into our garden."}
@@ -102,9 +106,9 @@ const Gallery = () => {
             <Button
               size="lg"
               onClick={() => window.open("https://www.instagram.com/mysecretgardencafewien/", "_blank")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg font-semibold text-lg px-8 py-6 gap-2"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg font-lora text-base sm:text-lg md:text-xl px-10 py-6 md:py-8 gap-3"
             >
-              <Instagram className="w-5 h-5" />
+              <Instagram className="w-5 h-5 md:w-6 md:h-6" />
               @mysecretgardencafewien
             </Button>
           </div>
