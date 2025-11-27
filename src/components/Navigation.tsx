@@ -57,24 +57,23 @@ export const Navigation = () => {
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean, isHash?: boolean) => {
+    e.preventDefault();
     setIsMobileMenuOpen(false);
 
-    // Handle external links (real pages or external URLs)
-    if (isExternal) {
-      if (href.startsWith('http')) {
-        e.preventDefault();
-        window.open(href, '_blank');
-      } else {
-        // Internal page navigation (like /gallery)
-        // Let React Router handle it naturally
-      }
+    // Handle external URLs (Instagram)
+    if (isExternal && href.startsWith('http')) {
+      window.open(href, '_blank');
       return;
     }
 
-    // Handle hash/section links
-    if (isHash || href.startsWith('#')) {
-      e.preventDefault();
+    // Handle internal page navigation (like /gallery)
+    if (isExternal && !isHash) {
+      navigate(href);
+      return;
+    }
 
+    // Handle hash/section links on homepage
+    if (isHash || href.startsWith('#')) {
       // If we're on a different page, navigate to home first
       if (location.pathname !== "/") {
         navigate("/");
@@ -82,14 +81,26 @@ export const Navigation = () => {
         setTimeout(() => {
           const element = document.querySelector(href);
           if (element) {
-            element.scrollIntoView({ behavior: "smooth", block: "start" });
+            const offset = 80; // navbar height
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
           }
         }, 100);
       } else {
         // Already on home page, just scroll
         const element = document.querySelector(href);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          const offset = 80; // navbar height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
         }
       }
     }
