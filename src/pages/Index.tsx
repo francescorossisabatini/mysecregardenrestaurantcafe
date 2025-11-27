@@ -21,15 +21,41 @@ const Index = () => {
     const preloaderShown = sessionStorage.getItem("preloader_shown");
     
     if (!preloaderShown) {
-      // Show navbar after preloader
+      // Show navbar after 2 seconds or on scroll
       const timer = setTimeout(() => {
         setShowNavbar(true);
-      }, 4200); // Shortly after preloader ends
+      }, 6000); // 4s preloader + 2s delay = 6s total
       
-      return () => clearTimeout(timer);
+      const handleScroll = () => {
+        if (window.scrollY > 10) {
+          setShowNavbar(true);
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', handleScroll);
+      };
     } else {
-      // No preloader, show immediately
-      setShowNavbar(true);
+      // No preloader, show navbar after scroll or 2 seconds
+      const timer = setTimeout(() => {
+        setShowNavbar(true);
+      }, 2000);
+
+      const handleScroll = () => {
+        if (window.scrollY > 10) {
+          setShowNavbar(true);
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', handleScroll);
+      };
     }
   }, []);
 
