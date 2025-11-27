@@ -138,7 +138,7 @@ export const FullMenu = () => {
           <div className="max-w-4xl mx-auto mb-16 md:mb-24">
             <div className="text-center mb-8">
               <h2 className="text-4xl md:text-5xl font-caveat font-bold text-primary mb-3">
-                {language === "de" ? "Wochenkarte" : "Weekly Menu"}
+                {language === "de" ? "Speisekarte" : "Full Menu"}
               </h2>
               <p className="text-sm md:text-base text-muted-foreground font-lora">
                 {language === "de" 
