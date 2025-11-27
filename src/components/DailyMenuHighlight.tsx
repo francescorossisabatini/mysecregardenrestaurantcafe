@@ -41,7 +41,6 @@ export const DailyMenuHighlight = () => {
         backgroundImage: `url(${foodGarden})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundAttachment: "fixed",
       }}
     >
       {/* Overlay - lighter to see images better */}
