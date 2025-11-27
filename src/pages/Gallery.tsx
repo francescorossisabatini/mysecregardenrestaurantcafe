@@ -39,8 +39,6 @@ const Gallery = () => {
     { src: interior, alt: "Interior" },
     { src: heroInterior, alt: "Restaurant Interior" },
     { src: poppyFlower, alt: "Poppy Flower" },
-    { src: team, alt: "Our Team" },
-    { src: sriChinmoy, alt: "Sri Chinmoy" },
   ];
 
   return (
