@@ -25,7 +25,8 @@ export const Navigation = () => {
     { 
       href: "#full-menu", 
       label: language === "de" ? "Speisekarte" : "Menu",
-      isPrimary: true
+      isPrimary: true,
+      isHash: true
     },
     // Secondary navigation - content sections
     { 
@@ -37,12 +38,14 @@ export const Navigation = () => {
     { 
       href: "#about", 
       label: language === "de" ? "Über uns" : "About",
-      isSecondary: true
+      isSecondary: true,
+      isHash: true
     },
     { 
       href: "#contact", 
       label: language === "de" ? "Kontakt" : "Contact",
-      isSecondary: true
+      isSecondary: true,
+      isHash: true
     },
     // Tertiary navigation - external/auxiliary
     {
@@ -53,36 +56,41 @@ export const Navigation = () => {
     },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean, isHash?: boolean) => {
     setIsMobileMenuOpen(false);
 
-    // Handle external links
+    // Handle external links (real pages or external URLs)
     if (isExternal) {
       if (href.startsWith('http')) {
+        e.preventDefault();
         window.open(href, '_blank');
       } else {
-        navigate(href);
+        // Internal page navigation (like /gallery)
+        // Let React Router handle it naturally
       }
       return;
     }
 
-    e.preventDefault();
+    // Handle hash/section links
+    if (isHash || href.startsWith('#')) {
+      e.preventDefault();
 
-    // If we're on a different page, navigate to home first
-    if (location.pathname !== "/") {
-      navigate("/");
-      // Wait for navigation and then scroll
-      setTimeout(() => {
+      // If we're on a different page, navigate to home first
+      if (location.pathname !== "/") {
+        navigate("/");
+        // Wait for navigation and then scroll
+        setTimeout(() => {
+          const element = document.querySelector(href);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
+      } else {
+        // Already on home page, just scroll
         const element = document.querySelector(href);
         if (element) {
           element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-      }, 100);
-    } else {
-      // Already on home page, just scroll
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
   };
@@ -152,7 +160,7 @@ export const Navigation = () => {
                   <a
                     key={item.href}
                     href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
+                    onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
                     className={itemClasses}
                   >
                     {item.label}
@@ -216,7 +224,7 @@ export const Navigation = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
+                  onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
                   className={itemClasses}
                 >
                   {item.label}
