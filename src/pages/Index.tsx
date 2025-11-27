@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
@@ -14,28 +15,24 @@ import foodDetailImg from "@/assets/food-detail-real.jpg";
 import poppyImg from "@/assets/poppy-flower-real.jpg";
 
 const Index = () => {
+  const location = useLocation();
+
   useEffect(() => {
-    try {
-      const target = sessionStorage.getItem("scrollTarget");
-      if (target) {
-        sessionStorage.removeItem("scrollTarget");
-        setTimeout(() => {
-          const element = document.querySelector(target);
-          if (element) {
-            const offset = 80; // navbar height
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
-            });
-          }
-        }, 150);
-      }
-    } catch (e) {
-      // ignore storage errors
+    if (location.hash === "#full-menu") {
+      setTimeout(() => {
+        const element = document.getElementById("full-menu");
+        if (element) {
+          const offset = 80; // navbar height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 50);
     }
-  }, []);
+  }, [location]);
 
   return (
     <div className="min-h-screen">
