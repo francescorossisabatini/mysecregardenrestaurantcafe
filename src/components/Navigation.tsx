@@ -114,10 +114,10 @@ export const Navigation = () => {
             {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
             <div className="hidden lg:flex items-center gap-6">
               {navItems.map((item) => {
-                // Check if current page matches this nav item
-                const isActive = item.isExternal && !item.href.startsWith('http')
+                // Only highlight actual pages, not hash sections
+                const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
                   ? location.pathname === item.href
-                  : location.pathname === '/' && item.href.startsWith('#');
+                  : false;
                 
                 // Gestalt: Similarity & Emphasis through visual weight
                 const baseClasses = "transition-colors relative py-1";
@@ -190,10 +190,10 @@ export const Navigation = () => {
         <div className="flex flex-col h-full pt-16 pb-6 px-6">
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => {
-              // Check if current page matches this nav item
-              const isActive = item.isExternal && !item.href.startsWith('http')
+              // Only highlight actual pages, not hash sections
+              const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
                 ? location.pathname === item.href
-                : location.pathname === '/' && item.href.startsWith('#');
+                : false;
               
               // Gestalt hierarchy for mobile menu
               let itemClasses = "block py-3 px-4 text-lg rounded-lg transition-all duration-200 text-emerald-900 dark:text-emerald-100";
