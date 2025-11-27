@@ -34,8 +34,8 @@ export const DailyMenuHighlight = () => {
     <section 
       ref={ref as any}
       id="daily-menu" 
-      className={`relative py-12 sm:py-16 md:py-20 overflow-hidden transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      className={`relative py-12 sm:py-16 md:py-20 overflow-hidden transition-opacity duration-700 ease-out ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
         backgroundImage: `url(${foodGarden})`,
@@ -67,7 +67,9 @@ export const DailyMenuHighlight = () => {
         </div>
 
         {/* Menu Cards Grid */}
-        <div className="grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto">
+        <div className={`grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto transition-all duration-500 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        }`}>
           {/* Soup Card */}
           <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10">
             <div className="flex items-start gap-3 mb-3">
