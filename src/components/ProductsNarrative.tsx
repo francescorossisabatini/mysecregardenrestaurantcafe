@@ -8,8 +8,8 @@ export const ProductsNarrative = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="products" className="relative overflow-hidden bg-background">
-      <div className="container mx-auto max-w-7xl py-12 sm:py-16 md:py-20 px-4">
+    <section className="relative overflow-hidden bg-background pb-12 sm:pb-16 md:pb-20">
+      <div className="container mx-auto max-w-7xl py-0 px-4">
         {/* Title */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-3 sm:mb-4">

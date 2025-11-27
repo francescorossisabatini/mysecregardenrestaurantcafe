@@ -22,9 +22,9 @@ const Index = () => {
       <FullMenu />
       <PhotoStripe imageUrl={poppyImg} variant="blue" />
       <Reviews />
+      <AboutSection />
       <ProductsNarrative />
       <InstagramFeed />
-      <AboutSection />
       <Contact />
       <Footer />
     </div>
