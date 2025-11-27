@@ -14,22 +14,22 @@ import { SectionDivider } from "@/components/SectionDivider";
 
 const Index = () => {
   const location = useLocation();
-  const [showContent, setShowContent] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     // Check if preloader was shown
     const preloaderShown = sessionStorage.getItem("preloader_shown");
     
     if (!preloaderShown) {
-      // Delay content appearance after preloader - longer delay
+      // Show navbar after preloader
       const timer = setTimeout(() => {
-        setShowContent(true);
-      }, 4500); // After preloader fades + extra delay
+        setShowNavbar(true);
+      }, 4200); // Shortly after preloader ends
       
       return () => clearTimeout(timer);
     } else {
       // No preloader, show immediately
-      setShowContent(true);
+      setShowNavbar(true);
     }
   }, []);
 
@@ -54,15 +54,13 @@ const Index = () => {
     <div className="min-h-screen">
       <Preloader />
       
-      {/* Navigation with slow fade-in */}
-      <div className={`transition-all duration-2000 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
+      {/* Navigation with fade-in after preloader */}
+      <div className={`transition-opacity duration-1000 ${showNavbar ? "opacity-100" : "opacity-0"}`}>
         <Navigation />
       </div>
       
-      {/* Hero Section with slower fade-in and slide up */}
-      <div className={`transition-all duration-2500 delay-300 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        <Hero />
-      </div>
+      {/* Hero Section - content appears on scroll */}
+      <Hero />
       
       {/* Daily Menu */}
       <DailyMenuHighlight />
