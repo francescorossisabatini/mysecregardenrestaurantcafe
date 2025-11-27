@@ -80,8 +80,8 @@ const Index = () => {
     <div className="min-h-screen">
       <Preloader />
       
-      {/* Navigation with fade-in after preloader */}
-      <div className={`transition-opacity duration-1000 ${showNavbar ? "opacity-100" : "opacity-0"}`}>
+      {/* Navigation with slow, delicate fade-in */}
+      <div className={`transition-opacity duration-[2000ms] ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
       </div>
       

@@ -84,10 +84,10 @@ export const Hero = () => {
       {/* Subtle overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
-      {/* Content - centered with scroll reveal */}
+      {/* Content - centered with slow, delicate reveal */}
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
-        <div className={`max-w-3xl mx-auto text-center space-y-6 md:space-y-12 transition-all duration-1500 ${
-          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        <div className={`max-w-3xl mx-auto text-center space-y-6 md:space-y-12 transition-all duration-[2500ms] ease-out ${
+          showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
         }`}>
           {/* Restaurant name with handwriting style */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-tight">
