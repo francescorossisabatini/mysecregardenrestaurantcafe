@@ -2,159 +2,159 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Vibrant spiritual palette inspired by Sri Chinmoy's art
+/* Spiritual palette inspired by Sri Chinmoy's art - Soft & Elegant
 All colors MUST be HSL format.
-Primary: Vibrant deep blue #2B4FE5
-Accent: Vivid lime green #7CFC00
-Secondary accents: Magenta, Golden yellow, Orange, Violet
-Background: Pure white with spiritual energy
+Primary: Soft spiritual blue #4A6FE8
+Accent: Soft lime green #A8D84E
+Secondary accents: Soft magenta, Golden yellow, Coral, Lavender
+Background: Warm cream #FAF7F0
 */
 
 @layer base {
   :root {
-    /* Light mode - vibrant spiritual identity */
-    --background: 0 0% 100%; /* Pure white */
-    --foreground: 240 20% 15%; /* Deep charcoal */
+    /* Light mode - soft spiritual identity */
+    --background: 45 50% 97%; /* Warm cream #FAF7F0 */
+    --foreground: 240 15% 20%; /* Soft charcoal */
 
-    --card: 0 0% 98%;
-    --card-foreground: 240 20% 15%;
+    --card: 45 50% 98%;
+    --card-foreground: 240 15% 20%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 240 20% 15%;
+    --popover: 45 50% 98%;
+    --popover-foreground: 240 15% 20%;
 
-    /* Primary: Vibrant spiritual blue #2B4FE5 */
-    --primary: 225 82% 54%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 280 75% 50%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 240 10% 95%;
-    --muted-foreground: 240 10% 40%;
-
-    /* Accent: Vivid lime green #7CFC00 */
-    --accent: 90 100% 50%;
-    --accent-foreground: 240 20% 15%;
-    
-    /* Accent secondary: Golden yellow #FFD700 */
-    --accent-light: 51 100% 50%;
-    
-    /* Spiritual magenta #FF1493 */
-    --magenta: 328 100% 54%;
-    --magenta-foreground: 0 0% 100%;
-    
-    /* Vibrant orange #FF8C00 */
-    --orange: 33 100% 50%;
-    --orange-foreground: 0 0% 100%;
-    
-    /* Deep violet #8B00FF */
-    --violet: 272 100% 50%;
-    --violet-foreground: 0 0% 100%;
-    
-    /* Blue accent for menu items */
-    --blue: 207 90% 54%;
-    --blue-foreground: 0 0% 100%;
-    
-    /* Cream background for special sections */
-    --cream: 45 50% 97%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 10% 90%;
-    --input: 240 10% 90%;
-    --ring: 225 82% 54%;
-
-    --radius: 1rem;
-    
-    /* Custom design tokens - spiritual vibrant theme */
-    --gradient-primary: linear-gradient(135deg, hsl(225 82% 54%) 0%, hsl(280 75% 50%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(90 100% 50%) 0%, hsl(51 100% 50%) 100%);
-    --gradient-rainbow: linear-gradient(135deg, hsl(225 82% 54%) 0%, hsl(328 100% 54%) 25%, hsl(33 100% 50%) 50%, hsl(51 100% 50%) 75%, hsl(90 100% 50%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(225 82% 54%) 0%, hsl(272 100% 50%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(225 82% 98%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(225 82% 54% / 0.2);
-    --shadow-elevated: 0 10px 40px -10px hsl(225 82% 54% / 0.35);
-    --shadow-vibrant: 0 8px 32px -8px hsl(328 100% 54% / 0.4);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 20% 15%;
-    --sidebar-primary: 225 82% 54%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 10% 95%;
-    --sidebar-accent-foreground: 240 20% 15%;
-    --sidebar-border: 240 10% 90%;
-    --sidebar-ring: 225 82% 54%;
-  }
-
-  .dark {
-    /* Dark mode - maintaining vibrant spiritual atmosphere */
-    --background: 240 30% 8%;
-    --foreground: 0 0% 95%;
-
-    --card: 240 25% 12%;
-    --card-foreground: 0 0% 95%;
-
-    --popover: 240 25% 12%;
-    --popover-foreground: 0 0% 95%;
-
-    /* Primary: Brighter blue for dark mode */
+    /* Primary: Soft spiritual blue #4A6FE8 */
     --primary: 225 75% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 70% 55%;
+    --secondary: 280 55% 65%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 20% 18%;
-    --muted-foreground: 240 10% 70%;
+    --muted: 45 30% 92%;
+    --muted-foreground: 240 10% 45%;
 
-    /* Accent: Bright green for dark mode */
-    --accent: 90 95% 55%;
-    --accent-foreground: 240 30% 8%;
+    /* Accent: Soft lime green #A8D84E */
+    --accent: 75 65% 58%;
+    --accent-foreground: 240 15% 20%;
     
-    --accent-light: 51 95% 55%;
+    /* Accent secondary: Soft golden yellow #F4D03F */
+    --accent-light: 48 85% 60%;
     
-    --magenta: 328 95% 60%;
+    /* Soft magenta #E877A6 */
+    --magenta: 335 70% 70%;
     --magenta-foreground: 0 0% 100%;
     
-    --orange: 33 95% 55%;
-    --orange-foreground: 240 30% 8%;
+    /* Soft coral #FF9A76 */
+    --orange: 18 100% 73%;
+    --orange-foreground: 240 15% 20%;
     
-    --violet: 272 95% 60%;
-    --violet-foreground: 0 0% 100%;
+    /* Soft lavender #A78BFA */
+    --violet: 258 90% 76%;
+    --violet-foreground: 240 15% 20%;
     
-    /* Blue accent for menu items (brighter in dark mode) */
-    --blue: 207 85% 60%;
+    /* Blue accent for menu items */
+    --blue: 210 75% 60%;
+    --blue-foreground: 0 0% 100%;
+    
+    /* Cream background for special sections */
+    --cream: 45 60% 95%;
+
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 45 25% 88%;
+    --input: 45 25% 88%;
+    --ring: 225 75% 60%;
+
+    --radius: 1rem;
+    
+    /* Custom design tokens - soft spiritual theme */
+    --gradient-primary: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(280 55% 65%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(75 65% 58%) 0%, hsl(48 85% 60%) 100%);
+    --gradient-rainbow: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(335 70% 70%) 25%, hsl(18 100% 73%) 50%, hsl(48 85% 60%) 75%, hsl(75 65% 58%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(258 90% 76%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(45 50% 97%) 0%, hsl(225 50% 96%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(225 75% 60% / 0.15);
+    --shadow-elevated: 0 10px 40px -10px hsl(225 75% 60% / 0.25);
+    --shadow-vibrant: 0 8px 32px -8px hsl(335 70% 70% / 0.3);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 45 50% 98%;
+    --sidebar-foreground: 240 15% 20%;
+    --sidebar-primary: 225 75% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 45 30% 92%;
+    --sidebar-accent-foreground: 240 15% 20%;
+    --sidebar-border: 45 25% 88%;
+    --sidebar-ring: 225 75% 60%;
+  }
+
+  .dark {
+    /* Dark mode - soft spiritual atmosphere */
+    --background: 240 20% 12%;
+    --foreground: 45 30% 92%;
+
+    --card: 240 18% 16%;
+    --card-foreground: 45 30% 92%;
+
+    --popover: 240 18% 16%;
+    --popover-foreground: 45 30% 92%;
+
+    /* Primary: Soft blue for dark mode */
+    --primary: 225 70% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 280 50% 68%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 15% 22%;
+    --muted-foreground: 45 20% 70%;
+
+    /* Accent: Soft green for dark mode */
+    --accent: 75 60% 60%;
+    --accent-foreground: 240 20% 12%;
+    
+    --accent-light: 48 80% 62%;
+    
+    --magenta: 335 65% 72%;
+    --magenta-foreground: 240 20% 12%;
+    
+    --orange: 18 95% 75%;
+    --orange-foreground: 240 20% 12%;
+    
+    --violet: 258 85% 78%;
+    --violet-foreground: 240 20% 12%;
+    
+    /* Blue accent for menu items (softer in dark mode) */
+    --blue: 210 70% 65%;
     --blue-foreground: 0 0% 100%;
     
     /* Cream background for special sections (darker in dark mode) */
-    --cream: 240 20% 15%;
+    --cream: 240 15% 18%;
 
-    --destructive: 0 63% 31%;
+    --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 20% 20%;
-    --input: 240 20% 20%;
-    --ring: 225 75% 60%;
+    --border: 240 15% 24%;
+    --input: 240 15% 24%;
+    --ring: 225 70% 65%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(280 70% 55%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(90 95% 55%) 0%, hsl(51 95% 55%) 100%);
-    --gradient-rainbow: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(328 95% 60%) 25%, hsl(33 95% 55%) 50%, hsl(51 95% 55%) 75%, hsl(90 95% 55%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(272 95% 60%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(240 30% 8%) 0%, hsl(240 25% 12%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.5);
-    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.7);
-    --shadow-vibrant: 0 8px 32px -8px hsl(328 95% 60% / 0.5);
+    --gradient-primary: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(280 50% 68%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(75 60% 60%) 0%, hsl(48 80% 62%) 100%);
+    --gradient-rainbow: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(335 65% 72%) 25%, hsl(18 95% 75%) 50%, hsl(48 80% 62%) 75%, hsl(75 60% 60%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(258 85% 78%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(240 20% 12%) 0%, hsl(240 18% 16%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
+    --shadow-vibrant: 0 8px 32px -8px hsl(335 65% 72% / 0.4);
     
-    --sidebar-background: 240 30% 10%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 225 75% 60%;
+    --sidebar-background: 240 20% 14%;
+    --sidebar-foreground: 45 30% 92%;
+    --sidebar-primary: 225 70% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 20% 18%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 240 20% 20%;
-    --sidebar-ring: 225 75% 60%;
+    --sidebar-accent: 240 15% 22%;
+    --sidebar-accent-foreground: 45 30% 92%;
+    --sidebar-border: 240 15% 24%;
+    --sidebar-ring: 225 70% 65%;
   }
 }
 
