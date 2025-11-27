@@ -9,6 +9,7 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
+import Gallery from "./pages/Gallery";
 
 function AppContent() {
   useHtmlLang();
@@ -17,6 +18,7 @@ function AppContent() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

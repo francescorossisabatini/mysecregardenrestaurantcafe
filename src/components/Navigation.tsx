@@ -22,12 +22,13 @@ export const Navigation = () => {
 
   const navItems = [
     { 
-      href: "#daily-menu", 
-      label: language === "de" ? "Tagesmenü" : "Daily Menu" 
-    },
-    { 
       href: "#full-menu", 
       label: language === "de" ? "Speisekarte" : "Full Menu" 
+    },
+    { 
+      href: "/gallery", 
+      label: language === "de" ? "Galerie" : "Gallery",
+      isExternal: true
     },
     { 
       href: "#about", 
@@ -37,11 +38,27 @@ export const Navigation = () => {
       href: "#contact", 
       label: language === "de" ? "Kontakt" : "Contact" 
     },
+    {
+      href: "https://www.instagram.com/mysecretgardencafewien/",
+      label: "Instagram",
+      isExternal: true
+    },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean) => {
     setIsMobileMenuOpen(false);
+
+    // Handle external links
+    if (isExternal) {
+      if (href.startsWith('http')) {
+        window.open(href, '_blank');
+      } else {
+        navigate(href);
+      }
+      return;
+    }
+
+    e.preventDefault();
 
     // If we're on a different page, navigate to home first
     if (location.pathname !== "/") {
@@ -92,7 +109,7 @@ export const Navigation = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
+                  onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
                   className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
                 >
                   {item.label}
@@ -132,7 +149,7 @@ export const Navigation = () => {
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
+                onClick={(e) => handleNavClick(e, item.href, item.isExternal)}
                 className="block py-3 px-4 text-lg font-medium text-emerald-900 dark:text-emerald-100 hover:bg-emerald-200/60 dark:hover:bg-emerald-800/60 rounded-lg transition-all duration-200"
               >
                 {item.label}
