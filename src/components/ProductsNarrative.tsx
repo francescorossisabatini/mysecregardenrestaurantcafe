@@ -1,5 +1,6 @@
 import { Leaf } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { SpiritualAnimations } from "./SpiritualAnimations";
 import { Card } from "@/components/ui/card";
@@ -8,10 +9,14 @@ import koreanBowl from "@/assets/korean-bowl.jpg";
 
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
+  const { ref, isVisible } = useScrollReveal(0.1);
 
   return (
     <section 
-      className="relative overflow-hidden pb-12 sm:pb-16 md:pb-20"
+      ref={ref as any}
+      className={`relative overflow-hidden pb-12 sm:pb-16 md:pb-20 transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
       style={{
         backgroundImage: `url(${koreanBowl})`,
         backgroundSize: "cover",
@@ -19,11 +24,11 @@ export const ProductsNarrative = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/92 to-background/95" />
+      {/* Overlay - lighter to see images better */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
       
       {/* Spiritual animations */}
-      <SpiritualAnimations variant="leaves" />
+      <SpiritualAnimations variant="leaves" className="opacity-100" />
       
       <div className="container mx-auto max-w-7xl py-0 px-4 relative z-10">
         {/* Title */}

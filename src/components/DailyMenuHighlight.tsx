@@ -1,5 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Loader2 } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { SpiritualAnimations } from "./SpiritualAnimations";
@@ -8,6 +9,7 @@ import foodGarden from "@/assets/food-garden.jpg";
 export const DailyMenuHighlight = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
+  const { ref, isVisible } = useScrollReveal(0.1);
 
   if (isLoading) {
     return (
@@ -30,8 +32,11 @@ export const DailyMenuHighlight = () => {
 
   return (
     <section 
+      ref={ref as any}
       id="daily-menu" 
-      className="relative py-12 sm:py-16 md:py-20 overflow-hidden"
+      className={`relative py-12 sm:py-16 md:py-20 overflow-hidden transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
       style={{
         backgroundImage: `url(${foodGarden})`,
         backgroundSize: "cover",
@@ -39,11 +44,11 @@ export const DailyMenuHighlight = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background/95" />
+      {/* Overlay - lighter to see images better */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
       
       {/* Spiritual animations */}
-      <SpiritualAnimations variant="leaves" />
+      <SpiritualAnimations variant="leaves" className="opacity-100" />
 
       <div className="container mx-auto max-w-6xl px-4 relative z-10">
         {/* Section Header */}
