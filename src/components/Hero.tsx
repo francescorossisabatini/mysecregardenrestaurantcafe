@@ -20,7 +20,7 @@ const heroImages = [
 ];
 
 export const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(0); // Always start from first image
+  const [currentImage, setCurrentImage] = useState(2); // Start from third image (heroGarden)
   const [showContent, setShowContent] = useState(false);
   const { language } = useLanguage();
 
