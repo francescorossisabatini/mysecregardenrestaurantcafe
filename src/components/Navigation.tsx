@@ -97,17 +97,17 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/30 py-3"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10 py-1.5"
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Mobile Menu Button - Left */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
+              className="p-1 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
 
             {/* Logo - Left on Desktop */}
@@ -115,11 +115,11 @@ export const Navigation = () => {
               to="/"
               className="transition-all duration-300"
             >
-              <Logo className="w-11 h-11" showTagline={false} />
+              <Logo className="w-8 h-8" showTagline={false} />
             </Link>
 
             {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-4">
               {navItems.map((item) => {
                 // Only highlight actual pages, not hash sections
                 const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
@@ -135,9 +135,9 @@ export const Navigation = () => {
                 if (item.isPrimary) {
                   // Primary: Bold, larger, primary color
                   if (isActive) {
-                    itemClasses += " text-base font-bold text-primary after:w-full after:h-0.5 after:bg-primary";
+                    itemClasses += " text-sm font-semibold text-primary after:w-full after:h-0.5 after:bg-primary";
                   } else {
-                    itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
+                    itemClasses += " text-sm font-semibold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
                   }
  
                   // Speisekarte: use custom hash navigation handler
@@ -156,16 +156,16 @@ export const Navigation = () => {
                 if (item.isSecondary) {
                   // Secondary: Medium weight, normal size
                   if (isActive) {
-                    itemClasses += " text-sm font-semibold text-foreground after:w-full after:h-0.5 after:bg-foreground";
+                    itemClasses += " text-xs font-medium text-foreground after:w-full after:h-0.5 after:bg-foreground";
                   } else {
-                    itemClasses += " text-sm font-semibold text-foreground/80 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
+                    itemClasses += " text-xs font-medium text-foreground/70 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
                   }
                 } else if (item.isTertiary) {
                   // Tertiary: Light weight, smaller, muted
                   if (isActive) {
-                    itemClasses += " text-sm font-medium text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
+                    itemClasses += " text-xs font-normal text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
                   } else {
-                    itemClasses += " text-sm font-medium text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
+                    itemClasses += " text-xs font-normal text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
                   }
                 }
 
@@ -208,11 +208,11 @@ export const Navigation = () => {
               })}
               <Link
                 to="/privacy"
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
+                className="text-xs font-normal text-foreground/70 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
-              <div className="relative z-10 ml-2">
+              <div className="relative z-10 ml-1">
                 <LanguageSwitcher />
               </div>
             </div>
