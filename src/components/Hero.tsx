@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { BotanicalDecoration } from "./BotanicalDecoration";
+import { SpiritualAnimations } from "./SpiritualAnimations";
 import heroGarden from "@/assets/garden-real.jpg";
 import heroFood from "@/assets/food-bowl-real.jpg";
 import heroInterior from "@/assets/interior-real.jpg";
+import entranceGarden from "@/assets/entrance-garden.jpg";
 
-const heroImages = [heroGarden, heroFood, heroInterior];
+const heroImages = [entranceGarden, heroGarden, heroFood, heroInterior];
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -32,7 +33,7 @@ export const Hero = () => {
       {heroImages.map((img, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
+          className={`absolute inset-0 transition-opacity duration-1500 ${
             currentImage === index ? "opacity-100" : "opacity-0"
           }`}
           style={{
@@ -44,7 +45,10 @@ export const Hero = () => {
       ))}
 
       {/* Stronger overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/40 to-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/45 to-black/55" />
+      
+      {/* Spiritual animations */}
+      <SpiritualAnimations variant="meditation-lines" />
 
       {/* Content - centered */}
       <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">

@@ -1,15 +1,31 @@
-import { Check, Leaf } from "lucide-react";
+import { Leaf } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BotanicalDecoration } from "./BotanicalDecoration";
+import { SpiritualAnimations } from "./SpiritualAnimations";
 import { Card } from "@/components/ui/card";
 import interiorImg from "@/assets/interior-real.jpg";
+import koreanBowl from "@/assets/korean-bowl.jpg";
 
 export const ProductsNarrative = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="relative overflow-hidden bg-background pb-12 sm:pb-16 md:pb-20">
-      <div className="container mx-auto max-w-7xl py-0 px-4">
+    <section 
+      className="relative overflow-hidden pb-12 sm:pb-16 md:pb-20"
+      style={{
+        backgroundImage: `url(${koreanBowl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/92 to-background/95" />
+      
+      {/* Spiritual animations */}
+      <SpiritualAnimations variant="leaves" />
+      
+      <div className="container mx-auto max-w-7xl py-0 px-4 relative z-10">
         {/* Title */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-3 sm:mb-4">
