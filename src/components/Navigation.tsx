@@ -71,20 +71,15 @@ export const Navigation = () => {
       navigate(href);
       return;
     }
-
+ 
     // Handle hash/section links on homepage
     if (isHash || href.startsWith('#')) {
-      // If we're on a different page, save target and navigate to home
+      // If we're on a different page, navigate to home with the hash
       if (location.pathname !== "/") {
-        try {
-          sessionStorage.setItem("scrollTarget", href);
-        } catch (e) {
-          // ignore storage errors
-        }
-        navigate("/");
+        navigate(`/${href}`); // e.g. "#full-menu" -> "/#full-menu"
         return;
       }
-
+ 
       // Already on home page, just scroll
       const element = document.querySelector(href);
       if (element) {
@@ -144,16 +139,17 @@ export const Navigation = () => {
                   } else {
                     itemClasses += " text-base font-bold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
                   }
-
-                  // Speisekarte: use native hash navigation via Link
+ 
+                  // Speisekarte: use custom hash navigation handler
                   return (
-                    <Link
+                    <a
                       key={item.href}
-                      to="/#full-menu"
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
                       className={itemClasses}
                     >
                       {item.label}
-                    </Link>
+                    </a>
                   );
                 }
 
@@ -256,60 +252,60 @@ export const Navigation = () => {
               }
               
               if (item.isPrimary) {
-                itemClasses += " font-bold text-xl border-l-4 border-primary";
-              } else if (item.isSecondary) {
-                itemClasses += " font-semibold";
-              } else if (item.isTertiary) {
-                itemClasses += " font-medium text-base opacity-80";
-              }
-              
-              return (
-                <>
-                  {item.href.startsWith('http') ? (
-                    // External link - use <a> tag
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                      className={itemClasses}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.label}
-                    </a>
-                  ) : item.isPrimary ? (
-                    // Primary item (Speisekarte) - use Link with hash
-                    <Link
-                      key={item.href}
-                      to="/#full-menu"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={itemClasses}
-                    >
-                      {item.label}
-                    </Link>
-                  ) : item.href.startsWith('#') ? (
-                    // Hash link - use <a> but with custom handler
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                      className={itemClasses}
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    // Internal page - use Link
-                    <Link
-                      key={item.href}
-                      to={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={itemClasses}
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </>
-              );
+                 itemClasses += " font-bold text-xl border-l-4 border-primary";
+               } else if (item.isSecondary) {
+                 itemClasses += " font-semibold";
+               } else if (item.isTertiary) {
+                 itemClasses += " font-medium text-base opacity-80";
+               }
+               
+               return (
+                 <>
+                   {item.href.startsWith('http') ? (
+                     // External link - use <a> tag
+                     <a
+                       key={item.href}
+                       href={item.href}
+                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                       className={itemClasses}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                     >
+                       {item.label}
+                     </a>
+                   ) : item.isPrimary ? (
+                     // Primary item (Speisekarte) - use custom hash navigation handler
+                     <a
+                       key={item.href}
+                       href={item.href}
+                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                       className={itemClasses}
+                     >
+                       {item.label}
+                     </a>
+                   ) : item.href.startsWith('#') ? (
+                     // Hash link - use <a> but with custom handler
+                     <a
+                       key={item.href}
+                       href={item.href}
+                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                       className={itemClasses}
+                     >
+                       {item.label}
+                     </a>
+                   ) : (
+                     // Internal page - use Link
+                     <Link
+                       key={item.href}
+                       to={item.href}
+                       onClick={() => setIsMobileMenuOpen(false)}
+                       className={itemClasses}
+                     >
+                       {item.label}
+                     </Link>
+                   )}
+                 </>
+               );
             })}
             <Link
               to="/privacy"
