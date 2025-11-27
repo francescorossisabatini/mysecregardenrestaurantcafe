@@ -29,7 +29,7 @@ export const Hero = () => {
     const startTimer = setTimeout(() => {
       const timer = setInterval(() => {
         setCurrentImage((prev) => (prev + 1) % heroImages.length);
-      }, 4000);
+      }, 7000); // Slow carousel: 7 seconds per image
       return () => clearInterval(timer);
     }, 2000); // Wait 2 seconds before starting carousel
 
@@ -66,11 +66,11 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Background carousel - fullscreen */}
+      {/* Background carousel - fullscreen with slow transitions */}
       {heroImages.map((img, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-all duration-2000 ease-in-out ${
+          className={`absolute inset-0 transition-all duration-[3000ms] ease-in-out ${
             currentImage === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
           }`}
           style={{
