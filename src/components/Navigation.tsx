@@ -74,34 +74,27 @@ export const Navigation = () => {
 
     // Handle hash/section links on homepage
     if (isHash || href.startsWith('#')) {
-      // If we're on a different page, navigate to home first
+      // If we're on a different page, save target and navigate to home
       if (location.pathname !== "/") {
-        navigate("/");
-        // Wait for navigation and then scroll
-        setTimeout(() => {
-          const element = document.querySelector(href);
-          if (element) {
-            const offset = 80; // navbar height
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
-            });
-          }
-        }, 100);
-      } else {
-        // Already on home page, just scroll
-        const element = document.querySelector(href);
-        if (element) {
-          const offset = 80; // navbar height
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
+        try {
+          sessionStorage.setItem("scrollTarget", href);
+        } catch (e) {
+          // ignore storage errors
         }
+        navigate("/");
+        return;
+      }
+
+      // Already on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        const offset = 80; // navbar height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
       }
     }
   };

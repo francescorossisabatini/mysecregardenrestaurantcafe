@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
@@ -13,6 +14,29 @@ import foodDetailImg from "@/assets/food-detail-real.jpg";
 import poppyImg from "@/assets/poppy-flower-real.jpg";
 
 const Index = () => {
+  useEffect(() => {
+    try {
+      const target = sessionStorage.getItem("scrollTarget");
+      if (target) {
+        sessionStorage.removeItem("scrollTarget");
+        setTimeout(() => {
+          const element = document.querySelector(target);
+          if (element) {
+            const offset = 80; // navbar height
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }
+        }, 150);
+      }
+    } catch (e) {
+      // ignore storage errors
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Preloader />
