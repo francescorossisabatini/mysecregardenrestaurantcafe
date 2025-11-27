@@ -82,19 +82,33 @@ export const Hero = () => {
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+          {/* CTA Buttons - Hierarchical Order */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 max-w-2xl mx-auto">
+            {/* Primary CTA - Daily Menu */}
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xl font-semibold text-base md:text-lg px-8 py-6 border-2 border-primary"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xl font-bold text-base md:text-lg px-10 py-7 border-2 border-primary transform hover:scale-105 transition-all"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
+            
+            {/* Secondary CTA - Call */}
+            <Button
+              size="lg"
+              asChild
+              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-2xl font-semibold text-base md:text-lg px-10 py-7 border-2 border-accent transform hover:scale-105 transition-all"
+            >
+              <a href="tel:+4315970547">
+                {language === "de" ? "Anrufen" : "Call Us"}
+              </a>
+            </Button>
+            
+            {/* Tertiary CTA - Full Menu */}
             <Button
               size="lg"
               onClick={() => scrollToSection("full-menu")}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-2xl font-semibold text-base md:text-lg px-8 py-6 border-2 border-accent"
+              className="bg-background/90 backdrop-blur-sm text-foreground hover:bg-background border-2 border-primary/50 shadow-xl font-medium text-base md:text-lg px-8 py-7 transform hover:scale-105 transition-all"
             >
               {language === "de" ? "Speisekarte" : "Full Menu"}
             </Button>
@@ -115,13 +129,6 @@ export const Hero = () => {
               />
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-6 h-10 border-2 border-background/60 rounded-full flex items-start justify-center p-2">
-          <div className="w-1.5 h-1.5 bg-background/60 rounded-full animate-pulse" />
         </div>
       </div>
     </section>
