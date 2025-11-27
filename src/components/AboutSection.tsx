@@ -1,14 +1,17 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Card } from "@/components/ui/card";
 import { Leaf, Heart, Droplets } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { SpiritualAnimations } from "./SpiritualAnimations";
 import gardenImg from "@/assets/garden-real.jpg";
 import gardenReal from "@/assets/garden-real.jpg";
+import entranceGarden from "@/assets/entrance-garden.jpg";
 import sriChinmoyImg from "@/assets/sri-chinmoy.jpg";
 
 export const AboutSection = () => {
   const { language } = useLanguage();
+  const { ref, isVisible } = useScrollReveal(0.1);
 
   const sectionTitle = {
     de: "Über uns & unsere Inspiration",
@@ -47,17 +50,20 @@ export const AboutSection = () => {
 
   return (
     <section 
+      ref={ref as any}
       id="about" 
-      className="relative overflow-hidden py-12 sm:py-16 md:py-20"
+      className={`relative overflow-hidden py-12 sm:py-16 md:py-20 transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
       style={{
-        backgroundImage: `url(${gardenReal})`,
+        backgroundImage: `url(${entranceGarden})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/97 via-background/93 to-background/97" />
+      {/* Overlay - lighter to see images better */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/80 to-background/85" />
       
       {/* Spiritual animations */}
       <SpiritualAnimations variant="butterfly" />

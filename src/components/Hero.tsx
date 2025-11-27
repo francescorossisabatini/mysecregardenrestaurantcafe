@@ -6,8 +6,19 @@ import heroGarden from "@/assets/garden-real.jpg";
 import heroFood from "@/assets/food-bowl-real.jpg";
 import heroInterior from "@/assets/interior-real.jpg";
 import entranceGarden from "@/assets/entrance-garden.jpg";
+import minnesotaBowl from "@/assets/minnesota-bowl.jpg";
+import koreanBowl from "@/assets/korean-bowl.jpg";
+import alpenpolenta from "@/assets/alpenpolenta.jpg";
 
-const heroImages = [entranceGarden, heroGarden, heroFood, heroInterior];
+const heroImages = [
+  entranceGarden,
+  minnesotaBowl,
+  heroGarden,
+  koreanBowl,
+  heroFood,
+  alpenpolenta,
+  heroInterior,
+];
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -16,7 +27,7 @@ export const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 4000); // Faster transitions for more dynamism
     return () => clearInterval(timer);
   }, []);
 
@@ -33,8 +44,8 @@ export const Hero = () => {
       {heroImages.map((img, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1500 ${
-            currentImage === index ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 transition-all duration-2000 ease-in-out ${
+            currentImage === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
           }`}
           style={{
             backgroundImage: `url(${img})`,
