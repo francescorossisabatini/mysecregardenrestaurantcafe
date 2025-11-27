@@ -52,14 +52,15 @@ export const AboutSection = () => {
     <section 
       ref={ref as any}
       id="about" 
-      className={`relative overflow-hidden py-16 md:py-20 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      className={`relative overflow-hidden py-20 md:py-28 transition-all duration-[2000ms] ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{
         backgroundImage: `url(${entranceGarden})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
+        transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       }}
     >
       {/* Overlay - lighter to see images better */}
@@ -70,18 +71,24 @@ export const AboutSection = () => {
       
       <div className="container mx-auto max-w-7xl px-4 relative z-10">
         {/* Title */}
-        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+        <div className={`text-center mb-12 md:mb-20 transition-all duration-[1800ms] ${
+          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
+        }`}
+        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
           <BotanicalDecoration 
             variant="vine" 
-            className="w-48 sm:w-56 md:w-64 h-6 sm:h-7 md:h-8 mx-auto mb-3 md:mb-4 text-primary/20" 
+            className="w-48 sm:w-56 md:w-64 h-6 sm:h-7 md:h-8 mx-auto mb-4 md:mb-6 text-primary/20" 
           />
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-4 md:mb-6">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat font-bold text-primary leading-tight">
             {language === "de" ? "Über uns" : "About us"}
           </h2>
         </div>
 
         {/* About the Restaurant - Side by side layout */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16 md:mb-20 items-center">
+        <div className={`grid md:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-24 items-center transition-all duration-[1800ms] delay-200 ${
+          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
+        }`}
+        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
           {/* Image */}
           <div className="order-2 md:order-1">
             <Card className="overflow-hidden shadow-elevated border-2 border-primary/20">
@@ -97,10 +104,10 @@ export const AboutSection = () => {
 
           {/* Content */}
           <div className="order-1 md:order-2">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-caveat font-bold text-primary mb-4 sm:mb-5 md:mb-6">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-5 md:mb-7 leading-tight">
               {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
             </h3>
-            <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground mb-6">
+            <p className="font-lora text-base sm:text-lg md:text-xl leading-relaxed text-foreground mb-8">
               {aboutRestaurant[language]}
             </p>
 
@@ -121,17 +128,20 @@ export const AboutSection = () => {
         </div>
 
         {/* Our Inspiration: Sri Chinmoy - Card layout */}
-        <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-primary/20 p-6 sm:p-8 md:p-12 shadow-elevated relative overflow-hidden">
+        <Card className={`bg-gradient-to-br from-primary/5 to-accent/5 border-2 border-primary/20 p-8 sm:p-10 md:p-16 shadow-elevated relative overflow-hidden transition-all duration-[1800ms] delay-400 ${
+          isVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-4 blur-sm'
+        }`}
+        style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
           <BotanicalDecoration 
             variant="flower" 
             className="absolute top-4 right-4 w-20 h-20 text-primary/10" 
           />
 
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-caveat font-bold text-primary mb-6 sm:mb-8 text-center">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-primary mb-8 sm:mb-10 text-center leading-tight">
             {language === "de" ? "Unsere Inspiration: Sri Chinmoy" : "Our Inspiration: Sri Chinmoy"}
           </h3>
 
-          <div className="grid md:grid-cols-[200px_1fr] lg:grid-cols-[220px_1fr] gap-6 sm:gap-8 items-start">
+          <div className="grid md:grid-cols-[200px_1fr] lg:grid-cols-[220px_1fr] gap-8 sm:gap-10 items-start">
             {/* Sri Chinmoy portrait */}
             <div className="mx-auto md:mx-0">
               <Card className="overflow-hidden border-2 border-primary/30 shadow-lg">
@@ -143,7 +153,7 @@ export const AboutSection = () => {
                   />
                 </div>
               </Card>
-              <p className="text-center mt-3 text-xs sm:text-sm font-lora text-muted-foreground italic">
+              <p className="text-center mt-3 text-sm font-lora text-muted-foreground italic">
                 Sri Chinmoy<br />
                 1931-2007
               </p>
@@ -151,20 +161,20 @@ export const AboutSection = () => {
 
             {/* Inspiration text and quote */}
             <div>
-              <p className="font-lora text-sm sm:text-base md:text-lg leading-relaxed text-foreground mb-6">
+              <p className="font-lora text-base sm:text-lg md:text-xl leading-relaxed text-foreground mb-8">
                 {aboutInspiration[language]}
               </p>
 
               {/* Quote box */}
-              <Card className="bg-card border-2 border-primary/20 p-5 sm:p-6 relative overflow-hidden">
+              <Card className="bg-card border-2 border-primary/20 p-6 sm:p-8 relative overflow-hidden">
                 <BotanicalDecoration 
                   variant="flower" 
                   className="absolute top-2 right-2 w-12 h-12 text-primary/10" 
                 />
-                <p className="font-lora text-base sm:text-lg md:text-xl italic text-foreground mb-3 relative z-10">
+                <p className="font-lora text-lg sm:text-xl md:text-2xl italic text-foreground mb-4 relative z-10 leading-relaxed">
                   {quote[language]}
                 </p>
-                <p className="font-caveat text-xl sm:text-2xl text-primary relative z-10">
+                <p className="font-caveat text-2xl sm:text-3xl text-primary relative z-10">
                   – Sri Chinmoy
                 </p>
               </Card>
