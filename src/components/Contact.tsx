@@ -9,28 +9,28 @@ export const Contact = () => {
   const { t } = useLanguage();
   
   return (
-    <section id="contact" className="py-16 md:py-20 bg-gradient-subtle relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-28 bg-gradient-subtle relative overflow-hidden">
       {/* Decorative Flowers and Lines - Maggiore contrasto */}
-      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-600 opacity-60">
+      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-600 opacity-40">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-16 left-12 w-24 h-24 text-teal-600 opacity-80">
+      <div className="absolute top-16 left-12 w-24 h-24 text-teal-600 opacity-50">
         <DetailedFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-16 right-12 w-28 h-28 text-blue-600 opacity-80">
+      <div className="absolute bottom-16 right-12 w-28 h-28 text-blue-600 opacity-50">
         <DetailedFlower className="w-full h-full" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 sm:mb-10 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-3 sm:mb-4">
-              <span className="font-dancing text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{t("contact.title")}</span>
+          <div className="text-center mb-12 md:mb-16 stagger-children in-view">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat font-bold text-primary mb-4 leading-tight">
+              {t("contact.title")}
             </h2>
-            <div className="w-20 sm:w-24 h-1 bg-accent mx-auto rounded-full" />
+            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-7 md:mb-8">
+          <div className="grid sm:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-10 stagger-children in-view">
             <Card className="p-4 sm:p-5 md:p-6 hover:shadow-elevated transition-all bg-card/80 backdrop-blur-sm">
               <div className="flex items-start gap-3 sm:gap-4">
                 <div className="bg-primary/10 p-2 sm:p-3 rounded-lg flex-shrink-0">
@@ -96,7 +96,7 @@ export const Contact = () => {
           </div>
 
           {/* Google Maps + Entrance Photo */}
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-7 md:mb-8">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-10 animate-smooth-reveal" style={{ animationDelay: '800ms' }}>
             {/* Map */}
             <Card className="p-3 sm:p-4 bg-card/80 backdrop-blur-sm overflow-hidden">
               <div className="aspect-video w-full rounded-lg overflow-hidden">
@@ -128,10 +128,10 @@ export const Contact = () => {
             </Card>
           </div>
 
-          <div className="text-center">
+          <div className="text-center animate-smooth-reveal" style={{ animationDelay: '1000ms' }}>
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated text-base sm:text-lg px-10 py-6 sm:py-7 font-lora"
               asChild
             >
               <a href="tel:015862839">{t("contact.call")}</a>

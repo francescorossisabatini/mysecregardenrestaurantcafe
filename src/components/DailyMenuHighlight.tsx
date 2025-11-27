@@ -31,7 +31,7 @@ export const DailyMenuHighlight = () => {
   return (
     <section
       id="daily-menu"
-      className="relative py-16 md:py-20 overflow-hidden bg-cream"
+      className="relative py-20 md:py-28 overflow-hidden bg-cream"
     >
       {/* Overlay - lighter to see images better */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
@@ -41,14 +41,14 @@ export const DailyMenuHighlight = () => {
 
       <div className="container mx-auto max-w-6xl px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-caveat font-bold text-primary mb-2 md:mb-3">
+        <div className="text-center mb-12 md:mb-16 stagger-children in-view">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat font-bold text-primary mb-3 md:mb-4 leading-tight">
             {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </h2>
-          <p className="text-base sm:text-lg md:text-xl font-lora text-muted-foreground">
+          <p className="text-lg sm:text-xl md:text-2xl font-lora text-muted-foreground">
             {todayMenu.day[language]} · {menu.period}
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground mt-2">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mt-3">
             {language === "de"
               ? "Jeden Tag frisch für Sie zubereitet"
               : "Freshly prepared for you every day"}
@@ -56,7 +56,7 @@ export const DailyMenuHighlight = () => {
         </div>
 
         {/* Menu Cards Grid - Horizontal on Desktop, Vertical on Mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto stagger-children in-view">
           {/* Soup Card */}
           <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10 flex flex-col">
             <div className="flex items-start gap-3 mb-3">
@@ -139,8 +139,8 @@ export const DailyMenuHighlight = () => {
         </div>
 
         {/* Footer Note */}
-        <div className="text-center mt-8 sm:mt-10">
-          <p className="text-sm sm:text-base text-muted-foreground">
+        <div className="text-center mt-12 md:mt-16 animate-smooth-reveal" style={{ animationDelay: '1000ms' }}>
+          <p className="text-base sm:text-lg md:text-xl font-lora text-muted-foreground">
             {language === "de"
               ? "Alle Gerichte werden mit frischen Bio-Zutaten zubereitet"
               : "All dishes are prepared with fresh organic ingredients"}
