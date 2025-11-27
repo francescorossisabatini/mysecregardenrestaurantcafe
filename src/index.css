@@ -2,159 +2,159 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Spiritual palette inspired by Sri Chinmoy's art - Soft & Elegant
+/* Delicate spiritual palette inspired by Sri Chinmoy's art - Very Soft
 All colors MUST be HSL format.
-Primary: Soft spiritual blue #4A6FE8
-Accent: Soft lime green #A8D84E
-Secondary accents: Soft magenta, Golden yellow, Coral, Lavender
+Primary: Very soft blue #7B95E8
+Accent: Delicate sage green #B8D99B
+Secondary accents: Soft rose, Pale yellow, Soft peach, Pale lavender
 Background: Warm cream #FAF7F0
 */
 
 @layer base {
   :root {
-    /* Light mode - soft spiritual identity */
+    /* Light mode - delicate spiritual identity */
     --background: 45 50% 97%; /* Warm cream #FAF7F0 */
-    --foreground: 240 15% 20%; /* Soft charcoal */
+    --foreground: 240 10% 25%; /* Soft charcoal */
 
-    --card: 45 50% 98%;
-    --card-foreground: 240 15% 20%;
+    --card: 45 45% 98%;
+    --card-foreground: 240 10% 25%;
 
-    --popover: 45 50% 98%;
-    --popover-foreground: 240 15% 20%;
+    --popover: 45 45% 98%;
+    --popover-foreground: 240 10% 25%;
 
-    /* Primary: Soft spiritual blue #4A6FE8 */
-    --primary: 225 75% 60%;
+    /* Primary: Very soft blue #7B95E8 */
+    --primary: 225 65% 70%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 55% 65%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 280 40% 75%;
+    --secondary-foreground: 240 10% 25%;
 
-    --muted: 45 30% 92%;
-    --muted-foreground: 240 10% 45%;
+    --muted: 45 25% 93%;
+    --muted-foreground: 240 8% 50%;
 
-    /* Accent: Soft lime green #A8D84E */
-    --accent: 75 65% 58%;
-    --accent-foreground: 240 15% 20%;
+    /* Accent: Delicate sage green #B8D99B */
+    --accent: 85 40% 72%;
+    --accent-foreground: 240 10% 25%;
     
-    /* Accent secondary: Soft golden yellow #F4D03F */
-    --accent-light: 48 85% 60%;
+    /* Accent secondary: Pale yellow #F4E8B8 */
+    --accent-light: 48 60% 85%;
     
-    /* Soft magenta #E877A6 */
-    --magenta: 335 70% 70%;
-    --magenta-foreground: 0 0% 100%;
+    /* Soft rose #E8B8C8 */
+    --magenta: 340 45% 80%;
+    --magenta-foreground: 240 10% 25%;
     
-    /* Soft coral #FF9A76 */
-    --orange: 18 100% 73%;
-    --orange-foreground: 240 15% 20%;
+    /* Soft peach #FFCCB8 */
+    --orange: 20 80% 86%;
+    --orange-foreground: 240 10% 25%;
     
-    /* Soft lavender #A78BFA */
-    --violet: 258 90% 76%;
-    --violet-foreground: 240 15% 20%;
+    /* Pale lavender #C8B8E8 */
+    --violet: 260 55% 82%;
+    --violet-foreground: 240 10% 25%;
     
-    /* Blue accent for menu items */
-    --blue: 210 75% 60%;
+    /* Soft blue accent */
+    --blue: 210 55% 70%;
     --blue-foreground: 0 0% 100%;
     
     /* Cream background for special sections */
-    --cream: 45 60% 95%;
+    --cream: 45 50% 95%;
 
-    --destructive: 0 70% 60%;
+    --destructive: 0 50% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 45 25% 88%;
-    --input: 45 25% 88%;
-    --ring: 225 75% 60%;
+    --border: 45 20% 90%;
+    --input: 45 20% 90%;
+    --ring: 225 65% 70%;
 
     --radius: 1rem;
     
-    /* Custom design tokens - soft spiritual theme */
-    --gradient-primary: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(280 55% 65%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(75 65% 58%) 0%, hsl(48 85% 60%) 100%);
-    --gradient-rainbow: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(335 70% 70%) 25%, hsl(18 100% 73%) 50%, hsl(48 85% 60%) 75%, hsl(75 65% 58%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(225 75% 60%) 0%, hsl(258 90% 76%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(45 50% 97%) 0%, hsl(225 50% 96%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(225 75% 60% / 0.15);
-    --shadow-elevated: 0 10px 40px -10px hsl(225 75% 60% / 0.25);
-    --shadow-vibrant: 0 8px 32px -8px hsl(335 70% 70% / 0.3);
+    /* Custom design tokens - very soft spiritual theme */
+    --gradient-primary: linear-gradient(135deg, hsl(225 65% 70%) 0%, hsl(280 40% 75%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(85 40% 72%) 0%, hsl(48 60% 85%) 100%);
+    --gradient-rainbow: linear-gradient(135deg, hsl(225 65% 70%) 0%, hsl(340 45% 80%) 25%, hsl(20 80% 86%) 50%, hsl(48 60% 85%) 75%, hsl(85 40% 72%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 65% 70%) 0%, hsl(260 55% 82%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(45 50% 97%) 0%, hsl(225 30% 96%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(225 65% 70% / 0.12);
+    --shadow-elevated: 0 10px 40px -10px hsl(225 65% 70% / 0.18);
+    --shadow-vibrant: 0 8px 32px -8px hsl(340 45% 80% / 0.2);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 45 50% 98%;
-    --sidebar-foreground: 240 15% 20%;
-    --sidebar-primary: 225 75% 60%;
+    --sidebar-background: 45 45% 98%;
+    --sidebar-foreground: 240 10% 25%;
+    --sidebar-primary: 225 65% 70%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 45 30% 92%;
-    --sidebar-accent-foreground: 240 15% 20%;
-    --sidebar-border: 45 25% 88%;
-    --sidebar-ring: 225 75% 60%;
+    --sidebar-accent: 45 25% 93%;
+    --sidebar-accent-foreground: 240 10% 25%;
+    --sidebar-border: 45 20% 90%;
+    --sidebar-ring: 225 65% 70%;
   }
 
   .dark {
-    /* Dark mode - soft spiritual atmosphere */
-    --background: 240 20% 12%;
-    --foreground: 45 30% 92%;
+    /* Dark mode - delicate spiritual atmosphere */
+    --background: 240 15% 15%;
+    --foreground: 45 25% 90%;
 
-    --card: 240 18% 16%;
-    --card-foreground: 45 30% 92%;
+    --card: 240 12% 18%;
+    --card-foreground: 45 25% 90%;
 
-    --popover: 240 18% 16%;
-    --popover-foreground: 45 30% 92%;
+    --popover: 240 12% 18%;
+    --popover-foreground: 45 25% 90%;
 
     /* Primary: Soft blue for dark mode */
-    --primary: 225 70% 65%;
+    --primary: 225 55% 68%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 50% 68%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 280 35% 72%;
+    --secondary-foreground: 240 15% 15%;
 
-    --muted: 240 15% 22%;
-    --muted-foreground: 45 20% 70%;
+    --muted: 240 12% 25%;
+    --muted-foreground: 45 15% 68%;
 
     /* Accent: Soft green for dark mode */
-    --accent: 75 60% 60%;
-    --accent-foreground: 240 20% 12%;
+    --accent: 85 35% 70%;
+    --accent-foreground: 240 15% 15%;
     
-    --accent-light: 48 80% 62%;
+    --accent-light: 48 50% 80%;
     
-    --magenta: 335 65% 72%;
-    --magenta-foreground: 240 20% 12%;
+    --magenta: 340 40% 75%;
+    --magenta-foreground: 240 15% 15%;
     
-    --orange: 18 95% 75%;
-    --orange-foreground: 240 20% 12%;
+    --orange: 20 70% 82%;
+    --orange-foreground: 240 15% 15%;
     
-    --violet: 258 85% 78%;
-    --violet-foreground: 240 20% 12%;
+    --violet: 260 50% 78%;
+    --violet-foreground: 240 15% 15%;
     
-    /* Blue accent for menu items (softer in dark mode) */
-    --blue: 210 70% 65%;
+    /* Soft blue accent */
+    --blue: 210 50% 68%;
     --blue-foreground: 0 0% 100%;
     
     /* Cream background for special sections (darker in dark mode) */
-    --cream: 240 15% 18%;
+    --cream: 240 12% 20%;
 
-    --destructive: 0 65% 55%;
+    --destructive: 0 45% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 15% 24%;
-    --input: 240 15% 24%;
-    --ring: 225 70% 65%;
+    --border: 240 12% 28%;
+    --input: 240 12% 28%;
+    --ring: 225 55% 68%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(280 50% 68%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(75 60% 60%) 0%, hsl(48 80% 62%) 100%);
-    --gradient-rainbow: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(335 65% 72%) 25%, hsl(18 95% 75%) 50%, hsl(48 80% 62%) 75%, hsl(75 60% 60%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(225 70% 65%) 0%, hsl(258 85% 78%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(240 20% 12%) 0%, hsl(240 18% 16%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
-    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
-    --shadow-vibrant: 0 8px 32px -8px hsl(335 65% 72% / 0.4);
+    --gradient-primary: linear-gradient(135deg, hsl(225 55% 68%) 0%, hsl(280 35% 72%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(85 35% 70%) 0%, hsl(48 50% 80%) 100%);
+    --gradient-rainbow: linear-gradient(135deg, hsl(225 55% 68%) 0%, hsl(340 40% 75%) 25%, hsl(20 70% 82%) 50%, hsl(48 50% 80%) 75%, hsl(85 35% 70%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 55% 68%) 0%, hsl(260 50% 78%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(240 15% 15%) 0%, hsl(240 12% 18%) 100%);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.35);
+    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
+    --shadow-vibrant: 0 8px 32px -8px hsl(340 40% 75% / 0.35);
     
-    --sidebar-background: 240 20% 14%;
-    --sidebar-foreground: 45 30% 92%;
-    --sidebar-primary: 225 70% 65%;
+    --sidebar-background: 240 15% 17%;
+    --sidebar-foreground: 45 25% 90%;
+    --sidebar-primary: 225 55% 68%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 15% 22%;
-    --sidebar-accent-foreground: 45 30% 92%;
-    --sidebar-border: 240 15% 24%;
-    --sidebar-ring: 225 70% 65%;
+    --sidebar-accent: 240 12% 25%;
+    --sidebar-accent-foreground: 45 25% 90%;
+    --sidebar-border: 240 12% 28%;
+    --sidebar-ring: 225 55% 68%;
   }
 }
 
