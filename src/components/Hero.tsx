@@ -20,15 +20,20 @@ const heroImages = [
 ];
 
 export const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImage, setCurrentImage] = useState(0); // Always start from first image
   const [showContent, setShowContent] = useState(false);
   const { language } = useLanguage();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(timer);
+    // Start carousel from beginning after a delay
+    const startTimer = setTimeout(() => {
+      const timer = setInterval(() => {
+        setCurrentImage((prev) => (prev + 1) % heroImages.length);
+      }, 4000);
+      return () => clearInterval(timer);
+    }, 2000); // Wait 2 seconds before starting carousel
+
+    return () => clearTimeout(startTimer);
   }, []);
 
   useEffect(() => {
