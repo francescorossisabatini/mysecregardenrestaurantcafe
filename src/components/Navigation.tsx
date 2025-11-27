@@ -76,7 +76,7 @@ export const Navigation = () => {
     if (isHash || href.startsWith('#')) {
       // If we're on a different page, navigate to home first
       if (location.pathname !== "/") {
-        navigate("/");
+        navigate(`/${href}`);
         // Wait for navigation and then scroll
         setTimeout(() => {
           const element = document.querySelector(href);
