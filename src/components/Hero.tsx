@@ -82,37 +82,37 @@ export const Hero = () => {
             Mariahilferstraße 45
           </p>
 
-          {/* CTA Buttons - Modern Design */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-6 max-w-2xl mx-auto">
-            {/* Primary CTA - Daily Menu */}
-            <Button
-              size="lg"
-              onClick={() => scrollToSection("daily-menu")}
-              className="group relative bg-primary text-primary-foreground hover:bg-primary font-semibold text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-primary/30 hover:shadow-2xl transition-all duration-300 overflow-hidden"
-            >
-              <span className="relative z-10">{language === "de" ? "Tagesmenü" : "Daily Menu"}</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Button>
-            
-            {/* Secondary CTA - Call */}
+          {/* CTA Buttons - Gestalt Hierarchy */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 max-w-3xl mx-auto">
+            {/* PRIMARY CTA - Anrufen (Most Important) - Gestalt: Prominence */}
             <Button
               size="lg"
               asChild
-              className="group relative bg-accent text-accent-foreground hover:bg-accent font-semibold text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-accent/30 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-accent text-accent-foreground hover:bg-accent/90 shadow-elevated font-bold text-lg md:text-xl px-12 py-8 rounded-2xl transition-all duration-300 hover:scale-105 order-1 sm:order-2"
             >
-              <a href="tel:+4315970547">
-                <span className="relative z-10">{language === "de" ? "Anrufen" : "Call Us"}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-accent to-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <a href="tel:+4315970547" className="flex items-center gap-3">
+                <span className="text-2xl">📞</span>
+                <span>{language === "de" ? "Jetzt Anrufen" : "Call Now"}</span>
               </a>
             </Button>
             
-            {/* Tertiary CTA - Full Menu */}
+            {/* SECONDARY CTA - Tagesmenü - Gestalt: Similarity & Grouping */}
             <Button
               size="lg"
-              onClick={() => scrollToSection("full-menu")}
-              className="group relative bg-background/95 backdrop-blur-md text-foreground hover:bg-background font-medium text-base md:text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl border border-border/20 hover:border-primary/30 transition-all duration-300"
+              onClick={() => scrollToSection("daily-menu")}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft font-semibold text-base md:text-lg px-8 py-6 rounded-xl transition-all duration-300 hover:scale-[1.02] order-2 sm:order-1"
             >
-              <span className="relative z-10">{language === "de" ? "Speisekarte" : "Full Menu"}</span>
+              {language === "de" ? "Tagesmenü" : "Daily Menu"}
+            </Button>
+            
+            {/* TERTIARY CTA - Speisekarte - Gestalt: Background/Figure */}
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => scrollToSection("full-menu")}
+              className="bg-background/40 backdrop-blur-sm text-foreground hover:bg-background/60 border-2 border-background/60 hover:border-background shadow-sm font-medium text-base px-6 py-5 rounded-lg transition-all duration-300 order-3 sm:order-3"
+            >
+              {language === "de" ? "Speisekarte" : "Full Menu"}
             </Button>
           </div>
 
