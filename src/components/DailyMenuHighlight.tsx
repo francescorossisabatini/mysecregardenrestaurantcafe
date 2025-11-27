@@ -1,6 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Loader2 } from "lucide-react";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { SpiritualAnimations } from "./SpiritualAnimations";
@@ -9,7 +8,6 @@ import foodGarden from "@/assets/food-garden.jpg";
 export const DailyMenuHighlight = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
-  const { ref, isVisible } = useScrollReveal(0.2);
 
   if (isLoading) {
     return (
@@ -31,21 +29,13 @@ export const DailyMenuHighlight = () => {
   const todayMenu = menu.days[dayIndex] || menu.days[0];
 
   return (
-    <section 
-      ref={ref as any}
-      id="daily-menu" 
-      className={`relative py-12 sm:py-16 md:py-20 overflow-hidden transition-opacity duration-700 ease-out ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{
-        backgroundImage: `url(${foodGarden})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+    <section
+      id="daily-menu"
+      className="relative py-12 sm:py-16 md:py-20 overflow-hidden bg-cream"
     >
       {/* Overlay - lighter to see images better */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
-      
+
       {/* Spiritual animations */}
       <SpiritualAnimations variant="leaves" className="opacity-100" />
 
@@ -66,9 +56,7 @@ export const DailyMenuHighlight = () => {
         </div>
 
         {/* Menu Cards Grid */}
-        <div className={`grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto transition-all duration-700 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}>
+        <div className="grid gap-4 sm:gap-5 md:gap-6 max-w-3xl mx-auto">
           {/* Soup Card */}
           <div className="bg-[#F5F1E3] rounded-xl p-5 sm:p-6 md:p-7 shadow-md hover:shadow-lg transition-all border-2 border-primary/10">
             <div className="flex items-start gap-3 mb-3">
