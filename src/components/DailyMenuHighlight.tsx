@@ -31,24 +31,18 @@ export const DailyMenuHighlight = () => {
   return (
     <section
       id="daily-menu"
-      className="relative py-20 md:py-28 overflow-hidden bg-cream"
+      className="py-32 md:py-40"
     >
-      {/* Overlay - lighter to see images better */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/75 to-background/80" />
-
-      {/* Spiritual animations */}
-      <SpiritualAnimations variant="leaves" className="opacity-100" />
-
-      <div className="container mx-auto max-w-6xl px-4 relative z-10">
+      <div className="container mx-auto max-w-6xl px-4">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16 stagger-children in-view">
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat font-bold text-primary mb-3 md:mb-4 leading-tight">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
             {language === "de" ? "Tagesmenü" : "Daily Menu"}
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl font-lora text-muted-foreground">
+          <p className="text-xl md:text-2xl font-lora text-muted-foreground mb-4">
             {todayMenu.day[language]} · {menu.period}
           </p>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground/80 mt-3">
+          <p className="text-base md:text-lg text-muted-foreground/80">
             {language === "de"
               ? "Jeden Tag frisch für Sie zubereitet"
               : "Freshly prepared for you every day"}

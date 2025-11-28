@@ -9,11 +9,11 @@ export const Contact = () => {
   const { t } = useLanguage();
   
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="contact" className="py-32 md:py-40 bg-muted/30">
+      <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
+            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
               {t("contact.title")}
             </h2>
           </div>

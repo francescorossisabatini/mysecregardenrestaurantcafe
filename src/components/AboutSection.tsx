@@ -47,99 +47,91 @@ export const AboutSection = () => {
     <section 
       ref={ref as any}
       id="about" 
-      className={`relative overflow-hidden min-h-screen flex items-center transition-all duration-1000 ${
+      className={`py-32 md:py-40 transition-all duration-1000 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{
-        backgroundImage: `url(${entranceGarden})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/80 to-background/85" />
-      
-      {/* Spiritual animations */}
-      <SpiritualAnimations variant="butterfly" className="opacity-80" />
-      
-      <div className="container mx-auto max-w-5xl py-20 px-4 md:px-8 relative z-10">
+      <div className="container mx-auto max-w-6xl px-4 md:px-8">
         {/* Title */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
             {language === "de" ? "Über uns" : "About us"}
           </h2>
         </div>
 
-        {/* Grid Layout - Minimal and Open */}
-        <div className="grid md:grid-cols-5 gap-12 items-center mb-20">
-          {/* Image */}
-          <div className="md:col-span-2">
-            <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-2xl">
-              <img
-                src={gardenImg}
-                alt="Secret Garden Restaurant"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-          </div>
-
+        {/* Grid Layout - Clean and Open */}
+        <div className="grid md:grid-cols-2 gap-16 items-start mb-32">
           {/* Content */}
-          <div className="md:col-span-3 space-y-8">
-            <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary">
-              {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
-            </h3>
-            <p className="font-lora text-lg leading-relaxed text-foreground/90">
-              {aboutRestaurant[language]}
-            </p>
+          <div className="space-y-10">
+            <div>
+              <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-6">
+                {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
+              </h3>
+              <p className="font-lora text-xl leading-relaxed text-foreground/90">
+                {aboutRestaurant[language]}
+              </p>
+            </div>
 
             {/* Values - Simple list */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               {values.map((value, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <value.icon className="w-6 h-6 text-accent flex-shrink-0" />
-                  <span className="font-lora text-lg text-foreground/90">
+                  <value.icon className="w-7 h-7 text-accent flex-shrink-0" />
+                  <span className="font-lora text-xl text-foreground/90">
                     {value.title[language]}
                   </span>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Image */}
+          <div className="relative">
+            <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
+              <img
+                src={entranceGarden}
+                alt="Secret Garden Restaurant Entrance"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Sri Chinmoy Section */}
-        <div className="grid md:grid-cols-5 gap-12 items-start mb-20">
+        <div className="grid md:grid-cols-2 gap-16 items-start mb-32">
           {/* Portrait */}
-          <div className="md:col-span-2 text-center md:text-left">
-            <div className="aspect-[3/4] overflow-hidden rounded-lg shadow-2xl inline-block">
+          <div className="relative order-2 md:order-1">
+            <div className="aspect-[3/4] overflow-hidden rounded-2xl shadow-xl">
               <img
                 src={sriChinmoyImg}
                 alt="Sri Chinmoy"
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="mt-4 text-sm font-lora text-muted-foreground italic">
+            <p className="mt-6 text-center text-base font-lora text-muted-foreground italic">
               Sri Chinmoy · 1931-2007
             </p>
           </div>
 
           {/* Inspiration Text */}
-          <div className="md:col-span-3 space-y-8">
-            <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent">
-              {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
-            </h3>
-            <p className="font-lora text-lg leading-relaxed text-foreground/90">
-              {aboutInspiration[language]}
-            </p>
+          <div className="space-y-10 order-1 md:order-2">
+            <div>
+              <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent mb-6">
+                {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
+              </h3>
+              <p className="font-lora text-xl leading-relaxed text-foreground/90">
+                {aboutInspiration[language]}
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Quote Section - Centered */}
-        <div className="text-center max-w-3xl mx-auto">
-          <blockquote className="text-3xl md:text-4xl font-caveat text-primary leading-relaxed italic">
+        <div className="text-center max-w-4xl mx-auto">
+          <blockquote className="text-4xl md:text-5xl font-caveat text-primary leading-relaxed">
             {quote[language]}
           </blockquote>
-          <p className="mt-6 text-lg text-muted-foreground font-lora">
+          <p className="mt-8 text-xl text-muted-foreground font-lora">
             — Sri Chinmoy
           </p>
         </div>
