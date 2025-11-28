@@ -47,7 +47,7 @@ const Gallery = () => {
       <Navigation />
       
       {/* Minimal Title - Fixed Position */}
-      <div className="fixed top-20 md:top-24 left-0 right-0 z-30 pointer-events-none">
+      <div className="fixed top-24 md:top-28 left-0 right-0 z-30 pointer-events-none">
         <div className="container mx-auto px-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-caveat text-background drop-shadow-2xl">
             {language === "de" ? "Galerie" : "Gallery"}

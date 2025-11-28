@@ -13,7 +13,16 @@ export const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Check if we're on a page that should always show navbar
+  const isAlwaysVisiblePage = location.pathname !== "/";
+
   useEffect(() => {
+    // Always show navbar on non-home pages
+    if (isAlwaysVisiblePage) {
+      setShowNavbar(true);
+      return;
+    }
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const heroHeight = window.innerHeight; // 100vh
@@ -31,7 +40,7 @@ export const Navigation = () => {
     
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, isAlwaysVisiblePage]);
 
   const navItems = [
     // Primary navigation - most important
@@ -110,7 +119,7 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10 py-1.5 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-3 md:py-4 transition-all duration-500 ease-in-out ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         }`}
       >
@@ -119,10 +128,10 @@ export const Navigation = () => {
             {/* Mobile Menu Button - Left */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
+              className="p-3 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
             {/* Logo - Left on Desktop */}
@@ -138,11 +147,11 @@ export const Navigation = () => {
               }}
               className="transition-all duration-300"
             >
-              <Logo className="w-8 h-8" showTagline={false} />
+              <Logo className="w-12 h-12 md:w-14 md:h-14" showTagline={false} />
             </Link>
 
             {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-6">
               {navItems.map((item) => {
                 // Only highlight actual pages, not hash sections
                 const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
@@ -150,7 +159,7 @@ export const Navigation = () => {
                   : false;
 
                 // Gestalt: Similarity & Emphasis through visual weight
-                const baseClasses = "transition-colors relative py-1";
+                const baseClasses = "transition-colors relative py-2 px-1";
                 const afterClasses = "after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-300";
 
                 let itemClasses = baseClasses + " " + afterClasses;
@@ -158,9 +167,9 @@ export const Navigation = () => {
                 if (item.isPrimary) {
                   // Primary: Bold, larger, primary color
                   if (isActive) {
-                    itemClasses += " text-sm font-semibold text-primary after:w-full after:h-0.5 after:bg-primary";
+                    itemClasses += " text-lg font-semibold text-primary after:w-full after:h-0.5 after:bg-primary";
                   } else {
-                    itemClasses += " text-sm font-semibold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
+                    itemClasses += " text-lg font-semibold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
                   }
  
                   // Speisekarte: use custom hash navigation handler
@@ -179,16 +188,16 @@ export const Navigation = () => {
                 if (item.isSecondary) {
                   // Secondary: Medium weight, normal size
                   if (isActive) {
-                    itemClasses += " text-xs font-medium text-foreground after:w-full after:h-0.5 after:bg-foreground";
+                    itemClasses += " text-base font-medium text-foreground after:w-full after:h-0.5 after:bg-foreground";
                   } else {
-                    itemClasses += " text-xs font-medium text-foreground/70 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
+                    itemClasses += " text-base font-medium text-foreground/70 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
                   }
                 } else if (item.isTertiary) {
                   // Tertiary: Light weight, smaller, muted
                   if (isActive) {
-                    itemClasses += " text-xs font-normal text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
+                    itemClasses += " text-sm font-normal text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
                   } else {
-                    itemClasses += " text-xs font-normal text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
+                    itemClasses += " text-sm font-normal text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
                   }
                 }
 
@@ -231,11 +240,11 @@ export const Navigation = () => {
               })}
               <Link
                 to="/privacy"
-                className="text-xs font-normal text-foreground/70 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-1"
+                className="text-sm font-normal text-foreground/70 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1"
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
-              <div className="relative z-10 ml-1">
+              <div className="relative z-10 ml-2">
                 <LanguageSwitcher />
               </div>
             </div>
@@ -253,20 +262,20 @@ export const Navigation = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-background/95 backdrop-blur-lg border-r border-border/30 z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 left-0 bottom-0 w-72 bg-background/95 backdrop-blur-lg border-r border-border/30 z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full pt-16 pb-6 px-6">
-          <nav className="flex-1 space-y-2">
+        <div className="flex flex-col h-full pt-20 pb-8 px-6">
+          <nav className="flex-1 space-y-3">
             {navItems.map((item) => {
               // Only highlight actual pages, not hash sections
               const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
                 ? location.pathname === item.href
                 : false;
               
-              // Minimal hierarchy for mobile menu
-              let itemClasses = "block py-3 px-4 text-base rounded-md transition-colors duration-200 text-foreground";
+              // Minimal hierarchy for mobile menu with proper touch targets
+              let itemClasses = "block py-4 px-5 text-lg rounded-lg transition-colors duration-200 text-foreground min-h-[44px]";
               
               if (isActive) {
                 itemClasses += " bg-muted/50";
@@ -275,9 +284,9 @@ export const Navigation = () => {
               }
               
               if (item.isPrimary) {
-                 itemClasses += " font-semibold text-lg";
+                 itemClasses += " font-semibold text-xl";
                 } else if (item.isSecondary) {
-                 itemClasses += " font-medium";
+                 itemClasses += " font-medium text-lg";
                 } else if (item.isTertiary) {
                  itemClasses += " font-normal opacity-70";
                 }
@@ -332,7 +341,7 @@ export const Navigation = () => {
             })}
             <Link
               to="/privacy"
-              className="block py-3 px-4 text-base font-normal text-foreground hover:bg-muted/30 rounded-md transition-colors duration-200 opacity-70"
+              className="block py-4 px-5 text-lg font-normal text-foreground hover:bg-muted/30 rounded-lg transition-colors duration-200 opacity-70 min-h-[44px]"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {language === "de" ? "Datenschutz" : "Privacy"}
@@ -340,7 +349,7 @@ export const Navigation = () => {
           </nav>
 
           {/* Mobile language switcher at the bottom */}
-          <div className="mt-4 flex justify-start">
+          <div className="mt-6 flex justify-start">
             <LanguageSwitcher />
           </div>
         </div>
