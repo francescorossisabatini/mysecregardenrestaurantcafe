@@ -24,37 +24,33 @@ export const Reviews = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="reviews" className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-4xl relative z-10">
+    <section id="reviews" className="py-32 md:py-40">
+      <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
+          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-8">
             {t("reviews.title")}
           </h2>
-          <div className="flex justify-center gap-2 text-yellow-500 mb-4">
+          <div className="flex justify-center gap-2 text-yellow-500">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-8 h-8 fill-current" />
             ))}
           </div>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-24">
           {reviews.map((review, index) => (
-            <div 
-              key={index}
-              className="text-center animate-smooth-reveal"
-              style={{ animationDelay: `${index * 200}ms` }}
-            >
-              <div className="flex gap-1 mb-6 justify-center text-yellow-500">
+            <div key={index} className="text-center">
+              <div className="flex gap-1 mb-8 justify-center text-yellow-500">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-current" />
                 ))}
               </div>
-              <blockquote className="text-2xl md:text-3xl font-lora text-foreground/90 leading-relaxed italic mb-6">
+              <blockquote className="text-2xl md:text-3xl font-lora text-foreground/90 leading-relaxed mb-8 max-w-3xl mx-auto">
                 "{review.text}"
               </blockquote>
-              <div className="space-y-1">
-                <p className="font-semibold text-lg text-foreground">{review.author}</p>
-                <p className="text-sm text-muted-foreground">{review.role}</p>
+              <div className="space-y-2">
+                <p className="font-semibold text-xl text-foreground">{review.author}</p>
+                <p className="text-base text-muted-foreground">{review.role}</p>
               </div>
             </div>
           ))}
