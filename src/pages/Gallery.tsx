@@ -56,15 +56,18 @@ const Gallery = () => {
       
       const scrollTop = window.scrollY;
       const viewportHeight = window.innerHeight;
-      const galleryHeight = galleryRef.current.scrollHeight;
       
-      // Start showing words after first image (after 1 viewport height)
-      const adjustedScroll = Math.max(0, scrollTop - viewportHeight);
-      const remainingHeight = galleryHeight - viewportHeight * 2;
-      const scrollProgress = Math.min(adjustedScroll / remainingHeight, 1);
+      // Calculate which image is currently visible (0-indexed)
+      const currentImageIndex = Math.floor(scrollTop / viewportHeight);
       
-      // Calculate how many words should be visible based on scroll progress
-      const wordsToShow = Math.floor(scrollProgress * words.length);
+      // Start showing words from second image (index 1)
+      // Distribute words evenly across remaining images
+      const wordsPerImage = words.length / (galleryImages.length - 1);
+      const wordsToShow = Math.min(
+        Math.floor(Math.max(0, currentImageIndex - 1) * wordsPerImage),
+        words.length
+      );
+      
       setVisibleWords(wordsToShow);
     };
 
@@ -72,7 +75,7 @@ const Gallery = () => {
     handleScroll(); // Initial check
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [words.length]);
+  }, [words.length, galleryImages.length]);
 
   return (
     <div className="min-h-screen bg-background">
