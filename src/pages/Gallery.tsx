@@ -61,8 +61,9 @@ const Gallery = () => {
       const currentImageIndex = Math.floor(scrollTop / viewportHeight);
       
       // Start showing words from second image (index 1)
-      // Distribute words evenly across remaining images
-      const wordsPerImage = words.length / (galleryImages.length - 1);
+      // Complete phrase before last image (distribute across images 1 to length-2)
+      const imagesForQuote = galleryImages.length - 2; // from image 2 to second-to-last
+      const wordsPerImage = words.length / imagesForQuote;
       const wordsToShow = Math.min(
         Math.floor(Math.max(0, currentImageIndex - 1) * wordsPerImage),
         words.length
