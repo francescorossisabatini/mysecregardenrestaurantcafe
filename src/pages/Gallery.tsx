@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
 // Import all images
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
@@ -23,6 +24,12 @@ import team from "@/assets/team-real.jpg";
 
 const Gallery = () => {
   const { language } = useLanguage();
+  const [visibleWords, setVisibleWords] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  // Sri Chinmoy quote - split into words
+  const quote = "Das Gute in anderen zu sehen, ist der Anfang von Frieden.";
+  const words = quote.split(" ");
 
   // Gallery images for scroll-based display
   const galleryImages = [
@@ -42,6 +49,26 @@ const Gallery = () => {
     { src: team, position: "center 40%" },
   ];
 
+  // Track scroll position to reveal words progressively
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!galleryRef.current) return;
+      
+      const scrollTop = window.scrollY;
+      const galleryHeight = galleryRef.current.scrollHeight - window.innerHeight;
+      const scrollProgress = Math.min(scrollTop / galleryHeight, 1);
+      
+      // Calculate how many words should be visible based on scroll progress
+      const wordsToShow = Math.floor(scrollProgress * words.length);
+      setVisibleWords(wordsToShow);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [words.length]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -55,8 +82,31 @@ const Gallery = () => {
         </div>
       </div>
 
+      {/* Sri Chinmoy Quote - Progressive Reveal */}
+      <div className="fixed inset-0 z-20 pointer-events-none flex items-center justify-center px-8 md:px-16">
+        <div className="max-w-6xl w-full">
+          <div className="flex flex-wrap gap-3 md:gap-4 justify-center items-center text-center">
+            {words.map((word, index) => (
+              <span
+                key={index}
+                className={`font-lora text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-background drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-all duration-700 ${
+                  index < visibleWords
+                    ? "opacity-100 blur-0 scale-100"
+                    : "opacity-0 blur-sm scale-95"
+                }`}
+                style={{
+                  transitionDelay: `${(index % 3) * 50}ms`,
+                }}
+              >
+                {word}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Scroll-Based Immersive Gallery */}
-      <div className="relative">
+      <div ref={galleryRef} className="relative">
         {galleryImages.map((image, index) => (
           <section
             key={index}
