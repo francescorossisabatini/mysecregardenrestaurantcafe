@@ -90,7 +90,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100dvh] md:min-h-[85vh] lg:min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background carousel - fullscreen with slow transitions */}
       {heroImages.map((img, index) => (
         <div
@@ -110,10 +110,10 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
       {/* Content - centered with smooth, staggered reveal */}
-      <div className="relative z-10 container mx-auto px-6 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-8">
+      <div className="relative z-10 container mx-auto px-6 py-12 md:py-16 lg:py-12">
+        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-5 lg:space-y-6">
           {/* Restaurant name with handwriting style - appears first - HERO ELEMENT */}
-          <h1 className={`text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-6 md:mb-10 transition-all duration-[2000ms] ${
+          <h1 className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-4 md:mb-6 transition-all duration-[2000ms] ${
             showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -140,7 +140,7 @@ export const Hero = () => {
           </p>
 
           {/* CTA Buttons - appear fourth */}
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center pt-12 max-w-xl mx-auto transition-all duration-[2000ms] ${
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 md:pt-8 lg:pt-6 max-w-xl mx-auto transition-all duration-[2000ms] ${
             showButtons ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
