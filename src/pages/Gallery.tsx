@@ -55,8 +55,13 @@ const Gallery = () => {
       if (!galleryRef.current) return;
       
       const scrollTop = window.scrollY;
-      const galleryHeight = galleryRef.current.scrollHeight - window.innerHeight;
-      const scrollProgress = Math.min(scrollTop / galleryHeight, 1);
+      const viewportHeight = window.innerHeight;
+      const galleryHeight = galleryRef.current.scrollHeight;
+      
+      // Start showing words after first image (after 1 viewport height)
+      const adjustedScroll = Math.max(0, scrollTop - viewportHeight);
+      const remainingHeight = galleryHeight - viewportHeight * 2;
+      const scrollProgress = Math.min(adjustedScroll / remainingHeight, 1);
       
       // Calculate how many words should be visible based on scroll progress
       const wordsToShow = Math.floor(scrollProgress * words.length);
@@ -83,19 +88,21 @@ const Gallery = () => {
       </div>
 
       {/* Sri Chinmoy Quote - Progressive Reveal */}
-      <div className="fixed inset-0 z-20 pointer-events-none flex items-center justify-center px-8 md:px-16">
-        <div className="max-w-6xl w-full">
-          <div className="flex flex-wrap gap-3 md:gap-4 justify-center items-center text-center">
+      <div className="fixed top-1/3 left-0 right-0 z-20 pointer-events-none px-6 md:px-12 lg:px-20">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap gap-2 md:gap-3 lg:gap-4 justify-start md:justify-center items-center">
             {words.map((word, index) => (
               <span
                 key={index}
-                className={`font-lora text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-background drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] transition-all duration-700 ${
+                className={`font-caveat font-bold text-3xl md:text-5xl lg:text-6xl xl:text-7xl transition-all duration-700 ${
                   index < visibleWords
-                    ? "opacity-100 blur-0 scale-100"
-                    : "opacity-0 blur-sm scale-95"
+                    ? "opacity-100 blur-0 translate-y-0"
+                    : "opacity-0 blur-md translate-y-4"
                 }`}
                 style={{
-                  transitionDelay: `${(index % 3) * 50}ms`,
+                  color: "white",
+                  textShadow: "0 2px 8px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.5)",
+                  transitionDelay: `${(index % 3) * 100}ms`,
                 }}
               >
                 {word}
