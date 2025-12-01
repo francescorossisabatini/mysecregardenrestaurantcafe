@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 
 export const Navigation = () => {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [navbarOpacity, setNavbarOpacity] = useState(1);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
@@ -14,33 +15,53 @@ export const Navigation = () => {
   const navigate = useNavigate();
 
   // Check if we're on a page that should always show navbar
-  const isAlwaysVisiblePage = location.pathname !== "/";
+  const isGalleryPage = location.pathname === "/gallery";
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
-    // Always show navbar on non-home pages
-    if (isAlwaysVisiblePage) {
+    // Gallery page: show navbar at top, fade out on scroll
+    if (isGalleryPage) {
       setShowNavbar(true);
-      return;
+      
+      const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        const fadeDistance = window.innerHeight * 0.5; // Fade over half viewport
+        
+        // Calculate opacity: 1 at top, 0 after fadeDistance
+        const opacity = Math.max(0, 1 - (currentScrollY / fadeDistance));
+        setNavbarOpacity(opacity);
+      };
+      
+      window.addEventListener("scroll", handleScroll);
+      handleScroll(); // Initial check
+      return () => window.removeEventListener("scroll", handleScroll);
     }
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const heroHeight = window.innerHeight; // 100vh
+    // Home page: hide navbar at top, show on scroll
+    if (isHomePage) {
+      const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        const heroHeight = window.innerHeight; // 100vh
+        
+        // Show navbar when scrolled past hero section (going down)
+        // Hide navbar when back in hero section
+        if (currentScrollY > heroHeight * 0.8) {
+          setShowNavbar(true);
+        } else {
+          setShowNavbar(false);
+        }
+        
+        setLastScrollY(currentScrollY);
+      };
       
-      // Show navbar when scrolled past hero section (going down)
-      // Hide navbar when back in hero section
-      if (currentScrollY > heroHeight * 0.8) {
-        setShowNavbar(true);
-      } else {
-        setShowNavbar(false);
-      }
-      
-      setLastScrollY(currentScrollY);
-    };
-    
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, isAlwaysVisiblePage]);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+
+    // Other pages: always show navbar
+    setShowNavbar(true);
+    setNavbarOpacity(1);
+  }, [lastScrollY, isGalleryPage, isHomePage]);
 
   const navItems = [
     // Primary navigation - most important
@@ -120,8 +141,11 @@ export const Navigation = () => {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-3 md:py-4 transition-all duration-500 ease-in-out ${
-          showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          showNavbar ? "translate-y-0" : "-translate-y-full"
         }`}
+        style={{
+          opacity: isGalleryPage ? navbarOpacity : showNavbar ? 1 : 0
+        }}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
