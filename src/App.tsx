@@ -10,12 +10,14 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Gallery from "./pages/Gallery";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 function AppContent() {
   useHtmlLang();
   
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/gallery" element={<Gallery />} />
