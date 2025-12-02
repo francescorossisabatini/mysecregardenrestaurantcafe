@@ -21,10 +21,10 @@ const Index = () => {
     const preloaderShown = sessionStorage.getItem("preloader_shown");
     
     if (!preloaderShown) {
-      // Show navbar after 2 seconds or on scroll
+      // Show navbar after preloader completes (5.5s) + 1s delay
       const timer = setTimeout(() => {
         setShowNavbar(true);
-      }, 6000); // 4s preloader + 2s delay = 6s total
+      }, 6500);
       
       const handleScroll = () => {
         if (window.scrollY > 10) {
