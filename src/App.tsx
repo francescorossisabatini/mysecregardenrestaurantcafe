@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Gallery from "./pages/Gallery";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { MobileLanguageSwitcher } from "./components/MobileLanguageSwitcher";
 
 function AppContent() {
   useHtmlLang();
@@ -18,6 +19,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <MobileLanguageSwitcher />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/gallery" element={<Gallery />} />
