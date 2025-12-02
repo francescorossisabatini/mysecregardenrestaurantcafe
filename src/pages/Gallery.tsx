@@ -1,6 +1,5 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { GalleryPreloader } from "@/components/GalleryPreloader";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
@@ -62,12 +61,11 @@ const Gallery = () => {
       const currentImageIndex = Math.floor(scrollTop / viewportHeight);
       
       // Start showing words from second image (index 1)
-      // Complete phrase before second-to-last image (penultima)
-      const lastImageForQuote = galleryImages.length - 2; // second-to-last image index
-      const imagesForQuote = lastImageForQuote - 1; // images 1 to (length-3)
+      // Complete phrase before last image (distribute across images 1 to length-2)
+      const imagesForQuote = galleryImages.length - 2; // from image 2 to second-to-last
       const wordsPerImage = words.length / imagesForQuote;
       const wordsToShow = Math.min(
-        Math.ceil(Math.max(0, currentImageIndex - 1) * wordsPerImage),
+        Math.floor(Math.max(0, currentImageIndex - 1) * wordsPerImage),
         words.length
       );
       
@@ -82,7 +80,6 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <GalleryPreloader />
       <Navigation />
       
       {/* Minimal Title - Fixed Position */}
