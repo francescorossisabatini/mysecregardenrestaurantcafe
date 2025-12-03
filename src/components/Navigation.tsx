@@ -99,6 +99,19 @@ export const Navigation = () => {
     },
   ];
 
+  const scrollToElement = (hash: string) => {
+    const element = document.querySelector(hash);
+    if (element) {
+      const offset = 80; // navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean, isHash?: boolean) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
@@ -117,23 +130,18 @@ export const Navigation = () => {
  
     // Handle hash/section links on homepage
     if (isHash || href.startsWith('#')) {
-      // If we're on a different page, navigate to home with the hash
+      // If we're on a different page, navigate to home first then scroll
       if (location.pathname !== "/") {
-        navigate(`/${href}`); // e.g. "#full-menu" -> "/#full-menu"
+        navigate("/");
+        // Wait for navigation and DOM to be ready, then scroll
+        setTimeout(() => {
+          scrollToElement(href);
+        }, 100);
         return;
       }
  
       // Already on home page, just scroll
-      const element = document.querySelector(href);
-      if (element) {
-        const offset = 80; // navbar height
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
+      scrollToElement(href);
     }
   };
 
