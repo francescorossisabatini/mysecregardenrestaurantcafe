@@ -1,7 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
@@ -49,6 +48,8 @@ const Gallery = () => {
     { src: team, position: "center 40%" },
   ];
 
+  const [quoteVisible, setQuoteVisible] = useState(true);
+
   // Track scroll position to reveal words progressively
   useEffect(() => {
     const handleScroll = () => {
@@ -60,9 +61,12 @@ const Gallery = () => {
       // Calculate which image is currently visible (0-indexed)
       const currentImageIndex = Math.floor(scrollTop / viewportHeight);
       
+      // Hide quote before 14th image (index 13)
+      setQuoteVisible(currentImageIndex < 13);
+      
       // Start showing words from second image (index 1)
       // Complete phrase before 13th image (index 12) - distribute across images 1 to 11
-      const endImageIndex = 11; // Complete by image 12 (before 13th)
+      const endImageIndex = 11;
       const startImageIndex = 1;
       const imagesForQuote = endImageIndex - startImageIndex;
       const wordsPerImage = words.length / imagesForQuote;
@@ -75,7 +79,7 @@ const Gallery = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, [words.length, galleryImages.length]);
@@ -93,8 +97,10 @@ const Gallery = () => {
         </div>
       </div>
 
-      {/* Sri Chinmoy Quote - Progressive Reveal */}
-      <div className="fixed top-1/3 left-0 right-0 z-20 pointer-events-none px-6 md:px-12 lg:px-20">
+      {/* Sri Chinmoy Quote - Progressive Reveal with Fade Out */}
+      <div className={`fixed top-1/3 left-0 right-0 z-20 pointer-events-none px-6 md:px-12 lg:px-20 transition-opacity duration-700 ${
+        quoteVisible ? "opacity-100" : "opacity-0"
+      }`}>
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-wrap gap-2 md:gap-3 lg:gap-4 justify-start md:justify-center items-center">
             {words.map((word, index) => (
@@ -142,29 +148,68 @@ const Gallery = () => {
         ))}
       </div>
 
-      {/* Instagram Call to Action */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-8 md:space-y-12 stagger-children in-view">
-            <div className="inline-block p-4 bg-primary/10 rounded-full">
-              <Instagram className="w-12 h-12 md:w-16 md:h-16 text-primary" />
+      {/* Instagram Call to Action - Modern & Evocative */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-foreground">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground/95 to-primary/20" />
+        
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        
+        {/* Floating botanicals */}
+        <svg className="absolute top-1/4 left-[5%] w-20 h-20 text-background/5 animate-gentle-float" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 10 C35 30, 35 50, 50 70 C65 50, 65 30, 50 10" />
+        </svg>
+        <svg className="absolute bottom-1/4 right-[10%] w-16 h-16 text-background/5 animate-gentle-float" style={{ animationDelay: "2s" }} viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 10 C35 30, 35 50, 50 70 C65 50, 65 30, 50 10" />
+        </svg>
+
+        <div className="relative z-10 container mx-auto px-6 py-20">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Minimal icon with glow */}
+            <div className="mb-12 relative inline-block">
+              <div className="absolute inset-0 bg-primary/30 blur-2xl rounded-full scale-150" />
+              <div className="relative p-6 border border-background/20 rounded-full backdrop-blur-sm">
+                <Instagram className="w-10 h-10 md:w-14 md:h-14 text-background" strokeWidth={1.5} />
+              </div>
             </div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-caveat font-bold text-primary leading-tight">
-              {language === "de" ? "Folgen Sie uns auf Instagram" : "Follow us on Instagram"}
+
+            {/* Headline with dramatic typography */}
+            <h2 className="text-background mb-6">
+              <span className="block text-sm md:text-base font-lora tracking-[0.3em] uppercase text-background/60 mb-4">
+                {language === "de" ? "Entdecken Sie mehr" : "Discover more"}
+              </span>
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat leading-none">
+                {language === "de" ? "Folgen Sie" : "Follow the"}
+              </span>
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat leading-none text-primary mt-2">
+                {language === "de" ? "unserer Reise" : "Journey"}
+              </span>
             </h2>
-            <p className="text-lg sm:text-xl md:text-2xl font-lora text-muted-foreground leading-relaxed">
+
+            {/* Evocative description */}
+            <p className="text-lg md:text-xl lg:text-2xl font-lora text-background/70 leading-relaxed max-w-2xl mx-auto mb-12">
               {language === "de"
-                ? "Bleiben Sie auf dem Laufenden mit unseren neuesten Kreationen, Tagesmenüs und Einblicken in unseren Garten."
-                : "Stay up to date with our latest creations, daily menus and insights into our garden."}
+                ? "Täglich frische Inspiration, saisonale Kreationen und Momente der Ruhe aus unserem geheimen Garten."
+                : "Daily inspiration, seasonal creations and moments of peace from our secret garden."}
             </p>
-            <Button
-              size="lg"
+
+            {/* Modern CTA button */}
+            <button
               onClick={() => window.open("https://www.instagram.com/mysecretgardencafewien/", "_blank")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg font-lora text-base sm:text-lg md:text-xl px-10 py-6 md:py-8 gap-3"
+              className="group relative inline-flex items-center gap-4 px-10 py-5 bg-transparent border-2 border-background/30 text-background font-lora text-lg md:text-xl tracking-wide hover:border-primary hover:text-primary transition-all duration-500 overflow-hidden"
             >
-              <Instagram className="w-5 h-5 md:w-6 md:h-6" />
-              @mysecretgardencafewien
-            </Button>
+              <span className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-all duration-500" />
+              <Instagram className="relative w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span className="relative">@mysecretgardencafewien</span>
+              <span className="relative w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
+            </button>
+
+            {/* Subtle signature */}
+            <p className="mt-16 text-background/30 text-sm font-lora tracking-widest">
+              My Secret Garden Wien
+            </p>
           </div>
         </div>
       </section>
