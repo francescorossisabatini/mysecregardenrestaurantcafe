@@ -61,11 +61,13 @@ const Gallery = () => {
       const currentImageIndex = Math.floor(scrollTop / viewportHeight);
       
       // Start showing words from second image (index 1)
-      // Complete phrase before last image (distribute across images 1 to length-2)
-      const imagesForQuote = galleryImages.length - 2; // from image 2 to second-to-last
+      // Complete phrase before 13th image (index 12) - distribute across images 1 to 11
+      const endImageIndex = 11; // Complete by image 12 (before 13th)
+      const startImageIndex = 1;
+      const imagesForQuote = endImageIndex - startImageIndex;
       const wordsPerImage = words.length / imagesForQuote;
       const wordsToShow = Math.min(
-        Math.floor(Math.max(0, currentImageIndex - 1) * wordsPerImage),
+        Math.floor(Math.max(0, currentImageIndex - startImageIndex) * wordsPerImage),
         words.length
       );
       
