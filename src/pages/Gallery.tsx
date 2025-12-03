@@ -148,66 +148,64 @@ const Gallery = () => {
         ))}
       </div>
 
-      {/* Instagram Call to Action - Modern & Evocative */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-foreground">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground/95 to-primary/20" />
+      {/* Instagram Call to Action - Evocative & Mobile-First */}
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-primary/5">
+        {/* Soft gradient background using site palette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-accent/10" />
         
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        {/* Decorative glow elements */}
+        <div className="absolute top-10 left-4 md:top-20 md:left-10 w-32 md:w-64 h-32 md:h-64 bg-primary/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-4 md:bottom-20 md:right-10 w-40 md:w-80 h-40 md:h-80 bg-accent/10 rounded-full blur-3xl" />
         
-        {/* Floating botanicals */}
-        <svg className="absolute top-1/4 left-[5%] w-20 h-20 text-background/5 animate-gentle-float" viewBox="0 0 100 100" fill="currentColor">
+        {/* Floating botanicals - hidden on small mobile */}
+        <svg className="hidden sm:block absolute top-1/4 left-[5%] w-12 md:w-20 h-12 md:h-20 text-primary/10 animate-gentle-float" viewBox="0 0 100 100" fill="currentColor">
           <path d="M50 10 C35 30, 35 50, 50 70 C65 50, 65 30, 50 10" />
         </svg>
-        <svg className="absolute bottom-1/4 right-[10%] w-16 h-16 text-background/5 animate-gentle-float" style={{ animationDelay: "2s" }} viewBox="0 0 100 100" fill="currentColor">
+        <svg className="hidden sm:block absolute bottom-1/4 right-[10%] w-10 md:w-16 h-10 md:h-16 text-primary/10 animate-gentle-float" style={{ animationDelay: "2s" }} viewBox="0 0 100 100" fill="currentColor">
           <path d="M50 10 C35 30, 35 50, 50 70 C65 50, 65 30, 50 10" />
         </svg>
 
-        <div className="relative z-10 container mx-auto px-6 py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Minimal icon with glow */}
-            <div className="mb-12 relative inline-block">
-              <div className="absolute inset-0 bg-primary/30 blur-2xl rounded-full scale-150" />
-              <div className="relative p-6 border border-background/20 rounded-full backdrop-blur-sm">
-                <Instagram className="w-10 h-10 md:w-14 md:h-14 text-background" strokeWidth={1.5} />
+        <div className="relative z-10 container mx-auto px-5 py-12 md:py-20">
+          <div className="max-w-3xl mx-auto text-center">
+            {/* Minimal icon */}
+            <div className="mb-8 md:mb-12 relative inline-block">
+              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150" />
+              <div className="relative p-4 md:p-6 border border-primary/30 rounded-full bg-background/50 backdrop-blur-sm">
+                <Instagram className="w-8 h-8 md:w-12 md:h-12 text-primary" strokeWidth={1.5} />
               </div>
             </div>
 
-            {/* Headline with dramatic typography */}
-            <h2 className="text-background mb-6">
-              <span className="block text-sm md:text-base font-lora tracking-[0.3em] uppercase text-background/60 mb-4">
+            {/* Headline - mobile optimized */}
+            <div className="mb-6 md:mb-8">
+              <span className="block text-xs md:text-sm font-lora tracking-[0.2em] md:tracking-[0.3em] uppercase text-muted-foreground mb-3 md:mb-4">
                 {language === "de" ? "Entdecken Sie mehr" : "Discover more"}
               </span>
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat leading-none">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-caveat text-foreground leading-tight">
                 {language === "de" ? "Folgen Sie" : "Follow the"}
-              </span>
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-caveat leading-none text-primary mt-2">
+              </h2>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-caveat text-primary leading-tight mt-1">
                 {language === "de" ? "unserer Reise" : "Journey"}
-              </span>
-            </h2>
+              </h2>
+            </div>
 
-            {/* Evocative description */}
-            <p className="text-lg md:text-xl lg:text-2xl font-lora text-background/70 leading-relaxed max-w-2xl mx-auto mb-12">
+            {/* Description - mobile optimized */}
+            <p className="text-base md:text-lg lg:text-xl font-lora text-muted-foreground leading-relaxed max-w-xl mx-auto mb-8 md:mb-12 px-2">
               {language === "de"
-                ? "Täglich frische Inspiration, saisonale Kreationen und Momente der Ruhe aus unserem geheimen Garten."
-                : "Daily inspiration, seasonal creations and moments of peace from our secret garden."}
+                ? "Frische Inspiration, saisonale Kreationen und Momente der Ruhe aus unserem geheimen Garten."
+                : "Fresh inspiration, seasonal creations and moments of peace from our secret garden."}
             </p>
 
-            {/* Modern CTA button */}
+            {/* CTA button - mobile friendly */}
             <button
               onClick={() => window.open("https://www.instagram.com/mysecretgardencafewien/", "_blank")}
-              className="group relative inline-flex items-center gap-4 px-10 py-5 bg-transparent border-2 border-background/30 text-background font-lora text-lg md:text-xl tracking-wide hover:border-primary hover:text-primary transition-all duration-500 overflow-hidden"
+              className="group inline-flex items-center gap-3 px-6 md:px-8 py-4 md:py-5 bg-primary text-primary-foreground font-lora text-sm md:text-base tracking-wide hover:bg-primary/90 transition-all duration-300 rounded-sm shadow-lg hover:shadow-xl"
             >
-              <span className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-all duration-500" />
-              <Instagram className="relative w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              <span className="relative">@mysecretgardencafewien</span>
-              <span className="relative w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
+              <Instagram className="w-4 h-4 md:w-5 md:h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span>@mysecretgardencafewien</span>
             </button>
 
             {/* Subtle signature */}
-            <p className="mt-16 text-background/30 text-sm font-lora tracking-widest">
+            <p className="mt-10 md:mt-16 text-muted-foreground/50 text-xs md:text-sm font-lora tracking-widest">
               My Secret Garden Wien
             </p>
           </div>
