@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import entranceGarden from "@/assets/entrance-garden.jpg";
 
 export const Preloader = () => {
-  const [isVisible, setIsVisible] = useState(true); // Always show for testing
+  const [isVisible, setIsVisible] = useState(() => {
+    try {
+      return !sessionStorage.getItem("preloader_shown");
+    } catch {
+      return true;
+    }
+  });
   const [phase, setPhase] = useState<"image" | "quote" | "fadeout">("image");
 
   useEffect(() => {
