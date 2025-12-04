@@ -90,7 +90,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] md:min-h-[85vh] lg:min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
       {/* Background carousel - fullscreen with slow transitions */}
       {heroImages.map((img, index) => (
         <div
@@ -110,10 +110,10 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
 
       {/* Content - centered with smooth, staggered reveal */}
-      <div className="relative z-10 container mx-auto px-6 py-12 md:py-16 lg:py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-4 md:space-y-5 lg:space-y-6">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full">
+        <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
           {/* Restaurant name with handwriting style - appears first - HERO ELEMENT */}
-          <h1 className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-4 md:mb-6 transition-all duration-[2000ms] ${
+          <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-all duration-[2000ms] ${
             showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -121,7 +121,7 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle - appears second - SECONDARY */}
-          <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
+          <p className={`text-base sm:text-lg md:text-xl lg:text-2xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
             showSubtitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -131,7 +131,7 @@ export const Hero = () => {
           </p>
 
           {/* Address - appears third - TERTIARY */}
-          <p className={`text-sm sm:text-base md:text-lg font-lora text-background/90 drop-shadow-lg transition-all duration-[2000ms] ${
+          <p className={`text-xs sm:text-sm md:text-base font-lora text-background/90 drop-shadow-lg transition-all duration-[2000ms] ${
             showAddress ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -140,7 +140,7 @@ export const Hero = () => {
           </p>
 
           {/* CTA Buttons - appear fourth */}
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 md:pt-8 lg:pt-6 max-w-xl mx-auto transition-all duration-[2000ms] ${
+          <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 sm:pt-6 max-w-xl mx-auto transition-all duration-[2000ms] ${
             showButtons ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -148,7 +148,7 @@ export const Hero = () => {
             <Button
               size="lg"
               asChild
-              className="bg-accent/90 text-accent-foreground hover:bg-accent border border-accent-light/20 font-medium text-base px-10 py-5 rounded-md transition-all duration-300 hover:shadow-md order-1 sm:order-2"
+              className="bg-accent/90 text-accent-foreground hover:bg-accent border border-accent-light/20 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-all duration-300 hover:shadow-md order-1 sm:order-2"
             >
               <a href="tel:+4315970547">
                 {language === "de" ? "Anrufen" : "Call"}
@@ -159,7 +159,7 @@ export const Hero = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary/90 text-primary-foreground hover:bg-primary border border-primary-foreground/10 font-normal text-sm px-8 py-4 rounded-md transition-all duration-300 order-2 sm:order-1"
+              className="bg-primary/90 text-primary-foreground hover:bg-primary border border-primary-foreground/10 font-normal text-xs sm:text-sm px-5 sm:px-8 py-3 sm:py-4 rounded-md transition-all duration-300 order-2 sm:order-1"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
@@ -169,14 +169,14 @@ export const Hero = () => {
               size="lg"
               variant="outline"
               onClick={() => scrollToSection("full-menu")}
-              className="bg-transparent backdrop-blur-sm text-background hover:bg-background/10 border border-background/40 hover:border-background/60 font-light text-sm px-7 py-4 rounded-md transition-all duration-300 order-3 sm:order-3"
+              className="bg-transparent backdrop-blur-sm text-background hover:bg-background/10 border border-background/40 hover:border-background/60 font-light text-xs sm:text-sm px-5 sm:px-7 py-3 sm:py-4 rounded-md transition-all duration-300 order-3 sm:order-3"
             >
               {language === "de" ? "Speisekarte" : "Menu"}
             </Button>
           </div>
 
           {/* Carousel dots - appear last */}
-          <div className={`flex gap-3 justify-center pt-8 transition-all duration-[2000ms] ${
+          <div className={`flex gap-2 sm:gap-3 justify-center pt-4 sm:pt-6 transition-all duration-[2000ms] ${
             showDots ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -184,9 +184,9 @@ export const Hero = () => {
               <button
                 key={index}
                 onClick={() => setCurrentImage(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
                   currentImage === index
-                    ? "bg-background w-10 shadow-lg"
+                    ? "bg-background w-6 sm:w-10 shadow-lg"
                     : "bg-background/60 hover:bg-background/80"
                 }`}
                 aria-label={`Go to image ${index + 1}`}
