@@ -64,6 +64,12 @@ export const Navigation = () => {
   }, [lastScrollY, isGalleryPage, isHomePage]);
 
   const navItems = [
+    // Home link - brand navigation
+    { 
+      href: "/", 
+      label: "My Secret Garden",
+      isHome: true
+    },
     // Primary navigation - most important
     { 
       href: "#full-menu", 
@@ -217,6 +223,26 @@ export const Navigation = () => {
                   );
                 }
 
+                if (item.isHome) {
+                  // Home: Elegant brand link
+                  itemClasses += " font-caveat text-xl text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={(e) => {
+                        if (location.pathname === "/") {
+                          e.preventDefault();
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                      className={itemClasses}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
                 if (item.isSecondary) {
                   // Secondary: Medium weight, normal size
                   if (isActive) {
@@ -315,7 +341,9 @@ export const Navigation = () => {
                 itemClasses += " hover:bg-muted/30";
               }
               
-              if (item.isPrimary) {
+              if (item.isHome) {
+                 itemClasses += " font-caveat text-2xl text-primary";
+                } else if (item.isPrimary) {
                  itemClasses += " font-semibold text-xl";
                 } else if (item.isSecondary) {
                  itemClasses += " font-medium text-lg";
@@ -325,7 +353,23 @@ export const Navigation = () => {
                
                return (
                  <>
-                   {item.href.startsWith('http') ? (
+                   {item.isHome ? (
+                     // Home link - brand navigation
+                     <Link
+                       key={item.href}
+                       to={item.href}
+                       onClick={(e) => {
+                         setIsMobileMenuOpen(false);
+                         if (location.pathname === "/") {
+                           e.preventDefault();
+                           window.scrollTo({ top: 0, behavior: "smooth" });
+                         }
+                       }}
+                       className={itemClasses}
+                     >
+                       {item.label}
+                     </Link>
+                   ) : item.href.startsWith('http') ? (
                      // External link - use <a> tag
                      <a
                        key={item.href}
