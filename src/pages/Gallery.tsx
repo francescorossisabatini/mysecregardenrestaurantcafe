@@ -49,6 +49,7 @@ const Gallery = () => {
   ];
 
   const [quoteVisible, setQuoteVisible] = useState(true);
+  const [titleVisible, setTitleVisible] = useState(true);
 
   // Track scroll position to reveal words progressively
   useEffect(() => {
@@ -60,6 +61,9 @@ const Gallery = () => {
       
       // Calculate which image is currently visible (0-indexed)
       const currentImageIndex = Math.floor(scrollTop / viewportHeight);
+      
+      // Hide title after first image
+      setTitleVisible(currentImageIndex < 1);
       
       // Hide quote before 14th image (index 13)
       setQuoteVisible(currentImageIndex < 13);
@@ -89,7 +93,9 @@ const Gallery = () => {
       <Navigation />
       
       {/* Minimal Title - Fixed Position */}
-      <div className="fixed top-24 md:top-28 left-0 right-0 z-30 pointer-events-none">
+      <div className={`fixed top-24 md:top-28 left-0 right-0 z-30 pointer-events-none transition-opacity duration-500 ${
+        titleVisible ? "opacity-100" : "opacity-0"
+      }`}>
         <div className="container mx-auto px-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-caveat text-background drop-shadow-2xl">
             {language === "de" ? "Galerie" : "Gallery"}
