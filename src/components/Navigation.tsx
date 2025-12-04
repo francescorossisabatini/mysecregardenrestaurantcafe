@@ -70,13 +70,6 @@ export const Navigation = () => {
       label: "My Secret Garden",
       isHome: true
     },
-    // Primary navigation - most important
-    { 
-      href: "#full-menu", 
-      label: language === "de" ? "Speisekarte" : "Menu",
-      isPrimary: true,
-      isHash: true
-    },
     // Secondary navigation - content sections
     { 
       href: "/gallery", 
@@ -202,27 +195,6 @@ export const Navigation = () => {
 
                 let itemClasses = baseClasses + " " + afterClasses;
 
-                if (item.isPrimary) {
-                  // Primary: Bold, larger, primary color
-                  if (isActive) {
-                    itemClasses += " text-lg font-semibold text-primary after:w-full after:h-0.5 after:bg-primary";
-                  } else {
-                    itemClasses += " text-lg font-semibold text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
-                  }
- 
-                  // Speisekarte: use custom hash navigation handler
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                      className={itemClasses}
-                    >
-                      {item.label}
-                    </a>
-                  );
-                }
-
                 if (item.isHome) {
                   // Home: Elegant brand link
                   itemClasses += " font-caveat text-xl text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
@@ -343,8 +315,6 @@ export const Navigation = () => {
               
               if (item.isHome) {
                  itemClasses += " font-caveat text-2xl text-primary";
-                } else if (item.isPrimary) {
-                 itemClasses += " font-semibold text-xl";
                 } else if (item.isSecondary) {
                  itemClasses += " font-medium text-lg";
                 } else if (item.isTertiary) {
@@ -378,16 +348,6 @@ export const Navigation = () => {
                        className={itemClasses}
                        target="_blank"
                        rel="noopener noreferrer"
-                     >
-                       {item.label}
-                     </a>
-                   ) : item.isPrimary ? (
-                     // Primary item (Speisekarte) - use custom hash navigation handler
-                     <a
-                       key={item.href}
-                       href={item.href}
-                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                       className={itemClasses}
                      >
                        {item.label}
                      </a>
