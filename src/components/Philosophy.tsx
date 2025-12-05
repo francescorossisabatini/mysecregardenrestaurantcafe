@@ -1,4 +1,4 @@
-import { Quote, Sparkles, Heart, Leaf } from "lucide-react";
+import { Quote, Sparkles, Heart, Leaf, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import sriChinmoyImage from "@/assets/sri-chinmoy.jpg";
 
@@ -10,14 +10,17 @@ export const Philosophy = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
               {t("philosophy.title")}
             </h2>
+            <p className="font-lora text-xl md:text-2xl text-foreground/80 max-w-3xl mx-auto leading-relaxed">
+              {t("philosophy.sri.intro")}
+            </p>
           </div>
 
           {/* Sri Chinmoy Section */}
-          <div className="grid md:grid-cols-2 gap-16 items-start mb-32">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start mb-24">
             {/* Portrait */}
             <div className="relative">
               <div className="aspect-[3/4] overflow-hidden rounded-2xl shadow-xl">
@@ -27,39 +30,66 @@ export const Philosophy = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="mt-6 text-center text-base font-lora text-muted-foreground italic">
+              <p className="mt-6 text-center text-sm md:text-base font-lora text-muted-foreground italic">
                 {t("philosophy.sri.subtitle")}
               </p>
             </div>
 
             {/* Content */}
-            <div className="space-y-10">
+            <div className="space-y-8">
               <div>
-                <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent mb-6">
-                  {t("philosophy.sri.title")}
-                </h3>
-                <p className="font-lora text-xl leading-relaxed text-foreground/90 mb-8">
-                  {t("philosophy.sri.story")}
+                <a 
+                  href="https://www.srichinmoy.org" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group inline-block"
+                >
+                  <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent mb-2 group-hover:text-primary transition-colors duration-300">
+                    {t("philosophy.sri.title")}
+                    <ExternalLink className="inline-block w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                </a>
+              </div>
+
+              <div className="space-y-6">
+                <p className="font-lora text-lg leading-relaxed text-foreground/90">
+                  {t("philosophy.sri.story1")}
+                </p>
+                <p className="font-lora text-lg leading-relaxed text-foreground/90">
+                  {t("philosophy.sri.story2")}
+                </p>
+                <p className="font-lora text-lg leading-relaxed text-foreground/90">
+                  {t("philosophy.sri.story3")}
                 </p>
               </div>
 
-              <div className="bg-muted/50 rounded-xl p-8 border-l-4 border-accent">
+              <div className="bg-muted/50 rounded-xl p-6 md:p-8 border-l-4 border-accent">
                 <div className="flex items-start gap-4">
-                  <Quote className="w-10 h-10 text-accent flex-shrink-0 mt-1" />
+                  <Quote className="w-8 h-8 md:w-10 md:h-10 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <p className="text-lg text-foreground leading-relaxed mb-4">
-                      {t("philosophy.sri.quote")}
+                    <p className="text-base md:text-lg text-foreground leading-relaxed mb-4 italic">
+                      "{t("philosophy.sri.quote")}"
                     </p>
-                    <p className="text-base font-semibold text-accent">
+                    <p className="text-sm md:text-base font-semibold text-accent">
                       — {t("philosophy.sri.author")}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <p className="font-lora text-xl leading-relaxed text-foreground/90">
+              <p className="font-lora text-lg leading-relaxed text-foreground/90">
                 {t("philosophy.sri.influence")}
               </p>
+
+              <a 
+                href="https://www.srichinmoy.org" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-accent hover:text-primary font-medium transition-colors duration-300"
+              >
+                {t("philosophy.sri.link")}
+                <ExternalLink className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
