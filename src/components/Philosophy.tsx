@@ -30,9 +30,18 @@ export const Philosophy = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="mt-6 text-center text-sm md:text-base font-lora text-muted-foreground italic">
-                {t("philosophy.sri.subtitle")}
-              </p>
+              <div className="mt-6 text-center space-y-4">
+                <div className="bg-muted/50 rounded-xl p-6 border border-accent/20">
+                  <p className="font-caveat text-xl md:text-2xl text-accent leading-relaxed">
+                    "No, it is not possible<br />
+                    For any inner cry<br />
+                    To remain unheard."
+                  </p>
+                </div>
+                <p className="text-sm md:text-base font-lora text-muted-foreground italic">
+                  {t("philosophy.sri.subtitle")}
+                </p>
+              </div>
             </div>
 
             {/* Content */}
@@ -42,12 +51,12 @@ export const Philosophy = () => {
                   href="https://www.srichinmoy.org" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group inline-block"
+                  className="group inline-flex items-center gap-2"
                 >
-                  <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent mb-2 group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent group-hover:text-primary transition-colors duration-300 underline decoration-accent/50 underline-offset-4 hover:decoration-primary">
                     {t("philosophy.sri.title")}
-                    <ExternalLink className="inline-block w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h3>
+                  <ExternalLink className="w-5 h-5 text-accent group-hover:text-primary transition-colors" />
                 </a>
               </div>
 
