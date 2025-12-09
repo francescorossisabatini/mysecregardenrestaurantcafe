@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
+import { StorySection } from "@/components/StorySection";
 import { AboutSection } from "@/components/AboutSection";
 import { Philosophy } from "@/components/Philosophy";
 
@@ -105,8 +106,8 @@ const Index = () => {
       {/* Reviews */}
       <Reviews />
       
-      {/* Elegant Divider */}
-      <SectionDivider variant="subtle" />
+      {/* Visual Storytelling Section */}
+      <StorySection />
       
       {/* About Section */}
       <AboutSection />

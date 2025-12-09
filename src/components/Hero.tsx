@@ -120,8 +120,18 @@ export const Hero = () => {
             My Secret Garden
           </h1>
 
+          {/* Emotional tagline */}
+          <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-caveat text-background/90 drop-shadow-xl mb-2 transition-all duration-[2000ms] ${
+            showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
+          }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', transitionDelay: '200ms' }}>
+            {language === "de"
+              ? "Ein Ort, wo die Seele isst"
+              : "A place where the soul eats"}
+          </p>
+
           {/* Subtitle - appears second - SECONDARY */}
-          <p className={`text-base sm:text-lg md:text-xl lg:text-2xl font-lora text-background drop-shadow-xl transition-all duration-[2000ms] ${
+          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background/80 drop-shadow-xl transition-all duration-[2000ms] ${
             showSubtitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
@@ -131,7 +141,7 @@ export const Hero = () => {
           </p>
 
           {/* Address - appears third - TERTIARY */}
-          <p className={`text-xs sm:text-sm md:text-base font-lora text-background/90 drop-shadow-lg transition-all duration-[2000ms] ${
+          <p className={`text-xs sm:text-sm md:text-base font-lora text-background/70 drop-shadow-lg transition-all duration-[2000ms] ${
             showAddress ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
           }`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
