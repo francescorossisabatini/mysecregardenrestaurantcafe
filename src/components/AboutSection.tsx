@@ -1,13 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Card } from "@/components/ui/card";
 import { Leaf, Heart, Droplets } from "lucide-react";
-import { BotanicalDecoration } from "./BotanicalDecoration";
-import { SpiritualAnimations } from "./SpiritualAnimations";
-import gardenImg from "@/assets/garden-real.jpg";
-import gardenReal from "@/assets/garden-real.jpg";
 import entranceGarden from "@/assets/entrance-garden.jpg";
-import sriChinmoyImg from "@/assets/sri-chinmoy.jpg";
 
 export const AboutSection = () => {
   const { language } = useLanguage();
@@ -18,15 +12,6 @@ export const AboutSection = () => {
     en: "My Secret Garden is a peaceful vegetarian & vegan restaurant inside Vienna's Raimundhof. We offer a relaxed atmosphere in a quiet courtyard garden and prepare fresh, homemade dishes daily with natural and organic ingredients. Our cuisine combines simple, nourishing meals that strengthen body and mind."
   };
 
-  const aboutInspiration = {
-    de: "Unser Restaurant ist von Sri Chinmoys Philosophie inspiriert – seinen Werten von Frieden, Einfachheit und dem Streben, das Gute in anderen zu sehen. Diese spirituelle Lebensweise des inneren Friedens und der bewussten, natürlichen Ernährung spiegelt sich sowohl in der stillen Atmosphäre unseres Secret Garden als auch in unseren liebevoll zubereiteten Gerichten wider.",
-    en: "Our restaurant is inspired by Sri Chinmoy's philosophy – his values of peace, simplicity and the aspiration to see the good in others. This spiritual way of life of inner peace and conscious, natural nourishment is reflected both in the quiet atmosphere of our Secret Garden and in our lovingly prepared dishes."
-  };
-
-  const quote = {
-    de: "\"Das Gute in anderen zu sehen, ist der Anfang von Frieden.\"",
-    en: "\"To see the good in others is the beginning of peace.\""
-  };
 
   const values = [
     {
@@ -95,45 +80,6 @@ export const AboutSection = () => {
               />
             </div>
           </div>
-        </div>
-
-        {/* Sri Chinmoy Section */}
-        <div className="grid md:grid-cols-2 gap-16 items-start mb-32">
-          {/* Portrait */}
-          <div className="relative order-2 md:order-1">
-            <div className="aspect-[3/4] overflow-hidden rounded-2xl shadow-xl">
-              <img
-                src={sriChinmoyImg}
-                alt="Sri Chinmoy"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="mt-6 text-center text-base font-lora text-muted-foreground italic">
-              Sri Chinmoy · 1931-2007
-            </p>
-          </div>
-
-          {/* Inspiration Text */}
-          <div className="space-y-10 order-1 md:order-2">
-            <div>
-              <h3 className="text-3xl md:text-4xl font-caveat font-bold text-accent mb-6">
-                {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
-              </h3>
-              <p className="font-lora text-xl leading-relaxed text-foreground/90">
-                {aboutInspiration[language]}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Quote Section - Centered */}
-        <div className="text-center max-w-4xl mx-auto">
-          <blockquote className="text-4xl md:text-5xl font-caveat text-primary leading-relaxed">
-            {quote[language]}
-          </blockquote>
-          <p className="mt-8 text-xl text-muted-foreground font-lora">
-            — Sri Chinmoy
-          </p>
         </div>
       </div>
     </section>

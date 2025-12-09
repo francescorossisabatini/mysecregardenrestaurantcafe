@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
+import { Philosophy } from "@/components/Philosophy";
 
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { FullMenu } from "@/components/FullMenu";
@@ -110,7 +111,10 @@ const Index = () => {
       {/* About Section */}
       <AboutSection />
       
+      {/* Philosophy / Unsere Inspiration */}
+      <Philosophy />
       
+
       {/* Products */}
       <ProductsNarrative />
       
