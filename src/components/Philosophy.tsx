@@ -3,7 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import sriChinmoyImage from "@/assets/sri-chinmoy.jpg";
 
 export const Philosophy = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   return (
     <section className="py-32 md:py-40 bg-muted/30">
@@ -34,9 +34,19 @@ export const Philosophy = () => {
               <div className="mt-4 md:mt-6 text-center space-y-3 md:space-y-4">
                 <div className="bg-accent/10 rounded-xl p-4 md:p-6 border border-accent/30">
                   <p className="font-caveat text-lg md:text-2xl text-accent leading-relaxed">
-                    "No, it is not possible<br />
-                    For any inner cry<br />
-                    To remain unheard."
+                    {language === "de" ? (
+                      <>
+                        „Nein, es ist nicht möglich,<br />
+                        dass ein innerer Ruf<br />
+                        unerhört bleibt."
+                      </>
+                    ) : (
+                      <>
+                        "No, it is not possible<br />
+                        For any inner cry<br />
+                        To remain unheard."
+                      </>
+                    )}
                   </p>
                 </div>
                 <p className="text-xs md:text-base font-lora text-muted-foreground italic px-2">
