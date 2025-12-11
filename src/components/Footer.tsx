@@ -14,11 +14,16 @@ export const Footer = () => {
             <Heart className="w-4 h-4 fill-accent text-accent animate-pulse" />
             <span>in Wien</span>
           </div>
+          <p className="text-base font-caveat text-primary-foreground/80 italic">
+            {language === "de"
+              ? "Ein Ort, wo die Seele isst"
+              : "A place where the soul eats"}
+          </p>
           <p className="text-sm text-primary-foreground/70">
             My Secret Garden Restaurant - Vegetarisch & Vegan seit 2006
           </p>
           <p className="text-xs text-primary-foreground/60">
-            Mariahilferstraße 45 – Im Raimundhof – 1060 Wien
+            Im Raimundhof – Mariahilferstraße 45 – 1060 Wien
           </p>
           <div className="pt-4 border-t border-primary-foreground/20 space-y-2">
             <p className="text-xs text-primary-foreground/60">
