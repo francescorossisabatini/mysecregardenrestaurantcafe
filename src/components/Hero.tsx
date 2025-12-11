@@ -7,13 +7,13 @@ import Autoplay from "embla-carousel-autoplay";
 
 // 3 curated images for consistency
 import minnesotaBowl from "@/assets/minnesota-bowl.jpg";
-import entranceGarden from "@/assets/entrance-garden.jpg";
+import heroGarden from "@/assets/garden-real.jpg";
 import heroInterior from "@/assets/interior-real.jpg";
 
 const heroImages = [
   { src: minnesotaBowl, position: "center center", alt: "Piatto del giorno" },
-  { src: entranceGarden, position: "center 40%", alt: "Cortile interno" },
-  { src: heroInterior, position: "center 55%", alt: "Interni del ristorante" },
+  { src: heroGarden, position: "center 45%", alt: "Cortile interno" },
+  { src: heroInterior, position: "center 35%", alt: "Interni del ristorante" },
 ];
 
 export const Hero = () => {
