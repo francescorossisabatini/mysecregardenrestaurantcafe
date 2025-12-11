@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -23,21 +23,21 @@ export const Hero = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
   const { language } = useLanguage();
-  const isMobile = useIsMobile();
+  
 
-  // Embla carousel for mobile swipe
+  // Embla carousel for swipe support
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true,
       skipSnaps: false,
-      // Only enable drag on mobile touch devices
-      watchDrag: isMobile,
+      // Enable drag for touch interactions
+      watchDrag: true,
     },
     [
       Autoplay({ 
         delay: 7000, 
         stopOnInteraction: false,
-        stopOnMouseEnter: false,
+        stopOnMouseEnter: true,
       })
     ]
   );
