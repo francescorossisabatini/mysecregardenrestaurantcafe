@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         'caveat': ['Caveat', 'cursive'],
         'lora': ['Lora', 'serif'],
+        'cormorant': ['Cormorant Garamond', 'serif'],
+        'work': ['Work Sans', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -49,6 +51,10 @@ export default {
           foreground: "hsl(var(--blue-foreground))",
         },
         cream: "hsl(var(--cream))",
+        daily: "hsl(var(--daily-card))",
+        dailyAlt: "hsl(var(--daily-card-alt))",
+        klassiker: "hsl(var(--klassiker-card))",
+        badgeWood: "hsl(var(--badge-wood))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -118,6 +124,7 @@ export default {
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'elevated': 'var(--shadow-elevated)',
+        'card': 'var(--shadow-card)',
       },
       transitionTimingFunction: {
         'smooth': 'var(--transition-smooth)',

@@ -5,6 +5,7 @@ import { StorySection } from "@/components/StorySection";
 import { AboutSection } from "@/components/AboutSection";
 import { Philosophy } from "@/components/Philosophy";
 
+import { SoulCarousel } from "@/components/SoulCarousel";
 import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
 import { FullMenu } from "@/components/FullMenu";
 import { ProductsNarrative } from "@/components/ProductsNarrative";
@@ -90,6 +91,9 @@ const Index = () => {
       
       {/* Hero Section - content appears on scroll */}
       <Hero />
+      
+      {/* Soul Carousel - Piatti del giorno + Classici */}
+      <SoulCarousel />
       
       {/* Daily Menu */}
       <DailyMenuHighlight />
