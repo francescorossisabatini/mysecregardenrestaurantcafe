@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
-import { StorySection } from "@/components/StorySection";
-import { AboutSection } from "@/components/AboutSection";
-import { Philosophy } from "@/components/Philosophy";
 import { MenuSection } from "@/components/MenuSection";
-import { ProductsNarrative } from "@/components/ProductsNarrative";
 import { Reviews } from "@/components/Reviews";
+import { HomeClosing } from "@/components/HomeClosing";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { Preloader } from "@/components/Preloader";
-import { SectionDivider } from "@/components/SectionDivider";
 
 const Index = () => {
   const location = useLocation();
@@ -84,22 +80,14 @@ const Index = () => {
       
       <Hero />
       
-      {/* Single unified menu section */}
+      {/* Menu section */}
       <MenuSection />
       
-      <SectionDivider variant="default" />
-      
+      {/* Reviews */}
       <Reviews />
       
-      <StorySection />
-      
-      <AboutSection />
-      
-      <Philosophy />
-
-      <ProductsNarrative />
-      
-      <SectionDivider variant="accent" showDecoration={false} />
+      {/* Silent closing + exploration CTA */}
+      <HomeClosing />
       
       <Contact />
       <Footer />

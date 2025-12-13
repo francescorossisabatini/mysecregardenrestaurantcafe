@@ -74,14 +74,17 @@ export const Navigation = () => {
     { 
       href: "/gallery", 
       label: language === "de" ? "Galerie" : "Gallery",
-      isExternal: true,
       isSecondary: true
     },
     { 
-      href: "#about", 
+      href: "/about", 
       label: language === "de" ? "Über uns" : "About",
-      isSecondary: true,
-      isHash: true
+      isSecondary: true
+    },
+    { 
+      href: "/inspiration", 
+      label: language === "de" ? "Inspiration" : "Inspiration",
+      isSecondary: true
     },
     { 
       href: "#contact", 
