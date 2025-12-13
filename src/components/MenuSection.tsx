@@ -3,8 +3,9 @@ import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu } from "@/data/klassikerData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, Coffee, Salad, UtensilsCrossed } from "lucide-react";
-
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Leaf, Coffee, Salad, UtensilsCrossed, ChevronDown } from "lucide-react";
+import { useState } from "react";
 const getCategoryIcon = (category: string) => {
   switch (category) {
     case "bowl": return <UtensilsCrossed className="w-3.5 h-3.5" />;
@@ -18,6 +19,7 @@ const getCategoryIcon = (category: string) => {
 export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
+  const [weeklyOpen, setWeeklyOpen] = useState(false);
   
   // Get today's day name
   const today = new Date();
@@ -125,9 +127,84 @@ export const MenuSection = () => {
             )}
           </div>
           
+          {/* Weekly Menu Accordion */}
+          <div className="my-10">
+            <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
+              <CollapsibleTrigger className="w-full group">
+                <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="font-cormorant text-base md:text-lg italic">
+                    {language === "de" ? "Ein Blick auf diese Woche" : "A look at this week"}
+                  </span>
+                  <ChevronDown 
+                    className={`w-4 h-4 transition-transform duration-200 ${weeklyOpen ? "rotate-180" : ""}`} 
+                  />
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                <div className="pt-4 pb-2 space-y-6">
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-16 w-full rounded-lg" />
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-xs text-muted-foreground text-center font-work mb-4">
+                        {menu.period}
+                      </p>
+                      {menu.days.map((day, index) => (
+                        <div key={index} className="border-b border-border/30 pb-4 last:border-0">
+                          <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
+                            {day.day[language]}
+                          </h4>
+                          <div className="space-y-2 text-sm font-work">
+                            {day.soup[language] && (
+                              <div className="flex justify-between items-start gap-2">
+                                <div>
+                                  <span className="text-muted-foreground text-xs">
+                                    {language === "de" ? "Suppe" : "Soup"}:
+                                  </span>
+                                  <p className="text-foreground/90">{day.soup[language]}</p>
+                                </div>
+                                <span className="text-accent text-xs font-medium shrink-0">5,90</span>
+                              </div>
+                            )}
+                            {day.green[language] && (
+                              <div className="flex justify-between items-start gap-2">
+                                <div>
+                                  <span className="text-muted-foreground text-xs">
+                                    {language === "de" ? "Grün" : "Green"}:
+                                  </span>
+                                  <p className="text-foreground/90">{day.green[language]}</p>
+                                </div>
+                                <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                              </div>
+                            )}
+                            {day.blue[language] && (
+                              <div className="flex justify-between items-start gap-2">
+                                <div>
+                                  <span className="text-muted-foreground text-xs">
+                                    {language === "de" ? "Blau" : "Blue"}:
+                                  </span>
+                                  <p className="text-foreground/90">{day.blue[language]}</p>
+                                </div>
+                                <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+          
           {/* BLOCK 2: Visual Transition */}
-          <div className="text-center py-12 md:py-16">
-            <p className="font-cormorant text-lg md:text-xl text-muted-foreground/70 italic leading-relaxed">
+          <div className="text-center py-10 md:py-14">
+            <p className="font-cormorant text-lg md:text-xl text-muted-foreground/70 italic leading-relaxed whitespace-pre-line">
               {language === "de" 
                 ? "Nicht alles bleibt.\nUnd das ist Teil davon." 
                 : "Not everything stays.\nAnd that's part of it."}
