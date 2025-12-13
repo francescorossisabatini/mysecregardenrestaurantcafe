@@ -4,10 +4,7 @@ import { Hero } from "@/components/Hero";
 import { StorySection } from "@/components/StorySection";
 import { AboutSection } from "@/components/AboutSection";
 import { Philosophy } from "@/components/Philosophy";
-
-import { SoulCarousel } from "@/components/SoulCarousel";
-import { DailyMenuHighlight } from "@/components/DailyMenuHighlight";
-import { FullMenu } from "@/components/FullMenu";
+import { MenuSection } from "@/components/MenuSection";
 import { ProductsNarrative } from "@/components/ProductsNarrative";
 import { Reviews } from "@/components/Reviews";
 import { Contact } from "@/components/Contact";
@@ -21,11 +18,9 @@ const Index = () => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
-    // Check if preloader was shown
     const preloaderShown = sessionStorage.getItem("preloader_shown");
     
     if (!preloaderShown) {
-      // Show navbar after preloader completes (5.5s) + 1s delay
       const timer = setTimeout(() => {
         setShowNavbar(true);
       }, 6500);
@@ -43,7 +38,6 @@ const Index = () => {
         window.removeEventListener('scroll', handleScroll);
       };
     } else {
-      // No preloader, show navbar after scroll or 2 seconds
       const timer = setTimeout(() => {
         setShowNavbar(true);
       }, 2000);
@@ -64,11 +58,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (location.hash === "#full-menu") {
+    if (location.hash === "#menu") {
       setTimeout(() => {
-        const element = document.getElementById("full-menu");
+        const element = document.getElementById("menu");
         if (element) {
-          const offset = -50; // negative offset to scroll section more into view
+          const offset = -50;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - offset;
           window.scrollTo({
@@ -84,46 +78,27 @@ const Index = () => {
     <div className="min-h-screen">
       <Preloader />
       
-      {/* Navigation with slow, delicate fade-in */}
       <div className={`transition-opacity duration-[2000ms] ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
       </div>
       
-      {/* Hero Section - content appears on scroll */}
       <Hero />
       
-      {/* Soul Carousel - Piatti del giorno + Classici */}
-      <SoulCarousel />
+      {/* Single unified menu section */}
+      <MenuSection />
       
-      {/* Daily Menu */}
-      <DailyMenuHighlight />
-      
-      {/* Modern Section Divider */}
-      <SectionDivider variant="accent" />
-      
-      {/* Full Menu / Wochenkarte */}
-      <FullMenu />
-      
-      {/* Subtle Divider */}
       <SectionDivider variant="default" />
       
-      {/* Reviews */}
       <Reviews />
       
-      {/* Visual Storytelling Section */}
       <StorySection />
       
-      {/* About Section */}
       <AboutSection />
       
-      {/* Philosophy / Unsere Inspiration */}
       <Philosophy />
-      
 
-      {/* Products */}
       <ProductsNarrative />
       
-      {/* Contact with natural transition */}
       <SectionDivider variant="accent" showDecoration={false} />
       
       <Contact />
