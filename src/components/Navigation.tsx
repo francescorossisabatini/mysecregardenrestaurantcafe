@@ -83,10 +83,9 @@ export const Navigation = () => {
       isSecondary: true
     },
     { 
-      href: "#contact", 
+      href: "/contact", 
       label: language === "de" ? "Kontakt" : "Contact",
-      isSecondary: true,
-      isHash: true
+      isSecondary: true
     },
   ];
 

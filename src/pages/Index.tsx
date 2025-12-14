@@ -4,7 +4,6 @@ import { Hero } from "@/components/Hero";
 import { MenuSection } from "@/components/MenuSection";
 import { Reviews } from "@/components/Reviews";
 import { HomeClosing } from "@/components/HomeClosing";
-import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { Preloader } from "@/components/Preloader";
@@ -89,7 +88,6 @@ const Index = () => {
       {/* Silent closing + exploration CTA */}
       <HomeClosing />
       
-      <Contact />
       <Footer />
     </div>
   );
