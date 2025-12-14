@@ -4,6 +4,7 @@ import { Hero } from "@/components/Hero";
 import { MenuSection } from "@/components/MenuSection";
 import { Reviews } from "@/components/Reviews";
 import { GallerySection } from "@/components/GallerySection";
+import { InstagramCTA } from "@/components/InstagramCTA";
 import { HomeClosing } from "@/components/HomeClosing";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -88,6 +89,9 @@ const Index = () => {
       
       {/* Gallery - after reviews, before closing */}
       <GallerySection />
+      
+      {/* Instagram - whispered invitation */}
+      <InstagramCTA />
       
       {/* Silent closing + exploration CTA */}
       <HomeClosing />
