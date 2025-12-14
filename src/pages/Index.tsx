@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { MenuSection } from "@/components/MenuSection";
 import { Reviews } from "@/components/Reviews";
+import { GallerySection } from "@/components/GallerySection";
 import { HomeClosing } from "@/components/HomeClosing";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -84,6 +85,9 @@ const Index = () => {
       
       {/* Reviews */}
       <Reviews />
+      
+      {/* Gallery - after reviews, before closing */}
+      <GallerySection />
       
       {/* Silent closing + exploration CTA */}
       <HomeClosing />

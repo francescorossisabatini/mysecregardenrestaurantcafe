@@ -9,7 +9,6 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
-import Gallery from "./pages/Gallery";
 import AboutUs from "./pages/AboutUs";
 import Inspiration from "./pages/Inspiration";
 import ContactPage from "./pages/Contact";
@@ -25,7 +24,6 @@ function AppContent() {
       <MobileLanguageSwitcher />
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/inspiration" element={<Inspiration />} />
         <Route path="/contact" element={<ContactPage />} />
