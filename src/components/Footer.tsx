@@ -34,13 +34,12 @@ export const Footer = () => {
               {language === "de" ? "Kontakt" : "Contact"}
             </Link>
             <a 
-              href="https://maps.google.com/?q=Mariahilferstraße+45,+1060+Wien"
+              href="https://maps.app.goo.gl/LqLqkbmvgX5SRfU56"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-primary-foreground/60 hover:text-primary-foreground/80 transition-colors"
+              className="text-primary-foreground/60 hover:text-primary-foreground/80 transition-colors"
             >
-              Google Maps
-              <ExternalLink className="w-3 h-3" />
+              My Secret Garden · Wien
             </a>
             <Link 
               to="/privacy" 
