@@ -4,7 +4,7 @@ import { klassikerMenu } from "@/data/klassikerData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Leaf, Coffee, Salad, UtensilsCrossed, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 // Parse dietary labels from dish description text
@@ -40,15 +40,6 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       )}
     </div>
   );
-};
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case "bowl": return <UtensilsCrossed className="w-3.5 h-3.5" />;
-    case "soup": return <Coffee className="w-3.5 h-3.5" />;
-    case "salad": return <Salad className="w-3.5 h-3.5" />;
-    case "drink": return <Leaf className="w-3.5 h-3.5" />;
-    default: return <UtensilsCrossed className="w-3.5 h-3.5" />;
-  }
 };
 
 export const MenuSection = () => {
@@ -263,38 +254,53 @@ export const MenuSection = () => {
               </p>
             </div>
             
-            <div className="space-y-4">
-              {klassikerMenu.items.map((item, index) => (
-                <div 
-                  key={item.id} 
-                  className="bg-klassiker rounded-xl p-5 border border-border/30"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-accent">
-                          {getCategoryIcon(item.category)}
-                        </span>
-                        <h3 className="font-cormorant text-lg font-semibold text-foreground">
-                          {item.name[language]}
-                        </h3>
-                      </div>
-                      <p className="text-muted-foreground font-work text-sm leading-relaxed">
-                        {item.description[language]}
-                      </p>
-                      <div className="flex items-center gap-2 mt-2">
-                        {item.isVegan && (
-                          <span className="text-xs text-green-600 dark:text-green-400 font-work">
-                            vegan
+            <div className="space-y-8">
+              {klassikerMenu.categories.map((category) => (
+                <div key={category.id}>
+                  <h3 className="font-cormorant text-lg font-medium text-foreground/80 mb-4 border-b border-border/30 pb-2">
+                    {category.name[language]}
+                  </h3>
+                  <div className="space-y-3">
+                    {category.items.map((item) => (
+                      <div 
+                        key={item.id} 
+                        className="bg-klassiker rounded-xl p-4 border border-border/20"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
+                              {item.name[language]}
+                            </h4>
+                            <p className="text-muted-foreground font-work text-sm leading-relaxed">
+                              {item.description[language]}
+                            </p>
+                            {/* Dietary labels - only if present */}
+                            {(item.isVegan || item.isGlutenFree || item.isBio) && (
+                              <div className="flex items-center gap-2 mt-2">
+                                {item.isVegan && (
+                                  <span className="text-xs text-green-600 dark:text-green-400 font-work">
+                                    vegan
+                                  </span>
+                                )}
+                                {item.isGlutenFree && (
+                                  <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
+                                    {language === "de" ? "glutenfrei" : "gluten-free"}
+                                  </span>
+                                )}
+                                {item.isBio && (
+                                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
+                                    bio
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-accent font-semibold text-sm font-work shrink-0">
+                            {item.price}
                           </span>
-                        )}
-                        {item.isGlutenFree && (
-                          <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
-                            glutenfrei
-                          </span>
-                        )}
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               ))}
