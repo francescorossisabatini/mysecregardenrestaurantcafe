@@ -14,28 +14,10 @@ export const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Check if we're on a page that should always show navbar
-  const isGalleryPage = location.pathname === "/gallery";
+  // Check if we're on the home page
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
-    // Gallery page: show navbar at top, fade out on scroll
-    if (isGalleryPage) {
-      setShowNavbar(true);
-      
-      const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        const fadeDistance = window.innerHeight * 0.5; // Fade over half viewport
-        
-        // Calculate opacity: 1 at top, 0 after fadeDistance
-        const opacity = Math.max(0, 1 - (currentScrollY / fadeDistance));
-        setNavbarOpacity(opacity);
-      };
-      
-      window.addEventListener("scroll", handleScroll);
-      handleScroll(); // Initial check
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
 
     // Home page: hide navbar at top, show on scroll
     if (isHomePage) {
@@ -61,7 +43,7 @@ export const Navigation = () => {
     // Other pages: always show navbar
     setShowNavbar(true);
     setNavbarOpacity(1);
-  }, [lastScrollY, isGalleryPage, isHomePage]);
+  }, [lastScrollY, isHomePage]);
 
   const navItems = [
     // Home link - brand navigation
@@ -142,7 +124,7 @@ export const Navigation = () => {
           showNavbar ? "translate-y-0" : "-translate-y-full"
         }`}
         style={{
-          opacity: isGalleryPage ? navbarOpacity : showNavbar ? 1 : 0
+          opacity: showNavbar ? 1 : 0
         }}
       >
         <div className="container mx-auto px-4">
