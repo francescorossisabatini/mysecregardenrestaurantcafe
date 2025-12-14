@@ -90,7 +90,7 @@ export const MenuSection = () => {
               <div className="space-y-4">
                 {/* Soup */}
                 {todayMenu.soup[language] && (
-                  <div className="bg-daily rounded-xl p-5 animate-fade-in">
+                  <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
@@ -109,7 +109,7 @@ export const MenuSection = () => {
                 
                 {/* Green Dish */}
                 {todayMenu.green[language] && (
-                  <div className="bg-daily rounded-xl p-5 animate-fade-in" style={{ animationDelay: "100ms" }}>
+                  <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
@@ -128,7 +128,7 @@ export const MenuSection = () => {
                 
                 {/* Blue Dish */}
                 {todayMenu.blue[language] && (
-                  <div className="bg-daily rounded-xl p-5 animate-fade-in" style={{ animationDelay: "200ms" }}>
+                  <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}

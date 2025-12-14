@@ -65,30 +65,17 @@ export const Hero = () => {
   }, [emblaApi]);
 
   useEffect(() => {
-    // Staggered animations - each element appears with a delay
-    const timer1 = setTimeout(() => setShowTitle(true), 800);
-    const timer2 = setTimeout(() => setShowSubtitle(true), 1400);
-    const timer3 = setTimeout(() => setShowButtons(true), 2000);
-    const timer4 = setTimeout(() => setShowDots(true), 2600);
-
-    // Also trigger on scroll
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setShowTitle(true);
-        setShowSubtitle(true);
-        setShowButtons(true);
-        setShowDots(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    // Gentle staggered fade-in - subtle delays, no blur effects
+    const timer1 = setTimeout(() => setShowTitle(true), 600);
+    const timer2 = setTimeout(() => setShowSubtitle(true), 1000);
+    const timer3 = setTimeout(() => setShowButtons(true), 1400);
+    const timer4 = setTimeout(() => setShowDots(true), 1800);
     
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -131,34 +118,31 @@ export const Hero = () => {
       {/* Content - fixed on every slide */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full pointer-events-none">
         <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
-          {/* Restaurant name */}
-          <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-all duration-[2000ms] ${
-            showTitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
+          {/* Restaurant name - gentle fade only */}
+          <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-opacity duration-[1500ms] ease-out ${
+            showTitle ? "opacity-100" : "opacity-0"
+          }`}>
             My Secret Garden
           </h1>
 
-          {/* Subtitle */}
-          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background/90 drop-shadow-xl transition-all duration-[2000ms] ${
-            showSubtitle ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
+          {/* Subtitle - gentle fade only */}
+          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background/90 drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
+            showSubtitle ? "opacity-100" : "opacity-0"
+          }`}>
             {language === "de"
               ? "Vegan Soul Food im Herzen von Wien"
               : "Vegan Soul Food in the Heart of Vienna"}
           </p>
 
-          {/* CTA Buttons - horizontal on mobile */}
-          <div className={`flex flex-row gap-3 sm:gap-4 justify-center items-center pt-6 sm:pt-8 max-w-md mx-auto transition-all duration-[2000ms] pointer-events-auto ${
-            showButtons ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
+          {/* CTA Buttons - gentle fade only */}
+          <div className={`flex flex-row gap-3 sm:gap-4 justify-center items-center pt-6 sm:pt-8 max-w-md mx-auto transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+            showButtons ? "opacity-100" : "opacity-0"
+          }`}>
             {/* PRIMARY CTA - Anrufen (green) */}
             <Button
               size="lg"
               asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 border border-accent-light/20 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-all duration-300 hover:shadow-lg"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 border border-accent-light/20 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-colors duration-300"
             >
               <a href="tel:+4315970547">
                 {language === "de" ? "Anrufen" : "Call"}
@@ -169,17 +153,16 @@ export const Hero = () => {
             <Button
               size="lg"
               onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 border border-primary-foreground/10 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-all duration-300 hover:shadow-lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 border border-primary-foreground/10 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-colors duration-300"
             >
               {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
           </div>
 
-          {/* Carousel dots - 3 dots for 3 slides */}
-          <div className={`flex gap-3 justify-center pt-4 sm:pt-6 transition-all duration-[2000ms] pointer-events-auto ${
-            showDots ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-4 blur-sm"
-          }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }}>
+          {/* Carousel dots - gentle fade only */}
+          <div className={`flex gap-3 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+            showDots ? "opacity-100" : "opacity-0"
+          }`}>
             {heroImages.map((_, index) => (
               <button
                 key={index}

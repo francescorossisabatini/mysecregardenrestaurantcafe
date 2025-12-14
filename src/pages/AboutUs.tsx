@@ -1,5 +1,4 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Leaf, Heart, Droplets, Users, Coffee, Utensils } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -12,7 +11,6 @@ import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   const { language } = useLanguage();
-  const { ref, isVisible } = useScrollReveal(0.1);
 
   const aboutRestaurant = {
     de: "My Secret Garden ist ein friedliches vegetarisches & veganes Restaurant im Raimundhof in Wien. Wir bieten eine entspannte Atmosphäre in einem ruhigen Innenhof-Garten und bereiten täglich frische, hausgemachte Gerichte mit natürlichen und biologischen Zutaten zu. Unsere Küche vereint einfache, nährende Speisen, die Körper und Geist stärken.",
@@ -129,12 +127,7 @@ const AboutUs = () => {
       </div>
 
       {/* Values Section */}
-      <section 
-        ref={ref as any}
-        className={`py-20 bg-muted/30 transition-all duration-1000 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-12 text-center">
