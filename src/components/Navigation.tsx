@@ -19,15 +19,13 @@ export const Navigation = () => {
 
   useEffect(() => {
 
-    // Home page: hide navbar at top, show on scroll
+    // Home page: hide navbar at top, show on any scroll
     if (isHomePage) {
       const handleScroll = () => {
         const currentScrollY = window.scrollY;
-        const heroHeight = window.innerHeight; // 100vh
         
-        // Show navbar when scrolled past hero section (going down)
-        // Hide navbar when back in hero section
-        if (currentScrollY > heroHeight * 0.8) {
+        // Show navbar as soon as user starts scrolling (threshold of 50px)
+        if (currentScrollY > 50) {
           setShowNavbar(true);
         } else {
           setShowNavbar(false);
@@ -228,8 +226,8 @@ export const Navigation = () => {
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
-              <div className="relative z-10 ml-2">
-                <LanguageSwitcher />
+              <div className="ml-4">
+                <LanguageSwitcher variant="navbar" />
               </div>
             </div>
           </div>
@@ -322,8 +320,8 @@ export const Navigation = () => {
           </nav>
 
           {/* Mobile language switcher at the bottom */}
-          <div className="mt-6 flex justify-start">
-            <LanguageSwitcher />
+          <div className="mt-auto">
+            <LanguageSwitcher variant="mobile" />
           </div>
         </div>
       </div>

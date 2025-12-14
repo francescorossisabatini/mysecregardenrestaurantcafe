@@ -1,39 +1,75 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
 
-export const LanguageSwitcher = () => {
+interface LanguageSwitcherProps {
+  variant?: "navbar" | "mobile";
+}
+
+export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) => {
   const { language, setLanguage } = useLanguage();
 
+  if (variant === "mobile") {
+    return (
+      <div className="border-t border-border/20 pt-6">
+        <p className="text-sm text-foreground/50 mb-3 px-1">Sprache</p>
+        <div className="flex gap-4" role="group" aria-label="Language selection">
+          <button
+            onClick={() => setLanguage("de")}
+            className={`text-lg transition-colors duration-200 ${
+              language === "de"
+                ? "text-foreground font-medium"
+                : "text-foreground/50 hover:text-foreground"
+            }`}
+            aria-pressed={language === "de"}
+            aria-label="Deutsch"
+          >
+            DE
+          </button>
+          <span className="text-foreground/30">/</span>
+          <button
+            onClick={() => setLanguage("en")}
+            className={`text-lg transition-colors duration-200 ${
+              language === "en"
+                ? "text-foreground font-medium"
+                : "text-foreground/50 hover:text-foreground"
+            }`}
+            aria-pressed={language === "en"}
+            aria-label="English"
+          >
+            EN
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop navbar variant - minimal text only
   return (
-    <div className="flex gap-2" role="group" aria-label="Language selection">
-      <Button
-        variant={language === "de" ? "default" : "outline"}
-        size="sm"
+    <div className="flex items-center gap-1" role="group" aria-label="Language selection">
+      <button
         onClick={() => setLanguage("de")}
-        className={`min-h-[44px] min-w-[44px] touch-manipulation font-semibold ${
+        className={`text-sm transition-colors duration-200 px-1 ${
           language === "de"
-            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md"
-            : "bg-transparent text-foreground/70 hover:text-foreground hover:bg-primary/10 border-2 border-primary/30"
+            ? "text-foreground font-medium"
+            : "text-foreground/50 hover:text-foreground"
         }`}
         aria-pressed={language === "de"}
-        aria-label="Switch to German"
+        aria-label="Deutsch"
       >
         DE
-      </Button>
-      <Button
-        variant={language === "en" ? "default" : "outline"}
-        size="sm"
+      </button>
+      <span className="text-foreground/30 text-sm">/</span>
+      <button
         onClick={() => setLanguage("en")}
-        className={`min-h-[44px] min-w-[44px] touch-manipulation font-semibold ${
+        className={`text-sm transition-colors duration-200 px-1 ${
           language === "en"
-            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md"
-            : "bg-transparent text-foreground/70 hover:text-foreground hover:bg-primary/10 border-2 border-primary/30"
+            ? "text-foreground font-medium"
+            : "text-foreground/50 hover:text-foreground"
         }`}
         aria-pressed={language === "en"}
-        aria-label="Switch to English"
+        aria-label="English"
       >
         EN
-      </Button>
+      </button>
     </div>
   );
 };
