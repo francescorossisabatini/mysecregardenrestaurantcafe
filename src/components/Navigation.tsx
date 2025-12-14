@@ -70,11 +70,12 @@ export const Navigation = () => {
       label: "My Secret Garden",
       isHome: true
     },
-    // Secondary navigation - content sections
+    // Secondary navigation - essential sections
     { 
-      href: "/gallery", 
-      label: language === "de" ? "Galerie" : "Gallery",
-      isSecondary: true
+      href: "#menu", 
+      label: "Menu",
+      isSecondary: true,
+      isHash: true
     },
     { 
       href: "/about", 
@@ -82,22 +83,10 @@ export const Navigation = () => {
       isSecondary: true
     },
     { 
-      href: "/inspiration", 
-      label: language === "de" ? "Inspiration" : "Inspiration",
-      isSecondary: true
-    },
-    { 
       href: "#contact", 
       label: language === "de" ? "Kontakt" : "Contact",
       isSecondary: true,
       isHash: true
-    },
-    // Tertiary navigation - external/auxiliary
-    {
-      href: "https://www.instagram.com/mysecretgardencafewien/",
-      label: "Instagram",
-      isExternal: true,
-      isTertiary: true
     },
   ];
 
@@ -225,35 +214,16 @@ export const Navigation = () => {
                   } else {
                     itemClasses += " text-base font-medium text-foreground/70 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
                   }
-                } else if (item.isTertiary) {
-                  // Tertiary: Light weight, smaller, muted
-                  if (isActive) {
-                    itemClasses += " text-sm font-normal text-foreground after:w-full after:h-0.5 after:bg-muted-foreground";
-                  } else {
-                    itemClasses += " text-sm font-normal text-muted-foreground hover:text-foreground after:w-0 after:h-0.5 after:bg-muted-foreground hover:after:w-full";
-                  }
                 }
 
                 return (
                   <>
-                    {item.href.startsWith('http') ? (
-                      // External link - use <a> tag
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                        className={itemClasses}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {item.label}
-                      </a>
-                    ) : item.href.startsWith('#') ? (
+                    {item.href.startsWith('#') ? (
                       // Hash link - use <a> but with custom handler
                       <a
                         key={item.href}
                         href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                        onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
                         className={itemClasses}
                       >
                         {item.label}
@@ -320,16 +290,13 @@ export const Navigation = () => {
                  itemClasses += " font-caveat text-2xl text-primary";
                 } else if (item.isSecondary) {
                  itemClasses += " font-medium text-lg";
-                } else if (item.isTertiary) {
-                 itemClasses += " font-normal opacity-70";
                 }
                
                return (
-                 <>
+                 <div key={item.href}>
                    {item.isHome ? (
                      // Home link - brand navigation
                      <Link
-                       key={item.href}
                        to={item.href}
                        onClick={(e) => {
                          setIsMobileMenuOpen(false);
@@ -342,24 +309,11 @@ export const Navigation = () => {
                      >
                        {item.label}
                      </Link>
-                   ) : item.href.startsWith('http') ? (
-                     // External link - use <a> tag
-                     <a
-                       key={item.href}
-                       href={item.href}
-                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
-                       className={itemClasses}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                     >
-                       {item.label}
-                     </a>
                    ) : item.href.startsWith('#') ? (
                      // Hash link - use <a> but with custom handler
                      <a
-                       key={item.href}
                        href={item.href}
-                       onClick={(e) => handleNavClick(e, item.href, item.isExternal, item.isHash)}
+                       onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
                        className={itemClasses}
                      >
                        {item.label}
@@ -367,7 +321,6 @@ export const Navigation = () => {
                    ) : (
                      // Internal page - use Link
                      <Link
-                       key={item.href}
                        to={item.href}
                        onClick={() => setIsMobileMenuOpen(false)}
                        className={itemClasses}
@@ -375,7 +328,7 @@ export const Navigation = () => {
                        {item.label}
                      </Link>
                    )}
-                 </>
+                 </div>
                );
             })}
             <Link

@@ -6,6 +6,41 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Leaf, Coffee, Salad, UtensilsCrossed, ChevronDown } from "lucide-react";
 import { useState } from "react";
+
+// Parse dietary labels from dish description text
+const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
+  const lowerText = text.toLowerCase();
+  return {
+    isVegan: lowerText.includes("vegan"),
+    isGlutenFree: lowerText.includes("glutenfrei") || lowerText.includes("gluten-free") || lowerText.includes("gluten free"),
+    isBio: lowerText.includes("bio"),
+  };
+};
+
+// Render dietary badges dynamically
+const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
+  const labels = parseDietaryLabels(text);
+  
+  return (
+    <div className="flex items-center gap-2 mt-2 flex-wrap">
+      {labels.isVegan && (
+        <span className="text-xs text-green-600 dark:text-green-400 font-work">
+          vegan
+        </span>
+      )}
+      {labels.isGlutenFree && (
+        <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
+          {language === "de" ? "glutenfrei" : "gluten-free"}
+        </span>
+      )}
+      {labels.isBio && (
+        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
+          bio
+        </span>
+      )}
+    </div>
+  );
+};
 const getCategoryIcon = (category: string) => {
   switch (category) {
     case "bowl": return <UtensilsCrossed className="w-3.5 h-3.5" />;
@@ -76,7 +111,8 @@ export const MenuSection = () => {
                     <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
                       {todayMenu.soup[language]}
                     </p>
-                    <p className="text-accent font-semibold text-sm font-work">5,90</p>
+                    <DietaryBadges text={todayMenu.soup[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">5,90</p>
                   </div>
                 )}
                 
@@ -94,7 +130,8 @@ export const MenuSection = () => {
                     <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
                       {todayMenu.green[language]}
                     </p>
-                    <p className="text-accent font-semibold text-sm font-work">11,90</p>
+                    <DietaryBadges text={todayMenu.green[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">11,90</p>
                   </div>
                 )}
                 
@@ -112,7 +149,8 @@ export const MenuSection = () => {
                     <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
                       {todayMenu.blue[language]}
                     </p>
-                    <p className="text-accent font-semibold text-sm font-work">11,90</p>
+                    <DietaryBadges text={todayMenu.blue[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">11,90</p>
                   </div>
                 )}
               </div>
@@ -161,33 +199,36 @@ export const MenuSection = () => {
                           <div className="space-y-2 text-sm font-work">
                             {day.soup[language] && (
                               <div className="flex justify-between items-start gap-2">
-                                <div>
+                                <div className="flex-1">
                                   <span className="text-muted-foreground text-xs">
                                     {language === "de" ? "Suppe" : "Soup"}:
                                   </span>
                                   <p className="text-foreground/90">{day.soup[language]}</p>
+                                  <DietaryBadges text={day.soup[language]} language={language} />
                                 </div>
                                 <span className="text-accent text-xs font-medium shrink-0">5,90</span>
                               </div>
                             )}
                             {day.green[language] && (
                               <div className="flex justify-between items-start gap-2">
-                                <div>
+                                <div className="flex-1">
                                   <span className="text-muted-foreground text-xs">
                                     {language === "de" ? "Grün" : "Green"}:
                                   </span>
                                   <p className="text-foreground/90">{day.green[language]}</p>
+                                  <DietaryBadges text={day.green[language]} language={language} />
                                 </div>
                                 <span className="text-accent text-xs font-medium shrink-0">11,90</span>
                               </div>
                             )}
                             {day.blue[language] && (
                               <div className="flex justify-between items-start gap-2">
-                                <div>
+                                <div className="flex-1">
                                   <span className="text-muted-foreground text-xs">
                                     {language === "de" ? "Blau" : "Blue"}:
                                   </span>
                                   <p className="text-foreground/90">{day.blue[language]}</p>
+                                  <DietaryBadges text={day.blue[language]} language={language} />
                                 </div>
                                 <span className="text-accent text-xs font-medium shrink-0">11,90</span>
                               </div>
