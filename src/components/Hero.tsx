@@ -134,28 +134,18 @@ export const Hero = () => {
               : "Vegan Soul Food in the Heart of Vienna"}
           </p>
 
-          {/* CTA Buttons - gentle fade only */}
-          <div className={`flex flex-row gap-3 sm:gap-4 justify-center items-center pt-6 sm:pt-8 max-w-md mx-auto transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          {/* CTA Button - single human call to action */}
+          <div className={`flex justify-center items-center pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
-            {/* PRIMARY CTA - Anrufen (green) */}
             <Button
               size="lg"
               asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 border border-accent-light/20 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-colors duration-300"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 border border-accent-light/20 font-medium text-sm sm:text-base px-8 sm:px-12 py-3 sm:py-5 rounded-md transition-colors duration-300"
             >
               <a href="tel:+4315970547">
                 {language === "de" ? "Anrufen" : "Call"}
               </a>
-            </Button>
-            
-            {/* SECONDARY CTA - Tagesmenü (blue) */}
-            <Button
-              size="lg"
-              onClick={() => scrollToSection("daily-menu")}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 border border-primary-foreground/10 font-medium text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-5 rounded-md transition-colors duration-300"
-            >
-              {language === "de" ? "Tagesmenü" : "Daily Menu"}
             </Button>
           </div>
 
