@@ -47,6 +47,12 @@ export const Footer = () => {
             >
               {language === "de" ? "Datenschutz" : "Privacy"}
             </Link>
+            <Link 
+              to="/impressum" 
+              className="text-primary-foreground/60 hover:text-primary-foreground/80 transition-colors"
+            >
+              Impressum
+            </Link>
           </div>
           
           {/* Made with love */}

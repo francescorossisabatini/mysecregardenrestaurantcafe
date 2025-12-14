@@ -9,6 +9,7 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
+import Impressum from "./pages/Impressum";
 import AboutUs from "./pages/AboutUs";
 import Inspiration from "./pages/Inspiration";
 import ContactPage from "./pages/Contact";
@@ -28,6 +29,7 @@ function AppContent() {
         <Route path="/inspiration" element={<Inspiration />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/impressum" element={<Impressum />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
