@@ -34,12 +34,12 @@ export const Footer = () => {
               {language === "de" ? "Kontakt" : "Contact"}
             </Link>
             <a 
-              href="https://maps.app.goo.gl/LqLqkbmvgX5SRfU56"
+              href="https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary-foreground/60 hover:text-primary-foreground/80 transition-colors"
             >
-              My Secret Garden · Wien
+              Google Maps
             </a>
             <Link 
               to="/privacy" 
