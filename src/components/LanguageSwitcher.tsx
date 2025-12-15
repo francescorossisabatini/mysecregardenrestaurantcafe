@@ -42,12 +42,12 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
     );
   }
 
-  // Desktop navbar variant - minimal text only
+  // Desktop navbar variant - minimal text only, constrained width
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="Language selection">
+    <div className="flex items-center gap-1 shrink-0" role="group" aria-label="Language selection">
       <button
         onClick={() => setLanguage("de")}
-        className={`text-sm transition-colors duration-200 px-1 ${
+        className={`text-sm transition-colors duration-200 px-1 whitespace-nowrap ${
           language === "de"
             ? "text-foreground font-medium"
             : "text-foreground/50 hover:text-foreground"
@@ -60,7 +60,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
       <span className="text-foreground/30 text-sm">/</span>
       <button
         onClick={() => setLanguage("en")}
-        className={`text-sm transition-colors duration-200 px-1 ${
+        className={`text-sm transition-colors duration-200 px-1 whitespace-nowrap ${
           language === "en"
             ? "text-foreground font-medium"
             : "text-foreground/50 hover:text-foreground"
