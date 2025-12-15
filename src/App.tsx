@@ -14,7 +14,7 @@ import AboutUs from "./pages/AboutUs";
 import Inspiration from "./pages/Inspiration";
 import ContactPage from "./pages/Contact";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { MobileLanguageSwitcher } from "./components/MobileLanguageSwitcher";
+
 
 function AppContent() {
   useHtmlLang();
@@ -22,7 +22,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <MobileLanguageSwitcher />
+      
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<AboutUs />} />

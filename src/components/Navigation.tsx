@@ -226,7 +226,7 @@ export const Navigation = () => {
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
-              <div className="ml-4">
+              <div className="ml-4 shrink-0">
                 <LanguageSwitcher variant="navbar" />
               </div>
             </div>
