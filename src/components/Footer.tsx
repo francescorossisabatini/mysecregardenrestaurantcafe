@@ -22,7 +22,7 @@ export const Footer = () => {
           
           {/* Hours - synthetic */}
           <p className="text-sm text-primary-foreground/60 font-work">
-            {language === "de" ? "Mo–Sa 11:30–21:30" : "Mon–Sat 11:30–21:30"}
+            {language === "de" ? "Mo–Sa 11:00–19:00" : "Mon–Sat 11:00–19:00"}
           </p>
           
           {/* Links */}
