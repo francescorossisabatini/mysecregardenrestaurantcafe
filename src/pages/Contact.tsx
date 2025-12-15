@@ -81,9 +81,9 @@ const ContactPage = () => {
                 </div>
                 <p className="text-muted-foreground font-work leading-relaxed">
                   {language === "de" ? "Montag – Samstag" : "Monday – Saturday"}<br />
-                  11:30 – 21:30<br />
+                  11:00 – 19:00<br />
                   <span className="text-sm opacity-70">
-                    {language === "de" ? "Sonntag geschlossen" : "Closed on Sunday"}
+                    {language === "de" ? "An Feiertagen geschlossen" : "Closed on holidays"}
                   </span>
                 </p>
               </div>
