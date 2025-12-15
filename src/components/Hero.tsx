@@ -141,7 +141,7 @@ export const Hero = () => {
             <Button
               size="lg"
               asChild
-              className="bg-accent text-accent-foreground hover:bg-accent/90 border border-accent-light/20 font-medium text-sm sm:text-base px-8 sm:px-12 py-3 sm:py-5 rounded-md transition-colors duration-300"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
             >
               <a href="tel:+4315970547">
                 {language === "de" ? "Anrufen" : "Call"}
