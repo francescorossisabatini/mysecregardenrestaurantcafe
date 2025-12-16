@@ -14,6 +14,7 @@ interface WeeklyMenu {
 
 const CACHE_KEY = 'weekly_menu_cache';
 const CACHE_DURATION = 30 * 1000; // 30 seconds
+const isDev = import.meta.env.DEV;
 
 interface CachedMenu {
   data: WeeklyMenu;
@@ -21,23 +22,21 @@ interface CachedMenu {
 }
 
 export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> {
-  console.log('📊 Caricamento da Google Sheets, ID:', sheetId);
+  if (isDev) console.log('📊 Caricamento da Google Sheets');
   
   // Clear cache to ensure fresh data
   clearMenuCache();
   
   try {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Menu`;
-    console.log('🌐 URL richiesta:', url);
+    if (isDev) console.log('🌐 Fetching menu data...');
     const response = await fetch(url);
-    console.log('📥 Risposta ricevuta, status:', response.status);
+    if (isDev) console.log('📥 Response status:', response.status);
     const text = await response.text();
-    console.log('📄 Testo risposta (primi 200 caratteri):', text.substring(0, 200));
     
     // Parse Google Sheets JSON response (it's wrapped in a function call)
     const jsonText = text.substring(47).slice(0, -2);
     const json = JSON.parse(jsonText);
-    console.log('📊 JSON parsato:', JSON.stringify(json, null, 2));
     
     const rows = json.table.rows;
     
@@ -55,7 +54,7 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
       // Detect period: first row with only first cell filled
       if (!period && c0 && !c1 && !c2) {
         period = c0;
-        console.log('📅 Periodo rilevato:', period);
+        if (isDev) console.log('📅 Period detected:', period);
         continue;
       }
 
@@ -85,23 +84,17 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
           },
         };
 
-        console.log(`🍽️ ${dayData.day.de}:`, {
-          soup: !!dayData.soup.de,
-          green: !!dayData.green.de,
-          blue: !!dayData.blue.de,
-        });
-
         days.push(dayData);
       }
     }
     
     if (!period || days.length === 0) {
-      console.warn('⚠️ Nessun dato menu valido trovato nel foglio, uso fallback');
+      if (isDev) console.warn('⚠️ No valid menu data found, using fallback');
       throw new Error('NO_MENU_DATA');
     }
     
     const menuData: WeeklyMenu = { period, days };
-    console.log('✅ Menu caricato con successo, giorni:', days.length);
+    if (isDev) console.log('✅ Menu loaded successfully, days:', days.length);
 
     // Cache the data
     localStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -111,8 +104,7 @@ export async function fetchMenuFromSheets(sheetId: string): Promise<WeeklyMenu> 
     
     return menuData;
   } catch (error) {
-    console.error('❌ ERRORE nel caricamento da Google Sheets:', error);
-    console.error('❌ Dettagli errore:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Failed to load menu from Google Sheets');
     throw error;
   }
 }

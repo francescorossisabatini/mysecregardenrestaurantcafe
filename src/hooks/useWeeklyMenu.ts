@@ -3,6 +3,8 @@ import { fetchMenuFromSheets, clearMenuCache } from '@/services/googleSheetsServ
 import { weeklyMenu as fallbackMenu } from '@/data/menuData';
 import { GOOGLE_SHEETS_CONFIG } from '@/config/googleSheets';
 
+const isDev = import.meta.env.DEV;
+
 interface MenuDay {
   day: { de: string; en: string };
   soup: { de: string; en: string };
@@ -24,12 +26,10 @@ export function useWeeklyMenu() {
 
   const loadMenu = async () => {
     const sheetId = GOOGLE_SHEETS_CONFIG.menuSheetId;
-    console.log('🔑 Sheet ID trovato:', sheetId ? 'SI ✅' : 'NO ❌');
-    console.log('🔑 Valore Sheet ID:', sheetId);
     
     // If no sheet ID is configured, use fallback data
     if (!sheetId) {
-      console.log('⚠️ Nessun Sheet ID, uso dati fallback');
+      if (isDev) console.log('⚠️ No Sheet ID configured, using fallback data');
       setMenu(fallbackMenu);
       setIsLoading(false);
       return;
@@ -38,12 +38,12 @@ export function useWeeklyMenu() {
     try {
       setIsLoading(true);
       setError(null);
-      console.log('⏳ Inizio caricamento menu...');
+      if (isDev) console.log('⏳ Loading menu...');
       const data = await fetchMenuFromSheets(sheetId);
-      console.log('✅ Menu caricato e impostato');
+      if (isDev) console.log('✅ Menu loaded and set');
       setMenu(data);
     } catch (err) {
-      console.error('❌ Fallito caricamento da Google Sheets, uso fallback:', err);
+      if (isDev) console.error('❌ Failed to load from Google Sheets, using fallback:', err);
       setError('Failed to load latest menu');
       setMenu(fallbackMenu);
     } finally {
