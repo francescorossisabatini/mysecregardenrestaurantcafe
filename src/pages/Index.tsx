@@ -8,50 +8,28 @@ import { InstagramCTA } from "@/components/InstagramCTA";
 import { HomeClosing } from "@/components/HomeClosing";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
-import { Preloader } from "@/components/Preloader";
 
 const Index = () => {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
-    const preloaderShown = sessionStorage.getItem("preloader_shown");
+    const timer = setTimeout(() => {
+      setShowNavbar(true);
+    }, 2000);
+
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setShowNavbar(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     
-    if (!preloaderShown) {
-      const timer = setTimeout(() => {
-        setShowNavbar(true);
-      }, 6500);
-      
-      const handleScroll = () => {
-        if (window.scrollY > 10) {
-          setShowNavbar(true);
-        }
-      };
-
-      window.addEventListener('scroll', handleScroll);
-      
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('scroll', handleScroll);
-      };
-    } else {
-      const timer = setTimeout(() => {
-        setShowNavbar(true);
-      }, 2000);
-
-      const handleScroll = () => {
-        if (window.scrollY > 10) {
-          setShowNavbar(true);
-        }
-      };
-
-      window.addEventListener('scroll', handleScroll);
-      
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -73,7 +51,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Preloader />
       
       <div className={`transition-opacity duration-[2000ms] ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
