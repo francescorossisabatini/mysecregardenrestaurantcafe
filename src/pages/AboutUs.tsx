@@ -126,6 +126,42 @@ const AboutUs = () => {
                 ? "Gemüse aus der Region. Kräuter aus dem Garten. Das, was gerade wächst." 
                 : "Vegetables from the region. Herbs from the garden. What grows right now."}
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Lo-fi Visual Placeholder - Silent pause */}
+      <div className="container mx-auto px-4 py-12 md:py-20">
+        <div className="max-w-3xl mx-auto">
+          <div 
+            className="aspect-[3/2] rounded-xl overflow-hidden"
+            style={{
+              background: 'linear-gradient(145deg, hsl(var(--secondary)) 0%, hsl(var(--muted)) 50%, hsl(var(--secondary)/0.8) 100%)',
+              position: 'relative',
+            }}
+          >
+            {/* Subtle grain texture overlay */}
+            <div 
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+              }}
+            />
+            {/* Soft warm wash */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: 'radial-gradient(ellipse at 30% 40%, hsl(var(--primary)/0.05) 0%, transparent 60%)',
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Product Philosophy continued */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto space-y-12">
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
                 ? "Wir kochen ohne Eile. Mit Aufmerksamkeit. Mit Freude." 
