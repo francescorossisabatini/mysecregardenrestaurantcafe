@@ -112,6 +112,42 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Product Philosophy - Micro-blocks (addition, not replacement) */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto space-y-12">
+            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+              {language === "de" 
+                ? "Was wir kochen, entsteht am Morgen." 
+                : "What we cook begins in the morning."}
+            </p>
+            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+              {language === "de" 
+                ? "Gemüse aus der Region. Kräuter aus dem Garten. Das, was gerade wächst." 
+                : "Vegetables from the region. Herbs from the garden. What grows right now."}
+            </p>
+            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+              {language === "de" 
+                ? "Wir kochen ohne Eile. Mit Aufmerksamkeit. Mit Freude." 
+                : "We cook without haste. With attention. With joy."}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Bridge to Inspiration */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center space-y-6">
+            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+              {language === "de" 
+                ? "Essen, das nährt. Nicht nur den Körper." 
+                : "Food that nourishes. Not just the body."}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Link to Inspiration - Minimal */}
       <section className="py-24 md:py-32">
         <div className="container mx-auto px-4">
