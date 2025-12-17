@@ -12,7 +12,7 @@ export const InstagramCTA = () => {
     <section className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-6">
         <a
-          href="https://www.instagram.com/mysecretgarden.wien/"
+          href="https://www.instagram.com/mysecretgardencafewien/"
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-4 group"
@@ -24,7 +24,7 @@ export const InstagramCTA = () => {
           <div className="flex items-center gap-3 text-muted-foreground/60 group-hover:text-foreground/70 transition-colors duration-500">
             <Instagram className="w-4 h-4" strokeWidth={1.5} />
             <span className="text-xs md:text-sm tracking-widest">
-              @mysecretgarden.wien
+              @mysecretgardencafewien
             </span>
           </div>
         </a>
