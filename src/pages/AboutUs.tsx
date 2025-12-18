@@ -263,6 +263,17 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Closing thought */}
+      <div className="pt-12 pb-6">
+        <div className="container mx-auto px-4">
+          <p className="font-lora text-base text-foreground/70 text-center">
+            {language === "de" 
+              ? "Einige dieser Dinge leben hier, bei uns." 
+              : "Some of these things live here, with us."}
+          </p>
+        </div>
+      </div>
+
       {/* Link to Inspiration - Minimal */}
       <section className="py-24 md:py-32">
         <div className="container mx-auto px-4">
