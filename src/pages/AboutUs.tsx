@@ -184,6 +184,85 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Vetrina / Ideas - Internal Chapter */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {/* Intro text */}
+            <div className="max-w-2xl mx-auto mb-16 md:mb-20">
+              <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed text-center">
+                {language === "de" 
+                  ? "Ein paar Dinge, die wir gerne teilen." 
+                  : "A few things we like to share."}
+              </p>
+            </div>
+            
+            {/* Lo-fi Items Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+              {/* Item 1 */}
+              <div className="space-y-4">
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--muted)/0.8) 100%)',
+                  }}
+                >
+                  <div 
+                    className="w-full h-full opacity-[0.04]"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    }}
+                  />
+                </div>
+                <p className="font-lora text-sm text-foreground/60 text-center">
+                  {language === "de" ? "Hausgemachte Marmeladen" : "Homemade jams"}
+                </p>
+              </div>
+              
+              {/* Item 2 */}
+              <div className="space-y-4">
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(145deg, hsl(var(--muted)) 0%, hsl(var(--secondary)/0.9) 100%)',
+                  }}
+                >
+                  <div 
+                    className="w-full h-full opacity-[0.04]"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    }}
+                  />
+                </div>
+                <p className="font-lora text-sm text-foreground/60 text-center">
+                  {language === "de" ? "Kräutersalze aus dem Garten" : "Herb salts from the garden"}
+                </p>
+              </div>
+              
+              {/* Item 3 */}
+              <div className="space-y-4">
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(170deg, hsl(var(--secondary)/0.9) 0%, hsl(var(--muted)/0.7) 100%)',
+                  }}
+                >
+                  <div 
+                    className="w-full h-full opacity-[0.04]"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    }}
+                  />
+                </div>
+                <p className="font-lora text-sm text-foreground/60 text-center">
+                  {language === "de" ? "Kleine Geschenke" : "Small gifts"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Link to Inspiration - Minimal */}
       <section className="py-24 md:py-32">
         <div className="container mx-auto px-4">
