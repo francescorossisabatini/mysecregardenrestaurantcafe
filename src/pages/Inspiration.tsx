@@ -35,22 +35,33 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Quote - Central */}
+      {/* BLOCCO 1 - Introduction (Context, not poetry) */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+              {language === "de" 
+                ? "Sri Chinmoy war ein spiritueller Lehrer aus Indien. Seine Schüler gründeten Orte auf der ganzen Welt, an denen das tägliche Leben zu einer Form der Meditation wurde." 
+                : "Sri Chinmoy was a spiritual teacher from India. His students founded places around the world where daily life became a form of meditation."}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* BLOCCO 2 - Central Manifesto (isolated, breathing) */}
+      <section className="py-20 md:py-32">
+        <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="font-caveat text-2xl md:text-3xl text-accent leading-relaxed">
+            <p className="font-caveat text-2xl md:text-4xl text-accent leading-relaxed">
               {language === "de" ? (
                 <>
-                  Nein, es ist nicht möglich,<br />
-                  dass ein innerer Ruf<br />
-                  unerhört bleibt.
+                  Kochen ist Gebet.<br />
+                  Essen ist Dankbarkeit.
                 </>
               ) : (
                 <>
-                  No, it is not possible<br />
-                  For any inner cry<br />
-                  To remain unheard.
+                  Cooking is prayer.<br />
+                  Eating is gratitude.
                 </>
               )}
             </p>
@@ -58,56 +69,24 @@ const Inspiration = () => {
         </div>
       </section>
 
-      {/* Brief Context */}
+      {/* BLOCCO 3 - Connection to the kitchen (narrative, compact) */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto space-y-8">
-            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
+          <div className="max-w-2xl mx-auto">
+            <p className="font-lora text-base md:text-lg text-foreground/70 leading-relaxed">
               {language === "de" 
-                ? "Sri Chinmoy war ein spiritueller Lehrer aus Indien." 
-                : "Sri Chinmoy was a spiritual teacher from India."}
-            </p>
-            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
-              {language === "de" 
-                ? "Seine Schüler gründeten Restaurants auf der ganzen Welt." 
-                : "His students founded restaurants around the world."}
-            </p>
-            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
-              {language === "de" 
-                ? "Orte, an denen Essen zur Meditation wird." 
-                : "Places where food becomes meditation."}
+                ? "Diese Haltung prägt unsere Küche. Einfachheit, Sorgfalt und Stille begleiten, wie wir kochen und wie wir servieren." 
+                : "This attitude shapes our kitchen. Simplicity, care and stillness guide how we cook and how we serve."}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Second Quote */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      {/* Visual pause - soft gradient block */}
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center space-y-6">
-            <p className="font-caveat text-xl md:text-2xl text-primary leading-relaxed">
-              {language === "de" 
-                ? "Kochen ist Gebet. Essen ist Dankbarkeit." 
-                : "Cooking is prayer. Eating is gratitude."}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* The Essence */}
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto space-y-8">
-            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
-              {language === "de" 
-                ? "Diese Haltung prägt unsere Küche." 
-                : "This attitude shapes our kitchen."}
-            </p>
-            <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
-              {language === "de" 
-                ? "Einfachheit. Sorgfalt. Stille." 
-                : "Simplicity. Care. Stillness."}
-            </p>
+          <div className="max-w-md mx-auto">
+            <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-muted/40 via-muted/20 to-transparent" />
           </div>
         </div>
       </section>
