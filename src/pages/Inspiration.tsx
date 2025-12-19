@@ -49,7 +49,46 @@ const poems = [
   {
     en: "No, it is not possible\nFor any inner cry\nTo remain unheard.",
     de: "Nein, es ist nicht möglich,\ndass ein innerer Ruf\nunerhört bleibt."
+  },
+  {
+    en: "Begin.\nTo arrive at the destination,\nThere is only one way:\nBegin.",
+    de: "Beginne.\nUm das Ziel zu erreichen,\ngibt es nur einen Weg:\nBeginne."
+  },
+  {
+    en: "All that you need\nIs definitely within you.",
+    de: "Alles, was du brauchst,\nist bereits in dir."
+  },
+  {
+    en: "Love is something\nThat never cared to learn\nHow to judge anybody.",
+    de: "Liebe ist etwas,\ndas nie gelernt hat,\njemanden zu beurteilen."
+  },
+  {
+    en: "Enrich the lives of others.\nLo, your heart has become\nInfinitely rich.",
+    de: "Bereichere das Leben anderer.\nSiehe, dein Herz ist\nunendlich reich geworden."
+  },
+  {
+    en: "Meditation means\nConversation with silence.",
+    de: "Meditation bedeutet\nGespräch mit der Stille."
+  },
+  {
+    en: "Truth does not force us.\nTruth does not beg us.\nTruth just inspires us.",
+    de: "Die Wahrheit zwingt uns nicht.\nDie Wahrheit bittet uns nicht.\nDie Wahrheit inspiriert uns einfach."
+  },
+  {
+    en: "The beauty of self-giving\nEventually grows into\nThe fragrance of God-becoming.",
+    de: "Die Schönheit des Sich-Hingebens\nwächst schließlich\nzum Duft des Gott-Werdens."
+  },
+  {
+    en: "A happy life\nIs the clear indication\nOf a tamed mind\nAnd disciplined thoughts.",
+    de: "Ein glückliches Leben\nist das klare Zeichen\neines gezähmten Geistes\nund disziplinierter Gedanken."
   }
+];
+
+const artworks = [
+  { src: sriChinmoyBirds, alt: "Soul-Birds", title: "Soul-Birds" },
+  { src: sriChinmoyFlowers, alt: "Flowers", title: "Blumen" },
+  { src: sriChinmoyWaves, alt: "Waves", title: "Wellen" },
+  { src: sriChinmoyAbstract, alt: "Abstract", title: "Abstrakt" },
 ];
 
 const Inspiration = () => {
@@ -126,20 +165,41 @@ const Inspiration = () => {
         </div>
       </section>
 
-      {/* Image Gallery Row */}
-      <section className="py-8 md:py-12 overflow-hidden">
-        <div className="flex gap-4 md:gap-6 px-4 md:px-8">
-          <div className="flex-shrink-0 w-64 md:w-80 aspect-square rounded-2xl overflow-hidden">
-            <img src={sriChinmoyBirds} alt="Sri Chinmoy art - birds" className="w-full h-full object-cover" />
+      {/* Jharna-Kala Art Gallery */}
+      <section className="py-8 md:py-12">
+        <div className="container mx-auto px-4 mb-4">
+          <p className="font-caveat text-xl md:text-2xl text-accent text-center">
+            {language === "de" ? "Jharna-Kala – Kunst aus der Quelle" : "Jharna-Kala – Art from the Source"}
+          </p>
+        </div>
+        
+        {/* Mobile: scrollable with affordance, Desktop: static row */}
+        <div className="relative">
+          {/* Mobile scroll hint gradient */}
+          <div className="md:hidden absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+          
+          <div className="flex gap-4 md:gap-6 px-4 md:px-8 overflow-x-auto md:overflow-visible scrollbar-hide snap-x snap-mandatory md:snap-none pb-4 md:pb-0 -mx-4 md:mx-0 pl-4 md:pl-8">
+            {artworks.map((art, index) => (
+              <div 
+                key={index}
+                className="flex-shrink-0 w-56 md:w-72 snap-center md:snap-align-none"
+              >
+                <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
+                  <img 
+                    src={art.src} 
+                    alt={art.alt} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="flex-shrink-0 w-64 md:w-80 aspect-square rounded-2xl overflow-hidden">
-            <img src={sriChinmoyFlowers} alt="Sri Chinmoy art - flowers" className="w-full h-full object-cover" />
-          </div>
-          <div className="flex-shrink-0 w-64 md:w-80 aspect-square rounded-2xl overflow-hidden">
-            <img src={sriChinmoyWaves} alt="Sri Chinmoy art - waves" className="w-full h-full object-cover" />
-          </div>
-          <div className="flex-shrink-0 w-64 md:w-80 aspect-square rounded-2xl overflow-hidden">
-            <img src={sriChinmoyAbstract} alt="Sri Chinmoy art - abstract" className="w-full h-full object-cover" />
+          
+          {/* Mobile scroll indicator dots */}
+          <div className="md:hidden flex justify-center gap-1.5 mt-4">
+            {artworks.map((_, index) => (
+              <div key={index} className="w-1.5 h-1.5 rounded-full bg-foreground/20" />
+            ))}
           </div>
         </div>
       </section>
@@ -193,33 +253,60 @@ const Inspiration = () => {
             {language === "de" ? "Seine Worte" : "His Words"}
           </h2>
           
-          <div className="max-w-2xl mx-auto relative">
+          {/* Mobile: horizontal scroll, Desktop: single card with arrows */}
+          <div className="md:hidden relative">
+            {/* Scroll hint gradient */}
+            <div className="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4">
+              {poems.map((poem, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-[85vw] snap-center"
+                >
+                  <div className="bg-background/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg min-h-[180px] flex items-center justify-center">
+                    <p className="font-lora text-base text-foreground/90 text-center whitespace-pre-line leading-relaxed italic">
+                      "{language === "de" ? poem.de : poem.en}"
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Mobile scroll indicator */}
+            <p className="text-center text-xs text-foreground/40 mt-2">
+              {language === "de" ? "← Wischen zum Blättern →" : "← Swipe to browse →"}
+            </p>
+          </div>
+          
+          {/* Desktop: single card with arrows */}
+          <div className="hidden md:block max-w-2xl mx-auto relative">
             <div 
               ref={carouselRef}
-              className="bg-background/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg min-h-[200px] flex items-center justify-center"
+              className="bg-background/80 backdrop-blur-sm rounded-3xl p-12 shadow-lg min-h-[200px] flex items-center justify-center transition-opacity duration-300"
             >
-              <p className="font-lora text-lg md:text-xl text-foreground/90 text-center whitespace-pre-line leading-relaxed italic">
+              <p className="font-lora text-xl text-foreground/90 text-center whitespace-pre-line leading-relaxed italic">
                 "{language === "de" ? poems[currentPoem].de : poems[currentPoem].en}"
               </p>
             </div>
             
-            {/* Navigation arrows */}
+            {/* Navigation arrows - desktop only */}
             <button 
               onClick={prevPoem}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 md:w-12 md:h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
               aria-label="Previous poem"
             >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+              <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={nextPoem}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 md:w-12 md:h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
               aria-label="Next poem"
             >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+              <ChevronRight className="w-6 h-6" />
             </button>
             
-            {/* Dots indicator */}
+            {/* Dots indicator - desktop */}
             <div className="flex justify-center gap-2 mt-6">
               {poems.map((_, index) => (
                 <button
