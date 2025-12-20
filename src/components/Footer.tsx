@@ -1,4 +1,4 @@
-import { Heart, ExternalLink } from "lucide-react";
+import { Heart, Instagram, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -24,6 +24,28 @@ export const Footer = () => {
           <p className="text-sm text-primary-foreground/60 font-work">
             {language === "de" ? "Mo–Sa 11:00–19:00" : "Mon–Sat 11:00–19:00"}
           </p>
+          
+          {/* Social Icons */}
+          <div className="flex items-center justify-center gap-4">
+            <a 
+              href="https://www.instagram.com/mysecretgarden_vienna/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/70 hover:bg-primary-foreground/20 hover:text-primary-foreground transition-all"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a 
+              href="https://www.facebook.com/secretgardencafewien"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center text-primary-foreground/70 hover:bg-primary-foreground/20 hover:text-primary-foreground transition-all"
+              aria-label="Facebook"
+            >
+              <Facebook className="w-4 h-4" />
+            </a>
+          </div>
           
           {/* Links */}
           <div className="flex items-center justify-center gap-6 text-sm font-work">
