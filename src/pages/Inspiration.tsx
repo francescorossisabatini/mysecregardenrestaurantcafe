@@ -279,6 +279,13 @@ const Inspiration = () => {
             </p>
           </div>
           
+          {/* Gentle hint about coffee cards */}
+          <p className="text-center text-sm text-foreground/50 mt-8 font-lora italic max-w-md mx-auto">
+            {language === "de" 
+              ? "Übrigens: Bei uns erhältst du mit jedem Kaffee eine Karte mit einem seiner Gedichte."
+              : "By the way: with every coffee, you receive a card with one of his poems."}
+          </p>
+          
           {/* Desktop: single card with arrows */}
           <div className="hidden md:block max-w-2xl mx-auto relative">
             <div 
