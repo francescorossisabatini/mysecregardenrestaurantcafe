@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
+import { CookieConsent } from "@/components/CookieConsent";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
@@ -32,6 +33,7 @@ function AppContent() {
         <Route path="/impressum" element={<Impressum />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieConsent />
     </BrowserRouter>
   );
 }
