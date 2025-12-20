@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { FloatingCallButton } from "@/components/FloatingCallButton";
 import gardenReal from "@/assets/garden-real.jpg";
 import interiorReal from "@/assets/interior-real.jpg";
 import { Link } from "react-router-dom";
@@ -165,6 +166,8 @@ const AboutUs = () => {
       </section>
 
       <Footer />
+      
+      <FloatingCallButton />
     </div>
   );
 };
