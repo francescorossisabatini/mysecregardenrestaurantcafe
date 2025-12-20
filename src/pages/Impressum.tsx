@@ -52,6 +52,19 @@ const Impressum = () => {
             </div>
           </section>
 
+          {/* Editorial Line (Blattlinie) */}
+          <section className="space-y-4">
+            <h2 className="font-caveat text-3xl text-primary">
+              {language === "de" ? "Blattlinie" : "Editorial Line"}
+            </h2>
+            <p>
+              {language === "de" 
+                ? "Diese Website dient der Information über unser vegetarisches Restaurant My Secret Garden in Wien. Wir berichten über unser kulinarisches Angebot, unsere Philosophie der achtsamen Küche und die spirituelle Inspiration, die unserer Arbeit zugrunde liegt. Die Inhalte sind unabhängig und dienen keiner politischen oder kommerziellen Einflussnahme Dritter."
+                : "This website serves to inform about our vegetarian restaurant My Secret Garden in Vienna. We report on our culinary offerings, our philosophy of mindful cooking, and the spiritual inspiration underlying our work. The content is independent and serves no political or commercial influence from third parties."
+              }
+            </p>
+          </section>
+
           {/* Legal Information */}
           <section className="space-y-4">
             <h2 className="font-caveat text-3xl text-primary">
@@ -65,13 +78,42 @@ const Impressum = () => {
             </p>
           </section>
 
+          {/* Online Dispute Resolution */}
+          <section className="space-y-4">
+            <h2 className="font-caveat text-3xl text-primary">
+              {language === "de" ? "Online-Streitbeilegung" : "Online Dispute Resolution"}
+            </h2>
+            <p>
+              {language === "de" 
+                ? "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:"
+                : "The European Commission provides a platform for online dispute resolution (ODR):"
+              }
+            </p>
+            <p>
+              <a 
+                href="https://ec.europa.eu/consumers/odr/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                https://ec.europa.eu/consumers/odr/
+              </a>
+            </p>
+            <p>
+              {language === "de" 
+                ? "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen."
+                : "We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+              }
+            </p>
+          </section>
+
         </div>
         
         <div className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
             {language === "de" 
-              ? "Stand: Dezember 2024"
-              : "Last updated: December 2024"
+              ? "Stand: Dezember 2025"
+              : "Last updated: December 2025"
             }
           </p>
         </div>
