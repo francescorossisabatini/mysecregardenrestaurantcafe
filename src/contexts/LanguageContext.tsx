@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type Language = "de" | "en";
 
@@ -227,8 +227,35 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const LANGUAGE_KEY = "preferred_language";
+
+const getInitialLanguage = (): Language => {
+  // Check localStorage first (user's explicit choice)
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem(LANGUAGE_KEY);
+    if (stored === "de" || stored === "en") {
+      return stored;
+    }
+    
+    // Detect browser language
+    const browserLang = navigator.language || (navigator as any).userLanguage || "";
+    const langCode = browserLang.split("-")[0].toLowerCase();
+    
+    // Return English only if browser is English, otherwise default to German
+    if (langCode === "en") {
+      return "en";
+    }
+  }
+  return "de";
+};
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>("de");
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+
+  // Save language preference to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem(LANGUAGE_KEY, language);
+  }, [language]);
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.de] || key;
