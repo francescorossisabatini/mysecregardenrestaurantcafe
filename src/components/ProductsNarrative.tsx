@@ -26,18 +26,18 @@ export const ProductsNarrative = () => {
           </h2>
         </div>
 
-        {/* Grid Layout - Clean */}
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        {/* Grid Layout - Responsive */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Content */}
-          <div className="space-y-10">
-            <p className="font-lora text-xl leading-relaxed text-foreground/90">
+          <div className="space-y-8 lg:space-y-10 order-2 lg:order-1">
+            <p className="font-lora text-lg lg:text-xl leading-relaxed text-foreground/90">
               {language === "de"
                 ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
                 : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
             </p>
 
-            {/* Key Points - Simple list */}
-            <div className="space-y-5">
+            {/* Key Points - Responsive grid on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-5">
               {[
                 {
                   de: "Bio & regionale Zutaten",
@@ -56,9 +56,9 @@ export const ProductsNarrative = () => {
                   en: "Gluten-free options"
                 }
               ].map((point, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <Leaf className="w-7 h-7 text-accent flex-shrink-0" />
-                  <span className="font-lora text-xl text-foreground/90">
+                <div key={index} className="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 rounded-xl bg-background/50 border border-border/30">
+                  <Leaf className="w-5 h-5 lg:w-6 lg:h-6 text-accent flex-shrink-0" />
+                  <span className="font-lora text-base lg:text-lg text-foreground/90">
                     {language === "de" ? point.de : point.en}
                   </span>
                 </div>
@@ -66,9 +66,9 @@ export const ProductsNarrative = () => {
             </div>
           </div>
 
-          {/* Image */}
-          <div className="relative">
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
+          {/* Image - Responsive sizing */}
+          <div className="relative order-1 lg:order-2">
+            <div className="aspect-[4/3] sm:aspect-[3/2] lg:aspect-[4/5] overflow-hidden rounded-2xl shadow-xl">
               <img
                 src={koreanBowl}
                 alt="Fresh Korean Bowl at Secret Garden"
