@@ -241,12 +241,12 @@ const getInitialLanguage = (): Language => {
     const browserLang = navigator.language || (navigator as any).userLanguage || "";
     const langCode = browserLang.split("-")[0].toLowerCase();
     
-    // Return English only if browser is English, otherwise default to German
-    if (langCode === "en") {
-      return "en";
+    // Return German only if browser is German, otherwise default to English
+    if (langCode === "de") {
+      return "de";
     }
   }
-  return "de";
+  return "en";
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
