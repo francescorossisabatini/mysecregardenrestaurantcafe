@@ -214,10 +214,68 @@ const Privacy = () => {
             </p>
           </section>
 
-          {/* Section 4 - Social Media */}
+          {/* Section 4 - Google Maps */}
           <section className="space-y-4">
             <h2 className="font-caveat text-3xl text-primary">
-              {isGerman ? "4. Datenschutzerklärung für unsere Social-Media-Auftritte" : "4. Privacy Policy for Our Social Media Presence"}
+              {isGerman ? "4. Google Maps" : "4. Google Maps"}
+            </h2>
+            <p>
+              {isGerman 
+                ? "Wir nutzen den Kartendienst Google Maps auf unserer Kontaktseite. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland."
+                : "We use the Google Maps mapping service on our contact page. The provider is Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland."
+              }
+            </p>
+            <p>
+              {isGerman 
+                ? "Beim Laden der Karte wird eine Verbindung zu den Servern von Google hergestellt. Dabei kann Ihre IP-Adresse an Google übermittelt werden. Wenn Sie in Ihrem Google-Konto eingeloggt sind, kann Google Ihr Surfverhalten Ihrem persönlichen Profil zuordnen."
+                : "When loading the map, a connection to Google's servers is established. Your IP address may be transmitted to Google. If you are logged into your Google account, Google can associate your browsing behavior with your personal profile."
+              }
+            </p>
+            <p>
+              {isGerman 
+                ? "Die Nutzung von Google Maps erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote und einer leichten Auffindbarkeit der von uns auf der Website angegebenen Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar."
+                : "The use of Google Maps is in the interest of an appealing presentation of our online offerings and easy findability of the locations indicated by us on the website. This represents a legitimate interest within the meaning of Art. 6 para. 1 lit. f GDPR."
+              }
+            </p>
+            <p>
+              {isGerman ? "Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: " : "For more information on how user data is handled, see Google's privacy policy: "}
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://policies.google.com/privacy</a>
+            </p>
+          </section>
+
+          {/* Section 5 - Google Analytics (prepared) */}
+          <section className="space-y-4">
+            <h2 className="font-caveat text-3xl text-primary">
+              {isGerman ? "5. Google Analytics" : "5. Google Analytics"}
+            </h2>
+            <p>
+              {isGerman 
+                ? "Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland."
+                : "This website uses features of the web analytics service Google Analytics. The provider is Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland."
+              }
+            </p>
+            <p>
+              {isGerman 
+                ? "Google Analytics ermöglicht es dem Websitebetreiber, das Verhalten der Websitebesucher zu analysieren. Hierbei erhält der Websitebetreiber verschiedene Nutzungsdaten, wie z. B. Seitenaufrufe, Verweildauer, verwendete Betriebssysteme und Herkunft des Nutzers."
+                : "Google Analytics enables the website operator to analyze the behavior of website visitors. The website operator receives various usage data, such as page views, session duration, operating systems used, and the origin of the user."
+              }
+            </p>
+            <p>
+              {isGerman 
+                ? "Die Nutzung dieses Analyse-Tools erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können Ihre Einwilligung jederzeit widerrufen."
+                : "The use of this analysis tool is based on Art. 6 para. 1 lit. a GDPR (consent). You can revoke your consent at any time."
+              }
+            </p>
+            <p>
+              {isGerman ? "Weitere Informationen finden Sie in der Datenschutzerklärung von Google: " : "For more information, see Google's privacy policy: "}
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://policies.google.com/privacy</a>
+            </p>
+          </section>
+
+          {/* Section 6 - Social Media */}
+          <section className="space-y-4">
+            <h2 className="font-caveat text-3xl text-primary">
+              {isGerman ? "6. Datenschutzerklärung für unsere Social-Media-Auftritte" : "6. Privacy Policy for Our Social Media Presence"}
             </h2>
             
             <h3 className="font-lora text-lg font-semibold text-foreground">
@@ -256,10 +314,10 @@ const Privacy = () => {
             </p>
           </section>
 
-          {/* Section 5 - Social Networks */}
+          {/* Section 7 - Social Networks Detail */}
           <section className="space-y-4">
             <h2 className="font-caveat text-3xl text-primary">
-              {isGerman ? "5. Soziale Netzwerke im Einzelnen" : "5. Social Networks in Detail"}
+              {isGerman ? "7. Soziale Netzwerke im Einzelnen" : "7. Social Networks in Detail"}
             </h2>
             
             <h3 className="font-lora text-lg font-semibold text-foreground">Facebook</h3>
@@ -287,10 +345,10 @@ const Privacy = () => {
             </p>
           </section>
 
-          {/* Section 6 */}
+          {/* Section 8 - Changes */}
           <section className="space-y-4">
             <h2 className="font-caveat text-3xl text-primary">
-              {isGerman ? "6. Änderung des Datenschutzes" : "6. Changes to Privacy Policy"}
+              {isGerman ? "8. Änderung des Datenschutzes" : "8. Changes to Privacy Policy"}
             </h2>
             <p>
               {isGerman 
@@ -305,8 +363,8 @@ const Privacy = () => {
         <div className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
             {isGerman 
-              ? "Stand: Dezember 2024"
-              : "Last updated: December 2024"
+              ? "Stand: Dezember 2025"
+              : "Last updated: December 2025"
             }
           </p>
         </div>
@@ -316,5 +374,6 @@ const Privacy = () => {
     </div>
   );
 };
+
 
 export default Privacy;
