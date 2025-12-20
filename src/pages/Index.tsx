@@ -8,6 +8,7 @@ import { InstagramCTA } from "@/components/InstagramCTA";
 import { HomeClosing } from "@/components/HomeClosing";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { FloatingCallButton } from "@/components/FloatingCallButton";
 
 const Index = () => {
   const location = useLocation();
@@ -74,6 +75,8 @@ const Index = () => {
       <HomeClosing />
       
       <Footer />
+      
+      <FloatingCallButton />
     </div>
   );
 };
