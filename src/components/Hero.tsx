@@ -130,8 +130,8 @@ export const Hero = () => {
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             {language === "de"
-              ? "Vegetarisches Café im Herzen von Wien"
-              : "Vegetarian Café in the Heart of Vienna"}
+              ? "Vegetarisches Café & Restaurant im Herzen von Wien"
+              : "Vegetarian Café & Restaurant in the Heart of Vienna"}
           </p>
 
           {/* CTA Button - single human call to action */}
