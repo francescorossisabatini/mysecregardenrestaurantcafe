@@ -1,7 +1,13 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu } from "@/data/klassikerData";
-import { getTodayHoliday, getHolidayForDayName, isSundayByName } from "@/data/holidaysData";
+import {
+  getTodayHoliday,
+  getHolidayForDate,
+  getHolidayForDayName,
+  getDateForMenuDay,
+  isSundayByName,
+} from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -256,10 +262,12 @@ export const MenuSection = () => {
                         {menu.period}
                       </p>
                       {menu.days.map((day, index) => {
-                        // Check if this day is a holiday or Sunday
-                        const dayHoliday = getHolidayForDayName(day.day.de);
-                        const isDaySunday = isSundayByName(day.day.de);
+                        // Prefer date-based matching using the menu period (so we can mark *next* week holidays correctly)
+                        const dayDate = getDateForMenuDay(menu.period, index);
+                        const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
+                        const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
                         const isDayClosed = dayHoliday || isDaySunday;
+
                         
                         return (
                           <div key={index} className="border-b border-border/30 pb-4 last:border-0">
