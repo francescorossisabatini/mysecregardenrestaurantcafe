@@ -3,7 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useState, useRef } from "react";
-import sriChinmoyImage from "@/assets/sri-chinmoy.jpg";
+import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
 import sriChinmoyWaves from "@/assets/sri-chinmoy-waves.jpg";
