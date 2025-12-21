@@ -92,7 +92,7 @@ export const MenuSection = () => {
                   </div>
                 ))}
               </div>
-            ) : todayMenu ? (
+            ) : !isSunday && todayMenu ? (
               <div className="space-y-4">
                 {/* Soup */}
                 {todayMenu.soup[language] && (
