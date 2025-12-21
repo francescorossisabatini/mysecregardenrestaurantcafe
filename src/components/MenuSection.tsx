@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu } from "@/data/klassikerData";
+import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -61,6 +62,12 @@ export const MenuSection = () => {
   // Check if it's Sunday (day 0)
   const isSunday = today.getDay() === 0;
   
+  // Check if today is a holiday
+  const todayHoliday = getTodayHoliday();
+  
+  // Determine if restaurant is closed (Sunday or holiday)
+  const isClosed = isSunday || todayHoliday !== null;
+  
   // Get Monday's menu for Sunday preview
   const mondayMenu = menu.days.find(day => day.day.de === "Montag");
 
@@ -92,7 +99,7 @@ export const MenuSection = () => {
                   </div>
                 ))}
               </div>
-            ) : !isSunday && todayMenu ? (
+            ) : !isClosed && todayMenu ? (
               <div className="space-y-4">
                 {/* Soup */}
                 {todayMenu.soup[language] && (
@@ -153,22 +160,31 @@ export const MenuSection = () => {
               </div>
             ) : (
               <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
-                {/* Sunday rest message */}
+                {/* Holiday or Sunday rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
-                    {language === "de" 
-                      ? "Sonntag — Tag der Ruhe" 
-                      : "Sunday — Day of Rest"}
+                    {todayHoliday 
+                      ? todayHoliday.name[language]
+                      : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
                   </p>
                   <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
-                    {language === "de" 
-                      ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
-                      : "We take time today for stillness and renewal. Tomorrow we open our doors again for you."}
+                    {todayHoliday 
+                      ? todayHoliday.message[language]
+                      : (language === "de" 
+                          ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
+                          : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
                   </p>
+                  {todayHoliday && (
+                    <p className="text-muted-foreground/70 font-work text-xs mt-2">
+                      {language === "de" 
+                        ? "Heute haben wir geschlossen." 
+                        : "We are closed today."}
+                    </p>
+                  )}
                 </div>
                 
-                {/* Monday preview */}
-                {isSunday && mondayMenu && (
+                {/* Monday preview - only on Sundays */}
+                {isSunday && !todayHoliday && mondayMenu && (
                   <div className="pt-4 border-t border-border/30">
                     <p className="text-xs uppercase tracking-wider text-muted-foreground font-work mb-4">
                       {language === "de" ? "Vorschau auf Montag" : "Preview of Monday"}
@@ -217,7 +233,7 @@ export const MenuSection = () => {
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-cormorant text-base md:text-lg italic">
-                    {isSunday 
+                    {isClosed 
                       ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
                       : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
                   </span>
