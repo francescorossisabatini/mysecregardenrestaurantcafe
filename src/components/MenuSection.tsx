@@ -217,7 +217,9 @@ export const MenuSection = () => {
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-cormorant text-base md:text-lg italic">
-                    {language === "de" ? "Ein Blick auf diese Woche" : "A look at this week"}
+                    {isSunday 
+                      ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
+                      : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
                   </span>
                   <ChevronDown 
                     className={`w-4 h-4 transition-transform duration-200 ${weeklyOpen ? "rotate-180" : ""}`} 
