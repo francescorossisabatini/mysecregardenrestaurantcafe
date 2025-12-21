@@ -44,11 +44,24 @@ export function getTodayHoliday(): Holiday | null {
   return holidays.find(h => h.date === todayString) || null;
 }
 
-// Helper function to get holiday for a specific date in the current week
-export function getHolidayForWeekday(dayIndex: number): Holiday | null {
-  // dayIndex: 0 = Monday, 1 = Tuesday, ... 5 = Saturday
+// Helper function to get holiday for a specific day name in the current week
+export function getHolidayForDayName(dayName: string): Holiday | null {
   const today = new Date();
   const currentDayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ...
+  
+  // Map day names to day offsets from Monday
+  const dayOffsets: { [key: string]: number } = {
+    "Montag": 0, "Monday": 0,
+    "Dienstag": 1, "Tuesday": 1,
+    "Mittwoch": 2, "Wednesday": 2,
+    "Donnerstag": 3, "Thursday": 3,
+    "Freitag": 4, "Friday": 4,
+    "Samstag": 5, "Saturday": 5,
+    "Sonntag": 6, "Sunday": 6,
+  };
+  
+  const dayOffset = dayOffsets[dayName];
+  if (dayOffset === undefined) return null;
   
   // Calculate the Monday of the current week
   const monday = new Date(today);
@@ -57,11 +70,16 @@ export function getHolidayForWeekday(dayIndex: number): Holiday | null {
   
   // Get the date for the requested day
   const targetDate = new Date(monday);
-  targetDate.setDate(monday.getDate() + dayIndex);
+  targetDate.setDate(monday.getDate() + dayOffset);
   
   const month = String(targetDate.getMonth() + 1).padStart(2, '0');
   const day = String(targetDate.getDate()).padStart(2, '0');
   const dateString = `${month}-${day}`;
   
   return holidays.find(h => h.date === dateString) || null;
+}
+
+// Check if a day name is Sunday
+export function isSundayByName(dayName: string): boolean {
+  return dayName === "Sonntag" || dayName === "Sunday";
 }
