@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu } from "@/data/klassikerData";
-import { getTodayHoliday } from "@/data/holidaysData";
+import { getTodayHoliday, getHolidayForWeekday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -255,51 +255,70 @@ export const MenuSection = () => {
                       <p className="text-xs text-muted-foreground text-center font-work mb-4">
                         {menu.period}
                       </p>
-                      {menu.days.map((day, index) => (
-                        <div key={index} className="border-b border-border/30 pb-4 last:border-0">
-                          <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
-                            {day.day[language]}
-                          </h4>
-                          <div className="space-y-2 text-sm font-work">
-                            {day.soup[language] && (
-                              <div className="flex justify-between items-start gap-2">
-                                <div className="flex-1">
-                                  <span className="text-muted-foreground text-xs">
-                                    {language === "de" ? "Suppe" : "Soup"}:
-                                  </span>
-                                  <p className="text-foreground/90">{day.soup[language]}</p>
-                                  <DietaryBadges text={day.soup[language]} language={language} />
-                                </div>
-                                <span className="text-accent text-xs font-medium shrink-0">5,90</span>
+                      {menu.days.map((day, index) => {
+                        // Check if this day is a holiday
+                        const dayHoliday = getHolidayForWeekday(index);
+                        
+                        return (
+                          <div key={index} className="border-b border-border/30 pb-4 last:border-0">
+                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
+                              {day.day[language]}
+                            </h4>
+                            
+                            {dayHoliday ? (
+                              // Show holiday message instead of food
+                              <div className="text-center py-3">
+                                <p className="font-cormorant text-base text-foreground/70 italic">
+                                  {dayHoliday.name[language]}
+                                </p>
+                                <p className="text-muted-foreground text-xs font-work mt-1">
+                                  {language === "de" ? "Geschlossen" : "Closed"}
+                                </p>
                               </div>
-                            )}
-                            {day.green[language] && (
-                              <div className="flex justify-between items-start gap-2">
-                                <div className="flex-1">
-                                  <span className="text-muted-foreground text-xs">
-                                    {language === "de" ? "Grün" : "Green"}:
-                                  </span>
-                                  <p className="text-foreground/90">{day.green[language]}</p>
-                                  <DietaryBadges text={day.green[language]} language={language} />
-                                </div>
-                                <span className="text-accent text-xs font-medium shrink-0">11,90</span>
-                              </div>
-                            )}
-                            {day.blue[language] && (
-                              <div className="flex justify-between items-start gap-2">
-                                <div className="flex-1">
-                                  <span className="text-muted-foreground text-xs">
-                                    {language === "de" ? "Blau" : "Blue"}:
-                                  </span>
-                                  <p className="text-foreground/90">{day.blue[language]}</p>
-                                  <DietaryBadges text={day.blue[language]} language={language} />
-                                </div>
-                                <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                            ) : (
+                              // Show normal menu
+                              <div className="space-y-2 text-sm font-work">
+                                {day.soup[language] && (
+                                  <div className="flex justify-between items-start gap-2">
+                                    <div className="flex-1">
+                                      <span className="text-muted-foreground text-xs">
+                                        {language === "de" ? "Suppe" : "Soup"}:
+                                      </span>
+                                      <p className="text-foreground/90">{day.soup[language]}</p>
+                                      <DietaryBadges text={day.soup[language]} language={language} />
+                                    </div>
+                                    <span className="text-accent text-xs font-medium shrink-0">5,90</span>
+                                  </div>
+                                )}
+                                {day.green[language] && (
+                                  <div className="flex justify-between items-start gap-2">
+                                    <div className="flex-1">
+                                      <span className="text-muted-foreground text-xs">
+                                        {language === "de" ? "Grün" : "Green"}:
+                                      </span>
+                                      <p className="text-foreground/90">{day.green[language]}</p>
+                                      <DietaryBadges text={day.green[language]} language={language} />
+                                    </div>
+                                    <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                                  </div>
+                                )}
+                                {day.blue[language] && (
+                                  <div className="flex justify-between items-start gap-2">
+                                    <div className="flex-1">
+                                      <span className="text-muted-foreground text-xs">
+                                        {language === "de" ? "Blau" : "Blue"}:
+                                      </span>
+                                      <p className="text-foreground/90">{day.blue[language]}</p>
+                                      <DietaryBadges text={day.blue[language]} language={language} />
+                                    </div>
+                                    <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </>
                   )}
                 </div>
