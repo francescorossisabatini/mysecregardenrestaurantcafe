@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu } from "@/data/klassikerData";
-import { getTodayHoliday, getHolidayForWeekday } from "@/data/holidaysData";
+import { getTodayHoliday, getHolidayForDayName, isSundayByName } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -256,8 +256,10 @@ export const MenuSection = () => {
                         {menu.period}
                       </p>
                       {menu.days.map((day, index) => {
-                        // Check if this day is a holiday
-                        const dayHoliday = getHolidayForWeekday(index);
+                        // Check if this day is a holiday or Sunday
+                        const dayHoliday = getHolidayForDayName(day.day.de);
+                        const isDaySunday = isSundayByName(day.day.de);
+                        const isDayClosed = dayHoliday || isDaySunday;
                         
                         return (
                           <div key={index} className="border-b border-border/30 pb-4 last:border-0">
@@ -265,11 +267,13 @@ export const MenuSection = () => {
                               {day.day[language]}
                             </h4>
                             
-                            {dayHoliday ? (
-                              // Show holiday message instead of food
+                            {isDayClosed ? (
+                              // Show holiday or Sunday message instead of food
                               <div className="text-center py-3">
                                 <p className="font-cormorant text-base text-foreground/70 italic">
-                                  {dayHoliday.name[language]}
+                                  {dayHoliday 
+                                    ? dayHoliday.name[language]
+                                    : (language === "de" ? "Tag der Ruhe" : "Day of Rest")}
                                 </p>
                                 <p className="text-muted-foreground text-xs font-work mt-1">
                                   {language === "de" ? "Geschlossen" : "Closed"}
