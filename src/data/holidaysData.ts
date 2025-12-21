@@ -9,14 +9,6 @@ interface Holiday {
 
 export const holidays: Holiday[] = [
   {
-    date: "12-21",
-    name: { de: "Wintersonntag", en: "Winter Sunday" },
-    message: { 
-      de: "Test - rimuovi questa festività dopo aver testato.", 
-      en: "Test - remove this holiday after testing." 
-    },
-  },
-  {
     date: "12-24",
     name: { de: "Heiligabend", en: "Christmas Eve" },
     message: { 
@@ -50,4 +42,26 @@ export function getTodayHoliday(): Holiday | null {
   const todayString = `${month}-${day}`;
   
   return holidays.find(h => h.date === todayString) || null;
+}
+
+// Helper function to get holiday for a specific date in the current week
+export function getHolidayForWeekday(dayIndex: number): Holiday | null {
+  // dayIndex: 0 = Monday, 1 = Tuesday, ... 5 = Saturday
+  const today = new Date();
+  const currentDayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ...
+  
+  // Calculate the Monday of the current week
+  const monday = new Date(today);
+  const daysFromMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+  monday.setDate(today.getDate() - daysFromMonday);
+  
+  // Get the date for the requested day
+  const targetDate = new Date(monday);
+  targetDate.setDate(monday.getDate() + dayIndex);
+  
+  const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const day = String(targetDate.getDate()).padStart(2, '0');
+  const dateString = `${month}-${day}`;
+  
+  return holidays.find(h => h.date === dateString) || null;
 }
