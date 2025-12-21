@@ -9,6 +9,14 @@ interface Holiday {
 
 export const holidays: Holiday[] = [
   {
+    date: "12-21",
+    name: { de: "Wintersonntag", en: "Winter Sunday" },
+    message: { 
+      de: "Test - rimuovi questa festività dopo aver testato.", 
+      en: "Test - remove this holiday after testing." 
+    },
+  },
+  {
     date: "12-24",
     name: { de: "Heiligabend", en: "Christmas Eve" },
     message: { 
