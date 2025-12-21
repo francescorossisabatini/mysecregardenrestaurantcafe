@@ -57,6 +57,12 @@ export const MenuSection = () => {
   
   // Find today's menu
   const todayMenu = menu.days.find(day => day.day[language] === todayName);
+  
+  // Check if it's Sunday (day 0)
+  const isSunday = today.getDay() === 0;
+  
+  // Get Monday's menu for Sunday preview
+  const mondayMenu = menu.days.find(day => day.day.de === "Montag");
 
   return (
     <section id="menu" className="py-16 md:py-24 bg-background">
@@ -146,12 +152,61 @@ export const MenuSection = () => {
                 )}
               </div>
             ) : (
-              <div className="bg-daily/50 rounded-xl p-6 text-center">
-                <p className="text-muted-foreground font-work text-sm">
-                  {language === "de" 
-                    ? "Heute ist Ruhetag. Wir freuen uns, dich bald wiederzusehen." 
-                    : "Today is a rest day. We look forward to seeing you soon."}
-                </p>
+              <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
+                {/* Sunday rest message */}
+                <div className="space-y-3">
+                  <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
+                    {language === "de" 
+                      ? "Sonntag — Tag der Ruhe" 
+                      : "Sunday — Day of Rest"}
+                  </p>
+                  <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
+                    {language === "de" 
+                      ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
+                      : "We take time today for stillness and renewal. Tomorrow we open our doors again for you."}
+                  </p>
+                </div>
+                
+                {/* Monday preview */}
+                {isSunday && mondayMenu && (
+                  <div className="pt-4 border-t border-border/30">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-work mb-4">
+                      {language === "de" ? "Vorschau auf Montag" : "Preview of Monday"}
+                    </p>
+                    <div className="space-y-3 text-left">
+                      {mondayMenu.soup[language] && (
+                        <div className="bg-background/50 rounded-lg p-3">
+                          <span className="text-xs text-accent font-work">
+                            {language === "de" ? "Suppe" : "Soup"}
+                          </span>
+                          <p className="text-foreground/70 font-work text-sm mt-1">
+                            {mondayMenu.soup[language]}
+                          </p>
+                        </div>
+                      )}
+                      {mondayMenu.green[language] && (
+                        <div className="bg-background/50 rounded-lg p-3">
+                          <span className="text-xs text-accent font-work">
+                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                          </span>
+                          <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
+                            {mondayMenu.green[language]}
+                          </p>
+                        </div>
+                      )}
+                      {mondayMenu.blue[language] && (
+                        <div className="bg-background/50 rounded-lg p-3">
+                          <span className="text-xs text-accent font-work">
+                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                          </span>
+                          <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
+                            {mondayMenu.blue[language]}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
