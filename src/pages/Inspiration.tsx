@@ -351,8 +351,8 @@ const Inspiration = () => {
             </p>
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
-                ? "My Secret Garden in Salzburg ist Teil dieser weltweiten Familie vegetarischer Restaurants, die Sri Chinmoys Geist der Hingabe weitertragen." 
-                : "My Secret Garden in Salzburg is part of this worldwide family of vegetarian restaurants that carry forward Sri Chinmoy's spirit of devotion."}
+                ? "My Secret Garden in Wien ist Teil dieser weltweiten Familie vegetarischer Restaurants, die Sri Chinmoys Geist der Hingabe weitertragen." 
+                : "My Secret Garden in Vienna is part of this worldwide family of vegetarian restaurants that carry forward Sri Chinmoy's spirit of devotion."}
             </p>
           </div>
         </div>
