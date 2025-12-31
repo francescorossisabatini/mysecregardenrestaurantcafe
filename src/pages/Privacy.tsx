@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
 
 const Privacy = () => {
   const { language } = useLanguage();
@@ -152,7 +153,7 @@ const Privacy = () => {
                   <p>{isGerman ? "Geschäftsführer" : "Managing Director"}: Ashru Andreas Reichel</p>
                   <p>Mariahilferstr. 45/6/48, 1060 {isGerman ? "Wien" : "Vienna"}</p>
                   <p className="mt-2">
-                    Tel.: <a href="tel:+4315862839" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">01/586 28 39</a>
+                    Tel.: <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">{SITE.phoneDisplay}</a>
                   </p>
                   <p>
                     E-Mail: <a href="mailto:reichel@purusha.at" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">reichel@purusha.at</a>

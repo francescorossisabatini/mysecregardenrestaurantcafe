@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
 
 const Impressum = () => {
   const { language } = useLanguage();
@@ -67,8 +68,8 @@ const Impressum = () => {
               <p>1060 {isGerman ? "Wien" : "Vienna"}, {isGerman ? "Österreich" : "Austria"}</p>
               <p className="pt-2">
                 <span className="font-medium">{isGerman ? "Telefon" : "Phone"}:</span>{" "}
-                <a href="tel:+4315862839" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
-                  01/586 28 39
+                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  {SITE.phoneDisplay}
                 </a>
               </p>
               <p>
@@ -97,8 +98,8 @@ const Impressum = () => {
               <p>1060 {isGerman ? "Wien" : "Vienna"}, {isGerman ? "Österreich" : "Austria"}</p>
               <p>
                 <span className="font-medium">{isGerman ? "Telefon" : "Phone"}:</span>{" "}
-                <a href="tel:+4315862839" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
-                  01/586 28 39
+                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                  {SITE.phoneDisplay}
                 </a>
               </p>
             </address>

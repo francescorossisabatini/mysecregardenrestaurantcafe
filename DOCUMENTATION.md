@@ -1508,7 +1508,22 @@ Privacy policy standard GDPR.
 
 ### 7.5 Impressum (`/impressum`)
 
-Informazioni legali richieste in Germania/Svizzera.
+Informazioni legali obbligatorie per l'Austria, conformi a:
+- **§5 E-Commerce Gesetz (ECG)**
+- **§14 Unternehmensgesetzbuch (UGB)**
+- **§63 Gewerbeordnung (GewO)**
+- **§25 Mediengesetz (MedienG)**
+
+Campi obbligatori implementati:
+- Ragione sociale (Purusha GmbH)
+- Geschäftsführer (Amministratore)
+- Indirizzo completo (1060 Wien)
+- Telefono (usa `SITE.phoneDisplay` / `SITE.phoneTel`)
+- E-Mail
+- UID-Nummer (Partita IVA austriaca)
+- Firmenbuchnummer (Registro imprese, Handelsgericht Wien)
+- Blattlinie (linea editoriale)
+- Link ODR (Online Dispute Resolution EU)
 
 ---
 
