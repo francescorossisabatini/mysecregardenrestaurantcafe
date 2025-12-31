@@ -1,11 +1,12 @@
 import { Phone } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export const FloatingCallButton = () => {
-  const { language } = useLanguage();
   const isMobile = useIsMobile();
+  const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -15,19 +16,18 @@ export const FloatingCallButton = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Check initial position
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Only show on mobile
   if (!isMobile) return null;
 
   const label = language === "de" ? "Anrufen" : "Call";
 
   return (
     <a
-      href="tel:+41442620818"
+      href={`tel:${SITE.phoneTel}`}
       className={`
         fixed bottom-6 right-4 z-50
         flex items-center gap-2
