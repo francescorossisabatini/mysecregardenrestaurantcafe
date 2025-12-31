@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
-import { fetchMenuFromSheets, clearMenuCache } from '@/services/googleSheetsService';
-import { weeklyMenu as fallbackMenu } from '@/data/menuData';
-import { GOOGLE_SHEETS_CONFIG } from '@/config/googleSheets';
-
-const isDev = import.meta.env.DEV;
+import { useCallback, useEffect, useRef, useState } from "react";
+import { fetchMenuFromSheets, clearMenuCache } from "@/services/googleSheetsService";
+import { weeklyMenu as fallbackMenu } from "@/data/menuData";
 
 interface MenuDay {
   day: { de: string; en: string };
@@ -24,49 +21,71 @@ export function useWeeklyMenu() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadMenu = async () => {
-    const sheetId = GOOGLE_SHEETS_CONFIG.menuSheetId;
-    
-    // If no sheet ID is configured, use fallback data
-    if (!sheetId) {
-      if (isDev) console.log('⚠️ No Sheet ID configured, using fallback data');
-      setMenu(fallbackMenu);
-      setIsLoading(false);
-      return;
-    }
+  // Fix: no refresh every 30s.
+  // Soft refresh on focus/online/visibility change, with minimum gap.
+  const SOFT_REFRESH_MIN_GAP = 10 * 60 * 1000; // 10 min
+  const HEARTBEAT_INTERVAL = 15 * 60 * 1000;   // 15 min (tab open long)
+  const lastSoftRefreshRef = useRef<number>(0);
 
-    try {
-      setIsLoading(true);
-      setError(null);
-      if (isDev) console.log('⏳ Loading menu...');
-      const data = await fetchMenuFromSheets(sheetId);
-      if (isDev) console.log('✅ Menu loaded and set');
-      setMenu(data);
-    } catch (err) {
-      if (isDev) console.error('❌ Failed to load from Google Sheets, using fallback:', err);
-      setError('Failed to load latest menu');
-      setMenu(fallbackMenu);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const loadMenu = useCallback(
+    async (opts?: { force?: boolean; silent?: boolean }) => {
+      const force = opts?.force ?? false;
+      const silent = opts?.silent ?? false;
+
+      try {
+        if (!silent) setIsLoading(true);
+        setError(null);
+
+        if (force) {
+          clearMenuCache(); // bypass local cache
+        }
+
+        const data = await fetchMenuFromSheets();
+        setMenu(data);
+      } catch (err) {
+        console.error("Failed to load menu:", err);
+        setError("Failed to load latest menu");
+        setMenu(fallbackMenu);
+      } finally {
+        if (!silent) setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  const softRefresh = useCallback(() => {
+    const now = Date.now();
+    if (now - lastSoftRefreshRef.current < SOFT_REFRESH_MIN_GAP) return;
+
+    // Soft refresh: does NOT clear cache -> avoids unnecessary calls
+    loadMenu({ silent: true });
+    lastSoftRefreshRef.current = now;
+  }, [loadMenu]);
 
   useEffect(() => {
     loadMenu();
+    lastSoftRefreshRef.current = Date.now();
 
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => {
-      clearMenuCache();
-      loadMenu();
-    }, 30 * 1000);
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") softRefresh();
+    };
 
-    return () => clearInterval(interval);
-  }, []);
+    window.addEventListener("focus", softRefresh);
+    window.addEventListener("online", softRefresh);
+    document.addEventListener("visibilitychange", onVisibility);
 
-  const refresh = () => {
-    clearMenuCache();
-    loadMenu();
-  };
+    const interval = setInterval(() => softRefresh(), HEARTBEAT_INTERVAL);
+
+    return () => {
+      window.removeEventListener("focus", softRefresh);
+      window.removeEventListener("online", softRefresh);
+      document.removeEventListener("visibilitychange", onVisibility);
+      clearInterval(interval);
+    };
+  }, [loadMenu, softRefresh]);
+
+  // Hard refresh (bypass cache)
+  const refresh = () => loadMenu({ force: true });
 
   return { menu, isLoading, error, refresh };
 }

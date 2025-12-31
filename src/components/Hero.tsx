@@ -1,14 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Phone, MapPin } from "lucide-react";
 
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
-// 3 curated images for consistency
 import minnesotaBowl from "@/assets/minnesota-bowl.jpg";
 import heroGarden from "@/assets/garden-real.jpg";
 import heroInterior from "@/assets/interior-real.jpg";
+
+import { SITE } from "@/config/site";
+import { getOpenStatus } from "@/lib/openStatus";
 
 const heroImages = [
   { src: minnesotaBowl, position: "center center", alt: "Piatto del giorno" },
@@ -16,33 +19,44 @@ const heroImages = [
   { src: heroInterior, position: "center 35%", alt: "Interni del ristorante" },
 ];
 
+function useMinuteNow() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+  return now;
+}
+
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [showTitle, setShowTitle] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
-  const { language } = useLanguage();
-  
+  const { language, t } = useLanguage();
 
-  // Embla carousel for swipe support
+  // A11y: respect prefers-reduced-motion (autoplay OFF)
+  const [reduceMotion, setReduceMotion] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduceMotion(!!mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+
+  // stopOnInteraction TRUE (better UX, doesn't "fight" the user)
+  const plugins = useMemo(() => {
+    if (reduceMotion) return [];
+    return [Autoplay({ delay: 7000, stopOnInteraction: true })];
+  }, [reduceMotion]);
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { 
-      loop: true,
-      skipSnaps: false,
-      // Enable drag for touch interactions
-      watchDrag: true,
-    },
-    [
-      Autoplay({ 
-        delay: 7000, 
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-      })
-    ]
+    { loop: true, watchDrag: true },
+    plugins
   );
 
-  // Sync embla with currentImage state
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setCurrentImage(emblaApi.selectedScrollSnap());
@@ -57,7 +71,6 @@ export const Hero = () => {
     };
   }, [emblaApi, onSelect]);
 
-  // Handle dot click
   const scrollToSlide = useCallback((index: number) => {
     if (emblaApi) {
       emblaApi.scrollTo(index);
@@ -65,7 +78,6 @@ export const Hero = () => {
   }, [emblaApi]);
 
   useEffect(() => {
-    // Gentle staggered fade-in - subtle delays, no blur effects
     const timer1 = setTimeout(() => setShowTitle(true), 600);
     const timer2 = setTimeout(() => setShowSubtitle(true), 1000);
     const timer3 = setTimeout(() => setShowButtons(true), 1400);
@@ -79,12 +91,9 @@ export const Hero = () => {
     };
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // Open/Closed chip in Vienna timezone
+  const now = useMinuteNow();
+  const status = getOpenStatus(SITE.openingHours, now);
 
   return (
     <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
@@ -110,22 +119,21 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Overlay for better text readability - stronger on mobile */}
+      {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
-      {/* Additional mobile overlay for better contrast */}
       <div className="absolute inset-0 bg-black/30 md:hidden" />
 
-      {/* Content - fixed on every slide */}
+      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full pointer-events-none">
         <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
-          {/* Restaurant name - gentle fade only */}
+          {/* Restaurant name */}
           <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-opacity duration-[1500ms] ease-out ${
             showTitle ? "opacity-100" : "opacity-0"
           }`}>
-            My Secret Garden
+            {SITE.name}
           </h1>
 
-          {/* Subtitle - gentle fade only */}
+          {/* Subtitle */}
           <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background/90 drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
@@ -134,22 +142,55 @@ export const Hero = () => {
               : "Vegetarian Café & Restaurant in the Heart of Vienna"}
           </p>
 
-          {/* CTA Button - single human call to action */}
-          <div className={`flex justify-center items-center pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          {/* Open/Closed chip - soft style */}
+          <div className={`flex justify-center items-center gap-2 transition-opacity duration-[1500ms] ease-out ${
+            showSubtitle ? "opacity-100" : "opacity-0"
+          }`}>
+            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
+              status.isOpen 
+                ? "bg-green-500/20 text-green-100 border border-green-400/30" 
+                : "bg-red-500/20 text-red-100 border border-red-400/30"
+            }`}>
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${status.isOpen ? "bg-green-400" : "bg-red-400"}`} />
+              {status.isOpen 
+                ? (language === "de" ? "Jetzt geöffnet" : "Open now")
+                : (language === "de" ? "Jetzt geschlossen" : "Closed now")
+              }
+            </span>
+            {status.isOpen && status.closesAt && (
+              <span className="text-xs text-background/70">
+                {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
+              </span>
+            )}
+          </div>
+
+          {/* CTA Buttons: Call (primary) + Directions (secondary) */}
+          <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
             <Button
               size="lg"
-              asChild
               className="bg-accent hover:bg-accent/90 text-accent-foreground font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
+              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
             >
-              <a href="tel:+4315970547">
-                {language === "de" ? "Anrufen" : "Call"}
+              <Phone className="w-4 h-4 mr-2" />
+              {language === "de" ? "Anrufen" : "Call Us"}
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
+              asChild
+            >
+              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
+                <MapPin className="w-4 h-4 mr-2" />
+                {language === "de" ? "Wegbeschreibung" : "Directions"}
               </a>
             </Button>
           </div>
 
-          {/* Carousel dots - gentle fade only */}
+          {/* Carousel dots with a11y */}
           <div className={`flex gap-3 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
@@ -157,12 +198,13 @@ export const Hero = () => {
               <button
                 key={index}
                 onClick={() => scrollToSlide(index)}
+                aria-label={language === "de" ? `Slide ${index + 1} anzeigen` : `Show slide ${index + 1}`}
+                aria-current={index === currentImage ? "true" : undefined}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   currentImage === index
                     ? "bg-background w-8 shadow-lg"
                     : "bg-background/60 hover:bg-background/80 w-2.5"
                 }`}
-                aria-label={`Vai alla slide ${index + 1}`}
               />
             ))}
           </div>
