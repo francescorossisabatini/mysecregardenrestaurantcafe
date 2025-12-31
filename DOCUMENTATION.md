@@ -79,7 +79,10 @@ src/
 ├── services/
 │   └── googleSheetsService.ts # Servizio fetch menu
 ├── config/
-│   └── googleSheets.ts       # Configurazione sheets
+│   ├── googleSheets.ts       # Configurazione sheets
+│   └── site.ts               # ✅ Configurazione centralizzata sito
+├── lib/
+│   └── openStatus.ts         # ✅ Helper stato aperto/chiuso
 └── integrations/
     └── supabase/
         ├── client.ts         # Client Supabase (auto-generato)
@@ -497,162 +500,111 @@ File: `supabase/functions/get-daily-menu/index.ts`
 ```typescript
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-// Rate limiting
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 60;
-const RATE_WINDOW = 60 * 1000; // 1 minuto
+// ✅ CORS origins - lista whitelist + controllo più sicuro
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:8080",
+  "http://localhost:3000",
+  "https://lovable.dev",
+  // Aggiungi dominio produzione quando noto, es:
+  // "https://mysecretgarden.at",
+];
+
+function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return true; // richieste server-to-server
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+
+  // ✅ Controllo sicuro: URL parsing + endsWith (blocca evil.lovable.app.evil.com)
+  try {
+    const { hostname } = new URL(origin);
+    if (hostname.endsWith(".lovable.app")) return true;
+    if (hostname.endsWith(".lovable.dev")) return true;
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+// ✅ Rate limiter con cleanup per evitare memory leak
+const rateLimitMap = new Map<string, { count: number; resetTime: number; lastSeen: number }>();
+const RATE_LIMIT_WINDOW_MS = 60000;
+const MAX_REQUESTS_PER_WINDOW = 60;
+
+// Anti-leak: pulizia periodica e cap mappa
+let lastRateCleanup = 0;
+const RATE_CLEANUP_INTERVAL = 10 * 60 * 1000; // ogni 10 min
+const RATE_ENTRY_TTL = 2 * RATE_LIMIT_WINDOW_MS;
+const RATE_MAP_MAX = 5000;
+
+function getClientIP(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  const real = req.headers.get("x-real-ip");
+  if (real) return real.trim();
+  return "unknown";
+}
+
+function cleanupRateLimitMap(now: number) {
+  if (now - lastRateCleanup < RATE_CLEANUP_INTERVAL) return;
+  lastRateCleanup = now;
+
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetTime + RATE_ENTRY_TTL || now - data.lastSeen > RATE_ENTRY_TTL) {
+      rateLimitMap.delete(ip);
+    }
+  }
+
+  if (rateLimitMap.size > RATE_MAP_MAX) {
+    const entries = [...rateLimitMap.entries()].sort((a, b) => a[1].lastSeen - b[1].lastSeen);
+    const toDrop = entries.length - RATE_MAP_MAX;
+    for (let i = 0; i < toDrop; i++) rateLimitMap.delete(entries[i][0]);
+  }
+}
 
 // Cache in memoria
 let menuCache: { data: any; timestamp: number } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minuti
 
-// CORS origins permessi
-const ALLOWED_ORIGINS = [
-  'http://localhost:5173',
-  'http://localhost:8080',
-  'https://lovable.dev',
-  'https://preview--',  // Preview URLs
-];
-
-function isOriginAllowed(origin: string | null): boolean {
-  if (!origin) return false;
-  return ALLOWED_ORIGINS.some(allowed => 
-    origin.startsWith(allowed) || origin.includes('.lovable.app')
-  );
-}
-
 // Sanitizzazione input
-function sanitizeText(text: string): string {
-  if (!text || typeof text !== 'string') return '';
+function sanitizeText(text: unknown, maxLength: number = 500): string {
+  if (typeof text !== 'string') return '';
   return text
-    .replace(/<[^>]*>/g, '')           // Rimuovi HTML
-    .replace(/javascript:/gi, '')       // Rimuovi JS
-    .replace(/on\w+=/gi, '')           // Rimuovi event handlers
-    .slice(0, 500)                      // Limite lunghezza
-    .trim();
+    .replace(/<[^>]*>/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+=/gi, '')
+    .trim()
+    .substring(0, maxLength);
 }
 
 serve(async (req) => {
-  const origin = req.headers.get('origin');
+  const origin = req.headers.get("origin");
   
-  // CORS headers
+  // ✅ Reject origini non permesse
+  if (!isOriginAllowed(origin)) {
+    console.warn("Origin not allowed:", origin);
+    return new Response(
+      JSON.stringify({ error: "Origin not allowed" }),
+      { status: 403, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   const corsHeaders = {
-    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin! : '',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    "Access-Control-Allow-Origin": origin ?? "*",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
   };
 
-  // Preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Rate limiting
-  const clientIP = req.headers.get('x-forwarded-for') || 'unknown';
+  // Rate limiting con cleanup
+  const clientIP = getClientIP(req);
   const now = Date.now();
-  const rateData = rateLimitMap.get(clientIP);
+  cleanupRateLimitMap(now);
   
-  if (rateData) {
-    if (now > rateData.resetTime) {
-      rateLimitMap.set(clientIP, { count: 1, resetTime: now + RATE_WINDOW });
-    } else if (rateData.count >= RATE_LIMIT) {
-      return new Response(
-        JSON.stringify({ error: 'Rate limit exceeded' }),
-        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    } else {
-      rateData.count++;
-    }
-  } else {
-    rateLimitMap.set(clientIP, { count: 1, resetTime: now + RATE_WINDOW });
-  }
-
-  try {
-    // Check cache
-    if (menuCache && (now - menuCache.timestamp) < CACHE_DURATION) {
-      return new Response(
-        JSON.stringify({ success: true, data: menuCache.data, cached: true }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Fetch da Google Sheets
-    const sheetId = Deno.env.get('GOOGLE_SHEET_ID');
-    if (!sheetId) throw new Error('GOOGLE_SHEET_ID not configured');
-
-    const sheetName = 'Wochenkarte';
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-
-    const response = await fetch(url);
-    const text = await response.text();
-    
-    // Parse risposta Google
-    const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?$/);
-    if (!jsonMatch) throw new Error('Invalid response format');
-    
-    const json = JSON.parse(jsonMatch[1]);
-    const rows = json.table.rows;
-
-    // Estrai periodo
-    const period = sanitizeText(rows[1]?.c?.[0]?.v || 'Menu Settimanale');
-
-    // Parse giorni (da riga 4)
-    const days = [];
-    for (let i = 4; i < rows.length && i < 10; i++) {
-      const row = rows[i]?.c;
-      if (!row || !row[0]?.v) continue;
-
-      days.push({
-        day: {
-          de: sanitizeText(row[0]?.v || ''),
-          en: translateDay(sanitizeText(row[0]?.v || ''))
-        },
-        soup: {
-          de: sanitizeText(row[1]?.v || ''),
-          en: sanitizeText(row[2]?.v || row[1]?.v || '')
-        },
-        green: {
-          de: sanitizeText(row[3]?.v || ''),
-          en: sanitizeText(row[4]?.v || row[3]?.v || '')
-        },
-        blue: {
-          de: sanitizeText(row[5]?.v || ''),
-          en: sanitizeText(row[6]?.v || row[5]?.v || '')
-        }
-      });
-    }
-
-    const menuData = { period, days };
-    
-    // Aggiorna cache
-    menuCache = { data: menuData, timestamp: now };
-
-    return new Response(
-      JSON.stringify({ success: true, data: menuData }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
-  } catch (error) {
-    console.error('Error:', error);
-    return new Response(
-      JSON.stringify({ success: false, error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-  }
+  // ... resto della logica (vedi codice completo nel repo)
 });
-
-function translateDay(german: string): string {
-  const translations: Record<string, string> = {
-    'Montag': 'Monday',
-    'Dienstag': 'Tuesday',
-    'Mittwoch': 'Wednesday',
-    'Donnerstag': 'Thursday',
-    'Freitag': 'Friday',
-    'Samstag': 'Saturday',
-    'Sonntag': 'Sunday'
-  };
-  return translations[german] || german;
-}
 ```
 
 ### 4.4 Servizio Frontend
@@ -725,46 +677,72 @@ export function clearMenuCache() {
 File: `src/hooks/useWeeklyMenu.ts`
 
 ```typescript
-import { useState, useEffect } from 'react';
-import { fetchMenuFromSheets, clearMenuCache } from '@/services/googleSheetsService';
-import { weeklyMenu as fallbackMenu } from '@/data/menuData';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { fetchMenuFromSheets, clearMenuCache } from "@/services/googleSheetsService";
+import { weeklyMenu as fallbackMenu } from "@/data/menuData";
 
 export function useWeeklyMenu() {
   const [menu, setMenu] = useState(fallbackMenu);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadMenu = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const data = await fetchMenuFromSheets();
-      setMenu(data);
-    } catch (err) {
-      console.error('Failed to load menu:', err);
-      setError('Failed to load latest menu');
-      setMenu(fallbackMenu);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // ✅ Soft refresh su focus/online/visibilità, NON ogni 30s
+  const SOFT_REFRESH_MIN_GAP = 10 * 60 * 1000; // 10 min
+  const HEARTBEAT_INTERVAL = 15 * 60 * 1000;   // 15 min
+  const lastSoftRefreshRef = useRef<number>(0);
+
+  const loadMenu = useCallback(
+    async (opts?: { force?: boolean; silent?: boolean }) => {
+      const force = opts?.force ?? false;
+      const silent = opts?.silent ?? false;
+
+      try {
+        if (!silent) setIsLoading(true);
+        setError(null);
+        if (force) clearMenuCache();
+        const data = await fetchMenuFromSheets();
+        setMenu(data);
+      } catch (err) {
+        console.error("Failed to load menu:", err);
+        setError("Failed to load latest menu");
+        setMenu(fallbackMenu);
+      } finally {
+        if (!silent) setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  const softRefresh = useCallback(() => {
+    const now = Date.now();
+    if (now - lastSoftRefreshRef.current < SOFT_REFRESH_MIN_GAP) return;
+    loadMenu({ silent: true });
+    lastSoftRefreshRef.current = now;
+  }, [loadMenu]);
 
   useEffect(() => {
     loadMenu();
+    lastSoftRefreshRef.current = Date.now();
 
-    // Auto-refresh ogni 30 secondi
-    const interval = setInterval(() => {
-      clearMenuCache();
-      loadMenu();
-    }, 30 * 1000);
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") softRefresh();
+    };
 
-    return () => clearInterval(interval);
-  }, []);
+    window.addEventListener("focus", softRefresh);
+    window.addEventListener("online", softRefresh);
+    document.addEventListener("visibilitychange", onVisibility);
 
-  const refresh = () => {
-    clearMenuCache();
-    loadMenu();
-  };
+    const interval = setInterval(() => softRefresh(), HEARTBEAT_INTERVAL);
+
+    return () => {
+      window.removeEventListener("focus", softRefresh);
+      window.removeEventListener("online", softRefresh);
+      document.removeEventListener("visibilitychange", onVisibility);
+      clearInterval(interval);
+    };
+  }, [loadMenu, softRefresh]);
+
+  const refresh = () => loadMenu({ force: true });
 
   return { menu, isLoading, error, refresh };
 }
@@ -981,102 +959,189 @@ const accordionTitle = isSundayToday
 
 ## 6. Componenti Principali
 
+### 6.0 Configurazione Centralizzata SITE
+
+File: `src/config/site.ts`
+
+```typescript
+import type { OpeningHours } from "@/lib/openStatus";
+
+export const SITE = {
+  name: "My Secret Garden",
+
+  // ✅ UNICO numero telefono (testo visibile)
+  phoneDisplay: "01 586 28 39",
+
+  // ✅ UNICO numero per tel: (formato internazionale)
+  phoneTel: "+4315862839",
+
+  // Indirizzo
+  addressShort: "Mariahilferstraße 45, Im Raimundhof – 1060 Wien",
+
+  // Google Maps link
+  mapsUrl: "https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/",
+
+  // Orari (Mo–Sa 11:00–19:00, So chiuso)
+  openingHours: {
+    mon: { open: "11:00", close: "19:00" },
+    tue: { open: "11:00", close: "19:00" },
+    wed: { open: "11:00", close: "19:00" },
+    thu: { open: "11:00", close: "19:00" },
+    fri: { open: "11:00", close: "19:00" },
+    sat: { open: "11:00", close: "19:00" },
+    sun: null,
+  } satisfies OpeningHours,
+} as const;
+```
+
+### 6.0.1 Helper Stato Aperto/Chiuso
+
+File: `src/lib/openStatus.ts`
+
+```typescript
+export type Slot = { open: string; close: string };
+export type OpeningHours = {
+  mon: Slot | null;
+  tue: Slot | null;
+  wed: Slot | null;
+  thu: Slot | null;
+  fri: Slot | null;
+  sat: Slot | null;
+  sun: Slot | null;
+};
+
+function toMinutes(hhmm: string): number {
+  const [hh, mm] = hhmm.split(":").map(Number);
+  return hh * 60 + mm;
+}
+
+function getViennaParts(date = new Date()): { weekday: string; minutes: number } {
+  const dtf = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Vienna",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const parts = dtf.formatToParts(date);
+  const weekday = parts.find((p) => p.type === "weekday")?.value ?? "Mon";
+  const hour = Number(parts.find((p) => p.type === "hour")?.value ?? "0");
+  const minute = Number(parts.find((p) => p.type === "minute")?.value ?? "0");
+
+  return { weekday, minutes: hour * 60 + minute };
+}
+
+function weekdayKey(weekdayShort: string): keyof OpeningHours {
+  const map: Record<string, keyof OpeningHours> = {
+    Mon: "mon", Tue: "tue", Wed: "wed", Thu: "thu",
+    Fri: "fri", Sat: "sat", Sun: "sun",
+  };
+  return map[weekdayShort] ?? "mon";
+}
+
+export function getOpenStatus(hours: OpeningHours, now = new Date()) {
+  const { weekday, minutes } = getViennaParts(now);
+  const key = weekdayKey(weekday);
+  const slot = hours[key];
+
+  if (!slot) {
+    return { isOpen: false, closesAt: null as string | null };
+  }
+
+  const openM = toMinutes(slot.open);
+  const closeM = toMinutes(slot.close);
+  const isOpen = minutes >= openM && minutes < closeM;
+
+  return {
+    isOpen,
+    closesAt: isOpen ? slot.close : null,
+  };
+}
+```
+
 ### 6.1 Hero
 
 File: `src/components/Hero.tsx`
 
 **Caratteristiche:**
 - Carousel Embla con 3 immagini
-- Autoplay su tutti i dispositivi
-- Overlay gradiente per leggibilità testo
-- Testo fisso sovrapposto (titolo, sottotitolo, CTA)
-- Indicatori dot in basso
-- Nessun pulsante "Tagesmenü" (rimosso per semplicità)
+- ✅ Autoplay rispetta `prefers-reduced-motion`
+- ✅ `stopOnInteraction: true` (non combatte l'utente)
+- ✅ Chip "Jetzt geöffnet" / "Jetzt geschlossen" (timezone Vienna)
+- ✅ CTA: Anrufen (primary) + Wegbeschreibung (secondary)
+- ✅ Dots con `aria-label` e `aria-current`
+- Usa `SITE` per telefono e mapsUrl
 
 ```tsx
-import { useEffect, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
-import { Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useState, useEffect, useMemo } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { Phone, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
+import { getOpenStatus } from "@/lib/openStatus";
 
-import heroFood from '@/assets/hero-food.jpg';
-import heroGarden from '@/assets/hero-garden.jpg';
-import heroInterior from '@/assets/hero-interior.jpg';
-
-const slides = [heroFood, heroGarden, heroInterior];
+// ... imports immagini
 
 export function Hero() {
-  const { t } = useLanguage();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { language, t } = useLanguage();
   
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, watchDrag: true },
-    [Autoplay({ delay: 5000, stopOnInteraction: false })]
-  );
-
+  // ✅ Rispetta prefers-reduced-motion
+  const [reduceMotion, setReduceMotion] = useState(false);
   useEffect(() => {
-    if (!emblaApi) return;
-    
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
-    emblaApi.on('select', onSelect);
-    
-    return () => { emblaApi.off('select', onSelect); };
-  }, [emblaApi]);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduceMotion(mq.matches);
+    mq.addEventListener?.("change", (e) => setReduceMotion(e.matches));
+  }, []);
+
+  const plugins = useMemo(() => {
+    if (reduceMotion) return [];
+    return [Autoplay({ delay: 7000, stopOnInteraction: true })];
+  }, [reduceMotion]);
+
+  // ✅ Stato aperto/chiuso in tempo reale (timezone Vienna)
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
+  const status = getOpenStatus(SITE.openingHours, now);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Carousel */}
-      <div ref={emblaRef} className="h-full">
-        <div className="flex h-full">
-          {slides.map((src, i) => (
-            <div key={i} className="flex-[0_0_100%] min-w-0 h-full">
-              <img 
-                src={src} 
-                alt="" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/60" />
-
+    <section className="relative h-screen">
+      {/* Carousel + Overlay */}
+      
       {/* Contenuto */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-        <h1 className="font-caveat text-5xl md:text-7xl mb-4 animate-fade-in">
-          My Secret Garden
-        </h1>
-        <p className="font-lora text-xl md:text-2xl mb-8 opacity-90 animate-fade-in" 
-           style={{ animationDelay: '0.2s' }}>
-          {t('Vegetarisches Restaurant', 'Vegetarian Restaurant')}
-        </p>
-        <Button
-          size="lg"
-          className="bg-primary hover:bg-primary/90 animate-fade-in"
-          style={{ animationDelay: '0.4s' }}
-          onClick={() => window.location.href = 'tel:+41123456789'}
-        >
-          <Phone className="mr-2 h-5 w-5" />
-          {t('Anrufen', 'Call Us')}
+      <div className="...">
+        <h1>{SITE.name}</h1>
+        <p>{t("Vegetarisches Restaurant", "Vegetarian Restaurant")}</p>
+        
+        {/* ✅ Chip stato */}
+        <span className={status.isOpen ? "bg-green-500/20" : "bg-red-500/20"}>
+          {status.isOpen ? t("Jetzt geöffnet", "Open now") : t("Jetzt geschlossen", "Closed now")}
+        </span>
+        {status.isOpen && status.closesAt && (
+          <span>• {t("schließt um", "closes at")} {status.closesAt}</span>
+        )}
+        
+        {/* ✅ CTA */}
+        <Button onClick={() => window.location.href = `tel:${SITE.phoneTel}`}>
+          <Phone /> {t("Anrufen", "Call Us")}
+        </Button>
+        <Button variant="outline" asChild>
+          <a href={SITE.mapsUrl}><MapPin /> {t("Wegbeschreibung", "Directions")}</a>
         </Button>
       </div>
-
-      {/* Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => emblaApi?.scrollTo(i)}
-            className={`w-2 h-2 rounded-full transition-all ${
-              i === selectedIndex ? 'bg-white w-6' : 'bg-white/50'
-            }`}
-          />
-        ))}
-      </div>
+      
+      {/* ✅ Dots con a11y */}
+      {slides.map((_, i) => (
+        <button
+          aria-label={t(`Slide ${i+1} anzeigen`, `Show slide ${i+1}`)}
+          aria-current={i === current ? "true" : undefined}
+        />
+      ))}
     </section>
   );
 }
@@ -1310,101 +1375,96 @@ export function GallerySection() {
 
 File: `src/components/Footer.tsx`
 
+**Nota:** Il footer attuale è più semplice e minimalista, con dati reali.
+
 ```tsx
-import { Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { MapPin, Phone, Clock, Instagram } from 'lucide-react';
+import { Heart, Instagram, Facebook } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-export function Footer() {
-  const { t } = useLanguage();
-
+export const Footer = () => {
+  const { language } = useLanguage();
+  
   return (
-    <footer className="bg-foreground text-background py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-primary text-primary-foreground py-10">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto text-center space-y-5">
           
-          {/* Contatti */}
-          <div>
-            <h4 className="font-caveat text-2xl mb-4">{t('Kontakt', 'Contact')}</h4>
-            <div className="space-y-2 text-sm">
-              <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                Musterstraße 123, 8000 Zürich
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                +41 12 345 67 89
-              </p>
-            </div>
+          {/* Brand */}
+          <p className="text-lg font-caveat text-primary-foreground/90">
+            My Secret Garden
+          </p>
+          
+          {/* Address - one line */}
+          <p className="text-sm text-primary-foreground/70 font-work">
+            Mariahilferstraße 45, Im Raimundhof – 1060 Wien
+          </p>
+          
+          {/* Hours - synthetic */}
+          <p className="text-sm text-primary-foreground/60 font-work">
+            {language === "de" ? "Mo–Sa 11:00–19:00" : "Mon–Sat 11:00–19:00"}
+          </p>
+          
+          {/* Social Icons */}
+          <div className="flex items-center justify-center gap-4">
+            <a href="https://www.instagram.com/mysecretgarden_vienna/" ...>
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a href="https://www.facebook.com/secretgardencafewien" ...>
+              <Facebook className="w-4 h-4" />
+            </a>
           </div>
-
-          {/* Orari */}
-          <div>
-            <h4 className="font-caveat text-2xl mb-4">{t('Öffnungszeiten', 'Opening Hours')}</h4>
-            <div className="space-y-1 text-sm">
-              <p className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                {t('Mo-Fr: 11:30 - 14:30', 'Mon-Fri: 11:30 AM - 2:30 PM')}
-              </p>
-              <p className="ml-6">{t('Sa: 11:30 - 15:00', 'Sat: 11:30 AM - 3:00 PM')}</p>
-              <p className="ml-6">{t('So: Geschlossen', 'Sun: Closed')}</p>
-            </div>
+          
+          {/* Links */}
+          <div className="flex items-center justify-center gap-6 text-sm font-work">
+            <Link to="/contact">{language === "de" ? "Kontakt" : "Contact"}</Link>
+            <a href="https://www.google.com/maps/place/My+Secret+Garden/...">Google Maps</a>
+            <Link to="/privacy">{language === "de" ? "Datenschutz" : "Privacy"}</Link>
+            <Link to="/impressum">Impressum</Link>
           </div>
-
-          {/* Link */}
-          <div>
-            <h4 className="font-caveat text-2xl mb-4">Links</h4>
-            <div className="space-y-2 text-sm">
-              <Link to="/privacy" className="block hover:underline">
-                {t('Datenschutz', 'Privacy Policy')}
-              </Link>
-              <Link to="/impressum" className="block hover:underline">
-                Impressum
-              </Link>
-              <a 
-                href="https://instagram.com/mysecretgarden" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:underline"
-              >
-                <Instagram className="h-4 w-4" />
-                Instagram
-              </a>
+          
+          {/* Made with love */}
+          <div className="pt-4 border-t border-primary-foreground/10">
+            <div className="flex items-center justify-center gap-2 text-xs text-primary-foreground/50">
+              <span>Made with</span>
+              <Heart className="w-3 h-3 fill-accent text-accent" />
+              <span>in Wien</span>
             </div>
+            <p className="text-xs text-primary-foreground/40 mt-2">
+              © {new Date().getFullYear()} My Secret Garden
+            </p>
           </div>
-
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-background/20 text-center text-sm">
-          <p>© {new Date().getFullYear()} My Secret Garden. {t('Alle Rechte vorbehalten.', 'All rights reserved.')}</p>
         </div>
       </div>
     </footer>
   );
-}
+};
 ```
 
 ### 6.6 FloatingCallButton
 
 File: `src/components/FloatingCallButton.tsx`
 
-Solo visibile su mobile.
+✅ **Usa `SITE` per numero telefono centralizzato.**
 
 ```tsx
-import { Phone } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Phone } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
 
 export function FloatingCallButton() {
   const isMobile = useIsMobile();
+  const { t } = useLanguage();
 
   if (!isMobile) return null;
 
   return (
     <a
-      href="tel:+41123456789"
+      href={`tel:${SITE.phoneTel}`}
       className="fixed bottom-6 right-6 z-50 bg-primary text-primary-foreground p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors"
-      aria-label="Anrufen"
+      aria-label={t("Anrufen", "Call Us")}
+      title={SITE.phoneDisplay}
     >
       <Phone className="h-6 w-6" />
     </a>
@@ -1454,25 +1514,49 @@ Informazioni legali richieste in Germania/Svizzera.
 
 ## 8. Sicurezza Implementata
 
-### 8.1 Rate Limiting
+### 8.1 Rate Limiting con Cleanup
 
 ```typescript
 // Edge function: 60 richieste/minuto per IP
-const RATE_LIMIT = 60;
-const RATE_WINDOW = 60 * 1000;
+// ✅ Con cleanup periodico per evitare memory leak
+const rateLimitMap = new Map<string, { count: number; resetTime: number; lastSeen: number }>();
+const RATE_LIMIT_WINDOW_MS = 60000;
+const MAX_REQUESTS_PER_WINDOW = 60;
+const RATE_CLEANUP_INTERVAL = 10 * 60 * 1000; // ogni 10 min
+const RATE_ENTRY_TTL = 2 * RATE_LIMIT_WINDOW_MS;
+const RATE_MAP_MAX = 5000; // cap hard
+
+function cleanupRateLimitMap(now: number) {
+  // Rimuovi entry vecchie e applica cap
+}
 ```
 
-### 8.2 CORS Ristretto
+### 8.2 CORS Sicuro
 
 ```typescript
 const ALLOWED_ORIGINS = [
-  'http://localhost:5173',
-  'http://localhost:8080',
-  'https://lovable.dev',
-  'https://preview--',
+  "http://localhost:5173",
+  "http://localhost:8080",
+  "http://localhost:3000",
+  "https://lovable.dev",
+  // Aggiungi dominio produzione quando noto
 ];
 
-// Solo origini in whitelist possono chiamare la funzione
+function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return true; // server-to-server
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+
+  // ✅ Controllo sicuro con URL parsing + endsWith
+  // Blocca trucchi tipo evil.lovable.app.evil.com
+  try {
+    const { hostname } = new URL(origin);
+    if (hostname.endsWith(".lovable.app")) return true;
+    if (hostname.endsWith(".lovable.dev")) return true;
+  } catch {
+    return false;
+  }
+  return false;
+}
 ```
 
 ### 8.3 Sanitizzazione Input
@@ -1629,6 +1713,15 @@ Configurati tramite dashboard o CLI:
 
 ---
 
-> **Ultimo aggiornamento:** Dicembre 2024
+> **Ultimo aggiornamento:** Dicembre 2024 (rev. 31/12/2024)
+> 
+> **Changelog recente:**
+> - ✅ Numero telefono centralizzato in `SITE` (`01 586 28 39`)
+> - ✅ CORS più sicuro (URL parsing + endsWith invece di includes)
+> - ✅ Rate limit map con cleanup periodico (evita memory leak)
+> - ✅ useWeeklyMenu: soft refresh invece di 30s polling
+> - ✅ Hero: chip "Jetzt geöffnet/geschlossen" con timezone Vienna
+> - ✅ Hero: rispetta prefers-reduced-motion, stopOnInteraction
+> - ✅ Orari aggiornati: Mo–Sa 11:00–19:00
 > 
 > Questo documento è stato generato automaticamente e contiene tutte le specifiche tecniche per ricreare il sito "My Secret Garden" da zero.
