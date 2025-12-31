@@ -1497,10 +1497,19 @@ Pagina dedicata a Sri Chinmoy con:
 
 ### 7.3 Contact (`/contact`)
 
-- Mappa (opzionale)
-- Form contatto
-- Info orari
-- Numero telefono
+Pagina informativa per raggiungere il ristorante. **Non esiste form contatto.**
+
+**Canali di contatto disponibili:**
+- **Telefono**: Link cliccabile `tel:` (usa `SITE.phoneTel` / `SITE.phoneDisplay`)
+- **Indirizzo**: Mariahilferstraße 45, Im Raimundhof, 1060 Wien + link Google Maps
+- **Orari**: Mo–Sa 11:00–19:00
+- **Instagram**: @mysecretgardencafewien
+
+**Elementi UI:**
+- Griglia info (indirizzo, telefono, orari, social)
+- Mappa Google Maps embed
+- Foto ingresso giardino
+- CTA "Jetzt anrufen" / "Call now" (bottone primario)
 
 ### 7.4 Privacy (`/privacy`)
 
