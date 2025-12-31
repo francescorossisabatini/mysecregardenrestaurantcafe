@@ -13,14 +13,14 @@ export const SITE = {
   // Google Maps share link
   mapsUrl: "https://www.google.com/maps/place/My+Secret+Garden/@48.2058449,16.3693511,17z",
 
-  // Opening hours (Mo–Fr 11:30–14:30, Sa 11:30–15:00, So closed)
+  // Opening hours (Mo–Sa 11:00–19:00, So closed)
   openingHours: {
-    mon: { open: "11:30", close: "14:30" },
-    tue: { open: "11:30", close: "14:30" },
-    wed: { open: "11:30", close: "14:30" },
-    thu: { open: "11:30", close: "14:30" },
-    fri: { open: "11:30", close: "14:30" },
-    sat: { open: "11:30", close: "15:00" },
+    mon: { open: "11:00", close: "19:00" },
+    tue: { open: "11:00", close: "19:00" },
+    wed: { open: "11:00", close: "19:00" },
+    thu: { open: "11:00", close: "19:00" },
+    fri: { open: "11:00", close: "19:00" },
+    sat: { open: "11:00", close: "19:00" },
     sun: null,
   } satisfies OpeningHours,
 } as const;
