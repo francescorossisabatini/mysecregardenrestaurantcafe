@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import gardenImg from "@/assets/garden-real.jpg";
+import { SITE } from "@/config/site";
 
 const ContactPage = () => {
   const { language, t } = useLanguage();
@@ -64,10 +65,10 @@ const ContactPage = () => {
                   </h3>
                 </div>
                 <a
-                  href="tel:015862839"
+                  href={`tel:${SITE.phoneTel}`}
                   className="text-muted-foreground font-work hover:text-accent transition-colors"
                 >
-                  01 586 28 39
+                  {SITE.phoneDisplay}
                 </a>
               </div>
 
@@ -138,7 +139,7 @@ const ContactPage = () => {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-work px-10 py-6"
                 asChild
               >
-                <a href="tel:015862839">
+                <a href={`tel:${SITE.phoneTel}`}>
                   {language === "de" ? "Jetzt anrufen" : "Call now"}
                 </a>
               </Button>

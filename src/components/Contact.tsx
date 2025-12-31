@@ -4,6 +4,7 @@ import { MapPin, Phone, Clock, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 import gardenImg from "@/assets/garden-real.jpg";
+import { SITE } from "@/config/site";
 
 export const Contact = () => {
   const { t } = useLanguage();
@@ -38,10 +39,10 @@ export const Contact = () => {
                 <h3 className="font-semibold text-lg text-foreground">{t("contact.phone")}</h3>
               </div>
               <a
-                href="tel:015862839"
+                href={`tel:${SITE.phoneTel}`}
                 className="text-base text-muted-foreground hover:text-accent transition-colors"
               >
-                01 586 28 39
+                {SITE.phoneDisplay}
               </a>
             </div>
 
@@ -99,7 +100,7 @@ export const Contact = () => {
               className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-12 py-7 font-lora"
               asChild
             >
-              <a href="tel:015862839">{t("contact.call")}</a>
+              <a href={`tel:${SITE.phoneTel}`}>{t("contact.call")}</a>
             </Button>
           </div>
         </div>

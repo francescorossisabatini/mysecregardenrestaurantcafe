@@ -2,50 +2,76 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 // Allowed origins for CORS - restrict to known domains
 const ALLOWED_ORIGINS = [
-  'https://secret-garden-zurich.lovable.app',
-  'https://www.secret-garden-zurich.lovable.app',
-  'http://localhost:8080',
-  'http://localhost:5173',
-  'http://localhost:3000',
+  "http://localhost:5173",
+  "http://localhost:8080",
+  "http://localhost:3000",
+  "https://lovable.dev",
+  // Add production domain when known, e.g.:
+  // "https://mysecretgarden.at",
 ];
 
-function getCorsHeaders(origin: string | null): Record<string, string> {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.some(allowed => 
-    origin === allowed || origin.endsWith('.lovable.app')
-  ) ? origin : ALLOWED_ORIGINS[0];
-  
-  return {
-    'Access-Control-Allow-Origin': allowedOrigin,
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  };
+function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return true; // server-to-server requests without Origin
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+
+  // ✅ Stricter check: use URL parsing + endsWith to block tricks like evil.lovable.app.evil.com
+  try {
+    const { hostname } = new URL(origin);
+    if (hostname.endsWith(".lovable.app")) return true;
+    if (hostname.endsWith(".lovable.dev")) return true;
+  } catch {
+    return false;
+  }
+
+  return false;
 }
 
-// Simple in-memory rate limiter
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+// Rate limiter with cleanup to prevent memory leaks
+const rateLimitMap = new Map<string, { count: number; resetTime: number; lastSeen: number }>();
 const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 60;
 
+// ✅ Anti-leak: periodic cleanup and map cap
+let lastRateCleanup = 0;
+const RATE_CLEANUP_INTERVAL = 10 * 60 * 1000; // every 10 min
+const RATE_ENTRY_TTL = 2 * RATE_LIMIT_WINDOW_MS; // TTL after window
+const RATE_MAP_MAX = 5000; // hard cap
+
 function getClientIP(req: Request): string {
-  return req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
-         req.headers.get('x-real-ip') || 
-         'unknown';
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  const real = req.headers.get("x-real-ip");
+  if (real) return real.trim();
+  return "unknown";
+}
+
+function cleanupRateLimitMap(now: number) {
+  if (now - lastRateCleanup < RATE_CLEANUP_INTERVAL) return;
+  lastRateCleanup = now;
+
+  // Remove old entries
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetTime + RATE_ENTRY_TTL || now - data.lastSeen > RATE_ENTRY_TTL) {
+      rateLimitMap.delete(ip);
+    }
+  }
+
+  // Cap: if exceeded, remove oldest (by lastSeen)
+  if (rateLimitMap.size > RATE_MAP_MAX) {
+    const entries = [...rateLimitMap.entries()].sort((a, b) => a[1].lastSeen - b[1].lastSeen);
+    const toDrop = entries.length - RATE_MAP_MAX;
+    for (let i = 0; i < toDrop; i++) rateLimitMap.delete(entries[i][0]);
+  }
 }
 
 function checkRateLimit(clientIP: string): boolean {
   const now = Date.now();
+  cleanupRateLimitMap(now);
+  
   const clientData = rateLimitMap.get(clientIP);
   
-  // Clean up old entries periodically
-  if (rateLimitMap.size > 1000) {
-    for (const [ip, data] of rateLimitMap.entries()) {
-      if (now > data.resetTime) {
-        rateLimitMap.delete(ip);
-      }
-    }
-  }
-  
   if (!clientData || now > clientData.resetTime) {
-    rateLimitMap.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    rateLimitMap.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS, lastSeen: now });
     return true;
   }
   
@@ -54,6 +80,7 @@ function checkRateLimit(clientIP: string): boolean {
   }
   
   clientData.count++;
+  clientData.lastSeen = now;
   return true;
 }
 
@@ -79,7 +106,7 @@ interface WeeklyMenuResponse {
 
 // Simple in-memory cache for edge function
 let cachedMenu: { data: WeeklyMenu; timestamp: number } | null = null;
-const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes (increased for better protection)
+const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
 function sanitizeText(text: unknown, maxLength: number = 500): string {
@@ -90,32 +117,6 @@ function sanitizeText(text: unknown, maxLength: number = 500): string {
     .replace(/on\w+=/gi, '') // Remove event handlers
     .trim()
     .substring(0, maxLength);
-}
-
-// Validate menu day structure
-function validateMenuDay(day: unknown): MenuDay | null {
-  if (!day || typeof day !== 'object') return null;
-  
-  const d = day as Record<string, unknown>;
-  
-  return {
-    day: {
-      de: sanitizeText(d.dayDe, 50),
-      en: sanitizeText(d.dayEn, 50),
-    },
-    soup: {
-      de: sanitizeText(d.soupDe, 500),
-      en: sanitizeText(d.soupEn, 500),
-    },
-    green: {
-      de: sanitizeText(d.greenDe, 1000),
-      en: sanitizeText(d.greenEn, 1000),
-    },
-    blue: {
-      de: sanitizeText(d.blueDe, 1000),
-      en: sanitizeText(d.blueEn, 1000),
-    },
-  };
 }
 
 // Validate entire menu structure
@@ -139,9 +140,23 @@ function validateWeeklyMenu(menu: unknown): WeeklyMenu | null {
 }
 
 serve(async (req) => {
-  const origin = req.headers.get('origin');
-  const corsHeaders = getCorsHeaders(origin);
+  const origin = req.headers.get("origin");
   
+  // ✅ Reject disallowed origins
+  if (!isOriginAllowed(origin)) {
+    console.warn("Origin not allowed:", origin);
+    return new Response(
+      JSON.stringify({ error: "Origin not allowed" }),
+      { status: 403, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": origin ?? "*",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+  };
+
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
