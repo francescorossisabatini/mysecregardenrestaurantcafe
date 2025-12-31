@@ -3,15 +3,17 @@ import type { OpeningHours } from "@/lib/openStatus";
 export const SITE = {
   name: "My Secret Garden",
 
-  // Contact
-  phoneDisplay: "01 597 05 47",
-  phoneTel: "+4315970547",
+  // ✅ UNICO NUMERO "vero" (testo visibile)
+  phoneDisplay: "01 586 28 39",
+
+  // ✅ UNICO NUMERO per tel: (stesso numero, senza spazi, con prefisso Austria)
+  phoneTel: "+4315862839",
 
   // Address
-  addressShort: "Wien – Annagasse 4, 1010",
+  addressShort: "Mariahilferstraße 45, Im Raimundhof – 1060 Wien",
 
   // Google Maps share link
-  mapsUrl: "https://www.google.com/maps/place/My+Secret+Garden/@48.2058449,16.3693511,17z",
+  mapsUrl: "https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/",
 
   // Opening hours (Mo–Sa 11:00–19:00, So closed)
   openingHours: {
