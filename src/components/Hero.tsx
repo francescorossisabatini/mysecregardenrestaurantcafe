@@ -12,6 +12,7 @@ import heroInterior from "@/assets/interior-real.jpg";
 
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
+import { useTodayClosed } from "@/hooks/useTodayClosed";
 
 const heroImages = [
   { src: minnesotaBowl, position: "center center", alt: "Piatto del giorno" },
@@ -94,6 +95,12 @@ export const Hero = () => {
   // Open/Closed chip in Vienna timezone
   const now = useMinuteNow();
   const status = getOpenStatus(SITE.openingHours, now);
+  
+  // Also check if closed due to no menu data, holiday, or Sunday
+  const { isClosed: isClosedToday, reason: closedReason } = useTodayClosed();
+  
+  // Force closed if no menu data, holiday, or Sunday
+  const effectivelyOpen = status.isOpen && !isClosedToday;
 
   return (
     <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
@@ -147,19 +154,24 @@ export const Hero = () => {
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
-              status.isOpen 
+              effectivelyOpen 
                 ? "bg-green-500/20 text-green-100 border border-green-400/30" 
                 : "bg-red-500/20 text-red-100 border border-red-400/30"
             }`}>
-              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${status.isOpen ? "bg-green-400" : "bg-red-400"}`} />
-              {status.isOpen 
+              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${effectivelyOpen ? "bg-green-400" : "bg-red-400"}`} />
+              {effectivelyOpen 
                 ? (language === "de" ? "Jetzt geöffnet" : "Open now")
-                : (language === "de" ? "Jetzt geschlossen" : "Closed now")
+                : (language === "de" ? "Heute geschlossen" : "Closed today")
               }
             </span>
-            {status.isOpen && status.closesAt && (
+            {effectivelyOpen && status.closesAt && (
               <span className="text-xs text-background/70">
                 {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
+              </span>
+            )}
+            {!effectivelyOpen && closedReason === "no-menu" && (
+              <span className="text-xs text-background/70">
+                {language === "de" ? "• kein Menü heute" : "• no menu today"}
               </span>
             )}
           </div>
