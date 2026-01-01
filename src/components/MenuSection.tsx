@@ -71,8 +71,16 @@ export const MenuSection = () => {
   // Check if today is a holiday
   const todayHoliday = getTodayHoliday();
   
-  // Determine if restaurant is closed (Sunday or holiday)
-  const isClosed = isSunday || todayHoliday !== null;
+  // Check if today's menu has any data
+  const hasMenuData = todayMenu && (
+    (todayMenu.soup?.de?.trim() || todayMenu.soup?.en?.trim()) ||
+    (todayMenu.green?.de?.trim() || todayMenu.green?.en?.trim()) ||
+    (todayMenu.blue?.de?.trim() || todayMenu.blue?.en?.trim())
+  );
+  
+  // Determine if restaurant is closed (Sunday, holiday, or no menu data)
+  const isClosed = isSunday || todayHoliday !== null || !hasMenuData;
+  const isNoMenuDay = !isSunday && !todayHoliday && !hasMenuData;
   
   // Get Monday's menu for Sunday preview
   const mondayMenu = menu.days.find(day => day.day.de === "Montag");
@@ -166,21 +174,27 @@ export const MenuSection = () => {
               </div>
             ) : (
               <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
-                {/* Holiday or Sunday rest message */}
+                {/* Holiday, Sunday, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
                     {todayHoliday 
                       ? todayHoliday.name[language]
-                      : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
+                      : isNoMenuDay
+                        ? (language === "de" ? "Heute geschlossen" : "Closed Today")
+                        : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
                   </p>
                   <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
                     {todayHoliday 
                       ? todayHoliday.message[language]
-                      : (language === "de" 
-                          ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
-                          : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
+                      : isNoMenuDay
+                        ? (language === "de" 
+                            ? "Heute haben wir leider geschlossen. Wir freuen uns, dich bald wiederzusehen." 
+                            : "We are closed today. We look forward to seeing you soon.")
+                        : (language === "de" 
+                            ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
+                            : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
                   </p>
-                  {todayHoliday && (
+                  {(todayHoliday || isNoMenuDay) && (
                     <p className="text-muted-foreground/70 font-work text-xs mt-2">
                       {language === "de" 
                         ? "Heute haben wir geschlossen." 
