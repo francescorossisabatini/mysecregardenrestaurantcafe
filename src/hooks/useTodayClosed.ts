@@ -47,11 +47,18 @@ export function useTodayClosed(): TodayClosedResult {
     const todayName = dayNames[today.getDay()];
     const todayMenu = menu.days.find((day) => day.day.de === todayName);
 
-    // If no menu found OR all dishes are empty, treat as closed
-    const hasMenuData = todayMenu && (
-      (todayMenu.soup?.de?.trim() || todayMenu.soup?.en?.trim()) ||
-      (todayMenu.green?.de?.trim() || todayMenu.green?.en?.trim()) ||
-      (todayMenu.blue?.de?.trim() || todayMenu.blue?.en?.trim())
+    const isValidMenuText = (text?: string) => {
+      const t = (text ?? "").trim();
+      if (!t) return false;
+      if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
+      return true;
+    };
+
+    // If no menu found OR all dishes are empty/invalid, treat as closed
+    const hasMenuData = !!todayMenu && (
+      isValidMenuText(todayMenu.soup?.de) || isValidMenuText(todayMenu.soup?.en) ||
+      isValidMenuText(todayMenu.green?.de) || isValidMenuText(todayMenu.green?.en) ||
+      isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
     );
 
     if (!hasMenuData) {

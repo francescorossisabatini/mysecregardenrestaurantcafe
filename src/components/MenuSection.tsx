@@ -24,6 +24,14 @@ const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boo
   };
 };
 
+// Treat spreadsheet error placeholders as empty (e.g. "#VALUE!")
+const isValidMenuText = (text?: string) => {
+  const t = (text ?? "").trim();
+  if (!t) return false;
+  if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
+  return true;
+};
+
 // Render dietary badges dynamically
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
@@ -72,10 +80,10 @@ export const MenuSection = () => {
   const todayHoliday = getTodayHoliday();
   
   // Check if today's menu has any data
-  const hasMenuData = todayMenu && (
-    (todayMenu.soup?.de?.trim() || todayMenu.soup?.en?.trim()) ||
-    (todayMenu.green?.de?.trim() || todayMenu.green?.en?.trim()) ||
-    (todayMenu.blue?.de?.trim() || todayMenu.blue?.en?.trim())
+  const hasMenuData = !!todayMenu && (
+    isValidMenuText(todayMenu.soup?.de) || isValidMenuText(todayMenu.soup?.en) ||
+    isValidMenuText(todayMenu.green?.de) || isValidMenuText(todayMenu.green?.en) ||
+    isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
   );
   
   // Determine if restaurant is closed (Sunday, holiday, or no menu data)
@@ -116,7 +124,7 @@ export const MenuSection = () => {
             ) : !isClosed && todayMenu ? (
               <div className="space-y-4">
                 {/* Soup */}
-                {todayMenu.soup[language] && (
+                {isValidMenuText(todayMenu.soup[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
@@ -133,9 +141,9 @@ export const MenuSection = () => {
                     <p className="text-accent font-semibold text-sm font-work mt-2">5,90</p>
                   </div>
                 )}
-                
+
                 {/* Green Dish */}
-                {todayMenu.green[language] && (
+                {isValidMenuText(todayMenu.green[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
@@ -152,9 +160,9 @@ export const MenuSection = () => {
                     <p className="text-accent font-semibold text-sm font-work mt-2">11,90</p>
                   </div>
                 )}
-                
+
                 {/* Blue Dish */}
-                {todayMenu.blue[language] && (
+                {isValidMenuText(todayMenu.blue[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
@@ -304,7 +312,7 @@ export const MenuSection = () => {
                             ) : (
                               // Show normal menu
                               <div className="space-y-2 text-sm font-work">
-                                {day.soup[language] && (
+                                {isValidMenuText(day.soup[language]) && (
                                   <div className="flex justify-between items-start gap-2">
                                     <div className="flex-1">
                                       <span className="text-muted-foreground text-xs">
@@ -316,7 +324,7 @@ export const MenuSection = () => {
                                     <span className="text-accent text-xs font-medium shrink-0">5,90</span>
                                   </div>
                                 )}
-                                {day.green[language] && (
+                                {isValidMenuText(day.green[language]) && (
                                   <div className="flex justify-between items-start gap-2">
                                     <div className="flex-1">
                                       <span className="text-muted-foreground text-xs">
@@ -328,7 +336,7 @@ export const MenuSection = () => {
                                     <span className="text-accent text-xs font-medium shrink-0">11,90</span>
                                   </div>
                                 )}
-                                {day.blue[language] && (
+                                {isValidMenuText(day.blue[language]) && (
                                   <div className="flex justify-between items-start gap-2">
                                     <div className="flex-1">
                                       <span className="text-muted-foreground text-xs">
