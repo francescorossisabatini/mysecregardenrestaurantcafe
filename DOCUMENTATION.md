@@ -67,6 +67,7 @@ src/
 │   └── productData.ts        # Prodotti in vendita
 ├── hooks/
 │   ├── useWeeklyMenu.ts      # Hook menu dinamico
+│   ├── useTodayClosed.ts     # ✅ Hook chiusura oggi (domenica/festività/no-menu)
 │   ├── useScrollReveal.ts    # Animazioni scroll
 │   └── use-mobile.tsx        # Rilevamento mobile
 ├── pages/
@@ -568,12 +569,17 @@ const CACHE_DURATION = 15 * 60 * 1000; // 15 minuti
 // Sanitizzazione input
 function sanitizeText(text: unknown, maxLength: number = 500): string {
   if (typeof text !== 'string') return '';
-  return text
+  const cleaned = text
     .replace(/<[^>]*>/g, '')
     .replace(/javascript:/gi, '')
     .replace(/on\w+=/gi, '')
     .trim()
     .substring(0, maxLength);
+  
+  // ✅ Tratta placeholder errori spreadsheet come vuoti (es. #VALUE!, #N/A, #REF!)
+  if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(cleaned)) return "";
+  
+  return cleaned;
 }
 
 serve(async (req) => {
@@ -642,7 +648,17 @@ export async function fetchMenuFromSheets(): Promise<WeeklyMenu> {
   if (cached) {
     try {
       const cachedData: CachedMenu = JSON.parse(cached);
-      if (Date.now() - cachedData.timestamp < CACHE_DURATION) {
+      
+      // ✅ Se la cache contiene placeholder errore spreadsheet, invalida la cache
+      const isSpreadsheetError = (v?: string) => 
+        /^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test((v ?? "").trim());
+      const hasErrorPlaceholder = cachedData?.data?.days?.some((d) =>
+        isSpreadsheetError(d.soup?.de) || isSpreadsheetError(d.soup?.en) ||
+        isSpreadsheetError(d.green?.de) || isSpreadsheetError(d.green?.en) ||
+        isSpreadsheetError(d.blue?.de) || isSpreadsheetError(d.blue?.en)
+      );
+      
+      if (!hasErrorPlaceholder && Date.now() - cachedData.timestamp < CACHE_DURATION) {
         return cachedData.data;
       }
     } catch (e) {
@@ -919,7 +935,81 @@ if (holiday) {
 }
 ```
 
-### 5.4 Integrazione con Menu Settimanale
+### 5.4 Hook useTodayClosed
+
+File: `src/hooks/useTodayClosed.ts`
+
+Hook che determina se il ristorante è chiuso oggi, verificando:
+1. **Domenica**: Giorno di chiusura fisso
+2. **Festività**: Date configurate in `holidaysData.ts`
+3. **No-menu**: Se Google Sheets non contiene dati validi per oggi (inclusi placeholder errore come `#VALUE!`)
+
+```typescript
+interface TodayClosedResult {
+  isClosed: boolean;
+  isLoading: boolean;
+  reason: "sunday" | "holiday" | "no-menu" | null;
+  holidayName?: { de: string; en: string };
+  holidayMessage?: { de: string; en: string };
+}
+
+export function useTodayClosed(): TodayClosedResult {
+  const { menu, isLoading } = useWeeklyMenu();
+
+  return useMemo(() => {
+    if (isLoading) {
+      return { isClosed: false, isLoading: true, reason: null };
+    }
+
+    const today = new Date();
+    const isSunday = today.getDay() === 0;
+    const todayHoliday = getTodayHoliday();
+
+    // 1. Check festività
+    if (todayHoliday) {
+      return {
+        isClosed: true,
+        isLoading: false,
+        reason: "holiday",
+        holidayName: todayHoliday.name,
+        holidayMessage: todayHoliday.message,
+      };
+    }
+
+    // 2. Check domenica
+    if (isSunday) {
+      return { isClosed: true, isLoading: false, reason: "sunday" };
+    }
+
+    // 3. Check se il menu di oggi è valido
+    // ✅ Tratta placeholder errori spreadsheet (#VALUE!, #N/A, etc.) come vuoti
+    const isValidMenuText = (text?: string) => {
+      const t = (text ?? "").trim();
+      if (!t) return false;
+      if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
+      return true;
+    };
+
+    const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const todayName = dayNames[today.getDay()];
+    const todayMenu = menu.days.find((day) => day.day.de === todayName);
+
+    const hasMenuData = !!todayMenu && (
+      isValidMenuText(todayMenu.soup?.de) || isValidMenuText(todayMenu.soup?.en) ||
+      isValidMenuText(todayMenu.green?.de) || isValidMenuText(todayMenu.green?.en) ||
+      isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
+    );
+
+    if (!hasMenuData) {
+      return { isClosed: true, isLoading: false, reason: "no-menu" };
+    }
+
+    return { isClosed: false, isLoading: false, reason: null };
+  }, [menu, isLoading]);
+}
+```
+
+### 5.5 Integrazione con Menu Settimanale
 
 ```tsx
 // Nel WeeklyMenuDialog
@@ -930,18 +1020,37 @@ const accordionTitle = isSundayToday
   ? (language === 'de' ? 'Was dich nächste Woche erwartet' : "What awaits you next week")
   : (language === 'de' ? 'Ein Blick auf diese Woche' : "This Week's Menu");
 
-// Skip domenica nella lista giorni
+// ✅ Ogni giorno dell'accordion controlla: festività, domenica, O assenza dati menu
 {menu.days.map((day, index) => {
   const dayDate = getDateForMenuDay(menu.period, index);
-  const holiday = dayDate ? getHolidayForDate(dayDate) : null;
-  const isSunday = isSundayByName(day.day.de);
+  const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
+  const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
   
-  if (isSunday) return null; // Non mostrare domenica
+  // ✅ Verifica se il giorno ha dati menu validi (escludi #VALUE!, etc.)
+  const hasDayMenuData =
+    isValidMenuText(day.soup?.de) || isValidMenuText(day.soup?.en) ||
+    isValidMenuText(day.green?.de) || isValidMenuText(day.green?.en) ||
+    isValidMenuText(day.blue?.de) || isValidMenuText(day.blue?.en);
   
-  if (holiday) {
+  const isDayClosed = !!dayHoliday || isDaySunday || !hasDayMenuData;
+  
+  if (isDayClosed) {
     return (
       <div key={index} className="py-4 border-b border-border/50">
         <p className="font-medium">{day.day[language]}</p>
+        <p className="text-muted-foreground italic">
+          {dayHoliday 
+            ? dayHoliday.name[language]
+            : isDaySunday 
+              ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
+              : (language === "de" ? "Heute geschlossen" : "Closed")}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          {language === "de" ? "Geschlossen" : "Closed"}
+        </p>
+      </div>
+    );
+  }
         <p className="text-muted-foreground italic">{holiday.message[language]}</p>
       </div>
     );
@@ -1737,9 +1846,13 @@ Configurati tramite dashboard o CLI:
 
 ---
 
-> **Ultimo aggiornamento:** Dicembre 2024 (rev. 31/12/2024)
+> **Ultimo aggiornamento:** Gennaio 2025 (rev. 02/01/2025)
 > 
 > **Changelog recente:**
+> - ✅ **Nuovo hook `useTodayClosed`**: centralizza logica chiusura (domenica/festività/no-menu)
+> - ✅ **Validazione errori spreadsheet**: `#VALUE!`, `#N/A`, `#REF!` etc. trattati come vuoti
+> - ✅ **Menu settimanale**: giorni senza dati mostrano "Heute geschlossen" / "Closed"
+> - ✅ **Cache client invalida** se contiene placeholder errori spreadsheet
 > - ✅ Numero telefono centralizzato in `SITE` (`01 586 28 39`)
 > - ✅ CORS più sicuro (URL parsing + endsWith invece di includes)
 > - ✅ Rate limit map con cleanup periodico (evita memory leak)
