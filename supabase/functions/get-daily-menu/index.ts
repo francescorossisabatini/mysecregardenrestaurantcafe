@@ -111,13 +111,18 @@ const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
 function sanitizeText(text: unknown, maxLength: number = 500): string {
-  if (typeof text !== 'string') return '';
-  return text
-    .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .replace(/javascript:/gi, '') // Remove javascript: protocol
-    .replace(/on\w+=/gi, '') // Remove event handlers
+  if (typeof text !== "string") return "";
+  const cleaned = text
+    .replace(/<[^>]*>/g, "") // Remove HTML tags
+    .replace(/javascript:/gi, "") // Remove javascript: protocol
+    .replace(/on\w+=/gi, "") // Remove event handlers
     .trim()
     .substring(0, maxLength);
+
+  // Treat spreadsheet error placeholders as empty
+  if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(cleaned)) return "";
+
+  return cleaned;
 }
 
 // Validate entire menu structure
