@@ -50,7 +50,7 @@ export function useTodayClosed(): TodayClosedResult {
     const isValidMenuText = (text?: string) => {
       const t = (text ?? "").trim();
       if (!t) return false;
-      if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
+      if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
       return true;
     };
 
