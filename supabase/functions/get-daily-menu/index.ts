@@ -120,7 +120,7 @@ function sanitizeText(text: unknown, maxLength: number = 500): string {
     .substring(0, maxLength);
 
   // Treat spreadsheet error placeholders as empty
-  if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(cleaned)) return "";
+  if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(cleaned)) return "";
 
   return cleaned;
 }

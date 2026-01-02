@@ -24,11 +24,11 @@ const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boo
   };
 };
 
-// Treat spreadsheet error placeholders as empty (e.g. "#VALUE!")
+// Treat spreadsheet error placeholders as empty (e.g. "#VALUE" / "#VALUE!")
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
   if (!t) return false;
-  if (/^#(VALUE!|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
+  if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
   return true;
 };
 
@@ -288,7 +288,13 @@ export const MenuSection = () => {
                         const dayDate = getDateForMenuDay(menu.period, index);
                         const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
                         const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
-                        const isDayClosed = dayHoliday || isDaySunday;
+
+                        const hasDayMenuData =
+                          isValidMenuText(day.soup?.de) || isValidMenuText(day.soup?.en) ||
+                          isValidMenuText(day.green?.de) || isValidMenuText(day.green?.en) ||
+                          isValidMenuText(day.blue?.de) || isValidMenuText(day.blue?.en);
+
+                        const isDayClosed = !!dayHoliday || isDaySunday || !hasDayMenuData;
 
                         
                         return (
@@ -298,12 +304,14 @@ export const MenuSection = () => {
                             </h4>
                             
                             {isDayClosed ? (
-                              // Show holiday or Sunday message instead of food
+                              // Show holiday / Sunday / no-menu message instead of food
                               <div className="text-center py-3">
                                 <p className="font-cormorant text-base text-foreground/70 italic">
-                                  {dayHoliday 
+                                  {dayHoliday
                                     ? dayHoliday.name[language]
-                                    : (language === "de" ? "Tag der Ruhe" : "Day of Rest")}
+                                    : isDaySunday
+                                      ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
+                                      : (language === "de" ? "Heute geschlossen" : "Closed")}
                                 </p>
                                 <p className="text-muted-foreground text-xs font-work mt-1">
                                   {language === "de" ? "Geschlossen" : "Closed"}

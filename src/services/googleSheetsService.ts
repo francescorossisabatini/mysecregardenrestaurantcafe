@@ -32,7 +32,16 @@ export async function fetchMenuFromSheets(_sheetId?: string): Promise<WeeklyMenu
   if (cached) {
     try {
       const cachedData: CachedMenu = JSON.parse(cached);
-      if (Date.now() - cachedData.timestamp < CACHE_DURATION) {
+
+      // If cached data contains spreadsheet error placeholders, treat cache as invalid
+      const isSpreadsheetError = (v?: string) => /^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test((v ?? "").trim());
+      const hasErrorPlaceholder = cachedData?.data?.days?.some((d) =>
+        isSpreadsheetError(d.soup?.de) || isSpreadsheetError(d.soup?.en) ||
+        isSpreadsheetError(d.green?.de) || isSpreadsheetError(d.green?.en) ||
+        isSpreadsheetError(d.blue?.de) || isSpreadsheetError(d.blue?.en)
+      );
+
+      if (!hasErrorPlaceholder && Date.now() - cachedData.timestamp < CACHE_DURATION) {
         if (isDev) console.log('📦 Using cached menu data');
         return cachedData.data;
       }
