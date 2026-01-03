@@ -7,18 +7,24 @@ const reviews = [
     textEn: "Very nice and cozy place. The food was really excellent and the portions generous. The staff is helpful and friendly, and the value for money is fair.",
     author: "Serena Saccaro",
     role: "Google Maps",
+    dateDe: "vor 6 Tagen",
+    dateEn: "6 days ago",
   },
   {
     textDe: "Ausgezeichnet! Gesundes Essen von hoher Qualität. Hier ist alles perfekt; das Personal ist wirklich leidenschaftlich bei der Arbeit. Wenn es mehr Sterne gäbe, würde ich alle vergeben!",
     textEn: "Excellent! Healthy, high-quality food. Everything is perfect here; the staff is truly passionate about their work. If there were more stars, I would give them all!",
     author: "Gabor Nyaradi",
     role: "Google Maps",
+    dateDe: "vor 2 Wochen",
+    dateEn: "2 weeks ago",
   },
   {
     textDe: "Der Ort ist wirklich wunderbar: Er bietet raffiniertes, hochwertiges veganes Essen in einer ruhigen und spirituellen Atmosphäre.",
     textEn: "The place is truly wonderful: it offers refined, high-quality vegan food in a serene and spiritual atmosphere.",
     author: "b.kishore Bala",
     role: "Google Maps",
+    dateDe: "vor 2 Wochen",
+    dateEn: "2 weeks ago",
   },
 ];
 
@@ -53,7 +59,9 @@ export const Reviews = () => {
               </blockquote>
               <div>
                 <p className="font-medium text-sm text-foreground">{review.author}</p>
-                <p className="text-xs text-muted-foreground">{review.role}</p>
+                <p className="text-xs text-muted-foreground">
+                  {review.role} · {language === "de" ? review.dateDe : review.dateEn}
+                </p>
               </div>
             </div>
           ))}
