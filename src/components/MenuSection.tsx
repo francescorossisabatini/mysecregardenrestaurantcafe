@@ -372,7 +372,7 @@ export const MenuSection = () => {
           <div className="text-center py-10 md:py-14">
             <p className="font-cormorant text-lg md:text-xl text-muted-foreground/70 italic leading-relaxed whitespace-pre-line">
               {language === "de" 
-                ? "Nicht alles bleibt.\nUnd das ist Teil davon." 
+                ? "Nicht alles bleibt.\nUnd das gehört dazu." 
                 : "Not everything stays.\nAnd that's part of it."}
             </p>
           </div>
