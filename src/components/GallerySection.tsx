@@ -62,7 +62,9 @@ export const GallerySection = () => {
       {/* Single static inspirational quote */}
       <div className="container mx-auto max-w-3xl text-center px-6 mb-12 md:mb-16">
         <blockquote className="font-caveat text-2xl md:text-3xl text-muted-foreground/80 italic">
-          "Das Gute in anderen zu sehen, ist der Anfang von Frieden."
+          {language === "de" 
+            ? "Das Gute in anderen zu sehen, ist der Anfang von Frieden." 
+            : "To see the good in others is the beginning of peace."}
         </blockquote>
         <cite className="block mt-3 text-sm text-muted-foreground/60 font-lora tracking-wide">
           — Sri Chinmoy
