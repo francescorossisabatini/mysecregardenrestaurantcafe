@@ -3,19 +3,22 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const reviews = [
   {
-    text: "Als Veganer ist dies mein Lieblingsrestaurant in Wien. Man spürt die Liebe in jedem Gericht.",
-    author: "Silent Rocco",
-    role: "Local Guide",
+    textDe: "Sehr schönes und gemütliches Lokal. Das Essen war wirklich ausgezeichnet und die Portionen großzügig. Das Personal ist hilfsbereit und freundlich, und das Preis-Leistungs-Verhältnis stimmt.",
+    textEn: "Very nice and cozy place. The food was really excellent and the portions generous. The staff is helpful and friendly, and the value for money is fair.",
+    author: "Serena Saccaro",
+    role: "Google Maps",
   },
   {
-    text: "Schönes Ambiente und mit Liebe zubereitete, gesunde Speisen. Was will man mehr?",
-    author: "Elbie",
-    role: "Google Review",
+    textDe: "Ausgezeichnet! Gesundes Essen von hoher Qualität. Hier ist alles perfekt; das Personal ist wirklich leidenschaftlich bei der Arbeit. Wenn es mehr Sterne gäbe, würde ich alle vergeben!",
+    textEn: "Excellent! Healthy, high-quality food. Everything is perfect here; the staff is truly passionate about their work. If there were more stars, I would give them all!",
+    author: "Gabor Nyaradi",
+    role: "Google Maps",
   },
   {
-    text: "Das Tagescurry mit Gemüse und der vegane Cheesecake schmeckten ausgezeichnet!",
-    author: "Lisa",
-    role: "Cheerfulsoul.blog",
+    textDe: "Der Ort ist wirklich wunderbar: Er bietet raffiniertes, hochwertiges veganes Essen in einer ruhigen und spirituellen Atmosphäre.",
+    textEn: "The place is truly wonderful: it offers refined, high-quality vegan food in a serene and spiritual atmosphere.",
+    author: "b.kishore Bala",
+    role: "Google Maps",
   },
 ];
 
@@ -46,7 +49,7 @@ export const Reviews = () => {
                 ))}
               </div>
               <blockquote className="text-base md:text-lg font-lora text-foreground/90 leading-relaxed mb-4">
-                "{review.text}"
+                "{language === "de" ? review.textDe : review.textEn}"
               </blockquote>
               <div>
                 <p className="font-medium text-sm text-foreground">{review.author}</p>
