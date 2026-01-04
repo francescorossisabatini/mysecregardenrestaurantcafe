@@ -10,7 +10,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
   if (variant === "mobile") {
     return (
       <div className="border-t border-border/20 pt-6">
-        <p className="text-sm text-foreground/50 mb-3 px-1">Sprache</p>
+        <p className="text-sm text-foreground/50 mb-3 px-1">{language === "de" ? "Sprache" : "Language"}</p>
         <div className="flex gap-4" role="group" aria-label="Language selection">
           <button
             onClick={() => setLanguage("de")}
