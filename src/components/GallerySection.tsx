@@ -1,24 +1,23 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Import gallery images
+// Import gallery images - avoiding redundancy with Hero and other pages
 import entranceGarden from "@/assets/entrance-garden.jpg";
 import foodBowl from "@/assets/food-bowl-real.jpg";
 import foodDetail from "@/assets/food-detail-real.jpg";
 import foodGarden from "@/assets/food-garden.jpg";
-import garden from "@/assets/garden-real.jpg";
-import heroFood from "@/assets/hero-food.jpg";
 import heroGarden from "@/assets/hero-garden.jpg";
-import interior from "@/assets/interior-real.jpg";
 import koreanBowl from "@/assets/korean-bowl.jpg";
-import minnesotaBowl from "@/assets/minnesota-bowl.jpg";
 import poppyFlower from "@/assets/poppy-flower-real.jpg";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
+// New images
+import dishesTableTop from "@/assets/dishes-table-top.jpg";
+import curryOfTheDay from "@/assets/curry-of-the-day.jpg";
 
 export const GallerySection = () => {
   const { language } = useLanguage();
 
   // Images organized in rows with layout hints
-  // layout: "full" = single image, "pair" = two side by side, "triple" = three (desktop only)
+  // Removed: garden-real.jpg, interior-real.jpg, minnesota-bowl.jpg, hero-food.jpg (used in Hero/other pages)
   const galleryRows = [
     // Row 1: Full width - dramatic entrance
     { layout: "full", images: [{ src: entranceGarden, alt: "Entrance to the secret garden" }] },
@@ -29,13 +28,13 @@ export const GallerySection = () => {
       { src: koreanBowl, alt: "Korean inspired dish" }
     ]},
     
-    // Row 3: Full - garden atmosphere
-    { layout: "full", images: [{ src: garden, alt: "Garden atmosphere" }] },
+    // Row 3: Full - NEW: table spread with multiple dishes
+    { layout: "full", images: [{ src: dishesTableTop, alt: "Selection of vegan dishes" }] },
     
-    // Row 4: Pair
+    // Row 4: Pair - NEW curry + existing
     { layout: "pair", images: [
-      { src: interior, alt: "Cozy interior" },
-      { src: minnesotaBowl, alt: "Minnesota bowl" }
+      { src: curryOfTheDay, alt: "Curry of the day preparation" },
+      { src: alpenpolenta, alt: "Alpenpolenta" }
     ]},
     
     // Row 5: Full - detail
@@ -44,16 +43,8 @@ export const GallerySection = () => {
     // Row 6: Triple (becomes pair + single on mobile)
     { layout: "triple", images: [
       { src: foodDetail, alt: "Food detail" },
-      { src: alpenpolenta, alt: "Alpenpolenta" },
-      { src: heroFood, alt: "Signature dish" }
-    ]},
-    
-    // Row 7: Full
-    { layout: "full", images: [{ src: foodGarden, alt: "Food in garden setting" }] },
-    
-    // Row 8: Pair - closing
-    { layout: "pair", images: [
-      { src: heroGarden, alt: "Garden view" },
+      { src: foodGarden, alt: "Food in garden setting" },
+      { src: heroGarden, alt: "Garden view" }
     ]},
   ];
 
