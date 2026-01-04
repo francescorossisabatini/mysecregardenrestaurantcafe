@@ -87,68 +87,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          BLOCK 5: PRODUCTS / VETRINA - Lo-fi, vertical
-          One title at a time, simple, not commercial
-      ═══════════════════════════════════════════════ */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 max-w-sm">
-          
-          {/* Product 1 */}
-          <div className="mb-20 md:mb-24">
-            <h3 className="font-caveat text-2xl md:text-3xl text-primary text-center mb-6">
-              {language === "de" ? "Hausgemachte Marmeladen" : "Homemade jams"}
-            </h3>
-            <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              }} />
-            </div>
-          </div>
-
-          {/* Product 2 */}
-          <div className="mb-20 md:mb-24">
-            <h3 className="font-caveat text-2xl md:text-3xl text-primary text-center mb-6">
-              {language === "de" ? "Kräutersalze aus dem Garten" : "Herb salts from the garden"}
-            </h3>
-            <div className="aspect-square rounded-lg bg-gradient-to-br from-accent/5 to-primary/5 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              }} />
-            </div>
-          </div>
-
-          {/* Product 3 */}
-          <div className="mb-12 md:mb-16">
-            <h3 className="font-caveat text-2xl md:text-3xl text-primary text-center mb-6">
-              {language === "de" ? "Kleine Geschenke" : "Small gifts"}
-            </h3>
-            <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/5 to-accent/5 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              }} />
-            </div>
-          </div>
-
-          {/* Final clarifying sentence */}
-          <p className="font-lora text-base text-foreground/50 text-center">
-            {language === "de" 
-              ? "Erhältlich in unserem Café." 
-              : "Available in our café."}
-          </p>
-        </div>
-      </section>
-
-      {/* Closing thought */}
-      <div className="pt-12 pb-6">
-        <div className="container mx-auto px-4">
-          <p className="font-lora text-base text-foreground/60 text-center">
-            {language === "de" 
-              ? "Einige dieser Dinge leben hier, bei uns." 
-              : "Some of these things live here, with us."}
-          </p>
-        </div>
-      </div>
 
       {/* Link to Inspiration - Minimal */}
       <section className="py-24 md:py-32">
