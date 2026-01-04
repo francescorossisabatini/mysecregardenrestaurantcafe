@@ -1,50 +1,49 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Import gallery images - avoiding redundancy with Hero and other pages
+// Import gallery images - curated selection avoiding redundancy
 import entranceGarden from "@/assets/entrance-garden.jpg";
 import foodBowl from "@/assets/food-bowl-real.jpg";
 import foodDetail from "@/assets/food-detail-real.jpg";
-import foodGarden from "@/assets/food-garden.jpg";
-import heroGarden from "@/assets/hero-garden.jpg";
-import koreanBowl from "@/assets/korean-bowl.jpg";
 import poppyFlower from "@/assets/poppy-flower-real.jpg";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
-// New images
-import dishesTableTop from "@/assets/dishes-table-top.jpg";
 import curryOfTheDay from "@/assets/curry-of-the-day.jpg";
+// New images - replacing redundant ones
+import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
+import tableSpreadMenu from "@/assets/table-spread-menu.jpg";
+import diningScene from "@/assets/dining-scene.jpg";
 
 export const GallerySection = () => {
   const { language } = useLanguage();
 
   // Images organized in rows with layout hints
-  // Removed: garden-real.jpg, interior-real.jpg, minnesota-bowl.jpg, hero-food.jpg (used in Hero/other pages)
+  // Fresh selection avoiding redundancy with Hero and other pages
   const galleryRows = [
-    // Row 1: Full width - dramatic entrance
-    { layout: "full", images: [{ src: entranceGarden, alt: "Entrance to the secret garden" }] },
+    // Row 1: Full width - dining scene with people
+    { layout: "full", images: [{ src: diningScene, alt: "Guests enjoying vegan dishes" }] },
     
     // Row 2: Pair - food focus
     { layout: "pair", images: [
       { src: foodBowl, alt: "Fresh bowl creation" },
-      { src: koreanBowl, alt: "Korean inspired dish" }
+      { src: dalRiceBowl, alt: "Dal with rice and pomegranate" }
     ]},
     
-    // Row 3: Full - NEW: table spread with multiple dishes
-    { layout: "full", images: [{ src: dishesTableTop, alt: "Selection of vegan dishes" }] },
+    // Row 3: Full - table spread with menu card
+    { layout: "full", images: [{ src: tableSpreadMenu, alt: "Selection of vegan dishes" }] },
     
-    // Row 4: Pair - NEW curry + existing
+    // Row 4: Pair - curry + polenta
     { layout: "pair", images: [
       { src: curryOfTheDay, alt: "Curry of the day preparation" },
       { src: alpenpolenta, alt: "Alpenpolenta" }
     ]},
     
-    // Row 5: Full - detail
-    { layout: "full", images: [{ src: poppyFlower, alt: "Poppy flower" }] },
+    // Row 5: Full - entrance
+    { layout: "full", images: [{ src: entranceGarden, alt: "Entrance to the secret garden" }] },
     
-    // Row 6: Triple (becomes pair + single on mobile)
+    // Row 6: Triple - details
     { layout: "triple", images: [
       { src: foodDetail, alt: "Food detail" },
-      { src: foodGarden, alt: "Food in garden setting" },
-      { src: heroGarden, alt: "Garden view" }
+      { src: poppyFlower, alt: "Poppy flower" },
+      { src: foodBowl, alt: "Bowl detail" }
     ]},
   ];
 
