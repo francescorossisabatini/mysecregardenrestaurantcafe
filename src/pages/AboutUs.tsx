@@ -2,8 +2,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FloatingCallButton } from "@/components/FloatingCallButton";
-import diningScene from "@/assets/dining-scene.jpg";
-import tableSpreadMenu from "@/assets/table-spread-menu.jpg";
+import entranceGarden from "@/assets/entrance-garden.jpg";
+import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import { Link } from "react-router-dom";
 
 const AboutUs = () => {
@@ -52,8 +52,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-lg">
             <img 
-              src={diningScene} 
-              alt={language === "de" ? "Gäste genießen vegane Gerichte" : "Guests enjoying vegan dishes"}
+              src={entranceGarden} 
+              alt={language === "de" ? "Eingang zum Garten" : "Entrance to the garden"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -79,8 +79,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-lg">
             <img 
-              src={tableSpreadMenu} 
-              alt={language === "de" ? "Auswahl veganer Gerichte" : "Selection of vegan dishes"}
+              src={dalRiceBowl} 
+              alt={language === "de" ? "Dal mit Reis" : "Dal with rice"}
               className="w-full h-full object-cover"
             />
           </div>
