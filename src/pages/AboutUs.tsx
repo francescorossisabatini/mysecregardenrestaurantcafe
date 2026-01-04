@@ -2,8 +2,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FloatingCallButton } from "@/components/FloatingCallButton";
-import gardenReal from "@/assets/garden-real.jpg";
-import interiorReal from "@/assets/interior-real.jpg";
+import diningScene from "@/assets/dining-scene.jpg";
+import tableSpreadMenu from "@/assets/table-spread-menu.jpg";
 import { Link } from "react-router-dom";
 
 const AboutUs = () => {
@@ -52,8 +52,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-lg">
             <img 
-              src={gardenReal} 
-              alt={language === "de" ? "Unser Garten" : "Our garden"}
+              src={diningScene} 
+              alt={language === "de" ? "Gäste genießen vegane Gerichte" : "Guests enjoying vegan dishes"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -79,8 +79,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-lg">
             <img 
-              src={interiorReal} 
-              alt={language === "de" ? "Unser Café" : "Our café"}
+              src={tableSpreadMenu} 
+              alt={language === "de" ? "Auswahl veganer Gerichte" : "Selection of vegan dishes"}
               className="w-full h-full object-cover"
             />
           </div>
