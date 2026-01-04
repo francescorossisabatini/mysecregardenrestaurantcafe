@@ -27,12 +27,12 @@ export const GallerySection = () => {
       { src: dalRiceBowl, alt: "Dal with rice and pomegranate" }
     ]},
     
-    // Row 3: Full - table spread with menu card
-    { layout: "full", images: [{ src: tableSpreadMenu, alt: "Selection of vegan dishes" }] },
+    // Row 3: Full - torta/quiche - hero shot
+    { layout: "full", images: [{ src: curryOfTheDay, alt: "Torta del giorno" }] },
     
-    // Row 4: Pair - curry + polenta
+    // Row 4: Pair - table spread + polenta
     { layout: "pair", images: [
-      { src: curryOfTheDay, alt: "Curry of the day preparation" },
+      { src: tableSpreadMenu, alt: "Selection of vegan dishes" },
       { src: alpenpolenta, alt: "Alpenpolenta" }
     ]},
     
