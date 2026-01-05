@@ -9,7 +9,7 @@ import { HomeClosing } from "@/components/HomeClosing";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FloatingCallButton } from "@/components/FloatingCallButton";
-import { NewsletterSection } from "@/components/NewsletterSection";
+
 
 const Index = () => {
   const location = useLocation();
@@ -69,8 +69,6 @@ const Index = () => {
       {/* Gallery - after reviews, before closing */}
       <GallerySection />
       
-      {/* Newsletter subscription */}
-      <NewsletterSection />
       
       {/* Instagram - whispered invitation */}
       <InstagramCTA />
