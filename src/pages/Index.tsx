@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { MenuSection } from "@/components/MenuSection";
@@ -14,29 +14,40 @@ import { FloatingCallButton } from "@/components/FloatingCallButton";
 const Index = () => {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(false);
+  const rafRef = useRef<number | null>(null);
+
+  // Throttled scroll handler using requestAnimationFrame
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) return;
+    
+    rafRef.current = requestAnimationFrame(() => {
+      if (window.scrollY > 10) {
+        setShowNavbar(true);
+      }
+      rafRef.current = null;
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowNavbar(true);
     }, 2000);
 
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setShowNavbar(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-  }, []);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (location.hash === "#menu") {
-      setTimeout(() => {
+      // Use requestAnimationFrame to batch layout reads
+      requestAnimationFrame(() => {
         const element = document.getElementById("menu");
         if (element) {
           const offset = -50;
@@ -47,7 +58,7 @@ const Index = () => {
             behavior: "smooth",
           });
         }
-      }, 50);
+      });
     }
   }, [location]);
 

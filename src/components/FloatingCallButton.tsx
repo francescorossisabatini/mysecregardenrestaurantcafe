@@ -2,24 +2,35 @@ import { Phone } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 export const FloatingCallButton = () => {
   const isMobile = useIsMobile();
   const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
+  const rafRef = useRef<number | null>(null);
+
+  // Throttled scroll handler using requestAnimationFrame
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) return;
+    
+    rafRef.current = requestAnimationFrame(() => {
+      setIsVisible(window.scrollY > 350);
+      rafRef.current = null;
+    });
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsVisible(scrollY > 350);
-    };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [handleScroll]);
 
   if (!isMobile) return null;
 
