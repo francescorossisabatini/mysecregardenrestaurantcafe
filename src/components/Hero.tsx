@@ -6,9 +6,9 @@ import { Phone, MapPin } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
-import minnesotaBowl from "@/assets/minnesota-bowl.jpg";
-import heroGarden from "@/assets/garden-real.jpg";
-import heroInterior from "@/assets/interior-real.jpg";
+import minnesotaBowl from "@/assets/minnesota-bowl.webp";
+import heroGarden from "@/assets/garden-real.webp";
+import heroInterior from "@/assets/interior-real.webp";
 
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
