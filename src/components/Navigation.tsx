@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,35 +13,46 @@ export const Navigation = () => {
   const { language } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
+  const rafRef = useRef<number | null>(null);
 
   // Check if we're on the home page
   const isHomePage = location.pathname === "/";
 
-  useEffect(() => {
+  // Throttled scroll handler using requestAnimationFrame
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) return;
+    
+    rafRef.current = requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
+      
+      // Show navbar as soon as user starts scrolling (threshold of 50px)
+      if (currentScrollY > 50) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+      rafRef.current = null;
+    });
+  }, []);
 
+  useEffect(() => {
     // Home page: hide navbar at top, show on any scroll
     if (isHomePage) {
-      const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        
-        // Show navbar as soon as user starts scrolling (threshold of 50px)
-        if (currentScrollY > 50) {
-          setShowNavbar(true);
-        } else {
-          setShowNavbar(false);
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
         }
-        
-        setLastScrollY(currentScrollY);
       };
-      
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
     }
 
     // Other pages: always show navbar
     setShowNavbar(true);
     setNavbarOpacity(1);
-  }, [lastScrollY, isHomePage]);
+  }, [isHomePage, handleScroll]);
 
   const navItems = [
     // Home link - brand navigation
@@ -70,16 +81,19 @@ export const Navigation = () => {
   ];
 
   const scrollToElement = (hash: string) => {
-    const element = document.querySelector(hash);
-    if (element) {
-      const offset = 80; // navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
+    // Use requestAnimationFrame to batch layout reads and prevent forced reflow
+    requestAnimationFrame(() => {
+      const element = document.querySelector(hash);
+      if (element) {
+        const offset = 80; // navbar height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    });
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean, isHash?: boolean) => {
