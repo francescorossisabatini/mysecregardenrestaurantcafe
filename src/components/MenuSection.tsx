@@ -90,8 +90,19 @@ export const MenuSection = () => {
   const isClosed = isSunday || todayHoliday !== null || !hasMenuData;
   const isNoMenuDay = !isSunday && !todayHoliday && !hasMenuData;
   
-  // Get Monday's menu for Sunday preview
-  const mondayMenu = menu.days.find(day => day.day.de === "Montag");
+  // Get next day's menu for closed day preview
+  const getNextDayMenu = () => {
+    const dayNamesDE = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    const nextDayIndex = (today.getDay() + 1) % 7;
+    const nextDayNameDE = dayNamesDE[nextDayIndex];
+    return menu.days.find(day => day.day.de === nextDayNameDE);
+  };
+  
+  const nextDayMenu = getNextDayMenu();
+  const nextDayName = {
+    de: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"][(today.getDay() + 1) % 7],
+    en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][(today.getDay() + 1) % 7]
+  };
 
   return (
     <section id="menu" className="py-16 md:py-24 bg-background">
@@ -211,40 +222,40 @@ export const MenuSection = () => {
                   )}
                 </div>
                 
-                {/* Monday preview - only on Sundays */}
-                {isSunday && !todayHoliday && mondayMenu && (
+                {/* Next day preview - when closed */}
+                {isClosed && nextDayMenu && (
                   <div className="pt-4 border-t border-border/30">
                     <p className="text-xs uppercase tracking-wider text-muted-foreground font-work mb-4">
-                      {language === "de" ? "Vorschau auf Montag" : "Preview of Monday"}
+                      {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
                     </p>
                     <div className="space-y-3 text-left">
-                      {mondayMenu.soup[language] && (
+                      {isValidMenuText(nextDayMenu.soup[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Suppe" : "Soup"}
                           </span>
                           <p className="text-foreground/70 font-work text-sm mt-1">
-                            {mondayMenu.soup[language]}
+                            {nextDayMenu.soup[language]}
                           </p>
                         </div>
                       )}
-                      {mondayMenu.green[language] && (
+                      {isValidMenuText(nextDayMenu.green[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Grünes Gericht" : "Green Dish"}
                           </span>
                           <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
-                            {mondayMenu.green[language]}
+                            {nextDayMenu.green[language]}
                           </p>
                         </div>
                       )}
-                      {mondayMenu.blue[language] && (
+                      {isValidMenuText(nextDayMenu.blue[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                           </span>
                           <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
-                            {mondayMenu.blue[language]}
+                            {nextDayMenu.blue[language]}
                           </p>
                         </div>
                       )}
@@ -261,7 +272,7 @@ export const MenuSection = () => {
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-cormorant text-base md:text-lg italic">
-                    {isClosed 
+                    {isClosed
                       ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
                       : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
                   </span>
