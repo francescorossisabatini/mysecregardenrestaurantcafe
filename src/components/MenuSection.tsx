@@ -397,6 +397,9 @@ export const MenuSection = () => {
               <p className="text-muted-foreground text-sm md:text-base font-work">
                 {klassikerMenu.subtitle[language]}
               </p>
+              <p className="text-muted-foreground/70 text-xs font-work mt-2 uppercase tracking-wide">
+                {language === "de" ? "Preise in Euro" : "Prices in Euro"}
+              </p>
             </div>
             
             <div className="space-y-8">
@@ -441,7 +444,7 @@ export const MenuSection = () => {
                             )}
                           </div>
                           <span className="text-accent font-semibold text-sm font-work shrink-0">
-                            {item.price}
+                            {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                           </span>
                         </div>
                       </div>
