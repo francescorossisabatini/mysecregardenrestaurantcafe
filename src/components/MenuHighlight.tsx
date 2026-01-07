@@ -87,7 +87,7 @@ export const MenuHighlight = () => {
                         </Badge>
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.soup[language]}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{t("menu.soupPrice")}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{language === 'de' ? 'Klein 4,5€ / Groß 6,5€' : 'Small €4.5 / Large €6.5'}</p>
                     </div>
 
                     {/* Green Dish */}

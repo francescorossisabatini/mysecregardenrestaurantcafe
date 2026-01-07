@@ -17,13 +17,13 @@ interface WeeklyMenuDialogProps {
 }
 
 const introText = {
-  de: "Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für 15.20€. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.",
-  en: "Every day you have the choice between two fresh, seasonal daily dishes for 15.20€. We always prepare the 'green' vegan & gluten-free - the 'blue' may also contain dairy products, gluten-containing grains or eggs."
+  de: "Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für 15,2€. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.",
+  en: "Every day you have the choice between two fresh, seasonal daily dishes for €15.2. We always prepare the 'green' vegan & gluten-free - the 'blue' may also contain dairy products, gluten-containing grains or eggs."
 };
 
 const soupInfo = {
-  de: "Unsere schmackhaften Tagessuppen sind immer vegan & glutenfrei und gibt's klein um 4.50€ / groß um 6.50€. Ein frisches Bio-Weckerl dazu? – 1.90€",
-  en: "Our delicious daily soups are always vegan & gluten-free and are available small for 4.50€ / large for 6.50€. A fresh organic roll with it? - 1.90€"
+  de: "Unsere schmackhaften Tagessuppen sind immer vegan & glutenfrei und gibt's klein um 4,5€ / groß um 6,5€. Ein frisches Bio-Weckerl dazu? – 1,9€",
+  en: "Our delicious daily soups are always vegan & gluten-free and are available small for €4.5 / large for €6.5. A fresh organic roll with it? - €1.9"
 };
 
 export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) => {
@@ -93,7 +93,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                       <Badge className="bg-accent text-accent-foreground text-xs font-bold uppercase px-2 py-0.5">
                         {language === 'de' ? 'Grün' : 'Green'}
                       </Badge>
-                      <span className="text-xs text-muted-foreground">15,20€</span>
+                      <span className="text-xs text-muted-foreground">15,2€</span>
                     </div>
                     <p className="text-sm leading-relaxed text-foreground font-medium">{dayMenu.green[language]}</p>
                   </div>
@@ -108,7 +108,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                         <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                           {language === 'de' ? 'Blau' : 'Blue'}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">15,20€</span>
+                        <span className="text-xs text-muted-foreground">15,2€</span>
                       </div>
                       <p className="text-sm leading-relaxed text-foreground font-medium">
                         {dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en}
@@ -127,8 +127,8 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
             <span className="font-bold text-primary">{language === 'de' ? 'Preise:' : 'Prices:'}</span>{' '}
             <span className="text-foreground/80">
               {language === 'de' 
-                ? 'Tagesgerichte 15,20€ • Suppe klein 4,50€ / groß 6,50€ • Bio-Weckerl +1,90€'
-                : 'Daily dishes 15,20€ • Soup small 4,50€ / large 6,50€ • Organic roll +1,90€'}
+                ? 'Tagesgerichte 15,2€ • Suppe klein 4,5€ / groß 6,5€ • Bio-Weckerl +1,9€'
+                : 'Daily dishes €15.2 • Soup small €4.5 / large €6.5 • Organic roll +€1.9'}
             </span>
           </p>
         </div>
