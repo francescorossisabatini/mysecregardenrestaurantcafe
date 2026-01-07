@@ -94,7 +94,7 @@ export const DailyMenuHighlight = () => {
             {day.soup[language]}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            {language === "de" ? "Klein 4,50 € / Groß 6,50 €" : "Small €4.50 / Large €6.50"}
+            {language === "de" ? "Klein 4,5€ / Groß 6,5€" : "Small €4.5 / Large €6.5"}
           </p>
         </div>
 
@@ -107,7 +107,7 @@ export const DailyMenuHighlight = () => {
                 {language === "de" ? "Grün" : "Green"}
               </span>
             </div>
-            <span className="text-sm font-bold text-accent">15,20 €</span>
+            <span className="text-sm font-bold text-accent">15,2€</span>
           </div>
           <p className="font-lora text-sm text-foreground leading-relaxed">
             {day.green[language]}
@@ -129,7 +129,7 @@ export const DailyMenuHighlight = () => {
                   {language === "de" ? "Blau" : "Blue"}
                 </span>
               </div>
-              <span className="text-sm font-bold text-primary">15,20 €</span>
+              <span className="text-sm font-bold text-primary">15,2€</span>
             </div>
             <p className="font-lora text-sm text-foreground leading-relaxed">
               {day.blue[language]}
@@ -223,7 +223,7 @@ export const DailyMenuHighlight = () => {
                               {day.soup[language]}
                             </p>
                             <p className="text-xs text-muted-foreground mt-1">
-                              {language === "de" ? "Klein 4,50 € / Groß 6,50 €" : "Small €4.50 / Large €6.50"}
+                              {language === "de" ? "Klein 4,5€ / Groß 6,5€" : "Small €4.5 / Large €6.5"}
                             </p>
                           </div>
 
@@ -236,7 +236,7 @@ export const DailyMenuHighlight = () => {
                                   {language === "de" ? "Grün" : "Green"}
                                 </span>
                               </div>
-                              <span className="text-sm font-bold text-accent">15,20 €</span>
+                              <span className="text-sm font-bold text-accent">15,2€</span>
                             </div>
                             <p className="font-lora text-sm text-foreground leading-relaxed">
                               {day.green[language]}
@@ -258,7 +258,7 @@ export const DailyMenuHighlight = () => {
                                     {language === "de" ? "Blau" : "Blue"}
                                   </span>
                                 </div>
-                                <span className="text-sm font-bold text-primary">15,20 €</span>
+                                <span className="text-sm font-bold text-primary">15,2€</span>
                               </div>
                               <p className="font-lora text-sm text-foreground leading-relaxed">
                                 {day.blue[language]}
