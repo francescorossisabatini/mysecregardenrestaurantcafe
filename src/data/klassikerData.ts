@@ -9,6 +9,7 @@ export interface KlassikerItem {
   isVegan?: boolean;
   isGlutenFree?: boolean;
   isBio?: boolean;
+  isUnavailable?: boolean;
 }
 
 export const klassikerMenu = {
@@ -147,6 +148,17 @@ export const klassikerMenu = {
           },
           price: "3,00 / 4,70",
           isVegan: true,
+        },
+        {
+          id: "eistee",
+          name: { de: "Hausgemachter Eistee", en: "Homemade Iced Tea" },
+          description: {
+            de: "Frisch gebrühter Eistee mit natürlichen Zutaten",
+            en: "Freshly brewed iced tea with natural ingredients"
+          },
+          price: "4,2",
+          isVegan: true,
+          isUnavailable: true,
         },
         {
           id: "mango-lassi",

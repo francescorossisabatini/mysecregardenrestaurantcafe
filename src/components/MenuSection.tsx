@@ -412,12 +412,17 @@ export const MenuSection = () => {
                     {category.items.map((item) => (
                       <div 
                         key={item.id} 
-                        className="bg-klassiker rounded-xl p-4 border border-border/20"
+                        className={`bg-klassiker rounded-xl p-4 border border-border/20 ${item.isUnavailable ? 'opacity-50' : ''}`}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1">
                             <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
                               {item.name[language]}
+                              {item.isUnavailable && (
+                                <span className="ml-2 text-xs font-work text-muted-foreground italic">
+                                  ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
+                                </span>
+                              )}
                             </h4>
                             <p className="text-muted-foreground font-work text-sm leading-relaxed">
                               {item.description[language]}
