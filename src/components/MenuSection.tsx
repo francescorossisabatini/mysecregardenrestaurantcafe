@@ -408,53 +408,97 @@ export const MenuSection = () => {
                   <h3 className="font-cormorant text-lg font-medium text-foreground/80 mb-4 border-b border-border/30 pb-2">
                     {category.name[language]}
                   </h3>
-                  <div className="space-y-3">
-                    {category.items.map((item) => (
-                      <div 
-                        key={item.id} 
-                        className={`bg-klassiker rounded-xl p-4 border border-border/20 ${item.isUnavailable ? 'opacity-50' : ''}`}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1">
-                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
-                              {item.name[language]}
-                              {item.isUnavailable && (
-                                <span className="ml-2 text-xs font-work text-muted-foreground italic">
-                                  ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
-                                </span>
+                  
+                  {/* Regular items (non-drinks categories) */}
+                  {category.items && (
+                    <div className="space-y-3">
+                      {category.items.map((item) => (
+                        <div 
+                          key={item.id} 
+                          className={`bg-klassiker rounded-xl p-4 border border-border/20 ${item.isUnavailable ? 'opacity-50' : ''}`}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1">
+                              <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
+                                {item.name[language]}
+                                {item.isUnavailable && (
+                                  <span className="ml-2 text-xs font-work text-muted-foreground italic">
+                                    ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
+                                  </span>
+                                )}
+                              </h4>
+                              {item.description && (
+                                <p className="text-muted-foreground font-work text-sm leading-relaxed">
+                                  {item.description[language]}
+                                </p>
                               )}
-                            </h4>
-                            <p className="text-muted-foreground font-work text-sm leading-relaxed">
-                              {item.description[language]}
-                            </p>
-                            {/* Dietary labels - only if present */}
-                            {(item.isVegan || item.isGlutenFree || item.isBio) && (
-                              <div className="flex items-center gap-2 mt-2">
-                                {item.isVegan && (
-                                  <span className="text-xs text-green-600 dark:text-green-400 font-work">
-                                    vegan
-                                  </span>
-                                )}
-                                {item.isGlutenFree && (
-                                  <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
-                                    {language === "de" ? "glutenfrei" : "gluten-free"}
-                                  </span>
-                                )}
-                                {item.isBio && (
-                                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
-                                    bio
-                                  </span>
-                                )}
-                              </div>
-                            )}
+                              {/* Dietary labels - only if present */}
+                              {(item.isVegan || item.isGlutenFree || item.isBio) && (
+                                <div className="flex items-center gap-2 mt-2">
+                                  {item.isVegan && (
+                                    <span className="text-xs text-green-600 dark:text-green-400 font-work">
+                                      vegan
+                                    </span>
+                                  )}
+                                  {item.isGlutenFree && (
+                                    <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
+                                      {language === "de" ? "glutenfrei" : "gluten-free"}
+                                    </span>
+                                  )}
+                                  {item.isBio && (
+                                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
+                                      bio
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                            <span className="text-accent font-semibold text-sm font-work shrink-0">
+                              {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
+                            </span>
                           </div>
-                          <span className="text-accent font-semibold text-sm font-work shrink-0">
-                            {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
-                          </span>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Drinks subcategories */}
+                  {category.subcategories && (
+                    <div className="space-y-6">
+                      {category.subcategories.map((subcategory) => (
+                        <div key={subcategory.id}>
+                          <h4 className="font-work text-sm text-muted-foreground uppercase tracking-wide mb-3">
+                            {subcategory.name[language]}
+                            {subcategory.sizeNote && (
+                              <span className="ml-2 text-xs normal-case">({subcategory.sizeNote})</span>
+                            )}
+                          </h4>
+                          <div className="space-y-2">
+                            {subcategory.items.map((item) => (
+                              <div 
+                                key={item.id} 
+                                className="flex items-start justify-between gap-3 py-2 border-b border-border/10 last:border-0"
+                              >
+                                <div className="flex-1">
+                                  <span className="font-work text-sm text-foreground">
+                                    {item.name[language]}
+                                  </span>
+                                  {item.sizeNote && (
+                                    <span className="text-muted-foreground text-xs ml-2">
+                                      ({item.sizeNote})
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="text-accent font-medium text-sm font-work shrink-0">
+                                  {item.price}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
