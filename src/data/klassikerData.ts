@@ -43,7 +43,7 @@ export const klassikerMenu = {
             de: "Frischer Blattsalat mit saisonalem Gemüse und hausgemachtem Dressing",
             en: "Fresh leaf salad with seasonal vegetables and homemade dressing"
           },
-          price: "5,90 / 9,90",
+          price: "6,5 / 10,9",
           isVegan: true,
           isGlutenFree: true,
         },
@@ -54,7 +54,7 @@ export const klassikerMenu = {
             de: "Bunter Salat mit frischer Avocado und hausgemachtem Dressing",
             en: "Colorful salad with fresh avocado and homemade dressing"
           },
-          price: "16,90",
+          price: "17,5",
           isVegan: true,
           isGlutenFree: true,
         },
@@ -65,7 +65,7 @@ export const klassikerMenu = {
             de: "Bunter Salat mit warmem Ziegenkäse und hausgemachtem Dressing",
             en: "Colorful salad with warm goat cheese and homemade dressing"
           },
-          price: "16,90",
+          price: "17,5",
           isGlutenFree: true,
         },
         {
@@ -75,7 +75,7 @@ export const klassikerMenu = {
             de: "Bunter Salat mit mariniertem Bio-Tofu und hausgemachtem Dressing",
             en: "Colorful salad with marinated organic tofu and homemade dressing"
           },
-          price: "16,90",
+          price: "17,5",
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
@@ -112,7 +112,7 @@ export const klassikerMenu = {
             de: "Saftiger Schokoladen-Brownie mit Walnüssen",
             en: "Moist chocolate brownie with walnuts"
           },
-          price: "4,30",
+          price: "4,7",
         },
         {
           id: "schoko-mousse-torte",
@@ -121,7 +121,7 @@ export const klassikerMenu = {
             de: "Luftige Schokoladenmousse-Torte",
             en: "Light chocolate mousse cake"
           },
-          price: "4,70",
+          price: "4,7",
         },
         {
           id: "karotten-gewuerztorte",
@@ -130,7 +130,7 @@ export const klassikerMenu = {
             de: "Würzige Karottentorte mit Frischkäse-Topping",
             en: "Spiced carrot cake with cream cheese topping"
           },
-          price: "4,30",
+          price: "4,5",
         },
       ],
     },
@@ -149,23 +149,13 @@ export const klassikerMenu = {
           isVegan: true,
         },
         {
-          id: "eistee",
-          name: { de: "Hausgemachter Eistee", en: "Homemade Iced Tea" },
-          description: {
-            de: "Frisch gebrühter Eistee mit natürlichen Zutaten",
-            en: "Freshly brewed iced tea with natural ingredients"
-          },
-          price: "4,00",
-          isVegan: true,
-        },
-        {
           id: "mango-lassi",
           name: { de: "Mango-Lassi", en: "Mango Lassi" },
           description: {
             de: "Cremiger Joghurt-Drink mit frischer Mango",
             en: "Creamy yogurt drink with fresh mango"
           },
-          price: "4,70",
+          price: "4,9",
         },
       ],
     },
