@@ -12,8 +12,8 @@ export const SITE = {
   // Address
   addressShort: "Mariahilferstraße 45, Im Raimundhof – 1060 Wien",
 
-  // Google Maps share link
-  mapsUrl: "https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/",
+  // Google Maps share link (direct link to restaurant)
+  mapsUrl: "https://www.google.com/maps/place/Secret+Garden+Caf%C3%A9+Restaurant/@48.1994275,16.353526,17z/data=!3m1!4b1!4m6!3m5!1s0x476d078f0451b459:0x76f7dc33e496ccb5!8m2!3d48.1994275!4d16.353526!16s%2Fg%2F1tj4fbv6",
 
   // Opening hours (Mo–Sa 11:00–19:00, So closed)
   openingHours: {
