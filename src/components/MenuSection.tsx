@@ -168,7 +168,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">17,90</p>
+                    <p className="text-accent font-semibold text-sm font-work mt-2">17,50</p>
                   </div>
                 )}
 
@@ -187,7 +187,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">17,90</p>
+                    <p className="text-accent font-semibold text-sm font-work mt-2">17,50</p>
                   </div>
                 )}
               </div>
