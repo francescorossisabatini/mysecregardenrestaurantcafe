@@ -1,6 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
-import { klassikerMenu } from "@/data/klassikerData";
+import { klassikerMenu, KlassikerItem } from "@/data/klassikerData";
 import {
   getTodayHoliday,
   getHolidayForDate,
@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
@@ -57,10 +57,25 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
+// Curated selection IDs for the compact drinks view
+const CURATED_DRINK_IDS = [
+  "indian-chai-latte",
+  "matcha-latte", 
+  "kurkuma-latte",
+  "cappuccino",
+  "espresso",
+  "flat-white",
+  "pumpkin-spiced-latte", // signature/seasonal
+  "glueh-kombucha", // signature/seasonal
+  "mineral-water",
+  "cola",
+];
+
 export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
   const [weeklyOpen, setWeeklyOpen] = useState(false);
+  const [drinksExpanded, setDrinksExpanded] = useState(false);
   
   // Get today's day name
   const today = new Date();
@@ -462,41 +477,93 @@ export const MenuSection = () => {
                     </div>
                   )}
                   
-                  {/* Drinks subcategories */}
+                  {/* Drinks - curated selection with expand option */}
                   {category.subcategories && (
-                    <div className="space-y-6">
-                      {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id}>
-                          <h4 className="font-work text-sm text-muted-foreground uppercase tracking-wide mb-3">
-                            {subcategory.name[language]}
-                            {subcategory.sizeNote && (
-                              <span className="ml-2 text-xs normal-case">({subcategory.sizeNote})</span>
-                            )}
-                          </h4>
-                          <div className="space-y-2">
-                            {subcategory.items.map((item) => (
-                              <div 
-                                key={item.id} 
-                                className="flex items-start justify-between gap-3 py-2 border-b border-border/10 last:border-0"
-                              >
-                                <div className="flex-1">
-                                  <span className="font-work text-sm text-foreground">
-                                    {item.name[language]}
-                                  </span>
-                                  {item.sizeNote && (
-                                    <span className="text-muted-foreground text-xs ml-2">
-                                      ({item.sizeNote})
-                                    </span>
-                                  )}
-                                </div>
-                                <span className="text-accent font-medium text-sm font-work shrink-0">
-                                  {item.price}
+                    <div className="space-y-4">
+                      {/* Curated selection (always visible) */}
+                      <div className="space-y-2">
+                        {category.subcategories
+                          .flatMap(sub => sub.items)
+                          .filter(item => CURATED_DRINK_IDS.includes(item.id))
+                          .map((item: KlassikerItem) => (
+                            <div 
+                              key={item.id} 
+                              className="flex items-start justify-between gap-3 py-2 border-b border-border/10 last:border-0"
+                            >
+                              <div className="flex-1">
+                                <span className="font-work text-sm text-foreground">
+                                  {item.name[language]}
                                 </span>
+                                {item.sizeNote && (
+                                  <span className="text-muted-foreground text-xs ml-2">
+                                    ({item.sizeNote})
+                                  </span>
+                                )}
                               </div>
-                            ))}
-                          </div>
+                              <span className="text-accent font-medium text-sm font-work shrink-0">
+                                {item.price}
+                              </span>
+                            </div>
+                          ))}
+                      </div>
+                      
+                      {/* Expand link */}
+                      {!drinksExpanded && (
+                        <button
+                          onClick={() => setDrinksExpanded(true)}
+                          className="text-muted-foreground text-sm font-work hover:text-foreground transition-colors"
+                        >
+                          {language === "de" ? "Alle Getränke anzeigen" : "Show all drinks"}
+                        </button>
+                      )}
+                      
+                      {/* Full drinks list (expanded) */}
+                      {drinksExpanded && (
+                        <div className="space-y-6 pt-4">
+                          {category.subcategories.map((subcategory) => (
+                            <div key={subcategory.id}>
+                              <h4 className="font-work text-sm text-muted-foreground uppercase tracking-wide mb-3">
+                                {subcategory.name[language]}
+                                {subcategory.sizeNote && (
+                                  <span className="ml-2 text-xs normal-case">({subcategory.sizeNote})</span>
+                                )}
+                              </h4>
+                              <div className="space-y-2">
+                                {subcategory.items
+                                  .filter(item => !CURATED_DRINK_IDS.includes(item.id))
+                                  .map((item: KlassikerItem) => (
+                                    <div 
+                                      key={item.id} 
+                                      className="flex items-start justify-between gap-3 py-2 border-b border-border/10 last:border-0"
+                                    >
+                                      <div className="flex-1">
+                                        <span className="font-work text-sm text-foreground">
+                                          {item.name[language]}
+                                        </span>
+                                        {item.sizeNote && (
+                                          <span className="text-muted-foreground text-xs ml-2">
+                                            ({item.sizeNote})
+                                          </span>
+                                        )}
+                                      </div>
+                                      <span className="text-accent font-medium text-sm font-work shrink-0">
+                                        {item.price}
+                                      </span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          ))}
+                          
+                          {/* Collapse link */}
+                          <button
+                            onClick={() => setDrinksExpanded(false)}
+                            className="text-muted-foreground text-sm font-work hover:text-foreground transition-colors"
+                          >
+                            {language === "de" ? "Weniger anzeigen" : "Show less"}
+                          </button>
                         </div>
-                      ))}
+                      )}
                     </div>
                   )}
                 </div>
