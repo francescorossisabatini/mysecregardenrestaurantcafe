@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Spaisekarte = () => {
+const Wochenkarte = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const Spaisekarte = () => {
   return null;
 };
 
-export default Spaisekarte;
+export default Wochenkarte;
