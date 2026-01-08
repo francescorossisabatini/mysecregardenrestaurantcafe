@@ -105,9 +105,9 @@ export const MenuSection = () => {
     isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
   );
   
-  // Determine if restaurant is closed (Sunday, holiday, or no menu data)
-  const isClosed = isSunday || todayHoliday !== null || !hasMenuData;
-  const isNoMenuDay = !isSunday && !todayHoliday && !hasMenuData;
+  // Determine if restaurant is closed (Sunday, holiday, no menu data, or after 19:00)
+  const isClosed = isSunday || todayHoliday !== null || !hasMenuData || isAfterClosing;
+  const isNoMenuDay = !isSunday && !todayHoliday && !hasMenuData && !isAfterClosing;
   
   // Show next day preview if closed OR after 19:00
   const showNextDayPreview = isClosed || isAfterClosing;
@@ -155,134 +155,93 @@ export const MenuSection = () => {
                 ))}
               </div>
             ) : !isClosed && todayMenu ? (
-              <>
-                {/* Today's menu (shown normally, or faded after 19:00) */}
-                <div className={`space-y-4 ${isAfterClosing ? 'opacity-60' : ''}`}>
-                  {/* Soup */}
-                  {isValidMenuText(todayMenu.soup[language]) && (
-                    <div className="bg-daily rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
-                          {language === "de" ? "Heute" : "Today"}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground font-work">
-                          {language === "de" ? "Suppe" : "Soup"}
-                        </span>
-                      </div>
-                      <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
-                        {todayMenu.soup[language]}
-                      </p>
-                      <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                      <p className="text-accent font-semibold text-sm font-work mt-2">6,90</p>
+              <div className="space-y-4">
+                {/* Soup */}
+                {isValidMenuText(todayMenu.soup[language]) && (
+                  <div className="bg-daily rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                        {language === "de" ? "Heute" : "Today"}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground font-work">
+                        {language === "de" ? "Suppe" : "Soup"}
+                      </span>
                     </div>
-                  )}
-
-                  {/* Green Dish */}
-                  {isValidMenuText(todayMenu.green[language]) && (
-                    <div className="bg-daily rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
-                          {language === "de" ? "Heute" : "Today"}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground font-work">
-                          {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                        </span>
-                      </div>
-                      <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
-                        {todayMenu.green[language]}
-                      </p>
-                      <DietaryBadges text={todayMenu.green[language]} language={language} />
-                      <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
-                    </div>
-                  )}
-
-                  {/* Blue Dish */}
-                  {isValidMenuText(todayMenu.blue[language]) && (
-                    <div className="bg-daily rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
-                          {language === "de" ? "Heute" : "Today"}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground font-work">
-                          {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                        </span>
-                      </div>
-                      <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
-                        {todayMenu.blue[language]}
-                      </p>
-                      <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                      <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
-                    </div>
-                  )}
-                </div>
-                
-                {/* Next day preview after 19:00 */}
-                {isAfterClosing && nextDayMenu && (
-                  <div className="mt-8 pt-6 border-t border-border/30">
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-work mb-4 text-center">
-                      {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
+                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                      {todayMenu.soup[language]}
                     </p>
-                    <div className="space-y-3">
-                      {isValidMenuText(nextDayMenu.soup[language]) && (
-                        <div className="bg-accent/10 rounded-lg p-4">
-                          <span className="text-xs text-accent font-work">
-                            {language === "de" ? "Suppe" : "Soup"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1">
-                            {nextDayMenu.soup[language]}
-                          </p>
-                          <DietaryBadges text={nextDayMenu.soup[language]} language={language} />
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.green[language]) && (
-                        <div className="bg-accent/10 rounded-lg p-4">
-                          <span className="text-xs text-accent font-work">
-                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1">
-                            {nextDayMenu.green[language]}
-                          </p>
-                          <DietaryBadges text={nextDayMenu.green[language]} language={language} />
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.blue[language]) && (
-                        <div className="bg-accent/10 rounded-lg p-4">
-                          <span className="text-xs text-accent font-work">
-                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1">
-                            {nextDayMenu.blue[language]}
-                          </p>
-                          <DietaryBadges text={nextDayMenu.blue[language]} language={language} />
-                        </div>
-                      )}
-                    </div>
+                    <DietaryBadges text={todayMenu.soup[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">6,90</p>
                   </div>
                 )}
-              </>
+
+                {/* Green Dish */}
+                {isValidMenuText(todayMenu.green[language]) && (
+                  <div className="bg-daily rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                        {language === "de" ? "Heute" : "Today"}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground font-work">
+                        {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                      </span>
+                    </div>
+                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                      {todayMenu.green[language]}
+                    </p>
+                    <DietaryBadges text={todayMenu.green[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
+                  </div>
+                )}
+
+                {/* Blue Dish */}
+                {isValidMenuText(todayMenu.blue[language]) && (
+                  <div className="bg-daily rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                        {language === "de" ? "Heute" : "Today"}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground font-work">
+                        {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                      </span>
+                    </div>
+                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                      {todayMenu.blue[language]}
+                    </p>
+                    <DietaryBadges text={todayMenu.blue[language]} language={language} />
+                    <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
-                {/* Holiday, Sunday, or no-menu rest message */}
+                {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
                     {todayHoliday 
                       ? todayHoliday.name[language]
-                      : isNoMenuDay
-                        ? (language === "de" ? "Heute geschlossen" : "Closed Today")
-                        : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
+                      : isAfterClosing
+                        ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
+                        : isNoMenuDay
+                          ? (language === "de" ? "Heute geschlossen" : "Closed Today")
+                          : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
                   </p>
                   <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
                     {todayHoliday 
                       ? todayHoliday.message[language]
-                      : isNoMenuDay
+                      : isAfterClosing
                         ? (language === "de" 
-                            ? "Heute haben wir leider geschlossen. Wir freuen uns, dich bald wiederzusehen." 
-                            : "We are closed today. We look forward to seeing you soon.")
-                        : (language === "de" 
-                            ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
-                            : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
+                            ? "Wir sind für heute geschlossen. Schau dir an, was morgen auf dich wartet." 
+                            : "We are closed for today. See what awaits you tomorrow.")
+                        : isNoMenuDay
+                          ? (language === "de" 
+                              ? "Heute haben wir leider geschlossen. Wir freuen uns, dich bald wiederzusehen." 
+                              : "We are closed today. We look forward to seeing you soon.")
+                          : (language === "de" 
+                              ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
+                              : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
                   </p>
-                  {(todayHoliday || isNoMenuDay) && (
+                  {(todayHoliday || isNoMenuDay) && !isAfterClosing && (
                     <p className="text-muted-foreground/70 font-work text-xs mt-2">
                       {language === "de" 
                         ? "Heute haben wir geschlossen." 
