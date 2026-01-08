@@ -236,6 +236,15 @@ const getInitialLanguage = (): Language => {
     if (stored === "de" || stored === "en") {
       return stored;
     }
+    
+    // Detect browser language for first-time visitors
+    const browserLang = navigator.language || (navigator as any).userLanguage || "";
+    const langCode = browserLang.split("-")[0].toLowerCase();
+    
+    // If browser is English, use English; otherwise default to German
+    if (langCode === "en") {
+      return "en";
+    }
   }
   // Default to German (restaurant is in Vienna)
   return "de";
