@@ -15,7 +15,8 @@ export const FloatingCallButton = () => {
     if (rafRef.current) return;
     
     rafRef.current = requestAnimationFrame(() => {
-      setIsVisible(window.scrollY > 350);
+      // Lower threshold on mobile for quicker visibility
+      setIsVisible(window.scrollY > 100);
       rafRef.current = null;
     });
   }, []);
@@ -45,11 +46,12 @@ export const FloatingCallButton = () => {
         px-4 py-2.5
         bg-foreground/90 text-background
         rounded-full
-        text-sm font-medium
+        text-base font-medium
         shadow-sm
         transition-all duration-300 ease-out
         hover:bg-foreground
         active:scale-95
+        touch-manipulation
         pb-[calc(0.625rem+env(safe-area-inset-bottom))]
         ${isVisible 
           ? "opacity-100 translate-y-0" 
@@ -57,8 +59,9 @@ export const FloatingCallButton = () => {
         }
       `}
       aria-label={label}
+      style={{ WebkitTapHighlightColor: 'transparent' }}
     >
-      <Phone className="w-4 h-4" strokeWidth={1.5} />
+      <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
       <span>{label}</span>
     </a>
   );
