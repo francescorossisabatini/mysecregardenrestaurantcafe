@@ -1,6 +1,7 @@
 import { Heart, Instagram, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
 
 export const Footer = () => {
   const { language } = useLanguage();
@@ -56,7 +57,7 @@ export const Footer = () => {
               {language === "de" ? "Kontakt" : "Contact"}
             </Link>
             <a 
-              href="https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/"
+              href={SITE.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary-foreground/60 hover:text-primary-foreground/80 transition-colors"
