@@ -49,19 +49,38 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
   const key = weekdayKey(weekday);
   const slot = hours[key];
 
+  // Helper to get next day's key
+  const dayOrder: (keyof OpeningHours)[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const currentDayIndex = dayOrder.indexOf(key);
+  const nextDayIndex = (currentDayIndex + 1) % 7;
+  const nextDayKey = dayOrder[nextDayIndex];
+  const nextDaySlot = hours[nextDayKey];
+
   if (!slot) {
-    return { isOpen: false, closesAt: null as string | null, opensAt: null as string | null, isClosed: true };
+    // Today is closed (e.g., Sunday) - check if tomorrow opens
+    return { 
+      isOpen: false, 
+      closesAt: null as string | null, 
+      opensAt: null as string | null, 
+      isClosed: true,
+      tomorrowOpensAt: nextDaySlot?.open ?? null,
+      tomorrowClosed: !nextDaySlot,
+    };
   }
 
   const openM = toMinutes(slot.open);
   const closeM = toMinutes(slot.close);
   const isOpen = minutes >= openM && minutes < closeM;
   const isBeforeOpening = minutes < openM;
+  const isAfterClosing = minutes >= closeM;
 
   return {
     isOpen,
     closesAt: isOpen ? slot.close : null,
     opensAt: isBeforeOpening ? slot.open : null,
     isClosed: false,
+    isAfterClosing,
+    tomorrowOpensAt: nextDaySlot?.open ?? null,
+    tomorrowClosed: !nextDaySlot,
   };
 }
