@@ -150,7 +150,7 @@ export const Hero = () => {
           </p>
 
           {/* Open/Closed chip - soft style */}
-          <div className={`flex justify-center items-center gap-2 transition-opacity duration-[1500ms] ease-out ${
+          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             {/* Case 1: Open now */}
@@ -174,8 +174,27 @@ export const Hero = () => {
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
             )}
-            {/* Case 3: Closed today (Sunday, holiday, no menu, or after closing) */}
-            {!effectivelyOpen && (isClosedToday || (!status.opensAt && status.isClosed) || (!status.opensAt && !status.isOpen)) && (
+            {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
+            {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
+              <>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-red-500/20 text-red-100 border border-red-400/30">
+                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-red-400" />
+                  {language === "de" ? "Jetzt geschlossen" : "Closed now"}
+                </span>
+                {status.tomorrowOpensAt && !status.tomorrowClosed && (
+                  <span className="text-xs text-background/70">
+                    {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
+                  </span>
+                )}
+                {status.tomorrowClosed && (
+                  <span className="text-xs text-background/70">
+                    {language === "de" ? "• morgen geschlossen" : "• closed tomorrow"}
+                  </span>
+                )}
+              </>
+            )}
+            {/* Case 4: Closed today (Sunday, holiday, no menu) */}
+            {!effectivelyOpen && isClosedToday && (
               <>
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-red-500/20 text-red-100 border border-red-400/30">
                   <span className="w-1.5 h-1.5 rounded-full mr-2 bg-red-400" />
@@ -184,6 +203,11 @@ export const Hero = () => {
                 {closedReason === "no-menu" && (
                   <span className="text-xs text-background/70">
                     {language === "de" ? "• kein Menü heute" : "• no menu today"}
+                  </span>
+                )}
+                {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
+                  <span className="text-xs text-background/70">
+                    {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
               </>
