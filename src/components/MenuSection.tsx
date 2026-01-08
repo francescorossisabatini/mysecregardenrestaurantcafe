@@ -168,7 +168,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">17,50</p>
+                    <p className="text-accent font-semibold text-sm font-work mt-2">16,90</p>
                   </div>
                 )}
 
@@ -187,7 +187,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">17,50</p>
+                    <p className="text-accent font-semibold text-sm font-work mt-2">16,90</p>
                   </div>
                 )}
               </div>
@@ -352,7 +352,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.green[language]}</p>
                                       <DietaryBadges text={day.green[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                                    <span className="text-accent text-xs font-medium shrink-0">16,90</span>
                                   </div>
                                 )}
                                 {isValidMenuText(day.blue[language]) && (
@@ -364,7 +364,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.blue[language]}</p>
                                       <DietaryBadges text={day.blue[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">11,90</span>
+                                    <span className="text-accent text-xs font-medium shrink-0">16,90</span>
                                   </div>
                                 )}
                               </div>
