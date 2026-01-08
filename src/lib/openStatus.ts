@@ -50,15 +50,18 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
   const slot = hours[key];
 
   if (!slot) {
-    return { isOpen: false, closesAt: null as string | null };
+    return { isOpen: false, closesAt: null as string | null, opensAt: null as string | null, isClosed: true };
   }
 
   const openM = toMinutes(slot.open);
   const closeM = toMinutes(slot.close);
   const isOpen = minutes >= openM && minutes < closeM;
+  const isBeforeOpening = minutes < openM;
 
   return {
     isOpen,
     closesAt: isOpen ? slot.close : null,
+    opensAt: isBeforeOpening ? slot.open : null,
+    isClosed: false,
   };
 }

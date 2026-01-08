@@ -153,26 +153,40 @@ export const Hero = () => {
           <div className={`flex justify-center items-center gap-2 transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
-              effectivelyOpen 
-                ? "bg-green-500/20 text-green-100 border border-green-400/30" 
-                : "bg-red-500/20 text-red-100 border border-red-400/30"
-            }`}>
-              <span className={`w-1.5 h-1.5 rounded-full mr-2 ${effectivelyOpen ? "bg-green-400" : "bg-red-400"}`} />
-              {effectivelyOpen 
-                ? (language === "de" ? "Jetzt geöffnet" : "Open now")
-                : (language === "de" ? "Heute geschlossen" : "Closed today")
-              }
-            </span>
-            {effectivelyOpen && status.closesAt && (
-              <span className="text-xs text-background/70">
-                {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
+            {/* Case 1: Open now */}
+            {effectivelyOpen && (
+              <>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-green-500/20 text-green-100 border border-green-400/30">
+                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-green-400" />
+                  {language === "de" ? "Jetzt geöffnet" : "Open now"}
+                </span>
+                {status.closesAt && (
+                  <span className="text-xs text-background/70">
+                    {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
+                  </span>
+                )}
+              </>
+            )}
+            {/* Case 2: Not open yet, but opens later today */}
+            {!effectivelyOpen && !isClosedToday && status.opensAt && (
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-amber-500/20 text-amber-100 border border-amber-400/30">
+                <span className="w-1.5 h-1.5 rounded-full mr-2 bg-amber-400" />
+                {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
             )}
-            {!effectivelyOpen && closedReason === "no-menu" && (
-              <span className="text-xs text-background/70">
-                {language === "de" ? "• kein Menü heute" : "• no menu today"}
-              </span>
+            {/* Case 3: Closed today (Sunday, holiday, no menu, or after closing) */}
+            {!effectivelyOpen && (isClosedToday || (!status.opensAt && status.isClosed) || (!status.opensAt && !status.isOpen)) && (
+              <>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-red-500/20 text-red-100 border border-red-400/30">
+                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-red-400" />
+                  {language === "de" ? "Heute geschlossen" : "Closed today"}
+                </span>
+                {closedReason === "no-menu" && (
+                  <span className="text-xs text-background/70">
+                    {language === "de" ? "• kein Menü heute" : "• no menu today"}
+                  </span>
+                )}
+              </>
             )}
           </div>
 
