@@ -14,7 +14,7 @@ import Impressum from "./pages/Impressum";
 import AboutUs from "./pages/AboutUs";
 import Inspiration from "./pages/Inspiration";
 import ContactPage from "./pages/Contact";
-import Spaisekarte from "./pages/Spaisekarte";
+import Wochenkarte from "./pages/Wochenkarte";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 
@@ -32,7 +32,7 @@ function AppContent() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
-        <Route path="/spaisekarte" element={<Spaisekarte />} />
+        <Route path="/wochenkarte" element={<Wochenkarte />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieConsent />
