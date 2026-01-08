@@ -6,8 +6,8 @@ const ALLOWED_ORIGINS = [
   "http://localhost:8080",
   "http://localhost:3000",
   "https://lovable.dev",
-  // Add production domain when known, e.g.:
-  // "https://mysecretgarden.at",
+  "https://www.secretgardenrestaurant.at",
+  "https://secretgardenrestaurant.at",
 ];
 
 function isOriginAllowed(origin: string | null): boolean {
