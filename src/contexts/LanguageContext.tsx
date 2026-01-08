@@ -236,17 +236,9 @@ const getInitialLanguage = (): Language => {
     if (stored === "de" || stored === "en") {
       return stored;
     }
-    
-    // Detect browser language
-    const browserLang = navigator.language || (navigator as any).userLanguage || "";
-    const langCode = browserLang.split("-")[0].toLowerCase();
-    
-    // Return German only if browser is German, otherwise default to English
-    if (langCode === "de") {
-      return "de";
-    }
   }
-  return "en";
+  // Default to German (restaurant is in Vienna)
+  return "de";
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
