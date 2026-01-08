@@ -149,7 +149,7 @@ export const MenuSection = () => {
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">5,90</p>
+                    <p className="text-accent font-semibold text-sm font-work mt-2">6,90</p>
                   </div>
                 )}
 
@@ -340,7 +340,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.soup[language]}</p>
                                       <DietaryBadges text={day.soup[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">5,90</span>
+                                    <span className="text-accent text-xs font-medium shrink-0">6,90</span>
                                   </div>
                                 )}
                                 {isValidMenuText(day.green[language]) && (
