@@ -4,12 +4,27 @@
 export interface KlassikerItem {
   id: string;
   name: { de: string; en: string };
-  description: { de: string; en: string };
+  description?: { de: string; en: string };
+  sizeNote?: string;
   price: string;
   isVegan?: boolean;
   isGlutenFree?: boolean;
   isBio?: boolean;
   isUnavailable?: boolean;
+}
+
+export interface DrinkSubcategory {
+  id: string;
+  name: { de: string; en: string };
+  sizeNote?: string;
+  items: KlassikerItem[];
+}
+
+export interface KlassikerCategory {
+  id: string;
+  name: { de: string; en: string };
+  items?: KlassikerItem[];
+  subcategories?: DrinkSubcategory[];
 }
 
 export const klassikerMenu = {
@@ -168,6 +183,69 @@ export const klassikerMenu = {
             en: "Creamy yogurt drink with fresh mango"
           },
           price: "4,9",
+        },
+      ],
+    },
+    {
+      id: "drinks",
+      name: { de: "Getränke", en: "Drinks" },
+      subcategories: [
+        {
+          id: "hot-drinks",
+          name: { de: "Heißgetränke", en: "Hot Drinks" },
+          items: [
+            { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,9" },
+            { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,4" },
+            { id: "pumpkin-spiced-latte", name: { de: "Pumpkin Spiced Latte", en: "Pumpkin Spiced Latte" }, price: "5,9" },
+            { id: "glueh-kombucha", name: { de: "\"Glüh\" Kombucha", en: "\"Glüh\" Kombucha (hot)" }, price: "4,9" },
+            { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,9" },
+            { id: "espresso", name: { de: "Espresso", en: "Espresso" }, price: "2,9 / 3,9" },
+            { id: "verlaengerter", name: { de: "Verlängerter / Americano", en: "Verlängerter / Americano" }, price: "3,5 / 4,5" },
+            { id: "cappuccino", name: { de: "Cappuccino / Melange", en: "Cappuccino / Melange" }, price: "4,3 / 5,7" },
+            { id: "flat-white", name: { de: "Flat White", en: "Flat White" }, price: "5,2" },
+            { id: "latte-macchiato", name: { de: "Latte Macchiato", en: "Latte Macchiato" }, price: "5,2" },
+            { id: "chaga-kaffee", name: { de: "Chaga Kaffee", en: "Chaga Kaffee" }, price: "5,5" },
+            { id: "blue-magic-tea", name: { de: "Blue Magic Tea", en: "Blue Magic Tea" }, price: "3,9" },
+          ],
+        },
+        {
+          id: "cold-drinks",
+          name: { de: "Kaltgetränke", en: "Cold Drinks" },
+          items: [
+            { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,0 / 4,7" },
+          ],
+        },
+        {
+          id: "juices",
+          name: { de: "Säfte vom österreichischen Bauernhof", en: "Juices from the Austrian Farm" },
+          sizeNote: "0,2 l / 0,5 l",
+          items: [
+            { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,9 / 4,5" },
+            { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,0 / 4,7" },
+            { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,7 / 4,2" },
+          ],
+        },
+        {
+          id: "organic-sodas",
+          name: { de: "Bio-Limonaden", en: "Organic Sodas" },
+          sizeNote: "0,33 l",
+          items: [
+            { id: "cola", name: { de: "Cola", en: "Cola" }, price: "3,9" },
+            { id: "pomegranate", name: { de: "Granatapfel", en: "Pomegranate" }, price: "3,9" },
+            { id: "orange-acerola", name: { de: "Orange-Acerola", en: "Orange-Acerola" }, price: "3,9" },
+            { id: "green-tea-soda", name: { de: "Grüner Tee", en: "Green Tea" }, price: "3,9" },
+          ],
+        },
+        {
+          id: "more-cold-drinks",
+          name: { de: "Weitere Kaltgetränke", en: "More Cold Drinks" },
+          items: [
+            { id: "goesser-beer", name: { de: "Gösser Alkoholfrei", en: "Gösser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,5" },
+            { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,7 / 5,7" },
+            { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,5" },
+            { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,7 / 3,9" },
+            { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,7" },
+          ],
         },
       ],
     },
