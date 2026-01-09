@@ -300,7 +300,7 @@ export const MenuSection = () => {
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-cormorant text-base md:text-lg italic">
-                    {isClosed
+                    {isSunday
                       ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
                       : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
                   </span>
