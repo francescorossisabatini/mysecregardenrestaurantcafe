@@ -15,6 +15,26 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics 4 - GDPR compliant: denied by default -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMVX2R7493"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      // Default: deny analytics until consent is given
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+      });
+      
+      // Check if user already consented
+      if (localStorage.getItem('cookie_consent') === 'accepted') {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      }
+      
+      gtag('config', 'G-NMVX2R7493');
+    </script>
 
     <meta property="og:title" content="My Secret Garden - Vegetarisches & Veganes Restaurant" />
     <meta property="og:description" content="Erleben Sie eine spannende vegetarische & vegane Küche mit schmackhaften Gerichten aus aller Welt." />

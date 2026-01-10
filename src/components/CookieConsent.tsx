@@ -3,6 +3,12 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const CONSENT_KEY = "cookie_consent";
 
 export type ConsentStatus = "pending" | "accepted" | "rejected";
@@ -32,8 +38,8 @@ export const CookieConsent = () => {
   const handleAccept = () => {
     localStorage.setItem(CONSENT_KEY, "accepted");
     closeWithAnimation();
-    // Here you would initialize Google Analytics when ready
-    // window.gtag?.('consent', 'update', { analytics_storage: 'granted' });
+    // Enable Google Analytics tracking after consent
+    window.gtag?.('consent', 'update', { 'analytics_storage': 'granted' });
   };
 
   const handleReject = () => {
