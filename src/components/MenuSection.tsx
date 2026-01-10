@@ -238,8 +238,8 @@ export const MenuSection = () => {
                               ? "Heute haben wir leider geschlossen. Wir freuen uns, dich bald wiederzusehen." 
                               : "We are closed today. We look forward to seeing you soon.")
                           : (language === "de" 
-                              ? "Wir nehmen uns heute Zeit für Stille und Erholung. Wir freuen uns, dich morgen wiederzusehen." 
-                              : "We take time today for stillness and renewal. We look forward to seeing you tomorrow.")}
+                              ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
+                              : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
                   </p>
                   {(todayHoliday || isNoMenuDay) && !isAfterClosing && (
                     <p className="text-muted-foreground/70 font-work text-xs mt-2">
@@ -251,7 +251,7 @@ export const MenuSection = () => {
                 </div>
                 
                 {/* Next day preview - when closed */}
-                {isClosed && !isSunday && nextDayMenu && (
+                {isClosed && nextDayMenu && (
                   <div className="pt-4 border-t border-border/30">
                     <p className="text-xs uppercase tracking-wider text-muted-foreground font-work mb-4">
                       {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
