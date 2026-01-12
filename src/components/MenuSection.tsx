@@ -294,8 +294,15 @@ export const MenuSection = () => {
             )}
           </div>
           
+          {/* Weekly Menu Anchor Label */}
+          <div id="wochenmenu" className="pt-8">
+            <p className="text-xs text-muted-foreground/70 font-work tracking-wide mb-6 text-center">
+              {language === "de" ? "Unser Wochenmenü" : "This week"}
+            </p>
+          </div>
+          
           {/* Weekly Menu Accordion */}
-          <div className="my-10">
+          <div className="my-2">
             <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">

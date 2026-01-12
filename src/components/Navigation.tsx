@@ -66,7 +66,11 @@ export const Navigation = () => {
       href: "#menu", 
       label: "Menu",
       isSecondary: true,
-      isHash: true
+      isHash: true,
+      subItem: {
+        href: "#wochenmenu",
+        label: language === "de" ? "Diese Woche" : "This week"
+      }
     },
     { 
       href: "/about", 
@@ -210,11 +214,10 @@ export const Navigation = () => {
                 }
 
                 return (
-                  <>
+                  <div key={item.href} className="flex items-center gap-1">
                     {item.href.startsWith('#') ? (
                       // Hash link - use <a> but with custom handler
                       <a
-                        key={item.href}
                         href={item.href}
                         onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
                         className={itemClasses}
@@ -224,14 +227,26 @@ export const Navigation = () => {
                     ) : (
                       // Internal page - use Link
                       <Link
-                        key={item.href}
                         to={item.href}
                         className={itemClasses}
                       >
                         {item.label}
                       </Link>
                     )}
-                  </>
+                    {/* Sub-item for weekly menu */}
+                    {item.subItem && (
+                      <>
+                        <span className="text-muted-foreground/40 text-sm">/</span>
+                        <a
+                          href={item.subItem.href}
+                          onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
+                          className="text-sm text-muted-foreground/60 hover:text-foreground transition-colors py-2"
+                        >
+                          {item.subItem.label}
+                        </a>
+                      </>
+                    )}
+                  </div>
                 );
               })}
               <Link
@@ -303,26 +318,36 @@ export const Navigation = () => {
                        {item.label}
                      </Link>
                    ) : item.href.startsWith('#') ? (
-                     // Hash link - use <a> but with custom handler
-                     <a
-                       href={item.href}
-                       onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
-                       className={itemClasses}
-                     >
-                       {item.label}
-                     </a>
-                   ) : (
-                     // Internal page - use Link
-                     <Link
-                       to={item.href}
-                       onClick={() => setIsMobileMenuOpen(false)}
-                       className={itemClasses}
-                     >
-                       {item.label}
-                     </Link>
-                   )}
-                 </div>
-               );
+                      // Hash link - use <a> but with custom handler
+                      <a
+                        href={item.href}
+                        onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
+                        className={itemClasses}
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      // Internal page - use Link
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={itemClasses}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                    {/* Sub-item for weekly menu - mobile */}
+                    {item.subItem && (
+                      <a
+                        href={item.subItem.href}
+                        onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
+                        className="block py-3 px-8 text-sm text-muted-foreground/70 hover:text-foreground hover:bg-muted/20 rounded-lg transition-colors"
+                      >
+                        {item.subItem.label}
+                      </a>
+                    )}
+                  </div>
+                );
             })}
             <Link
               to="/privacy"
