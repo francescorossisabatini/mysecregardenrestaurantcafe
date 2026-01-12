@@ -44,6 +44,42 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Lovable" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Schema.org Restaurant JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "@id": "https://www.secretgardenrestaurant.at/#restaurant",
+      "name": "My Secret Garden",
+      "url": "https://www.secretgardenrestaurant.at/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Mariahilferstraße 45",
+        "addressLocality": "Wien",
+        "postalCode": "1060",
+        "addressCountry": "AT"
+      },
+      "telephone": "+43 1 586 28 39",
+      "servesCuisine": ["Vegetarian", "Vegan"],
+      "menu": "https://www.secretgardenrestaurant.at/speisekarte/",
+      "hasMenu": [
+        "https://www.secretgardenrestaurant.at/wochenkarte/",
+        "https://www.secretgardenrestaurant.at/speisekarte/"
+      ],
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday",    "opens": "11:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday",   "opens": "11:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "11:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday",  "opens": "11:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday",    "opens": "11:00", "closes": "19:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday",  "opens": "11:00", "closes": "19:00" }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/secretgardencafewien/"
+      ]
+    }
+    </script>
   </head>
 
   <body>
