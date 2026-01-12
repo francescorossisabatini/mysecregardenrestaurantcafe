@@ -50,9 +50,15 @@
     {
       "@context": "https://schema.org",
       "@type": "Restaurant",
-      "@id": "https://www.secretgardenrestaurant.at/#restaurant",
+      "@id": "https://secretgardenrestaurant.at/#restaurant",
       "name": "My Secret Garden",
-      "url": "https://www.secretgardenrestaurant.at/",
+      "url": "https://secretgardenrestaurant.at/",
+      "menu": "https://secretgardenrestaurant.at/speisekarte/",
+      "hasMenu": [
+        "https://secretgardenrestaurant.at/wochenkarte/",
+        "https://secretgardenrestaurant.at/speisekarte/"
+      ],
+      "servesCuisine": ["Vegetarian", "Vegan"],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Mariahilferstraße 45",
@@ -61,12 +67,6 @@
         "addressCountry": "AT"
       },
       "telephone": "+43 1 586 28 39",
-      "servesCuisine": ["Vegetarian", "Vegan"],
-      "menu": "https://www.secretgardenrestaurant.at/speisekarte/",
-      "hasMenu": [
-        "https://www.secretgardenrestaurant.at/wochenkarte/",
-        "https://www.secretgardenrestaurant.at/speisekarte/"
-      ],
       "openingHoursSpecification": [
         { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday",    "opens": "11:00", "closes": "19:00" },
         { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday",   "opens": "11:00", "closes": "19:00" },
