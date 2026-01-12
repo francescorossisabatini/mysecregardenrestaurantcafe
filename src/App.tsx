@@ -33,6 +33,7 @@ function AppContent() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
         <Route path="/wochenkarte" element={<Wochenkarte />} />
+        <Route path="/speisekarte" element={<Wochenkarte />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieConsent />
