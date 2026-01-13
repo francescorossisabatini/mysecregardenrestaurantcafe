@@ -1,1 +1,22 @@
+# Favicon redirect
 /favicon.ico /favicon.png 301
+
+# Old WordPress URLs - 301 permanent redirects
+/blog /inspiration 301
+/blog/* /inspiration 301
+/category/* /inspiration 301
+/tag/* /inspiration 301
+/wp-admin/* / 301
+/wp-content/* / 301
+/wp-includes/* / 301
+/feed / 301
+/feed/* / 301
+/author/* / 301
+/page/* / 301
+/archives/* /inspiration 301
+
+# Old menu URL compatibility (already handled by React route, but adding for SEO)
+/spaisekarte /wochenkarte 301
+
+# SPA fallback - serves index.html for all routes, React handles 404
+/* /index.html 200
