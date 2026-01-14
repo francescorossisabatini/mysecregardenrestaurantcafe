@@ -14,7 +14,8 @@ import Impressum from "./pages/Impressum";
 import AboutUs from "./pages/AboutUs";
 import Inspiration from "./pages/Inspiration";
 import ContactPage from "./pages/Contact";
-import Wochenkarte from "./pages/Wochenkarte";
+import WeeklySpecials from "./pages/WeeklySpecials";
+import LinkPage from "./pages/Link";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 
@@ -32,8 +33,9 @@ function AppContent() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
-        <Route path="/wochenkarte" element={<Wochenkarte />} />
-        <Route path="/speisekarte" element={<Wochenkarte />} />
+        <Route path="/wochenkarte" element={<WeeklySpecials />} />
+        <Route path="/speisekarte" element={<WeeklySpecials />} />
+        <Route path="/link" element={<LinkPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieConsent />

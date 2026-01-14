@@ -4,12 +4,10 @@ import { Hero } from "@/components/Hero";
 import { MenuSection } from "@/components/MenuSection";
 import { Reviews } from "@/components/Reviews";
 import { GallerySection } from "@/components/GallerySection";
-import { InstagramCTA } from "@/components/InstagramCTA";
-import { HomeClosing } from "@/components/HomeClosing";
+import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
-import { FloatingCallButton } from "@/components/FloatingCallButton";
-
+import { MobileStickyBar } from "@/components/MobileStickyBar";
 
 const Index = () => {
   const location = useLocation();
@@ -77,19 +75,15 @@ const Index = () => {
       {/* Reviews */}
       <Reviews />
       
-      {/* Gallery - after reviews, before closing */}
+      {/* Gallery */}
       <GallerySection />
       
-      
-      {/* Instagram - whispered invitation */}
-      <InstagramCTA />
-      
-      {/* Silent closing + exploration CTA */}
-      <HomeClosing />
+      {/* End CTA Block */}
+      <CTAEndBlock show={["weekly", "menu", "directions"]} />
       
       <Footer />
       
-      <FloatingCallButton />
+      <MobileStickyBar />
     </div>
   );
 };

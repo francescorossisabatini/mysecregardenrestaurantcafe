@@ -61,16 +61,17 @@ export const Navigation = () => {
       label: "My Secret Garden",
       isHome: true
     },
-    // Secondary navigation - essential sections
+    // Primary navigation - conversion focused
     { 
       href: "#menu", 
-      label: "Menu",
+      label: language === "de" ? "Speisekarte" : "Menu",
       isSecondary: true,
       isHash: true,
-      subItem: {
-        href: "#wochenmenu",
-        label: language === "de" ? "Diese Woche" : "This week"
-      }
+    },
+    { 
+      href: "/wochenkarte", 
+      label: language === "de" ? "Wochenmenü" : "Weekly Specials",
+      isSecondary: true
     },
     { 
       href: "/about", 
@@ -79,7 +80,7 @@ export const Navigation = () => {
     },
     { 
       href: "/contact", 
-      label: language === "de" ? "Kontakt" : "Contact",
+      label: language === "de" ? "Besuche uns" : "Visit Us",
       isSecondary: true
     },
   ];
@@ -233,19 +234,6 @@ export const Navigation = () => {
                         {item.label}
                       </Link>
                     )}
-                    {/* Sub-item for weekly menu */}
-                    {item.subItem && (
-                      <>
-                        <span className="text-muted-foreground/50 text-sm">/</span>
-                        <a
-                          href={item.subItem.href}
-                          onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
-                          className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2 underline-offset-2 hover:underline"
-                        >
-                          {item.subItem.label}
-                        </a>
-                      </>
-                    )}
                   </div>
                 );
               })}
@@ -300,54 +288,44 @@ export const Navigation = () => {
                  itemClasses += " font-medium text-lg";
                 }
                
-               return (
-                 <div key={item.href}>
-                   {item.isHome ? (
-                     // Home link - brand navigation
-                     <Link
-                       to={item.href}
-                       onClick={(e) => {
-                         setIsMobileMenuOpen(false);
-                         if (location.pathname === "/") {
-                           e.preventDefault();
-                           window.scrollTo({ top: 0, behavior: "smooth" });
-                         }
-                       }}
-                       className={itemClasses}
-                     >
-                       {item.label}
-                     </Link>
-                   ) : item.href.startsWith('#') ? (
-                      // Hash link - use <a> but with custom handler
-                      <a
-                        href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
-                        className={itemClasses}
-                      >
-                        {item.label}
-                      </a>
-                    ) : (
-                      // Internal page - use Link
-                      <Link
-                        to={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={itemClasses}
-                      >
-                        {item.label}
-                      </Link>
-                    )}
-                    {/* Sub-item for weekly menu - mobile */}
-                    {item.subItem && (
-                      <a
-                        href={item.subItem.href}
-                        onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
-                        className="block py-3 px-8 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/20 rounded-lg transition-colors underline-offset-2 hover:underline"
-                      >
-                        {item.subItem.label}
-                      </a>
-                    )}
-                  </div>
-                );
+                   return (
+                     <div key={item.href}>
+                       {item.isHome ? (
+                         // Home link - brand navigation
+                         <Link
+                           to={item.href}
+                           onClick={(e) => {
+                             setIsMobileMenuOpen(false);
+                             if (location.pathname === "/") {
+                               e.preventDefault();
+                               window.scrollTo({ top: 0, behavior: "smooth" });
+                             }
+                           }}
+                           className={itemClasses}
+                         >
+                           {item.label}
+                         </Link>
+                       ) : item.href.startsWith('#') ? (
+                          // Hash link - use <a> but with custom handler
+                          <a
+                            href={item.href}
+                            onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
+                            className={itemClasses}
+                          >
+                            {item.label}
+                          </a>
+                        ) : (
+                          // Internal page - use Link
+                          <Link
+                            to={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={itemClasses}
+                          >
+                            {item.label}
+                          </Link>
+                        )}
+                      </div>
+                    );
             })}
             <Link
               to="/privacy"
