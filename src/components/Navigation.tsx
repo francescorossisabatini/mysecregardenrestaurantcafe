@@ -1,44 +1,35 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SITE } from "@/config/site";
 
 export const Navigation = () => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const [navbarOpacity, setNavbarOpacity] = useState(1);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
-  const navigate = useNavigate();
   const rafRef = useRef<number | null>(null);
 
-  // Check if we're on the home page
   const isHomePage = location.pathname === "/";
 
-  // Throttled scroll handler using requestAnimationFrame
   const handleScroll = useCallback(() => {
     if (rafRef.current) return;
     
     rafRef.current = requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY;
-      
-      // Show navbar as soon as user starts scrolling (threshold of 50px)
-      if (currentScrollY > 50) {
+      if (window.scrollY > 50) {
         setShowNavbar(true);
       } else {
         setShowNavbar(false);
       }
-      
-      setLastScrollY(currentScrollY);
       rafRef.current = null;
     });
   }, []);
 
   useEffect(() => {
-    // Home page: hide navbar at top, show on any scroll
     if (isHomePage) {
       window.addEventListener("scroll", handleScroll, { passive: true });
       return () => {
@@ -48,101 +39,15 @@ export const Navigation = () => {
         }
       };
     }
-
-    // Other pages: always show navbar
     setShowNavbar(true);
-    setNavbarOpacity(1);
   }, [isHomePage, handleScroll]);
-
-  const navItems = [
-    // Home link - brand navigation
-    { 
-      href: "/", 
-      label: "My Secret Garden",
-      isHome: true
-    },
-    // Primary navigation - conversion focused
-    { 
-      href: "#menu", 
-      label: language === "de" ? "Speisekarte" : "Menu",
-      isSecondary: true,
-      isHash: true,
-    },
-    { 
-      href: "/wochenkarte", 
-      label: language === "de" ? "Wochenmenü" : "Weekly Specials",
-      isSecondary: true
-    },
-    { 
-      href: "/about", 
-      label: language === "de" ? "Über uns" : "About",
-      isSecondary: true
-    },
-    { 
-      href: "/contact", 
-      label: language === "de" ? "Besuche uns" : "Visit Us",
-      isSecondary: true
-    },
-  ];
-
-  const scrollToElement = (hash: string) => {
-    // Use requestAnimationFrame to batch layout reads and prevent forced reflow
-    requestAnimationFrame(() => {
-      const element = document.querySelector(hash);
-      if (element) {
-        const offset = 80; // navbar height
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    });
-  };
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean, isHash?: boolean) => {
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
-
-    // Handle external URLs (Instagram)
-    if (isExternal && href.startsWith('http')) {
-      window.open(href, '_blank');
-      return;
-    }
-
-    // Handle internal page navigation (like /gallery)
-    if (isExternal && !isHash) {
-      navigate(href);
-      return;
-    }
- 
-    // Handle hash/section links on homepage
-    if (isHash || href.startsWith('#')) {
-      // If we're on a different page, navigate to home first then scroll
-      if (location.pathname !== "/") {
-        navigate("/");
-        // Wait for navigation and DOM to be ready, then scroll
-        setTimeout(() => {
-          scrollToElement(href);
-        }, 100);
-        return;
-      }
- 
-      // Already on home page, just scroll
-      scrollToElement(href);
-    }
-  };
 
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-3 md:py-4 transition-all duration-500 ease-in-out ${
-          showNavbar ? "translate-y-0" : "-translate-y-full"
+          showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         }`}
-        style={{
-          opacity: showNavbar ? 1 : 0
-        }}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
@@ -155,98 +60,54 @@ export const Navigation = () => {
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
-            {/* Logo - Left on Desktop */}
+            {/* Logo + Subtitle - Center on mobile, Left on desktop */}
             <Link 
               to="/"
               onClick={(e) => {
-                // If already on home page, scroll to top
                 if (location.pathname === "/") {
                   e.preventDefault();
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }
-                // Otherwise Link will handle navigation to home
               }}
-              className="transition-all duration-300"
+              className="flex items-center gap-3 transition-all duration-300"
             >
-              <Logo className="w-12 h-12 md:w-14 md:h-14" showTagline={false} />
+              <Logo className="w-10 h-10 md:w-12 md:h-12" showTagline={false} />
+              <div className="hidden sm:block">
+                <span className="font-caveat text-lg text-primary">My Secret Garden</span>
+                <p className="text-xs text-muted-foreground">
+                  Vegetarian Café & Restaurant • Vienna
+                </p>
+              </div>
             </Link>
 
-            {/* Desktop Navigation - Right (hidden on mobile) - Gestalt: Hierarchy */}
-            <div className="hidden lg:flex items-center gap-6">
-              {navItems.map((item) => {
-                // Only highlight actual pages, not hash sections
-                const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
-                  ? location.pathname === item.href
-                  : false;
-
-                // Gestalt: Similarity & Emphasis through visual weight
-                const baseClasses = "transition-colors relative py-2 px-1";
-                const afterClasses = "after:absolute after:bottom-0 after:left-0 after:transition-all after:duration-300";
-
-                let itemClasses = baseClasses + " " + afterClasses;
-
-                if (item.isHome) {
-                  // Home: Elegant brand link
-                  itemClasses += " font-caveat text-xl text-primary hover:text-primary/80 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full";
-                  return (
-                    <Link
-                      key={item.href}
-                      to={item.href}
-                      onClick={(e) => {
-                        if (location.pathname === "/") {
-                          e.preventDefault();
-                          window.scrollTo({ top: 0, behavior: "smooth" });
-                        }
-                      }}
-                      className={itemClasses}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
-
-                if (item.isSecondary) {
-                  // Secondary: Medium weight, normal size
-                  if (isActive) {
-                    itemClasses += " text-base font-medium text-foreground after:w-full after:h-0.5 after:bg-foreground";
-                  } else {
-                    itemClasses += " text-base font-medium text-foreground/85 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
-                  }
-                }
-
-                return (
-                  <div key={item.href} className="flex items-center gap-1">
-                    {item.href.startsWith('#') ? (
-                      // Hash link - use <a> but with custom handler
-                      <a
-                        href={item.href}
-                        onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
-                        className={itemClasses}
-                      >
-                        {item.label}
-                      </a>
-                    ) : (
-                      // Internal page - use Link
-                      <Link
-                        to={item.href}
-                        className={itemClasses}
-                      >
-                        {item.label}
-                      </Link>
-                    )}
-                  </div>
-                );
-              })}
-              <Link
-                to="/privacy"
-                className="text-sm font-normal text-foreground/85 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1"
+            {/* Desktop: DE/EN toggle + CTAs */}
+            <div className="hidden lg:flex items-center gap-4">
+              <LanguageSwitcher variant="navbar" />
+              
+              <Button
+                size="sm"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
+                onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
               >
-                {language === "de" ? "Datenschutz" : "Privacy"}
-              </Link>
-              <div className="ml-4 shrink-0">
-                <LanguageSwitcher variant="navbar" />
-              </div>
+                <Phone className="w-4 h-4 mr-2" />
+                {language === "de" ? "Anrufen" : "Call Us"}
+              </Button>
+
+              <Button
+                size="sm"
+                variant="outline"
+                className="font-work"
+                asChild
+              >
+                <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
+                  <MapPin className="w-4 h-4 mr-2" />
+                  {language === "de" ? "Route" : "Directions"}
+                </a>
+              </Button>
             </div>
+
+            {/* Mobile: placeholder for spacing (buttons in menu) */}
+            <div className="w-12 lg:hidden" />
           </div>
         </div>
       </nav>
@@ -266,78 +127,72 @@ export const Navigation = () => {
         }`}
       >
         <div className="flex flex-col h-full pt-20 pb-8 px-6">
-          <nav className="flex-1 space-y-3">
-            {navItems.map((item) => {
-              // Only highlight actual pages, not hash sections
-              const isActive = !item.href.startsWith('#') && !item.href.startsWith('http')
-                ? location.pathname === item.href
-                : false;
-              
-              // Minimal hierarchy for mobile menu with proper touch targets
-              let itemClasses = "block py-4 px-5 text-lg rounded-lg transition-colors duration-200 text-foreground min-h-[44px]";
-              
-              if (isActive) {
-                itemClasses += " bg-muted/50";
-              } else {
-                itemClasses += " hover:bg-muted/30";
-              }
-              
-              if (item.isHome) {
-                 itemClasses += " font-caveat text-2xl text-primary";
-                } else if (item.isSecondary) {
-                 itemClasses += " font-medium text-lg";
-                }
-               
-                   return (
-                     <div key={item.href}>
-                       {item.isHome ? (
-                         // Home link - brand navigation
-                         <Link
-                           to={item.href}
-                           onClick={(e) => {
-                             setIsMobileMenuOpen(false);
-                             if (location.pathname === "/") {
-                               e.preventDefault();
-                               window.scrollTo({ top: 0, behavior: "smooth" });
-                             }
-                           }}
-                           className={itemClasses}
-                         >
-                           {item.label}
-                         </Link>
-                       ) : item.href.startsWith('#') ? (
-                          // Hash link - use <a> but with custom handler
-                          <a
-                            href={item.href}
-                            onClick={(e) => handleNavClick(e, item.href, false, item.isHash)}
-                            className={itemClasses}
-                          >
-                            {item.label}
-                          </a>
-                        ) : (
-                          // Internal page - use Link
-                          <Link
-                            to={item.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={itemClasses}
-                          >
-                            {item.label}
-                          </Link>
-                        )}
-                      </div>
-                    );
-            })}
-            <Link
-              to="/privacy"
-              className="block py-4 px-5 text-lg font-normal text-foreground/85 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors duration-200 min-h-[44px]"
-              onClick={() => setIsMobileMenuOpen(false)}
+          {/* Primary CTAs */}
+          <div className="space-y-3 mb-8">
+            <Button
+              size="lg"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-work"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = `tel:${SITE.phoneTel}`;
+              }}
             >
-              {language === "de" ? "Datenschutz" : "Privacy"}
+              <Phone className="w-5 h-5 mr-2" />
+              {language === "de" ? "Jetzt anrufen" : "Call Now"}
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full font-work"
+              asChild
+            >
+              <a 
+                href={SITE.mapsUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <MapPin className="w-5 h-5 mr-2" />
+                {language === "de" ? "Route anzeigen" : "Get Directions"}
+              </a>
+            </Button>
+          </div>
+
+          {/* Secondary nav links */}
+          <nav className="flex-1 space-y-2">
+            <Link
+              to="/#menu"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-3 px-4 text-base text-foreground/80 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+            >
+              {language === "de" ? "Speisekarte" : "View Menu"}
+            </Link>
+            <Link
+              to="/wochenkarte"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-3 px-4 text-base text-foreground/80 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+            >
+              {language === "de" ? "Wochenmenü" : "Today's Specials"}
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-3 px-4 text-base text-foreground/80 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+            >
+              {language === "de" ? "Über uns" : "About"}
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-3 px-4 text-base text-foreground/80 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors"
+            >
+              {language === "de" ? "Besuche uns" : "Visit Us"}
             </Link>
           </nav>
 
-          {/* Mobile language switcher at the bottom */}
-          <div className="mt-auto">
+          {/* Language switcher at bottom */}
+          <div className="mt-auto pt-4 border-t border-border/20">
             <LanguageSwitcher variant="mobile" />
           </div>
         </div>

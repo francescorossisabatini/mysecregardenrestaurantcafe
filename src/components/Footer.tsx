@@ -1,100 +1,32 @@
-import { Heart, Instagram, Facebook } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { SITE } from "@/config/site";
+import { Instagram } from "lucide-react";
 
 export const Footer = () => {
-  const { language } = useLanguage();
-  
   return (
-    <footer className="bg-primary text-primary-foreground py-10">
+    <footer className="bg-primary text-primary-foreground py-8">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center space-y-5">
-          
-          {/* Brand */}
-          <p className="text-lg font-caveat text-primary-foreground">
-            My Secret Garden
-          </p>
+        <div className="max-w-xl mx-auto text-center space-y-4">
           
           {/* Address - one line */}
-          <p className="text-sm text-primary-foreground/85 font-work">
+          <p className="text-sm text-primary-foreground/90 font-work">
             Mariahilferstraße 45, Im Raimundhof – 1060 Wien
           </p>
           
-          {/* Hours - synthetic */}
-          <p className="text-sm text-primary-foreground/80 font-work">
-            {language === "de" ? "Mo–Sa 11:00–19:00" : "Mon–Sat 11:00–19:00"}
+          {/* Instagram */}
+          <a 
+            href="https://www.instagram.com/mysecretgarden_vienna/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+            aria-label="Instagram"
+          >
+            <Instagram className="w-4 h-4" />
+            @mysecretgarden_vienna
+          </a>
+          
+          {/* Copyright */}
+          <p className="text-xs text-primary-foreground/70">
+            © {new Date().getFullYear()} My Secret Garden
           </p>
-          
-          {/* Social Icons */}
-          <div className="flex items-center justify-center gap-4">
-            <a 
-              href="https://www.instagram.com/mysecretgarden_vienna/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-primary-foreground/15 flex items-center justify-center text-primary-foreground/85 hover:bg-primary-foreground/25 hover:text-primary-foreground transition-all"
-              aria-label="Instagram"
-            >
-              <Instagram className="w-4 h-4" />
-            </a>
-            <a 
-              href="https://www.facebook.com/secretgardencafewien"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-primary-foreground/15 flex items-center justify-center text-primary-foreground/85 hover:bg-primary-foreground/25 hover:text-primary-foreground transition-all"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-4 h-4" />
-            </a>
-          </div>
-          
-          {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-work">
-            <Link 
-              to="/wochenkarte" 
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
-            >
-              {language === "de" ? "Wochenmenü" : "Weekly Specials"}
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
-            >
-              {language === "de" ? "Besuche uns" : "Visit Us"}
-            </Link>
-            <a 
-              href={SITE.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-foreground/80 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
-            >
-              {language === "de" ? "Route" : "Directions"}
-            </a>
-            <Link 
-              to="/privacy" 
-              className="text-primary-foreground/80 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
-            >
-              {language === "de" ? "Datenschutz" : "Privacy"}
-            </Link>
-            <Link 
-              to="/impressum" 
-              className="text-primary-foreground/80 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
-            >
-              Impressum
-            </Link>
-          </div>
-          
-          {/* Made with love */}
-          <div className="pt-4 border-t border-primary-foreground/20">
-            <div className="flex items-center justify-center gap-2 text-xs text-primary-foreground/90">
-              <span>Made with</span>
-              <Heart className="w-3 h-3 fill-accent-light text-accent-light" />
-              <span>in Wien</span>
-            </div>
-            <p className="text-xs text-primary-foreground/80 mt-2">
-              © {new Date().getFullYear()} My Secret Garden
-            </p>
-          </div>
           
         </div>
       </div>
