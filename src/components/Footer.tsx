@@ -79,13 +79,13 @@ export const Footer = () => {
           </div>
           
           {/* Made with love */}
-          <div className="pt-4 border-t border-primary-foreground/15">
-            <div className="flex items-center justify-center gap-2 text-xs text-primary-foreground/75">
+          <div className="pt-4 border-t border-primary-foreground/20">
+            <div className="flex items-center justify-center gap-2 text-xs text-primary-foreground/90">
               <span>Made with</span>
-              <Heart className="w-3 h-3 fill-accent text-accent" />
+              <Heart className="w-3 h-3 fill-accent-light text-accent-light" />
               <span>in Wien</span>
             </div>
-            <p className="text-xs text-primary-foreground/65 mt-2">
+            <p className="text-xs text-primary-foreground/80 mt-2">
               © {new Date().getFullYear()} My Secret Garden
             </p>
           </div>
