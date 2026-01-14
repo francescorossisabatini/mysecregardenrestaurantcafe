@@ -32,24 +32,24 @@ const isValidMenuText = (text?: string) => {
   return true;
 };
 
-// Render dietary badges dynamically
+// Render dietary badges dynamically - WCAG AA compliant colors
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
   
   return (
     <div className="flex items-center gap-2 mt-2 flex-wrap">
       {labels.isVegan && (
-        <span className="text-xs text-green-600 dark:text-green-400 font-work">
+        <span className="text-xs text-green-800 dark:text-green-300 font-work font-medium">
           vegan
         </span>
       )}
       {labels.isGlutenFree && (
-        <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
+        <span className="text-xs text-amber-800 dark:text-amber-300 font-work font-medium">
           {language === "de" ? "glutenfrei" : "gluten-free"}
         </span>
       )}
       {labels.isBio && (
-        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
+        <span className="text-xs text-emerald-800 dark:text-emerald-300 font-work font-medium">
           bio
         </span>
       )}
@@ -160,7 +160,7 @@ export const MenuSection = () => {
                 {isValidMenuText(todayMenu.soup[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work">
@@ -171,7 +171,7 @@ export const MenuSection = () => {
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">6,90</p>
+                    <p className="text-primary font-semibold text-sm font-work mt-2">6,90</p>
                   </div>
                 )}
 
@@ -179,7 +179,7 @@ export const MenuSection = () => {
                 {isValidMenuText(todayMenu.green[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work">
@@ -190,7 +190,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
+                    <p className="text-primary font-semibold text-sm font-work mt-2">15,90</p>
                   </div>
                 )}
 
@@ -198,7 +198,7 @@ export const MenuSection = () => {
                 {isValidMenuText(todayMenu.blue[language]) && (
                   <div className="bg-daily rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className="bg-accent/20 text-accent border-accent/30 text-xs font-work">
+                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work">
@@ -209,7 +209,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <p className="text-accent font-semibold text-sm font-work mt-2">15,90</p>
+                    <p className="text-primary font-semibold text-sm font-work mt-2">15,90</p>
                   </div>
                 )}
               </div>
@@ -259,7 +259,7 @@ export const MenuSection = () => {
                     <div className="space-y-3 text-left">
                       {isValidMenuText(nextDayMenu.soup[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-accent font-work">
+                          <span className="text-xs text-primary font-work font-medium">
                             {language === "de" ? "Suppe" : "Soup"}
                           </span>
                           <p className="text-foreground/85 font-work text-sm mt-1">
@@ -269,7 +269,7 @@ export const MenuSection = () => {
                       )}
                       {isValidMenuText(nextDayMenu.green[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-accent font-work">
+                          <span className="text-xs text-primary font-work font-medium">
                             {language === "de" ? "Grünes Gericht" : "Green Dish"}
                           </span>
                           <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
@@ -279,7 +279,7 @@ export const MenuSection = () => {
                       )}
                       {isValidMenuText(nextDayMenu.blue[language]) && (
                         <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-accent font-work">
+                          <span className="text-xs text-primary font-work font-medium">
                             {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                           </span>
                           <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
@@ -375,7 +375,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.soup[language]}</p>
                                       <DietaryBadges text={day.soup[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">6,90</span>
+                                    <span className="text-primary text-xs font-medium shrink-0">6,90</span>
                                   </div>
                                 )}
                                 {isValidMenuText(day.green[language]) && (
@@ -387,7 +387,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.green[language]}</p>
                                       <DietaryBadges text={day.green[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">15,90</span>
+                                    <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
                                 )}
                                 {isValidMenuText(day.blue[language]) && (
@@ -399,7 +399,7 @@ export const MenuSection = () => {
                                       <p className="text-foreground/90">{day.blue[language]}</p>
                                       <DietaryBadges text={day.blue[language]} language={language} />
                                     </div>
-                                    <span className="text-accent text-xs font-medium shrink-0">15,90</span>
+                                    <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
                                 )}
                               </div>
@@ -416,7 +416,7 @@ export const MenuSection = () => {
           
           {/* BLOCK 2: Visual Transition */}
           <div className="text-center py-10 md:py-14">
-            <p className="font-cormorant text-lg md:text-xl text-muted-foreground/70 italic leading-relaxed whitespace-pre-line">
+            <p className="font-cormorant text-lg md:text-xl text-muted-foreground italic leading-relaxed whitespace-pre-line">
               {language === "de" 
                 ? "Nicht alles bleibt.\nUnd das gehört dazu." 
                 : "Not everything stays.\nAnd that's part of it."}
@@ -432,7 +432,7 @@ export const MenuSection = () => {
               <p className="text-muted-foreground text-sm md:text-base font-work">
                 {klassikerMenu.subtitle[language]}
               </p>
-              <p className="text-muted-foreground/70 text-xs font-work mt-2 uppercase tracking-wide">
+              <p className="text-muted-foreground text-xs font-work mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
@@ -467,28 +467,28 @@ export const MenuSection = () => {
                                   {item.description[language]}
                                 </p>
                               )}
-                              {/* Dietary labels - only if present */}
+                              {/* Dietary labels - only if present - WCAG AA compliant */}
                               {(item.isVegan || item.isGlutenFree || item.isBio) && (
                                 <div className="flex items-center gap-2 mt-2">
                                   {item.isVegan && (
-                                    <span className="text-xs text-green-600 dark:text-green-400 font-work">
+                                    <span className="text-xs text-green-800 dark:text-green-300 font-work font-medium">
                                       vegan
                                     </span>
                                   )}
                                   {item.isGlutenFree && (
-                                    <span className="text-xs text-amber-600 dark:text-amber-400 font-work">
+                                    <span className="text-xs text-amber-800 dark:text-amber-300 font-work font-medium">
                                       {language === "de" ? "glutenfrei" : "gluten-free"}
                                     </span>
                                   )}
                                   {item.isBio && (
-                                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-work">
+                                    <span className="text-xs text-emerald-800 dark:text-emerald-300 font-work font-medium">
                                       bio
                                     </span>
                                   )}
                                 </div>
                               )}
                             </div>
-                            <span className="text-accent font-semibold text-sm font-work shrink-0">
+                            <span className="text-primary font-semibold text-sm font-work shrink-0">
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
@@ -520,7 +520,7 @@ export const MenuSection = () => {
                                   </span>
                                 )}
                               </div>
-                              <span className="text-accent font-medium text-sm font-work shrink-0">
+                              <span className="text-primary font-medium text-sm font-work shrink-0">
                                 {item.price}
                               </span>
                             </div>
@@ -566,7 +566,7 @@ export const MenuSection = () => {
                                           </span>
                                         )}
                                       </div>
-                                      <span className="text-accent font-medium text-sm font-work shrink-0">
+                                      <span className="text-primary font-medium text-sm font-work shrink-0">
                                         {item.price}
                                       </span>
                                     </div>

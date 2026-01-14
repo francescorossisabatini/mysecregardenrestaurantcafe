@@ -114,12 +114,13 @@ export const Hero = () => {
             >
               <div
                 className="absolute inset-0 transition-transform duration-500"
+                role="img"
+                aria-label={image.alt}
                 style={{
                   backgroundImage: `url(${image.src})`,
                   backgroundSize: "cover",
                   backgroundPosition: image.position,
                 }}
-                aria-label={image.alt}
               />
             </div>
           ))}
@@ -220,7 +221,7 @@ export const Hero = () => {
           }`}>
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
               onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
             >
               <Phone className="w-4 h-4 mr-2" />
@@ -240,8 +241,8 @@ export const Hero = () => {
             </Button>
           </div>
 
-          {/* Carousel dots with a11y */}
-          <div className={`flex gap-3 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          {/* Carousel dots with a11y - WCAG touch target size 24px minimum */}
+          <div className={`flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {heroImages.map((_, index) => (
@@ -250,12 +251,14 @@ export const Hero = () => {
                 onClick={() => scrollToSlide(index)}
                 aria-label={language === "de" ? `Slide ${index + 1} anzeigen` : `Show slide ${index + 1}`}
                 aria-current={index === currentImage ? "true" : undefined}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className="w-8 h-8 flex items-center justify-center"
+              >
+                <span className={`rounded-full transition-all duration-300 ${
                   currentImage === index
-                    ? "bg-background w-8 shadow-lg"
-                    : "bg-background/80 hover:bg-background w-2.5"
-                }`}
-              />
+                    ? "bg-background w-8 h-2.5 shadow-lg"
+                    : "bg-background/80 hover:bg-background w-2.5 h-2.5"
+                }`} />
+              </button>
             ))}
           </div>
         </div>

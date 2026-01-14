@@ -9,7 +9,7 @@ export const HomeClosing = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center space-y-8">
           {/* Silent closing phrase */}
-          <p className="font-cormorant text-xl md:text-2xl text-muted-foreground/80 italic">
+          <p className="font-cormorant text-xl md:text-2xl text-muted-foreground italic">
             {language === "de" 
               ? "Wir freuen uns auf dich." 
               : "We look forward to seeing you."}
