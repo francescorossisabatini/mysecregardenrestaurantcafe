@@ -1,7 +1,8 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { FloatingCallButton } from "@/components/FloatingCallButton";
+import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { CTAEndBlock } from "@/components/CTAEndBlock";
 import entranceGarden from "@/assets/entrance-garden.jpg";
 import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import { Link } from "react-router-dom";
@@ -16,10 +17,7 @@ const AboutUs = () => {
       {/* Spacer for fixed navigation */}
       <div className="h-20" />
 
-      {/* ═══════════════════════════════════════════════
-          BLOCK 1: MANIFESTO PHRASE - Emotional anchor
-          Large, centered, maximum breathing room
-      ═══════════════════════════════════════════════ */}
+      {/* BLOCK 1: MANIFESTO PHRASE */}
       <section className="py-24 md:py-40">
         <div className="container mx-auto px-4">
           <h1 className="font-caveat text-4xl md:text-6xl lg:text-7xl text-primary text-center leading-tight max-w-3xl mx-auto">
@@ -30,10 +28,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          BLOCK 2: DESCRIPTIVE BLOCK - Combined narrative
-          Smaller font, one paragraph, natural alignment
-      ═══════════════════════════════════════════════ */}
+      {/* BLOCK 2: DESCRIPTIVE BLOCK */}
       <section className="pb-16 md:pb-24">
         <div className="container mx-auto px-4 max-w-2xl">
           <p className="font-lora text-lg md:text-xl text-foreground/85 leading-relaxed">
@@ -44,10 +39,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          BLOCK 3: VISUAL PAUSE - Image
-          Never more than 2 text blocks without image
-      ═══════════════════════════════════════════════ */}
+      {/* BLOCK 3: VISUAL PAUSE - Image */}
       <section className="pb-24 md:pb-36">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-lg">
@@ -60,10 +52,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════
-          BLOCK 4: SECOND POETIC PHRASE - Discovery moment
-          Medium font, centered, feels like finding something
-      ═══════════════════════════════════════════════ */}
+      {/* BLOCK 4: SECOND POETIC PHRASE */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 max-w-xl">
           <p className="font-lora text-xl md:text-2xl text-foreground/85 text-center leading-relaxed whitespace-pre-line">
@@ -87,14 +76,13 @@ const AboutUs = () => {
         </div>
       </section>
 
-
       {/* Link to Inspiration - Minimal */}
-      <section className="py-24 md:py-32">
+      <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <Link 
               to="/inspiration"
-              className="font-lora text-lg text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2 underline-offset-2 hover:underline"
+              className="font-lora text-lg text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2 underline underline-offset-4"
             >
               {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
               <span className="text-sm">→</span>
@@ -103,9 +91,12 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* End CTA Block */}
+      <CTAEndBlock show={["weekly", "menu", "directions"]} />
+
       <Footer />
       
-      <FloatingCallButton />
+      <MobileStickyBar />
     </div>
   );
 };

@@ -2,6 +2,8 @@ import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { useState, useRef } from "react";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
@@ -432,7 +434,12 @@ const Inspiration = () => {
         </div>
       </section>
 
+      {/* End CTA Block */}
+      <CTAEndBlock show={["weekly", "menu", "directions"]} />
+
       <Footer />
+      
+      <MobileStickyBar />
     </div>
   );
 };

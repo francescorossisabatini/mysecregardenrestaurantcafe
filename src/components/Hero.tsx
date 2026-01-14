@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Phone, MapPin } from "lucide-react";
-
+import { Phone, MapPin, CalendarDays, UtensilsCrossed } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -216,13 +216,13 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Call (primary) + Directions (secondary) */}
-          <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          {/* CTA Buttons: Call (primary), Directions, Weekly Specials, Menu */}
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
             >
               <Phone className="w-4 h-4 mr-2" />
@@ -232,13 +232,37 @@ export const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6"
+              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
               <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
                 <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Wegbeschreibung" : "Directions"}
+                {language === "de" ? "Route" : "Directions"}
               </a>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              asChild
+            >
+              <Link to="/wochenkarte">
+                <CalendarDays className="w-4 h-4 mr-2" />
+                {language === "de" ? "Wochenmenü" : "Weekly Specials"}
+              </Link>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              asChild
+            >
+              <Link to="/#menu">
+                <UtensilsCrossed className="w-4 h-4 mr-2" />
+                {language === "de" ? "Speisekarte" : "Menu"}
+              </Link>
             </Button>
           </div>
 

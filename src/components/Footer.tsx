@@ -49,12 +49,18 @@ export const Footer = () => {
           </div>
           
           {/* Links */}
-          <div className="flex items-center justify-center gap-6 text-sm font-work">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-work">
+            <Link 
+              to="/wochenkarte" 
+              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
+            >
+              {language === "de" ? "Wochenmenü" : "Weekly Specials"}
+            </Link>
             <Link 
               to="/contact" 
               className="text-primary-foreground/90 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
             >
-              {language === "de" ? "Kontakt" : "Contact"}
+              {language === "de" ? "Besuche uns" : "Visit Us"}
             </Link>
             <a 
               href={SITE.mapsUrl}
@@ -62,7 +68,7 @@ export const Footer = () => {
               rel="noopener noreferrer"
               className="text-primary-foreground/80 hover:text-primary-foreground transition-colors underline-offset-2 hover:underline"
             >
-              Google Maps
+              {language === "de" ? "Route" : "Directions"}
             </a>
             <Link 
               to="/privacy" 
