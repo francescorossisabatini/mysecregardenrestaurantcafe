@@ -98,16 +98,16 @@ export const DailyMenuHighlight = () => {
           </p>
         </div>
 
-        {/* Green Dish */}
+        {/* Green Dish - WCAG compliant using primary instead of accent for text */}
         <div>
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <BotanicalDecoration variant="flower" className="w-5 h-5 text-accent" />
-              <span className="text-sm font-medium text-accent uppercase tracking-wide">
+              <BotanicalDecoration variant="flower" className="w-5 h-5 text-primary" />
+              <span className="text-sm font-medium text-primary uppercase tracking-wide">
                 {language === "de" ? "Grün" : "Green"}
               </span>
             </div>
-            <span className="text-sm font-bold text-accent">15,2€</span>
+            <span className="text-sm font-bold text-foreground">15,2€</span>
           </div>
           <p className="font-lora text-sm text-foreground leading-relaxed">
             {day.green[language]}

@@ -143,7 +143,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                   {/* Green dish */}
                   {day.green[language] && (
                     <div className="space-y-1">
-                      <Badge className="bg-accent text-accent-foreground text-xs mb-1">
+                      <Badge className="bg-primary text-primary-foreground text-xs mb-1">
                         {language === "de" ? "Grün" : "Green"}
                       </Badge>
                       <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">

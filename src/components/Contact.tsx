@@ -97,7 +97,7 @@ export const Contact = () => {
           <div className="text-center">
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-12 py-7 font-lora"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-12 py-7 font-lora"
               asChild
             >
               <a href={`tel:${SITE.phoneTel}`}>{t("contact.call")}</a>

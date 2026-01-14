@@ -136,7 +136,7 @@ const ContactPage = () => {
             <div className="text-center">
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-work px-10 py-6"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-work px-10 py-6"
                 asChild
               >
                 <a href={`tel:${SITE.phoneTel}`}>

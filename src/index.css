@@ -31,11 +31,11 @@ Background: Warm cream #F5F1E3
     --muted: 40 30% 94%;
     --muted-foreground: 0 0% 28%; /* Darker for WCAG 4.5:1 contrast - was 35% */
 
-    /* Accent: Natural green - WCAG AA compliant for text on light backgrounds */
-    --accent: 92 55% 30%; /* Darker green for 4.5:1+ contrast on cream */
+    /* Accent: Natural green - WCAG AAA compliant for text on light backgrounds */
+    --accent: 92 60% 25%; /* Very dark green for 7:1+ contrast on cream - #2D5C1E */
     --accent-foreground: 0 0% 100%;
     
-    /* Accent secondary: Light green for backgrounds only */
+    /* Accent secondary: Light green for backgrounds only (decorative) */
     --accent-light: 85 42% 61%;
     
     /* Blue accent for menu items - WCAG compliant */
