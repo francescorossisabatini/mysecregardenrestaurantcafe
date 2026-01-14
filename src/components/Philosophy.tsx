@@ -32,8 +32,8 @@ export const Philosophy = () => {
               </div>
               {/* Quote sotto la foto */}
               <div className="mt-4 md:mt-6 text-center space-y-3 md:space-y-4">
-                <div className="bg-accent/10 rounded-xl p-4 md:p-6 border border-accent/30">
-                  <p className="font-caveat text-lg md:text-2xl text-accent leading-relaxed">
+                <div className="bg-primary/10 rounded-xl p-4 md:p-6 border border-primary/30">
+                  <p className="font-caveat text-lg md:text-2xl text-primary leading-relaxed">
                     {language === "de" ? (
                       <>
                         „Nein, es ist nicht möglich,<br />
@@ -90,7 +90,7 @@ export const Philosophy = () => {
                     <p className="text-base md:text-lg text-foreground leading-relaxed mb-4 italic">
                       "{t("philosophy.sri.quote")}"
                     </p>
-                    <p className="text-sm md:text-base font-semibold text-accent">
+                    <p className="text-sm md:text-base font-semibold text-primary">
                       — {t("philosophy.sri.author")}
                     </p>
                   </div>
@@ -105,7 +105,7 @@ export const Philosophy = () => {
                 href="https://www.srichinmoy.org" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-accent hover:text-primary font-medium transition-colors duration-300"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors duration-300 underline underline-offset-2"
               >
                 {t("philosophy.sri.link")}
                 <ExternalLink className="w-4 h-4" />

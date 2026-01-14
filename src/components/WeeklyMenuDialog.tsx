@@ -86,11 +86,11 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                 </div>
 
                 {/* Green Dish - Gestalt: Color coding for grouping */}
-                <div className="flex gap-3 items-start bg-accent/10 p-3 rounded-lg border-l-4 border-accent">
-                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-accent mt-2"></div>
+                <div className="flex gap-3 items-start bg-primary/10 p-3 rounded-lg border-l-4 border-primary">
+                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <Badge className="bg-accent text-accent-foreground text-xs font-bold uppercase px-2 py-0.5">
+                      <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                         {language === 'de' ? 'Grün' : 'Green'}
                       </Badge>
                       <span className="text-xs text-muted-foreground">15,2€</span>
