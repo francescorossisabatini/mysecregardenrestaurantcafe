@@ -262,7 +262,7 @@ export const MenuSection = () => {
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Suppe" : "Soup"}
                           </span>
-                          <p className="text-foreground/70 font-work text-sm mt-1">
+                          <p className="text-foreground/85 font-work text-sm mt-1">
                             {nextDayMenu.soup[language]}
                           </p>
                         </div>
@@ -272,7 +272,7 @@ export const MenuSection = () => {
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Grünes Gericht" : "Green Dish"}
                           </span>
-                          <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
+                          <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
                             {nextDayMenu.green[language]}
                           </p>
                         </div>
@@ -282,7 +282,7 @@ export const MenuSection = () => {
                           <span className="text-xs text-accent font-work">
                             {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                           </span>
-                          <p className="text-foreground/70 font-work text-sm mt-1 line-clamp-2">
+                          <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
                             {nextDayMenu.blue[language]}
                           </p>
                         </div>
@@ -296,7 +296,7 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div id="wochenmenu" className="pt-8">
-            <p className="text-xs text-muted-foreground/70 font-work tracking-wide mb-6 text-center">
+            <p className="text-xs text-muted-foreground font-work tracking-wide mb-6 text-center">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
@@ -352,7 +352,7 @@ export const MenuSection = () => {
                             {isDayClosed ? (
                               // Show holiday / Sunday / no-menu message instead of food
                               <div className="text-center py-3">
-                                <p className="font-cormorant text-base text-foreground/70 italic">
+                                <p className="font-cormorant text-base text-foreground/85 italic">
                                   {dayHoliday
                                     ? dayHoliday.name[language]
                                     : isDaySunday

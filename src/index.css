@@ -13,134 +13,140 @@ Background: Warm cream #F5F1E3
   :root {
     /* Light mode - botanical brand identity */
     --background: 40 33% 96%; /* #FAF7F3 warm ivory */
-    --foreground: 0 0% 12%; /* #1E1E1E readable and calm */
+    --foreground: 0 0% 10%; /* Slightly darker for better contrast - WCAG AA */
 
     --card: 40 40% 97%;
-    --card-foreground: 0 0% 12%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 40 40% 97%;
-    --popover-foreground: 0 0% 12%;
+    --popover-foreground: 0 0% 10%;
 
     /* Primary: Spiritual deep blue #243260 */
     --primary: 226 45% 26%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 40 35% 92%;
-    --secondary-foreground: 0 0% 12%;
+    --secondary-foreground: 0 0% 10%;
 
     --muted: 40 30% 94%;
-    --muted-foreground: 0 0% 35%;
+    --muted-foreground: 0 0% 28%; /* Darker for WCAG 4.5:1 contrast - was 35% */
 
-    /* Accent: Natural green #74A84B */
-    --accent: 92 39% 48%;
+    /* Accent: Natural green #74A84B - darkened for better contrast */
+    --accent: 92 45% 38%; /* Darker green for text readability */
     --accent-foreground: 0 0% 100%;
     
-    /* Accent secondary: Light green #A0C86F */
+    /* Accent secondary: Light green for backgrounds only */
     --accent-light: 85 42% 61%;
     
-    /* Blue accent for menu items */
-    --blue: 210 85% 55%;
+    /* Blue accent for menu items - WCAG compliant */
+    --blue: 210 85% 45%; /* Darker blue for better contrast */
     --blue-foreground: 0 0% 100%;
     
     /* Soul Carousel colors */
     --daily-card: 47 100% 88%; /* #FFF3C1 warm fresh */
     --daily-card-alt: 80 50% 94%; /* #F1F7E1 green fresh */
     --klassiker-card: 40 33% 96%; /* #FAF7F3 ivory stable */
-    --badge-wood: 37 30% 33%; /* #7C6740 natural wood */
+    --badge-wood: 37 35% 28%; /* Darker wood for text contrast */
     
     /* Cream background for special sections */
     --cream: 40 40% 95%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 45%; /* Darker for better contrast */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
+    --border: 40 20% 85%; /* Slightly darker border */
+    --input: 40 20% 85%;
     --ring: 226 45% 26%;
+    
+    /* Focus ring - visible and accessible */
+    --focus-ring: 226 60% 45%;
 
     --radius: 0.5rem;
     
     /* Custom design tokens - botanical theme */
-    --gradient-green: linear-gradient(135deg, hsl(92 39% 48%) 0%, hsl(85 42% 61%) 100%);
+    --gradient-green: linear-gradient(135deg, hsl(92 45% 38%) 0%, hsl(85 42% 50%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(226 45% 26%) 0%, hsl(226 35% 36%) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(40 40% 97%) 0%, hsl(80 35% 95%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(92 39% 48% / 0.15);
+    --shadow-soft: 0 4px 20px -4px hsl(92 45% 38% / 0.15);
     --shadow-elevated: 0 10px 40px -10px hsl(226 45% 26% / 0.25);
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.08);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 40% 20%;
-    --sidebar-primary: 220 75% 35%;
+    --sidebar-foreground: 220 40% 18%; /* Darker for contrast */
+    --sidebar-primary: 220 75% 30%; /* Darker for contrast */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 30% 95%;
-    --sidebar-accent-foreground: 220 40% 20%;
-    --sidebar-border: 210 25% 88%;
-    --sidebar-ring: 220 75% 35%;
+    --sidebar-accent-foreground: 220 40% 18%;
+    --sidebar-border: 210 25% 85%;
+    --sidebar-ring: 220 75% 30%;
   }
 
   .dark {
-    /* Dark mode - maintaining botanical atmosphere */
-    --background: 226 35% 15%;
-    --foreground: 45 30% 90%;
+    /* Dark mode - maintaining botanical atmosphere - WCAG AA compliant */
+    --background: 226 35% 12%; /* Slightly darker for better contrast */
+    --foreground: 45 25% 92%; /* Lighter for better contrast */
 
-    --card: 226 30% 18%;
-    --card-foreground: 45 30% 90%;
+    --card: 226 30% 15%;
+    --card-foreground: 45 25% 92%;
 
-    --popover: 226 30% 18%;
-    --popover-foreground: 45 30% 90%;
+    --popover: 226 30% 15%;
+    --popover-foreground: 45 25% 92%;
 
-    /* Primary: Lighter blue for dark mode */
-    --primary: 226 40% 45%;
+    /* Primary: Lighter blue for dark mode - WCAG compliant */
+    --primary: 226 50% 60%; /* Brighter for contrast */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 226 25% 22%;
-    --secondary-foreground: 45 30% 90%;
+    --secondary: 226 25% 20%;
+    --secondary-foreground: 45 25% 92%;
 
-    --muted: 226 25% 24%;
-    --muted-foreground: 45 20% 70%;
+    --muted: 226 25% 22%;
+    --muted-foreground: 45 15% 75%; /* Brighter for WCAG 4.5:1 */
 
     /* Accent: Brighter green for dark mode */
-    --accent: 92 45% 55%;
+    --accent: 92 50% 58%;
     --accent-foreground: 0 0% 100%;
     
     --accent-light: 85 45% 65%;
     
     /* Blue accent for menu items (brighter in dark mode) */
-    --blue: 210 80% 65%;
+    --blue: 210 80% 68%;
     --blue-foreground: 0 0% 100%;
     
     /* Soul Carousel colors (dark mode) */
-    --daily-card: 47 60% 25%;
-    --daily-card-alt: 80 30% 22%;
-    --klassiker-card: 226 25% 20%;
-    --badge-wood: 37 25% 55%;
+    --daily-card: 47 60% 22%;
+    --daily-card-alt: 80 30% 20%;
+    --klassiker-card: 226 25% 18%;
+    --badge-wood: 37 30% 60%; /* Brighter for contrast */
     
     /* Cream background for special sections (darker in dark mode) */
-    --cream: 226 20% 25%;
+    --cream: 226 20% 22%;
 
-    --destructive: 0 63% 31%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 226 25% 28%;
     --input: 226 25% 28%;
-    --ring: 226 40% 45%;
+    --ring: 226 50% 60%;
     
-    --gradient-green: linear-gradient(135deg, hsl(92 45% 55%) 0%, hsl(85 45% 65%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(226 40% 20%) 0%, hsl(226 35% 30%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(226 35% 12%) 0%, hsl(226 30% 18%) 100%);
+    /* Focus ring - visible in dark mode */
+    --focus-ring: 226 70% 65%;
+    
+    --gradient-green: linear-gradient(135deg, hsl(92 50% 58%) 0%, hsl(85 45% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(226 40% 18%) 0%, hsl(226 35% 28%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(226 35% 10%) 0%, hsl(226 30% 16%) 100%);
     --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
     --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.25);
     
-    --sidebar-background: 220 35% 10%;
+    --sidebar-background: 220 35% 8%;
     --sidebar-foreground: 210 25% 95%;
-    --sidebar-primary: 220 65% 55%;
+    --sidebar-primary: 220 65% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 30% 18%;
+    --sidebar-accent: 220 30% 16%;
     --sidebar-accent-foreground: 210 25% 95%;
-    --sidebar-border: 220 30% 20%;
-    --sidebar-ring: 220 65% 55%;
+    --sidebar-border: 220 30% 22%;
+    --sidebar-ring: 220 65% 60%;
   }
 }
 
@@ -170,6 +176,53 @@ Background: Warm cream #F5F1E3
   /* Handwritten titles */
   .font-handwritten {
     @apply font-caveat;
+  }
+  
+  /* WCAG-compliant focus styles - visible for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--focus-ring, var(--ring)));
+    outline-offset: 2px;
+  }
+  
+  /* Accessible link styles with subtle underline */
+  a:not([class*="btn"]):not([class*="Button"]) {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  
+  a:not([class*="btn"]):not([class*="Button"]):hover {
+    text-decoration: underline;
+  }
+}
+
+/* Improved contrast for muted/micro-copy text */
+@layer utilities {
+  /* Higher contrast variant for small text and micro-copy */
+  .text-muted-high-contrast {
+    color: hsl(0 0% 22%);
+  }
+  
+  .dark .text-muted-high-contrast {
+    color: hsl(45 15% 78%);
+  }
+  
+  /* Text overlay protection for text on images */
+  .text-overlay-protect {
+    text-shadow: 0 1px 3px hsl(0 0% 0% / 0.3);
+  }
+  
+  .dark .text-overlay-protect {
+    text-shadow: 0 1px 4px hsl(0 0% 0% / 0.5);
+  }
+  
+  /* Light overlay for text readability on images */
+  .bg-overlay-light {
+    background: linear-gradient(to bottom, hsl(0 0% 100% / 0.85), hsl(0 0% 100% / 0.7));
+  }
+  
+  /* Dark overlay for text readability on images */
+  .bg-overlay-dark {
+    background: linear-gradient(to bottom, hsl(0 0% 0% / 0.5), hsl(0 0% 0% / 0.4));
   }
 }
 

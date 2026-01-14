@@ -115,7 +115,7 @@ const Inspiration = () => {
             <h1 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
               {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
             </h1>
-            <p className="font-lora text-lg md:text-xl text-foreground/60 italic">
+            <p className="font-lora text-lg md:text-xl text-muted-foreground italic">
               {language === "de" 
                 ? "Die Quelle, aus der alles fließt" 
                 : "The source from which everything flows"}
@@ -300,14 +300,14 @@ const Inspiration = () => {
             {/* Navigation arrows - desktop only */}
             <button 
               onClick={prevPoem}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
               aria-label="Previous poem"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={nextPoem}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-foreground/60 hover:text-primary transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-12 h-12 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
               aria-label="Next poem"
             >
               <ChevronRight className="w-6 h-6" />
@@ -383,7 +383,7 @@ const Inspiration = () => {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="font-lora text-lg md:text-xl text-foreground/70 leading-relaxed">
+            <p className="font-lora text-lg md:text-xl text-foreground/85 leading-relaxed">
               {language === "de" 
                 ? "Diese Haltung prägt unsere Küche. Einfachheit, Sorgfalt und Stille begleiten, wie wir kochen und wie wir servieren." 
                 : "This attitude shapes our kitchen. Simplicity, care and stillness guide how we cook and how we serve."}
@@ -396,7 +396,7 @@ const Inspiration = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center space-y-4">
-            <p className="font-lora text-base text-foreground/50 mb-6">
+            <p className="font-lora text-base text-muted-foreground mb-6">
               {language === "de" ? "Mehr entdecken" : "Discover more"}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">

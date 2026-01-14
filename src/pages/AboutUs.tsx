@@ -36,7 +36,7 @@ const AboutUs = () => {
       ═══════════════════════════════════════════════ */}
       <section className="pb-16 md:pb-24">
         <div className="container mx-auto px-4 max-w-2xl">
-          <p className="font-lora text-lg md:text-xl text-foreground/75 leading-relaxed">
+          <p className="font-lora text-lg md:text-xl text-foreground/85 leading-relaxed">
             {language === "de" 
               ? "Was wir kochen, entsteht am Morgen – mit Gemüse aus der Region, Kräutern aus dem Garten und dem, was gerade wächst." 
               : "What we cook takes shape in the morning – with vegetables from the region, herbs from the garden, and whatever is in season."}
@@ -66,7 +66,7 @@ const AboutUs = () => {
       ═══════════════════════════════════════════════ */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 max-w-xl">
-          <p className="font-lora text-xl md:text-2xl text-foreground/70 text-center leading-relaxed whitespace-pre-line">
+          <p className="font-lora text-xl md:text-2xl text-foreground/85 text-center leading-relaxed whitespace-pre-line">
             {language === "de" 
               ? "Wir kochen ohne Eile.\nMit Aufmerksamkeit.\nMit Freude." 
               : "We cook without haste.\nWith attention.\nWith joy."}
@@ -94,7 +94,7 @@ const AboutUs = () => {
           <div className="text-center">
             <Link 
               to="/inspiration"
-              className="font-lora text-lg text-foreground/50 hover:text-foreground/70 transition-colors inline-flex items-center gap-2"
+              className="font-lora text-lg text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2 underline-offset-2 hover:underline"
             >
               {language === "de" ? "Unsere Inspiration" : "Our Inspiration"}
               <span className="text-sm">→</span>
