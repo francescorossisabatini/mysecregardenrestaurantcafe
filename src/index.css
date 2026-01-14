@@ -31,8 +31,8 @@ Background: Warm cream #F5F1E3
     --muted: 40 30% 94%;
     --muted-foreground: 0 0% 28%; /* Darker for WCAG 4.5:1 contrast - was 35% */
 
-    /* Accent: Natural green #74A84B - darkened for better contrast */
-    --accent: 92 45% 38%; /* Darker green for text readability */
+    /* Accent: Natural green - WCAG AA compliant for text on light backgrounds */
+    --accent: 92 55% 30%; /* Darker green for 4.5:1+ contrast on cream */
     --accent-foreground: 0 0% 100%;
     
     /* Accent secondary: Light green for backgrounds only */

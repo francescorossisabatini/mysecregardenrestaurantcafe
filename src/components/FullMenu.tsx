@@ -153,7 +153,7 @@ export const FullMenu = () => {
             {/* Content - Minimal Layout */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center space-y-6">
               {/* Small label */}
-              <p className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest opacity-60">
+              <p className="text-xs md:text-sm text-foreground/80 font-medium uppercase tracking-widest">
                 {language === "de" ? "Diese Woche" : "This Week"}
               </p>
               
@@ -163,7 +163,7 @@ export const FullMenu = () => {
               </h3>
               
               {/* Subtitle */}
-              <p className="text-sm md:text-base text-foreground/70 font-lora">
+              <p className="text-sm md:text-base text-foreground/85 font-lora">
                 {language === "de" 
                   ? "Tippe für das komplette Menü" 
                   : "Tap for the complete menu"}

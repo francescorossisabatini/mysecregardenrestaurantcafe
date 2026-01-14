@@ -91,9 +91,9 @@ export const CookieConsent = () => {
               
               <p className="text-xs text-muted-foreground">
                 {language === "de" ? (
-                  <>Mehr Informationen in unserer <a href="/privacy" className="text-primary hover:underline">Datenschutzerklärung</a>.</>
+                  <>Mehr Informationen in unserer <a href="/privacy" className="text-primary underline hover:text-primary/80">Datenschutzerklärung</a>.</>
                 ) : (
-                  <>More information in our <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>.</>
+                  <>More information in our <a href="/privacy" className="text-primary underline hover:text-primary/80">Privacy Policy</a>.</>
                 )}
               </p>
             </div>
