@@ -209,7 +209,7 @@ export const Navigation = () => {
                   if (isActive) {
                     itemClasses += " text-base font-medium text-foreground after:w-full after:h-0.5 after:bg-foreground";
                   } else {
-                    itemClasses += " text-base font-medium text-foreground/70 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
+                    itemClasses += " text-base font-medium text-foreground/85 hover:text-foreground after:w-0 after:h-0.5 after:bg-foreground hover:after:w-full";
                   }
                 }
 
@@ -236,11 +236,11 @@ export const Navigation = () => {
                     {/* Sub-item for weekly menu */}
                     {item.subItem && (
                       <>
-                        <span className="text-muted-foreground/40 text-sm">/</span>
+                        <span className="text-muted-foreground/50 text-sm">/</span>
                         <a
                           href={item.subItem.href}
                           onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
-                          className="text-sm text-muted-foreground/60 hover:text-foreground transition-colors py-2"
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2 underline-offset-2 hover:underline"
                         >
                           {item.subItem.label}
                         </a>
@@ -251,7 +251,7 @@ export const Navigation = () => {
               })}
               <Link
                 to="/privacy"
-                className="text-sm font-normal text-foreground/70 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1"
+                className="text-sm font-normal text-foreground/85 hover:text-foreground transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full py-2 px-1"
               >
                 {language === "de" ? "Datenschutz" : "Privacy"}
               </Link>
@@ -341,7 +341,7 @@ export const Navigation = () => {
                       <a
                         href={item.subItem.href}
                         onClick={(e) => handleNavClick(e, item.subItem.href, false, true)}
-                        className="block py-3 px-8 text-sm text-muted-foreground/70 hover:text-foreground hover:bg-muted/20 rounded-lg transition-colors"
+                        className="block py-3 px-8 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/20 rounded-lg transition-colors underline-offset-2 hover:underline"
                       >
                         {item.subItem.label}
                       </a>
@@ -351,7 +351,7 @@ export const Navigation = () => {
             })}
             <Link
               to="/privacy"
-              className="block py-4 px-5 text-lg font-normal text-foreground hover:bg-muted/30 rounded-lg transition-colors duration-200 opacity-70 min-h-[44px]"
+              className="block py-4 px-5 text-lg font-normal text-foreground/85 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors duration-200 min-h-[44px]"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {language === "de" ? "Datenschutz" : "Privacy"}

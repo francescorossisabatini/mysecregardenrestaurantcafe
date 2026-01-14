@@ -126,9 +126,9 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/45" />
-      <div className="absolute inset-0 bg-black/30 md:hidden" />
+      {/* Overlay for better text readability - WCAG compliant */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/55" />
+      <div className="absolute inset-0 bg-black/35 md:hidden" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full pointer-events-none">
@@ -140,8 +140,8 @@ export const Hero = () => {
             {SITE.name}
           </h1>
 
-          {/* Subtitle */}
-          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background/90 drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
+          {/* Subtitle - WCAG compliant contrast */}
+          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             {language === "de"
@@ -161,7 +161,7 @@ export const Hero = () => {
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
-                  <span className="text-xs text-background/70">
+                  <span className="text-xs text-background/90 drop-shadow-sm">
                     {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
                   </span>
                 )}
@@ -182,12 +182,12 @@ export const Hero = () => {
                   {language === "de" ? "Jetzt geschlossen" : "Closed now"}
                 </span>
                 {status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs text-background/70">
+                  <span className="text-xs text-background/90 drop-shadow-sm">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
                 {status.tomorrowClosed && (
-                  <span className="text-xs text-background/70">
+                  <span className="text-xs text-background/90 drop-shadow-sm">
                     {language === "de" ? "• morgen geschlossen" : "• closed tomorrow"}
                   </span>
                 )}
@@ -201,12 +201,12 @@ export const Hero = () => {
                   {language === "de" ? "Heute geschlossen" : "Closed today"}
                 </span>
                 {closedReason === "no-menu" && (
-                  <span className="text-xs text-background/70">
+                  <span className="text-xs text-background/90 drop-shadow-sm">
                     {language === "de" ? "• kein Menü heute" : "• no menu today"}
                   </span>
                 )}
                 {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs text-background/70">
+                  <span className="text-xs text-background/90 drop-shadow-sm">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
@@ -253,7 +253,7 @@ export const Hero = () => {
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   currentImage === index
                     ? "bg-background w-8 shadow-lg"
-                    : "bg-background/60 hover:bg-background/80 w-2.5"
+                    : "bg-background/80 hover:bg-background w-2.5"
                 }`}
               />
             ))}

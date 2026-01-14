@@ -17,11 +17,11 @@ export const InstagramCTA = () => {
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-4 group"
         >
-          <p className="text-muted-foreground/70 text-sm md:text-base font-light tracking-wide text-center">
+          <p className="text-muted-foreground text-sm md:text-base font-light tracking-wide text-center">
             {text}
           </p>
           
-          <div className="flex items-center gap-3 text-muted-foreground/60 group-hover:text-foreground/70 transition-colors duration-500">
+          <div className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition-colors duration-500 underline-offset-2 group-hover:underline">
             <Instagram className="w-4 h-4" strokeWidth={1.5} />
             <span className="text-xs md:text-sm tracking-widest">
               @mysecretgardencafewien
