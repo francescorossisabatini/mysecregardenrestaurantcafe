@@ -128,9 +128,9 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Overlay for better text readability - WCAG compliant */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/55" />
-      <div className="absolute inset-0 bg-black/35 md:hidden" />
+      {/* Overlay - reduced for better image visibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
+      <div className="absolute inset-0 bg-black/20 md:hidden" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full pointer-events-none">
@@ -142,13 +142,18 @@ export const Hero = () => {
             {SITE.name}
           </h1>
 
-          {/* Subtitle - WCAG compliant contrast */}
-          <p className={`text-sm sm:text-base md:text-lg lg:text-xl font-lora text-background drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
+          {/* Subtitle */}
+          <p className={`text-sm sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
-            {language === "de"
-              ? "Vegetarisches Café & Restaurant im Herzen von Wien"
-              : "Vegetarian Café & Restaurant in the Heart of Vienna"}
+            Vegetarian Café & Restaurant • Vienna
+          </p>
+
+          {/* Tagline quote */}
+          <p className={`text-base sm:text-lg md:text-xl font-caveat italic text-background/90 drop-shadow-lg transition-opacity duration-[1500ms] ease-out ${
+            showSubtitle ? "opacity-100" : "opacity-0"
+          }`}>
+            "Cooking is prayer. Eating is gratitude."
           </p>
 
           {/* Open/Closed chip - soft style */}
@@ -216,19 +221,21 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Call (primary), Directions, Weekly Specials, Menu */}
+          {/* CTA Buttons: Call Now (primary), Get Directions (secondary), then Menu/Specials */}
           <div className={`flex flex-wrap justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
+            {/* Primary: Call Now */}
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
             >
               <Phone className="w-4 h-4 mr-2" />
-              {language === "de" ? "Anrufen" : "Call Us"}
+              {language === "de" ? "Jetzt anrufen" : "Call Now"}
             </Button>
 
+            {/* Secondary: Get Directions */}
             <Button
               size="lg"
               variant="outline"
@@ -237,31 +244,36 @@ export const Hero = () => {
             >
               <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
                 <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Route" : "Directions"}
+                {language === "de" ? "Route anzeigen" : "Get Directions"}
               </a>
             </Button>
+          </div>
 
+          {/* Secondary row: Menu + Specials */}
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-3 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+            showButtons ? "opacity-100" : "opacity-0"
+          }`}>
             <Button
-              size="lg"
-              variant="outline"
-              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
-              asChild
-            >
-              <Link to="/wochenkarte">
-                <CalendarDays className="w-4 h-4 mr-2" />
-                {language === "de" ? "Wochenmenü" : "Weekly Specials"}
-              </Link>
-            </Button>
-
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              size="default"
+              variant="ghost"
+              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
               asChild
             >
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
-                {language === "de" ? "Speisekarte" : "Menu"}
+                {language === "de" ? "Speisekarte" : "View Menu"}
+              </Link>
+            </Button>
+
+            <Button
+              size="default"
+              variant="ghost"
+              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
+              asChild
+            >
+              <Link to="/wochenkarte">
+                <CalendarDays className="w-4 h-4 mr-2" />
+                {language === "de" ? "Wochenmenü" : "Today's Specials"}
               </Link>
             </Button>
           </div>
