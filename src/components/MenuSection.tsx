@@ -32,24 +32,24 @@ const isValidMenuText = (text?: string) => {
   return true;
 };
 
-// Render dietary badges dynamically - WCAG AA compliant colors
+// Render dietary badges dynamically - WCAG AAA compliant colors (4.5:1+ on cream)
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
   
   return (
     <div className="flex items-center gap-2 mt-2 flex-wrap">
       {labels.isVegan && (
-        <span className="text-xs text-green-800 dark:text-green-300 font-work font-medium">
+        <span className="text-xs text-green-900 dark:text-green-300 font-work font-semibold">
           vegan
         </span>
       )}
       {labels.isGlutenFree && (
-        <span className="text-xs text-amber-800 dark:text-amber-300 font-work font-medium">
+        <span className="text-xs text-amber-900 dark:text-amber-300 font-work font-semibold">
           {language === "de" ? "glutenfrei" : "gluten-free"}
         </span>
       )}
       {labels.isBio && (
-        <span className="text-xs text-emerald-800 dark:text-emerald-300 font-work font-medium">
+        <span className="text-xs text-emerald-900 dark:text-emerald-300 font-work font-semibold">
           bio
         </span>
       )}
@@ -258,31 +258,31 @@ export const MenuSection = () => {
                     </p>
                     <div className="space-y-3 text-left">
                       {isValidMenuText(nextDayMenu.soup[language]) && (
-                        <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-primary font-work font-medium">
+                        <div className="bg-background rounded-lg p-3">
+                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
                             {language === "de" ? "Suppe" : "Soup"}
                           </span>
-                          <p className="text-foreground/85 font-work text-sm mt-1">
+                          <p className="text-foreground font-work text-sm mt-1">
                             {nextDayMenu.soup[language]}
                           </p>
                         </div>
                       )}
                       {isValidMenuText(nextDayMenu.green[language]) && (
-                        <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-primary font-work font-medium">
+                        <div className="bg-background rounded-lg p-3">
+                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
                             {language === "de" ? "Grünes Gericht" : "Green Dish"}
                           </span>
-                          <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
+                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
                             {nextDayMenu.green[language]}
                           </p>
                         </div>
                       )}
                       {isValidMenuText(nextDayMenu.blue[language]) && (
-                        <div className="bg-background/50 rounded-lg p-3">
-                          <span className="text-xs text-primary font-work font-medium">
+                        <div className="bg-background rounded-lg p-3">
+                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
                             {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                           </span>
-                          <p className="text-foreground/85 font-work text-sm mt-1 line-clamp-2">
+                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
                             {nextDayMenu.blue[language]}
                           </p>
                         </div>
@@ -296,7 +296,7 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div id="wochenmenu" className="pt-8">
-            <p className="text-xs text-muted-foreground font-work tracking-wide mb-6 text-center">
+            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
@@ -416,7 +416,7 @@ export const MenuSection = () => {
           
           {/* BLOCK 2: Visual Transition */}
           <div className="text-center py-10 md:py-14">
-            <p className="font-cormorant text-lg md:text-xl text-muted-foreground italic leading-relaxed whitespace-pre-line">
+            <p className="font-cormorant text-lg md:text-xl text-foreground/70 italic leading-relaxed whitespace-pre-line">
               {language === "de" 
                 ? "Nicht alles bleibt.\nUnd das gehört dazu." 
                 : "Not everything stays.\nAnd that's part of it."}
@@ -432,7 +432,7 @@ export const MenuSection = () => {
               <p className="text-muted-foreground text-sm md:text-base font-work">
                 {klassikerMenu.subtitle[language]}
               </p>
-              <p className="text-muted-foreground text-xs font-work mt-2 uppercase tracking-wide">
+              <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
@@ -457,7 +457,7 @@ export const MenuSection = () => {
                               <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
                                 {item.name[language]}
                                 {item.isUnavailable && (
-                                  <span className="ml-2 text-xs font-work text-muted-foreground italic">
+                                  <span className="ml-2 text-xs font-work text-foreground/60 italic">
                                     ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
                                   </span>
                                 )}
@@ -467,21 +467,21 @@ export const MenuSection = () => {
                                   {item.description[language]}
                                 </p>
                               )}
-                              {/* Dietary labels - only if present - WCAG AA compliant */}
+                              {/* Dietary labels - only if present - WCAG AAA compliant */}
                               {(item.isVegan || item.isGlutenFree || item.isBio) && (
                                 <div className="flex items-center gap-2 mt-2">
                                   {item.isVegan && (
-                                    <span className="text-xs text-green-800 dark:text-green-300 font-work font-medium">
+                                    <span className="text-xs text-green-900 dark:text-green-300 font-work font-semibold">
                                       vegan
                                     </span>
                                   )}
                                   {item.isGlutenFree && (
-                                    <span className="text-xs text-amber-800 dark:text-amber-300 font-work font-medium">
+                                    <span className="text-xs text-amber-900 dark:text-amber-300 font-work font-semibold">
                                       {language === "de" ? "glutenfrei" : "gluten-free"}
                                     </span>
                                   )}
                                   {item.isBio && (
-                                    <span className="text-xs text-emerald-800 dark:text-emerald-300 font-work font-medium">
+                                    <span className="text-xs text-emerald-900 dark:text-emerald-300 font-work font-semibold">
                                       bio
                                     </span>
                                   )}
@@ -531,7 +531,7 @@ export const MenuSection = () => {
                       {!drinksExpanded && (
                         <button
                           onClick={() => setDrinksExpanded(true)}
-                          className="text-muted-foreground text-sm font-work hover:text-foreground transition-colors"
+                          className="text-primary text-sm font-work font-medium hover:text-primary/80 transition-colors underline underline-offset-2"
                         >
                           {language === "de" ? "Alle Getränke anzeigen" : "Show all drinks"}
                         </button>
@@ -578,7 +578,7 @@ export const MenuSection = () => {
                           {/* Collapse link */}
                           <button
                             onClick={() => setDrinksExpanded(false)}
-                            className="text-muted-foreground text-sm font-work hover:text-foreground transition-colors"
+                            className="text-primary text-sm font-work font-medium hover:text-primary/80 transition-colors underline underline-offset-2"
                           >
                             {language === "de" ? "Weniger anzeigen" : "Show less"}
                           </button>

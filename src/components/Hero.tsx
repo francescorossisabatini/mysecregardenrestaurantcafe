@@ -111,16 +111,17 @@ export const Hero = () => {
             <div
               key={index}
               className="flex-[0_0_100%] min-w-0 h-full relative"
+              role="img"
+              aria-label={image.alt}
             >
               <div
                 className="absolute inset-0 transition-transform duration-500"
-                role="img"
-                aria-label={image.alt}
                 style={{
                   backgroundImage: `url(${image.src})`,
                   backgroundSize: "cover",
                   backgroundPosition: image.position,
                 }}
+                aria-hidden="true"
               />
             </div>
           ))}
