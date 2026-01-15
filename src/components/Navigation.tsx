@@ -17,17 +17,15 @@ export const Navigation = () => {
   const rafRef = useRef<number | null>(null);
 
   const handleScroll = useCallback(() => {
-    if (rafRef.current) return;
+    if (rafRef.current || showNavbar) return; // Skip if already visible
     
     rafRef.current = requestAnimationFrame(() => {
       if (window.scrollY > 50) {
         setShowNavbar(true);
-      } else {
-        setShowNavbar(false);
       }
       rafRef.current = null;
     });
-  }, []);
+  }, [showNavbar]);
 
   useEffect(() => {
     if (isHomePage) {
