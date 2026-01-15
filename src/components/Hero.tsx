@@ -149,13 +149,6 @@ export const Hero = () => {
             Vegetarian Café & Restaurant • Vienna
           </p>
 
-          {/* Tagline quote */}
-          <p className={`text-base sm:text-lg md:text-xl font-caveat italic text-background/90 drop-shadow-lg transition-opacity duration-[1500ms] ease-out ${
-            showSubtitle ? "opacity-100" : "opacity-0"
-          }`}>
-            "Cooking is prayer. Eating is gratitude."
-          </p>
-
           {/* Open/Closed chip - soft style */}
           <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-[1500ms] ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
