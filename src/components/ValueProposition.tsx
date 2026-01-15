@@ -10,8 +10,8 @@ export const ValueProposition = () => {
     {
       emoji: "🌱",
       icon: Leaf,
-      titleDe: "Vegetarisch & Vegan",
-      titleEn: "Vegetarian & Vegan",
+      titleDe: "Vegetarisch, Vegan & Glutenfrei",
+      titleEn: "Vegetarian, Vegan & Gluten-Free",
       descDe: "Täglich frisch aus saisonalen Bio-Zutaten.",
       descEn: "Fresh daily from seasonal organic ingredients.",
     },
