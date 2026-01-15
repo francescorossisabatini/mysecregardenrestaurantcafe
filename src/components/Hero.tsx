@@ -233,7 +233,7 @@ export const Hero = () => {
             >
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
-                {language === "de" ? "Speisekarte" : "View Menu"}
+                {language === "de" ? "Tagesmenü" : "Today's Menu"}
               </Link>
             </Button>
 
