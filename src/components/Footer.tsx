@@ -16,6 +16,11 @@ export const Footer = () => {
             {SITE.name}
           </p>
           
+          {/* Tagline */}
+          <p className="font-caveat text-sm text-primary-foreground/70 italic">
+            "Cooking is prayer. Eating is gratitude."
+          </p>
+          
           {/* Address */}
           <p className="text-sm text-primary-foreground/90 font-work">
             {SITE.addressShort}
