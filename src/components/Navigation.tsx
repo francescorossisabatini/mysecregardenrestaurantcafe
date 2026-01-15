@@ -51,7 +51,6 @@ export const Navigation = () => {
     { to: "/#menu", label: language === "de" ? "Speisekarte" : "Menu" },
     { to: "/wochenkarte", label: language === "de" ? "Wochenmenü" : "Weekly Specials" },
     { to: "/about", label: language === "de" ? "Über uns" : "About" },
-    { to: "/inspiration", label: language === "de" ? "Philosophie" : "Philosophy" },
     { to: "/contact", label: language === "de" ? "Besuche uns" : "Visit Us" },
   ];
 
