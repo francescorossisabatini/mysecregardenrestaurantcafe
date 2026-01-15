@@ -1,3 +1,4 @@
+import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,6 +10,13 @@ const Impressum = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Impressum"
+        description={isGerman 
+          ? "Impressum und rechtliche Informationen zu My Secret Garden Restaurant Wien."
+          : "Legal notice and imprint for My Secret Garden Restaurant Vienna."}
+        path="/impressum"
+      />
       {/* Skip to main content link for screen readers */}
       <a 
         href="#main-content" 

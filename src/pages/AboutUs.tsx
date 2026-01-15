@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight, Leaf, Heart, Sparkles } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
@@ -105,6 +106,13 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={language === "de" ? "Über Uns" : "About Us"}
+        description={language === "de" 
+          ? "Erfahre mehr über My Secret Garden – unser vegetarisches Restaurant inspiriert von Sri Chinmoys Philosophie in Wien."
+          : "Learn more about My Secret Garden – our vegetarian restaurant inspired by Sri Chinmoy's philosophy in Vienna."}
+        path="/about"
+      />
       <Navigation />
       <div className="h-20" />
 

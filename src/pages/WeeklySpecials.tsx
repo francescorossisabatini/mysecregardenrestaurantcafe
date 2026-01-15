@@ -1,5 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
+import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
@@ -66,6 +67,13 @@ const WeeklySpecials = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={language === "de" ? "Wochenmenü" : "Weekly Specials"}
+        description={language === "de" 
+          ? "Entdecke unser wechselndes Wochenmenü mit frischen vegetarischen und veganen Gerichten."
+          : "Discover our changing weekly menu with fresh vegetarian and vegan dishes."}
+        path="/wochenkarte"
+      />
       <Navigation />
       
       {/* Hero */}

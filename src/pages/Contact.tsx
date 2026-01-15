@@ -1,5 +1,6 @@
 import { MapPin, Phone, Clock, Instagram, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
@@ -13,6 +14,13 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={language === "de" ? "Kontakt" : "Contact"}
+        description={language === "de" 
+          ? "Besuche My Secret Garden in Wien – Mariahilferstraße 45. Öffnungszeiten Mo–Sa 11–19 Uhr."
+          : "Visit My Secret Garden in Vienna – Mariahilferstraße 45. Open Mon–Sat 11am–7pm."}
+        path="/contact"
+      />
       <Navigation />
       
       <main className="pt-24 pb-8">

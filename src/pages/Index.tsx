@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { SEOHead } from "@/components/SEOHead";
 import { Hero } from "@/components/Hero";
 import { ValueProposition } from "@/components/ValueProposition";
 import { ShowcaseSections } from "@/components/ShowcaseSections";
@@ -64,7 +65,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      
+      <SEOHead path="/" />
       <div className={`transition-opacity duration-[2000ms] ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
       </div>

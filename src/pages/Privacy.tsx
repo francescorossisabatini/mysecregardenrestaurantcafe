@@ -1,3 +1,4 @@
+import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,6 +22,13 @@ const Privacy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={isGerman ? "Datenschutz" : "Privacy Policy"}
+        description={isGerman 
+          ? "Datenschutzerklärung von My Secret Garden Restaurant Wien."
+          : "Privacy policy for My Secret Garden Restaurant Vienna."}
+        path="/privacy"
+      />
       {/* Skip to main content link for screen readers */}
       <a 
         href="#main-content" 
