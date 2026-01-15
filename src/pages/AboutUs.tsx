@@ -7,7 +7,7 @@ import { Phone, MapPin, Leaf, Heart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SITE } from "@/config/site";
 import entranceGarden from "@/assets/entrance-garden.jpg";
-import interiorReal from "@/assets/interior-real.jpg";
+import diningScene from "@/assets/dining-scene.jpg";
 
 const AboutUs = () => {
   const { language } = useLanguage();
@@ -202,8 +202,8 @@ const AboutUs = () => {
             <div>
               <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
                 <img 
-                  src={interiorReal} 
-                  alt="Restaurant interior"
+                  src={diningScene} 
+                  alt="Dining scene"
                   className="w-full h-full object-cover"
                 />
               </div>
