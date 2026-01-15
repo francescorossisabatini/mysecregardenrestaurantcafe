@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import entranceGarden from "@/assets/entrance-garden.jpg";
 import gardenReal from "@/assets/garden-real.jpg";
+import koreanBowl from "@/assets/korean-bowl.jpg";
+import alpenpolenta from "@/assets/alpenpolenta.jpg";
+import interiorReal from "@/assets/interior-real.jpg";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
@@ -48,12 +51,12 @@ const AboutUs = () => {
       philosophyQuote: "Kochen ist Gebet. Essen ist Dankbarkeit.",
       philosophyPara2: "Wir kochen täglich frisch mit biologischen und regionalen Zutaten. Ohne Eile, mit Aufmerksamkeit und Freude.",
       pillarsTitle: "Was uns ausmacht",
-      pillar1Title: "Vegetarisch, Vegan & Glutenfrei",
-      pillar1Desc: "Nährende Gerichte aus frischen, pflanzlichen Zutaten – täglich mit Liebe zubereitet. Viele glutenfreie Optionen.",
-      pillar2Title: "Bio & Österreichisch",
-      pillar2Desc: "Zutaten aus biologischem Anbau und von österreichischen Produzenten aus der Region.",
+      pillar1Title: "Cucina del Mondo",
+      pillar1Desc: "Ci ispiriamo alle cucine vegetariane e vegane di tutto il mondo per creare i nostri piatti giornalieri. Dall'India al Giappone, dal Mediterraneo all'America Latina – ogni giorno un viaggio culinario diverso.",
+      pillar2Title: "Prodotti del Territorio",
+      pillar2Desc: "Utilizziamo e vendiamo prodotti biologici e locali che costituiscono la base dei nostri ingredienti. Ci affidiamo a produttori locali della regione per garantire freschezza e qualità.",
       pillar3Title: "Achtsam & Alkoholfrei",
-      pillar3Desc: "Ein Ort der Ruhe ohne Alkohol – zum Genießen, Entspannen und Auftanken.",
+      pillar3Desc: "Un luogo di calma senza alcol – per gustare, rilassarsi e ricaricarsi. Offriamo molte opzioni senza glutine per chi ha esigenze alimentari specifiche.",
       spaceLabel: "Unser Garten",
       spaceTitle: "Im Herzen von Wien",
       spacePara1: "Versteckt im Raimundhof an der Mariahilferstraße – ein ruhiger Innenhof abseits vom Trubel.",
@@ -76,12 +79,12 @@ const AboutUs = () => {
       philosophyQuote: "Cooking is prayer. Eating is gratitude.",
       philosophyPara2: "We cook fresh daily with organic and regional ingredients. Without haste, with attention and joy.",
       pillarsTitle: "What Makes Us Special",
-      pillar1Title: "Vegetarian, Vegan & Gluten-Free",
-      pillar1Desc: "Nourishing dishes from fresh, plant-based ingredients – prepared with love every day. Many gluten-free options.",
-      pillar2Title: "Organic & Austrian",
-      pillar2Desc: "Ingredients from organic farming and Austrian producers from the region.",
+      pillar1Title: "World Cuisine",
+      pillar1Desc: "We draw inspiration from vegetarian and vegan cuisines around the world to create our daily dishes. From India to Japan, from the Mediterranean to Latin America – a different culinary journey every day.",
+      pillar2Title: "Local Products",
+      pillar2Desc: "We use and sell organic and local products that form the base of our ingredients. We rely on local producers from the region to ensure freshness and quality.",
       pillar3Title: "Mindful & Alcohol-Free",
-      pillar3Desc: "A place of calm without alcohol – to enjoy, relax, and recharge.",
+      pillar3Desc: "A place of calm without alcohol – to enjoy, relax, and recharge. We offer many gluten-free options for those with specific dietary needs.",
       spaceLabel: "Our Garden",
       spaceTitle: "In the Heart of Vienna",
       spacePara1: "Hidden in the Raimundhof on Mariahilferstraße – a quiet courtyard away from the bustle.",
@@ -98,10 +101,25 @@ const AboutUs = () => {
   };
 
   const t = content[language];
-  const pillars = [
-    { icon: Leaf, title: t.pillar1Title, desc: t.pillar1Desc },
-    { icon: Heart, title: t.pillar2Title, desc: t.pillar2Desc },
-    { icon: Sparkles, title: t.pillar3Title, desc: t.pillar3Desc },
+  const pillarsData = [
+    { 
+      image: koreanBowl, 
+      imageAlt: language === "de" ? "Internationale Küche" : "World cuisine",
+      title: t.pillar1Title, 
+      desc: t.pillar1Desc 
+    },
+    { 
+      image: alpenpolenta, 
+      imageAlt: language === "de" ? "Lokale Produkte" : "Local products",
+      title: t.pillar2Title, 
+      desc: t.pillar2Desc 
+    },
+    { 
+      image: interiorReal, 
+      imageAlt: language === "de" ? "Ruhige Atmosphäre" : "Peaceful atmosphere",
+      title: t.pillar3Title, 
+      desc: t.pillar3Desc 
+    },
   ];
 
   return (
@@ -150,18 +168,36 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* PILLARS / OFFERING - 3 centered cards */}
+      {/* PILLARS / OFFERING - Alternating sections with photos */}
       <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-5xl">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="font-caveat text-4xl md:text-5xl text-primary text-center mb-16">{t.pillarsTitle}</h2>
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {pillars.map((pillar, index) => (
-              <div key={index} className="text-center space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20">
-                  <pillar.icon className="w-8 h-8 text-accent" />
+          
+          <div className="space-y-16 md:space-y-24">
+            {pillarsData.map((pillar, index) => (
+              <div 
+                key={index} 
+                className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${
+                  index % 2 === 1 ? 'md:flex-row-reverse' : ''
+                }`}
+              >
+                <div className={`${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
+                  <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
+                    <img 
+                      src={pillar.image} 
+                      alt={pillar.imageAlt} 
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                    />
+                  </div>
                 </div>
-                <h3 className="font-cormorant text-2xl font-semibold text-foreground">{pillar.title}</h3>
-                <p className="font-lora text-foreground/75 leading-relaxed">{pillar.desc}</p>
+                <div className={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
+                  <h3 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground">
+                    {pillar.title}
+                  </h3>
+                  <p className="font-lora text-lg text-foreground/80 leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
