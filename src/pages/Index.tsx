@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "@/components/Hero";
+import { ValueProposition } from "@/components/ValueProposition";
+import { ShowcaseSections } from "@/components/ShowcaseSections";
 import { MenuSection } from "@/components/MenuSection";
 import { Reviews } from "@/components/Reviews";
 import { GallerySection } from "@/components/GallerySection";
@@ -67,19 +69,27 @@ const Index = () => {
         <Navigation />
       </div>
       
+      {/* HERO: Big image, H1, subtitle, 2 CTAs */}
       <Hero />
       
-      {/* Menu section */}
+      {/* VALUE PROP: Label, H2, paragraph, 3 cards, CTA */}
+      <ValueProposition />
+      
+      {/* SHOWCASE 1: Menu/Specials - Image + Text */}
+      {/* SHOWCASE 2: Visit - Text + Image (reversed) */}
+      <ShowcaseSections />
+      
+      {/* Menu section with today's dishes */}
       <MenuSection />
       
-      {/* Reviews */}
+      {/* Reviews / Social Proof */}
       <Reviews />
       
       {/* Gallery */}
       <GallerySection />
       
-      {/* End CTA Block */}
-      <CTAEndBlock show={["weekly", "menu", "directions"]} />
+      {/* FINAL CTA BLOCK: Brand bg, H2, address, Call + Directions */}
+      <CTAEndBlock show={["call", "directions", "weekly"]} />
       
       <Footer />
       

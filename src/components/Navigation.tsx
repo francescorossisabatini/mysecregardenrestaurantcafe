@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
+import { useState, useEffect, useRef, useCallback, createContext } from "react";
 import { Menu, X, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -49,12 +49,13 @@ export const Navigation = () => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
   const navLinks = [
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/#menu", label: language === "de" ? "Speisekarte" : "Menu" },
-    { to: "/wochenkarte", label: language === "de" ? "Wochenmenü" : "Weekly Specials" },
+    { to: "/wochenkarte", label: language === "de" ? "Wochenmenü" : "Specials" },
     { to: "/about", label: language === "de" ? "Über uns" : "About" },
-    { to: "/contact", label: language === "de" ? "Besuche uns" : "Visit Us" },
+    { to: "/contact", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
 
   return (
@@ -83,7 +84,7 @@ export const Navigation = () => {
                 My Secret Garden
               </span>
               <p className="text-xs text-muted-foreground font-work">
-                Vegetarian Café & Restaurant • Vienna
+                Vegetarian Café • Vienna
               </p>
             </div>
           </Link>
@@ -112,18 +113,6 @@ export const Navigation = () => {
             >
               <Phone className="w-4 h-4 mr-2" />
               {language === "de" ? "Anrufen" : "Call"}
-            </Button>
-
-            <Button
-              size="sm"
-              variant="outline"
-              className="font-work"
-              asChild
-            >
-              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Route" : "Directions"}
-              </a>
             </Button>
           </div>
 
