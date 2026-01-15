@@ -9,7 +9,7 @@ import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import entranceGarden from "@/assets/entrance-garden.jpg";
-import diningScene from "@/assets/dining-scene.jpg";
+import gardenReal from "@/assets/garden-real.jpg";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
@@ -188,7 +188,7 @@ const AboutUs = () => {
             </div>
             <div>
               <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
-                <img src={diningScene} alt="Dining scene" className="w-full h-full object-cover" />
+                <img src={gardenReal} alt="Our garden" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
