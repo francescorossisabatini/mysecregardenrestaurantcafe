@@ -221,42 +221,14 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Call Now (primary), Get Directions (secondary), then Menu/Specials */}
+          {/* CTA Buttons: Menu (primary), Specials (secondary), then Call/Directions */}
           <div className={`flex flex-wrap justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
-            {/* Primary: Call Now */}
+            {/* Primary: View Menu */}
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
-              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              {language === "de" ? "Jetzt anrufen" : "Call Now"}
-            </Button>
-
-            {/* Secondary: Get Directions */}
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
-              asChild
-            >
-              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Route anzeigen" : "Get Directions"}
-              </a>
-            </Button>
-          </div>
-
-          {/* Secondary row: Menu + Specials */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-3 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
-            showButtons ? "opacity-100" : "opacity-0"
-          }`}>
-            <Button
-              size="default"
-              variant="ghost"
-              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
               asChild
             >
               <Link to="/#menu">
@@ -265,16 +237,44 @@ export const Hero = () => {
               </Link>
             </Button>
 
+            {/* Secondary: Today's Specials */}
             <Button
-              size="default"
-              variant="ghost"
-              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
+              size="lg"
+              variant="outline"
+              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
               <Link to="/wochenkarte">
                 <CalendarDays className="w-4 h-4 mr-2" />
                 {language === "de" ? "Wochenmenü" : "Today's Specials"}
               </Link>
+            </Button>
+          </div>
+
+          {/* Secondary row: Call + Directions */}
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-3 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+            showButtons ? "opacity-100" : "opacity-0"
+          }`}>
+            <Button
+              size="default"
+              variant="ghost"
+              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
+              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
+            >
+              <Phone className="w-4 h-4 mr-2" />
+              {language === "de" ? "Jetzt anrufen" : "Call Now"}
+            </Button>
+
+            <Button
+              size="default"
+              variant="ghost"
+              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
+              asChild
+            >
+              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
+                <MapPin className="w-4 h-4 mr-2" />
+                {language === "de" ? "Route anzeigen" : "Get Directions"}
+              </a>
             </Button>
           </div>
 
