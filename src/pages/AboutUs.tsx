@@ -21,7 +21,7 @@ const AboutUs = () => {
       // Philosophy
       philosophyLabel: "Unsere Philosophie",
       philosophyTitle: "Unser Ansatz",
-      philosophyPara1: "Im Jahr 2001 entstand My Secret Garden als ein Traum: ein Ort, wo achtsames Kochen und friedliche Atmosphäre zusammenkommen.",
+      philosophyPara1: "Im Jahr 2018 entstand My Secret Garden als ein Traum: ein Ort, wo achtsames Kochen und friedliche Atmosphäre zusammenkommen.",
       philosophyQuote: "Kochen ist Gebet. Essen ist Dankbarkeit.",
       philosophyPara2: "Wir kochen täglich frisch mit biologischen und regionalen Zutaten. Ohne Eile, mit Aufmerksamkeit und Freude.",
       
@@ -54,7 +54,7 @@ const AboutUs = () => {
       // Philosophy
       philosophyLabel: "Our Philosophy",
       philosophyTitle: "Our Approach",
-      philosophyPara1: "In 2001, My Secret Garden was born from a dream: a place where mindful cooking and peaceful atmosphere come together.",
+      philosophyPara1: "In 2018, My Secret Garden was born from a dream: a place where mindful cooking and peaceful atmosphere come together.",
       philosophyQuote: "Cooking is prayer. Eating is gratitude.",
       philosophyPara2: "We cook fresh daily with organic and regional ingredients. Without haste, with attention and joy.",
       
