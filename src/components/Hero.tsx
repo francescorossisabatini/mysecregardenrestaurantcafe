@@ -251,32 +251,6 @@ export const Hero = () => {
             </Button>
           </div>
 
-          {/* Secondary row: Call + Directions */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-3 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
-            showButtons ? "opacity-100" : "opacity-0"
-          }`}>
-            <Button
-              size="default"
-              variant="ghost"
-              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
-              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              {language === "de" ? "Jetzt anrufen" : "Call Now"}
-            </Button>
-
-            <Button
-              size="default"
-              variant="ghost"
-              className="text-background/90 hover:text-background hover:bg-background/10 font-work text-sm"
-              asChild
-            >
-              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Route anzeigen" : "Get Directions"}
-              </a>
-            </Button>
-          </div>
 
           {/* Carousel dots with a11y - WCAG touch target size 24px minimum */}
           <div className={`flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
