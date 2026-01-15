@@ -4,13 +4,32 @@ import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { getConsentStatus } from "@/components/CookieConsent";
 
 export const MobileStickyBar = () => {
   const isMobile = useIsMobile();
   const { language } = useLanguage();
   const { isOpen: isMobileMenuOpen } = useMobileMenu();
   const [isVisible, setIsVisible] = useState(false);
+  const [cookieConsentPending, setCookieConsentPending] = useState(true);
   const rafRef = useRef<number | null>(null);
+
+  // Check cookie consent status
+  useEffect(() => {
+    const checkConsent = () => {
+      setCookieConsentPending(getConsentStatus() === "pending");
+    };
+    checkConsent();
+    // Re-check when localStorage changes
+    const handleStorage = () => checkConsent();
+    window.addEventListener("storage", handleStorage);
+    // Also poll occasionally in case consent changes in same tab
+    const interval = setInterval(checkConsent, 1000);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
+    };
+  }, []);
 
   // Throttled scroll handler using requestAnimationFrame
   const handleScroll = useCallback(() => {
@@ -39,6 +58,9 @@ export const MobileStickyBar = () => {
   const callLabel = language === "de" ? "Anrufen" : "Call";
   const directionsLabel = language === "de" ? "Route" : "Directions";
 
+  // Hide sticky bar when cookie consent is pending
+  const shouldShow = isVisible && !isMobileMenuOpen && !cookieConsentPending;
+
   return (
     <div
       className={`
@@ -47,7 +69,7 @@ export const MobileStickyBar = () => {
         border-t border-border/30
         px-4 py-3
         transition-all duration-300 ease-out
-        ${isVisible && !isMobileMenuOpen
+        ${shouldShow
           ? "opacity-100 translate-y-0" 
           : "opacity-0 translate-y-full pointer-events-none"
         }
