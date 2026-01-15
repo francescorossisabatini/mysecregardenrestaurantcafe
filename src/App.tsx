@@ -12,7 +12,7 @@ import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Impressum from "./pages/Impressum";
 import AboutUs from "./pages/AboutUs";
-import Inspiration from "./pages/Inspiration";
+// Inspiration content now integrated into AboutUs page
 import ContactPage from "./pages/Contact";
 import WeeklySpecials from "./pages/WeeklySpecials";
 import LinkPage from "./pages/Link";
@@ -29,7 +29,6 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/inspiration" element={<Inspiration />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/impressum" element={<Impressum />} />
