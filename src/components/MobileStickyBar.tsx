@@ -2,13 +2,13 @@ import { Phone, MapPin } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useState, useRef, useCallback, useContext } from "react";
-import { MobileMenuContext } from "@/components/Navigation";
+import { useMobileMenu } from "@/contexts/MobileMenuContext";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 export const MobileStickyBar = () => {
   const isMobile = useIsMobile();
   const { language } = useLanguage();
-  const { isOpen: isMobileMenuOpen } = useContext(MobileMenuContext);
+  const { isOpen: isMobileMenuOpen } = useMobileMenu();
   const [isVisible, setIsVisible] = useState(false);
   const rafRef = useRef<number | null>(null);
 
