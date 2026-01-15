@@ -20,8 +20,8 @@ export const ValueProposition = () => {
       icon: Heart,
       titleDe: "Bio & Regional",
       titleEn: "Organic & Local",
-      descDe: "Von lokalen Produzenten aus der Region.",
-      descEn: "From local producers in the region.",
+      descDe: "Von österreichischen Produzenten aus der Region.",
+      descEn: "From Austrian producers in the region.",
     },
     {
       emoji: "✨",
