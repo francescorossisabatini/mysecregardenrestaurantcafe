@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
 import { Menu, X, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,9 @@ import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SITE } from "@/config/site";
+
+// Context to share mobile menu state
+export const MobileMenuContext = createContext<{ isOpen: boolean }>({ isOpen: false });
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,7 +58,8 @@ export const Navigation = () => {
   ];
 
   return (
-    <>
+    <MobileMenuContext.Provider value={{ isOpen: isMobileMenuOpen }}>
+      <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-3 md:py-4 transition-all duration-500 ease-in-out ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
@@ -222,6 +226,7 @@ export const Navigation = () => {
           </div>
         </div>
       </div>
-    </>
+      </>
+    </MobileMenuContext.Provider>
   );
 };
