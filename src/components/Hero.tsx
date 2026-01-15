@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Phone, MapPin, CalendarDays, UtensilsCrossed } from "lucide-react";
+import { CalendarDays, UtensilsCrossed, ChevronDown } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -35,6 +35,7 @@ export const Hero = () => {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const { language, t } = useLanguage();
 
   // A11y: respect prefers-reduced-motion (autoplay OFF)
@@ -90,6 +91,17 @@ export const Hero = () => {
       clearTimeout(timer3);
       clearTimeout(timer4);
     };
+  }, []);
+
+  // Hide scroll indicator on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowScrollIndicator(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Open/Closed chip in Vienna timezone
@@ -156,12 +168,12 @@ export const Hero = () => {
             {/* Case 1: Open now */}
             {effectivelyOpen && (
               <>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-green-500/20 text-green-100 border border-green-400/30">
-                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-green-400" />
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-green-500/25 text-green-100 border border-green-400/40 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-green-400 animate-pulse" />
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
-                  <span className="text-xs text-background/90 drop-shadow-sm">
+                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
                   </span>
                 )}
@@ -169,25 +181,25 @@ export const Hero = () => {
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-amber-500/20 text-amber-100 border border-amber-400/30">
-                <span className="w-1.5 h-1.5 rounded-full mr-2 bg-amber-400" />
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-amber-500/25 text-amber-100 border border-amber-400/40 shadow-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-amber-400" />
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
             )}
             {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
             {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
               <>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-red-500/20 text-red-100 border border-red-400/30">
-                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-red-400" />
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
                   {language === "de" ? "Jetzt geschlossen" : "Closed now"}
                 </span>
                 {status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs text-background/90 drop-shadow-sm">
+                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
                 {status.tomorrowClosed && (
-                  <span className="text-xs text-background/90 drop-shadow-sm">
+                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? "• morgen geschlossen" : "• closed tomorrow"}
                   </span>
                 )}
@@ -196,17 +208,17 @@ export const Hero = () => {
             {/* Case 4: Closed today (Sunday, holiday, no menu) */}
             {!effectivelyOpen && isClosedToday && (
               <>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm bg-red-500/20 text-red-100 border border-red-400/30">
-                  <span className="w-1.5 h-1.5 rounded-full mr-2 bg-red-400" />
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
                   {language === "de" ? "Heute geschlossen" : "Closed today"}
                 </span>
                 {closedReason === "no-menu" && (
-                  <span className="text-xs text-background/90 drop-shadow-sm">
+                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? "• kein Menü heute" : "• no menu today"}
                   </span>
                 )}
                 {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs text-background/90 drop-shadow-sm">
+                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
@@ -265,6 +277,21 @@ export const Hero = () => {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div 
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-500 ${
+          showScrollIndicator && showDots ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden="true"
+      >
+        <div className="flex flex-col items-center gap-1 text-background/80">
+          <span className="text-xs font-work tracking-wide uppercase">
+            {language === "de" ? "Mehr entdecken" : "Discover more"}
+          </span>
+          <ChevronDown className="w-5 h-5 animate-bounce" />
         </div>
       </div>
     </section>

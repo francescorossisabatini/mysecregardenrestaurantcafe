@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 declare global {
   interface Window {
@@ -22,6 +23,7 @@ export const getConsentStatus = (): ConsentStatus => {
 
 export const CookieConsent = () => {
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -54,56 +56,58 @@ export const CookieConsent = () => {
 
   if (!isVisible) return null;
 
+  // Mobile bottom offset to avoid overlap with MobileStickyBar
+  const mobileBottomOffset = isMobile ? "calc(5rem + env(safe-area-inset-bottom))" : "calc(1rem + env(safe-area-inset-bottom))";
+
   return (
     <div 
-      className={`fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 transition-all duration-300 ${
+      className={`fixed bottom-0 left-0 right-0 z-[60] p-3 md:p-6 transition-all duration-300 ${
         isClosing ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
       }`}
-      style={{ paddingBottom: "calc(1rem + env(safe-area-inset-bottom))" }}
+      style={{ paddingBottom: mobileBottomOffset }}
     >
       <div className="container mx-auto max-w-2xl">
-        <div className="bg-background border border-border rounded-2xl shadow-xl p-5 md:p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-1 space-y-3">
-              <p className="font-lora text-sm md:text-base text-foreground/80 leading-relaxed">
+        <div className="bg-background border border-border rounded-2xl shadow-xl p-4 md:p-6">
+          <div className="flex items-start gap-3 md:gap-4">
+            <div className="flex-1 space-y-2 md:space-y-3">
+              <p className="font-lora text-xs md:text-base text-foreground/80 leading-relaxed">
                 {language === "de" 
-                  ? "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und unsere Website zu analysieren. Sie können wählen, welche Cookies Sie akzeptieren möchten."
-                  : "We use cookies to improve your experience and analyze our website. You can choose which cookies you want to accept."
+                  ? "Wir verwenden Cookies zur Analyse. Sie können wählen, welche Sie akzeptieren."
+                  : "We use cookies for analytics. You can choose which to accept."
                 }
               </p>
               
-              <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <Button
                   onClick={handleAccept}
                   size="sm"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm h-8 md:h-9 px-3 md:px-4"
                 >
-                  {language === "de" ? "Alle akzeptieren" : "Accept all"}
+                  {language === "de" ? "Akzeptieren" : "Accept"}
                 </Button>
                 <Button
                   onClick={handleReject}
                   variant="outline"
                   size="sm"
+                  className="text-xs md:text-sm h-8 md:h-9 px-3 md:px-4"
                 >
-                  {language === "de" ? "Nur notwendige" : "Only necessary"}
+                  {language === "de" ? "Ablehnen" : "Decline"}
                 </Button>
+                <a 
+                  href="/privacy" 
+                  className="text-xs text-muted-foreground underline hover:text-foreground ml-1 hidden sm:inline"
+                >
+                  {language === "de" ? "Datenschutz" : "Privacy"}
+                </a>
               </div>
-              
-              <p className="text-xs text-muted-foreground">
-                {language === "de" ? (
-                  <>Mehr Informationen in unserer <a href="/privacy" className="text-primary underline hover:text-primary/80">Datenschutzerklärung</a>.</>
-                ) : (
-                  <>More information in our <a href="/privacy" className="text-primary underline hover:text-primary/80">Privacy Policy</a>.</>
-                )}
-              </p>
             </div>
             
             <button 
               onClick={handleReject}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1"
+              className="text-muted-foreground hover:text-foreground transition-colors p-1 -mt-1"
               aria-label={language === "de" ? "Schließen" : "Close"}
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
         </div>
