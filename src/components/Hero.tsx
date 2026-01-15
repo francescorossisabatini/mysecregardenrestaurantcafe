@@ -246,7 +246,7 @@ export const Hero = () => {
             >
               <Link to="/wochenkarte">
                 <CalendarDays className="w-4 h-4 mr-2" />
-                {language === "de" ? "Wochenmenü" : "Today's Specials"}
+                {language === "de" ? "Wochenmenü" : "Weekly Specials"}
               </Link>
             </Button>
           </div>
