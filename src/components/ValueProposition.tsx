@@ -72,7 +72,7 @@ export const ValueProposition = () => {
         <div className="text-center">
           <Button variant="outline" size="lg" className="font-work" asChild>
             <Link to="/about">
-              {language === "de" ? "Mehr über uns" : "Learn More"}
+              {language === "de" ? "Mehr über uns erfahren" : "Discover Our Story"}
             </Link>
           </Button>
         </div>
