@@ -278,20 +278,6 @@ export const Hero = () => {
             ))}
           </div>
 
-          {/* Instagram chip */}
-          <div className={`flex justify-center pt-4 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
-            showDots ? "opacity-100" : "opacity-0"
-          }`}>
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md bg-background/10 hover:bg-background/20 text-background/90 hover:text-background border border-background/20 transition-all duration-300 text-sm font-work"
-            >
-              <Instagram className="w-4 h-4" />
-              {SITE.instagramHandle}
-            </a>
-          </div>
         </div>
       </div>
 

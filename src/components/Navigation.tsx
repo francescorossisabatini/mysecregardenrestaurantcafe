@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, Phone, MapPin } from "lucide-react";
+import { Menu, X, Phone, MapPin, Instagram } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
@@ -101,6 +101,17 @@ export const Navigation = () => {
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="navbar" />
             
+            {/* Instagram icon */}
+            <a
+              href={SITE.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            
             <Button
               size="sm"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
@@ -111,8 +122,17 @@ export const Navigation = () => {
             </Button>
           </div>
 
-          {/* Mobile: Show small Call button */}
-          <div className="lg:hidden">
+          {/* Mobile: Instagram icon + Call button */}
+          <div className="lg:hidden flex items-center gap-2">
+            <a
+              href={SITE.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-foreground/70 hover:text-primary transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
             <Button
               size="sm"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
