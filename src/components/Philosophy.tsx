@@ -105,10 +105,11 @@ export const Philosophy = () => {
                 href="https://www.srichinmoy.org" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors duration-300 underline underline-offset-2"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-all duration-200 ease-in-out underline underline-offset-2 hover:gap-3 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded"
+                aria-label={language === "de" ? "Offizielle Website von Sri Chinmoy besuchen (öffnet in neuem Tab)" : "Visit Sri Chinmoy's official website (opens in new tab)"}
               >
-                {t("philosophy.sri.link")}
-                <ExternalLink className="w-4 h-4" />
+                {language === "de" ? "Sri Chinmoys Biografie & Lehren entdecken" : "Explore Sri Chinmoy's Biography & Teachings"}
+                <ExternalLink className="w-4 h-4" aria-hidden="true" />
               </a>
             </div>
           </div>
