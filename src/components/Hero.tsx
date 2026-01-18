@@ -144,8 +144,8 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
       <div className="absolute inset-0 bg-black/20 md:hidden" />
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center h-full pointer-events-none">
+      {/* Content - pt-20 ensures navbar doesn't cover title */}
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-20 pb-8 flex flex-col justify-center h-full pointer-events-none">
         <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
           {/* Restaurant name */}
           <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-opacity duration-[1500ms] ease-out ${
