@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        'caveat': ['Caveat', 'cursive'],
-        'lora': ['Lora', 'serif'],
-        'cormorant': ['Cormorant Garamond', 'serif'],
-        'work': ['Work Sans', 'sans-serif'],
+        'caveat': ['Caveat', 'Brush Script MT', 'cursive'],
+        'lora': ['Lora', 'Georgia', 'Times New Roman', 'serif'],
+        'cormorant': ['Cormorant Garamond', 'Garamond', 'Georgia', 'serif'],
+        'work': ['Work Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

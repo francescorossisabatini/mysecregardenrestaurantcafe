@@ -9,33 +9,46 @@
     <meta name="description" content="Vegetarisches & veganes Restaurant in Wien. Geschmack, der entzückt. Bio, fair, regional & saisonal. Mariahilferstraße 45, 1060 Wien." />
     <meta name="author" content="My Secret Garden Restaurant" />
     
+    <!-- Critical inline styles for instant FCP -->
+    <style>
+      /* Instant background + system fonts while loading */
+      html { background-color: #FAF7F3; }
+      body { 
+        margin: 0; 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        background-color: #FAF7F3;
+      }
+      /* Prevent FOIT - show text immediately with system fonts */
+      .font-caveat, .font-lora, .font-cormorant, .font-work { 
+        font-family: inherit; 
+      }
+      /* Skeleton loading animation */
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+    </style>
+    
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cqgcriywwsdvwqefbnhx.supabase.co" crossorigin>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Google Analytics 4 - GDPR compliant: denied by default -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMVX2R7493"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      
-      // Default: deny analytics until consent is given
-      gtag('consent', 'default', {
-        'analytics_storage': 'denied'
-      });
-      
-      // Check if user already consented
-      if (localStorage.getItem('cookie_consent') === 'accepted') {
-        gtag('consent', 'update', { 'analytics_storage': 'granted' });
-      }
-      
-      gtag('config', 'G-NMVX2R7493');
-    </script>
+    <!-- Google Fonts - Non-blocking load with font-display: swap -->
+    <link 
+      rel="preload" 
+      as="style" 
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap"
+    >
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" 
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- Open Graph -->
     <meta property="og:title" content="My Secret Garden - Vegetarisches & Veganes Restaurant Wien" />
@@ -96,5 +109,35 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Google Analytics 4 - Deferred, GDPR compliant -->
+    <script>
+      // Defer analytics to after page load
+      window.addEventListener('load', function() {
+        var script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-NMVX2R7493';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        script.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          
+          // Default: deny analytics until consent is given
+          gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+          });
+          
+          // Check if user already consented
+          if (localStorage.getItem('cookie_consent') === 'accepted') {
+            gtag('consent', 'update', { 'analytics_storage': 'granted' });
+          }
+          
+          gtag('config', 'G-NMVX2R7493');
+        };
+      });
+    </script>
   </body>
 </html>
