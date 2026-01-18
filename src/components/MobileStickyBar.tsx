@@ -56,7 +56,9 @@ export const MobileStickyBar = () => {
   if (!isMobile) return null;
 
   const callLabel = language === "de" ? "Anrufen" : "Call";
+  const callAriaLabel = language === "de" ? "Restaurant anrufen" : "Call the restaurant";
   const directionsLabel = language === "de" ? "Route" : "Directions";
+  const directionsAriaLabel = language === "de" ? "Route zum Restaurant (öffnet in neuem Tab)" : "Get directions to restaurant (opens in new tab)";
 
   // Hide sticky bar when cookie consent is pending
   const shouldShow = isVisible && !isMobileMenuOpen && !cookieConsentPending;
@@ -90,14 +92,14 @@ export const MobileStickyBar = () => {
             shadow-sm
             active:scale-95
             transition-all duration-200
-            touch-manipulation"
-          aria-label={callLabel}
+            touch-manipulation
+            focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+          aria-label={callAriaLabel}
         >
-          <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
+          <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           <span>{callLabel}</span>
         </a>
 
-        {/* Directions Button - Secondary */}
         <a
           href={SITE.mapsUrl}
           target="_blank"
@@ -109,10 +111,11 @@ export const MobileStickyBar = () => {
             shadow-sm
             active:scale-95
             transition-all duration-200
-            touch-manipulation"
-          aria-label={directionsLabel}
+            touch-manipulation
+            focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+          aria-label={directionsAriaLabel}
         >
-          <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
+          <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           <span>{directionsLabel}</span>
         </a>
       </div>

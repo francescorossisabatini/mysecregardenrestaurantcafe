@@ -65,8 +65,11 @@ export const Navigation = () => {
           {/* Mobile Menu Button - Left */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-3 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10"
-            aria-label="Toggle menu"
+            className="p-3 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+            aria-label={isMobileMenuOpen 
+              ? (language === "de" ? "Menü schließen" : "Close menu") 
+              : (language === "de" ? "Menü öffnen" : "Open menu")}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -106,10 +109,11 @@ export const Navigation = () => {
               href={SITE.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors"
-              aria-label="Instagram"
+              className="p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
+              title="Instagram"
             >
-              <Instagram className="w-5 h-5" />
+              <Instagram className="w-5 h-5" aria-hidden="true" />
             </a>
             
             <Button
@@ -128,10 +132,11 @@ export const Navigation = () => {
               href={SITE.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground/70 hover:text-primary transition-colors"
-              aria-label="Instagram"
+              className="p-2 rounded-lg text-foreground/70 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
+              title="Instagram"
             >
-              <Instagram className="w-5 h-5" />
+              <Instagram className="w-5 h-5" aria-hidden="true" />
             </a>
             <Button
               size="sm"

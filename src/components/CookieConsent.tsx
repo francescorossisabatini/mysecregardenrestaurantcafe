@@ -104,10 +104,11 @@ export const CookieConsent = () => {
             
             <button 
               onClick={handleReject}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1 -mt-1"
-              aria-label={language === "de" ? "Schließen" : "Close"}
+              className="text-muted-foreground hover:text-foreground transition-colors p-1 -mt-1 rounded focus:outline-none focus:ring-2 focus:ring-primary/50"
+              aria-label={language === "de" ? "Cookie-Banner schließen" : "Close cookie banner"}
+              title={language === "de" ? "Schließen" : "Close"}
             >
-              <X className="w-4 h-4 md:w-5 md:h-5" />
+              <X className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
             </button>
           </div>
         </div>
