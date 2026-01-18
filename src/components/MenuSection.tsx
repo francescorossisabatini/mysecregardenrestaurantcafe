@@ -451,25 +451,25 @@ export const MenuSection = () => {
                       {category.items.map((item) => (
                         <div 
                           key={item.id} 
-                          className={`bg-klassiker rounded-xl p-4 border border-border/20 ${item.isUnavailable ? 'opacity-50' : ''}`}
+                          className={`bg-klassiker rounded-xl p-4 border border-border/20 ${item.isUnavailable ? 'border-dashed' : ''}`}
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className="font-cormorant text-base font-semibold text-foreground mb-1">
+                              <h4 className={`font-cormorant text-base font-semibold mb-1 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                                 {item.name[language]}
                                 {item.isUnavailable && (
-                                  <span className="ml-2 text-xs font-work text-foreground/60 italic">
+                                  <span className="ml-2 text-xs font-work text-muted-foreground italic">
                                     ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
                                   </span>
                                 )}
                               </h4>
                               {item.description && (
-                                <p className="text-muted-foreground font-work text-sm leading-relaxed">
+                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground/80' : 'text-muted-foreground'}`}>
                                   {item.description[language]}
                                 </p>
                               )}
                               {/* Dietary labels - WCAG AAA compliant with explicit colors */}
-                              {(item.isVegan || item.isGlutenFree || item.isBio) && (
+                              {(item.isVegan || item.isGlutenFree || item.isBio) && !item.isUnavailable && (
                                 <div className="flex items-center gap-2 mt-2">
                                   {item.isVegan && (
                                     <span className="text-xs font-work font-semibold" style={{ color: '#166534' }}>
@@ -489,7 +489,7 @@ export const MenuSection = () => {
                                 </div>
                               )}
                             </div>
-                            <span className="text-foreground font-semibold text-sm font-work shrink-0">
+                            <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
