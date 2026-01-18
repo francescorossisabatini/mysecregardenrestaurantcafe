@@ -28,14 +28,14 @@ export const Footer = () => {
           
           {/* Instagram */}
           <a 
-            href="https://www.instagram.com/mysecretgarden_vienna/"
+            href={SITE.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
             aria-label="Instagram"
           >
             <Instagram className="w-4 h-4" />
-            @mysecretgarden_vienna
+            {SITE.instagramHandle}
           </a>
           
           {/* Required Legal Links - MUST be on every page */}
