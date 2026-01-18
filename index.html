@@ -110,10 +110,10 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Google Analytics 4 - Deferred, GDPR compliant -->
+    <!-- Google Analytics 4 - Heavily deferred for better performance -->
     <script>
-      // Defer analytics to after page load
-      window.addEventListener('load', function() {
+      // Use requestIdleCallback to load analytics only when browser is idle
+      function loadAnalytics() {
         var script = document.createElement('script');
         script.src = 'https://www.googletagmanager.com/gtag/js?id=G-NMVX2R7493';
         script.async = true;
@@ -137,7 +137,15 @@
           
           gtag('config', 'G-NMVX2R7493');
         };
-      });
+      }
+      
+      // Defer analytics until browser is idle (better for mobile performance)
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadAnalytics, { timeout: 4000 });
+      } else {
+        // Fallback: load after 3s delay
+        setTimeout(loadAnalytics, 3000);
+      }
     </script>
   </body>
 </html>
