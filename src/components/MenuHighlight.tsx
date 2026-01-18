@@ -13,10 +13,10 @@ export const MenuHighlight = () => {
   return (
     <section id="menu" className="py-16 md:py-24 bg-background relative overflow-hidden">
       {/* Abstract Plant Decorations */}
-      <div className="absolute top-20 right-16 w-56 h-28 text-cyan-300/40">
+      <div className="absolute top-20 right-16 w-56 h-28 text-accent/30">
         <WavyPattern className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-16 w-52 h-26 text-teal-300/40">
+      <div className="absolute bottom-20 left-16 w-52 h-26 text-accent/30">
         <OrganicLines className="w-full h-full" />
       </div>
       
@@ -93,7 +93,7 @@ export const MenuHighlight = () => {
                     {/* Green Dish */}
                     <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 border-green-300 dark:border-green-700">
+                        <Badge className="bg-accent/15 text-accent border-accent/30">
                           {t("menu.greenDish")} 
                         </Badge>
                       </div>
@@ -106,7 +106,7 @@ export const MenuHighlight = () => {
                     {/* Blue Dish */}
                     <div>
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 border-blue-300 dark:border-blue-700">
+                        <Badge className="bg-blue/15 text-blue border-blue/30">
                           {t("menu.blueDish")}
                         </Badge>
                       </div>

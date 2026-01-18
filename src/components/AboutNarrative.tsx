@@ -9,13 +9,13 @@ export const AboutNarrative = () => {
   return (
     <section id="about" className="py-20 md:py-32 bg-gradient-subtle relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 right-0 h-24 text-emerald-600 opacity-50">
+      <div className="absolute top-0 left-0 right-0 h-24 text-accent opacity-50">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-20 right-12 w-28 h-28 text-teal-600 opacity-70">
+      <div className="absolute top-20 right-12 w-28 h-28 text-accent opacity-70">
         <RoseFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-12 w-32 h-32 text-emerald-600 opacity-70">
+      <div className="absolute bottom-20 left-12 w-32 h-32 text-accent opacity-70">
         <DetailedFlower className="w-full h-full" />
       </div>
       
@@ -42,7 +42,7 @@ export const AboutNarrative = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div className="flex items-center gap-3 mb-4">
-                <Leaf className="w-8 h-8 text-emerald-600" />
+                <Leaf className="w-8 h-8 text-accent" />
                 <h3 className="text-3xl font-serif text-foreground">
                   {language === "de" ? "Unsere Philosophie" : "Our Philosophy"}
                 </h3>
@@ -52,23 +52,23 @@ export const AboutNarrative = () => {
               </p>
               
               <div className="flex flex-wrap gap-3 pt-4">
-                <div className="px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
-                  <span className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                <div className="px-4 py-2 bg-accent/15 rounded-full">
+                  <span className="text-sm font-medium text-accent">
                     {t("about.bio")}
                   </span>
                 </div>
-                <div className="px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
-                  <span className="text-sm font-medium text-teal-800 dark:text-teal-200">
+                <div className="px-4 py-2 bg-primary/10 rounded-full">
+                  <span className="text-sm font-medium text-primary">
                     {t("about.fair")}
                   </span>
                 </div>
-                <div className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                  <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                <div className="px-4 py-2 bg-blue/10 rounded-full">
+                  <span className="text-sm font-medium text-blue">
                     {t("about.regional")}
                   </span>
                 </div>
-                <div className="px-4 py-2 bg-cyan-100 dark:bg-cyan-900/30 rounded-full">
-                  <span className="text-sm font-medium text-cyan-800 dark:text-cyan-200">
+                <div className="px-4 py-2 bg-accent/10 rounded-full">
+                  <span className="text-sm font-medium text-accent">
                     {t("about.seasonal")}
                   </span>
                 </div>
@@ -76,8 +76,8 @@ export const AboutNarrative = () => {
             </div>
             
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 to-teal-200 dark:from-emerald-800 dark:to-teal-800 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform"></div>
-              <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-emerald-200 dark:border-emerald-800">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform"></div>
+              <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-accent/20">
                 <img 
                   src="https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg"
                   alt="Fresh vegetables and ingredients"
@@ -105,8 +105,8 @@ export const AboutNarrative = () => {
           {/* Story Section 2 - Image Left */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative group order-2 md:order-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-200 to-cyan-200 dark:from-teal-800 dark:to-cyan-800 rounded-2xl transform -rotate-3 group-hover:-rotate-6 transition-transform"></div>
-              <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-teal-200 dark:border-teal-800">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/10 rounded-2xl transform -rotate-3 group-hover:-rotate-6 transition-transform"></div>
+              <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-primary/20">
                 <img 
                   src="https://www.secretgardenrestaurant.at/wp-content/uploads/2020/09/Gastgarten.jpg"
                   alt="Secret Garden courtyard"
@@ -117,7 +117,7 @@ export const AboutNarrative = () => {
             
             <div className="space-y-6 order-1 md:order-2">
               <div className="flex items-center gap-3 mb-4">
-                <Flower2 className="w-8 h-8 text-teal-600" />
+                <Flower2 className="w-8 h-8 text-primary" />
                 <h3 className="text-3xl font-serif text-foreground">
                   {language === "de" ? "Unser Geheimer Garten" : "Our Secret Garden"}
                 </h3>

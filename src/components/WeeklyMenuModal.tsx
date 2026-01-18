@@ -69,7 +69,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-6xl bg-[#F5F1E3] border-4 border-primary/30 rounded-lg shadow-2xl overflow-hidden"
+        className="relative w-full max-w-6xl bg-cream border-4 border-primary/30 rounded-lg shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{ maxHeight: '90vh' }}
       >

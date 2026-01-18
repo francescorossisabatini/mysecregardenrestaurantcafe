@@ -14,7 +14,7 @@ export const InstagramFeed = () => {
   // 5. Copia l'iframe o script generato e sostituiscilo qui sotto
 
   return (
-    <section className="py-12 md:py-16 bg-[#F5F1E3] relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-cream relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-10 right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-10 left-10 w-24 h-24 bg-accent/5 rounded-full blur-2xl" />
@@ -27,7 +27,7 @@ export const InstagramFeed = () => {
               <Instagram className="w-7 h-7 text-primary" />
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-caveat font-bold text-[#243260] mb-3">
+            <h2 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-3">
               {language === "de" ? "Impressionen aus unserem Secret Garden" : "Impressions from our Secret Garden"}
             </h2>
             <p className="text-base text-muted-foreground mb-4">
