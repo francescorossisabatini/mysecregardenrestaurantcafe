@@ -1,4 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Instagram } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SITE } from "@/config/site";
 
 // Import gallery images - curated selection avoiding redundancy
 import entranceGarden from "@/assets/entrance-garden.jpg";
@@ -119,6 +122,33 @@ export const GallerySection = () => {
 
             return null;
           })}
+        </div>
+
+        {/* Instagram CTA */}
+        <div className="max-w-xl mx-auto text-center mt-12 md:mt-16 space-y-4">
+          <p className="font-lora text-lg text-foreground/80">
+            {language === "de" 
+              ? "Mehr Einblicke & tägliche Gerichte" 
+              : "More glimpses & daily dishes"}
+          </p>
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-primary/30 hover:bg-primary/5 text-foreground font-work"
+            asChild
+          >
+            <a
+              href={SITE.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className="w-5 h-5 mr-2" />
+              {language === "de" ? "Folge uns auf Instagram" : "Follow us on Instagram"}
+            </a>
+          </Button>
+          <p className="text-sm text-muted-foreground font-work">
+            {SITE.instagramHandle}
+          </p>
         </div>
       </div>
     </section>
