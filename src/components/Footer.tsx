@@ -7,7 +7,7 @@ export const Footer = () => {
   const { language } = useLanguage();
 
   return (
-    <footer className="bg-primary text-primary-foreground py-8">
+    <footer className="bg-primary text-primary-foreground py-8 pb-24 md:pb-8">
       <div className="container mx-auto px-4">
         <div className="max-w-xl mx-auto text-center space-y-4">
           
