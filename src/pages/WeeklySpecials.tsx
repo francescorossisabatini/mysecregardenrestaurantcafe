@@ -40,15 +40,15 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   return (
     <div className="flex items-center gap-2 mt-1 flex-wrap">
       {labels.isVegan && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#166534' }}>vegan</span>
+        <span className="text-xs font-work font-semibold text-accent">vegan</span>
       )}
       {labels.isGlutenFree && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#92400e' }}>
+        <span className="text-xs font-work font-semibold text-primary">
           {language === "de" ? "glutenfrei" : "gluten-free"}
         </span>
       )}
       {labels.isBio && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#065f46' }}>bio</span>
+        <span className="text-xs font-work font-semibold text-accent">bio</span>
       )}
     </div>
   );
