@@ -31,10 +31,11 @@ export const Footer = () => {
             href={SITE.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-            aria-label="Instagram"
+            className="inline-flex items-center gap-2 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+            aria-label={`${SITE.instagramHandle} on Instagram (opens in new tab)`}
+            title={`${SITE.instagramHandle} on Instagram`}
           >
-            <Instagram className="w-4 h-4" />
+            <Instagram className="w-4 h-4" aria-hidden="true" />
             {SITE.instagramHandle}
           </a>
           

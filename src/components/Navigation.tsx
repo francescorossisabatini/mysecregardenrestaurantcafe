@@ -146,8 +146,11 @@ export const Navigation = () => {
               size="sm"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
               onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
+              aria-label={language === "de" ? "Anrufen" : "Call"}
+              title={language === "de" ? "Anrufen" : "Call"}
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-4 h-4" aria-hidden="true" />
+              <span className="sr-only">{language === "de" ? "Anrufen" : "Call"}</span>
             </Button>
           </div>
         </div>
