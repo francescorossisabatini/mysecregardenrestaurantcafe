@@ -1,10 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CalendarDays, UtensilsCrossed, ChevronDown, Instagram } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+import { CalendarDays, UtensilsCrossed, ChevronDown } from "lucide-react";
 
 import minnesotaBowl from "@/assets/minnesota-bowl.webp";
 import heroGarden from "@/assets/garden-real.webp";
@@ -13,6 +11,9 @@ import heroInterior from "@/assets/interior-real.webp";
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
+
+// Lazy load the carousel - it's not needed for initial paint
+const HeroCarousel = lazy(() => import("@/components/HeroCarousel"));
 
 const heroImages = [
   { src: minnesotaBowl, position: "center center", alt: "Piatto del giorno" },
@@ -36,60 +37,27 @@ export const Hero = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
-  const { language, t } = useLanguage();
+  const [carouselReady, setCarouselReady] = useState(false);
+  const { language } = useLanguage();
 
-  // A11y: respect prefers-reduced-motion (autoplay OFF)
-  const [reduceMotion, setReduceMotion] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduceMotion(!!mq.matches);
-    update();
-    mq.addEventListener?.("change", update);
-    return () => mq.removeEventListener?.("change", update);
+  const handleSlideChange = useCallback((index: number) => {
+    setCurrentImage(index);
   }, []);
-
-  // stopOnInteraction TRUE (better UX, doesn't "fight" the user)
-  const plugins = useMemo(() => {
-    if (reduceMotion) return [];
-    return [Autoplay({ delay: 7000, stopOnInteraction: true })];
-  }, [reduceMotion]);
-
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, watchDrag: true },
-    plugins
-  );
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCurrentImage(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    onSelect();
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  const scrollToSlide = useCallback((index: number) => {
-    if (emblaApi) {
-      emblaApi.scrollTo(index);
-    }
-  }, [emblaApi]);
 
   useEffect(() => {
     const timer1 = setTimeout(() => setShowTitle(true), 600);
     const timer2 = setTimeout(() => setShowSubtitle(true), 1000);
     const timer3 = setTimeout(() => setShowButtons(true), 1400);
     const timer4 = setTimeout(() => setShowDots(true), 1800);
+    // Delay carousel hydration until after initial paint
+    const timer5 = setTimeout(() => setCarouselReady(true), 100);
     
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
+      clearTimeout(timer5);
     };
   }, []);
 
@@ -116,29 +84,26 @@ export const Hero = () => {
 
   return (
     <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Background carousel with Embla for swipe support */}
-      <div className="absolute inset-0 overflow-hidden" ref={emblaRef}>
-        <div className="flex h-full touch-pan-y">
-          {heroImages.map((image, index) => (
-            <div
-              key={index}
-              className="flex-[0_0_100%] min-w-0 h-full relative"
-              role="img"
-              aria-label={image.alt}
-            >
-              <div
-                className="absolute inset-0 transition-transform duration-500"
-                style={{
-                  backgroundImage: `url(${image.src})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: image.position,
-                }}
-                aria-hidden="true"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Static first image - shown immediately for FCP */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ${carouselReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        style={{
+          backgroundImage: `url(${heroImages[0].src})`,
+          backgroundSize: "cover",
+          backgroundPosition: heroImages[0].position,
+        }}
+        aria-hidden={carouselReady}
+      />
+
+      {/* Lazy-loaded carousel - hydrates after initial paint */}
+      {carouselReady && (
+        <Suspense fallback={null}>
+          <HeroCarousel 
+            images={heroImages} 
+            onSlideChange={handleSlideChange}
+          />
+        </Suspense>
+      )}
 
       {/* Overlay - reduced for better image visibility */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
@@ -226,7 +191,7 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Menu (primary), Specials (secondary), then Call/Directions */}
+          {/* CTA Buttons: Menu (primary), Specials (secondary) */}
           <div className={`flex flex-wrap justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
@@ -256,25 +221,22 @@ export const Hero = () => {
             </Button>
           </div>
 
-
-          {/* Carousel dots with a11y - WCAG touch target size 24px minimum */}
+          {/* Carousel dots */}
           <div className={`flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {heroImages.map((_, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => scrollToSlide(index)}
-                aria-label={language === "de" ? `Slide ${index + 1} anzeigen` : `Show slide ${index + 1}`}
-                aria-current={index === currentImage ? "true" : undefined}
                 className="w-8 h-8 flex items-center justify-center"
+                aria-hidden="true"
               >
                 <span className={`rounded-full transition-all duration-300 ${
                   currentImage === index
                     ? "bg-background w-8 h-2.5 shadow-lg"
-                    : "bg-background/80 hover:bg-background w-2.5 h-2.5"
+                    : "bg-background/80 w-2.5 h-2.5"
                 }`} />
-              </button>
+              </div>
             ))}
           </div>
 
