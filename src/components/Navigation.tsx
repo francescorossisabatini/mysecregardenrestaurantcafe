@@ -75,8 +75,12 @@ export const Navigation = () => {
           </button>
 
           {/* Logo + Subtitle */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <Logo className="w-10 h-10 md:w-12 md:h-12" />
+          <Link 
+            to="/" 
+            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+            aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
+          >
+            <Logo className="w-10 h-10 md:w-12 md:h-12" aria-hidden="true" />
             <div className="hidden sm:block">
               <span className="font-cormorant text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                 My Secret Garden
@@ -171,14 +175,19 @@ export const Navigation = () => {
         >
           {/* Drawer Header */}
           <div className="p-6 border-b border-border/20 flex items-center justify-between">
-            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
-              <Logo className="w-10 h-10" />
+            <Link 
+              to="/" 
+              onClick={() => setIsMobileMenuOpen(false)} 
+              className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+              aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
+            >
+              <Logo className="w-10 h-10" aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors"
-              aria-label="Close menu"
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
             >
               <X className="w-5 h-5" />
             </button>

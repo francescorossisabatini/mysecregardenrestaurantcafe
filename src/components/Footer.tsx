@@ -42,21 +42,24 @@ export const Footer = () => {
           <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
             <Link 
               to="/contact" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Kontaktseite besuchen" : "Visit contact page"}
             >
-              {language === "de" ? "Kontakt" : "Contact"}
+              {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
-            <span className="text-primary-foreground/40">•</span>
+            <span className="text-primary-foreground/40" aria-hidden="true">•</span>
             <Link 
               to="/impressum" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Impressum und rechtliche Hinweise lesen" : "Read legal notice and imprint"}
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
-            <span className="text-primary-foreground/40">•</span>
+            <span className="text-primary-foreground/40" aria-hidden="true">•</span>
             <Link 
               to="/privacy" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Datenschutzerklärung lesen" : "Read privacy policy"}
             >
               {language === "de" ? "Datenschutz" : "Privacy Policy"}
             </Link>

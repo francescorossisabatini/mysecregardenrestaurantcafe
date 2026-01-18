@@ -70,9 +70,12 @@ export const ValueProposition = () => {
         
         {/* CTA */}
         <div className="text-center">
-          <Button variant="outline" size="lg" className="font-work" asChild>
-            <Link to="/about">
-              {language === "de" ? "Mehr über uns erfahren" : "Discover Our Story"}
+          <Button variant="outline" size="lg" className="font-work group" asChild>
+            <Link 
+              to="/about"
+              className="inline-flex items-center gap-2 transition-all duration-200 ease-in-out hover:gap-3"
+            >
+              {language === "de" ? "Unsere Philosophie & Geschichte entdecken" : "Explore Our Philosophy & Story"}
             </Link>
           </Button>
         </div>

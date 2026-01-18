@@ -77,10 +77,16 @@ export const ShowcaseSections = () => {
                   ? "Grüne Pflanzen, Holztische und sanfte Musik. Ein Ort zum Durchatmen." 
                   : "Green plants, wooden tables, and soft music. A place to breathe."}
               </p>
-              <Button variant="outline" className="font-work" asChild>
-                <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  {language === "de" ? "Route anzeigen" : "Get Directions"}
+              <Button variant="outline" className="font-work group" asChild>
+                <a 
+                  href={SITE.mapsUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label={language === "de" ? "Route zum Restaurant auf Google Maps anzeigen (öffnet in neuem Tab)" : "View directions to restaurant on Google Maps (opens in new tab)"}
+                  className="inline-flex items-center gap-2 transition-all duration-200 ease-in-out"
+                >
+                  <MapPin className="w-4 h-4" aria-hidden="true" />
+                  {language === "de" ? "Route auf Google Maps" : "Directions on Google Maps"}
                 </a>
               </Button>
             </div>
