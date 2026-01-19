@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -14,6 +14,10 @@ interface HeroCarouselProps {
 }
 
 export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
+  // Defer carousel initialization to avoid forced reflow during initial render
+  const [isReady, setIsReady] = useState(false);
+  const initRef = useRef(false);
+
   // A11y: respect prefers-reduced-motion (autoplay OFF)
   const [reduceMotion, setReduceMotion] = useState(false);
   useEffect(() => {
@@ -24,14 +28,24 @@ export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
     return () => mq.removeEventListener?.("change", update);
   }, []);
 
+  // Defer initialization to next frame to avoid forced reflow
+  useEffect(() => {
+    if (initRef.current) return;
+    initRef.current = true;
+    // Use requestAnimationFrame to batch layout reads after paint
+    requestAnimationFrame(() => {
+      setIsReady(true);
+    });
+  }, []);
+
   // stopOnInteraction TRUE (better UX, doesn't "fight" the user)
   const plugins = useMemo(() => {
-    if (reduceMotion) return [];
+    if (reduceMotion || !isReady) return [];
     return [Autoplay({ delay: 7000, stopOnInteraction: true })];
-  }, [reduceMotion]);
+  }, [reduceMotion, isReady]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, watchDrag: true },
+    { loop: true, watchDrag: isReady, active: isReady },
     plugins
   );
 
@@ -51,7 +65,7 @@ export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
 
   return (
     <div className="absolute inset-0 overflow-hidden" ref={emblaRef}>
-      <div className="flex h-full touch-pan-y">
+      <div className="flex h-full touch-pan-y" style={{ willChange: isReady ? 'auto' : 'transform' }}>
         {images.map((image, index) => (
           <div
             key={index}
