@@ -119,10 +119,8 @@ export const Hero = () => {
             {SITE.name}
           </h1>
 
-          {/* Subtitle */}
-          <p className={`text-sm sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-opacity duration-[1500ms] ease-out ${
-            showSubtitle ? "opacity-100" : "opacity-0"
-          }`}>
+          {/* Subtitle - visible immediately for LCP */}
+          <p className="text-sm sm:text-base md:text-lg font-lora text-background drop-shadow-xl">
             Vegetarian Café & Restaurant • Vienna
           </p>
 
