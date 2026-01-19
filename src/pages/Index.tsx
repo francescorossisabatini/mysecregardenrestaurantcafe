@@ -23,30 +23,22 @@ const SectionLoader = () => (
 
 const Index = () => {
   const location = useLocation();
-  const [showNavbar, setShowNavbar] = useState(false);
+  const [showNavbar] = useState(true);
   const rafRef = useRef<number | null>(null);
 
   // Throttled scroll handler using requestAnimationFrame
   const handleScroll = useCallback(() => {
     if (rafRef.current) return;
-    
+
     rafRef.current = requestAnimationFrame(() => {
-      if (window.scrollY > 10) {
-        setShowNavbar(true);
-      }
       rafRef.current = null;
     });
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowNavbar(true);
-    }, 2000);
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
