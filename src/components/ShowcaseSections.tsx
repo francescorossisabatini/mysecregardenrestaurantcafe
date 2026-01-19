@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CalendarDays, MapPin } from "lucide-react";
 import { SITE } from "@/config/site";
-import curryOfTheDay from "@/assets/curry-of-the-day.jpg";
-import entranceGarden from "@/assets/entrance-garden.jpg";
+import curryOfTheDay from "@/assets/curry-of-the-day.webp";
+import entranceGarden from "@/assets/entrance-garden.webp";
 
 export const ShowcaseSections = () => {
   const { language } = useLanguage();

@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Leaf, Heart, Droplets } from "lucide-react";
-import entranceGarden from "@/assets/entrance-garden.jpg";
+import entranceGarden from "@/assets/entrance-garden.webp";
 
 export const AboutSection = () => {
   const { language } = useLanguage();
