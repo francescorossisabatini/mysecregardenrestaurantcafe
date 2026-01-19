@@ -304,7 +304,7 @@ const AboutUs = () => {
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-center text-sm text-foreground/50 mt-6 font-lora italic">{t.poemHint}</p>
+            <p className="text-center text-sm text-muted-foreground mt-6 font-lora italic">{t.poemHint}</p>
           </div>
         </div>
       </section>

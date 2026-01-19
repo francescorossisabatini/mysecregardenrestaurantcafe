@@ -13,11 +13,11 @@ export const About = () => {
       <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl" />
       <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
       
-      {/* Decorative Flowers and Lines - Maggiore contrasto */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 text-emerald-600 opacity-60 rotate-180">
+      {/* Decorative Flowers and Lines - decorative only, aria-hidden */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 text-emerald-600 opacity-60 rotate-180" aria-hidden="true">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-1/4 right-16 w-32 h-32 text-teal-600 opacity-80">
+      <div className="absolute top-1/4 right-16 w-32 h-32 text-teal-600 opacity-80" aria-hidden="true">
         <RoseFlower className="w-full h-full" />
       </div>
       

@@ -295,7 +295,7 @@ export const DailyMenuHighlight = () => {
                     w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50
                     ${current === index 
                       ? 'w-8 bg-primary' 
-                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      : 'bg-muted-foreground/60 hover:bg-muted-foreground/80'
                     }
                   `}
                 />

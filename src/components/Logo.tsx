@@ -9,8 +9,8 @@ export const Logo = ({ className = "w-24 h-24", lightText = false, showTagline =
         className={className}
       />
       {showTagline && (
-        <p className={`text-[8px] font-light tracking-wide opacity-70 ${
-          lightText ? 'text-white/80' : 'text-muted-foreground'
+        <p className={`text-[10px] font-normal tracking-wide ${
+          lightText ? 'text-white' : 'text-muted-foreground'
         }`}>
           inspired by Sri Chinmoy
         </p>
