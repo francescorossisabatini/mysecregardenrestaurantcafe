@@ -32,7 +32,7 @@ function useMinuteNow() {
 
 export const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [showTitle, setShowTitle] = useState(false);
+  // Remove showTitle state - H1 renders immediately for better LCP
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
@@ -45,15 +45,14 @@ export const Hero = () => {
   }, []);
 
   useEffect(() => {
-    const timer1 = setTimeout(() => setShowTitle(true), 600);
-    const timer2 = setTimeout(() => setShowSubtitle(true), 1000);
-    const timer3 = setTimeout(() => setShowButtons(true), 1400);
-    const timer4 = setTimeout(() => setShowDots(true), 1800);
+    // Title now uses CSS animation, no JS delay needed
+    const timer2 = setTimeout(() => setShowSubtitle(true), 400);
+    const timer3 = setTimeout(() => setShowButtons(true), 800);
+    const timer4 = setTimeout(() => setShowDots(true), 1200);
     // Delay carousel hydration until after initial paint
     const timer5 = setTimeout(() => setCarouselReady(true), 100);
     
     return () => {
-      clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
@@ -112,10 +111,8 @@ export const Hero = () => {
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-20 pb-8 flex flex-col justify-center h-full pointer-events-none">
         <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
-          {/* Restaurant name */}
-          <h1 className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 transition-opacity duration-[1500ms] ease-out ${
-            showTitle ? "opacity-100" : "opacity-0"
-          }`}>
+          {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 animate-fade-in-hero">
             {SITE.name}
           </h1>
 
