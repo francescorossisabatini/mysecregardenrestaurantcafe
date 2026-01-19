@@ -37,7 +37,8 @@ export const Hero = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [showDots, setShowDots] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
-  const [carouselReady, setCarouselReady] = useState(false);
+  const [carouselMounted, setCarouselMounted] = useState(false);
+  const [carouselVisible, setCarouselVisible] = useState(false);
   const { language } = useLanguage();
 
   const handleSlideChange = useCallback((index: number) => {
@@ -49,9 +50,10 @@ export const Hero = () => {
     const timer2 = setTimeout(() => setShowSubtitle(true), 400);
     const timer3 = setTimeout(() => setShowButtons(true), 800);
     const timer4 = setTimeout(() => setShowDots(true), 1200);
-    // Delay carousel hydration until after initial paint
-    const timer5 = setTimeout(() => setCarouselReady(true), 100);
-    
+
+    // Mount carousel after first paint, but keep the static image until carousel reports ready
+    const timer5 = setTimeout(() => setCarouselMounted(true), 100);
+
     return () => {
       clearTimeout(timer2);
       clearTimeout(timer3);
@@ -85,21 +87,22 @@ export const Hero = () => {
     <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
-        className={`absolute inset-0 transition-opacity duration-500 ${carouselReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         style={{
           backgroundImage: `url(${heroImages[0].src})`,
           backgroundSize: "cover",
           backgroundPosition: heroImages[0].position,
         }}
-        aria-hidden={carouselReady}
+        aria-hidden={carouselVisible}
       />
 
-      {/* Lazy-loaded carousel - hydrates after initial paint */}
-      {carouselReady && (
+      {/* Lazy-loaded carousel - mounts after initial paint */}
+      {carouselMounted && (
         <Suspense fallback={null}>
           <HeroCarousel 
             images={heroImages} 
             onSlideChange={handleSlideChange}
+            onReady={() => setCarouselVisible(true)}
           />
         </Suspense>
       )}
