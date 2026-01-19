@@ -11,9 +11,10 @@ interface HeroImage {
 interface HeroCarouselProps {
   images: HeroImage[];
   onSlideChange?: (index: number) => void;
+  onReady?: () => void;
 }
 
-export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
+export const HeroCarousel = ({ images, onSlideChange, onReady }: HeroCarouselProps) => {
   // Defer carousel initialization significantly to avoid blocking TTI
   const [isReady, setIsReady] = useState(false);
   const initRef = useRef(false);
@@ -28,17 +29,25 @@ export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
   useEffect(() => {
     if (initRef.current) return;
     initRef.current = true;
-    
+
     // Use requestIdleCallback if available, fallback to setTimeout
     const scheduleInit = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 100));
     const cancelInit = window.cancelIdleCallback || clearTimeout;
-    
+
     const id = scheduleInit(() => {
       setIsReady(true);
     });
-    
+
     return () => cancelInit(id);
   }, []);
+
+  // Let parent know when carousel is ready to be shown (prevents background flash)
+  useEffect(() => {
+    if (!isReady) return;
+    requestAnimationFrame(() => {
+      onReady?.();
+    });
+  }, [isReady, onReady]);
 
   // stopOnInteraction TRUE (better UX, doesn't "fight" the user)
   const plugins = useMemo(() => {
