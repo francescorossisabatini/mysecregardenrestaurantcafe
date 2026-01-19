@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
@@ -78,54 +78,58 @@ export const MenuSection = () => {
   const [weeklyOpen, setWeeklyOpen] = useState(false);
   const [drinksExpanded, setDrinksExpanded] = useState(false);
   
-  // Get today's day name
-  const today = new Date();
-  const currentHour = today.getHours();
-  const dayNames = {
+  // Memoize date calculations to avoid recalculating on every render
+  // This prevents forced reflows from repeated Date operations
+  const dateInfo = useMemo(() => {
+    const today = new Date();
+    const currentHour = today.getHours();
+    const dayIndex = today.getDay();
+    const nextDayIndex = (dayIndex + 1) % 7;
+    
+    return {
+      dayIndex,
+      currentHour,
+      nextDayIndex,
+      isAfterClosing: currentHour >= 19,
+      isSunday: dayIndex === 0,
+      todayHoliday: getTodayHoliday(),
+    };
+  }, []);
+  
+  const dayNames = useMemo(() => ({
     de: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
     en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-  };
-  const todayName = dayNames[language][today.getDay()];
+  }), []);
   
-  // After 19:00, show next day's menu as preview
-  const isAfterClosing = currentHour >= 19;
+  const todayName = dayNames[language][dateInfo.dayIndex];
   
   // Find today's menu
-  const todayMenu = menu.days.find(day => day.day[language] === todayName);
-  
-  // Check if it's Sunday (day 0)
-  const isSunday = today.getDay() === 0;
-  
-  // Check if today is a holiday
-  const todayHoliday = getTodayHoliday();
+  const todayMenu = useMemo(() => 
+    menu.days.find(day => day.day[language] === todayName),
+    [menu.days, language, todayName]
+  );
   
   // Check if today's menu has any data
-  const hasMenuData = !!todayMenu && (
+  const hasMenuData = useMemo(() => !!todayMenu && (
     isValidMenuText(todayMenu.soup?.de) || isValidMenuText(todayMenu.soup?.en) ||
     isValidMenuText(todayMenu.green?.de) || isValidMenuText(todayMenu.green?.en) ||
     isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
-  );
+  ), [todayMenu]);
   
   // Determine if restaurant is closed (Sunday, holiday, no menu data, or after 19:00)
-  const isClosed = isSunday || todayHoliday !== null || !hasMenuData || isAfterClosing;
-  const isNoMenuDay = !isSunday && !todayHoliday && !hasMenuData && !isAfterClosing;
-  
-  // Show next day preview if closed OR after 19:00
-  const showNextDayPreview = isClosed || isAfterClosing;
+  const isClosed = dateInfo.isSunday || dateInfo.todayHoliday !== null || !hasMenuData || dateInfo.isAfterClosing;
+  const isNoMenuDay = !dateInfo.isSunday && !dateInfo.todayHoliday && !hasMenuData && !dateInfo.isAfterClosing;
   
   // Get next day's menu for closed day preview
-  const getNextDayMenu = () => {
-    const dayNamesDE = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-    const nextDayIndex = (today.getDay() + 1) % 7;
-    const nextDayNameDE = dayNamesDE[nextDayIndex];
+  const nextDayMenu = useMemo(() => {
+    const nextDayNameDE = dayNames.de[dateInfo.nextDayIndex];
     return menu.days.find(day => day.day.de === nextDayNameDE);
-  };
+  }, [menu.days, dateInfo.nextDayIndex, dayNames.de]);
   
-  const nextDayMenu = getNextDayMenu();
-  const nextDayName = {
-    de: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"][(today.getDay() + 1) % 7],
-    en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][(today.getDay() + 1) % 7]
-  };
+  const nextDayName = useMemo(() => ({
+    de: dayNames.de[dateInfo.nextDayIndex],
+    en: dayNames.en[dateInfo.nextDayIndex]
+  }), [dayNames, dateInfo.nextDayIndex]);
 
   return (
     <section id="menu" className="py-16 md:py-24 bg-background">
@@ -219,18 +223,18 @@ export const MenuSection = () => {
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
-                    {todayHoliday 
-                      ? todayHoliday.name[language]
-                      : isAfterClosing
+                    {dateInfo.todayHoliday 
+                      ? dateInfo.todayHoliday.name[language]
+                      : dateInfo.isAfterClosing
                         ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
                         : isNoMenuDay
                           ? (language === "de" ? "Heute geschlossen" : "Closed Today")
                           : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
                   </p>
                   <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
-                    {todayHoliday 
-                      ? todayHoliday.message[language]
-                      : isAfterClosing
+                    {dateInfo.todayHoliday 
+                      ? dateInfo.todayHoliday.message[language]
+                      : dateInfo.isAfterClosing
                         ? (language === "de" 
                             ? "Wir sind für heute geschlossen. Schau dir an, was morgen auf dich wartet." 
                             : "We are closed for today. See what awaits you tomorrow.")
@@ -242,7 +246,7 @@ export const MenuSection = () => {
                               ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
                               : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
                   </p>
-                  {(todayHoliday || isNoMenuDay) && !isAfterClosing && (
+                  {(dateInfo.todayHoliday || isNoMenuDay) && !dateInfo.isAfterClosing && (
                     <p className="text-muted-foreground font-work text-xs mt-2">
                       {language === "de" 
                         ? "Heute haben wir geschlossen." 
@@ -308,7 +312,7 @@ export const MenuSection = () => {
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
                   <span className="font-cormorant text-base md:text-lg italic">
-                    {isSunday
+                    {dateInfo.isSunday
                       ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
                       : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
                   </span>

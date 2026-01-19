@@ -14,28 +14,30 @@ interface HeroCarouselProps {
 }
 
 export const HeroCarousel = ({ images, onSlideChange }: HeroCarouselProps) => {
-  // Defer carousel initialization to avoid forced reflow during initial render
+  // Defer carousel initialization significantly to avoid blocking TTI
   const [isReady, setIsReady] = useState(false);
   const initRef = useRef(false);
 
-  // A11y: respect prefers-reduced-motion (autoplay OFF)
-  const [reduceMotion, setReduceMotion] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduceMotion(!!mq.matches);
-    update();
-    mq.addEventListener?.("change", update);
-    return () => mq.removeEventListener?.("change", update);
+  // A11y: respect prefers-reduced-motion (autoplay OFF) - check only once
+  const reduceMotion = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
   }, []);
 
-  // Defer initialization to next frame to avoid forced reflow
+  // Defer initialization using idle callback for better TTI
   useEffect(() => {
     if (initRef.current) return;
     initRef.current = true;
-    // Use requestAnimationFrame to batch layout reads after paint
-    requestAnimationFrame(() => {
+    
+    // Use requestIdleCallback if available, fallback to setTimeout
+    const scheduleInit = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 100));
+    const cancelInit = window.cancelIdleCallback || clearTimeout;
+    
+    const id = scheduleInit(() => {
       setIsReady(true);
     });
+    
+    return () => cancelInit(id);
   }, []);
 
   // stopOnInteraction TRUE (better UX, doesn't "fight" the user)
