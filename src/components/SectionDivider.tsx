@@ -18,7 +18,7 @@ export const SectionDivider = ({
   return (
     <div className="relative w-full py-16 md:py-20">
       {/* Minimal gradient divider */}
-      <div className={`absolute inset-0 bg-gradient-to-r ${gradientClasses[variant]} opacity-50`} />
+      <div className={`absolute inset-0 bg-gradient-to-r ${gradientClasses[variant]} opacity-50`} aria-hidden="true" />
       
       {/* Simple line */}
       {showDecoration && (

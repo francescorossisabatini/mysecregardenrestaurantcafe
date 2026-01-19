@@ -117,13 +117,14 @@ const ContactPage = () => {
                   Instagram
                 </p>
                 <a
-                  href="https://www.instagram.com/mysecretgarden_vienna/"
+                  href={SITE.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground font-work hover:text-primary transition-colors inline-flex items-center gap-1"
+                  aria-label={`${SITE.instagramHandle} (opens in new tab)`}
                 >
-                  @mysecretgarden_vienna
-                  <ExternalLink className="w-3 h-3" />
+                  {SITE.instagramHandle}
+                  <ExternalLink className="w-3 h-3" aria-hidden="true" />
                 </a>
               </div>
             </div>

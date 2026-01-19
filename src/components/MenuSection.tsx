@@ -464,7 +464,7 @@ export const MenuSection = () => {
                                 )}
                               </h4>
                               {item.description && (
-                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground/80' : 'text-muted-foreground'}`}>
+                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                                   {item.description[language]}
                                 </p>
                               )}

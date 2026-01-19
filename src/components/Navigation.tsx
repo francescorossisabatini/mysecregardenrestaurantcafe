@@ -114,8 +114,8 @@ export const Navigation = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg text-foreground hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
-              title="Instagram"
+              aria-label={language === "de" ? `${SITE.instagramHandle} auf Instagram (öffnet in neuem Tab)` : `${SITE.instagramHandle} on Instagram (opens in new tab)`}
+              title={SITE.instagramHandle}
             >
               <Instagram className="w-5 h-5" aria-hidden="true" />
             </a>
@@ -137,8 +137,8 @@ export const Navigation = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
-              title="Instagram"
+              aria-label={language === "de" ? `${SITE.instagramHandle} auf Instagram (öffnet in neuem Tab)` : `${SITE.instagramHandle} on Instagram (opens in new tab)`}
+              title={SITE.instagramHandle}
             >
               <Instagram className="w-5 h-5" aria-hidden="true" />
             </a>

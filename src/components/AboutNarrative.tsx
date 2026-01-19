@@ -9,13 +9,13 @@ export const AboutNarrative = () => {
   return (
     <section id="about" className="py-20 md:py-32 bg-gradient-subtle relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 right-0 h-24 text-accent opacity-50">
+      <div className="absolute top-0 left-0 right-0 h-24 text-accent opacity-50" aria-hidden="true">
         <ContinuousVine className="w-full h-full" />
       </div>
-      <div className="absolute top-20 right-12 w-28 h-28 text-accent opacity-70">
+      <div className="absolute top-20 right-12 w-28 h-28 text-accent opacity-70" aria-hidden="true">
         <RoseFlower className="w-full h-full" />
       </div>
-      <div className="absolute bottom-20 left-12 w-32 h-32 text-accent opacity-70">
+      <div className="absolute bottom-20 left-12 w-32 h-32 text-accent opacity-70" aria-hidden="true">
         <DetailedFlower className="w-full h-full" />
       </div>
       
