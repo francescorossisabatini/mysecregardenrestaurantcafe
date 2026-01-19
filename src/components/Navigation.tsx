@@ -97,7 +97,7 @@ export const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-sm font-work text-foreground/80 hover:text-primary transition-colors"
+                className="text-sm font-work text-foreground hover:text-primary transition-colors"
               >
                 {link.label}
               </Link>
@@ -113,7 +113,7 @@ export const Navigation = () => {
               href={SITE.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="p-2 rounded-lg text-foreground hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
               title="Instagram"
             >
@@ -136,7 +136,7 @@ export const Navigation = () => {
               href={SITE.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground/70 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="p-2 rounded-lg text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Instagram (öffnet in neuem Tab)" : "Instagram (opens in new tab)"}
               title="Instagram"
             >
@@ -203,7 +203,7 @@ export const Navigation = () => {
                 key={link.to}
                 to={link.to}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 px-4 text-base text-foreground/80 hover:text-foreground hover:bg-muted/30 rounded-lg transition-colors font-work"
+                className="block py-3 px-4 text-base text-foreground hover:text-primary hover:bg-muted/30 rounded-lg transition-colors font-work"
               >
                 {link.label}
               </Link>

@@ -105,7 +105,7 @@ export const MobileStickyBar = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-2 
-            bg-muted text-foreground
+            bg-secondary text-secondary-foreground
             rounded-full py-3 px-4
             text-base font-medium font-work
             shadow-sm

@@ -17,7 +17,7 @@ export const Footer = () => {
           </p>
           
           {/* Tagline */}
-          <p className="font-caveat text-sm text-primary-foreground/70 italic">
+          <p className="font-caveat text-sm text-primary-foreground/90 italic">
             "Cooking is prayer. Eating is gratitude."
           </p>
           
@@ -43,31 +43,31 @@ export const Footer = () => {
           <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
             <Link 
               to="/contact" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
-              aria-label={language === "de" ? "Kontaktseite besuchen" : "Visit contact page"}
+              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Kontakt" : "Contact Us"}
             >
               {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
-            <span className="text-primary-foreground/40" aria-hidden="true">•</span>
+            <span className="text-primary-foreground/50" aria-hidden="true">•</span>
             <Link 
               to="/impressum" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
-              aria-label={language === "de" ? "Impressum und rechtliche Hinweise lesen" : "Read legal notice and imprint"}
+              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Impressum" : "Legal Notice"}
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
-            <span className="text-primary-foreground/40" aria-hidden="true">•</span>
+            <span className="text-primary-foreground/50" aria-hidden="true">•</span>
             <Link 
               to="/privacy" 
-              className="text-primary-foreground/70 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
-              aria-label={language === "de" ? "Datenschutzerklärung lesen" : "Read privacy policy"}
+              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              aria-label={language === "de" ? "Datenschutz" : "Privacy Policy"}
             >
               {language === "de" ? "Datenschutz" : "Privacy Policy"}
             </Link>
           </div>
           
           {/* Copyright */}
-          <p className="text-xs text-primary-foreground/70">
+          <p className="text-xs text-primary-foreground/85">
             © {new Date().getFullYear()} {SITE.name}
           </p>
           
