@@ -82,7 +82,7 @@ export const ShowcaseSections = () => {
                   href={SITE.mapsUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  aria-label={language === "de" ? "Route zum Restaurant auf Google Maps anzeigen (öffnet in neuem Tab)" : "View directions to restaurant on Google Maps (opens in new tab)"}
+                  aria-label={language === "de" ? "Route auf Google Maps (öffnet in neuem Tab)" : "Directions on Google Maps (opens in new tab)"}
                   className="inline-flex items-center gap-2 transition-all duration-200 ease-in-out"
                 >
                   <MapPin className="w-4 h-4" aria-hidden="true" />
