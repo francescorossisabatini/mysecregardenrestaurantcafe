@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { SITE } from "@/config/site";
 
 // Import gallery images - curated selection avoiding redundancy
-import entranceGarden from "@/assets/entrance-garden.jpg";
+import entranceGarden from "@/assets/entrance-garden.webp";
 import foodBowl from "@/assets/food-bowl-real.jpg";
 import foodDetail from "@/assets/food-detail-real.jpg";
 import poppyFlower from "@/assets/poppy-flower-real.jpg";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
-import curryOfTheDay from "@/assets/curry-of-the-day.jpg";
+import curryOfTheDay from "@/assets/curry-of-the-day.webp";
 // New images - replacing redundant ones
 import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import tableSpreadMenu from "@/assets/table-spread-menu.jpg";

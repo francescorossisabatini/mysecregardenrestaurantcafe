@@ -9,7 +9,7 @@ import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { SITE } from "@/config/site";
-import entranceGarden from "@/assets/entrance-garden.jpg";
+import entranceGarden from "@/assets/entrance-garden.webp";
 import gardenReal from "@/assets/garden-real.jpg";
 import koreanBowl from "@/assets/korean-bowl.jpg";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
