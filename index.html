@@ -20,6 +20,10 @@
     
     <!-- Critical inline styles for instant FCP/LCP - hero section -->
     <style>
+      /* FOUC prevention - hide content until styles load */
+      #root { opacity: 0; }
+      #root.ready { opacity: 1; transition: opacity 0.15s ease-out; }
+      
       /* Instant background + system fonts while loading */
       html { background-color: #FAF7F3; }
       body { 

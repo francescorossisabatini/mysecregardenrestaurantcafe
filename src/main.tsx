@@ -4,10 +4,17 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root")!;
+
+createRoot(root).render(
   <React.StrictMode>
     <HelmetProvider>
       <App />
     </HelmetProvider>
   </React.StrictMode>
 );
+
+// Show content after React has rendered - prevents FOUC
+requestAnimationFrame(() => {
+  root.classList.add("ready");
+});
