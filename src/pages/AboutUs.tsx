@@ -8,6 +8,7 @@ import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { SITE } from "@/config/site";
 import entranceGarden from "@/assets/entrance-garden.jpg";
 import gardenReal from "@/assets/garden-real.jpg";
 import koreanBowl from "@/assets/korean-bowl.jpg";
@@ -214,12 +215,13 @@ const AboutUs = () => {
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara2}</p>
               <a 
-                href="https://instagram.com/mysecretgarden_vienna" 
+                href={SITE.instagramUrl}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-block font-work text-accent hover:text-accent/80 transition-colors"
+                aria-label={`${SITE.instagramHandle} (opens in new tab)`}
               >
-                @mysecretgarden_vienna
+                {SITE.instagramHandle}
               </a>
             </div>
             <div>
