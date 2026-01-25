@@ -213,7 +213,7 @@ serve(async (req) => {
     console.log('Fetching weekly menu from Google Sheets...');
     
     // Fetch from Google Sheets using the public visualization API
-    const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(sheetId)}/gviz/tq?tqx=out:json&sheet=Menu`;
+    const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(sheetId)}/gviz/tq?tqx=out:json&sheet=web`;
     const response = await fetch(url);
     
     if (!response.ok) {
