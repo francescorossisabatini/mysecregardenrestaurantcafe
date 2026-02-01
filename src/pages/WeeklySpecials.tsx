@@ -146,7 +146,7 @@ const WeeklySpecials = () => {
                           {dayHoliday
                             ? dayHoliday.name[language]
                             : isDaySunday
-                              ? (language === "de" ? "chiuso" : "closed")
+                              ? (language === "de" ? "Geschlossen" : "Closed")
                               : (language === "de" ? "Geschlossen" : "Closed")}
                         </p>
                       </div>
