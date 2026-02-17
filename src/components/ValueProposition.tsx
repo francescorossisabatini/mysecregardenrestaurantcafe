@@ -27,7 +27,7 @@ export const ValueProposition = () => {
           <div className="max-w-2xl mx-auto space-y-6">
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
-                ? "In unserer Küche bereiten wir jedes Gericht mit der gleichen Aufmerksamkeit zu, mit der ein Gärtner seine Pflanzen pflegt. Saisonal, biologisch, von Hand – und immer mit einem stillen Lächeln." 
+                ? "In unserer Küche bereiten wir jedes Gericht mit derselben Sorgfalt zu, mit der ein Gärtner seine Pflanzen pflegt. Saisonale, biologische Produkte, von Hand zubereitet – und immer mit einem freundlichen Lächeln." 
                 : "In our kitchen, we prepare each dish with the same attention a gardener gives to their plants. Seasonal, organic, by hand – and always with a quiet smile."}
             </p>
             
