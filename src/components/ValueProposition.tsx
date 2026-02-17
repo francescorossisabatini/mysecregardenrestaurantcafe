@@ -21,7 +21,7 @@ export const ValueProposition = () => {
           <h2 className="font-caveat text-4xl md:text-6xl text-primary leading-tight">
             {language === "de" 
               ? "Kochen ein Gebet und\nEssen Dankbarkeit ist." 
-              : "Cooking is prayer.\nEating is gratitude."}
+              : "Cooking is prayer and\neating is gratitude."}
           </h2>
           
           <div className="max-w-2xl mx-auto space-y-6">
