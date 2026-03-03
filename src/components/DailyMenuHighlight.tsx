@@ -1,6 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { Loader2 } from "lucide-react";
+import { translatePeriod } from "@/lib/translatePeriod";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import {
   Carousel,
@@ -154,7 +155,7 @@ export const DailyMenuHighlight = () => {
             {language === "de" ? "Wochenmenü" : "Weekly Menu"}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground">
-            {menu.period}
+            {translatePeriod(menu.period, language)}
           </p>
         </div>
 

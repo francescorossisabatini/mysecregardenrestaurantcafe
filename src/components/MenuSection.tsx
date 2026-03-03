@@ -8,6 +8,7 @@ import {
   getDateForMenuDay,
   isSundayByName,
 } from "@/data/holidaysData";
+import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -332,7 +333,7 @@ export const MenuSection = () => {
                   ) : (
                     <>
                       <p className="text-xs text-muted-foreground text-center font-work mb-4">
-                        {menu.period}
+                        {translatePeriod(menu.period, language)}
                       </p>
                       {menu.days.map((day, index) => {
                         // Prefer date-based matching using the menu period (so we can mark *next* week holidays correctly)

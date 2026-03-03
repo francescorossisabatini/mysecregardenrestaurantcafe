@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Separator } from "@/components/ui/separator";
+import { translatePeriod } from "@/lib/translatePeriod";
 
 interface WeeklyMenuDialogProps {
   open: boolean;
@@ -38,7 +39,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
             {language === 'de' ? 'Wochenkarte' : 'Weekly Menu'}
           </DialogTitle>
           <p className="text-center text-sm text-muted-foreground font-lora pt-1">
-            {menu.period}
+            {translatePeriod(menu.period, language)}
           </p>
         </DialogHeader>
 
