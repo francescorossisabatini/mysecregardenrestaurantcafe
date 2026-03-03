@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { translatePeriod } from "@/lib/translatePeriod";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 
 interface MenuDay {
@@ -112,7 +113,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
               {language === "de" ? "Wochenkarte" : "Weekly Menu"}
             </h2>
             <p className="text-base sm:text-lg font-lora text-foreground/80">
-              {menu.period}
+              {translatePeriod(menu.period, language)}
             </p>
           </div>
 

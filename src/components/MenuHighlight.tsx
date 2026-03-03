@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UtensilsCrossed } from "lucide-react";
+import { translatePeriod } from "@/lib/translatePeriod";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { WavyPattern, OrganicLines } from "@/components/AbstractPlantDecoration";
@@ -44,7 +45,7 @@ export const MenuHighlight = () => {
           {/* Weekly Menu */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-center mb-8 text-foreground">
-              {t("menu.weeklyMenu")} {isLoading ? <Skeleton className="inline-block w-32 h-6" /> : menu.period}
+              {t("menu.weeklyMenu")} {isLoading ? <Skeleton className="inline-block w-32 h-6" /> : translatePeriod(menu.period, language)}
             </h3>
 
             {isLoading ? (

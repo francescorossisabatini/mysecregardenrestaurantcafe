@@ -8,6 +8,7 @@ import { CTATopRow } from "@/components/CTATopRow";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { translatePeriod } from "@/lib/translatePeriod";
 import {
   getTodayHoliday,
   getDateForMenuDay,
@@ -83,7 +84,7 @@ const WeeklySpecials = () => {
             {language === "de" ? "Wochenmenü" : "Weekly Specials"}
           </h1>
           <p className="text-muted-foreground font-work text-base mb-2">
-            {menu.period}
+            {translatePeriod(menu.period, language)}
           </p>
           <p className="text-sm text-muted-foreground font-work max-w-md mx-auto">
             {language === "de"
