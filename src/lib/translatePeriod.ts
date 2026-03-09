@@ -18,8 +18,8 @@ const DE_TO_EN_MONTHS: [RegExp, string][] = [
 export function translatePeriod(period: string, language: "de" | "en"): string {
   if (language === "de") return period;
   let result = period;
-  for (const [de, en] of Object.entries(DE_TO_EN_MONTHS)) {
-    result = result.replace(new RegExp(de, "gi"), en);
+  for (const [regex, en] of DE_TO_EN_MONTHS) {
+    result = result.replace(regex, en);
   }
   return result;
 }
