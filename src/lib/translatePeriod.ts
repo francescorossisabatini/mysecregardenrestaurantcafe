@@ -1,17 +1,18 @@
-const DE_TO_EN_MONTHS: Record<string, string> = {
-  "Januar": "January",
-  "Februar": "February",
-  "März": "March",
-  "April": "April",
-  "Mai": "May",
-  "Juni": "June",
-  "Juli": "July",
-  "August": "August",
-  "September": "September",
-  "Oktober": "October",
-  "November": "November",
-  "Dezember": "December",
-};
+// Map German month names (including common misspellings) to English
+const DE_TO_EN_MONTHS: [RegExp, string][] = [
+  [/j[aä]n(?:uar|ner)/gi, "January"],
+  [/feb(?:ruar)?/gi, "February"],
+  [/m[aä]r(?:tz|z)/gi, "March"],
+  [/april/gi, "April"],
+  [/mai/gi, "May"],
+  [/juni/gi, "June"],
+  [/juli/gi, "July"],
+  [/august/gi, "August"],
+  [/sep(?:tember)?/gi, "September"],
+  [/okt(?:ober)?/gi, "October"],
+  [/nov(?:ember)?/gi, "November"],
+  [/dez(?:ember)?/gi, "December"],
+];
 
 /** Translate German month names in a period string to English */
 export function translatePeriod(period: string, language: "de" | "en"): string {
