@@ -226,7 +226,17 @@ serve(async (req) => {
   console.log('Menu request from:', origin || 'unknown origin', 'IP:', clientIP);
 
   try {
-    const sheetId = Deno.env.get('GOOGLE_SHEET_ID');
+    let sheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
+    
+    // Extract sheet ID from full URL if needed
+    const urlMatch = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+    if (urlMatch) {
+      sheetId = urlMatch[1];
+    }
+    // Also strip any query params
+    sheetId = sheetId.split('?')[0].split('/')[0].trim();
+    
+    console.log('Using sheet ID:', sheetId);
     
     if (!sheetId) {
       console.error('GOOGLE_SHEET_ID not configured');
