@@ -213,8 +213,25 @@ serve(async (req) => {
     console.log('Fetching weekly menu from Google Sheets...');
     
     // Fetch from Google Sheets using the public visualization API
-    const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(sheetId)}/gviz/tq?tqx=out:json&sheet=web`;
-    const response = await fetch(url);
+    // Try gviz first, then CSV export as fallback
+    const gvizUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=web`;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=web`;
+    
+    console.log('Trying gviz URL:', gvizUrl);
+    
+    const fetchHeaders = {
+      'User-Agent': 'Mozilla/5.0 (compatible; MenuBot/1.0)',
+      'Accept': 'application/json, text/plain, */*',
+    };
+    
+    let response = await fetch(gvizUrl, { headers: fetchHeaders });
+    let useCSV = false;
+    
+    if (!response.ok) {
+      console.warn(`gviz failed (${response.status}), trying CSV export...`);
+      response = await fetch(csvUrl, { headers: fetchHeaders });
+      useCSV = true;
+    }
     
     if (!response.ok) {
       console.error(`Failed to fetch sheet: ${response.status}`);
