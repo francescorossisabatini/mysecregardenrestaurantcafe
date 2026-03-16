@@ -145,6 +145,47 @@ function validateWeeklyMenu(menu: unknown): WeeklyMenu | null {
   };
 }
 
+// Parse a CSV line handling quoted fields
+function parseCSVLine(line: string): string[] {
+  const result: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
+      else if (ch === '"') { inQuotes = false; }
+      else { current += ch; }
+    } else {
+      if (ch === '"') { inQuotes = true; }
+      else if (ch === ',') { result.push(current.trim()); current = ''; }
+      else { current += ch; }
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+// Build period string from a date like "16/3/2026" -> "16. – 21. März 2026"
+function buildPeriodFromDate(dateStr: string): string {
+  const parts = dateStr.replace(/"/g, '').trim().split('/');
+  if (parts.length < 3) return dateStr;
+  const day = parseInt(parts[0]);
+  const month = parseInt(parts[1]);
+  const year = parseInt(parts[2]);
+  if (isNaN(day) || isNaN(month) || isNaN(year)) return dateStr;
+  
+  const monthNames: Record<number, string> = {
+    1: 'Jänner', 2: 'Februar', 3: 'März', 4: 'April',
+    5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',
+    9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember',
+  };
+  
+  // Monday to Saturday = +5 days
+  const endDay = day + 5;
+  return `${day}. – ${endDay}. ${monthNames[month] || month} ${year}`;
+}
+
 serve(async (req) => {
   const origin = req.headers.get("origin");
   
