@@ -11,7 +11,7 @@ export const Philosophy = () => {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-6">
+            <h2 className="text-5xl md:text-7xl font-bold text-primary mb-6">
               {t("philosophy.title")}
             </h2>
             <p className="font-lora text-xl md:text-2xl text-foreground/80 max-w-3xl mx-auto leading-relaxed">
@@ -64,7 +64,7 @@ export const Philosophy = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 md:gap-3 bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-lg transition-all duration-300"
                 >
-                  <h3 className="text-2xl md:text-4xl font-caveat font-bold text-primary underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">
+                  <h3 className="text-2xl md:text-4xl font-bold text-primary underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">
                     {t("philosophy.sri.title")}
                   </h3>
                   <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-primary" />
@@ -116,7 +116,7 @@ export const Philosophy = () => {
 
           {/* Vision */}
           <div className="mb-32">
-            <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-8 text-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
               {t("philosophy.vision.title")}
             </h3>
             <div className="space-y-6 max-w-4xl mx-auto">
@@ -169,7 +169,7 @@ export const Philosophy = () => {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
                 <Heart className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="font-caveat text-2xl font-bold text-foreground mb-3">{t("philosophy.feature1.title")}</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature1.title")}</h3>
               <p className="font-lora text-base text-muted-foreground">
                 {t("philosophy.feature1.desc")}
               </p>
@@ -179,7 +179,7 @@ export const Philosophy = () => {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="font-caveat text-2xl font-bold text-foreground mb-3">{t("philosophy.feature2.title")}</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature2.title")}</h3>
               <p className="font-lora text-base text-muted-foreground">
                 {t("philosophy.feature2.desc")}
               </p>
@@ -189,7 +189,7 @@ export const Philosophy = () => {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
                 <Leaf className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="font-caveat text-2xl font-bold text-foreground mb-3">{t("philosophy.feature3.title")}</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature3.title")}</h3>
               <p className="font-lora text-base text-muted-foreground">
                 {t("philosophy.feature3.desc")}
               </p>

@@ -158,7 +158,7 @@ const AboutUs = () => {
             </div>
             <div className="order-1 md:order-2 space-y-6">
               <span className="text-xs font-work uppercase tracking-widest text-accent">{t.philosophyLabel}</span>
-              <h2 className="font-caveat text-4xl md:text-5xl text-primary">{t.philosophyTitle}</h2>
+              <h2 className="text-4xl md:text-5xl text-primary">{t.philosophyTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara1}</p>
               <blockquote className="font-lora text-xl md:text-2xl italic text-primary/90 border-l-4 border-accent pl-6 py-2">
                 "{t.philosophyQuote}"
@@ -172,7 +172,7 @@ const AboutUs = () => {
       {/* PILLARS / OFFERING - Alternating sections with photos */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="font-caveat text-4xl md:text-5xl text-primary text-center mb-16">{t.pillarsTitle}</h2>
+          <h2 className="text-4xl md:text-5xl text-primary text-center mb-16">{t.pillarsTitle}</h2>
           
           <div className="space-y-16 md:space-y-24">
             {pillarsData.map((pillar, index) => (
@@ -211,7 +211,7 @@ const AboutUs = () => {
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="space-y-6">
               <span className="text-xs font-work uppercase tracking-widest text-accent">{t.spaceLabel}</span>
-              <h2 className="font-caveat text-4xl md:text-5xl text-primary">{t.spaceTitle}</h2>
+              <h2 className="text-4xl md:text-5xl text-primary">{t.spaceTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara2}</p>
               <a 
@@ -251,7 +251,7 @@ const AboutUs = () => {
             {/* Text */}
             <div className="order-1 md:order-2 space-y-6">
               <span className="text-xs font-work uppercase tracking-widest text-accent">{t.inspirationLabel}</span>
-              <h2 className="font-caveat text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
+              <h2 className="text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara2}</p>
               <a 
@@ -284,7 +284,7 @@ const AboutUs = () => {
 
           {/* Poem Carousel */}
           <div className="max-w-2xl mx-auto">
-            <h3 className="font-caveat text-2xl md:text-3xl text-accent text-center mb-8">{t.poemTitle}</h3>
+            <h3 className="text-2xl md:text-3xl text-accent text-center mb-8">{t.poemTitle}</h3>
             <div className="relative">
               <div className="bg-background/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg min-h-[160px] flex items-center justify-center">
                 <p className="font-lora text-lg md:text-xl text-foreground/90 text-center whitespace-pre-line leading-relaxed italic">

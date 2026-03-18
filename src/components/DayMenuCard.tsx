@@ -32,7 +32,7 @@ export const DayMenuCard = ({ day, isToday }: DayMenuCardProps) => {
       {/* Day Header */}
       <div className="text-center mb-6 pb-4 border-b border-border">
         <div className="flex items-center justify-center gap-2">
-          <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary">
+          <h3 className="text-2xl md:text-3xl font-bold text-primary">
             {day.day[language]}
           </h3>
           {isToday && (

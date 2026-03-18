@@ -121,7 +121,7 @@ const StorySlide = ({ slide, language, index }: StorySlideProps) => {
 
           {/* Title */}
           <h2 
-            className={`text-4xl md:text-5xl lg:text-6xl font-caveat font-bold text-background drop-shadow-2xl transition-all duration-1000 ${
+            className={`text-4xl md:text-5xl lg:text-6xl font-bold text-background drop-shadow-2xl transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             style={{ transitionDelay: '300ms' }}

@@ -31,7 +31,7 @@ export const ShowcaseSections = () => {
               <span className="text-xs font-work uppercase tracking-widest text-accent">
                 {language === "de" ? "Täglich Frisch" : "Fresh Daily"}
               </span>
-              <h2 className="font-caveat text-4xl md:text-5xl text-primary">
+              <h2 className="text-4xl md:text-5xl text-primary">
                 {language === "de" ? "Saisonale Küche" : "Seasonal Kitchen"}
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
@@ -64,7 +64,7 @@ export const ShowcaseSections = () => {
               <span className="text-xs font-work uppercase tracking-widest text-accent">
                 {language === "de" ? "Unser Garten" : "Our Garden"}
               </span>
-              <h2 className="font-caveat text-4xl md:text-5xl text-primary">
+              <h2 className="text-4xl md:text-5xl text-primary">
                 {language === "de" ? "Ein verstecktes Refugium" : "A Hidden Refuge"}
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">

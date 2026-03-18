@@ -15,7 +15,7 @@ export const DailyMenuCard = ({ title, items }: DailyMenuCardProps) => {
         className="absolute top-0 right-0 w-20 h-20 text-accent/20" 
       />
       
-      <h3 className="text-2xl font-caveat font-bold text-primary mb-4">
+      <h3 className="text-2xl font-bold text-primary mb-4">
         {title}
       </h3>
       

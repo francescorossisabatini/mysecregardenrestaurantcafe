@@ -39,7 +39,7 @@ export const AboutSection = () => {
       <div className="container mx-auto max-w-6xl px-4 md:px-8">
         {/* Title */}
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
+          <h2 className="text-5xl md:text-7xl font-bold text-primary">
             {language === "de" ? "Über uns" : "About us"}
           </h2>
         </div>
@@ -49,7 +49,7 @@ export const AboutSection = () => {
           {/* Content */}
           <div className="space-y-10">
             <div>
-              <h3 className="text-3xl md:text-4xl font-caveat font-bold text-primary mb-6">
+              <h3 className="text-3xl md:text-4xl font-bold text-primary mb-6">
                 {language === "de" ? "Unser Restaurant" : "Our Restaurant"}
               </h3>
               <p className="font-lora text-xl leading-relaxed text-foreground/90">

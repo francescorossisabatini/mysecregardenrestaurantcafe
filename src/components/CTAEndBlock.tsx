@@ -26,7 +26,7 @@ export const CTAEndBlock = ({
     <section className={`py-16 md:py-20 bg-primary/5 ${className}`}>
       <div className="container mx-auto px-4">
         <div className="max-w-md mx-auto text-center">
-          <h2 className="font-caveat text-3xl md:text-4xl text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl text-primary mb-4">
             {title || defaultTitle}
           </h2>
           <p className="text-sm text-muted-foreground font-work mb-8">
