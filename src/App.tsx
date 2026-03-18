@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,7 +35,25 @@ const PageLoader = () => (
 
 function AppContent() {
   useHtmlLang();
-  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPct = Math.round(
+        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+      );
+      if (scrollPct >= 50 && !window._tracked50) {
+        window._tracked50 = true;
+        window.gtag?.('event', 'scroll_depth', { event_category: 'engagement', event_label: '50_percent' });
+      }
+      if (scrollPct >= 90 && !window._tracked90) {
+        window._tracked90 = true;
+        window.gtag?.('event', 'scroll_depth', { event_category: 'engagement', event_label: '90_percent' });
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <BrowserRouter>
       <ScrollToTop />

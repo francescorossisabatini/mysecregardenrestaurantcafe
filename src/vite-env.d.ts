@@ -4,4 +4,7 @@
 interface Window {
   requestIdleCallback?: (callback: () => void) => number;
   cancelIdleCallback?: (id: number) => void;
+  gtag?: (...args: unknown[]) => void;
+  _tracked50?: boolean;
+  _tracked90?: boolean;
 }

@@ -130,7 +130,7 @@ export const Navigation = () => {
             <Button
               size="sm"
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
-              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
+              onClick={() => { window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'desktop_nav' }); window.location.href = `tel:${SITE.phoneTel}`; }}
             >
               <Phone className="w-4 h-4 mr-2" />
               {language === "de" ? "Anrufen" : "Call"}
