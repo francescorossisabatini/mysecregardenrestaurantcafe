@@ -144,7 +144,7 @@ export const Hero = () => {
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-amber-500/25 text-amber-100 border border-amber-400/40 shadow-sm">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-warning/25 text-amber-100 border border-amber-400/40 shadow-sm">
                 <span className="w-2 h-2 rounded-full mr-2 bg-amber-400" />
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>

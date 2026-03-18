@@ -38,7 +38,7 @@ export const Reviews = () => {
           <h2 className="text-3xl md:text-4xl font-cormorant font-semibold text-foreground mb-4">
             {language === "de" ? "Stimmen aus dem Garten" : "Voices from the Garden"}
           </h2>
-          <div className="flex justify-center gap-1 text-yellow-500">
+          <div className="flex justify-center gap-1 text-brand-star">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-5 h-5 fill-current" />
             ))}
@@ -49,7 +49,7 @@ export const Reviews = () => {
         <div className="flex flex-col md:flex-row md:gap-8 gap-12">
           {reviews.map((review, index) => (
             <div key={index} className="flex-1 text-center md:text-left">
-              <div className="flex gap-0.5 mb-4 justify-center md:justify-start text-yellow-500">
+              <div className="flex gap-0.5 mb-4 justify-center md:justify-start text-brand-star">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />
                 ))}
