@@ -199,7 +199,7 @@ export const Hero = () => {
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
-              <Link to="/#menu">
+              <Link to="/#menu" onClick={() => window.gtag?.('event', 'click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' })}>
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
               </Link>
@@ -212,7 +212,7 @@ export const Hero = () => {
               className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
-              <Link to="/wochenkarte">
+              <Link to="/wochenkarte" onClick={() => window.gtag?.('event', 'click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' })}>
                 <CalendarDays className="w-4 h-4 mr-2" />
                 {language === "de" ? "Wochenmenü" : "Weekly Specials"}
               </Link>

@@ -78,10 +78,11 @@ export const ShowcaseSections = () => {
                   : "Green plants, wooden tables, and soft music. A place to breathe."}
               </p>
               <Button variant="outline" className="font-work group" asChild>
-                <a 
-                  href={SITE.mapsUrl} 
-                  target="_blank" 
+                <a
+                  href={SITE.mapsUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => window.gtag?.('event', 'click_directions', { event_category: 'engagement', event_label: 'visit_section' })}
                   aria-label={language === "de" ? "Route auf Google Maps (öffnet in neuem Tab)" : "Directions on Google Maps (opens in new tab)"}
                   className="inline-flex items-center gap-2 transition-all duration-200 ease-in-out"
                 >

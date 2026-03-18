@@ -85,7 +85,8 @@ export const MobileStickyBar = () => {
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
-          className="flex-1 flex items-center justify-center gap-2 
+          onClick={() => window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' })}
+          className="flex-1 flex items-center justify-center gap-2
             bg-primary text-primary-foreground
             rounded-full py-3 px-4
             text-base font-medium font-work
@@ -104,7 +105,8 @@ export const MobileStickyBar = () => {
           href={SITE.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 
+          onClick={() => window.gtag?.('event', 'click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' })}
+          className="flex-1 flex items-center justify-center gap-2
             bg-secondary text-secondary-foreground
             rounded-full py-3 px-4
             text-base font-medium font-work

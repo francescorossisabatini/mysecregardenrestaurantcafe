@@ -91,7 +91,7 @@ export const Contact = () => {
               className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-12 py-7 font-lora"
               asChild
             >
-              <a href={`tel:${SITE.phoneTel}`}>{t("contact.call")}</a>
+              <a href={`tel:${SITE.phoneTel}`} onClick={() => window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'visit_section' })}>{t("contact.call")}</a>
             </Button>
           </div>
         </div>

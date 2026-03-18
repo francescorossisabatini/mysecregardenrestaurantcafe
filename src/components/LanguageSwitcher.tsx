@@ -13,7 +13,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
         <p className="text-sm text-foreground/50 mb-3 px-1">{language === "de" ? "Sprache" : "Language"}</p>
         <div className="flex gap-4" role="group" aria-label="Language selection">
           <button
-            onClick={() => setLanguage("de")}
+            onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
             className={`text-lg transition-colors duration-200 ${
               language === "de"
                 ? "text-foreground font-medium"
@@ -26,7 +26,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
           </button>
           <span className="text-foreground/30">/</span>
           <button
-            onClick={() => setLanguage("en")}
+            onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
             className={`text-lg transition-colors duration-200 ${
               language === "en"
                 ? "text-foreground font-medium"
@@ -46,7 +46,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
   return (
     <div className="flex items-center gap-1 shrink-0" role="group" aria-label="Language selection">
       <button
-        onClick={() => setLanguage("de")}
+        onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
         className={`text-sm transition-colors duration-200 px-1 whitespace-nowrap ${
           language === "de"
             ? "text-foreground font-medium"
@@ -59,7 +59,7 @@ export const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) 
       </button>
       <span className="text-foreground/30 text-sm">/</span>
       <button
-        onClick={() => setLanguage("en")}
+        onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
         className={`text-sm transition-colors duration-200 px-1 whitespace-nowrap ${
           language === "en"
             ? "text-foreground font-medium"
