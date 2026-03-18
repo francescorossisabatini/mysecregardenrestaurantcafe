@@ -76,7 +76,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
             <p className="text-xs sm:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
               {language === "de" ? "Diese Woche" : "This Week"}
             </p>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-caveat font-bold text-primary mb-2">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-2">
               {language === "de" ? "Wochenkarte" : "Weekly Menu"}
             </h2>
             <p className="text-base sm:text-lg font-lora text-foreground/80">
@@ -86,7 +86,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
           {/* TAGESGERICHTE - Daily dishes */}
           <div className="mb-8 md:mb-10">
-            <h3 className="text-2xl sm:text-3xl font-caveat font-bold text-primary text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary text-center mb-6">
               {language === "de" ? "Tagesgerichte" : "Daily Specials"}
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -153,7 +153,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
           {/* SALATE - Salads */}
           <div className="mb-8 md:mb-10">
-            <h3 className="text-2xl sm:text-3xl font-caveat font-bold text-primary text-center mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary text-center mb-4">
               {language === "de" ? "Frische Salate" : "Fresh Salads"}
             </h3>
             <div className="grid sm:grid-cols-2 gap-3 md:gap-4 max-w-4xl mx-auto">
@@ -175,7 +175,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
           {/* DAL / EINTÖPFE */}
           <div className="mb-8 md:mb-10">
-            <h3 className="text-2xl sm:text-3xl font-caveat font-bold text-primary text-center mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary text-center mb-4">
               {language === "de" ? "Dal / Eintöpfe" : "Dal / Stews"}
             </h3>
             <div className="flex justify-between items-start gap-3 bg-background/20 p-4 rounded-lg max-w-2xl mx-auto">
@@ -191,7 +191,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
           {/* GETRÄNKE - Drinks */}
           <div className="mb-6">
-            <h3 className="text-2xl sm:text-3xl font-caveat font-bold text-primary text-center mb-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary text-center mb-4">
               {language === "de" ? "Kalte Getränke" : "Cold Drinks"}
             </h3>
             <div className="grid sm:grid-cols-2 gap-2 md:gap-3 max-w-3xl mx-auto">

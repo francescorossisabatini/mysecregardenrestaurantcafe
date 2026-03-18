@@ -31,7 +31,7 @@ export const FullMenu = () => {
           {/* Wochenkarte clickable card section */}
           <div className="max-w-4xl mx-auto mb-16 md:mb-24">
             <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-caveat font-bold text-primary mb-3">
+              <h2 className="text-4xl md:text-5xl font-bold text-primary mb-3">
                 {language === "de" ? "Speisekarte" : "Full Menu"}
               </h2>
               <p className="text-sm md:text-base text-muted-foreground font-lora">
@@ -64,7 +64,7 @@ export const FullMenu = () => {
               </p>
               
               {/* Main Title - Simple */}
-              <h3 className="text-5xl md:text-7xl font-caveat text-primary">
+              <h3 className="text-5xl md:text-7xl text-primary">
                 {language === "de" ? "Wochenkarte" : "Weekly Menu"}
               </h3>
               

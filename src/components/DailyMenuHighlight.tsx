@@ -63,7 +63,7 @@ export const DailyMenuHighlight = () => {
       <div className="container mx-auto max-w-6xl px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary mb-4">
+          <h2 className="text-5xl md:text-7xl font-bold text-primary mb-4">
             {language === "de" ? "Wochenmenü" : "Weekly Menu"}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground">
@@ -111,7 +111,7 @@ export const DailyMenuHighlight = () => {
                         {/* Day Header */}
                         <div className="text-center mb-6 pb-4 border-b border-border">
                           <div className="flex items-center justify-center gap-2">
-                            <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary">
+                            <h3 className="text-2xl md:text-3xl font-bold text-primary">
                               {day.day[language]}
                             </h3>
                             {isToday && (

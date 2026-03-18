@@ -13,7 +13,7 @@ export const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
+            <h2 className="text-5xl md:text-7xl font-bold text-primary">
               {t("contact.title")}
             </h2>
           </div>

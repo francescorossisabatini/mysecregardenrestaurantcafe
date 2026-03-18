@@ -13,6 +13,12 @@ export default {
       },
     },
     extend: {
+      fontSize: {
+        'ui':      ['0.875rem', { lineHeight: '1.5' }],
+        'body':    ['1rem',     { lineHeight: '1.7' }],
+        'section': ['1.313rem', { lineHeight: '1.3' }],
+        'hero':    ['3rem',     { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+      },
       fontFamily: {
         'caveat': ['Caveat', 'Brush Script MT', 'cursive'],
         'lora': ['Lora', 'Georgia', 'Times New Roman', 'serif'],
@@ -85,9 +91,11 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        DEFAULT: "var(--radius)",
+        lg:      "var(--radius)",
+        md:      "var(--radius)",
+        sm:      "var(--radius)",
+        full:    "9999px",
       },
       keyframes: {
         "accordion-down": {

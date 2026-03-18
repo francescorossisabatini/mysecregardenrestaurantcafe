@@ -21,7 +21,7 @@ export const ProductsNarrative = () => {
       <div className="container mx-auto max-w-6xl px-4 md:px-8">
         {/* Title */}
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-7xl font-caveat font-bold text-primary">
+          <h2 className="text-5xl md:text-7xl font-bold text-primary">
             {language === "de" ? "Unsere Produkte" : "Our Products"}
           </h2>
         </div>

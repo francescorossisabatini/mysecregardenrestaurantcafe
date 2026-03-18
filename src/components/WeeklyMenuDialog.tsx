@@ -36,7 +36,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-cream">
         <DialogHeader className="pb-4 border-b-2 border-primary/20">
-          <DialogTitle className="text-3xl md:text-4xl font-caveat font-bold text-primary text-center">
+          <DialogTitle className="text-3xl md:text-4xl font-bold text-primary text-center">
             {language === 'de' ? 'Wochenkarte' : 'Weekly Menu'}
           </DialogTitle>
           <p className="text-center text-sm text-muted-foreground font-lora pt-1">
@@ -63,7 +63,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
             >
               {/* Day header - Gestalt: Continuity */}
               <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-primary/30">
-                <h3 className="text-2xl md:text-3xl font-caveat font-bold text-primary">
+                <h3 className="text-2xl md:text-3xl font-bold text-primary">
                   {dayMenu.day[language]}
                 </h3>
                 <Badge variant="outline" className="text-xs uppercase tracking-wider border-primary/40">

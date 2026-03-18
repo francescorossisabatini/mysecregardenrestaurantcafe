@@ -165,7 +165,7 @@ Background: Warm cream #F5F1E3
   }
 
   body {
-    @apply text-foreground font-lora;
+    @apply text-foreground font-lora text-body;
     background: hsl(var(--background));
   }
   
@@ -173,9 +173,8 @@ Background: Warm cream #F5F1E3
     background: hsl(var(--background));
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-caveat;
-  }
+  h1 { @apply font-caveat; }
+  h2, h3, h4, h5, h6 { @apply font-cormorant; }
   
   /* Elegant serif for body text */
   .font-serif {
