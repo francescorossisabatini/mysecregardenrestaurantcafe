@@ -11,6 +11,7 @@ import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Separator } from "@/components/ui/separator";
 import { translatePeriod } from "@/lib/translatePeriod";
+import { MENU_PRICES } from "@/constants/menuPrices";
 
 interface WeeklyMenuDialogProps {
   open: boolean;
@@ -18,13 +19,13 @@ interface WeeklyMenuDialogProps {
 }
 
 const introText = {
-  de: "Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für 15,2€. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.",
-  en: "Every day you have the choice between two fresh, seasonal daily dishes for €15.2. We always prepare the 'green' vegan & gluten-free - the 'blue' may also contain dairy products, gluten-containing grains or eggs."
+  de: `Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für ${MENU_PRICES.DISH}. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.`,
+  en: `Every day you have the choice between two fresh, seasonal daily dishes for ${MENU_PRICES.DISH}. We always prepare the 'green' vegan & gluten-free - the 'blue' may also contain dairy products, gluten-containing grains or eggs.`,
 };
 
 const soupInfo = {
-  de: "Unsere schmackhaften Tagessuppen sind immer vegan & glutenfrei und gibt's klein um 4,5€ / groß um 6,5€. Ein frisches Bio-Weckerl dazu? – 1,9€",
-  en: "Our delicious daily soups are always vegan & gluten-free and are available small for €4.5 / large for €6.5. A fresh organic roll with it? - €1.9"
+  de: `Unsere schmackhaften Tagessuppen sind immer vegan & glutenfrei und gibt's klein um ${MENU_PRICES.SOUP_SMALL} / groß um ${MENU_PRICES.SOUP_LARGE}. Ein frisches Bio-Weckerl dazu? – ${MENU_PRICES.ROLL_EXTRA}`,
+  en: `Our delicious daily soups are always vegan & gluten-free and are available small for ${MENU_PRICES.SOUP_SMALL} / large for ${MENU_PRICES.SOUP_LARGE}. A fresh organic roll with it? - ${MENU_PRICES.ROLL_EXTRA}`,
 };
 
 export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) => {
@@ -94,7 +95,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                       <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                         {language === 'de' ? 'Grün' : 'Green'}
                       </Badge>
-                      <span className="text-xs text-muted-foreground">15,2€</span>
+                      <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
                     </div>
                     <p className="text-sm leading-relaxed text-foreground font-medium">{dayMenu.green[language]}</p>
                   </div>
@@ -109,7 +110,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                         <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                           {language === 'de' ? 'Blau' : 'Blue'}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">15,2€</span>
+                        <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
                       </div>
                       <p className="text-sm leading-relaxed text-foreground font-medium">
                         {dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en}
@@ -128,8 +129,8 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
             <span className="font-bold text-primary">{language === 'de' ? 'Preise:' : 'Prices:'}</span>{' '}
             <span className="text-foreground/80">
               {language === 'de' 
-                ? 'Tagesgerichte 15,2€ • Suppe klein 4,5€ / groß 6,5€ • Bio-Weckerl +1,9€'
-                : 'Daily dishes €15.2 • Soup small €4.5 / large €6.5 • Organic roll +€1.9'}
+                ? `Tagesgerichte ${MENU_PRICES.DISH} • Suppe klein ${MENU_PRICES.SOUP_SMALL} / groß ${MENU_PRICES.SOUP_LARGE} • Bio-Weckerl +${MENU_PRICES.ROLL_EXTRA}`
+                : `Daily dishes ${MENU_PRICES.DISH} • Soup small ${MENU_PRICES.SOUP_SMALL} / large ${MENU_PRICES.SOUP_LARGE} • Organic roll +${MENU_PRICES.ROLL_EXTRA}`}
             </span>
           </p>
         </div>

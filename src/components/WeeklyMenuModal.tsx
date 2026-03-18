@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { BotanicalDecoration } from "./BotanicalDecoration";
+import { fixedDishes } from "@/data/fixedMenuData";
 
 interface MenuDay {
   day: { de: string; en: string };
@@ -28,41 +29,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
   if (!isOpen) return null;
 
-  // Fixed menu items data
-  const fixedDishes = {
-    salads: {
-      de: [
-        { name: "Bunter Salat", price: "5,90 / 9,90 €", size: "klein / groß" },
-        { name: "Secret Garden Salat mit Avocado", price: "16,90 €" },
-        { name: "Secret Garden Salat mit Ziegenkäse", price: "16,90 €" },
-        { name: "Secret Garden Salat mit Tofu", price: "16,90 €" }
-      ],
-      en: [
-        { name: "Colorful Salad", price: "5,90 / 9,90 €", size: "small / large" },
-        { name: "Secret Garden Salad with Avocado", price: "16,90 €" },
-        { name: "Secret Garden Salad with Goat Cheese", price: "16,90 €" },
-        { name: "Secret Garden Salad with Tofu", price: "16,90 €" }
-      ]
-    },
-    dal: {
-      de: { name: "Indisches Dal", price: "9,90 €", description: "mit Bio-Naturreis" },
-      en: { name: "Indian Dal", price: "9,90 €", description: "with organic brown rice" }
-    },
-    drinks: {
-      de: [
-        { name: "Ingwer-Limonade (hausgemacht)", price: "3,00 / 4,70 €" },
-        { name: "Hausgemachter Eistee", price: "3,50 €" },
-        { name: "Apfelsaft naturtrüb", price: "3,40 / 5,30 €" },
-        { name: "Kokoswasser", price: "3,50 / 5,50 €" }
-      ],
-      en: [
-        { name: "Ginger Lemonade (homemade)", price: "3,00 / 4,70 €" },
-        { name: "Homemade Iced Tea", price: "3,50 €" },
-        { name: "Cloudy Apple Juice", price: "3,40 / 5,30 €" },
-        { name: "Coconut Water", price: "3,50 / 5,50 €" }
-      ]
-    }
-  };
+  const dal = fixedDishes.warm[language][0];
 
   return (
     <div 
@@ -213,10 +180,10 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
             </h3>
             <div className="flex justify-between items-start gap-3 bg-background/20 p-4 rounded-lg max-w-2xl mx-auto">
               <div className="flex-1">
-                <p className="text-sm sm:text-base font-medium">{fixedDishes.dal[language].name}</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">{fixedDishes.dal[language].description}</p>
+                <p className="text-sm sm:text-base font-medium">{dal.name}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{dal.description}</p>
               </div>
-              <span className="text-xs sm:text-sm font-light whitespace-nowrap">{fixedDishes.dal[language].price}</span>
+              <span className="text-xs sm:text-sm font-light whitespace-nowrap">{dal.price}</span>
             </div>
           </div>
 
