@@ -11,6 +11,11 @@ Background: Warm cream #F5F1E3
 
 @layer base {
   :root {
+    /* Dietary state colors */
+    --color-vegan: #166534;
+    --color-gluten-free: #92400e;
+    --color-bio: #065f46;
+
     /* Light mode - botanical brand identity */
     --background: 40 33% 96%; /* #FAF7F3 warm ivory */
     --foreground: 0 0% 10%; /* Slightly darker for better contrast - WCAG AA */

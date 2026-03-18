@@ -41,17 +41,17 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   return (
     <div className="flex items-center gap-2 mt-2 flex-wrap">
       {labels.isVegan && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#166534' }}>
+        <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-vegan)' }}>
           vegan
         </span>
       )}
       {labels.isGlutenFree && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#92400e' }}>
+        <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-gluten-free)' }}>
           {language === "de" ? "glutenfrei" : "gluten-free"}
         </span>
       )}
       {labels.isBio && (
-        <span className="text-xs font-work font-semibold" style={{ color: '#065f46' }}>
+        <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-bio)' }}>
           bio
         </span>
       )}
@@ -477,17 +477,17 @@ export const MenuSection = () => {
                               {(item.isVegan || item.isGlutenFree || item.isBio) && !item.isUnavailable && (
                                 <div className="flex items-center gap-2 mt-2">
                                   {item.isVegan && (
-                                    <span className="text-xs font-work font-semibold" style={{ color: '#166534' }}>
+                                    <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-vegan)' }}>
                                       vegan
                                     </span>
                                   )}
                                   {item.isGlutenFree && (
-                                    <span className="text-xs font-work font-semibold" style={{ color: '#92400e' }}>
+                                    <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-gluten-free)' }}>
                                       {language === "de" ? "glutenfrei" : "gluten-free"}
                                     </span>
                                   )}
                                   {item.isBio && (
-                                    <span className="text-xs font-work font-semibold" style={{ color: '#065f46' }}>
+                                    <span className="text-xs font-work font-semibold" style={{ color: 'var(--color-bio)' }}>
                                       bio
                                     </span>
                                   )}
