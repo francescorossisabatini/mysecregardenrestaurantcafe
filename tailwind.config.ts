@@ -37,6 +37,11 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        warning: "hsl(var(--semantic-warning))",
+        success: "hsl(var(--semantic-success))",
+        brand: {
+          star: '#F59E0B',
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

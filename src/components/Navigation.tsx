@@ -11,6 +11,7 @@ import { SITE } from "@/config/site";
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
   const [showNavbar, setShowNavbar] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -26,6 +27,12 @@ export const Navigation = () => {
       rafRef.current = null;
     });
   }, [showNavbar]);
+
+  useEffect(() => {
+    const handleScrollShadow = () => setScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", handleScrollShadow, { passive: true });
+    return () => window.removeEventListener("scroll", handleScrollShadow);
+  }, []);
 
   useEffect(() => {
     if (isHomePage) {
@@ -59,7 +66,7 @@ export const Navigation = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-3 md:py-4 transition-all duration-500 ease-in-out ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        }`}
+        } ${scrolled ? "shadow-sm" : ""}`}
       >
         <div className="container mx-auto px-4 flex items-center justify-between">
           {/* Mobile Menu Button - Left */}
