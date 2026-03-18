@@ -42,6 +42,11 @@ export default {
         brand: {
           star: '#F59E0B',
         },
+        state: {
+          vegan: 'var(--color-vegan)',
+          glutenFree: 'var(--color-gluten-free)',
+          bio: 'var(--color-bio)',
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
