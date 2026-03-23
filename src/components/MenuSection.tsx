@@ -419,6 +419,7 @@ export const MenuSection = () => {
               </CollapsibleContent>
             </Collapsible>
           </div>
+          </>
           ) : (
             <WeeklyMenuUnavailable />
           )}
