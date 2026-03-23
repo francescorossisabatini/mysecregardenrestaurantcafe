@@ -14,7 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
-
+import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
+import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
