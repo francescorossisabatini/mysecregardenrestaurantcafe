@@ -138,7 +138,8 @@ export const MenuSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           
-          {/* BLOCK 1: Daily Dishes */}
+          {/* BLOCK 1: Daily Dishes — hidden when weekly menu is disabled */}
+          {SHOW_WEEKLY_MENU ? (
           <div className="mb-16">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
