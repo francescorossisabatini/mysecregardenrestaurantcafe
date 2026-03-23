@@ -105,7 +105,9 @@ const WeeklySpecials = () => {
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto space-y-6">
-            {isLoading ? (
+            {!SHOW_WEEKLY_MENU ? (
+              <WeeklyMenuUnavailable />
+            ) : isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <Skeleton key={i} className="h-32 w-full rounded-xl" />
@@ -133,11 +135,11 @@ const WeeklySpecials = () => {
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-3">
-                      <h3 className="font-cormorant text-xl font-semibold text-foreground">
+                      <h2 className="font-cormorant text-xl font-semibold text-foreground">
                         {day.day[language]}
-                      </h3>
+                      </h2>
                       {isToday && (
-                        <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
+                        <Badge variant="default" className="text-xs">
                           {language === "de" ? "Heute" : "Today"}
                         </Badge>
                       )}
@@ -145,20 +147,22 @@ const WeeklySpecials = () => {
 
                     {isDayClosed ? (
                       <div className="text-center py-4">
-                        <p className="font-cormorant text-lg text-foreground/80 italic">
+                        <p className="font-cormorant text-base text-foreground/85 italic">
                           {dayHoliday
                             ? dayHoliday.name[language]
                             : isDaySunday
-                              ? (language === "de" ? "Geschlossen" : "Closed")
-                              : (language === "de" ? "Geschlossen" : "Closed")}
+                              ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
+                              : (language === "de" ? "Heute geschlossen" : "Closed")}
+                        </p>
+                        <p className="text-muted-foreground text-xs font-work mt-1">
+                          {language === "de" ? "Geschlossen" : "Closed"}
                         </p>
                       </div>
                     ) : (
                       <div className="space-y-3">
-                        {/* Soup */}
                         {isValidMenuText(day.soup[language]) && (
                           <div>
-                            <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
+                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                               {language === "de" ? "Suppe" : "Soup"}
                             </span>
                             <p className="text-foreground font-work text-sm mt-0.5">
@@ -167,12 +171,10 @@ const WeeklySpecials = () => {
                             <DietaryBadges text={day.soup[language]} language={language} />
                           </div>
                         )}
-
-                        {/* Green Dish */}
                         {isValidMenuText(day.green[language]) && (
                           <div>
-                            <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                              {language === "de" ? "Grün" : "Green"}
                             </span>
                             <p className="text-foreground font-work text-sm mt-0.5">
                               {day.green[language]}
@@ -180,12 +182,10 @@ const WeeklySpecials = () => {
                             <DietaryBadges text={day.green[language]} language={language} />
                           </div>
                         )}
-
-                        {/* Blue Dish */}
                         {isValidMenuText(day.blue[language]) && (
                           <div>
-                            <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                              {language === "de" ? "Blau" : "Blue"}
                             </span>
                             <p className="text-foreground font-work text-sm mt-0.5">
                               {day.blue[language]}
