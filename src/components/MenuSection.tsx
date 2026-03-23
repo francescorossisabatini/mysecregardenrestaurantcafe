@@ -138,7 +138,9 @@ export const MenuSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           
-          {/* BLOCK 1: Daily Dishes */}
+          {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
+          {SHOW_WEEKLY_MENU ? (
+          <>
           <div className="mb-16">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
@@ -308,74 +310,73 @@ export const MenuSection = () => {
             </p>
           </div>
           
-          {/* Weekly Menu: toggle via SHOW_WEEKLY_MENU flag in src/config/menuFlags.ts */}
-          {SHOW_WEEKLY_MENU ? (
-            <div className="my-2">
-              <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
-                <CollapsibleTrigger className="w-full group">
-                  <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
-                    <span className="font-cormorant text-base md:text-lg italic">
-                      {dateInfo.isSunday
-                        ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
-                        : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
-                    </span>
-                    <ChevronDown 
-                      className={`w-4 h-4 transition-transform duration-200 ${weeklyOpen ? "rotate-180" : ""}`} 
-                    />
-                  </div>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                  <div className="pt-4 pb-2 space-y-6">
-                    {isLoading ? (
-                      <div className="space-y-3">
-                        {[1, 2, 3].map((i) => (
-                          <Skeleton key={i} className="h-16 w-full rounded-lg" />
-                        ))}
-                      </div>
-                    ) : (
-                      <>
-                        <p className="text-xs text-muted-foreground text-center font-work mb-4">
-                          {translatePeriod(menu.period, language)}
-                        </p>
-                        {menu.days.map((day, index) => {
-                          const dayDate = getDateForMenuDay(menu.period, index);
-                          const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
-                          const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
+          {/* Weekly Menu Accordion */}
+          <div className="my-2">
+            <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
+              <CollapsibleTrigger className="w-full group">
+                <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="font-cormorant text-base md:text-lg italic">
+                    {dateInfo.isSunday
+                      ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
+                      : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
+                  </span>
+                  <ChevronDown 
+                    className={`w-4 h-4 transition-transform duration-200 ${weeklyOpen ? "rotate-180" : ""}`} 
+                  />
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                <div className="pt-4 pb-2 space-y-6">
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      {[1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-16 w-full rounded-lg" />
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-xs text-muted-foreground text-center font-work mb-4">
+                        {translatePeriod(menu.period, language)}
+                      </p>
+                      {menu.days.map((day, index) => {
+                        const dayDate = getDateForMenuDay(menu.period, index);
+                        const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
+                        const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
 
-                          const hasDayMenuData =
-                            isValidMenuText(day.soup?.de) || isValidMenuText(day.soup?.en) ||
-                            isValidMenuText(day.green?.de) || isValidMenuText(day.green?.en) ||
-                            isValidMenuText(day.blue?.de) || isValidMenuText(day.blue?.en);
+                        const hasDayMenuData =
+                          isValidMenuText(day.soup?.de) || isValidMenuText(day.soup?.en) ||
+                          isValidMenuText(day.green?.de) || isValidMenuText(day.green?.en) ||
+                          isValidMenuText(day.blue?.de) || isValidMenuText(day.blue?.en);
 
-                          const isDayClosed = !!dayHoliday || isDaySunday || !hasDayMenuData;
+                        const isDayClosed = !!dayHoliday || isDaySunday || !hasDayMenuData;
 
-                          
-                          return (
-                            <div key={index} className="border-b border-border/30 pb-4 last:border-0">
-                              <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
-                                {day.day[language]}
-                              </h4>
-                              
-                              {isDayClosed ? (
-                                <div className="text-center py-3">
-                                  <p className="font-cormorant text-base text-foreground/85 italic">
-                                    {dayHoliday
-                                      ? dayHoliday.name[language]
-                                      : isDaySunday
-                                        ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
-                                        : (language === "de" ? "Heute geschlossen" : "Closed")}
-                                  </p>
-                                  <p className="text-muted-foreground text-xs font-work mt-1">
-                                    {language === "de" ? "Geschlossen" : "Closed"}
-                                  </p>
-                                </div>
-                              ) : (
-                                <div className="space-y-2 text-sm font-work">
-                                  {isValidMenuText(day.soup[language]) && (
-                                    <div className="flex justify-between items-start gap-2">
-                                      <div className="flex-1">
-                                        <span className="text-muted-foreground text-xs">
-                                          {language === "de" ? "Suppe" : "Soup"}:
+                        
+                        return (
+                          <div key={index} className="border-b border-border/30 pb-4 last:border-0">
+                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
+                              {day.day[language]}
+                            </h4>
+                            
+                            {isDayClosed ? (
+                              <div className="text-center py-3">
+                                <p className="font-cormorant text-base text-foreground/85 italic">
+                                  {dayHoliday
+                                    ? dayHoliday.name[language]
+                                    : isDaySunday
+                                      ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
+                                      : (language === "de" ? "Heute geschlossen" : "Closed")}
+                                </p>
+                                <p className="text-muted-foreground text-xs font-work mt-1">
+                                  {language === "de" ? "Geschlossen" : "Closed"}
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="space-y-2 text-sm font-work">
+                                {isValidMenuText(day.soup[language]) && (
+                                  <div className="flex justify-between items-start gap-2">
+                                    <div className="flex-1">
+                                      <span className="text-muted-foreground text-xs">
+                                        {language === "de" ? "Suppe" : "Soup"}:
                                       </span>
                                       <p className="text-foreground/90">{day.soup[language]}</p>
                                       <DietaryBadges text={day.soup[language]} language={language} />
@@ -418,6 +419,7 @@ export const MenuSection = () => {
               </CollapsibleContent>
             </Collapsible>
           </div>
+          </>
           ) : (
             <WeeklyMenuUnavailable />
           )}
