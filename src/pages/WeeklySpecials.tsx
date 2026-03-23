@@ -1,3 +1,5 @@
+import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
+import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { SEOHead } from "@/components/SEOHead";
