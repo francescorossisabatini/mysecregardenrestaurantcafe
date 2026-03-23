@@ -418,6 +418,9 @@ export const MenuSection = () => {
               </CollapsibleContent>
             </Collapsible>
           </div>
+          ) : (
+            <WeeklyMenuUnavailable />
+          )}
           
           {/* BLOCK 2: Visual Transition - WCAG compliant text */}
           <div className="text-center py-10 md:py-14">
