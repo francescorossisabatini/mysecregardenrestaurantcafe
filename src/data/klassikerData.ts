@@ -203,6 +203,8 @@ export const klassikerMenu = {
           },
           price: "3,00 / 4,70",
           isVegan: true,
+          descriptionShort: "frisch, Ingwer, spritzig",
+          ingredientsMain: ["Ingwer", "Zitrone"],
         },
         {
           id: "eistee",
@@ -214,6 +216,8 @@ export const klassikerMenu = {
           price: "4,2",
           isVegan: true,
           isUnavailable: true,
+          descriptionShort: "frisch, Tee, hausgemacht",
+          ingredientsMain: ["Tee", "natürliche Zutaten"],
         },
         {
           id: "mango-lassi",
@@ -223,6 +227,9 @@ export const klassikerMenu = {
             en: "Creamy yogurt drink with fresh mango"
           },
           price: "4,9",
+          descriptionShort: "cremig, Mango",
+          ingredientsMain: ["Joghurt", "Mango"],
+          allergens: [7],
         },
       ],
     },
