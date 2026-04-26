@@ -42,17 +42,17 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   return (
     <div className="flex items-center gap-2 mt-2 flex-wrap">
       {labels.isVegan && (
-        <span className="text-xs font-work font-semibold text-state-vegan">
+        <span className="rounded-full bg-accent-light/45 px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-vegan">
           vegan
         </span>
       )}
       {labels.isGlutenFree && (
-        <span className="text-xs font-work font-semibold text-state-glutenFree">
+        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-glutenFree">
           {language === "de" ? "glutenfrei" : "gluten-free"}
         </span>
       )}
       {labels.isBio && (
-        <span className="text-xs font-work font-semibold text-state-bio">
+        <span className="rounded-full bg-dailyAlt px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-bio">
           bio
         </span>
       )}
@@ -150,8 +150,8 @@ export const MenuSection = () => {
     <section id="menu" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/30 bg-background/95 px-4 py-2 backdrop-blur-md">
-            <div className="grid grid-cols-3 gap-1 rounded-lg bg-muted/40 p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
+          <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
+            <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
                 { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
                 { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
@@ -163,10 +163,10 @@ export const MenuSection = () => {
                   role="tab"
                   aria-selected={activeMenuTab === tab.id}
                   onClick={() => scrollToMenuBlock(tab.id)}
-                  className={`rounded-md px-2 py-2 text-sm font-work font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                  className={`rounded-full px-2 py-2 text-xs font-work font-semibold uppercase tracking-[0.06em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
                     activeMenuTab === tab.id
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-primary/75 hover:text-primary"
                   }`}
                 >
                   {tab.label}
@@ -205,17 +205,17 @@ export const MenuSection = () => {
               <div className="space-y-4">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
+                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
                       </div>
-                      <p className="text-primary font-semibold text-sm font-work shrink-0">6,90</p>
+                       <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
                     </div>
                     <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.soup[language]}
@@ -226,17 +226,17 @@ export const MenuSection = () => {
 
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
+                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
                       </div>
-                      <p className="text-primary font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
                     <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.green[language]}
@@ -247,17 +247,17 @@ export const MenuSection = () => {
 
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
+                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
                       </div>
-                      <p className="text-primary font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
                     <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.blue[language]}
