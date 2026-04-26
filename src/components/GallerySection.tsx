@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,61 @@ import curryOfTheDay from "@/assets/curry-of-the-day.webp";
 import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import tableSpreadMenu from "@/assets/table-spread-menu.jpg";
 import diningScene from "@/assets/dining-scene.jpg";
+
+const GalleryReveal = ({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.24, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`transform-gpu transition-all duration-1000 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-0 ${
+        isVisible ? "translate-y-0 opacity-100 blur-0" : "translate-y-10 opacity-0 blur-sm"
+      } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const ImageFrame = ({ src, alt, ratio = "aspect-[4/5]" }: { src: string; alt: string; ratio?: string }) => (
+  <div className={`group relative overflow-hidden rounded-2xl bg-muted shadow-card ${ratio}`}>
+    <img
+      src={src}
+      alt={alt}
+      className="h-full w-full object-cover transition-[filter] duration-700 ease-out group-hover:saturate-110"
+      loading="lazy"
+    />
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/18 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+  </div>
+);
 
 export const GallerySection = () => {
   const { language } = useLanguage();
@@ -51,7 +107,7 @@ export const GallerySection = () => {
   ];
 
   return (
-    <section id="gallery" className="py-16 md:py-24 bg-background">
+    <section id="gallery" className="overflow-hidden bg-background py-16 md:py-24">
       {/* Single static inspirational quote */}
       <div className="container mx-auto max-w-3xl text-center px-6 mb-12 md:mb-16">
         <blockquote className="font-caveat text-2xl md:text-3xl text-foreground/80 italic">
@@ -65,22 +121,15 @@ export const GallerySection = () => {
       </div>
 
       {/* Gallery - Organic, breathing layout */}
-      <div className="px-5 md:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto space-y-5 md:space-y-6">
+      <div className="px-4 md:px-8 lg:px-12">
+        <div className="mx-auto max-w-6xl space-y-5 md:space-y-7">
           {galleryRows.map((row, rowIndex) => {
             // Full width image
             if (row.layout === "full") {
               return (
-                <div key={rowIndex} className="w-full">
-                  <div className="relative overflow-hidden aspect-[4/3] md:aspect-[16/9]">
-                    <img
-                      src={row.images[0].src}
-                      alt={row.images[0].alt}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
+                <GalleryReveal key={rowIndex} delay={rowIndex * 90} className="w-full">
+                  <ImageFrame src={row.images[0].src} alt={row.images[0].alt} ratio="aspect-[4/3] md:aspect-[16/9]" />
+                </GalleryReveal>
               );
             }
 
@@ -89,14 +138,9 @@ export const GallerySection = () => {
               return (
                 <div key={rowIndex} className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                   {row.images.map((image, imgIndex) => (
-                    <div key={imgIndex} className="relative overflow-hidden aspect-[4/5]">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
+                    <GalleryReveal key={imgIndex} delay={imgIndex * 120}>
+                      <ImageFrame src={image.src} alt={image.alt} />
+                    </GalleryReveal>
                   ))}
                 </div>
               );
@@ -107,14 +151,9 @@ export const GallerySection = () => {
               return (
                 <div key={rowIndex} className="space-y-5 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
                   {row.images.map((image, imgIndex) => (
-                    <div key={imgIndex} className="relative overflow-hidden aspect-[4/5] md:aspect-square">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
+                    <GalleryReveal key={imgIndex} delay={imgIndex * 100}>
+                      <ImageFrame src={image.src} alt={image.alt} ratio="aspect-[4/5] md:aspect-square" />
+                    </GalleryReveal>
                   ))}
                 </div>
               );
