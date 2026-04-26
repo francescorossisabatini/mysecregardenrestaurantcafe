@@ -1,30 +1,52 @@
-Modificherò la UX mobile in due punti: lingua e hero A/B test.
+Sì: guardando il file operativo e l’architettura attuale, non ha senso tenere “Specials” e “Menu” come due esperienze separate. Oggi il sito ha già una logica mista: la Home contiene il blocco menu completo, mentre `/wochenkarte` duplica parte del contenuto come pagina “Weekly Specials”. Questo crea confusione nella navbar e per l’utente: non è chiaro se “Menu” e “Specials” siano due cose diverse.
 
-1. Lingua DE/EN su mobile lungo la pagina
-- Rimuovere il selettore lingua dal drawer hamburger su mobile.
-- Lasciare il selettore lingua nella navbar solo desktop, come ora.
-- Aggiungere un piccolo componente mobile-only lungo la pagina, non nella hero: una barra/strip discreta subito dopo la hero o all’inizio del contenuto, prima delle sezioni principali.
-- Stile: leggero, coerente con il sito, testo semplice “DE / EN”, senza farlo sembrare una CTA principale.
-- Tracking: mantenere l’evento `language_switch` esistente.
+La direzione migliore è: una sola voce principale “Menu”, con dentro le sezioni “Today”, “Week” e “Classics”.
 
-2. Hero mobile A/B test senza carosello
-- Su mobile, quando l’A/B test è attivo, mostrare una singola immagine statica in base alla variante assegnata:
-  - food: foto cibo
-  - dining: foto tavola/contesto conviviale
-  - garden: foto giardino
-- Eliminare il carosello, i dots e il cambio immagine dalla hero mobile, così l’unico elemento che cambia tra le varianti è il contesto fotografico.
-- Mantenere identici copy, CTA, overlay, spaziature e comportamento per tutte le varianti mobile.
-- Su desktop mantenere il comportamento attuale con carosello, così non cambiamo l’esperienza desktop.
+## Piano proposto
 
-3. Pulizia UX e performance
-- Evitare di caricare `HeroCarousel` su mobile quando non serve.
-- Tenere il tracking A/B già creato: impression e click continueranno a includere `hero_variant`.
-- Verificare che la hero resti ottimizzata per LCP: immagine statica subito visibile, niente dinamiche inutili su mobile.
+1. Semplificare la navbar
+   - Rimuovere la voce separata “Specials / Wochenmenü”.
+   - Tenere una sola voce “Menu / Speisekarte”.
+   - La voce Menu porterà alla sezione menu della Home (`/#menu`) oppure alla pagina menu unica, in base alla soluzione più coerente con il routing esistente.
 
-File principali coinvolti:
-- `src/components/Hero.tsx`
-- `src/components/Navigation.tsx`
-- `src/components/LanguageSwitcher.tsx`
-- probabilmente un nuovo piccolo componente per il selettore lingua mobile lungo pagina, oppure integrazione diretta in `Index.tsx`
+2. Rendere coerente la struttura del menu
+   - Mantenere la divisione interna in:
+     - oggi / today
+     - settimana / week
+     - classici / classics
+   - Non presentarle come sezioni principali separate nella navigazione globale.
+   - Su mobile, mantenere il tab sticky interno “Heute / Immer da / Woche”, perché lì è utile come orientamento dentro il menu.
 
-Nota: aggiornerò anche la memoria del progetto sulla posizione del language switcher, perché la nuova preferenza sostituisce quella precedente “mobile dentro hamburger”.
+3. Rivedere la pagina `/wochenkarte`
+   - Evitare che sembri una pagina alternativa o concorrente al menu.
+   - Opzione consigliata: trasformarla in redirect o alias verso la sezione menu principale.
+   - Se mantenuta per SEO/backlink, deve essere trattata come “pagina menu” e non come “Specials” separato.
+
+4. Aggiornare i testi CTA
+   - In `ShowcaseSections`, cambiare il bottone “Wochenmenü ansehen / View Weekly Specials” in qualcosa come:
+     - DE: “Speisekarte ansehen”
+     - EN: “View Menu”
+   - Evitare la parola “Specials” dove non serve.
+
+5. Allineare SEO e label
+   - Aggiornare title/description della pagina menu se rimane `/wochenkarte` o `/speisekarte`.
+   - Usare una terminologia uniforme:
+     - DE: “Speisekarte” o “Menü”
+     - EN: “Menu”
+   - Usare “Wochenmenü / Weekly menu” solo come sottosezione, non come voce primaria.
+
+## Risultato atteso
+
+La navigazione diventa più chiara:
+
+```text
+Home | Menu | About | Visit
+```
+
+E dentro Menu:
+
+```text
+Today | Week | Classics
+```
+
+Questo risolve la confusione tra “specials” e “menu”, riduce l’affollamento della navbar e rispetta meglio l’architettura già memorizzata del progetto: un singolo flusso verticale per il menu.
