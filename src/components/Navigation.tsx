@@ -237,10 +237,6 @@ export const Navigation = () => {
                 {language === "de" ? "Route anzeigen" : "Get Directions"}
               </a>
             </Button>
-
-            <div className="pt-2">
-              <LanguageSwitcher variant="navbar" />
-            </div>
           </div>
         </div>
       </div>
