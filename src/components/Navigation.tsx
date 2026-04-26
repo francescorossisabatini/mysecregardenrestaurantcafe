@@ -10,7 +10,7 @@ import { SITE } from "@/config/site";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
-  const [showNavbar, setShowNavbar] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
@@ -69,30 +69,18 @@ export const Navigation = () => {
         } ${scrolled ? "shadow-sm" : ""}`}
       >
         <div className="container mx-auto px-4 flex items-center justify-between">
-          {/* Mobile Menu Button - Left */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-3 rounded-lg transition-colors lg:hidden touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
-            aria-label={isMobileMenuOpen 
-              ? (language === "de" ? "Menü schließen" : "Close menu") 
-              : (language === "de" ? "Menü öffnen" : "Open menu")}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-
           {/* Logo + Subtitle */}
           <Link 
             to="/" 
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+            className="flex min-w-0 items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
-            <Logo className="w-10 h-10 md:w-12 md:h-12" aria-hidden="true" />
-            <div className="hidden sm:block">
-              <span className="font-cormorant text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+            <Logo className="w-9 h-9 md:w-12 md:h-12 flex-shrink-0" aria-hidden="true" />
+            <div className="min-w-0 leading-tight">
+              <span className="block truncate font-cormorant text-base md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                 My Secret Garden
               </span>
-              <p className="text-xs text-muted-foreground font-work">
+              <p className="hidden xs:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
                 Vegetarian Café • Vienna
               </p>
             </div>
@@ -137,18 +125,19 @@ export const Navigation = () => {
             </Button>
           </div>
 
-          {/* Mobile: keep top bar lightweight; call is available in drawer and sticky bar */}
-          <div className="lg:hidden flex items-center gap-2">
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? `${SITE.instagramHandle} auf Instagram (öffnet in neuem Tab)` : `${SITE.instagramHandle} on Instagram (opens in new tab)`}
-              title={SITE.instagramHandle}
+          {/* Mobile top bar actions */}
+          <div className="lg:hidden flex items-center gap-2 flex-shrink-0">
+            <LanguageSwitcher variant="mobile" />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="h-10 w-10 inline-flex items-center justify-center rounded-lg transition-colors touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              aria-label={isMobileMenuOpen 
+                ? (language === "de" ? "Menü schließen" : "Close menu") 
+                : (language === "de" ? "Menü öffnen" : "Open menu")}
+              aria-expanded={isMobileMenuOpen}
             >
-              <Instagram className="w-5 h-5" aria-hidden="true" />
-            </a>
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
       </nav>
