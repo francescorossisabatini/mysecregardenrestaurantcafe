@@ -12,6 +12,20 @@ export const SITE = {
   // Address
   addressShort: "Mariahilferstraße 45, Im Raimundhof – 1060 Wien",
 
+  // Trust signals
+  rating: "4.7",
+  reviewCount: "936+",
+
+  // Practical visit notes
+  courtyardInstruction: {
+    de: "Durch den Bogen bei Mariahilferstraße 45 in den Raimundhof gehen.",
+    en: "Enter through the arch at Mariahilferstraße 45 into Raimundhof.",
+  },
+  counterServiceNote: {
+    de: "Am Tresen bestellen, dann im ruhigen Gartenhof Platz nehmen.",
+    en: "Order at the counter, then choose a seat in the quiet garden courtyard.",
+  },
+
   // Google Maps share link (direct link to restaurant)
   mapsUrl: "https://www.google.com/maps/place/Secret+Garden+Caf%C3%A9+Restaurant/@48.1994275,16.353526,17z/data=!3m1!4b1!4m6!3m5!1s0x476d078f0451b459:0x76f7dc33e496ccb5!8m2!3d48.1994275!4d16.353526!16s%2Fg%2F1tj4fbv6",
 
