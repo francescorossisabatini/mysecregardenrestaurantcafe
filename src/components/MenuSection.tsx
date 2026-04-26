@@ -16,6 +16,8 @@ import { ChevronDown, Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
+import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
+import { inferDishDetails } from "@/lib/menuDetails";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -59,6 +61,10 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
     </div>
   );
 };
+
+const WeeklyDishDetails = ({ text }: { text: string }) => (
+  <MenuDishDetails details={inferDishDetails(text)} compact />
+);
 
 export const MenuSection = () => {
   const { language } = useLanguage();
