@@ -31,12 +31,12 @@ export const CTATopRow = ({ show, className = "" }: CTATopRowProps) => {
     weekly: {
       label: { de: "Wochenmenü", en: "Weekly Specials" },
       icon: <CalendarDays className="w-4 h-4" />,
-      href: "/wochenkarte",
+      href: "/menu",
     },
     menu: {
       label: { de: "Speisekarte", en: "Menu" },
       icon: <UtensilsCrossed className="w-4 h-4" />,
-      href: "/#menu",
+      href: "/menu",
     },
   };
 

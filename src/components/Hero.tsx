@@ -242,9 +242,9 @@ export const Hero = () => {
               className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
-              <Link to="/wochenkarte" onClick={() => trackHeroAbEvent('click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
+              <Link to="/menu" onClick={() => trackHeroAbEvent('click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
                 <CalendarDays className="w-4 h-4 mr-2" />
-                {language === "de" ? "Wochenmenü" : "Weekly Specials"}
+                {language === "de" ? "Speisekarte" : "Full Menu"}
               </Link>
             </Button>
           </div>

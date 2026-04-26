@@ -20,6 +20,7 @@ const Impressum = lazy(() => import("./pages/Impressum"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const LinkPage = lazy(() => import("./pages/Link"));
+const MenuPage = lazy(() => import("./pages/Menu"));
 
 // Minimal loading fallback
 const PageLoader = () => (
@@ -61,10 +62,11 @@ function AppContent() {
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<Suspense fallback={<PageLoader />}><AboutUs /></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
+        <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
-        <Route path="/wochenkarte" element={<Navigate to="/#menu" replace />} />
-        <Route path="/speisekarte" element={<Navigate to="/#menu" replace />} />
+        <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
+        <Route path="/speisekarte" element={<Navigate to="/menu" replace />} />
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>

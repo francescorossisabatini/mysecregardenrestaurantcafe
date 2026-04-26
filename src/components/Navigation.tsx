@@ -54,7 +54,7 @@ export const Navigation = () => {
   // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
   const navLinks = [
     { to: "/", label: language === "de" ? "Home" : "Home" },
-    { to: "/#menu", label: language === "de" ? "Speisekarte" : "Menu" },
+    { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
     { to: "/about", label: language === "de" ? "Über uns" : "About" },
     { to: "/contact", label: language === "de" ? "Besuche uns" : "Visit" },
   ];

@@ -45,7 +45,7 @@ export const ShowcaseSections = () => {
                   : "Plus our beloved classics, available every day."}
               </p>
               <Button className="font-work" asChild>
-                <Link to="/#menu">
+                <Link to="/menu">
                   <BookOpen className="w-4 h-4 mr-2" />
                   {language === "de" ? "Speisekarte ansehen" : "View Menu"}
                 </Link>

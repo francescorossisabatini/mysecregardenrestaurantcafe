@@ -4,11 +4,11 @@ import { SEOHead } from "@/components/SEOHead";
 import { Hero } from "@/components/Hero";
 import { Navigation } from "@/components/Navigation";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { HomeMenuPreview } from "@/components/HomeMenuPreview";
 
 // Lazy load below-the-fold components to reduce initial JS bundle
 const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
 const ShowcaseSections = lazy(() => import("@/components/ShowcaseSections").then(m => ({ default: m.ShowcaseSections })));
-const MenuSection = lazy(() => import("@/components/MenuSection").then(m => ({ default: m.MenuSection })));
 const Reviews = lazy(() => import("@/components/Reviews").then(m => ({ default: m.Reviews })));
 const GallerySection = lazy(() => import("@/components/GallerySection").then(m => ({ default: m.GallerySection })));
 const CTAEndBlock = lazy(() => import("@/components/CTAEndBlock").then(m => ({ default: m.CTAEndBlock })));
@@ -85,10 +85,8 @@ const Index = () => {
         <ShowcaseSections />
       </Suspense>
       
-      {/* Menu section with today's dishes */}
-      <Suspense fallback={<SectionLoader />}>
-        <MenuSection />
-      </Suspense>
+      {/* Menu preview with today's dishes */}
+      <HomeMenuPreview />
       
       {/* Reviews / Social Proof */}
       <Suspense fallback={<SectionLoader />}>
@@ -102,7 +100,7 @@ const Index = () => {
       
       {/* FINAL CTA BLOCK: Brand bg, H2, address, Call + Directions */}
       <Suspense fallback={<SectionLoader />}>
-        <CTAEndBlock show={["call", "directions", "weekly"]} />
+        <CTAEndBlock show={["call", "directions", "menu"]} />
       </Suspense>
       
       <Suspense fallback={null}>
