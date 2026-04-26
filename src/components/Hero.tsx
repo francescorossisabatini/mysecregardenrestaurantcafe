@@ -250,7 +250,7 @@ export const Hero = () => {
           </div>
 
           {/* Carousel dots */}
-          <div className={`hidden sm:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {carouselImages.map((_, index) => (
