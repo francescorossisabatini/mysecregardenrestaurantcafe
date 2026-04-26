@@ -164,6 +164,7 @@ export const MenuSection = () => {
                 ))}
               </div>
             ) : !isClosed && todayMenu ? (
+              <>
               <div className="space-y-4">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
@@ -236,6 +237,7 @@ export const MenuSection = () => {
                     : "Gluten-free options are marked. Our kitchen is not exclusively gluten-free — please ask our team about allergies or cross-contamination."}
                 </p>
               </div>
+              </>
             ) : (
               <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
