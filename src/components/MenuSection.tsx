@@ -212,6 +212,7 @@ export const MenuSection = () => {
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.soup[language]} />
                   </div>
                 )}
 
@@ -233,6 +234,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.green[language]} />
                   </div>
                 )}
 
@@ -254,6 +256,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.blue[language]} />
                   </div>
                 )}
               </div>
