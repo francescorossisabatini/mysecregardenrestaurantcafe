@@ -3,10 +3,20 @@ import { supabase } from "@/integrations/supabase/client";
 interface MenuDay {
   day: { de: string; en: string };
   soup: { de: string; en: string };
+  soupMeta?: MenuItemMeta;
   green: { de: string; en: string };
+  greenMeta?: MenuItemMeta;
   greenNote?: { de: string; en: string };
   blue: { de: string; en: string };
+  blueMeta?: MenuItemMeta;
   blueNote?: { de: string; en: string };
+}
+
+interface MenuItemMeta {
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: number[];
+  gfDisclaimer?: boolean;
 }
 
 interface WeeklyMenu {

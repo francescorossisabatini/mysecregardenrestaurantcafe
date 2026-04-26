@@ -16,6 +16,9 @@ import { ChevronDown, Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
+import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
+import type { DishDetails } from "@/data/allergensData";
+import { inferDishDetails } from "@/lib/menuDetails";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -59,6 +62,15 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
     </div>
   );
 };
+
+const dishDetails = (text: string, meta?: DishDetails) => ({
+  ...inferDishDetails(text),
+  ...meta,
+});
+
+const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
+  <MenuDishDetails details={dishDetails(text, meta)} compact />
+);
 
 export const MenuSection = () => {
   const { language } = useLanguage();
@@ -206,6 +218,7 @@ export const MenuSection = () => {
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.soup[language]} meta={todayMenu.soupMeta} />
                   </div>
                 )}
 
@@ -227,6 +240,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.green[language]} meta={todayMenu.greenMeta} />
                   </div>
                 )}
 
@@ -248,6 +262,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
+                    <WeeklyDishDetails text={todayMenu.blue[language]} meta={todayMenu.blueMeta} />
                   </div>
                 )}
               </div>
@@ -418,6 +433,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.soup[language]}</p>
                                       <DietaryBadges text={day.soup[language]} language={language} />
+                                      <WeeklyDishDetails text={day.soup[language]} meta={day.soupMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">6,90</span>
                                   </div>
@@ -430,6 +446,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.green[language]}</p>
                                       <DietaryBadges text={day.green[language]} language={language} />
+                                      <WeeklyDishDetails text={day.green[language]} meta={day.greenMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
@@ -442,6 +459,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.blue[language]}</p>
                                       <DietaryBadges text={day.blue[language]} language={language} />
+                                      <WeeklyDishDetails text={day.blue[language]} meta={day.blueMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
@@ -535,6 +553,17 @@ export const MenuSection = () => {
                                   )}
                                 </div>
                               )}
+                              {!item.isUnavailable && (
+                                <MenuDishDetails
+                                  details={{
+                                    descriptionShort: item.descriptionShort,
+                                    ingredientsMain: item.ingredientsMain,
+                                    allergens: item.allergens,
+                                    gfDisclaimer: item.gfDisclaimer,
+                                    ingredientProducers: item.ingredientProducers,
+                                  }}
+                                />
+                              )}
                             </div>
                             <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
@@ -585,6 +614,7 @@ export const MenuSection = () => {
                 </div>
               ))}
             </div>
+            <AllergenLegend />
           </div>
           
         </div>

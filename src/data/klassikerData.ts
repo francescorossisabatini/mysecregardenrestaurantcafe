@@ -5,6 +5,11 @@ export interface KlassikerItem {
   id: string;
   name: { de: string; en: string };
   description?: { de: string; en: string };
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: number[];
+  gfDisclaimer?: boolean;
+  ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
   sizeNote?: string;
   price: string;
   isVegan?: boolean;
@@ -45,6 +50,9 @@ export const klassikerMenu = {
           price: "9,90",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "cremig, Linsen, würzig",
+          ingredientsMain: ["Rote Linsen", "Tomaten", "Zwiebeln", "indische Gewürze", "Basmatireis"],
+          gfDisclaimer: true,
         },
       ],
     },
@@ -62,6 +70,10 @@ export const klassikerMenu = {
           price: "6,5 / 10,9",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, saisonales Gemüse",
+          ingredientsMain: ["Blattsalat", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-avocado",
@@ -73,6 +85,10 @@ export const klassikerMenu = {
           price: "17,5",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, Avocado, saisonal",
+          ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-ziegenkase",
@@ -83,6 +99,10 @@ export const klassikerMenu = {
           },
           price: "17,5",
           isGlutenFree: true,
+          descriptionShort: "frisch, warm, cremig",
+          ingredientsMain: ["Blattsalat", "Ziegenkäse", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [7, 10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-tofu",
@@ -95,6 +115,11 @@ export const klassikerMenu = {
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
+          descriptionShort: "frisch, Bio-Tofu, saisonal",
+          ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [6, 10],
+          gfDisclaimer: true,
+          ingredientProducers: { Tofu: { certification: "bio" } },
         },
       ],
     },
@@ -111,6 +136,9 @@ export const klassikerMenu = {
           },
           price: "4,90",
           isVegan: true,
+          descriptionShort: "cremig, vegan, süß",
+          ingredientsMain: ["vegane Creme", "Kuchenboden"],
+          allergens: [1, 6, 8],
         },
         {
           id: "karamellschnitte",
@@ -120,6 +148,9 @@ export const klassikerMenu = {
             en: "Homemade caramel slice"
           },
           price: "4,90",
+          descriptionShort: "süß, Karamell, hausgemacht",
+          ingredientsMain: ["Karamell", "Kuchenboden"],
+          allergens: [1, 3, 7],
         },
         {
           id: "walnuss-brownie",
@@ -129,6 +160,9 @@ export const klassikerMenu = {
             en: "Moist chocolate brownie with walnuts"
           },
           price: "4,7",
+          descriptionShort: "schokoladig, Walnuss",
+          ingredientsMain: ["Schokolade", "Walnüsse"],
+          allergens: [1, 3, 7, 8],
         },
         {
           id: "schoko-mousse-torte",
@@ -138,6 +172,9 @@ export const klassikerMenu = {
             en: "Light chocolate mousse cake"
           },
           price: "4,7",
+          descriptionShort: "cremig, Schokolade",
+          ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
+          allergens: [1, 3, 7],
         },
         {
           id: "karotten-gewuerztorte",
@@ -147,6 +184,9 @@ export const klassikerMenu = {
             en: "Spiced carrot cake with cream cheese topping"
           },
           price: "4,5",
+          descriptionShort: "würzig, Karotte, cremig",
+          ingredientsMain: ["Karotten", "Gewürze", "Frischkäse-Topping"],
+          allergens: [1, 3, 7, 8],
         },
       ],
     },
@@ -163,6 +203,8 @@ export const klassikerMenu = {
           },
           price: "3,00 / 4,70",
           isVegan: true,
+          descriptionShort: "frisch, Ingwer, spritzig",
+          ingredientsMain: ["Ingwer", "Zitrone"],
         },
         {
           id: "eistee",
@@ -174,6 +216,8 @@ export const klassikerMenu = {
           price: "4,2",
           isVegan: true,
           isUnavailable: true,
+          descriptionShort: "frisch, Tee, hausgemacht",
+          ingredientsMain: ["Tee", "natürliche Zutaten"],
         },
         {
           id: "mango-lassi",
@@ -183,6 +227,9 @@ export const klassikerMenu = {
             en: "Creamy yogurt drink with fresh mango"
           },
           price: "4,9",
+          descriptionShort: "cremig, Mango",
+          ingredientsMain: ["Joghurt", "Mango"],
+          allergens: [7],
         },
       ],
     },

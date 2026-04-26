@@ -6,6 +6,8 @@ import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AllergenCodes } from "@/components/MenuDishDetails";
+import { inferDishDetails } from "@/lib/menuDetails";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -105,6 +107,7 @@ export const HomeMenuPreview = () => {
                   </div>
                   <p className="font-work text-base leading-relaxed text-foreground">{dish.text}</p>
                   <DietaryBadges text={dish.text} language={language} />
+                  <AllergenCodes codes={inferDishDetails(dish.text).allergens} />
                 </div>
               ))}
             </div>
