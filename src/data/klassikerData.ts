@@ -29,7 +29,7 @@ export interface KlassikerCategory {
 
 export const klassikerMenu = {
   title: { de: "Unsere Klassiker", en: "Our Classics" },
-  subtitle: { de: "Gerichte, die bleiben", en: "Dishes that stay" },
+  subtitle: { de: "Dal, Salate, Kuchen und Getränke, die fast jeden Tag da sind.", en: "Dal, salads, cakes and drinks that are here almost every day." },
   categories: [
     {
       id: "warm",
