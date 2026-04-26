@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ab_test_events: {
+        Row: {
+          created_at: string
+          event_name: string
+          id: string
+          metadata: Json
+          page_path: string | null
+          test_id: string
+          user_agent: string | null
+          variant: string
+        }
+        Insert: {
+          created_at?: string
+          event_name: string
+          id?: string
+          metadata?: Json
+          page_path?: string | null
+          test_id: string
+          user_agent?: string | null
+          variant: string
+        }
+        Update: {
+          created_at?: string
+          event_name?: string
+          id?: string
+          metadata?: Json
+          page_path?: string | null
+          test_id?: string
+          user_agent?: string | null
+          variant?: string
+        }
+        Relationships: []
+      }
+      ab_test_reports: {
+        Row: {
+          created_at: string
+          file_path: string | null
+          generated_at: string | null
+          id: string
+          period_end: string
+          period_start: string
+          public_url: string | null
+          report_name: string
+          status: string
+          summary: Json
+          test_id: string
+        }
+        Insert: {
+          created_at?: string
+          file_path?: string | null
+          generated_at?: string | null
+          id?: string
+          period_end: string
+          period_start: string
+          public_url?: string | null
+          report_name?: string
+          status?: string
+          summary?: Json
+          test_id: string
+        }
+        Update: {
+          created_at?: string
+          file_path?: string | null
+          generated_at?: string | null
+          id?: string
+          period_end?: string
+          period_start?: string
+          public_url?: string | null
+          report_name?: string
+          status?: string
+          summary?: Json
+          test_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
