@@ -85,12 +85,23 @@ function checkRateLimit(clientIP: string): boolean {
   return true;
 }
 
+interface DishMeta {
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: number[];
+  gfDisclaimer?: boolean;
+  ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
+}
+
 interface MenuDay {
   day: { de: string; en: string };
   soup: { de: string; en: string };
+  soupMeta?: DishMeta;
   green: { de: string; en: string };
+  greenMeta?: DishMeta;
   greenNote?: { de: string; en: string };
   blue: { de: string; en: string };
+  blueMeta?: DishMeta;
   blueNote?: { de: string; en: string };
 }
 
@@ -167,6 +178,38 @@ function parseCSVLine(line: string): string[] {
 }
 
 // Build period string from a date like "16/3/2026" -> "16. – 21. März 2026"
+function parseListCell(value: unknown): string[] {
+  const text = sanitizeText(value, 1000);
+  if (!text) return [];
+  return text.split(/[;|]/).map((item) => sanitizeText(item, 120)).filter(Boolean).slice(0, 8);
+}
+
+function parseAllergenCell(value: unknown): number[] {
+  const text = sanitizeText(value, 200);
+  if (!text) return [];
+  const matches = text.match(/\d+/g) ?? [];
+  return [...new Set(matches.map(Number).filter((code) => code >= 1 && code <= 14))].sort((a, b) => a - b);
+}
+
+function parseBooleanCell(value: unknown): boolean {
+  const text = sanitizeText(value, 40).toLowerCase();
+  return ["true", "yes", "ja", "y", "1", "gf"].includes(text);
+}
+
+function buildDishMeta(description: unknown, ingredients: unknown, allergens: unknown, gf: unknown): DishMeta | undefined {
+  const meta: DishMeta = {
+    descriptionShort: sanitizeText(description, 160),
+    ingredientsMain: parseListCell(ingredients),
+    allergens: parseAllergenCell(allergens),
+    gfDisclaimer: parseBooleanCell(gf),
+  };
+  if (!meta.descriptionShort) delete meta.descriptionShort;
+  if (!meta.ingredientsMain?.length) delete meta.ingredientsMain;
+  if (!meta.allergens?.length) delete meta.allergens;
+  if (!meta.gfDisclaimer) delete meta.gfDisclaimer;
+  return Object.keys(meta).length ? meta : undefined;
+}
+
 function buildPeriodFromDate(dateStr: string): string {
   const parts = dateStr.replace(/"/g, '').trim().split('/');
   if (parts.length < 3) return dateStr;
@@ -333,6 +376,9 @@ serve(async (req) => {
             soup: { de: sanitizeText(cells[2], 500), en: sanitizeText(cells[2], 500) },
             green: { de: sanitizeText(cells[3], 1000), en: sanitizeText(cells[3], 1000) },
             blue: { de: sanitizeText(cells[4], 1000), en: sanitizeText(cells[4], 1000) },
+            soupMeta: buildDishMeta(cells[5], cells[6], cells[7], cells[8]),
+            greenMeta: buildDishMeta(cells[9], cells[10], cells[11], cells[12]),
+            blueMeta: buildDishMeta(cells[13], cells[14], cells[15], cells[16]),
           };
           days.push(dayData);
         }
@@ -407,6 +453,9 @@ serve(async (req) => {
             soup: { de: sanitizeText(c2, 500), en: sanitizeText(c2, 500) },
             green: { de: sanitizeText(row[3]?.v, 1000), en: sanitizeText(row[3]?.v, 1000) },
             blue: { de: sanitizeText(row[4]?.v, 1000), en: sanitizeText(row[4]?.v, 1000) },
+            soupMeta: buildDishMeta(row[5]?.v, row[6]?.v, row[7]?.v, row[8]?.v),
+            greenMeta: buildDishMeta(row[9]?.v, row[10]?.v, row[11]?.v, row[12]?.v),
+            blueMeta: buildDishMeta(row[13]?.v, row[14]?.v, row[15]?.v, row[16]?.v),
           };
           days.push(dayData);
           continue;
