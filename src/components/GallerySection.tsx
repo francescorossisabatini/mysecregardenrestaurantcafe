@@ -60,7 +60,7 @@ export const GallerySection = () => {
             : "To see the good in others is the beginning of peace."}
         </blockquote>
         <cite className="block mt-3 text-sm text-muted-foreground font-lora font-medium tracking-wide">
-          — Sri Chinmoy
+          Sri Chinmoy
         </cite>
       </div>
 
