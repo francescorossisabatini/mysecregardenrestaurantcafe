@@ -17,3 +17,6 @@ port = 54323
 
 [functions.get-daily-menu]
 verify_jwt = false
+
+[functions.generate-ab-report]
+verify_jwt = false
