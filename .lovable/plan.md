@@ -1,98 +1,114 @@
-## Piano UX aggiornato con insight CS01
+# Piano: A/B test Hero mobile con foto food, dining e garden
 
-Obiettivo: usare il file operativo “Personas & User Flows” per trasformare il sito da pagina narrativa a strumento di decisione rapido, soprattutto mobile, senza perdere identità botanica/spirituale.
+Obiettivo: mostrare automaticamente hero mobile diverse a utenti diversi per capire quale contesto converte meglio: cibo, tavola/dining, garden/cortile. Il test durerà 7 giorni e userà solo foto reali già presenti nel progetto.
 
-### Insight principali da applicare
+## Varianti da testare
 
-- Il 74% del traffico è mobile: ogni scelta deve essere thumb-first.
-- La sessione media è 58 secondi: il sito deve rispondere subito, non richiedere esplorazione.
-- Il 99% sono nuovi utenti: la home deve convincere chi non conosce il posto.
-- Il menu è asset prioritario: “cosa c’è oggi?” deve essere raggiungibile in 1 tap.
-- Il profilo “Seeker” deve capire in 10 secondi:
-  1. cos’è il posto;
-  2. se è aperto;
-  3. se vale la pena andarci.
-- Mancano alcuni trust/friction reducers: rating 4.7★ / 936+, indicazioni per trovare il cortile, nota “ordina al banco”.
-- Per gluten-free serve una nota onesta: opzioni GF presenti, ma cucina non dedicata.
+Useremo 3 varianti mobile-first:
 
-### 1. Hero più orientata alla decisione
+1. **Food focus**
+   - Immagine: `minnesota-bowl.webp` oppure `dal-rice-bowl.jpg`
+   - Ipotesi: funziona meglio per utenti affamati/decisi che vogliono capire subito cosa si mangia.
 
-Aggiungere sopra la piega mobile un micro-blocco di fiducia e chiarezza:
-- stato aperto/chiuso già presente;
-- rating “4.7★ da 936+ recensioni”;
-- frase breve di posizionamento tipo “Vegetarian world cuisine in a hidden garden courtyard”.
+2. **Dining/table context**
+   - Immagine: `dining-scene.jpg` oppure `dishes-table-top.jpg`
+   - Ipotesi: comunica esperienza, convivialità e fiducia meglio del singolo piatto.
 
-La hero deve restare compatta: niente nuove CTA pesanti, solo segnali rapidi che aiutano il nuovo visitatore a decidere se restare.
+3. **Garden/courtyard context**
+   - Immagine: `garden-real.webp` o `entrance-garden.webp`
+   - Ipotesi: rafforza il differenziale “hidden garden courtyard” e riduce la frizione del “dove si trova?”.
 
-### 2. Percorso Menu Today più diretto
+Non useremo immagini AI e non aggiungeremo zoom/parallax, rispettando le regole visive esistenti.
 
-Rafforzare la CTA primaria “Tagesmenü / Today’s menu” e assicurare che:
-- sia la prima azione percepita;
-- porti direttamente alla sezione menu;
-- il menu di oggi sia leggibile in pochi secondi;
-- prezzi e badge dietetici siano scansionabili.
+## Come funzionerà il test
 
-Il profilo Regular deve poter arrivare al menu in massimo 1 tap dalla home.
+- Solo su mobile.
+- Ogni nuovo visitatore mobile riceve una variante casuale.
+- La variante viene salvata in `localStorage`, così lo stesso utente vede sempre la stessa hero nei 7 giorni.
+- Desktop resta invariato, per non disturbare l’esperienza già più stabile.
+- Dopo 7 giorni il test può essere letto dai dati analytics.
 
-### 3. Sezione “Il Posto / Visit” come riduzione della frizione
+Schema:
 
-Inserire o rafforzare micro-copy operativo nella parte visit/contact o nella sezione più adatta della home:
-- “Enter through the arch at [address]” / equivalente tedesco;
-- “Order at the counter, then choose your seat”;
-- indicazioni chiare verso Google Maps.
+```text
+Nuovo utente mobile
+        |
+        v
+assegna variante A/B/C
+        |
+        v
+mostra hero mobile con foto dedicata
+        |
+        v
+traccia impression + click CTA con hero_variant
+```
 
-Questo serve al primo visitatore che non conosce il cortile nascosto e potrebbe essere confuso dall’esperienza self-service.
+## Metriche da misurare
 
-### 4. Trust signals senza appesantire
+Per ogni variante tracceremo:
 
-Aggiungere segnali di fiducia in punti mirati:
-- hero: rating breve;
-- eventuale sezione recensioni: rafforzare il numero recensioni;
-- vicino al menu: badge/etichette alimentari visibili ma sobrie.
+- `hero_variant_impression`: quante volte la variante viene vista.
+- Click su `Tagesmenü / Today's Menu` dalla hero.
+- Click su `Wochenmenü / Weekly Specials` dalla hero, se visibile.
+- Click su `Route / Directions` dalla sticky bar mobile.
+- Click su `Call / Anrufen` dalla sticky bar mobile.
 
-Evitare nuovi blocchi grandi: l’obiettivo è aumentare fiducia senza aumentare rumore visivo.
+La metrica principale sarà:
 
-### 5. Dietary / gluten-free copy onesto
+```text
+conversion rate = click utili / impression variante
+```
 
-Aggiungere una nota discreta ma chiara vicino ai badge o alla sezione menu:
-- opzioni gluten-free disponibili quando indicate;
-- cucina non dedicata esclusivamente al gluten-free;
-- chiedere allo staff per allergie o contaminazione incrociata.
+Dove “click utili” = menu + directions + call.
 
-Questo protegge la fiducia del profilo con restrizioni alimentari senza promettere troppo.
+## Modifiche previste
 
-### 6. Link alla storia per il profilo spiritual-curious
+### 1. Configurazione test
+Creare una configurazione dedicata, ad esempio `src/config/heroAbTest.ts`, con:
 
-Mantenere la filosofia come elemento secondario ma ben collegato:
-- sezione filosofia/home con CTA chiara verso `/about`;
-- non far competere la storia con menu e indicazioni above-the-fold;
-- preservare tono botanico/spirituale esistente.
+- ID test: `mobile_hero_context_v1`
+- data/durata test: 7 giorni
+- varianti: `food`, `dining`, `garden`
+- immagine mobile associata
+- eventuale posizione background ottimizzata per mobile
 
-### 7. Cosa NON implementare ora
+### 2. Utility di assegnazione variante
+Creare una piccola utility client-side, ad esempio `src/lib/heroAbTest.ts`, che:
 
-Per evitare scope creep, non includere in questo step:
-- nuova pagina `/menu` dedicata;
-- pagina `/cakes`;
-- form ordine torte;
-- form prenotazioni;
-- loyalty/notifiche per clienti abituali.
+- controlla se siamo su mobile
+- legge/scrive la variante in `localStorage`
+- rispetta la durata del test
+- ritorna la variante attiva al componente Hero
 
-Questi sono validi come roadmap futura, ma richiedono struttura, copy e possibile backend separati.
+### 3. Aggiornamento Hero mobile
+Modificare `src/components/Hero.tsx` per:
 
-## Dettagli tecnici
+- usare la variante A/B solo su mobile
+- mantenere il carousel/hero desktop invariato
+- usare la foto scelta come immagine iniziale mobile
+- inviare un evento impression una sola volta per sessione/visualizzazione
+- aggiungere `hero_variant` agli eventi CTA già esistenti
 
-File probabili da aggiornare:
-- `src/components/Hero.tsx` per rating, micro-positioning e CTA primaria;
-- `src/components/MenuSection.tsx` per scanabilità, badge e nota GF;
-- `src/components/Contact.tsx` o sezione visit equivalente per cortile/counter-service;
-- `src/components/Reviews.tsx` se il rating/numero recensioni è già centralizzato lì;
-- `src/config/site.ts` se conviene centralizzare rating, review count, indirizzo e link Maps.
+### 4. Tracking CTA mobile collegate alla variante
+Aggiornare `src/components/MobileStickyBar.tsx` per includere `hero_variant` negli eventi:
 
-Non sono previste modifiche backend o database.
+- `click_call`
+- `click_directions`
 
-## Criteri di successo
+Così possiamo capire se una hero non genera solo click sul menu, ma influenza anche azioni locali importanti.
 
-- Su viewport mobile 390x494, entro la prima schermata si capisce: cosa è, se è aperto, perché fidarsi, dove andare dopo.
-- Il menu del giorno è raggiungibile e scansionabile velocemente.
-- Le informazioni pratiche riducono dubbi prima della visita fisica.
-- Il tono rimane coerente: reale, botanico/spirituale, niente immagini AI, niente zoom/parallax.
+## Lettura dopo 7 giorni
+
+Dopo 7 giorni si confronteranno le varianti su:
+
+1. Impression
+2. Click menu
+3. Click directions
+4. Click call
+5. Conversion rate complessivo
+
+Se una variante ha più conversioni ma pochissime impression, la valuteremo con cautela. Se una variante vince chiaramente, la imposteremo come hero mobile permanente.
+
+## Nota importante sui dati
+
+Il tracking analytics rispetta il consenso cookie già presente. Quindi verranno misurati solo gli utenti che accettano analytics. È corretto per GDPR, ma significa che il campione sarà più piccolo rispetto al traffico totale.
