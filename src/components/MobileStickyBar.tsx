@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { getConsentStatus } from "@/components/CookieConsent";
+import { getHeroAbVariant, trackHeroAbEvent } from "@/lib/heroAbTest";
 
 export const MobileStickyBar = () => {
   const isMobile = useIsMobile();
@@ -59,6 +60,7 @@ export const MobileStickyBar = () => {
   const callAriaLabel = language === "de" ? "Restaurant anrufen" : "Call the restaurant";
   const directionsLabel = language === "de" ? "Route" : "Directions";
   const directionsAriaLabel = language === "de" ? "Route zum Restaurant (öffnet in neuem Tab)" : "Get directions to restaurant (opens in new tab)";
+  const heroVariant = getHeroAbVariant({ assign: false });
 
   // Hide sticky bar when cookie consent is pending
   const shouldShow = isVisible && !isMobileMenuOpen && !cookieConsentPending;
@@ -85,7 +87,7 @@ export const MobileStickyBar = () => {
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
-          onClick={() => window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' })}
+          onClick={() => trackHeroAbEvent('click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
             bg-primary text-primary-foreground
             rounded-full py-3 px-4
@@ -105,7 +107,7 @@ export const MobileStickyBar = () => {
           href={SITE.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => window.gtag?.('event', 'click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' })}
+          onClick={() => trackHeroAbEvent('click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
             bg-secondary text-secondary-foreground
             rounded-full py-3 px-4
