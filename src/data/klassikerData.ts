@@ -136,6 +136,9 @@ export const klassikerMenu = {
           },
           price: "4,90",
           isVegan: true,
+          descriptionShort: "cremig, vegan, süß",
+          ingredientsMain: ["vegane Creme", "Kuchenboden"],
+          allergens: [1, 6, 8],
         },
         {
           id: "karamellschnitte",
@@ -145,6 +148,9 @@ export const klassikerMenu = {
             en: "Homemade caramel slice"
           },
           price: "4,90",
+          descriptionShort: "süß, Karamell, hausgemacht",
+          ingredientsMain: ["Karamell", "Kuchenboden"],
+          allergens: [1, 3, 7],
         },
         {
           id: "walnuss-brownie",
@@ -154,6 +160,9 @@ export const klassikerMenu = {
             en: "Moist chocolate brownie with walnuts"
           },
           price: "4,7",
+          descriptionShort: "schokoladig, Walnuss",
+          ingredientsMain: ["Schokolade", "Walnüsse"],
+          allergens: [1, 3, 7, 8],
         },
         {
           id: "schoko-mousse-torte",
@@ -163,6 +172,9 @@ export const klassikerMenu = {
             en: "Light chocolate mousse cake"
           },
           price: "4,7",
+          descriptionShort: "cremig, Schokolade",
+          ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
+          allergens: [1, 3, 7],
         },
         {
           id: "karotten-gewuerztorte",
@@ -172,6 +184,9 @@ export const klassikerMenu = {
             en: "Spiced carrot cake with cream cheese topping"
           },
           price: "4,5",
+          descriptionShort: "würzig, Karotte, cremig",
+          ingredientsMain: ["Karotten", "Gewürze", "Frischkäse-Topping"],
+          allergens: [1, 3, 7, 8],
         },
       ],
     },
