@@ -17,8 +17,8 @@ const ContactPage = () => {
       <SEOHead 
         title={language === "de" ? "Kontakt" : "Contact"}
         description={language === "de" 
-          ? "Besuche My Secret Garden in Wien – Mariahilferstraße 45. Öffnungszeiten Mo–Sa 11–19 Uhr."
-          : "Visit My Secret Garden in Vienna – Mariahilferstraße 45. Open Mon–Sat 11am–7pm."}
+          ? "Besuche My Secret Garden in Wien, Mariahilferstraße 45. Öffnungszeiten Montag bis Samstag von 11 bis 19 Uhr."
+          : "Visit My Secret Garden in Vienna, Mariahilferstraße 45. Open Monday to Saturday from 11am to 7pm."}
         path="/contact"
       />
       <Navigation />
@@ -91,7 +91,7 @@ const ContactPage = () => {
                   </h3>
                 </div>
                 <p className="text-muted-foreground font-work leading-relaxed text-sm">
-                  {language === "de" ? "Mo–Sa" : "Mon–Sat"} 11:00–19:00<br />
+                  {language === "de" ? "Mo bis Sa" : "Mon to Sat"} 11:00 bis 19:00<br />
                   <span className="text-xs opacity-70">
                     {language === "de" ? "Sonn- & Feiertage geschlossen" : "Closed Sun & holidays"}
                   </span>
