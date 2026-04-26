@@ -80,7 +80,7 @@ export const Navigation = () => {
               <span className="block truncate font-cormorant text-base md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                 My Secret Garden
               </span>
-              <p className="hidden xs:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
+              <p className="hidden sm:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
                 Vegetarian Café • Vienna
               </p>
             </div>
