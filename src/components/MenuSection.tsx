@@ -154,7 +154,7 @@ export const MenuSection = () => {
             <div className="grid grid-cols-3 gap-1 rounded-lg bg-muted/40 p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
                 { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
-                { id: "fixed" as const, label: language === "de" ? "Fix" : "Fixed" },
+                { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
                 { id: "week" as const, label: language === "de" ? "Woche" : "Week" },
               ].map((tab) => (
                 <button
@@ -181,12 +181,12 @@ export const MenuSection = () => {
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
-                {language === "de" ? "Heute frisch gekocht" : "Freshly cooked today"}
+                {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
               <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
                 {language === "de" 
-                  ? "Tagesgerichte, Preise und Hinweise auf vegan oder glutenfrei auf einen Blick." 
-                  : "Daily dishes, prices and vegan or gluten-free notes at a glance."}
+                  ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
+                  : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
               </p>
             </div>
             
@@ -286,22 +286,22 @@ export const MenuSection = () => {
                         ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
                         : isNoMenuDay
                           ? (language === "de" ? "Heute geschlossen" : "Closed Today")
-                          : (language === "de" ? "Sonntag — Tag der Ruhe" : "Sunday — Day of Rest")}
+                          : (language === "de" ? "Sonntag. Heute bleibt es still" : "Sunday. A quiet day here")}
                   </p>
                   <p className="text-muted-foreground font-work text-sm max-w-md mx-auto">
                     {dateInfo.todayHoliday 
                       ? dateInfo.todayHoliday.message[language]
                       : dateInfo.isAfterClosing
                         ? (language === "de" 
-                            ? "Wir sind für heute geschlossen. Schau dir an, was morgen auf dich wartet." 
-                            : "We are closed for today. See what awaits you tomorrow.")
+                            ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist." 
+                            : "The pots are done for today. Below you can see what is planned for tomorrow.")
                         : isNoMenuDay
                           ? (language === "de" 
-                              ? "Heute haben wir leider geschlossen. Wir freuen uns, dich bald wiederzusehen." 
-                              : "We are closed today. We look forward to seeing you soon.")
+                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei." 
+                              : "The kitchen is closed today. Feel free to check back later.")
                           : (language === "de" 
-                              ? "Wir nehmen uns heute Zeit für Stille und Erholung. Morgen öffnen wir wieder die Türen für dich." 
-                              : "We take time today for stillness and renewal. Tomorrow we open our doors again for you.")}
+                              ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee." 
+                              : "Sunday is our pause. Tomorrow it will smell of rice, spices and fresh coffee again.")}
                   </p>
                   {(dateInfo.todayHoliday || isNoMenuDay) && !dateInfo.isAfterClosing && (
                     <p className="text-muted-foreground font-work text-xs mt-2">
