@@ -1,65 +1,30 @@
-Aggiorno il piano della sezione menu tenendo conto del file `ai-aware-copy.md`: non solo tab sticky e gerarchia, ma anche testi meno “da sito generico”, più concreti e naturali.
+Modificherò la UX mobile in due punti: lingua e hero A/B test.
 
-## Obiettivo
-Rendere la parte menu più facile da usare su mobile e più umana nel tono, soprattutto nel passaggio tra:
+1. Lingua DE/EN su mobile lungo la pagina
+- Rimuovere il selettore lingua dal drawer hamburger su mobile.
+- Lasciare il selettore lingua nella navbar solo desktop, come ora.
+- Aggiungere un piccolo componente mobile-only lungo la pagina, non nella hero: una barra/strip discreta subito dopo la hero o all’inizio del contenuto, prima delle sezioni principali.
+- Stile: leggero, coerente con il sito, testo semplice “DE / EN”, senza farlo sembrare una CTA principale.
+- Tracking: mantenere l’evento `language_switch` esistente.
 
-```text
-Today / Heute  ->  Fissi / Klassiker  ->  Week / Woche
-```
+2. Hero mobile A/B test senza carosello
+- Su mobile, quando l’A/B test è attivo, mostrare una singola immagine statica in base alla variante assegnata:
+  - food: foto cibo
+  - dining: foto tavola/contesto conviviale
+  - garden: foto giardino
+- Eliminare il carosello, i dots e il cambio immagine dalla hero mobile, così l’unico elemento che cambia tra le varianti è il contesto fotografico.
+- Mantenere identici copy, CTA, overlay, spaziature e comportamento per tutte le varianti mobile.
+- Su desktop mantenere il comportamento attuale con carosello, così non cambiamo l’esperienza desktop.
 
-La priorità resta “scelta rapida”, con weekly menu secondario.
+3. Pulizia UX e performance
+- Evitare di caricare `HeroCarousel` su mobile quando non serve.
+- Tenere il tracking A/B già creato: impression e click continueranno a includere `hero_variant`.
+- Verificare che la hero resti ottimizzata per LCP: immagine statica subito visibile, niente dinamiche inutili su mobile.
 
-## Interventi UX
+File principali coinvolti:
+- `src/components/Hero.tsx`
+- `src/components/Navigation.tsx`
+- `src/components/LanguageSwitcher.tsx`
+- probabilmente un nuovo piccolo componente per il selettore lingua mobile lungo pagina, oppure integrazione diretta in `Index.tsx`
 
-1. **Tab sticky mobile più chiari**
-   - Mantengo la barra sticky `Heute / Fix / Woche`.
-   - Rendo più evidente quale sezione si sta aprendo.
-   - Miglioro microcopy e label: meno tecnico, più orientato alla scelta reale dell’utente.
-
-2. **Gerarchia dei blocchi menu**
-   - `Heute` resta il blocco più immediato.
-   - `Fix / Klassiker` diventa il secondo blocco principale, perché è utile quando il daily menu non convince o non è disponibile.
-   - `Woche` resta secondario: accessibile dal tab, ma in accordion chiuso o visivamente più leggero.
-
-3. **Intro brevi e concrete**
-   - Riscrivo le frasi descrittive usando il documento caricato:
-     - frasi meno perfette e meno “marketing”.
-     - più ritmo parlato.
-     - dettagli concreti: cucina, piatti caldi, pranzo, cortile, allergie da chiedere al banco.
-   - Evito formule tipo “at a glance”, “freshly cooked” ripetuto in modo generico, tripletti troppo lisci.
-
-4. **Stati chiuso / no menu più naturali**
-   - Rendo i testi di chiusura meno rigidi.
-   - Evito em dash e frasi troppo levigate.
-   - Mantengo chiarezza pratica: oggi chiuso, cosa si può guardare dopo, quando tornare.
-
-5. **Allergeni e note pratiche**
-   - Riscrivo il box allergeni in tono più umano e diretto.
-   - Il senso resta lo stesso: gluten-free segnalato, ma cucina non esclusivamente gluten-free, quindi meglio chiedere.
-
-## Stile copy da applicare
-Seguirò queste regole dal file caricato:
-
-- frasi con lunghezza variabile;
-- meno bullet e meno copy “troppo pulito”; 
-- pochissimo uso di `—`;
-- parole concrete invece di formule generiche;
-- piccoli dettagli realistici, senza inventare promesse non verificabili;
-- tono caldo ma non troppo ispirazionale.
-
-## Dettagli tecnici
-
-File principale:
-- `src/components/MenuSection.tsx`
-
-Possibili aggiustamenti collegati:
-- testi statici in `src/data/klassikerData.ts`, se il sottotitolo dei Klassiker risulta troppo generico;
-- nessun cambio database;
-- nessun cambio al sistema weekly menu o al Google Sheet;
-- nessun cambio alle immagini o all’A/B test della hero.
-
-## Verifica
-Dopo le modifiche:
-- controllo TypeScript con `bunx tsc --noEmit`;
-- controllo manuale della sezione menu in mobile, viewport circa `390x494`, perché è quello che stai guardando ora;
-- verifico che i tab sticky non coprano i titoli dopo lo scroll.
+Nota: aggiornerò anche la memoria del progetto sulla posizione del language switcher, perché la nuova preferenza sostituisce quella precedente “mobile dentro hamburger”.
