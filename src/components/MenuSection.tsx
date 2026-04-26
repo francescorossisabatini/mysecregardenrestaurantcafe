@@ -547,6 +547,17 @@ export const MenuSection = () => {
                                   )}
                                 </div>
                               )}
+                              {!item.isUnavailable && (
+                                <MenuDishDetails
+                                  details={{
+                                    descriptionShort: item.descriptionShort,
+                                    ingredientsMain: item.ingredientsMain,
+                                    allergens: item.allergens,
+                                    gfDisclaimer: item.gfDisclaimer,
+                                    ingredientProducers: item.ingredientProducers,
+                                  }}
+                                />
+                              )}
                             </div>
                             <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
