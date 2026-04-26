@@ -11,8 +11,7 @@ import {
 import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
@@ -75,7 +74,6 @@ const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails })
 export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
-  const [weeklyOpen, setWeeklyOpen] = useState(false);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
