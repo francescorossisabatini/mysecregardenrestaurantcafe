@@ -66,6 +66,11 @@ const WeeklyDishDetails = ({ text }: { text: string }) => (
   <MenuDishDetails details={inferDishDetails(text)} compact />
 );
 
+const dishDetails = (text: string, meta?: Parameters<typeof MenuDishDetails>[0]["details"]) => ({
+  ...inferDishDetails(text),
+  ...meta,
+});
+
 export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
