@@ -270,8 +270,8 @@ export const MenuSection = () => {
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
                   {language === "de"
-                    ? "Glutenfreie Optionen sind gekennzeichnet. Unsere Küche ist jedoch nicht ausschließlich glutenfrei — bitte sprich uns bei Allergien oder Kreuzkontamination an."
-                    : "Gluten-free options are marked. Our kitchen is not exclusively gluten-free — please ask our team about allergies or cross-contamination."}
+                    ? "Glutenfreie Optionen sind markiert. Unsere Küche ist aber klein und nicht rein glutenfrei. Bei Allergien bitte kurz fragen, lieber einmal zu viel."
+                    : "Gluten-free options are marked. Our kitchen is small and not fully gluten-free. If you have allergies, please ask us first."}
                 </p>
               </div>
               </>
@@ -481,8 +481,8 @@ export const MenuSection = () => {
           <div className="text-center py-10 md:py-14">
             <p className="font-cormorant text-lg md:text-xl text-muted-foreground italic leading-relaxed whitespace-pre-line">
               {language === "de" 
-                ? "Nicht alles bleibt.\nUnd das gehört dazu." 
-                : "Not everything stays.\nAnd that's part of it."}
+                ? "Manches kochen wir nur heute.\nEin paar Dinge bleiben, weil ihr sie immer wieder bestellt." 
+                : "Some dishes are only here today.\nA few stay because people keep asking for them."}
             </p>
           </div>
           
@@ -492,7 +492,7 @@ export const MenuSection = () => {
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
                 {klassikerMenu.title[language]}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
                 {klassikerMenu.subtitle[language]}
               </p>
               <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
