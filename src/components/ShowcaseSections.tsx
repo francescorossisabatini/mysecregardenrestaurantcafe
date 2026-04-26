@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { CalendarDays, MapPin } from "lucide-react";
+import { BookOpen, MapPin } from "lucide-react";
 import { SITE } from "@/config/site";
 import curryOfTheDay from "@/assets/curry-of-the-day.webp";
 import entranceGarden from "@/assets/entrance-garden.webp";
@@ -45,9 +45,9 @@ export const ShowcaseSections = () => {
                   : "Plus our beloved classics, available every day."}
               </p>
               <Button className="font-work" asChild>
-                <Link to="/wochenkarte">
-                  <CalendarDays className="w-4 h-4 mr-2" />
-                  {language === "de" ? "Wochenmenü ansehen" : "View Weekly Specials"}
+                <Link to="/#menu">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  {language === "de" ? "Speisekarte ansehen" : "View Menu"}
                 </Link>
               </Button>
             </div>
