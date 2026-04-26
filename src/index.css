@@ -185,6 +185,11 @@ Background: Warm cream #F5F0E8
     @apply text-foreground font-lora text-body;
     background: hsl(var(--background));
   }
+
+  ::selection {
+    background: hsl(var(--accent) / 0.22);
+    color: hsl(var(--foreground));
+  }
   
   .dark body {
     background: hsl(var(--background));
@@ -222,9 +227,37 @@ Background: Warm cream #F5F0E8
 
 /* Improved contrast for muted/micro-copy text */
 @layer utilities {
+  .bg-nav-surface {
+    background: hsl(var(--background) / 0.95);
+  }
+
+  .border-soft {
+    border-color: hsl(var(--border) / 0.75);
+  }
+
+  .shadow-design-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-design-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .text-action {
+    color: hsl(var(--accent));
+  }
+
+  .bg-action {
+    background: hsl(var(--accent));
+  }
+
+  .text-on-action {
+    color: hsl(var(--accent-foreground));
+  }
+
   /* Higher contrast variant for small text and micro-copy */
   .text-muted-high-contrast {
-    color: hsl(0 0% 22%);
+    color: hsl(var(--navy-400));
   }
   
   .dark .text-muted-high-contrast {
