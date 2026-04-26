@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, Phone, MapPin, Instagram } from "lucide-react";
+import { Menu, X, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
@@ -99,44 +99,13 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop CTAs + Language */}
+          {/* Desktop Language */}
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="navbar" />
-            
-            {/* Instagram icon */}
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg text-foreground hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? `${SITE.instagramHandle} auf Instagram (öffnet in neuem Tab)` : `${SITE.instagramHandle} on Instagram (opens in new tab)`}
-              title={SITE.instagramHandle}
-            >
-              <Instagram className="w-5 h-5" aria-hidden="true" />
-            </a>
-            
-            <Button
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
-              onClick={() => { window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'desktop_nav' }); window.location.href = `tel:${SITE.phoneTel}`; }}
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              {language === "de" ? "Anrufen" : "Call"}
-            </Button>
           </div>
 
           {/* Mobile nav actions */}
           <div className="lg:hidden flex items-center gap-2 flex-shrink-0">
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-10 w-10 inline-flex items-center justify-center rounded-lg text-foreground hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? `${SITE.instagramHandle} auf Instagram (öffnet in neuem Tab)` : `${SITE.instagramHandle} on Instagram (opens in new tab)`}
-              title={SITE.instagramHandle}
-            >
-              <Instagram className="w-5 h-5" aria-hidden="true" />
-            </a>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="h-10 w-10 inline-flex items-center justify-center rounded-lg transition-colors touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
