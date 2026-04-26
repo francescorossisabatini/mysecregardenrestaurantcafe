@@ -1,5 +1,6 @@
 import { Star, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SITE } from "@/config/site";
 
 const reviews = [
   {
@@ -43,6 +44,9 @@ export const Reviews = () => {
               <Star key={i} className="w-5 h-5 fill-current" />
             ))}
           </div>
+          <p className="mt-3 text-sm text-muted-foreground font-work">
+            {SITE.rating}★ · {SITE.reviewCount} {language === "de" ? "Bewertungen auf Google" : "reviews on Google"}
+          </p>
         </div>
 
         {/* Mobile: vertical, Desktop: horizontal */}
