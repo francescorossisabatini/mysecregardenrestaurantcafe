@@ -6,7 +6,7 @@ import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 import { SITE } from "@/config/site";
 
 export const Contact = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   return (
     <section id="contact" className="py-32 md:py-40 bg-muted/30">
