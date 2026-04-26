@@ -79,6 +79,10 @@ export const MenuSection = () => {
   const { menu, isLoading } = useWeeklyMenu();
   const [weeklyOpen, setWeeklyOpen] = useState(false);
   const [drinksExpanded, setDrinksExpanded] = useState(false);
+  const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
+  const todayRef = useRef<HTMLDivElement>(null);
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const weekRef = useRef<HTMLDivElement>(null);
   
   // Memoize date calculations to avoid recalculating on every render
   // This prevents forced reflows from repeated Date operations
@@ -133,15 +137,48 @@ export const MenuSection = () => {
     en: dayNames.en[dateInfo.nextDayIndex]
   }), [dayNames, dateInfo.nextDayIndex]);
 
+  const scrollToMenuBlock = (tab: "today" | "fixed" | "week") => {
+    const target = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
+    if (!target) return;
+
+    setActiveMenuTab(tab);
+    const offset = 128;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
+  };
+
   return (
     <section id="menu" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
+          <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/30 bg-background/95 px-4 py-2 backdrop-blur-md">
+            <div className="grid grid-cols-3 gap-1 rounded-lg bg-muted/40 p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
+              {[
+                { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
+                { id: "fixed" as const, label: language === "de" ? "Fix" : "Fixed" },
+                { id: "week" as const, label: language === "de" ? "Woche" : "Week" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeMenuTab === tab.id}
+                  onClick={() => scrollToMenuBlock(tab.id)}
+                  className={`rounded-md px-2 py-2 text-sm font-work font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                    activeMenuTab === tab.id
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
           
           {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
           {SHOW_WEEKLY_MENU ? (
           <>
-          <div className="mb-14 md:mb-16">
+          <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute frisch gekocht" : "Freshly cooked today"}
@@ -320,14 +357,14 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu Anchor Label */}
-          <div id="wochenmenu" className="pt-8">
+          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
             <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
           
           {/* Weekly Menu Accordion */}
-          <div className="my-2">
+          <div className="my-2 rounded-lg border border-border/30 bg-muted/15 px-3 py-2">
             <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
@@ -450,7 +487,7 @@ export const MenuSection = () => {
           </div>
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
-          <div>
+          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
                 {klassikerMenu.title[language]}
