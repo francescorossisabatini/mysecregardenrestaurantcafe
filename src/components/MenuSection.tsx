@@ -372,23 +372,9 @@ export const MenuSection = () => {
             </p>
           </div>
           
-          {/* Weekly Menu Accordion */}
-          <div className="my-2 rounded-2xl border border-border/75 bg-card/70 px-3 py-2 shadow-card">
-            <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
-              <CollapsibleTrigger className="w-full group">
-                <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
-                  <span className="font-cormorant text-base md:text-lg italic">
-                    {dateInfo.isSunday
-                      ? (language === "de" ? "Was dich nächste Woche erwartet" : "What awaits you next week")
-                      : (language === "de" ? "Ein Blick auf diese Woche" : "A look at this week")}
-                  </span>
-                  <ChevronDown 
-                    className={`w-4 h-4 transition-transform duration-200 ${weeklyOpen ? "rotate-180" : ""}`} 
-                  />
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                <div className="pt-4 pb-2 space-y-6">
+          {/* Weekly Menu */}
+          <div className="my-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-5 shadow-card md:px-5">
+                <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
                       {[1, 2, 3].map((i) => (
@@ -481,8 +467,6 @@ export const MenuSection = () => {
                     </>
                   )}
                 </div>
-              </CollapsibleContent>
-            </Collapsible>
           </div>
           </>
           ) : (
