@@ -4,6 +4,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { Hero } from "@/components/Hero";
 import { Navigation } from "@/components/Navigation";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { MobileLanguageStrip } from "@/components/MobileLanguageStrip";
 
 // Lazy load below-the-fold components to reduce initial JS bundle
 const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
@@ -73,6 +74,7 @@ const Index = () => {
       
       {/* HERO: Big image, H1, subtitle, 2 CTAs */}
       <Hero />
+      <MobileLanguageStrip />
       
       {/* VALUE PROP: Label, H2, paragraph, 3 cards, CTA */}
       <Suspense fallback={<SectionLoader />}>
