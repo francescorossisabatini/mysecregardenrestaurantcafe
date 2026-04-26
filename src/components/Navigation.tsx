@@ -61,15 +61,15 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/20 py-2 md:py-4 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 bg-nav-surface backdrop-blur-md border-b border-border/75 py-2 md:py-3 transition-all duration-500 ease-in-out ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } ${scrolled ? "shadow-sm" : ""}`}
+        } ${scrolled ? "shadow-design-card" : ""}`}
       >
-        <div className="container mx-auto flex min-h-16 items-center justify-between gap-4 px-5 md:min-h-0 md:px-4">
+        <div className="container mx-auto flex min-h-16 items-center justify-between gap-4 px-5 md:min-h-14 md:px-4">
           {/* Logo + Subtitle */}
           <Link 
             to="/" 
-            className="group flex min-w-0 flex-1 items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 lg:flex-none"
+            className="group flex min-w-0 flex-1 items-center gap-3 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 lg:flex-none"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" aria-hidden="true" />
@@ -89,7 +89,7 @@ export const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-sm font-work text-foreground hover:text-primary transition-colors"
+              className="font-work text-xs font-medium uppercase tracking-[0.08em] text-primary/80 transition-colors hover:text-primary"
               >
                 {link.label}
               </Link>
@@ -106,7 +106,7 @@ export const Navigation = () => {
             <LanguageSwitcher variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-md border border-border/60 bg-background/80 text-primary shadow-sm transition-colors hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border/75 bg-card/85 text-primary shadow-sm transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
               aria-label={isMobileMenuOpen 
                 ? (language === "de" ? "Menü schließen" : "Close menu") 
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -126,7 +126,7 @@ export const Navigation = () => {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-foreground/50 transition-opacity duration-300 ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
@@ -134,12 +134,12 @@ export const Navigation = () => {
 
         {/* Drawer */}
         <div
-          className={`absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-300 ease-out flex flex-col ${
+          className={`absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-300 ease-out flex flex-col border-r border-border/75 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Drawer Header */}
-          <div className="p-6 border-b border-border/20 flex items-center justify-between">
+          <div className="p-6 border-b border-border/75 flex items-center justify-between">
             <Link 
               to="/" 
               onClick={() => setIsMobileMenuOpen(false)} 
@@ -165,7 +165,7 @@ export const Navigation = () => {
                 key={link.to}
                 to={link.to}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 px-4 text-base text-foreground hover:text-primary hover:bg-muted/30 rounded-lg transition-colors font-work"
+                className="block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] text-primary/85 transition-colors hover:bg-muted hover:text-primary"
               >
                 {link.label}
               </Link>
