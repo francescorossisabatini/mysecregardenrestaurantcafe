@@ -68,7 +68,7 @@ export const Navigation = () => {
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } ${scrolled ? "shadow-sm" : ""}`}
       >
-        <div className="container mx-auto px-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 flex min-h-12 md:min-h-0 items-center justify-between gap-3">
           {/* Logo + Subtitle */}
           <Link 
             to="/" 
@@ -77,7 +77,7 @@ export const Navigation = () => {
           >
             <Logo className="w-9 h-9 md:w-12 md:h-12 flex-shrink-0" aria-hidden="true" />
             <div className="min-w-0 leading-tight">
-              <span className="block truncate font-cormorant text-base md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+              <span className="block truncate font-cormorant text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                 My Secret Garden
               </span>
               <p className="hidden sm:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
@@ -106,6 +106,7 @@ export const Navigation = () => {
 
           {/* Mobile nav actions */}
           <div className="lg:hidden flex items-center gap-2 flex-shrink-0">
+            <LanguageSwitcher variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="h-10 w-10 inline-flex items-center justify-center rounded-lg transition-colors touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
@@ -116,15 +117,6 @@ export const Navigation = () => {
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
-          </div>
-        </div>
-
-        <div className="lg:hidden mt-2 border-t border-border/20">
-          <div className="container mx-auto px-4 pt-2 flex items-center justify-between gap-3">
-            <span className="text-[11px] font-work text-muted-foreground truncate">
-              Vegetarian Café • Vienna
-            </span>
-            <LanguageSwitcher variant="mobile" />
           </div>
         </div>
       </nav>
