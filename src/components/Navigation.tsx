@@ -68,16 +68,16 @@ export const Navigation = () => {
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } ${scrolled ? "shadow-sm" : ""}`}
       >
-        <div className="container mx-auto px-4 flex min-h-12 md:min-h-0 items-center justify-between gap-3">
+        <div className="container mx-auto flex min-h-16 items-center justify-between gap-4 px-5 md:min-h-0 md:px-4">
           {/* Logo + Subtitle */}
           <Link 
             to="/" 
-            className="flex min-w-0 items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+            className="group flex min-w-0 flex-1 items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 lg:flex-none"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
-            <Logo className="w-9 h-9 md:w-12 md:h-12 flex-shrink-0" aria-hidden="true" />
+            <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" aria-hidden="true" />
             <div className="min-w-0 leading-tight">
-              <span className="block truncate font-cormorant text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+              <span className="block max-w-[9.75rem] truncate font-cormorant text-xl font-bold text-foreground transition-colors group-hover:text-primary sm:max-w-none md:text-xl">
                 My Secret Garden
               </span>
               <p className="hidden sm:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
@@ -105,11 +105,11 @@ export const Navigation = () => {
           </div>
 
           {/* Mobile nav actions */}
-          <div className="lg:hidden flex items-center gap-2 flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-3 lg:hidden">
             <LanguageSwitcher variant="mobile" />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="h-10 w-10 inline-flex items-center justify-center rounded-lg transition-colors touch-manipulation text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-md border border-border/60 bg-background/80 text-primary shadow-sm transition-colors hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
               aria-label={isMobileMenuOpen 
                 ? (language === "de" ? "Menü schließen" : "Close menu") 
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
