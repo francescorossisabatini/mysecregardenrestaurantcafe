@@ -65,7 +65,7 @@ export const CTAEndBlock = ({
                 className="w-full justify-center gap-2 py-6 text-base font-work"
                 asChild
               >
-                <Link to="/wochenkarte">
+                <Link to="/menu">
                   <CalendarDays className="w-5 h-5" />
                   {language === "de" ? "Wochenmenü" : "Weekly Specials"}
                 </Link>
@@ -78,7 +78,7 @@ export const CTAEndBlock = ({
                 className="w-full justify-center gap-2 py-6 text-base font-work"
                 asChild
               >
-                <Link to="/#menu">
+                <Link to="/menu">
                   <UtensilsCrossed className="w-5 h-5" />
                   {language === "de" ? "Speisekarte" : "Menu"}
                 </Link>
