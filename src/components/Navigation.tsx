@@ -137,7 +137,7 @@ export const Navigation = () => {
             </Button>
           </div>
 
-          {/* Mobile: Instagram icon + Call button */}
+          {/* Mobile: keep top bar lightweight; call is available in drawer and sticky bar */}
           <div className="lg:hidden flex items-center gap-2">
             <a
               href={SITE.instagramUrl}
@@ -149,16 +149,6 @@ export const Navigation = () => {
             >
               <Instagram className="w-5 h-5" aria-hidden="true" />
             </a>
-            <Button
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work"
-              onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
-              aria-label={language === "de" ? "Anrufen" : "Call"}
-              title={language === "de" ? "Anrufen" : "Call"}
-            >
-              <Phone className="w-4 h-4" aria-hidden="true" />
-              <span className="sr-only">{language === "de" ? "Anrufen" : "Call"}</span>
-            </Button>
           </div>
         </div>
       </nav>

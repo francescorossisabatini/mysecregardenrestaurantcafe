@@ -84,7 +84,7 @@ export const Hero = () => {
   const effectivelyOpen = status.isOpen && !isClosedToday;
 
   return (
-    <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
         className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
@@ -112,15 +112,15 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-black/20 md:hidden" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-20 pb-8 flex flex-col justify-center h-full pointer-events-none">
-        <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 md:space-y-5">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-16 md:pt-20 pb-6 md:pb-8 flex flex-col justify-center h-full pointer-events-none">
+        <div className="max-w-4xl mx-auto text-center space-y-2.5 sm:space-y-4 md:space-y-5">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.9] mb-2 sm:mb-4 animate-fade-in-hero">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
             {SITE.name}
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className="text-sm sm:text-base md:text-lg font-lora text-background drop-shadow-xl">
+          <p className="text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl">
             Vegetarian Café & Restaurant • Vienna
           </p>
 
@@ -131,12 +131,12 @@ export const Hero = () => {
             {/* Case 1: Open now */}
             {effectivelyOpen && (
               <>
-                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-green-500/25 text-green-100 border border-green-400/40 shadow-sm">
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-green-500/25 text-green-100 border border-green-400/40 shadow-sm">
                   <span className="w-2 h-2 rounded-full mr-2 bg-green-400 animate-pulse" />
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
-                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
+                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
                   </span>
                 )}
@@ -144,7 +144,7 @@ export const Hero = () => {
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-warning/25 text-amber-100 border border-amber-400/40 shadow-sm">
+              <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-warning/25 text-amber-100 border border-amber-400/40 shadow-sm">
                 <span className="w-2 h-2 rounded-full mr-2 bg-amber-400" />
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
@@ -152,17 +152,17 @@ export const Hero = () => {
             {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
             {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
               <>
-                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
                   <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
                   {language === "de" ? "Jetzt geschlossen" : "Closed now"}
                 </span>
                 {status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
+                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
                 {status.tomorrowClosed && (
-                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
+                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? "• morgen geschlossen" : "• closed tomorrow"}
                   </span>
                 )}
@@ -171,17 +171,17 @@ export const Hero = () => {
             {/* Case 4: Closed today (Sunday, holiday, no menu) */}
             {!effectivelyOpen && isClosedToday && (
               <>
-                <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
                   <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
                   {language === "de" ? "Heute geschlossen" : "Closed today"}
                 </span>
                 {closedReason === "no-menu" && (
-                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
+                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? "• kein Menü heute" : "• no menu today"}
                   </span>
                 )}
                 {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-sm text-background/90 drop-shadow-md font-medium">
+                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
                     {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
@@ -190,13 +190,13 @@ export const Hero = () => {
           </div>
 
           {/* CTA Buttons: Menu (primary), Specials (secondary) */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-6 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showButtons ? "opacity-100" : "opacity-0"
           }`}>
             {/* Primary: View Menu */}
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
               <Link to="/#menu" onClick={() => window.gtag?.('event', 'click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' })}>
@@ -209,7 +209,7 @@ export const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              className="bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
               <Link to="/wochenkarte" onClick={() => window.gtag?.('event', 'click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' })}>
@@ -220,7 +220,7 @@ export const Hero = () => {
           </div>
 
           {/* Carousel dots */}
-          <div className={`flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          <div className={`hidden sm:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {heroImages.map((_, index) => (
@@ -243,7 +243,7 @@ export const Hero = () => {
 
       {/* Scroll indicator */}
       <div 
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-500 ${
+        className={`hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-500 ${
           showScrollIndicator && showDots ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
