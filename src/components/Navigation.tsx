@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, Phone, MapPin } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { SITE } from "@/config/site";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
@@ -175,37 +173,6 @@ export const Navigation = () => {
             ))}
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="p-6 border-t border-border/20 space-y-3">
-            <Button
-              size="lg"
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-work"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                window.location.href = `tel:${SITE.phoneTel}`;
-              }}
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              {language === "de" ? "Jetzt anrufen" : "Call Now"}
-            </Button>
-
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full font-work"
-              asChild
-            >
-              <a 
-                href={SITE.mapsUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <MapPin className="w-5 h-5 mr-2" />
-                {language === "de" ? "Route anzeigen" : "Get Directions"}
-              </a>
-            </Button>
-          </div>
         </div>
       </div>
     </>
