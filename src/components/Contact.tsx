@@ -1,12 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Clock, Mail } from "lucide-react";
+import { MapPin, Phone, Clock, Mail, DoorOpen, HandPlatter } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 import { SITE } from "@/config/site";
 
 export const Contact = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   return (
     <section id="contact" className="py-32 md:py-40 bg-muted/30">
@@ -30,6 +30,16 @@ export const Contact = () => {
                 Im Raimundhof<br />
                 1060 Wien, Österreich
               </p>
+              <div className="mt-4 space-y-2 text-sm text-muted-foreground font-work leading-relaxed">
+                <p className="flex items-start justify-center sm:justify-start gap-2">
+                  <DoorOpen className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
+                  <span>{SITE.courtyardInstruction[language]}</span>
+                </p>
+                <p className="flex items-start justify-center sm:justify-start gap-2">
+                  <HandPlatter className="w-4 h-4 mt-0.5 text-accent shrink-0" aria-hidden="true" />
+                  <span>{SITE.counterServiceNote[language]}</span>
+                </p>
+              </div>
             </div>
 
             <div>
@@ -85,13 +95,23 @@ export const Contact = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="text-center">
+          <div className="text-center flex flex-col sm:flex-row justify-center gap-3">
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-12 py-7 font-lora"
               asChild
             >
               <a href={`tel:${SITE.phoneTel}`} onClick={() => window.gtag?.('event', 'click_call', { event_category: 'engagement', event_label: 'visit_section' })}>{t("contact.call")}</a>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-12 py-7 font-lora"
+              asChild
+            >
+              <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" onClick={() => window.gtag?.('event', 'click_directions', { event_category: 'engagement', event_label: 'visit_section' })}>
+                {language === "de" ? "Route anzeigen" : "Get Directions"}
+              </a>
             </Button>
           </div>
         </div>

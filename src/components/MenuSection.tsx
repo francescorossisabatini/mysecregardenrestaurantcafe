@@ -12,7 +12,7 @@ import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
@@ -148,8 +148,8 @@ export const MenuSection = () => {
               </h2>
               <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
                 {language === "de" 
-                  ? "Was heute da ist, bestimmt das Gericht." 
-                  : "What's here today determines the dish."}
+                  ? "Tagesgerichte, Preise und Hinweise auf vegan oder glutenfrei auf einen Blick." 
+                  : "Daily dishes, prices and vegan or gluten-free notes at a glance."}
               </p>
             </div>
             
@@ -164,6 +164,7 @@ export const MenuSection = () => {
                 ))}
               </div>
             ) : !isClosed && todayMenu ? (
+              <>
               <div className="space-y-4">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
@@ -228,6 +229,15 @@ export const MenuSection = () => {
                   </div>
                 )}
               </div>
+              <div className="mt-4 flex items-start gap-2 rounded-lg border border-border/30 bg-muted/30 px-4 py-3 text-left">
+                <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
+                <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
+                  {language === "de"
+                    ? "Glutenfreie Optionen sind gekennzeichnet. Unsere Küche ist jedoch nicht ausschließlich glutenfrei — bitte sprich uns bei Allergien oder Kreuzkontamination an."
+                    : "Gluten-free options are marked. Our kitchen is not exclusively gluten-free — please ask our team about allergies or cross-contamination."}
+                </p>
+              </div>
+              </>
             ) : (
               <div className="bg-daily/50 rounded-xl p-8 text-center space-y-6">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}

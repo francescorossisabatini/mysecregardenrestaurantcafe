@@ -1,55 +1,98 @@
-## Piano UX per migliorare il sito
+## Piano UX aggiornato con insight CS01
 
-Obiettivo: rendere la home più chiara e meno affollata soprattutto su mobile, mantenendo l’identità botanica/spirituale e senza introdurre animazioni vietate.
+Obiettivo: usare il file operativo “Personas & User Flows” per trasformare il sito da pagina narrativa a strumento di decisione rapido, soprattutto mobile, senza perdere identità botanica/spirituale.
 
-### 1. Hero mobile più pulita e orientata all’azione
-- Ridurre l’altezza percepita e la densità della hero su mobile.
-- Rendere il titolo più compatto su schermi piccoli.
-- Mantenere una sola gerarchia primaria: nome del ristorante, stato aperto/chiuso, CTA principale.
-- Spostare o ridurre elementi secondari come dots del carousel e indicatore “Mehr entdecken” su mobile.
+### Insight principali da applicare
 
-### 2. CTA più coerenti e meno duplicate
-- Definire una priorità chiara:
-  - Prima azione: vedere il menu del giorno.
-  - Seconda azione: chiamare o ottenere indicazioni.
-  - Terza azione: settimane/specials.
-- Evitare che hero, navbar, sticky bar e blocchi finali competano tutti nello stesso momento.
-- Su mobile, usare la sticky bar solo dopo lo scroll, come già previsto, ma rendere la hero meno carica all’inizio.
+- Il 74% del traffico è mobile: ogni scelta deve essere thumb-first.
+- La sessione media è 58 secondi: il sito deve rispondere subito, non richiedere esplorazione.
+- Il 99% sono nuovi utenti: la home deve convincere chi non conosce il posto.
+- Il menu è asset prioritario: “cosa c’è oggi?” deve essere raggiungibile in 1 tap.
+- Il profilo “Seeker” deve capire in 10 secondi:
+  1. cos’è il posto;
+  2. se è aperto;
+  3. se vale la pena andarci.
+- Mancano alcuni trust/friction reducers: rating 4.7★ / 936+, indicazioni per trovare il cortile, nota “ordina al banco”.
+- Per gluten-free serve una nota onesta: opzioni GF presenti, ma cucina non dedicata.
 
-### 3. Cookie banner meno invasivo su mobile
-- Trasformare il banner cookie in una versione più compatta.
-- Ridurre altezza, padding e testo visibile iniziale.
-- Mantenere i pulsanti “Akzeptieren / Ablehnen” ben cliccabili.
-- Fare in modo che il banner non sembri in competizione con CTA e contenuto principale.
+### 1. Hero più orientata alla decisione
 
-### 4. Navigazione mobile più semplice
-- Valutare la rimozione del pulsante call dalla navbar mobile, dato che è già presente nella sticky bar dopo lo scroll.
-- Lasciare in alto solo hamburger, logo e una singola azione discreta se necessario.
-- Mantenere il language switcher dentro il menu hamburger, come da memoria del progetto.
+Aggiungere sopra la piega mobile un micro-blocco di fiducia e chiarezza:
+- stato aperto/chiuso già presente;
+- rating “4.7★ da 936+ recensioni”;
+- frase breve di posizionamento tipo “Vegetarian world cuisine in a hidden garden courtyard”.
 
-### 5. Menu section più scansionabile
-- Rafforzare la leggibilità dei piatti del giorno.
-- Rendere più evidente il prezzo e la categoria del piatto.
-- Migliorare la separazione tra “oggi”, “settimana” e “classici”, senza cambiare l’architettura verticale esistente.
+La hero deve restare compatta: niente nuove CTA pesanti, solo segnali rapidi che aiutano il nuovo visitatore a decidere se restare.
 
-### 6. Controllo finale UX responsive
-- Verificare principalmente il viewport mobile attuale: 390x494.
-- Controllare anche desktop per evitare regressioni.
-- Mantenere:
-  - foto reali soltanto;
-  - niente zoom/parallax;
-  - solo fade-in lenti;
-  - stile botanical/spiritual già presente.
+### 2. Percorso Menu Today più diretto
+
+Rafforzare la CTA primaria “Tagesmenü / Today’s menu” e assicurare che:
+- sia la prima azione percepita;
+- porti direttamente alla sezione menu;
+- il menu di oggi sia leggibile in pochi secondi;
+- prezzi e badge dietetici siano scansionabili.
+
+Il profilo Regular deve poter arrivare al menu in massimo 1 tap dalla home.
+
+### 3. Sezione “Il Posto / Visit” come riduzione della frizione
+
+Inserire o rafforzare micro-copy operativo nella parte visit/contact o nella sezione più adatta della home:
+- “Enter through the arch at [address]” / equivalente tedesco;
+- “Order at the counter, then choose your seat”;
+- indicazioni chiare verso Google Maps.
+
+Questo serve al primo visitatore che non conosce il cortile nascosto e potrebbe essere confuso dall’esperienza self-service.
+
+### 4. Trust signals senza appesantire
+
+Aggiungere segnali di fiducia in punti mirati:
+- hero: rating breve;
+- eventuale sezione recensioni: rafforzare il numero recensioni;
+- vicino al menu: badge/etichette alimentari visibili ma sobrie.
+
+Evitare nuovi blocchi grandi: l’obiettivo è aumentare fiducia senza aumentare rumore visivo.
+
+### 5. Dietary / gluten-free copy onesto
+
+Aggiungere una nota discreta ma chiara vicino ai badge o alla sezione menu:
+- opzioni gluten-free disponibili quando indicate;
+- cucina non dedicata esclusivamente al gluten-free;
+- chiedere allo staff per allergie o contaminazione incrociata.
+
+Questo protegge la fiducia del profilo con restrizioni alimentari senza promettere troppo.
+
+### 6. Link alla storia per il profilo spiritual-curious
+
+Mantenere la filosofia come elemento secondario ma ben collegato:
+- sezione filosofia/home con CTA chiara verso `/about`;
+- non far competere la storia con menu e indicazioni above-the-fold;
+- preservare tono botanico/spirituale esistente.
+
+### 7. Cosa NON implementare ora
+
+Per evitare scope creep, non includere in questo step:
+- nuova pagina `/menu` dedicata;
+- pagina `/cakes`;
+- form ordine torte;
+- form prenotazioni;
+- loyalty/notifiche per clienti abituali.
+
+Questi sono validi come roadmap futura, ma richiedono struttura, copy e possibile backend separati.
 
 ## Dettagli tecnici
 
-File principali da modificare:
-- `src/components/Hero.tsx`
-- `src/components/CookieConsent.tsx`
-- `src/components/Navigation.tsx`
-- `src/components/MenuSection.tsx`
-- eventualmente `src/components/MobileStickyBar.tsx`
+File probabili da aggiornare:
+- `src/components/Hero.tsx` per rating, micro-positioning e CTA primaria;
+- `src/components/MenuSection.tsx` per scanabilità, badge e nota GF;
+- `src/components/Contact.tsx` o sezione visit equivalente per cortile/counter-service;
+- `src/components/Reviews.tsx` se il rating/numero recensioni è già centralizzato lì;
+- `src/config/site.ts` se conviene centralizzare rating, review count, indirizzo e link Maps.
 
-Non sono previste modifiche al backend o al database.
+Non sono previste modifiche backend o database.
 
-Risultato atteso: una prima schermata mobile più respirabile, CTA più chiare, meno sovrapposizione tra cookie banner / navbar / hero / sticky bar, e un percorso utente più diretto verso menu, chiamata e indicazioni.
+## Criteri di successo
+
+- Su viewport mobile 390x494, entro la prima schermata si capisce: cosa è, se è aperto, perché fidarsi, dove andare dopo.
+- Il menu del giorno è raggiungibile e scansionabile velocemente.
+- Le informazioni pratiche riducono dubbi prima della visita fisica.
+- Il tono rimane coerente: reale, botanico/spirituale, niente immagini AI, niente zoom/parallax.

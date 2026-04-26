@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CalendarDays, UtensilsCrossed, ChevronDown } from "lucide-react";
+import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
 
 import minnesotaBowl from "@/assets/minnesota-bowl.webp";
 import heroGarden from "@/assets/garden-real.webp";
@@ -121,8 +121,15 @@ export const Hero = () => {
 
           {/* Subtitle - visible immediately for LCP */}
           <p className="text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl">
-            Vegetarian Café & Restaurant • Vienna
+            {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
+
+          <div className="flex items-center justify-center gap-2 text-background/95 drop-shadow-lg">
+            <span className="inline-flex items-center gap-1 rounded-full bg-background/10 border border-background/25 backdrop-blur-md px-3 py-1 text-xs sm:text-sm font-work font-medium">
+              <Star className="w-3.5 h-3.5 fill-current text-brand-star" aria-hidden="true" />
+              {SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}
+            </span>
+          </div>
 
           {/* Open/Closed chip - soft style */}
           <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-[1500ms] ease-out ${
@@ -196,7 +203,7 @@ export const Hero = () => {
             {/* Primary: View Menu */}
             <Button
               size="lg"
-              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 py-5 sm:py-6 shadow-lg"
               asChild
             >
               <Link to="/#menu" onClick={() => window.gtag?.('event', 'click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' })}>
