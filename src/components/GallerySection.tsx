@@ -108,8 +108,18 @@ export const GallerySection = () => {
 
   return (
     <section id="gallery" className="overflow-hidden bg-background py-16 md:py-24">
-      {/* Single static inspirational quote */}
-      <div className="container mx-auto max-w-3xl text-center px-6 mb-12 md:mb-16">
+      <div className="container mx-auto max-w-3xl px-6 text-center mb-12 md:mb-16">
+        <p className="mb-3 font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+          {language === "de" ? "Ein Blick in den Garten" : "A glimpse into the garden"}
+        </p>
+        <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-4">
+          {language === "de" ? "Momente, Teller und stille Details" : "Moments, plates and quiet details"}
+        </h2>
+        <p className="mx-auto max-w-2xl font-work text-sm md:text-base leading-relaxed text-muted-foreground mb-8">
+          {language === "de"
+            ? "Unsere Fotos zeigen, was den Besuch bei uns ausmacht: frisches vegetarisches Essen, warme Farben, echte Menschen und kleine botanische Spuren zwischen Küche, Tisch und Eingang."
+            : "Our photos show what a visit with us feels like: fresh vegetarian food, warm colours, real people and small botanical traces between kitchen, table and entrance."}
+        </p>
         <blockquote className="font-caveat text-2xl md:text-3xl text-foreground/80 italic">
           {language === "de" 
             ? "Das Gute in anderen zu sehen, ist der Anfang von Frieden." 
