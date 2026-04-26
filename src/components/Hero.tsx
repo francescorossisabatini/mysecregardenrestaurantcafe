@@ -12,7 +12,7 @@ import heroInterior from "@/assets/interior-real.webp";
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
-import { getHeroAbVariant, trackHeroAbEvent, trackHeroAbImpression, type HeroAbVariantId } from "@/lib/heroAbTest";
+import { getHeroAbVariant, isMobileHeroViewport, trackHeroAbEvent, trackHeroAbImpression, type HeroAbVariantId } from "@/lib/heroAbTest";
 
 // Lazy load the carousel - it's not needed for initial paint
 const HeroCarousel = lazy(() => import("@/components/HeroCarousel"));
@@ -48,6 +48,7 @@ export const Hero = () => {
   const [carouselMounted, setCarouselMounted] = useState(false);
   const [carouselVisible, setCarouselVisible] = useState(false);
   const [heroVariant, setHeroVariant] = useState<HeroAbVariantId | null>(null);
+  const [isMobileHero, setIsMobileHero] = useState(false);
   const { language } = useLanguage();
 
   const handleSlideChange = useCallback((index: number) => {
@@ -60,22 +61,26 @@ export const Hero = () => {
     const timer3 = setTimeout(() => setShowButtons(true), 800);
     const timer4 = setTimeout(() => setShowDots(true), 1200);
 
-    // Mount carousel after first paint, but keep the static image until carousel reports ready
-    const timer5 = setTimeout(() => setCarouselMounted(true), 100);
-
     return () => {
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
-      clearTimeout(timer5);
     };
   }, []);
 
   useEffect(() => {
     const variant = getHeroAbVariant();
     setHeroVariant(variant);
+    setIsMobileHero(isMobileHeroViewport());
     trackHeroAbImpression(variant);
   }, []);
+
+  useEffect(() => {
+    if (isMobileHero) return;
+
+    const timer = setTimeout(() => setCarouselMounted(true), 100);
+    return () => clearTimeout(timer);
+  }, [isMobileHero]);
 
   // Hide scroll indicator on scroll
   useEffect(() => {
@@ -99,22 +104,23 @@ export const Hero = () => {
   const effectivelyOpen = status.isOpen && !isClosedToday;
   const staticHeroImage = heroVariant ? mobileHeroVariants[heroVariant] : heroImages[0];
   const carouselImages = heroVariant ? [staticHeroImage, ...heroImages.filter((image) => image.src !== staticHeroImage.src)] : heroImages;
+  const showCarousel = carouselMounted && !isMobileHero;
 
   return (
     <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
-        className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         style={{
           backgroundImage: `url(${staticHeroImage.src})`,
           backgroundSize: "cover",
           backgroundPosition: staticHeroImage.position,
         }}
-        aria-hidden={carouselVisible}
+        aria-hidden={carouselVisible && !isMobileHero}
       />
 
-      {/* Lazy-loaded carousel - mounts after initial paint */}
-      {carouselMounted && (
+      {/* Lazy-loaded carousel - desktop only; mobile A/B test keeps one static image */}
+      {showCarousel && (
         <Suspense fallback={null}>
           <HeroCarousel 
             images={carouselImages} 
@@ -244,7 +250,7 @@ export const Hero = () => {
           </div>
 
           {/* Carousel dots */}
-          <div className={`hidden sm:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {carouselImages.map((_, index) => (
