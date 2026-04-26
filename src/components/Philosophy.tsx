@@ -91,7 +91,7 @@ export const Philosophy = () => {
                       "{t("philosophy.sri.quote")}"
                     </p>
                     <p className="text-sm md:text-base font-semibold text-primary">
-                      — {t("philosophy.sri.author")}
+                      {t("philosophy.sri.author")}
                     </p>
                   </div>
                 </div>
