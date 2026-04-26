@@ -36,8 +36,8 @@ export const ShowcaseSections = () => {
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Jeden Tag kochen wir zwei frische Hauptgerichte und eine Suppe – basierend auf dem, was gerade Saison hat." 
-                  : "Every day we cook two fresh main dishes and a soup – based on what's currently in season."}
+                  ? "Jeden Tag kochen wir zwei frische Hauptgerichte und eine Suppe. Die Auswahl richtet sich nach dem, was gerade Saison hat." 
+                  : "Every day we cook two fresh main dishes and a soup. The menu follows what is in season."}
               </p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
@@ -69,8 +69,8 @@ export const ShowcaseSections = () => {
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Im Raimundhof, abseits der Mariahilferstraße, liegt unser ruhiger Innenhof – eine Oase mitten in Wien." 
-                  : "In the Raimundhof, off Mariahilferstraße, lies our peaceful courtyard – an oasis in the heart of Vienna."}
+                  ? "Im Raimundhof, abseits der Mariahilferstraße, liegt unser ruhiger Innenhof. Ein grüner Platz mitten in Wien." 
+                  : "In the Raimundhof, just off Mariahilferstraße, you find our quiet courtyard. A green place in the heart of Vienna."}
               </p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
