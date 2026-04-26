@@ -60,20 +60,6 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
-// Curated selection IDs for the compact drinks view
-const CURATED_DRINK_IDS = [
-  "indian-chai-latte",
-  "matcha-latte", 
-  "kurkuma-latte",
-  "cappuccino",
-  "espresso",
-  "flat-white",
-  "pumpkin-spiced-latte", // signature/seasonal
-  "glueh-kombucha", // signature/seasonal
-  "mineral-water",
-  "cola",
-];
-
 export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
