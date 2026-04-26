@@ -357,14 +357,14 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu Anchor Label */}
-          <div id="wochenmenu" className="pt-8">
+          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
             <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
           
           {/* Weekly Menu Accordion */}
-          <div className="my-2">
+          <div className="my-2 rounded-lg border border-border/30 bg-muted/15 px-3 py-2">
             <Collapsible open={weeklyOpen} onOpenChange={setWeeklyOpen}>
               <CollapsibleTrigger className="w-full group">
                 <div className="flex items-center justify-center gap-2 py-3 text-muted-foreground hover:text-foreground transition-colors">
@@ -487,7 +487,7 @@ export const MenuSection = () => {
           </div>
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
-          <div>
+          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
                 {klassikerMenu.title[language]}
