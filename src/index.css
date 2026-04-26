@@ -2,83 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Botanical brand identity for My Secret Garden - with spiritual touch
+/* Botanical brand identity for My Secret Garden - refined with Design System v2.0
 All colors MUST be HSL format.
-Primary: Spiritual deep blue #243260
-Accent: Natural green gradient #74A84B → #A0C86F
-Background: Warm cream #F5F1E3
+Primary: Garden navy #264195
+Accent: Botanical green #5A7A2E
+Background: Warm cream #F5F0E8
 */
 
 @layer base {
   :root {
     /* Dietary state colors */
-    --color-vegan: #166534;
-    --color-gluten-free: #92400e;
-    --color-bio: #065f46;
+    --color-vegan: hsl(142 70% 24%);
+    --color-gluten-free: hsl(32 84% 31%);
+    --color-bio: hsl(160 84% 22%);
 
     /* Semantic colors */
     --semantic-warning: 38 92% 50%;
     --semantic-success: 142 72% 29%;
 
-    /* Light mode - botanical brand identity */
-    --background: 40 33% 96%; /* #FAF7F3 warm ivory */
-    --foreground: 0 0% 10%; /* Slightly darker for better contrast - WCAG AA */
+    /* Design System v2.0 primitives */
+    --cream-50: 40 67% 98%; /* #FDFAF5 */
+    --cream-100: 36 39% 94%; /* #F5F0E8 */
+    --cream-200: 38 33% 89%; /* #EDE6D8 */
+    --cream-300: 38 29% 84%; /* #E2D9C8 */
+    --navy-100: 224 42% 63%; /* #7A90C8 */
+    --navy-200: 218 39% 47%; /* #4A6EA8 */
+    --navy-300: 227 59% 37%; /* #264195 */
+    --navy-400: 226 61% 26%; /* #1A2E6B */
+    --navy-500: 225 60% 17%; /* #111E45 */
+    --verde-100: 77 25% 70%; /* #B8C4A0 */
+    --verde-200: 91 26% 50%; /* #7FA060 */
+    --verde-300: 84 45% 33%; /* #5A7A2E */
+    --verde-400: 86 44% 22%; /* #3B5220 */
+    --amber-100: 41 82% 78%; /* #F5D89A */
+    --amber-200: 39 81% 52%; /* #E8A020 */
 
-    --card: 40 40% 97%;
-    --card-foreground: 0 0% 10%;
+    /* Light mode - botanical design system */
+    --background: var(--cream-100);
+    --foreground: var(--navy-500);
 
-    --popover: 40 40% 97%;
-    --popover-foreground: 0 0% 10%;
+    --card: var(--cream-50);
+    --card-foreground: var(--navy-500);
 
-    /* Primary: Spiritual deep blue #243260 */
-    --primary: 226 45% 26%;
+    --popover: var(--cream-50);
+    --popover-foreground: var(--navy-500);
+
+    /* Primary: Garden navy */
+    --primary: var(--navy-300);
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 35% 92%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: var(--navy-300);
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 30% 94%;
-    --muted-foreground: 0 0% 28%; /* Darker for WCAG 4.5:1 contrast - was 35% */
+    --muted: var(--cream-200);
+    --muted-foreground: var(--navy-200);
 
-    /* Accent: Natural green - WCAG AAA compliant for text on light backgrounds */
-    --accent: 92 60% 25%; /* Very dark green for 7:1+ contrast on cream - #2D5C1E */
+    /* Accent: Botanical green for primary actions */
+    --accent: var(--verde-300);
     --accent-foreground: 0 0% 100%;
     
     /* Accent secondary: Light green for backgrounds only (decorative) */
-    --accent-light: 85 42% 61%;
+    --accent-light: var(--verde-100);
     
     /* Blue accent for menu items - WCAG compliant */
-    --blue: 210 85% 45%; /* Darker blue for better contrast */
+    --blue: var(--navy-200);
     --blue-foreground: 0 0% 100%;
     
     /* Soul Carousel colors */
-    --daily-card: 47 100% 88%; /* #FFF3C1 warm fresh */
-    --daily-card-alt: 80 50% 94%; /* #F1F7E1 green fresh */
-    --klassiker-card: 40 33% 96%; /* #FAF7F3 ivory stable */
-    --badge-wood: 37 35% 28%; /* Darker wood for text contrast */
+    --daily-card: 40 67% 98%;
+    --daily-card-alt: 77 25% 92%;
+    --klassiker-card: 40 67% 98%;
+    --badge-wood: var(--navy-300);
     
     /* Cream background for special sections */
-    --cream: 40 40% 95%;
+    --cream: var(--cream-100);
 
     --destructive: 0 84% 45%; /* Darker for better contrast */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 85%; /* Slightly darker border */
-    --input: 40 20% 85%;
-    --ring: 226 45% 26%;
+    --border: var(--cream-300);
+    --input: var(--cream-300);
+    --ring: var(--navy-300);
     
     /* Focus ring - visible and accessible */
-    --focus-ring: 226 60% 45%;
+    --focus-ring: var(--navy-300);
 
-    --radius: 0.5rem;
+    --radius: 1rem;
     
     /* Custom design tokens - botanical theme */
-    --gradient-green: linear-gradient(135deg, hsl(92 45% 38%) 0%, hsl(85 42% 50%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(226 45% 26%) 0%, hsl(226 35% 36%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(40 40% 97%) 0%, hsl(80 35% 95%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(92 45% 38% / 0.15);
-    --shadow-elevated: 0 10px 40px -10px hsl(226 45% 26% / 0.25);
-    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.08);
+    --gradient-green: linear-gradient(135deg, hsl(var(--verde-300)) 0%, hsl(var(--verde-200)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--navy-500)) 0%, hsl(var(--navy-300)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--cream-50)) 0%, hsl(var(--cream-100)) 100%);
+    --shadow-soft: 0 6px 22px -14px hsl(var(--navy-500) / 0.22);
+    --shadow-elevated: 0 14px 42px -22px hsl(var(--navy-500) / 0.32);
+    --shadow-card: 0 8px 24px -20px hsl(var(--navy-500) / 0.25);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
