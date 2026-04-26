@@ -143,6 +143,17 @@ export const MenuSection = () => {
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
+  const fixedMenuAnchors = klassikerMenu.categories.flatMap((category) => [
+    { id: category.id, label: category.name[language] },
+    ...(category.subcategories?.map((subcategory) => ({ id: subcategory.id, label: subcategory.name[language] })) ?? []),
+  ]);
+
+  const scrollToFixedAnchor = (id: string) => {
+    const target = document.getElementById(`menu-${id}`);
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 132, behavior: "smooth" });
+  };
+
   return (
     <section id="menu" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -502,11 +513,25 @@ export const MenuSection = () => {
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
+            <div className="sticky top-[72px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
+              <div className="flex gap-2 overflow-x-auto pb-1" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
+                {fixedMenuAnchors.map((anchor) => (
+                  <button
+                    key={anchor.id}
+                    type="button"
+                    onClick={() => scrollToFixedAnchor(anchor.id)}
+                    className="shrink-0 rounded-full border border-border/75 bg-card px-3 py-2 text-xs font-work font-semibold text-primary transition-colors hover:border-primary/35 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    {anchor.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             
             <div className="space-y-8">
               {klassikerMenu.categories.map((category) => (
-                <div key={category.id}>
-                  <h3 className="font-cormorant text-lg font-medium text-foreground/80 mb-4 border-b border-border/30 pb-2">
+                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-36">
+                  <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
                     {category.name[language]}
                   </h3>
                   
@@ -578,32 +603,52 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id}>
-                          <h4 className="font-work text-sm text-muted-foreground uppercase tracking-wide mb-3">
-                            {subcategory.name[language]}
-                            {subcategory.sizeNote && (
-                              <span className="ml-2 text-xs normal-case">({subcategory.sizeNote})</span>
-                            )}
-                          </h4>
-                          <div className="space-y-2">
+                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-36 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                          <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
+                            <div>
+                              <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
+                                {subcategory.name[language]}
+                              </h4>
+                              {subcategory.sizeNote && (
+                                <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
+                              )}
+                            </div>
+                            <Badge className="border-accent/25 bg-accent/10 text-accent text-[10px] font-work uppercase tracking-[0.08em]">
+                              {language === "de" ? "Getränke" : "Drinks"}
+                            </Badge>
+                          </div>
+                          <div className="grid gap-2 sm:grid-cols-2">
                             {subcategory.items.map((item: KlassikerItem) => (
                               <div 
                                 key={item.id} 
-                                className="flex items-start justify-between gap-3 py-2 border-b border-border/10 last:border-0"
+                                className="rounded-xl border border-border/50 bg-background/60 p-3"
                               >
-                                <div className="flex-1">
-                                  <span className="font-work text-sm text-foreground">
-                                    {item.name[language]}
-                                  </span>
-                                  {item.sizeNote && (
-                                    <span className="text-muted-foreground text-xs ml-2">
-                                      ({item.sizeNote})
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="flex-1">
+                                    <span className="font-work text-sm font-semibold text-foreground">
+                                      {item.name[language]}
                                     </span>
-                                  )}
+                                    {item.sizeNote && (
+                                      <p className="mt-1 text-xs font-work text-muted-foreground">
+                                        {item.sizeNote}
+                                      </p>
+                                    )}
+                                  </div>
+                                  <span className="text-accent font-semibold text-sm font-work shrink-0">
+                                    {item.price}
+                                  </span>
                                 </div>
-                                <span className="text-accent font-medium text-sm font-work shrink-0">
-                                  {item.price}
-                                </span>
+                                {(item.descriptionShort || item.ingredientsMain || item.allergens) && (
+                                  <MenuDishDetails
+                                    details={{
+                                      descriptionShort: item.descriptionShort,
+                                      ingredientsMain: item.ingredientsMain,
+                                      allergens: item.allergens,
+                                      gfDisclaimer: item.gfDisclaimer,
+                                    }}
+                                    compact
+                                  />
+                                )}
                               </div>
                             ))}
                           </div>
