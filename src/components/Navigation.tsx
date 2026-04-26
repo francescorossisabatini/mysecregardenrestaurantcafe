@@ -76,7 +76,7 @@ export const Navigation = () => {
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" aria-hidden="true" />
-            <div className="min-w-0 leading-tight">
+            <div className="hidden min-w-0 leading-tight lg:block">
               <span className="block max-w-[9.75rem] truncate font-cormorant text-xl font-bold text-foreground transition-colors group-hover:text-primary sm:max-w-none md:text-xl">
                 My Secret Garden
               </span>
