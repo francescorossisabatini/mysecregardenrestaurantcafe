@@ -36,8 +36,8 @@ export const FullMenu = () => {
               </h2>
               <p className="text-sm md:text-base text-muted-foreground font-lora">
                 {language === "de" 
-                  ? "Unsere aktuelle Wochenkarte – wie auf der Speisekarte im Restaurant." 
-                  : "Our current weekly menu – as shown on the restaurant menu."}
+                  ? "Unsere aktuelle Wochenkarte, wie auf der Speisekarte im Restaurant." 
+                  : "Our current weekly menu, as shown on the restaurant menu."}
               </p>
             </div>
 
