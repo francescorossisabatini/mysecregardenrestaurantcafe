@@ -13,6 +13,7 @@ export const Navigation = () => {
   const { language } = useLanguage();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const isHeroOverlay = isHomePage && !scrolled && !isMobileMenuOpen;
   const rafRef = useRef<number | null>(null);
 
   const handleScroll = useCallback(() => {
@@ -61,9 +62,9 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 bg-nav-surface backdrop-blur-md border-b border-border/75 py-2 md:py-3 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 py-2 md:py-3 transition-all duration-500 ease-in-out ${
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } ${scrolled ? "shadow-design-card" : ""}`}
+        } ${isHeroOverlay ? "border-b border-background/10 bg-transparent backdrop-blur-[2px]" : "border-b border-border/75 bg-nav-surface backdrop-blur-md shadow-design-card"}`}
       >
         <div className="container mx-auto flex min-h-16 items-center justify-between gap-4 px-5 md:min-h-14 md:px-4">
           {/* Logo + Subtitle */}
@@ -74,10 +75,10 @@ export const Navigation = () => {
           >
             <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" aria-hidden="true" />
             <div className="hidden min-w-0 leading-tight lg:block">
-              <span className="block max-w-[9.75rem] truncate font-cormorant text-xl font-bold text-foreground transition-colors group-hover:text-primary sm:max-w-none md:text-xl">
+              <span className={`block max-w-[9.75rem] truncate font-cormorant text-xl font-bold transition-colors sm:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
               </span>
-              <p className="hidden sm:block text-[11px] md:text-xs text-muted-foreground font-work truncate">
+              <p className={`hidden sm:block text-[11px] md:text-xs font-work truncate ${isHeroOverlay ? "text-background/75 drop-shadow-sm" : "text-muted-foreground"}`}>
                 Vegetarian Café • Vienna
               </p>
             </div>
@@ -89,7 +90,7 @@ export const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-              className="font-work text-xs font-medium uppercase tracking-[0.08em] text-primary/80 transition-colors hover:text-primary"
+                className={`font-work text-xs font-medium uppercase tracking-[0.08em] transition-colors ${isHeroOverlay ? "text-background/85 hover:text-background drop-shadow-sm" : "text-primary/80 hover:text-primary"}`}
               >
                 {link.label}
               </Link>
@@ -98,15 +99,15 @@ export const Navigation = () => {
 
           {/* Desktop Language */}
           <div className="hidden lg:flex items-center gap-3">
-            <LanguageSwitcher variant="navbar" />
+            <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
 
           {/* Mobile nav actions */}
           <div className="flex flex-shrink-0 items-center gap-3 lg:hidden">
-            <LanguageSwitcher variant="mobile" />
+            <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border/75 bg-card/85 text-primary shadow-sm transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/25 bg-background/10 text-background backdrop-blur-sm hover:bg-background/15" : "border-border/75 bg-card/85 text-primary hover:bg-muted"}`}
               aria-label={isMobileMenuOpen 
                 ? (language === "de" ? "Menü schließen" : "Close menu") 
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
