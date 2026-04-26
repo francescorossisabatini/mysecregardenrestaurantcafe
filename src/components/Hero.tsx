@@ -5,12 +5,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
 
 import minnesotaBowl from "@/assets/minnesota-bowl.webp";
+import diningScene from "@/assets/dining-scene.jpg";
 import heroGarden from "@/assets/garden-real.webp";
 import heroInterior from "@/assets/interior-real.webp";
 
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
+import { getHeroAbVariant, trackHeroAbEvent, trackHeroAbImpression, type HeroAbVariantId } from "@/lib/heroAbTest";
 
 // Lazy load the carousel - it's not needed for initial paint
 const HeroCarousel = lazy(() => import("@/components/HeroCarousel"));
@@ -20,6 +22,12 @@ const heroImages = [
   { src: heroGarden, position: "center 45%", alt: "Cortile interno" },
   { src: heroInterior, position: "center 35%", alt: "Interni del ristorante" },
 ];
+
+const mobileHeroVariants: Record<HeroAbVariantId, { src: string; position: string; alt: string }> = {
+  food: { src: minnesotaBowl, position: "center center", alt: "Piatto vegetariano del giorno" },
+  dining: { src: diningScene, position: "center center", alt: "Tavola con piatti vegetariani" },
+  garden: { src: heroGarden, position: "center 45%", alt: "Cortile giardino del ristorante" },
+};
 
 function useMinuteNow() {
   const [now, setNow] = useState(() => new Date());
@@ -39,6 +47,7 @@ export const Hero = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const [carouselMounted, setCarouselMounted] = useState(false);
   const [carouselVisible, setCarouselVisible] = useState(false);
+  const [heroVariant, setHeroVariant] = useState<HeroAbVariantId | null>(null);
   const { language } = useLanguage();
 
   const handleSlideChange = useCallback((index: number) => {
@@ -62,6 +71,12 @@ export const Hero = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const variant = getHeroAbVariant();
+    setHeroVariant(variant);
+    trackHeroAbImpression(variant);
+  }, []);
+
   // Hide scroll indicator on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -82,6 +97,7 @@ export const Hero = () => {
   
   // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
+  const staticHeroImage = heroVariant ? mobileHeroVariants[heroVariant] : heroImages[0];
 
   return (
     <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
@@ -89,9 +105,9 @@ export const Hero = () => {
       <div 
         className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         style={{
-          backgroundImage: `url(${heroImages[0].src})`,
+          backgroundImage: `url(${staticHeroImage.src})`,
           backgroundSize: "cover",
-          backgroundPosition: heroImages[0].position,
+          backgroundPosition: staticHeroImage.position,
         }}
         aria-hidden={carouselVisible}
       />
@@ -206,7 +222,7 @@ export const Hero = () => {
               className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 py-5 sm:py-6 shadow-lg"
               asChild
             >
-              <Link to="/#menu" onClick={() => window.gtag?.('event', 'click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' })}>
+              <Link to="/#menu" onClick={() => trackHeroAbEvent('click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
               </Link>
@@ -219,7 +235,7 @@ export const Hero = () => {
               className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
               asChild
             >
-              <Link to="/wochenkarte" onClick={() => window.gtag?.('event', 'click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' })}>
+              <Link to="/wochenkarte" onClick={() => trackHeroAbEvent('click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
                 <CalendarDays className="w-4 h-4 mr-2" />
                 {language === "de" ? "Wochenmenü" : "Weekly Specials"}
               </Link>
