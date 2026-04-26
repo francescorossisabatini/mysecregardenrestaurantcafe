@@ -208,7 +208,7 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
@@ -229,7 +229,7 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
@@ -250,7 +250,7 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/12 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
