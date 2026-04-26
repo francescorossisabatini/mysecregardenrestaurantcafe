@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
@@ -19,7 +19,6 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Impressum = lazy(() => import("./pages/Impressum"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactPage = lazy(() => import("./pages/Contact"));
-const WeeklySpecials = lazy(() => import("./pages/WeeklySpecials"));
 const LinkPage = lazy(() => import("./pages/Link"));
 
 // Minimal loading fallback
@@ -64,8 +63,8 @@ function AppContent() {
         <Route path="/contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
-        <Route path="/wochenkarte" element={<Suspense fallback={<PageLoader />}><WeeklySpecials /></Suspense>} />
-        <Route path="/speisekarte" element={<Suspense fallback={<PageLoader />}><WeeklySpecials /></Suspense>} />
+        <Route path="/wochenkarte" element={<Navigate to="/#menu" replace />} />
+        <Route path="/speisekarte" element={<Navigate to="/#menu" replace />} />
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
