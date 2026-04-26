@@ -11,8 +11,8 @@ const LinkPage = () => {
   const links = [
     { href: `tel:${SITE.phoneTel}`, label: { de: "Jetzt anrufen", en: "Call Now" }, icon: Phone, isTel: true },
     { href: SITE.mapsUrl, label: { de: "Route anzeigen", en: "Get Directions" }, icon: MapPin, isExternal: true },
-    { href: "/wochenkarte", label: { de: "Wochenmenü", en: "Weekly Specials" }, icon: CalendarDays },
-    { href: "/#menu", label: { de: "Speisekarte", en: "View Menu" }, icon: UtensilsCrossed },
+    { href: "/menu", label: { de: "Wochenmenü", en: "Weekly Specials" }, icon: CalendarDays },
+    { href: "/menu", label: { de: "Speisekarte", en: "View Menu" }, icon: UtensilsCrossed },
   ];
 
   return (
