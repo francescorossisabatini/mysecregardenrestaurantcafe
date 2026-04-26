@@ -218,7 +218,7 @@ export const MenuSection = () => {
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.soup[language]} />
+                    <WeeklyDishDetails text={todayMenu.soup[language]} meta={todayMenu.soupMeta} />
                   </div>
                 )}
 
@@ -240,7 +240,7 @@ export const MenuSection = () => {
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.green[language]} />
+                    <WeeklyDishDetails text={todayMenu.green[language]} meta={todayMenu.greenMeta} />
                   </div>
                 )}
 
@@ -262,7 +262,7 @@ export const MenuSection = () => {
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.blue[language]} />
+                    <WeeklyDishDetails text={todayMenu.blue[language]} meta={todayMenu.blueMeta} />
                   </div>
                 )}
               </div>
@@ -433,7 +433,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.soup[language]}</p>
                                       <DietaryBadges text={day.soup[language]} language={language} />
-                                      <WeeklyDishDetails text={day.soup[language]} />
+                                      <WeeklyDishDetails text={day.soup[language]} meta={day.soupMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">6,90</span>
                                   </div>
@@ -446,7 +446,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.green[language]}</p>
                                       <DietaryBadges text={day.green[language]} language={language} />
-                                      <WeeklyDishDetails text={day.green[language]} />
+                                      <WeeklyDishDetails text={day.green[language]} meta={day.greenMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
@@ -459,7 +459,7 @@ export const MenuSection = () => {
                                       </span>
                                       <p className="text-foreground/90">{day.blue[language]}</p>
                                       <DietaryBadges text={day.blue[language]} language={language} />
-                                      <WeeklyDishDetails text={day.blue[language]} />
+                                      <WeeklyDishDetails text={day.blue[language]} meta={day.blueMeta} />
                                     </div>
                                     <span className="text-primary text-xs font-medium shrink-0">15,90</span>
                                   </div>
