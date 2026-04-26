@@ -15,7 +15,7 @@ export const ValueProposition = () => {
         {/* Poetic intro */}
         <div className="text-center space-y-8">
           <p className="font-caveat text-2xl md:text-3xl text-accent">
-            {language === "de" ? "Ein Ort, an dem..." : "A place where..."}
+            {language === "de" ? "Mitten im Raimundhof" : "Inside the Raimundhof"}
           </p>
           
           <h2 className="text-4xl md:text-6xl text-primary leading-tight">
@@ -27,14 +27,14 @@ export const ValueProposition = () => {
           <div className="max-w-2xl mx-auto space-y-6">
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
-                ? "In unserer Küche bereiten wir jedes Gericht mit derselben Sorgfalt zu, mit der ein Gärtner seine Pflanzen pflegt. Saisonale, biologische Produkte, von Hand zubereitet – und immer mit einem freundlichen Lächeln." 
-                : "In our kitchen, we prepare each dish with the same attention a gardener gives to their plants. Seasonal, organic, by hand – and always with a quiet smile."}
+                ? "Wir kochen täglich frisch mit biologischen Zutaten und Produkten aus der Region. Die Gerichte wechseln mit der Saison und bleiben so einfach, nährend und liebevoll wie möglich." 
+                : "We cook fresh every day with organic ingredients and produce from the region. The dishes follow the season and stay simple, nourishing and made with care."}
             </p>
             
             <p className="font-lora text-base md:text-lg text-muted-foreground italic">
               {language === "de" 
-                ? "Vegetarisch, vegan, glutenfrei – größtenteils von Bauern aus der Region." 
-                : "Vegetarian, vegan, gluten-free – mostly from farmers in the region."}
+                ? "Vegetarisch, vegan und glutenfrei freundlich, größtenteils von Bauern aus der Region." 
+                : "Vegetarian, vegan and gluten-free friendly, mostly from farmers in the region."}
             </p>
           </div>
           
