@@ -1,52 +1,81 @@
-Sì: guardando il file operativo e l’architettura attuale, non ha senso tenere “Specials” e “Menu” come due esperienze separate. Oggi il sito ha già una logica mista: la Home contiene il blocco menu completo, mentre `/wochenkarte` duplica parte del contenuto come pagina “Weekly Specials”. Questo crea confusione nella navbar e per l’utente: non è chiaro se “Menu” e “Specials” siano due cose diverse.
+Implementerei il design system come un raffinamento coerente, non come redesign completo. L’obiettivo è far emergere le nuove linee guida — crema, navy, verde, pill buttons, card più morbide, spaziature più disciplinate — mantenendo struttura, contenuti e identità attuali del sito.
 
-La direzione migliore è: una sola voce principale “Menu”, con dentro le sezioni “Today”, “Week” e “Classics”.
+## Piano di integrazione
 
-## Piano proposto
+1. Fondamenta visive globali
+   - Allineare i token CSS esistenti ai colori del design system:
+     - page cream più caldo: `#F5F0E8`
+     - card cream chiaro: `#FDFAF5`
+     - primary navy: `#264195`
+     - foreground navy profondo: `#111E45`
+     - accent verde: `#5A7A2E`
+   - Mantenere i nomi Tailwind già usati (`primary`, `accent`, `background`, `card`, ecc.) per evitare modifiche invasive.
+   - Raffinare border, shadow e radius per ottenere card più eleganti e meno “default shadcn”.
 
-1. Semplificare la navbar
-   - Rimuovere la voce separata “Specials / Wochenmenü”.
-   - Tenere una sola voce “Menu / Speisekarte”.
-   - La voce Menu porterà alla sezione menu della Home (`/#menu`) oppure alla pagina menu unica, in base alla soluzione più coerente con il routing esistente.
+2. Bottoni e CTA
+   - Aggiornare `Button` per seguire il design system:
+     - forma pill/rounded-full per CTA principali
+     - primary verde per le azioni principali
+     - secondary/navy per azioni secondarie
+     - outline più morbido, con bordo navy/cream e hover leggero
+   - Applicare questa logica senza cambiare i testi o la gerarchia delle CTA già presenti.
 
-2. Rendere coerente la struttura del menu
-   - Mantenere la divisione interna in:
-     - oggi / today
-     - settimana / week
-     - classici / classics
-   - Non presentarle come sezioni principali separate nella navigazione globale.
-   - Su mobile, mantenere il tab sticky interno “Heute / Immer da / Woche”, perché lì è utile come orientamento dentro il menu.
+3. Top bar e navigazione
+   - Usare la guida del design system per una top bar più ordinata:
+     - background cream semi-trasparente
+     - border bottom più visibile ma delicato
+     - controlli mobile con proporzioni coerenti
+     - language switcher pill, navy attivo, cream passivo
+   - Non reintrodurre “My Secret Garden” nella top bar mobile, rispettando la richiesta precedente.
+   - Non reintrodurre CTA nella navbar/drawer.
 
-3. Rivedere la pagina `/wochenkarte`
-   - Evitare che sembri una pagina alternativa o concorrente al menu.
-   - Opzione consigliata: trasformarla in redirect o alias verso la sezione menu principale.
-   - Se mantenuta per SEO/backlink, deve essere trattata come “pagina menu” e non come “Specials” separato.
+4. Menu e card
+   - Portare le card del menu verso lo stile del design system:
+     - card cream chiaro
+     - bordo cream più caldo
+     - radius 16px
+     - badge/tag pill più coerenti
+     - prezzi in verde accent
+   - Mantenere l’architettura menu unica già impostata: Heute/Immer da/Woche.
 
-4. Aggiornare i testi CTA
-   - In `ShowcaseSections`, cambiare il bottone “Wochenmenü ansehen / View Weekly Specials” in qualcosa come:
-     - DE: “Speisekarte ansehen”
-     - EN: “View Menu”
-   - Evitare la parola “Specials” dove non serve.
+5. Mobile sticky bar
+   - Allinearla ai componenti del design system:
+     - barra navy/cream più premium
+     - bottoni pill con primary verde e secondary navy
+     - spacing più chiaro
+   - Mantenerla mobile-only e senza interferire con cookie banner/menu aperto.
 
-5. Allineare SEO e label
-   - Aggiornare title/description della pagina menu se rimane `/wochenkarte` o `/speisekarte`.
-   - Usare una terminologia uniforme:
-     - DE: “Speisekarte” o “Menü”
-     - EN: “Menu”
-   - Usare “Wochenmenü / Weekly menu” solo come sottosezione, non come voce primaria.
+6. Micro-coerenza tipografica e spacing
+   - Conservare i font già corretti per il brand: Caveat, Cormorant Garamond, Lora, Work Sans.
+   - Uniformare alcuni pattern:
+     - eyebrow in Work Sans uppercase
+     - heading Cormorant/Caveat dove già previsto
+     - body Lora
+     - UI Work Sans
+   - Applicare piccoli aggiustamenti solo dove aumentano coerenza e leggibilità.
 
-## Risultato atteso
+## Cosa non farò
 
-La navigazione diventa più chiara:
+- Non stravolgerò layout, sezioni o contenuti.
+- Non cambierò immagini o introdurrò immagini generate.
+- Non reintrodurrò parallax/zoom o animazioni aggressive.
+- Non aggiungerò CTA alla navbar.
+- Non trasformerò il sito in una copia del file HTML: userò il design system come fondazione visiva, non come template rigido.
 
-```text
-Home | Menu | About | Visit
-```
+## File principali coinvolti
 
-E dentro Menu:
+- `src/index.css` — token globali, colori, shadow, radius, utilities leggere.
+- `tailwind.config.ts` — eventuali token aggiuntivi se necessari.
+- `src/components/ui/button.tsx` — stile base dei bottoni.
+- `src/components/ui/card.tsx` — card più coerenti con il design system.
+- `src/components/Navigation.tsx` — top bar/nav refinement.
+- `src/components/LanguageSwitcher.tsx` — pill segmented control più fedele al design system.
+- `src/components/MenuSection.tsx` — menu cards, badge, tabs mobile.
+- `src/components/MobileStickyBar.tsx` — CTA mobile più coerenti.
 
-```text
-Today | Week | Classics
-```
+## Verifica
 
-Questo risolve la confusione tra “specials” e “menu”, riduce l’affollamento della navbar e rispetta meglio l’architettura già memorizzata del progetto: un singolo flusso verticale per il menu.
+Dopo l’implementazione eseguirò:
+- controllo TypeScript con `bunx tsc --noEmit`
+- controllo visivo mirato su mobile e desktop, soprattutto top bar, menu e CTA
+- verifica che le richieste precedenti restino rispettate: niente CTA in navbar, niente brand text nella top bar mobile, menu/specials unificati.
