@@ -5,6 +5,11 @@ export interface KlassikerItem {
   id: string;
   name: { de: string; en: string };
   description?: { de: string; en: string };
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: number[];
+  gfDisclaimer?: boolean;
+  ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
   sizeNote?: string;
   price: string;
   isVegan?: boolean;
@@ -45,6 +50,9 @@ export const klassikerMenu = {
           price: "9,90",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "cremig, Linsen, würzig",
+          ingredientsMain: ["Rote Linsen", "Tomaten", "Zwiebeln", "indische Gewürze", "Basmatireis"],
+          gfDisclaimer: true,
         },
       ],
     },
@@ -62,6 +70,10 @@ export const klassikerMenu = {
           price: "6,5 / 10,9",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, saisonales Gemüse",
+          ingredientsMain: ["Blattsalat", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-avocado",
@@ -73,6 +85,10 @@ export const klassikerMenu = {
           price: "17,5",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, Avocado, saisonal",
+          ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-ziegenkase",
@@ -83,6 +99,10 @@ export const klassikerMenu = {
           },
           price: "17,5",
           isGlutenFree: true,
+          descriptionShort: "frisch, warm, cremig",
+          ingredientsMain: ["Blattsalat", "Ziegenkäse", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [7, 10],
+          gfDisclaimer: true,
         },
         {
           id: "secret-garden-tofu",
@@ -95,6 +115,11 @@ export const klassikerMenu = {
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
+          descriptionShort: "frisch, Bio-Tofu, saisonal",
+          ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gemüse", "hausgemachtes Dressing"],
+          allergens: [6, 10],
+          gfDisclaimer: true,
+          ingredientProducers: { Tofu: { certification: "bio" } },
         },
       ],
     },
