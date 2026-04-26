@@ -141,12 +141,12 @@ export const MenuSection = () => {
           {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
           {SHOW_WEEKLY_MENU ? (
           <>
-          <div className="mb-16">
+          <div className="mb-14 md:mb-16">
             <div className="text-center mb-8">
-              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
+              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute frisch gekocht" : "Freshly cooked today"}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
                 {language === "de" 
                   ? "Was heute da ist, bestimmt das Gericht." 
                   : "What's here today determines the dish."}
@@ -167,58 +167,64 @@ export const MenuSection = () => {
               <div className="space-y-4">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="bg-daily rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
-                      <span className="text-xs text-muted-foreground font-work">
+                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
+                      </div>
+                      <p className="text-primary font-semibold text-sm font-work shrink-0">6,90</p>
                     </div>
-                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                    <p className="text-primary font-semibold text-sm font-work mt-2">6,90</p>
                   </div>
                 )}
 
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="bg-daily rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
-                      <span className="text-xs text-muted-foreground font-work">
+                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
+                      </div>
+                      <p className="text-primary font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <p className="text-primary font-semibold text-sm font-work mt-2">15,90</p>
                   </div>
                 )}
 
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="bg-daily rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div className="bg-daily rounded-lg p-4 md:p-5 border border-border/20">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="bg-primary/15 text-primary border-primary/30 text-xs font-work">
                         {language === "de" ? "Heute" : "Today"}
                       </Badge>
-                      <span className="text-xs text-muted-foreground font-work">
+                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
+                      </div>
+                      <p className="text-primary font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-sm md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <p className="text-primary font-semibold text-sm font-work mt-2">15,90</p>
                   </div>
                 )}
               </div>
