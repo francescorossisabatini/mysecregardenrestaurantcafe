@@ -17,6 +17,7 @@ import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
+import type { DishDetails } from "@/data/allergensData";
 import { inferDishDetails } from "@/lib/menuDetails";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
@@ -62,14 +63,14 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
-const WeeklyDishDetails = ({ text }: { text: string }) => (
-  <MenuDishDetails details={inferDishDetails(text)} compact />
-);
-
-const dishDetails = (text: string, meta?: Parameters<typeof MenuDishDetails>[0]["details"]) => ({
+const dishDetails = (text: string, meta?: DishDetails) => ({
   ...inferDishDetails(text),
   ...meta,
 });
+
+const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
+  <MenuDishDetails details={dishDetails(text, meta)} compact />
+);
 
 export const MenuSection = () => {
   const { language } = useLanguage();
