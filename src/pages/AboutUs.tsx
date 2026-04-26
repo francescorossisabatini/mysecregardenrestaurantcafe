@@ -76,7 +76,7 @@ const AboutUs = () => {
       heroTagline: "A place of peace in the heart of Vienna.",
       philosophyLabel: "Our Philosophy",
       philosophyTitle: "Our Approach",
-      philosophyPara1: "In 2018, My Secret Garden was born from a dream: a place where mindful cooking and peaceful atmosphere come together.",
+      philosophyPara1: "My Secret Garden began in 2018 from a simple wish: to create a peaceful place for fresh vegetarian cooking in the middle of Vienna.",
       philosophyQuote: "Cooking is prayer. Eating is gratitude.",
       philosophyPara2: "We cook fresh daily with organic and regional ingredients. Without haste, with attention and joy.",
       pillarsTitle: "What Makes Us Special",
@@ -92,8 +92,8 @@ const AboutUs = () => {
       spacePara2: "Here you forget the city. Green plants, wooden tables, soft music. A place to breathe.",
       inspirationLabel: "Our Inspiration",
       inspirationTitle: "Sri Chinmoy",
-      inspirationPara1: "Sri Chinmoy (1931–2007) was a spiritual teacher who taught meditation, music, and art as paths to inner peace.",
-      inspirationPara2: "His students founded vegetarian restaurants worldwide. Places where cooking and serving are understood as meditative practice.",
+      inspirationPara1: "Sri Chinmoy lived from 1931 to 2007. He was a spiritual teacher who taught meditation, music and art as paths to inner peace.",
+      inspirationPara2: "His students founded vegetarian restaurants around the world. In these places, cooking and serving are part of a mindful daily practice.",
       artTitle: "Jharna-Kala",
       artSubtitle: "Art from the Source",
       poemTitle: "His Words",
@@ -128,8 +128,8 @@ const AboutUs = () => {
       <SEOHead 
         title={language === "de" ? "Über Uns" : "About Us"}
         description={language === "de" 
-          ? "Erfahre mehr über My Secret Garden – unser vegetarisches Restaurant inspiriert von Sri Chinmoys Philosophie in Wien."
-          : "Learn more about My Secret Garden – our vegetarian restaurant inspired by Sri Chinmoy's philosophy in Vienna."}
+          ? "Erfahre mehr über My Secret Garden, unser vegetarisches Restaurant inspiriert von Sri Chinmoys Philosophie in Wien."
+          : "Learn more about My Secret Garden, our vegetarian restaurant inspired by Sri Chinmoy's philosophy in Vienna."}
         path="/about"
       />
       <Navigation />
@@ -244,7 +244,7 @@ const AboutUs = () => {
                   <img src={sriChinmoyImage} alt="Sri Chinmoy" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-2 rounded-full shadow-lg">
-                  <p className="font-caveat text-lg text-primary">1931 – 2007</p>
+                  <p className="font-caveat text-lg text-primary">1931 bis 2007</p>
                 </div>
               </div>
             </div>
@@ -269,7 +269,7 @@ const AboutUs = () => {
           {/* Art Gallery - Jharna-Kala */}
           <div className="mb-16">
             <p className="font-caveat text-xl md:text-2xl text-accent text-center mb-6">
-              {t.artTitle} – {t.artSubtitle}
+              {t.artTitle}. {t.artSubtitle}
             </p>
             <div className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4 md:justify-center md:overflow-visible">
               {artworks.map((art, index) => (
