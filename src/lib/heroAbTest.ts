@@ -1,4 +1,5 @@
 import { HERO_AB_TEST, type HeroAbVariantId } from "@/config/heroAbTest";
+import { supabase } from "@/integrations/supabase/client";
 
 export type { HeroAbVariantId } from "@/config/heroAbTest";
 
@@ -74,6 +75,17 @@ export const trackHeroAbEvent = (
   attempt = 0,
 ) => {
   const eventParams = { ...params, ...getHeroAbTrackingParams(variant) };
+
+  if (variant) {
+    void (supabase as any).from("ab_test_events").insert({
+      test_id: HERO_AB_TEST.id,
+      variant,
+      event_name: eventName,
+      page_path: window.location.pathname,
+      user_agent: navigator.userAgent,
+      metadata: eventParams,
+    });
+  }
 
   if (window.gtag) {
     window.gtag("event", eventName, eventParams);
