@@ -69,8 +69,8 @@ export const MobileStickyBar = () => {
     <div
       className={`
         fixed bottom-0 left-0 right-0 z-50
-        bg-background/95 backdrop-blur-md
-        border-t border-border/30
+        bg-nav-surface backdrop-blur-md
+        border-t border-border/75
         px-4 py-3
         transition-all duration-300 ease-out
         ${shouldShow
@@ -83,20 +83,20 @@ export const MobileStickyBar = () => {
         WebkitTapHighlightColor: 'transparent' 
       }}
     >
-      <div className="flex gap-3 max-w-md mx-auto">
+      <div className="flex max-w-md gap-3 mx-auto">
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
           onClick={() => trackHeroAbEvent('click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
-            bg-primary text-primary-foreground
+            bg-accent text-accent-foreground
             rounded-full py-3 px-4
             text-base font-medium font-work
-            shadow-sm
+            shadow-soft
             active:scale-95
             transition-all duration-200
             touch-manipulation
-            focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+            focus:outline-none focus:ring-2 focus:ring-ring/50 focus:ring-offset-2"
           aria-label={callAriaLabel}
         >
           <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
@@ -109,10 +109,10 @@ export const MobileStickyBar = () => {
           rel="noopener noreferrer"
           onClick={() => trackHeroAbEvent('click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
-            bg-secondary text-secondary-foreground
+            bg-primary text-primary-foreground
             rounded-full py-3 px-4
             text-base font-medium font-work
-            shadow-sm
+            shadow-soft
             active:scale-95
             transition-all duration-200
             touch-manipulation
