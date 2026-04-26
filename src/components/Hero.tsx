@@ -98,6 +98,7 @@ export const Hero = () => {
   // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
   const staticHeroImage = heroVariant ? mobileHeroVariants[heroVariant] : heroImages[0];
+  const carouselImages = heroVariant ? [staticHeroImage, ...heroImages.filter((image) => image.src !== staticHeroImage.src)] : heroImages;
 
   return (
     <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
@@ -116,7 +117,7 @@ export const Hero = () => {
       {carouselMounted && (
         <Suspense fallback={null}>
           <HeroCarousel 
-            images={heroImages} 
+            images={carouselImages} 
             onSlideChange={handleSlideChange}
             onReady={() => setCarouselVisible(true)}
           />
@@ -246,7 +247,7 @@ export const Hero = () => {
           <div className={`hidden sm:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
-            {heroImages.map((_, index) => (
+            {carouselImages.map((_, index) => (
               <div
                 key={index}
                 className="w-8 h-8 flex items-center justify-center"
