@@ -1,5 +1,7 @@
 import { HERO_AB_TEST, type HeroAbVariantId } from "@/config/heroAbTest";
 
+export type { HeroAbVariantId } from "@/config/heroAbTest";
+
 type HeroAbAssignment = {
   testId: string;
   variant: HeroAbVariantId;
@@ -21,8 +23,8 @@ export const isMobileHeroViewport = () => {
 };
 
 const pickVariant = (): HeroAbVariantId => {
-  const randomValue = crypto?.getRandomValues
-    ? crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32
+  const randomValue = globalThis.crypto?.getRandomValues
+    ? globalThis.crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32
     : Math.random();
   const index = Math.floor(randomValue * HERO_AB_TEST.variants.length);
   return HERO_AB_TEST.variants[index] ?? HERO_AB_TEST.variants[0];
