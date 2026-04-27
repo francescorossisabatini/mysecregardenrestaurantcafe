@@ -230,24 +230,37 @@ const AboutUs = () => {
       </section>
 
       {/* COFFEE PARTNERSHIP */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="grid items-center gap-8 rounded-2xl border border-border/75 bg-card/70 p-6 shadow-card md:grid-cols-[1fr_auto] md:p-8">
-            <div className="space-y-3">
-              <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{t.coffeeLabel}</span>
-              <h2 className="font-cormorant text-3xl font-semibold text-foreground md:text-4xl">{t.coffeeTitle}</h2>
-              <p className="max-w-2xl font-lora text-lg leading-relaxed text-foreground/80">{t.coffeePara}</p>
+      <section className="bg-section-soft py-16 md:py-20">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid items-center gap-8 border-y border-border/75 py-10 md:grid-cols-[1.35fr_0.65fr] md:gap-12 md:py-12">
+            <div className="space-y-5">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{t.coffeeLabel}</span>
+                <span className="font-work text-xs text-muted-foreground">✿</span>
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">Secret Garden × Supermind</span>
+              </div>
+              <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{t.coffeeTitle}</h2>
+              <p className="max-w-2xl font-lora text-xl leading-relaxed text-foreground/85">{t.coffeeBridge}</p>
+              <p className="max-w-2xl font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.coffeePara}</p>
               <a
                 href="https://supermind.at/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-work text-sm font-semibold text-accent transition-colors hover:text-accent/80"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary/25 bg-card px-4 font-work text-sm font-semibold text-primary transition-colors hover:border-primary/45 hover:bg-muted"
               >
                 supermind.at
                 <ExternalLink className="h-4 w-4" />
               </a>
             </div>
-            <img src={supermindLogo} alt="Supermind Kaffee" className="mx-auto h-36 w-auto object-contain md:h-44" loading="lazy" />
+            <a
+              href="https://supermind.at/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-auto flex w-full max-w-xs items-center justify-center rounded-lg border border-border bg-card px-8 py-10 shadow-card transition-colors hover:border-primary/35 md:justify-self-end"
+              aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind Kaffee website"}
+            >
+              <img src={supermindLogo} alt="Supermind Kaffee" className="h-48 w-auto object-contain md:h-56" loading="lazy" />
+            </a>
           </div>
         </div>
       </section>
