@@ -181,9 +181,12 @@ const AboutUs = () => {
       </section>
 
       {/* PILLARS / OFFERING - Alternating sections with photos */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      <section className="bg-section-accent py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-4xl md:text-5xl text-primary text-center mb-16">{t.pillarsTitle}</h2>
+          <div className="mx-auto mb-14 max-w-2xl text-center md:mb-16">
+            <h2 className="text-4xl text-primary md:text-5xl">{t.pillarsTitle}</h2>
+            <p className="mt-4 font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.pillarsIntro}</p>
+          </div>
           
           <div className="space-y-16 md:space-y-24">
             {pillarsData.map((pillar, index) => (
@@ -194,15 +197,16 @@ const AboutUs = () => {
                 }`}
               >
                 <div className={`${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
-                  <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
+                  <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                     <img 
                       src={pillar.image} 
                       alt={pillar.imageAlt} 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover" 
                     />
                   </div>
                 </div>
                 <div className={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
+                  <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">✿</p>
                   <h3 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground">
                     {pillar.title}
                   </h3>
@@ -225,6 +229,7 @@ const AboutUs = () => {
               <h2 className="text-4xl md:text-5xl text-primary">{t.spaceTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara2}</p>
+              <p className="font-cormorant text-2xl italic leading-relaxed text-primary/90">{t.spaceNote}</p>
               <a 
                 href={SITE.instagramUrl}
                 target="_blank" 
@@ -236,7 +241,7 @@ const AboutUs = () => {
               </a>
             </div>
             <div>
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                 <img src={gardenReal} alt="Our garden" className="w-full h-full object-cover" />
               </div>
             </div>
