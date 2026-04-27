@@ -230,7 +230,8 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Parken" : "Parking"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
                   {SITE.transportNote[language]}<br />
-                  {SITE.parkingNote[language]}
+                  {SITE.parkingNote[language]}<br />
+                  {language === "de" ? "1 Stunde Parken inklusive ab 27 Euro Konsumation." : "1 hour of parking included with a 27 euro spend."}
                 </p>
               </div>
             </section>
