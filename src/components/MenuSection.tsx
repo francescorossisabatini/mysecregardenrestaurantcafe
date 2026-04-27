@@ -75,6 +75,7 @@ export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
+  const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
@@ -149,7 +150,9 @@ export const MenuSection = () => {
   const scrollToFixedAnchor = (id: string) => {
     const target = document.getElementById(`menu-${id}`);
     if (!target) return;
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 132, behavior: "smooth" });
+    setActiveFixedAnchor(id);
+    const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
   return (
