@@ -10,7 +10,7 @@ import foodBowl from "@/assets/food-bowl-real.jpg";
 import foodDetail from "@/assets/food-detail-real.jpg";
 import curryOfTheDay from "@/assets/curry-of-the-day.webp";
 import diningScene from "@/assets/dining-scene.jpg";
-import piattoBowlBlue from "@/assets/piatto-bowl-blue.jpg";
+import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import tavolata from "@/assets/tavolata-3.jpg";
 import torta from "@/assets/torta-2.jpg";
 import maniMangianoCibo from "@/assets/primo-piano-mani-mangiano-cibo.jpg";
@@ -82,7 +82,7 @@ export const GallerySection = () => {
     // Row 2: Pair - food focus
     { layout: "pair", images: [
       { src: foodBowl, alt: "Fresh bowl creation" },
-      { src: piattoBowlBlue, alt: "Blue plate bowl with salad and vegetables" }
+      { src: dalRiceBowl, alt: "Dal and rice bowl" }
     ]},
     
     // Row 3: Full - torta/quiche - hero shot
