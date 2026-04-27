@@ -23,9 +23,9 @@ export const CTAEndBlock = ({
   const defaultTitle = language === "de" ? "Besuche uns" : "Visit Us";
 
   return (
-    <section className={`py-16 md:py-20 bg-primary/5 ${className}`}>
+    <section className={`py-16 md:py-20 bg-section-accent ${className}`}>
       <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto text-center">
+        <div className="max-w-md mx-auto text-center rounded-2xl border border-border/70 bg-card/55 p-6 shadow-card md:p-8">
           <h2 className="text-3xl md:text-4xl text-primary mb-4">
             {title || defaultTitle}
           </h2>
