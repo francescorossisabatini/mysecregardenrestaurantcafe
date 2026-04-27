@@ -1,19 +1,19 @@
 export const weeklyMenu = {
-  period: "10-15. November",
+  period: "10 bis 15. November",
   days: [
     {
       day: { de: "Montag", en: "Monday" },
       soup: {
-        de: "Erdäpfel-Champignoncremesuppe",
-        en: "Potato-Mushroom Cream Soup"
+        de: "Erdäpfel Champignoncremesuppe",
+        en: "Potato Mushroom Cream Soup"
       },
       green: {
-        de: "Grünes Pattaya-Curry mit Zucchini, Kohlrabi, Brokkoli, Erbsen, Kartoffeln und Spinat in milden Limetten-Kokosmilchsauce mit frischem Koriander und Ingwer; dazu Bio-Basmati-Vollkornreis und bunter Salat.",
-        en: "Green Pattaya Curry with zucchini, kohlrabi, broccoli, peas, potatoes and spinach in mild lime-coconut sauce with fresh coriander and ginger; served with organic basmati brown rice and mixed salad."
+        de: "Grünes Pattaya Curry mit Zucchini, Kohlrabi, Brokkoli, Erbsen, Kartoffeln und Spinat in milden Limetten Kokosmilchsauce mit frischem Koriander und Ingwer; dazu Bio Basmati Vollkornreis und bunter Salat.",
+        en: "Green Pattaya Curry with zucchini, kohlrabi, broccoli, peas, potatoes and spinach in mild lime coconut sauce with fresh coriander and ginger; served with organic basmati brown rice and mixed salad."
       },
       blue: {
-        de: "Afrikanischer Raglan-Eintopf mit Schwarzaugenbohnen und Süßkartoffeln; dazu Bio-Quinoa, Cashew-Aioli und bunter Salat mit Zitronen-Tahinidressing.",
-        en: "African Raglan stew with black-eyed beans and sweet potatoes; served with organic quinoa, cashew aioli and mixed salad with lemon-tahini dressing."
+        de: "Afrikanischer Raglan Eintopf mit Schwarzaugenbohnen und Süßkartoffeln; dazu Bio Quinoa, Cashew Aioli und bunter Salat mit Zitronen Tahinidressing.",
+        en: "African Raglan stew with black eyed beans and sweet potatoes; served with organic quinoa, cashew aioli and mixed salad with lemon tahini dressing."
       },
     },
     {
