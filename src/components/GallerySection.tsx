@@ -154,10 +154,10 @@ export const GallerySection = () => {
               );
             }
 
-            // Triple layout - 3 columns on desktop, stacked on mobile
+            // Triple layout - up to 3 columns on desktop, stacked on mobile
             if (row.layout === "triple") {
               return (
-                <div key={rowIndex} className="space-y-5 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
+                <div key={rowIndex} className="space-y-5 md:space-y-0 md:grid md:grid-cols-2 md:gap-6">
                   {row.images.map((image, imgIndex) => (
                     <GalleryReveal key={imgIndex} delay={imgIndex * 100}>
                       <ImageFrame src={image.src} alt={image.alt} ratio="aspect-[4/5] md:aspect-square" />
