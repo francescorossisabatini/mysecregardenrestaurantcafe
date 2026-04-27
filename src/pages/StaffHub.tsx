@@ -6,6 +6,24 @@ import { SEOHead } from "@/components/SEOHead";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
+import { inferDishDetails } from "@/lib/menuDetails";
+
+type DishMeta = {
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: string[];
+  gfDisclaimer?: boolean;
+};
+
+const mergeDishMeta = (dishText: string, sheetMeta?: DishMeta): DishMeta => {
+  const inferred = inferDishDetails(dishText);
+  return {
+    descriptionShort: sheetMeta?.descriptionShort || inferred.descriptionShort,
+    ingredientsMain: sheetMeta?.ingredientsMain?.length ? sheetMeta.ingredientsMain : inferred.ingredientsMain,
+    allergens: sheetMeta?.allergens?.length ? sheetMeta.allergens : inferred.allergens,
+    gfDisclaimer: sheetMeta?.gfDisclaimer || inferred.gfDisclaimer,
+  };
+};
 
 const StaffHub = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -27,11 +45,14 @@ const StaffHub = () => {
         return;
       }
 
-      const { data: allowed } = await supabase.rpc("is_staff_user", {
-        _user_id: data.session.user.id,
-      });
+      const { data: accessData, error: accessError } = await supabase.functions.invoke("check-staff-access");
 
-      setIsStaff(allowed);
+      if (accessError) {
+        setError("Staff access check failed. Please sign out and try again.");
+        setIsStaff(false);
+      } else {
+        setIsStaff(Boolean(accessData?.isStaff));
+      }
       setIsChecking(false);
     });
 
@@ -79,47 +100,49 @@ const StaffHub = () => {
 
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
 
-        <section className="mb-8 grid gap-4 md:grid-cols-2">
+        <section className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <ChefHat className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
             <p className="font-work text-sm text-muted-foreground">Menu days</p>
             <strong className="font-cormorant text-4xl text-foreground">{menu.days.length}</strong>
           </div>
+          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:col-span-2">
+            <p className="font-work text-sm text-muted-foreground">Week</p>
+            <strong className="mt-1 block font-cormorant text-3xl text-foreground">{menu.period}</strong>
+          </div>
         </section>
 
         <div className="grid gap-8">
-          <aside className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
+          <aside className="grid gap-6">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Dishes and ingredients</h2>
+                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly menu and ingredients</h2>
                 <Button variant="outline" size="sm" onClick={refresh}>Sync</Button>
               </div>
-              <div className="grid gap-4">
+              <div className="grid gap-4 xl:grid-cols-2">
                 {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Loading menu…</p> : menu.days.map((day) => (
                   <article key={day.day.de} className="rounded-md bg-background/70 p-4">
-                    <h3 className="font-work text-xs font-semibold uppercase tracking-[0.1em] text-primary">{day.day.de}</h3>
+                    <h3 className="font-cormorant text-2xl font-semibold text-foreground">{day.day.en}</h3>
                     {[
                       { label: "Soup", name: day.soup.en || day.soup.de, meta: day.soupMeta },
                       { label: "Green dish", name: day.green.de, meta: day.greenMeta },
                       { label: "Blue dish", name: day.blue.de, meta: day.blueMeta },
-                    ].map((dish) => (
-                      <div key={`${day.day.de}-${dish.label}`} className="mt-3 border-t border-border/60 pt-3">
-                        <p className="font-work text-xs font-semibold text-muted-foreground">{dish.label}</p>
-                        <p className="font-work text-sm font-medium text-foreground">{dish.name}</p>
-                        {dish.meta?.ingredientsMain?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Ingredients: {dish.meta.ingredientsMain.join(", ")}</p> : null}
-                        {dish.meta?.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Allergens: {dish.meta.allergens.join(", ")}</p> : null}
-                      </div>
-                    ))}
+                    ].map((dish) => {
+                      const details = mergeDishMeta(dish.name, dish.meta);
+                      return (
+                        <div key={`${day.day.de}-${dish.label}`} className="mt-4 border-t border-border/60 pt-4">
+                          <p className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">{dish.label}</p>
+                          <p className="mt-1 font-work text-sm font-medium leading-relaxed text-foreground">{dish.name}</p>
+                          {details.descriptionShort ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground">{details.descriptionShort}</p> : null}
+                          {details.ingredientsMain?.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Ingredients:</span> {details.ingredientsMain.join(", ")}</p> : null}
+                          {details.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {details.allergens.join(", ")}</p> : null}
+                          {details.gfDisclaimer ? <p className="mt-1 font-work text-xs text-muted-foreground">No gluten-containing ingredients by recipe.</p> : null}
+                        </div>
+                      );
+                    })}
                   </article>
                 ))}
               </div>
-            </section>
-
-            <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
-              <h2 className="font-cormorant text-3xl font-semibold text-foreground">Cakes</h2>
-              <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">
-                This section is ready for cake requests. We can activate it once products, minimum notice and order fields are defined.
-              </p>
             </section>
           </aside>
         </div>
