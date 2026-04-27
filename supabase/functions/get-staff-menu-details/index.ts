@@ -295,7 +295,7 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
 }
 
 const digestRows = async (rows: string[][]) => {
-  const bytes = new TextEncoder().encode(JSON.stringify(normalizeRows(rows)));
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "day-weekly-v2", rows: normalizeRows(rows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 };
