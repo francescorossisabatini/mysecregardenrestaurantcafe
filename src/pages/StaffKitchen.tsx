@@ -523,6 +523,7 @@ const StaffKitchen = () => {
   useEffect(() => {
     if (!session || !isStaff) return;
     void loadReservations(selectedReservationDate);
+    void loadCakeOrders(selectedReservationDate);
   }, [selectedReservationDate, session, isStaff]);
 
   useEffect(() => {
@@ -532,6 +533,9 @@ const StaffKitchen = () => {
       .channel("reservation-requests-changes")
       .on("postgres_changes", { event: "*", schema: "public", table: "reservation_requests" }, () => {
         void loadReservations(selectedReservationDate);
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "cake_orders" }, () => {
+        void loadCakeOrders(selectedReservationDate);
       })
       .subscribe();
 
