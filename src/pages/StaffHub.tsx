@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { ChefHat, LogOut, ShieldCheck } from "lucide-react";
+import { CakeSlice, ChefHat, ClipboardList, LogOut, Search, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEOHead } from "@/components/SEOHead";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,6 +17,18 @@ type DishMeta = {
   ingredientsMain?: string[];
   allergens?: string[];
   gfDisclaimer?: boolean;
+};
+
+type StaffMenuRecord = {
+  id: string;
+  title: string;
+  category?: string;
+  description?: string;
+  ingredients: string[];
+  allergens: string[];
+  notes: string[];
+  sourceSheet: string;
+  fields: Array<{ label: string; value: string }>;
 };
 
 const mergeDishMeta = (dishText: string, sheetMeta?: DishMeta): DishMeta => {
