@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { ExternalLink, ChevronLeft, ChevronRight, Leaf, Heart, Sparkles } from "lucide-react";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { SITE } from "@/config/site";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import gardenReal from "@/assets/garden-real.jpg";
@@ -46,12 +44,15 @@ const AboutUs = () => {
     de: {
       heroTitle: "Unsere Geschichte",
       heroTagline: "Ein Ort der Ruhe mitten in Wien.",
+      manifesto: "Ein Raum für Ruhe und Begegnung.",
+      dietaryLine: "Vegetarisch, vegan, glutenfrei – vieles von Produzenten aus der Region.",
       philosophyLabel: "Unsere Philosophie",
       philosophyTitle: "Unser Ansatz",
       philosophyPara1: "Im Jahr 2018 entstand My Secret Garden als ein Traum: ein Ort, wo achtsames Kochen und friedliche Atmosphäre zusammenkommen.",
       philosophyQuote: "Kochen ist Gebet. Essen ist Dankbarkeit.",
       philosophyPara2: "Wir kochen täglich frisch mit biologischen und regionalen Zutaten. Ohne Eile, mit Aufmerksamkeit und Freude.",
       pillarsTitle: "Was uns ausmacht",
+      pillarsIntro: "Unsere Küche ist World Cuisine: inspiriert von vielen vegetarischen Traditionen, gekocht mit Sorgfalt und ohne Alkohol.",
       pillar1Title: "Weltküche",
       pillar1Desc: "Wir lassen uns von vegetarischen und veganen Küchen aus aller Welt inspirieren. Von Indien bis Japan, vom Mittelmeer bis Lateinamerika. Jeden Tag eine andere kulinarische Reise.",
       pillar2Title: "Regionale Produkte",
@@ -62,10 +63,12 @@ const AboutUs = () => {
       spaceTitle: "Im Herzen von Wien",
       spacePara1: "Versteckt im Raimundhof an der Mariahilferstraße. Ein ruhiger Innenhof abseits vom Trubel.",
       spacePara2: "Hier vergisst man die Stadt. Grüne Pflanzen, Holztische, sanfte Musik. Ein Ort zum Durchatmen.",
+      spaceNote: "Komm für ein schnelles Mittagessen. Bleib, wenn du einen stillen Moment brauchst.",
       inspirationLabel: "Unsere Inspiration",
       inspirationTitle: "Sri Chinmoy",
       inspirationPara1: "Sri Chinmoy (1931–2007) war ein spiritueller Lehrer, der Meditation, Musik und Kunst als Wege zum inneren Frieden lehrte.",
       inspirationPara2: "Seine Schüler gründeten weltweit vegetarische Restaurants. Orte, wo Kochen und Servieren als meditative Praxis verstanden werden.",
+      inspirationNote: "Diese Haltung prägt den Alltag im Secret Garden: aufmerksam kochen, freundlich servieren, Raum lassen.",
       artTitle: "Jharna-Kala",
       artSubtitle: "Kunst aus der Quelle",
       poemTitle: "Seine Worte",
@@ -74,12 +77,15 @@ const AboutUs = () => {
     en: {
       heroTitle: "Our Story",
       heroTagline: "A place of peace in the heart of Vienna.",
+      manifesto: "A room for stillness and meeting.",
+      dietaryLine: "Vegetarian, vegan, gluten-free – mostly from farmers in the region.",
       philosophyLabel: "Our Philosophy",
       philosophyTitle: "Our Approach",
       philosophyPara1: "My Secret Garden began in 2018 from a simple wish: to create a peaceful place for fresh vegetarian cooking in the middle of Vienna.",
       philosophyQuote: "Cooking is prayer. Eating is gratitude.",
       philosophyPara2: "We cook fresh daily with organic and regional ingredients. Without haste, with attention and joy.",
       pillarsTitle: "What Makes Us Special",
+      pillarsIntro: "Our kitchen is World Cuisine: inspired by vegetarian traditions from many places, cooked with care and always alcohol-free.",
       pillar1Title: "World Cuisine",
       pillar1Desc: "We draw inspiration from vegetarian and vegan cuisines around the world to create our daily dishes. From India to Japan, from the Mediterranean to Latin America. A different culinary journey every day.",
       pillar2Title: "Local Products",
@@ -90,10 +96,12 @@ const AboutUs = () => {
       spaceTitle: "In the Heart of Vienna",
       spacePara1: "Hidden in the Raimundhof on Mariahilferstraße. A quiet courtyard away from the bustle.",
       spacePara2: "Here you forget the city. Green plants, wooden tables, soft music. A place to breathe.",
+      spaceNote: "Come for a quick lunch. Stay when you need a quiet moment.",
       inspirationLabel: "Our Inspiration",
       inspirationTitle: "Sri Chinmoy",
       inspirationPara1: "Sri Chinmoy lived from 1931 to 2007. He was a spiritual teacher who taught meditation, music and art as paths to inner peace.",
       inspirationPara2: "His students founded vegetarian restaurants around the world. In these places, cooking and serving are part of a mindful daily practice.",
+      inspirationNote: "This spirit shapes daily life at Secret Garden: attentive cooking, kind service, and space to breathe.",
       artTitle: "Jharna-Kala",
       artSubtitle: "Art from the Source",
       poemTitle: "His Words",
@@ -136,13 +144,16 @@ const AboutUs = () => {
       <div className="h-20" />
 
       {/* ABOUT HERO */}
-      <section className="py-16 md:py-24 text-center">
+      <section className="bg-section-soft py-14 text-center md:py-20">
         <div className="container mx-auto px-4">
-          <h1 className="font-caveat text-5xl md:text-7xl text-primary mb-4">
+          <h1 className="mb-4 font-caveat text-5xl text-primary md:text-7xl">
             {t.heroTitle}
           </h1>
-          <p className="font-lora text-xl text-foreground/80 max-w-xl mx-auto">
-            {t.heroTagline}
+          <p className="mx-auto max-w-xl font-lora text-xl leading-relaxed text-foreground/85">
+            {t.manifesto}
+          </p>
+          <p className="mx-auto mt-4 max-w-md font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+            {t.heroTagline} {t.dietaryLine}
           </p>
         </div>
       </section>
@@ -152,7 +163,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="order-2 md:order-1">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                 <img src={entranceGarden} alt="Garden entrance" className="w-full h-full object-cover" />
               </div>
             </div>
@@ -160,7 +171,7 @@ const AboutUs = () => {
               <span className="text-xs font-work uppercase tracking-widest text-accent">{t.philosophyLabel}</span>
               <h2 className="text-4xl md:text-5xl text-primary">{t.philosophyTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara1}</p>
-              <blockquote className="font-lora text-xl md:text-2xl italic text-primary/90 border-l-4 border-accent pl-6 py-2">
+              <blockquote className="border-l-4 border-accent py-2 pl-6 font-lora text-xl italic text-primary/90 md:text-2xl">
                 "{t.philosophyQuote}"
               </blockquote>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara2}</p>
@@ -170,9 +181,12 @@ const AboutUs = () => {
       </section>
 
       {/* PILLARS / OFFERING - Alternating sections with photos */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      <section className="bg-section-accent py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-4xl md:text-5xl text-primary text-center mb-16">{t.pillarsTitle}</h2>
+          <div className="mx-auto mb-14 max-w-2xl text-center md:mb-16">
+            <h2 className="text-4xl text-primary md:text-5xl">{t.pillarsTitle}</h2>
+            <p className="mt-4 font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.pillarsIntro}</p>
+          </div>
           
           <div className="space-y-16 md:space-y-24">
             {pillarsData.map((pillar, index) => (
@@ -183,15 +197,16 @@ const AboutUs = () => {
                 }`}
               >
                 <div className={`${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
-                  <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-lg">
+                  <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                     <img 
                       src={pillar.image} 
                       alt={pillar.imageAlt} 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover" 
                     />
                   </div>
                 </div>
                 <div className={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
+                  <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">✿</p>
                   <h3 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground">
                     {pillar.title}
                   </h3>
@@ -214,6 +229,7 @@ const AboutUs = () => {
               <h2 className="text-4xl md:text-5xl text-primary">{t.spaceTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara2}</p>
+              <p className="font-cormorant text-2xl italic leading-relaxed text-primary/90">{t.spaceNote}</p>
               <a 
                 href={SITE.instagramUrl}
                 target="_blank" 
@@ -225,7 +241,7 @@ const AboutUs = () => {
               </a>
             </div>
             <div>
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                 <img src={gardenReal} alt="Our garden" className="w-full h-full object-cover" />
               </div>
             </div>
@@ -234,16 +250,16 @@ const AboutUs = () => {
       </section>
 
       {/* INSPIRATION - Sri Chinmoy integrated section */}
-      <section className="py-16 md:py-24 bg-muted/20">
+      <section className="bg-section-soft py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-16">
             {/* Portrait */}
             <div className="order-2 md:order-1">
               <div className="relative max-w-sm mx-auto">
-                <div className="aspect-[3/4] overflow-hidden rounded-3xl shadow-2xl">
+                <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                   <img src={sriChinmoyImage} alt="Sri Chinmoy" className="w-full h-full object-cover" />
                 </div>
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-2 rounded-full shadow-lg">
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-border/75 bg-card px-6 py-2 shadow-card">
                   <p className="font-caveat text-lg text-primary">1931 bis 2007</p>
                 </div>
               </div>
@@ -254,6 +270,7 @@ const AboutUs = () => {
               <h2 className="text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara2}</p>
+              <p className="font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.inspirationNote}</p>
               <a 
                 href="https://www.srichinmoy.org" 
                 target="_blank" 
@@ -274,7 +291,7 @@ const AboutUs = () => {
             <div className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4 md:justify-center md:overflow-visible">
               {artworks.map((art, index) => (
                 <div key={index} className="flex-shrink-0 w-48 md:w-56 snap-center">
-                  <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
+                  <div className="aspect-square overflow-hidden rounded-2xl border border-border/75 shadow-card">
                     <img src={art.src} alt={art.alt} className="w-full h-full object-cover" />
                   </div>
                 </div>
@@ -293,14 +310,14 @@ const AboutUs = () => {
               </div>
               <button 
                 onClick={prevPoem}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:-translate-x-12"
                 aria-label="Previous poem"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button 
                 onClick={nextPoem}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:translate-x-12"
                 aria-label="Next poem"
               >
                 <ChevronRight className="w-5 h-5" />
