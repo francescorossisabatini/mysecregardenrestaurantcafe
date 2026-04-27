@@ -228,7 +228,21 @@ Background: Warm cream #F5F0E8
 /* Improved contrast for muted/micro-copy text */
 @layer utilities {
   .bg-nav-surface {
-    background: hsl(var(--background) / 0.95);
+    background: hsl(var(--card) / 0.94);
+  }
+
+  .bg-section-soft {
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.42) 100%);
+  }
+
+  .bg-section-accent {
+    background: linear-gradient(180deg, hsl(var(--accent-light) / 0.24) 0%, hsl(var(--background)) 100%);
+  }
+
+  .surface-card {
+    background: hsl(var(--card) / 0.92);
+    border-color: hsl(var(--border) / 0.78);
+    box-shadow: var(--shadow-card);
   }
 
   .border-soft {
