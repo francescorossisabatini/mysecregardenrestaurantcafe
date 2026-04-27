@@ -221,6 +221,9 @@ function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMen
 }
 
 function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const weeklyDayRecords = rowsToWeeklyDayRecords(rows, sourceSheet);
+  if (weeklyDayRecords.length >= 5) return weeklyDayRecords;
+
   const dayColumnRecords = rowsToDayColumnRecords(rows, sourceSheet);
   if (dayColumnRecords.length) return dayColumnRecords;
 
