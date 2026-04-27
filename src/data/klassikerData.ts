@@ -72,7 +72,6 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, saisonales Gemüse",
           ingredientsMain: ["Blattsalat", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: ["M"],
           gfDisclaimer: true,
         },
         {
@@ -87,7 +86,6 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, Avocado, saisonal",
           ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: ["M"],
           gfDisclaimer: true,
         },
         {
@@ -101,7 +99,7 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenkäse", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: ["G", "M"],
+          allergens: ["G"],
           gfDisclaimer: true,
         },
         {
@@ -117,7 +115,7 @@ export const klassikerMenu = {
           isBio: true,
           descriptionShort: "frisch, Bio-Tofu, saisonal",
           ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: ["F", "M"],
+          allergens: ["F"],
           gfDisclaimer: true,
           ingredientProducers: { Tofu: { certification: "bio" } },
         },
