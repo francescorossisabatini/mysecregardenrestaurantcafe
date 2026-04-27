@@ -22,7 +22,7 @@ export const SEOHead = ({
 }: SEOHeadProps) => {
   const fullTitle = title
     ? `${title} | My Secret Garden Wien`
-    : "My Secret Garden - Vegetarisches & Veganes Restaurant Wien";
+    : "My Secret Garden Vegetarisches & Veganes Restaurant Wien";
   
   const canonicalUrl = `${BASE_URL}${path}`;
 
