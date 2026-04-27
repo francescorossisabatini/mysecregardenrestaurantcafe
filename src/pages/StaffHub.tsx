@@ -46,7 +46,24 @@ const StaffHub = () => {
   const [isChecking, setIsChecking] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cakeRecords, setCakeRecords] = useState<StaffMenuRecord[]>([]);
+  const [isCakeLoading, setIsCakeLoading] = useState(false);
+  const [cakeError, setCakeError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const { menu, isLoading: isMenuLoading, refresh } = useWeeklyMenu();
+
+  const loadCakePlan = async () => {
+    setIsCakeLoading(true);
+    setCakeError(null);
+    const { data, error: functionError } = await supabase.functions.invoke("get-staff-menu-details");
+    if (functionError || !data?.success) {
+      setCakeError("Kuchenplan could not be loaded from Google Sheets.");
+      setCakeRecords([]);
+    } else {
+      setCakeRecords(data.data.records ?? []);
+    }
+    setIsCakeLoading(false);
+  };
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -67,7 +84,9 @@ const StaffHub = () => {
         setError("Staff access check failed. Please sign out and try again.");
         setIsStaff(false);
       } else {
-        setIsStaff(Boolean(accessData?.isStaff));
+        const hasStaffAccess = Boolean(accessData?.isStaff);
+        setIsStaff(hasStaffAccess);
+        if (hasStaffAccess) void loadCakePlan();
       }
       setIsChecking(false);
     });
@@ -79,6 +98,14 @@ const StaffHub = () => {
     await supabase.auth.signOut();
     setSession(null);
   };
+
+  const filteredCakeRecords = cakeRecords.filter((record) => {
+    const query = searchTerm.trim().toLowerCase();
+    if (!query) return true;
+    return [record.title, record.category, record.description, ...record.ingredients, ...record.allergens, ...record.notes]
+      .filter(Boolean)
+      .some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
+  });
 
   if (!isChecking && !session) return <Navigate to="/staff/login" replace />;
 
