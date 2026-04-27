@@ -96,8 +96,8 @@ export const AboutNarrative = () => {
               <Heart className="w-12 h-12 mx-auto text-accent" />
               <p className="text-2xl md:text-3xl font-serif italic text-foreground leading-relaxed">
                 {language === "de" 
-                  ? '"Nahrung für Körper, Geist und Seele – täglich frisch zubereitet mit Liebe und Achtsamkeit"' 
-                  : '"Nourishment for body, mind and soul – freshly prepared daily with love and mindfulness"'}
+                  ? '"Ein Teller kann den Tag nicht lösen. Aber er kann ihn kurz leichter machen."' 
+                  : '"A plate cannot fix the day. But it can make it lighter for a moment."'}
               </p>
             </div>
           </Card>
