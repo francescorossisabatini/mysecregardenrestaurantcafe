@@ -37,6 +37,25 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
+const splitDishText = (text: string, language: "de" | "en") => {
+  const trimmed = text.trim();
+  const separators = [":", ";", language === "de" ? " mit " : " with ", language === "de" ? " auf " : " on "];
+  const match = separators
+    .map((separator) => ({ separator, index: trimmed.toLowerCase().indexOf(separator) }))
+    .filter(({ index }) => index > 8)
+    .sort((a, b) => a.index - b.index)[0];
+
+  if (!match) return { name: trimmed, description: "" };
+
+  const name = trimmed.slice(0, match.index).trim();
+  const rawDescription = trimmed.slice(match.index + match.separator.length).trim();
+  const description = match.separator.trim().length > 1
+    ? `${match.separator.trim()} ${rawDescription}`
+    : rawDescription;
+
+  return { name, description };
+};
+
 export const HomeMenuPreview = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
@@ -94,22 +113,34 @@ export const HomeMenuPreview = () => {
             </div>
           ) : !isClosed && dishes.length > 0 ? (
             <div className="space-y-4">
-              {dishes.map((dish) => (
+              {dishes.map((dish) => {
+                const dishCopy = splitDishText(dish.text, language);
+
+                return (
                 <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5">
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge className="border-accent/25 bg-accent/10 font-work text-[11px] uppercase tracking-[0.08em] text-accent">
-                        {language === "de" ? "Heute" : "Today"}
-                      </Badge>
-                      <span className="font-work text-xs uppercase tracking-wide text-muted-foreground">{dish.label}</span>
+                  <div className="mb-3 flex items-start justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
+                          {dishCopy.name}
+                        </h3>
+                        <Badge className="border-accent/25 bg-accent/10 font-work text-[10px] uppercase tracking-[0.08em] text-accent">
+                          {dish.label}
+                        </Badge>
+                      </div>
+                      {dishCopy.description && (
+                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+                          {dishCopy.description}
+                        </p>
+                      )}
                     </div>
                     <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
                   </div>
-                  <p className="font-work text-base leading-relaxed text-foreground">{dish.text}</p>
                   <DietaryBadges text={dish.text} language={language} />
                   <AllergenCodes codes={inferDishDetails(dish.text).allergens} />
                 </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="rounded-2xl border p-8 text-center surface-card">
