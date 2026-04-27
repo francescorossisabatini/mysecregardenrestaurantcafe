@@ -136,7 +136,7 @@ export const klassikerMenu = {
           isVegan: true,
           descriptionShort: "cremig, vegan, süß",
           ingredientsMain: ["vegane Creme", "Kuchenboden"],
-          allergens: ["A", "F", "H"],
+          allergens: ["H"],
         },
         {
           id: "karamellschnitte",
