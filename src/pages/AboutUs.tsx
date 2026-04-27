@@ -17,6 +17,7 @@ import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
 import sriChinmoyWaves from "@/assets/sri-chinmoy-waves.jpg";
 import sriChinmoyAbstract from "@/assets/sri-chinmoy-abstract.jpg";
+import supermindLogo from "@/assets/supermind-logo.png";
 
 const poems = [
   { en: "World peace can be achieved\nWhen the power of love\nReplaces the love of power.", de: "Weltfrieden kann erreicht werden,\nwenn die Kraft der Liebe\ndie Liebe zur Macht ersetzt." },
@@ -59,6 +60,9 @@ const AboutUs = () => {
       pillar2Desc: "Morgens kommen Gemüse, Salate und Getreide in die Küche. Was gut aussieht und zur Saison passt, findet oft noch am selben Tag auf die Karte.",
       pillar3Title: "Achtsam & Alkoholfrei",
       pillar3Desc: "Bei uns gibt es keinen Alkohol. Dafür Kaffee, Tee, hausgemachte Kuchen und viele Gerichte ohne glutenhaltige Zutaten. Wenn du Zöliakie hast, sag bitte vorher Bescheid.",
+      coffeeLabel: "Unser Kaffee",
+      coffeeTitle: "Supermind Kaffee, Wien",
+      coffeePara: "Für Espresso, Melange, Flat White und Latte arbeiten wir mit Supermind Kaffee aus Wien. Die Partnerschaft passt zu uns, weil sie ruhig, bewusst und qualitätsorientiert ist, ohne sich in den Vordergrund zu drängen.",
       spaceLabel: "Unser Garten",
       spaceTitle: "Im Herzen von Wien",
       spacePara1: "Du gehst durch den Bogen auf der Mariahilferstraße und plötzlich wird es leiser. Der Hof liegt ein paar Schritte zurück, fast ein bisschen versteckt.",
@@ -92,6 +96,9 @@ const AboutUs = () => {
       pillar2Desc: "Vegetables, salads and grains arrive in the morning. What looks good and fits the season often ends up on the menu the same day.",
       pillar3Title: "Mindful & Alcohol Free",
       pillar3Desc: "We do not serve alcohol. We do serve coffee, tea, homemade cakes and many dishes without gluten containing ingredients. If you are coeliac, please tell us before ordering.",
+      coffeeLabel: "Our Coffee",
+      coffeeTitle: "Supermind Kaffee, Vienna",
+      coffeePara: "For espresso, melange, flat white and latte, we work with Supermind Kaffee from Vienna. The partnership fits us because it is quiet, mindful and quality focused, without becoming the loudest thing in the room.",
       spaceLabel: "Our Garden",
       spaceTitle: "In the Heart of Vienna",
       spacePara1: "You walk through the arch on Mariahilferstraße and, a few steps later, it gets quieter. The courtyard sits back from the street, almost hidden.",
