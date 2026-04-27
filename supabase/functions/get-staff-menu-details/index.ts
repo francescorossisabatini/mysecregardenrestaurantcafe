@@ -48,6 +48,7 @@ const dayNames = [
   "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag",
   "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
   "mo", "di", "mi", "do", "fr", "sa", "so",
+  "mon", "tue", "wed", "thu", "fri", "sat", "sun",
 ];
 
 const isDayLabel = (value: string) => {
@@ -58,6 +59,20 @@ const isDayLabel = (value: string) => {
 const fieldKindFromRowLabel = (label: string) => {
   const kind = headerKind(label);
   return kind === "field" ? "description" : kind;
+};
+
+const dayDisplayName = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase().replace(/[.:]/g, "").trim();
+  const names: Record<string, string> = {
+    mo: "Monday", mon: "Monday", montag: "Monday", monday: "Monday",
+    di: "Tuesday", tue: "Tuesday", dienstag: "Tuesday", tuesday: "Tuesday",
+    mi: "Wednesday", wed: "Wednesday", mittwoch: "Wednesday", wednesday: "Wednesday",
+    do: "Thursday", thu: "Thursday", donnerstag: "Thursday", thursday: "Thursday",
+    fr: "Friday", fri: "Friday", freitag: "Friday", friday: "Friday",
+    sa: "Saturday", sat: "Saturday", samstag: "Saturday", saturday: "Saturday",
+    so: "Sunday", sun: "Sunday", sonntag: "Sunday", sunday: "Sunday",
+  };
+  return names[normalized.split(" ")[0]] ?? clean(value, 80);
 };
 
 const parseGviz = (text: string): string[][] => {
