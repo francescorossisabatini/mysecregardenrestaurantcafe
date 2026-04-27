@@ -1,5 +1,5 @@
 import { Phone, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -10,6 +10,7 @@ import { getHeroAbVariant, trackHeroAbEvent } from "@/lib/heroAbTest";
 
 export const MobileStickyBar = () => {
   const isMobile = useIsMobile();
+  const location = useLocation();
   const { language } = useLanguage();
   const { isOpen: isMobileMenuOpen } = useMobileMenu();
   const [isVisible, setIsVisible] = useState(false);
@@ -59,8 +60,9 @@ export const MobileStickyBar = () => {
 
   const callLabel = language === "de" ? "Anrufen" : "Call";
   const callAriaLabel = language === "de" ? "Restaurant anrufen" : "Call the restaurant";
-  const visitLabel = language === "de" ? "Besuch" : "Visit";
-  const visitAriaLabel = language === "de" ? "Besuchsinfos öffnen" : "Open visit information";
+  const isVisitPage = location.pathname === "/visit" || location.pathname === "/contact";
+  const visitLabel = isVisitPage ? (language === "de" ? "Route" : "Get directions") : (language === "de" ? "Besuch" : "Visit");
+  const visitAriaLabel = isVisitPage ? (language === "de" ? "Route auf Google Maps öffnen" : "Open directions on Google Maps") : (language === "de" ? "Besuchsinfos öffnen" : "Open visit information");
   const heroVariant = getHeroAbVariant({ assign: false });
 
   // Hide sticky bar when cookie consent is pending
@@ -104,7 +106,25 @@ export const MobileStickyBar = () => {
           <span>{callLabel}</span>
         </a>
 
-        <Link
+        {isVisitPage ? <a
+          href={SITE.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackHeroAbEvent('click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
+          className="flex-1 flex items-center justify-center gap-2
+            bg-primary text-primary-foreground
+            rounded-full py-3 px-4
+            text-base font-medium font-work
+            shadow-soft
+            active:scale-95
+            transition-all duration-200
+            touch-manipulation
+            focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+          aria-label={visitAriaLabel}
+        >
+          <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
+          <span>{visitLabel}</span>
+        </a> : <Link
           to="/visit"
           onClick={() => trackHeroAbEvent('click_visit', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
@@ -120,7 +140,7 @@ export const MobileStickyBar = () => {
         >
           <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
           <span>{visitLabel}</span>
-        </Link>
+        </Link>}
       </div>
     </div>
   );
