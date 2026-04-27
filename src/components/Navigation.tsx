@@ -11,8 +11,7 @@ export const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
-  const isHeroOverlay = isHomePage && !scrolled && !isMobileMenuOpen;
+  const isHeroOverlay = false;
 
   useEffect(() => {
     const handleScrollShadow = () => setScrolled(window.scrollY > 24);
