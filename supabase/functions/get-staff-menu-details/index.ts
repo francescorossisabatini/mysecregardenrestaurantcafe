@@ -87,7 +87,81 @@ const normalizeRows = (rows: string[][]) => rows.map((row) => {
 const makeId = (sourceSheet: string, rowIndex: number, title: string, fields: Array<{ label: string; value: string }>) =>
   `${sourceSheet}_${rowIndex}_${title}_${fields.map((field) => field.value).join("_")}`.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 120);
 
+function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const usableRows = normalizeRows(rows);
+  const dayHeaderIndex = usableRows.findIndex((row) => row.filter(isDayLabel).length >= 2);
+  if (dayHeaderIndex < 0) return [];
+
+  const dayHeader = usableRows[dayHeaderIndex];
+  const dayColumns = dayHeader
+    .map((value, index) => ({ day: clean(value, 80), index }))
+    .filter((column) => isDayLabel(column.day));
+
+  const records: StaffMenuRecord[] = [];
+  const activeTitles = new Map<number, string>();
+  const activeFields = new Map<number, Array<{ label: string; value: string }>>();
+
+  const flushColumn = (columnIndex: number, rowIndex: number) => {
+    const title = clean(activeTitles.get(columnIndex) ?? "");
+    const fields = activeFields.get(columnIndex) ?? [];
+    if (!title || !fields.length) return;
+
+    const ingredients: string[] = [];
+    const allergens: string[] = [];
+    const notes: string[] = [];
+    let description = "";
+
+    for (const field of fields) {
+      const kind = fieldKindFromRowLabel(field.label);
+      if (kind === "ingredients") ingredients.push(...splitList(field.value));
+      else if (kind === "allergens") allergens.push(...splitList(field.value));
+      else if (kind === "notes") notes.push(field.value);
+      else if (!description && field.value !== title) description = field.value;
+    }
+
+    records.push({
+      id: makeId(sourceSheet, records.length + rowIndex, title, fields),
+      title,
+      category: undefined,
+      menuDay: dayColumns.find((column) => column.index === columnIndex)?.day,
+      description: description || undefined,
+      ingredients: ingredients.length ? [...new Set(ingredients)] : [...new Set(fields.map((field) => field.value).filter((value) => value !== title))],
+      allergens: [...new Set(allergens)],
+      notes: [...new Set(notes)],
+      sourceSheet,
+      fields,
+    });
+  };
+
+  usableRows.slice(dayHeaderIndex + 1).forEach((row, offset) => {
+    const rowIndex = dayHeaderIndex + offset + 1;
+    const rowLabel = clean(row[0] || `Detail ${rowIndex + 1}`, 80);
+
+    for (const column of dayColumns) {
+      const value = clean(row[column.index]);
+      if (!value) continue;
+
+      const kind = fieldKindFromRowLabel(rowLabel);
+      const shouldStartRecord = kind === "title" || (!activeTitles.get(column.index) && rowLabel && !/(zutat|ingredient|allergen|note|notiz|hinweis|prep|vorbereitung|beschreibung|description)/i.test(rowLabel));
+
+      if (shouldStartRecord && activeTitles.get(column.index)) {
+        flushColumn(column.index, rowIndex);
+        activeFields.set(column.index, []);
+      }
+
+      if (shouldStartRecord || !activeTitles.get(column.index)) activeTitles.set(column.index, value);
+      activeFields.set(column.index, [...(activeFields.get(column.index) ?? []), { label: rowLabel, value }]);
+    }
+  });
+
+  dayColumns.forEach((column) => flushColumn(column.index, usableRows.length));
+  return records;
+}
+
 function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const dayColumnRecords = rowsToDayColumnRecords(rows, sourceSheet);
+  if (dayColumnRecords.length) return dayColumnRecords;
+
   const usableRows = normalizeRows(rows);
   if (!usableRows.length) return [];
 
