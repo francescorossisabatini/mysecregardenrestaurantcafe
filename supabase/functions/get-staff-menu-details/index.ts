@@ -102,6 +102,53 @@ const normalizeRows = (rows: string[][]) => rows.map((row) => {
 const makeId = (sourceSheet: string, rowIndex: number, title: string, fields: Array<{ label: string; value: string }>) =>
   `${sourceSheet}_${rowIndex}_${title}_${fields.map((field) => field.value).join("_")}`.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 120);
 
+function rowsToWeeklyDayRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const usableRows = normalizeRows(rows);
+  const records: StaffMenuRecord[] = [];
+
+  usableRows.forEach((row, rowIndex) => {
+    const dayCellIndex = row.findIndex(isDayLabel);
+    if (dayCellIndex < 0) return;
+
+    const day = dayDisplayName(row[dayCellIndex]);
+    const fields = row.map((value, index) => ({ label: index === dayCellIndex ? "day" : `column ${index + 1}`, value: clean(value) })).filter((field) => field.value);
+    const afterDay = row.slice(dayCellIndex + 1).map((value) => clean(value)).filter(Boolean);
+    if (afterDay.length < 2) return;
+
+    const typedFields = [
+      { label: "day", value: day },
+      { label: "soup", value: afterDay[0] ?? "" },
+      { label: "green dish", value: afterDay[1] ?? "" },
+      { label: "blue dish", value: afterDay[2] ?? "" },
+      { label: "prep", value: afterDay.slice(3).join(", ") },
+    ].filter((field) => field.value);
+
+    const dishes = [
+      { category: "Soup", title: afterDay[0] },
+      { category: "Green dish", title: afterDay[1] },
+      { category: "Blue dish", title: afterDay[2] },
+    ].filter((dish) => dish.title && !isDayLabel(dish.title));
+
+    dishes.forEach((dish, dishIndex) => {
+      const recordFields = [...typedFields, ...fields].filter((field, index, list) => list.findIndex((item) => item.label === field.label && item.value === field.value) === index);
+      records.push({
+        id: makeId(sourceSheet, rowIndex * 10 + dishIndex, `${day}_${dish.category}_${dish.title}`, recordFields),
+        title: dish.title,
+        category: dish.category,
+        menuDay: day,
+        description: undefined,
+        ingredients: afterDay.slice(3),
+        allergens: [],
+        notes: afterDay.slice(3).length ? [`Prep: ${afterDay.slice(3).join(", ")}`] : [],
+        sourceSheet,
+        fields: recordFields,
+      });
+    });
+  });
+
+  return records;
+}
+
 function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
   const usableRows = normalizeRows(rows);
   const dayHeaderIndex = usableRows.findIndex((row) => row.filter(isDayLabel).length >= 2);
