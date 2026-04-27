@@ -11,11 +11,19 @@ export const Navigation = () => {
   const { language } = useLanguage();
   const location = useLocation();
   const isHeroOverlay = false;
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname, setIsMobileMenuOpen]);
+
+  useEffect(() => {
+    const onScroll = () => setHasScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
   const navLinks = [
@@ -83,7 +91,9 @@ export const Navigation = () => {
           <div className="hidden items-center justify-end gap-3 lg:flex">
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
-          <div className="flex items-center justify-end lg:hidden" aria-hidden="true" />
+          <div className={`flex items-center justify-end lg:hidden transition-opacity duration-300 ${hasScrolled ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+            <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
+          </div>
         </div>
       </nav>
 
