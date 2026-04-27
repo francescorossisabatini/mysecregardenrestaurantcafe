@@ -143,7 +143,7 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className={`text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-all duration-[350ms] ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+          <p className={`text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-all duration-slow ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
