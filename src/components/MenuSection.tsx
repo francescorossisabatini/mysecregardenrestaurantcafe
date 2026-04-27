@@ -17,6 +17,7 @@ import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
+import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -41,7 +42,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   const labels = parseDietaryLabels(text);
   const visibleLabels = [
     labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients") : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
     labels.isBio ? "bio" : null,
   ].filter(Boolean);
 
@@ -49,7 +50,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   
   return (
     <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
-      {visibleLabels.join(" · ")}
+      {joinDisplayText(visibleLabels)}
     </p>
   );
 };
@@ -72,14 +73,14 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
       <div className="min-w-0 flex-1">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
           <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
-            {dishCopy.name}
+            {cleanDisplayText(dishCopy.name)}
           </p>
           <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
             {weeklyDishLabels[kind][language]}
           </span>
         </div>
         {dishCopy.description && (
-          <p className="mt-1 text-muted-foreground whitespace-pre-line">{dishCopy.description}</p>
+          <p className="mt-1 text-muted-foreground whitespace-pre-line">{cleanDisplayText(dishCopy.description)}</p>
         )}
         <DietaryBadges text={text} language={language} />
         <WeeklyDishDetails text={text} meta={meta} />
