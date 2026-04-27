@@ -205,7 +205,7 @@ const ContactPage = () => {
                 <Clock className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffnungszeiten" : "Opening hours"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
-                  {language === "de" ? "Mo–Sa: 11:00–19:00" : "Mon–Sat: 11:00–19:00"}<br />
+                  {language === "de" ? "Mo bis Sa: 11:00 bis 19:00" : "Mon to Sat: 11:00 to 19:00"}<br />
                   {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
                 </p>
               </div>
@@ -214,8 +214,8 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Unser Garten hat Stufen – aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
-                    : "Our garden has steps – but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step-free access."}
+                    ? "Unser Garten hat Stufen, aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
+                    : "Our garden has steps, but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step free access."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
@@ -243,8 +243,8 @@ const ContactPage = () => {
                 </h2>
                 <p className="mb-6 font-work leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Du möchtest sicher gehen, dass ein Tisch auf dich wartet? Ruf uns an – das geht am schnellsten. Oder schick uns eine kurze Anfrage."
-                    : "Want to make sure there’s a table waiting for you? Give us a call – it’s the fastest way. Or send us a short request."}
+                    ? "Du möchtest sicher gehen, dass ein Tisch auf dich wartet? Ruf uns an, das geht am schnellsten. Oder schick uns eine kurze Anfrage."
+                    : "Want to make sure there’s a table waiting for you? Give us a call, it’s the fastest way. Or send us a short request."}
                 </p>
                 <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
                   <a href={`tel:${SITE.phoneTel}`}><Phone className="mr-2 h-4 w-4" />{SITE.phoneDisplay}</a>
