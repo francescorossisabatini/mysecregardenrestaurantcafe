@@ -235,7 +235,7 @@ const ContactPage = () => {
               </div>
             </section>
 
-            <section className="grid gap-6 rounded-lg border border-border/70 bg-section-accent p-6 shadow-card md:grid-cols-[0.9fr_1.1fr] md:p-8">
+            {false && <section className="grid gap-6 rounded-lg border border-border/70 bg-section-accent p-6 shadow-card md:grid-cols-[0.9fr_1.1fr] md:p-8">
               <div>
                 <CalendarDays className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-3xl font-semibold text-foreground">
@@ -290,7 +290,7 @@ const ContactPage = () => {
                     : (language === "de" ? "Wir bestätigen deine Anfrage innerhalb von 24 Stunden." : "We confirm your request within 24 hours."))}
                 </p>
               </form>
-            </section>
+            </section>}
           </div>
         </div>
       </main>
