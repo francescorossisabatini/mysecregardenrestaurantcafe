@@ -69,8 +69,9 @@ const ContactPage = () => {
               </div>
             </header>
 
-            <section className="mb-14 grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-stretch">
-              <div className="min-h-[320px] overflow-hidden rounded-lg shadow-card">
+            <section className="mb-14 overflow-hidden rounded-lg border border-border/70 bg-card/70 shadow-card">
+              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
+                <div className="min-h-[320px] lg:min-h-[520px]">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
                   width="100%"
@@ -81,48 +82,51 @@ const ContactPage = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Secret Garden Restaurant Location"
                 />
-              </div>
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card md:p-8">
-                <div className="mb-4 flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
-                  <h2 className="font-cormorant text-3xl font-semibold text-foreground">
-                    {language === "de" ? "So findest du uns" : "How to find us"}
-                  </h2>
                 </div>
-                <p className="font-work leading-relaxed text-muted-foreground">
-                  Mariahilferstraße 45<br />
-                  Im Raimundhof<br />
-                  1060 Wien
-                </p>
-                <p className="mt-5 font-work leading-relaxed text-foreground/90">
-                  {SITE.courtyardInstruction[language]}
-                </p>
-                <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 font-work text-sm font-medium text-primary underline-offset-4 hover:underline">
-                  {language === "de" ? "In Google Maps öffnen" : "Open in Google Maps"}
-                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                </a>
-              </div>
-            </section>
+                <div className="grid gap-6 p-6 md:p-8">
+                  <div>
+                    <div className="mb-4 flex items-center gap-3">
+                      <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
+                      <h2 className="font-cormorant text-3xl font-semibold text-foreground">
+                        {language === "de" ? "So findest du uns" : "How to find us"}
+                      </h2>
+                    </div>
+                    <p className="font-work leading-relaxed text-muted-foreground">
+                      Mariahilferstraße 45<br />
+                      Im Raimundhof<br />
+                      1060 Wien
+                    </p>
+                    <p className="mt-5 font-work leading-relaxed text-foreground/90">
+                      {SITE.courtyardInstruction[language]}
+                    </p>
+                  </div>
 
-            <section className="mb-14 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-              <div className="overflow-hidden rounded-lg shadow-card">
-                <img src={entranceGarden} alt={language === "de" ? "Eingang im Raimundhof zu My Secret Garden" : "Entrance in Raimundhof to My Secret Garden"} className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div>
-                <div className="mb-5 flex items-center gap-3">
-                  <DoorOpen className="h-5 w-5 text-primary" aria-hidden="true" />
-                  <h2 className="font-cormorant text-3xl font-semibold text-foreground">
-                    {language === "de" ? "Wie du hineinkommst" : "How to enter"}
-                  </h2>
+                  <div className="overflow-hidden rounded-lg border border-border/70">
+                    <img src={entranceGarden} alt={language === "de" ? "Eingang im Raimundhof zu My Secret Garden" : "Entrance in Raimundhof to My Secret Garden"} className="aspect-[4/3] w-full object-cover" loading="lazy" />
+                  </div>
+
+                  <div>
+                    <div className="mb-5 flex items-center gap-3">
+                      <DoorOpen className="h-5 w-5 text-primary" aria-hidden="true" />
+                      <h3 className="font-cormorant text-2xl font-semibold text-foreground">
+                        {language === "de" ? "Der Weg hinein" : "The way in"}
+                      </h3>
+                    </div>
+                    <ol className="space-y-4">
+                      {enterSteps.map((step, index) => (
+                        <li key={step} className="flex gap-4 font-work text-foreground/90">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">{index + 1}</span>
+                          <span className="pt-0.5 leading-relaxed">{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-work text-sm font-medium text-primary underline-offset-4 hover:underline">
+                    {language === "de" ? "In Google Maps öffnen" : "Open in Google Maps"}
+                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  </a>
                 </div>
-                <ol className="space-y-4">
-                  {enterSteps.map((step, index) => (
-                    <li key={step} className="flex gap-4 font-work text-foreground/90">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">{index + 1}</span>
-                      <span className="pt-0.5 leading-relaxed">{step}</span>
-                    </li>
-                  ))}
-                </ol>
               </div>
             </section>
 
