@@ -17,7 +17,7 @@ Background: Warm cream #F5F0E8
     --color-bio: hsl(160 84% 22%);
 
     /* Semantic colors */
-    --semantic-warning: 38 92% 50%;
+    --semantic-warning: var(--amber-200);
     --semantic-success: 142 72% 29%;
 
     /* Design System v2.0 primitives */
@@ -34,8 +34,27 @@ Background: Warm cream #F5F0E8
     --verde-200: 91 26% 50%; /* #7FA060 */
     --verde-300: 84 45% 33%; /* #5A7A2E */
     --verde-400: 86 44% 22%; /* #3B5220 */
+    --verde-500: 86 44% 15%; /* #273816 */
     --amber-100: 41 82% 78%; /* #F5D89A */
     --amber-200: 39 81% 52%; /* #E8A020 */
+    --muted-100: 248 23% 92%; /* #E8E6F0 */
+    --muted-200: 240 20% 82%; /* #C8C8D8 */
+
+    /* Uploaded Design System semantic aliases */
+    --surface-page: var(--cream-100);
+    --surface-card: var(--cream-50);
+    --brand-primary: var(--navy-300);
+    --brand-accent: var(--verde-300);
+    --btn-primary-bg: var(--verde-300);
+    --btn-primary-hover: var(--verde-400);
+    --btn-secondary-bg: var(--navy-300);
+    --btn-secondary-hover: var(--navy-400);
+    --btn-disabled-bg: var(--muted-200);
+    --badge-zuppa-bg: var(--amber-200);
+    --badge-verde-bg: var(--verde-300);
+    --badge-blu-bg: var(--navy-200);
+    --tag-vegan-bg: var(--verde-100);
+    --tag-vegan-text: var(--verde-400);
 
     /* Light mode - botanical design system */
     --background: var(--cream-100);
