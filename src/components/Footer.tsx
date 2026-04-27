@@ -1,4 +1,4 @@
-import { Instagram, LockKeyhole } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
@@ -63,15 +63,6 @@ export const Footer = () => {
               aria-label={language === "de" ? "Datenschutz" : "Privacy Policy"}
             >
               {language === "de" ? "Datenschutz" : "Privacy Policy"}
-            </Link>
-            <span className="text-primary-foreground/50" aria-hidden="true">•</span>
-            <Link
-              to="/staff/login"
-              className="inline-flex items-center gap-1 text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
-              aria-label="Staff Hub"
-            >
-              <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
-              Staff
             </Link>
           </div>
           
