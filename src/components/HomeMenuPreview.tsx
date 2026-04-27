@@ -152,7 +152,7 @@ export const HomeMenuPreview = () => {
             <p className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {language === "de"
                 ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
-                : "Marked options are made without gluten-containing ingredients. If you have allergies, please ask us first."}
+                : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
             </p>
           </div>
 
