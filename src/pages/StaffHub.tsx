@@ -6,6 +6,24 @@ import { SEOHead } from "@/components/SEOHead";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
+import { inferDishDetails } from "@/lib/menuDetails";
+
+type DishMeta = {
+  descriptionShort?: string;
+  ingredientsMain?: string[];
+  allergens?: string[];
+  gfDisclaimer?: boolean;
+};
+
+const mergeDishMeta = (dishText: string, sheetMeta?: DishMeta): DishMeta => {
+  const inferred = inferDishDetails(dishText);
+  return {
+    descriptionShort: sheetMeta?.descriptionShort || inferred.descriptionShort,
+    ingredientsMain: sheetMeta?.ingredientsMain?.length ? sheetMeta.ingredientsMain : inferred.ingredientsMain,
+    allergens: sheetMeta?.allergens?.length ? sheetMeta.allergens : inferred.allergens,
+    gfDisclaimer: sheetMeta?.gfDisclaimer || inferred.gfDisclaimer,
+  };
+};
 
 const StaffHub = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -27,11 +45,14 @@ const StaffHub = () => {
         return;
       }
 
-      const { data: allowed } = await supabase.rpc("is_staff_user", {
-        _user_id: data.session.user.id,
-      });
+      const { data: accessData, error: accessError } = await supabase.functions.invoke("check-staff-access");
 
-      setIsStaff(allowed);
+      if (accessError) {
+        setError("Staff access check failed. Please sign out and try again.");
+        setIsStaff(false);
+      } else {
+        setIsStaff(Boolean(accessData?.isStaff));
+      }
       setIsChecking(false);
     });
 
