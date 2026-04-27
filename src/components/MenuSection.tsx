@@ -75,6 +75,7 @@ export const MenuSection = () => {
   const { language } = useLanguage();
   const { menu, isLoading } = useWeeklyMenu();
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
+  const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
@@ -149,7 +150,9 @@ export const MenuSection = () => {
   const scrollToFixedAnchor = (id: string) => {
     const target = document.getElementById(`menu-${id}`);
     if (!target) return;
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 132, behavior: "smooth" });
+    setActiveFixedAnchor(id);
+    const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
   return (
@@ -495,14 +498,22 @@ export const MenuSection = () => {
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
-            <div className="sticky top-[72px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
-              <div className="flex gap-2 overflow-x-auto pb-1" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
+            <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
+              <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                {language === "de" ? "Immer da · direkt wählen" : "Always · choose directly"}
+              </p>
+              <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
                 {fixedMenuAnchors.map((anchor) => (
                   <button
                     key={anchor.id}
                     type="button"
                     onClick={() => scrollToFixedAnchor(anchor.id)}
-                    className="shrink-0 rounded-full border border-border/75 bg-card px-3 py-2 text-xs font-work font-semibold text-primary transition-colors hover:border-primary/35 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
+                    className={`shrink-0 rounded-full border px-3 py-2 text-xs font-work font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                      activeFixedAnchor === anchor.id
+                        ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                        : "border-border/75 bg-card text-primary hover:border-primary/35 hover:bg-muted"
+                    }`}
                   >
                     {anchor.label}
                   </button>
@@ -512,7 +523,7 @@ export const MenuSection = () => {
             
             <div className="space-y-8">
               {klassikerMenu.categories.map((category) => (
-                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-36">
+                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
                   <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
                     {category.name[language]}
                   </h3>
@@ -585,7 +596,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-36 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
