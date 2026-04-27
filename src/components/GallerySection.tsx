@@ -113,12 +113,12 @@ export const GallerySection = () => {
           {language === "de" ? "Ein Blick in den Garten" : "A glimpse into the garden"}
         </p>
         <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-4">
-          {language === "de" ? "Momente, Teller und stille Details" : "Moments, plates and quiet details"}
+          {language === "de" ? "Teller, Tische, kleine Spuren" : "Plates, tables, small traces"}
         </h2>
         <p className="mx-auto max-w-2xl font-work text-sm md:text-base leading-relaxed text-muted-foreground mb-8">
           {language === "de"
-            ? "Unsere Fotos zeigen, was den Besuch bei uns ausmacht: frisches vegetarisches Essen, warme Farben, echte Menschen und kleine botanische Spuren zwischen Küche, Tisch und Eingang."
-            : "Our photos show what a visit with us feels like: fresh vegetarian food, warm colours, real people and small botanical traces between kitchen, table and entrance."}
+            ? "Ein paar Bilder aus dem Alltag: Schüsseln am Tisch, Blumen am Eingang, Licht im Hof. Nicht alles ist gestellt. Genau das mögen wir."
+            : "A few pictures from daily life: bowls on the table, flowers by the entrance, light in the courtyard. Not everything is staged. We like that."}
         </p>
         <blockquote className="font-caveat text-2xl md:text-3xl text-foreground/80 italic">
           {language === "de" 
@@ -177,8 +177,8 @@ export const GallerySection = () => {
         <div className="max-w-xl mx-auto text-center mt-12 md:mt-16 space-y-4">
           <p className="font-lora text-lg text-foreground/80">
             {language === "de" 
-              ? "Mehr Einblicke & tägliche Gerichte" 
-              : "More glimpses & daily dishes"}
+              ? "Mehr vom heutigen Tresen" 
+              : "More from today’s counter"}
           </p>
           <Button
             size="lg"

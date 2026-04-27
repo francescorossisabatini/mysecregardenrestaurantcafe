@@ -104,8 +104,8 @@ export const HomeMenuPreview = () => {
             </h2>
             <p className="mx-auto mt-3 max-w-sm font-work text-sm leading-relaxed text-muted-foreground md:text-base">
               {language === "de"
-                ? "Eine kurze Vorschau auf das Tagesmenü. Die komplette Speisekarte findest du auf der Menüseite."
-                : "A short preview of today’s menu. The full menu is available on the menu page."}
+                ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
+                : "A quick look at today’s menu. Classics, drinks and details are on the menu page."}
             </p>
           </div>
 
@@ -182,7 +182,7 @@ export const HomeMenuPreview = () => {
             <Button size="lg" asChild>
               <Link to="/menu">
                 <UtensilsCrossed className="h-4 w-4" />
-                {language === "de" ? "Komplette Speisekarte" : "Full menu"}
+                {language === "de" ? "Zur Speisekarte" : "Go to menu"}
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </Button>

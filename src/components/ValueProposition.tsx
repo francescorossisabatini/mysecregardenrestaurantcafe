@@ -23,14 +23,14 @@ export const ValueProposition = () => {
           <div className="max-w-2xl mx-auto space-y-6">
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
-                ? "Wir kochen täglich frisch mit biologischen Zutaten und Produkten aus der Region. Die Gerichte wechseln mit der Saison und bleiben so einfach, nährend und liebevoll wie möglich." 
-                : "We cook fresh every day with organic ingredients and produce from the region. The dishes follow the season and stay simple, nourishing and made with care."}
+                ? "Wir kochen jeden Tag frisch. Morgens kommen Gemüse, Kräuter und Getreide in die Küche, mittags stehen die ersten Teller am Tresen." 
+                : "We cook fresh every day. Vegetables, herbs and grains arrive in the morning; by lunch, the first plates are at the counter."}
             </p>
             
             <p className="font-lora text-base md:text-lg text-muted-foreground italic">
               {language === "de" 
-                ? "Vegetarisch, vegan und glutenfrei freundlich, größtenteils von Bauern aus der Region." 
-                : "Vegetarian, vegan and gluten-free friendly, mostly from farmers in the region."}
+                ? "Vegetarisch und vegan. Viele Gerichte ohne glutenhaltige Zutaten, aber keine zertifiziert glutenfreie Küche." 
+                : "Vegetarian and vegan. Many dishes without gluten-containing ingredients, but not a certified gluten-free kitchen."}
             </p>
           </div>
           
@@ -47,7 +47,7 @@ export const ValueProposition = () => {
               to="/about"
               className="inline-flex items-center gap-2 transition-all duration-200 ease-in-out hover:gap-3"
             >
-              {language === "de" ? "Unsere Geschichte entdecken" : "Discover Our Story"}
+              {language === "de" ? "Unsere Geschichte lesen" : "Read Our Story"}
             </Link>
           </Button>
         </div>

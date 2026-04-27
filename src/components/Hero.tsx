@@ -280,7 +280,7 @@ export const Hero = () => {
       >
         <div className="flex flex-col items-center gap-1 text-background/80">
           <span className="text-xs font-work tracking-wide uppercase">
-            {language === "de" ? "Mehr entdecken" : "Discover more"}
+            {language === "de" ? "Weiter" : "More below"}
           </span>
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </div>

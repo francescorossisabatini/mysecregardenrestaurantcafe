@@ -36,8 +36,8 @@ export const productsData: Product[] = [
       en: "Hand-picked organic herbs from our garden"
     },
     fullDescription: {
-      de: "Unser exklusiver Bio-Kräutertee wird aus sorgfältig ausgewählten Kräutern hergestellt, die in unserem eigenen Garten angebaut werden. Jede Tasse bietet ein einzigartiges Geschmackserlebnis und fördert das Wohlbefinden. Perfekt für einen ruhigen Moment der Entspannung.",
-      en: "Our exclusive organic herbal tea is crafted from carefully selected herbs grown in our own garden. Each cup offers a unique flavor experience and promotes well-being. Perfect for a quiet moment of relaxation."
+      de: "Unser Kräutertee ist schlicht: gute Bio-Kräuter, heißes Wasser, ein paar Minuten Zeit. Am besten passt er, wenn draußen der Hof langsam ruhiger wird.",
+      en: "Our herbal tea is simple: good organic herbs, hot water, a few minutes. It works best when the courtyard starts to quiet down."
     },
     image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=300&fit=crop",
     featured: true
@@ -57,8 +57,8 @@ export const productsData: Product[] = [
       en: "Freshly baked daily with organic flour"
     },
     fullDescription: {
-      de: "Unser hausgemachtes Brot wird jeden Morgen frisch gebacken. Wir verwenden nur Bio-Mehl und natürliche Zutaten. Der Teig wird traditionell von Hand geknetet und mit viel Liebe zubereitet. Das Ergebnis ist ein knuspriges, aromatisches Brot mit einer weichen Krume.",
-      en: "Our homemade bread is freshly baked every morning. We use only organic flour and natural ingredients. The dough is traditionally kneaded by hand and prepared with lots of love. The result is a crispy, aromatic bread with a soft crumb."
+      de: "Das Brot kommt morgens aus dem Ofen, wenn die Küche noch sortiert wird. Außen knusprig, innen weich genug für Suppe und Aufstrich.",
+      en: "The bread comes out of the oven in the morning while the kitchen is still getting ready. Crisp outside, soft enough for soup and spreads."
     },
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop",
     featured: true
@@ -141,8 +141,8 @@ export const productsData: Product[] = [
       en: "Fruity jams from seasonal fruits"
     },
     fullDescription: {
-      de: "Unsere hausgemachten Marmeladen werden in kleinen Chargen aus frischen, saisonalen Früchten hergestellt. Wir verwenden nur natürlichen Zucker und keine künstlichen Zusätze. Jede Sorte ist ein Fest der Aromen und schmeckt wie ein Sommertag im Glas.",
-      en: "Our homemade jams are made in small batches from fresh, seasonal fruits. We use only natural sugar and no artificial additives. Each variety is a celebration of flavors and tastes like a summer day in a jar."
+      de: "Unsere Marmeladen kochen wir in kleinen Mengen. Wenn die Früchte gut sind, braucht es nicht viel mehr. Ein Glas davon verschwindet manchmal schneller als geplant.",
+      en: "We cook our jams in small batches. When the fruit is good, it does not need much else. A jar sometimes disappears faster than planned."
     },
     image: "https://images.unsplash.com/photo-1599870054908-44542bf02d6e?w=400&h=300&fit=crop",
     featured: false

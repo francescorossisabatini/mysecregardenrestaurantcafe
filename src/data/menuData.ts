@@ -42,8 +42,8 @@ export const weeklyMenu = {
         en: "Baigan Takari Curry: Eggplant and colorful bell peppers in creamy tomato-coconut sauce with garam masala spice blend, fresh coriander and ginger; served with organic basmati brown rice and mixed salad."
       },
       blue: {
-        de: "Penne al forno aus glutenfreien Italienischen Bio-Nudeln mit aromatischen Bio-Soja, Spinat, Karotten und frischem Basilikum in zitroniger Tomaten-Kapern-Sauce; dazu bunter Salat mit Tahini-Dressing.",
-        en: "Penne al forno made with gluten-free Italian organic pasta with aromatic organic soy, spinach, carrots and fresh basil in lemony tomato-caper sauce; served with mixed salad and tahini dressing."
+        de: "Penne al forno aus italienischen Bio-Nudeln ohne glutenhaltige Zutaten mit Bio-Soja, Spinat, Karotten und frischem Basilikum in zitroniger Tomaten-Kapern-Sauce; dazu bunter Salat mit Tahini-Dressing.",
+        en: "Penne al forno made with Italian organic pasta without gluten-containing ingredients, organic soy, spinach, carrots and fresh basil in lemony tomato-caper sauce; served with mixed salad and tahini dressing."
       },
     },
     {
@@ -60,7 +60,7 @@ export const weeklyMenu = {
         de: "Türkische Brathähnchenbowl mit gerösteten Karotten, Brokkoli, Pilaw, Korinthen und Pinienkernen, Dill-Joghurt-Sauce und unserem Haussalat mit Zitronen-Tahini-Dressing.",
         en: "Turkish Roasted Chicken Bowl with roasted carrots, broccoli, pilaf, currants and pine nuts, dill-yogurt sauce and our house salad with lemon-tahini dressing."
       },
-      blueNote: { de: "vegetarisch & glutenfrei", en: "vegetarian & gluten-free" },
+      blueNote: { de: "vegetarisch, ohne glutenhaltige Zutaten", en: "vegetarian, no gluten ingredients" },
     },
     {
       day: { de: "Freitag", en: "Friday" },

@@ -50,8 +50,8 @@ const ContactPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
                 {language === "de"
-                  ? "My Secret Garden liegt im Raimundhof. Der Eingang ist leicht zu übersehen — hier findest du den Weg, die Zeiten und die wichtigsten Infos vor deinem Besuch."
-                  : "My Secret Garden is inside Raimundhof. The entrance is easy to miss — here is the way in, the hours and the practical details before you visit."}
+                  ? "My Secret Garden liegt im Raimundhof. Der Eingang ist leicht zu übersehen. Hier findest du den Weg, die Zeiten und die wichtigsten Infos vor deinem Besuch."
+                  : "My Secret Garden is inside Raimundhof. The entrance is easy to miss. Here is the way in, the hours and the practical details before you visit."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
@@ -140,8 +140,8 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Unser Garten hat Stufen — aber keine Hürden. Bitte ruf uns kurz an, wir helfen dir gerne beim Zugang."
-                    : "Our garden has steps — but no barriers. Give us a call and we'll make sure you can get in."}
+                    ? "Unser Garten hat Stufen, aber keine Hürden. Bitte ruf uns kurz an, wir helfen dir gerne beim Zugang."
+                    : "Our garden has steps, but no barriers. Give us a call and we'll make sure you can get in."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
