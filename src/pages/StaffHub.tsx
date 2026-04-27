@@ -1,68 +1,85 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { CakeSlice, ChefHat, ClipboardList, LogOut, Search, ShieldCheck } from "lucide-react";
+import { Archive, CakeSlice, ClipboardList, LogOut, Search, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEOHead } from "@/components/SEOHead";
-import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
-import { inferDishDetails } from "@/lib/menuDetails";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-
-type DishMeta = {
-  descriptionShort?: string;
-  ingredientsMain?: string[];
-  allergens?: string[];
-  gfDisclaimer?: boolean;
-};
 
 type StaffMenuRecord = {
   id: string;
   title: string;
   category?: string;
+  menuDay?: string;
   description?: string;
   ingredients: string[];
   allergens: string[];
   notes: string[];
   sourceSheet: string;
+  snapshotPeriod?: string;
+  isCurrent?: boolean;
   fields: Array<{ label: string; value: string }>;
 };
 
-const mergeDishMeta = (dishText: string, sheetMeta?: DishMeta): DishMeta => {
-  const inferred = inferDishDetails(dishText);
-  return {
-    descriptionShort: sheetMeta?.descriptionShort || inferred.descriptionShort,
-    ingredientsMain: sheetMeta?.ingredientsMain?.length ? sheetMeta.ingredientsMain : inferred.ingredientsMain,
-    allergens: sheetMeta?.allergens?.length ? sheetMeta.allergens : inferred.allergens,
-    gfDisclaimer: sheetMeta?.gfDisclaimer || inferred.gfDisclaimer,
-  };
+type KuchenplanData = {
+  sheetName: string;
+  records: StaffMenuRecord[];
+  currentRecords: StaffMenuRecord[];
+  archiveRecords: StaffMenuRecord[];
+  snapshots: Array<{ id: string; sheet_name: string; period: string | null; is_current: boolean; created_at: string }>;
 };
+
+const emptyKuchenplanData: KuchenplanData = {
+  sheetName: "Küchenplan",
+  records: [],
+  currentRecords: [],
+  archiveRecords: [],
+  snapshots: [],
+};
+
+const recordMatches = (record: StaffMenuRecord, query: string) => [
+  record.title,
+  record.category,
+  record.menuDay,
+  record.description,
+  record.snapshotPeriod,
+  ...record.ingredients,
+  ...record.allergens,
+  ...record.notes,
+  ...record.fields.flatMap((field) => [field.label, field.value]),
+]
+  .filter(Boolean)
+  .some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
+
+const recordSection = (record: StaffMenuRecord) => cleanDisplayText(record.menuDay || record.category || "Weekly prep");
 
 const StaffHub = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cakeRecords, setCakeRecords] = useState<StaffMenuRecord[]>([]);
-  const [isCakeLoading, setIsCakeLoading] = useState(false);
-  const [cakeError, setCakeError] = useState<string | null>(null);
+  const [kuchenplan, setKuchenplan] = useState<KuchenplanData>(emptyKuchenplanData);
+  const [isKuchenplanLoading, setIsKuchenplanLoading] = useState(false);
+  const [kuchenplanError, setKuchenplanError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const { menu, isLoading: isMenuLoading, refresh } = useWeeklyMenu();
 
-  const loadCakePlan = async () => {
-    setIsCakeLoading(true);
-    setCakeError(null);
+  const loadKuchenplan = async () => {
+    setIsKuchenplanLoading(true);
+    setKuchenplanError(null);
     const { data, error: functionError } = await supabase.functions.invoke("get-staff-menu-details");
+
     if (functionError || !data?.success) {
-      setCakeError("Kuchenplan could not be loaded from Google Sheets.");
-      setCakeRecords([]);
+      setKuchenplanError("Küchenplan could not be loaded from Google Sheets.");
+      setKuchenplan(emptyKuchenplanData);
     } else {
-      setCakeRecords(data.data.records ?? []);
+      setKuchenplan({ ...emptyKuchenplanData, ...data.data });
     }
-    setIsCakeLoading(false);
+
+    setIsKuchenplanLoading(false);
   };
 
   useEffect(() => {
@@ -86,7 +103,7 @@ const StaffHub = () => {
       } else {
         const hasStaffAccess = Boolean(accessData?.isStaff);
         setIsStaff(hasStaffAccess);
-        if (hasStaffAccess) void loadCakePlan();
+        if (hasStaffAccess) void loadKuchenplan();
       }
       setIsChecking(false);
     });
@@ -99,20 +116,32 @@ const StaffHub = () => {
     setSession(null);
   };
 
-  const filteredCakeRecords = cakeRecords.filter((record) => {
+  const currentRecords = kuchenplan.currentRecords.length
+    ? kuchenplan.currentRecords
+    : kuchenplan.records.filter((record) => record.isCurrent);
+
+  const currentSections = useMemo(() => currentRecords.reduce<Record<string, StaffMenuRecord[]>>((groups, record) => {
+    const key = recordSection(record);
+    groups[key] = [...(groups[key] ?? []), record];
+    return groups;
+  }, {}), [currentRecords]);
+
+  const archiveSearchRecords = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
-    if (!query) return true;
-    return [record.title, record.category, record.description, ...record.ingredients, ...record.allergens, ...record.notes]
-      .filter(Boolean)
-      .some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
-  });
+    const searchableRecords = kuchenplan.records.length ? kuchenplan.records : [...currentRecords, ...kuchenplan.archiveRecords];
+    const uniqueRecords = Array.from(new Map(searchableRecords.map((record) => [record.id, record])).values());
+
+    return uniqueRecords
+      .filter((record) => query ? recordMatches(record, query) : !record.isCurrent)
+      .sort((a, b) => Number(Boolean(b.isCurrent)) - Number(Boolean(a.isCurrent)));
+  }, [currentRecords, kuchenplan.archiveRecords, kuchenplan.records, searchTerm]);
 
   if (!isChecking && !session) return <Navigate to="/staff/login" replace />;
 
   if (!isChecking && session && !isStaff) {
     return (
       <div className="min-h-screen bg-section-soft px-4 py-12">
-          <SEOHead title="Staff Hub" description="Restricted staff area." path="/staff" noindex />
+        <SEOHead title="Staff Hub" description="Restricted staff area." path="/staff" noindex />
         <main className="mx-auto max-w-xl rounded-lg border border-border/70 bg-card/90 p-6 text-center shadow-card">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="font-cormorant text-3xl font-semibold text-foreground">Unauthorized access</h1>
@@ -125,15 +154,16 @@ const StaffHub = () => {
 
   return (
     <div className="min-h-screen bg-section-soft">
-      <SEOHead title="Staff Hub" description="Current menu, ingredients and internal notes." path="/staff" noindex />
+      <SEOHead title="Staff Hub" description="Current Küchenplan, ingredients and archive search." path="/staff" noindex />
       <main className="container mx-auto px-4 py-8 md:py-10">
         <header className="mb-8 flex flex-col gap-4 border-b border-border/70 pb-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">My Secret Garden</p>
             <h1 className="mt-2 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">Staff Hub</h1>
-            <p className="mt-2 font-work text-sm text-muted-foreground">Current menu, ingredients and internal notes.</p>
+            <p className="mt-2 font-work text-sm text-muted-foreground">Küchenplan details from Google Sheets with searchable archive.</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={loadKuchenplan} disabled={isKuchenplanLoading}>{isKuchenplanLoading ? "Loading" : "Sync Küchenplan"}</Button>
             <Button variant="ghost" onClick={signOut}>
               <LogOut className="h-4 w-4" />
               Sign out
@@ -142,116 +172,74 @@ const StaffHub = () => {
         </header>
 
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
+        {kuchenplanError ? <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{kuchenplanError}</p> : null}
 
-        <section className="mb-8 grid gap-4 md:grid-cols-4">
-          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
-            <ChefHat className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Menu days</p>
-            <strong className="font-cormorant text-4xl text-foreground">{menu.days.length}</strong>
-          </div>
-          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:col-span-2">
-            <p className="font-work text-sm text-muted-foreground">Week</p>
-            <strong className="mt-1 block font-cormorant text-3xl text-foreground">{cleanDisplayText(menu.period)}</strong>
-          </div>
+        <section className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <CakeSlice className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Kuchenplan items</p>
-            <strong className="font-cormorant text-4xl text-foreground">{cakeRecords.length}</strong>
+            <p className="font-work text-sm text-muted-foreground">Current Küchenplan items</p>
+            <strong className="font-cormorant text-4xl text-foreground">{currentRecords.length}</strong>
+          </div>
+          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
+            <Archive className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
+            <p className="font-work text-sm text-muted-foreground">Archived items</p>
+            <strong className="font-cormorant text-4xl text-foreground">{kuchenplan.archiveRecords.length}</strong>
+          </div>
+          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
+            <ClipboardList className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
+            <p className="font-work text-sm text-muted-foreground">Source sheet</p>
+            <strong className="font-cormorant text-3xl text-foreground">{cleanDisplayText(kuchenplan.sheetName)}</strong>
           </div>
         </section>
 
-        <Tabs defaultValue="weekly" className="grid gap-6">
+        <Tabs defaultValue="current" className="grid gap-6">
           <TabsList className="w-full justify-start overflow-x-auto bg-card/85">
-            <TabsTrigger value="weekly">Weekly menu</TabsTrigger>
-            <TabsTrigger value="cakes">Kuchenplan</TabsTrigger>
+            <TabsTrigger value="current">Current Küchenplan</TabsTrigger>
+            <TabsTrigger value="archive">Archive search</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="weekly" className="mt-0">
+          <TabsContent value="current" className="mt-0">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly menu and ingredients</h2>
-                  <p className="font-work text-sm text-muted-foreground">Soup, green dish and blue dish with details for staff.</p>
-                </div>
-                <Button variant="outline" size="sm" onClick={refresh}>Sync</Button>
+              <div className="mb-5 flex items-center gap-2">
+                <ClipboardList className="h-5 w-5 text-primary" aria-hidden="true" />
+                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly Küchenplan details</h2>
               </div>
-              <div className="grid gap-4 xl:grid-cols-2">
-                {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Loading menu...</p> : menu.days.map((day) => (
-                  <article key={day.day.de} className="rounded-md bg-background/70 p-4">
-                    <h3 className="font-cormorant text-2xl font-semibold text-foreground">{day.day.en}</h3>
-                    {[
-                      { label: "Soup", name: day.soup.en || day.soup.de, meta: day.soupMeta },
-                      { label: "Green dish", name: day.green.de, meta: day.greenMeta },
-                      { label: "Blue dish", name: day.blue.de, meta: day.blueMeta },
-                    ].map((dish) => {
-                      const details = mergeDishMeta(dish.name, dish.meta);
-                      return (
-                        <div key={`${day.day.de}-${dish.label}`} className="mt-4 border-t border-border/60 pt-4">
-                          <p className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">{dish.label}</p>
-                          <p className="mt-1 font-work text-sm font-medium leading-relaxed text-foreground">{cleanDisplayText(dish.name)}</p>
-                          {details.descriptionShort ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(details.descriptionShort)}</p> : null}
-                          {details.ingredientsMain?.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Ingredients:</span> {joinDisplayText(details.ingredientsMain, ", ")}</p> : null}
-                          {details.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(details.allergens, ", ")}</p> : null}
-                          {details.gfDisclaimer ? <p className="mt-1 font-work text-xs text-muted-foreground">No gluten containing ingredients by recipe.</p> : null}
-                        </div>
-                      );
-                    })}
-                  </article>
+
+              {isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Küchenplan...</p> : null}
+              {!isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-foreground">No current Küchenplan items found.</p> : null}
+
+              <div className="grid gap-6">
+                {Object.entries(currentSections).map(([section, records]) => (
+                  <div key={section} className="rounded-md bg-background/70 p-4">
+                    <h3 className="font-cormorant text-2xl font-semibold text-foreground">{section}</h3>
+                    <div className="mt-4 grid gap-4 xl:grid-cols-2">
+                      {records.map((record) => <KuchenplanCard key={record.id} record={record} />)}
+                    </div>
+                  </div>
                 ))}
               </div>
             </section>
           </TabsContent>
 
-          <TabsContent value="cakes" className="mt-0">
+          <TabsContent value="archive" className="mt-0">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
               <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <ClipboardList className="h-5 w-5 text-primary" aria-hidden="true" />
-                    <h2 className="font-cormorant text-3xl font-semibold text-foreground">Kuchenplan ingredient details</h2>
+                    <Search className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <h2 className="font-cormorant text-3xl font-semibold text-foreground">Archive dish search</h2>
                   </div>
-                  <p className="mt-1 font-work text-sm text-muted-foreground">Detailed cake and dessert data read from the Kuchenplan sheet.</p>
+                  <p className="mt-1 font-work text-sm text-muted-foreground">Search current and archived Küchenplan dishes by name, ingredient or allergen.</p>
                 </div>
-                <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
-                  <div className="relative min-w-0 sm:w-72">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search ingredients" className="pl-9" />
-                  </div>
-                  <Button variant="outline" onClick={loadCakePlan} disabled={isCakeLoading}>{isCakeLoading ? "Loading" : "Sync Kuchenplan"}</Button>
+                <div className="relative min-w-0 sm:w-80">
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                  <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search dish name" className="pl-9" />
                 </div>
               </div>
 
-              {cakeError ? <p className="mb-4 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{cakeError}</p> : null}
-
               <div className="grid gap-4 xl:grid-cols-2">
-                {isCakeLoading && !cakeRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Kuchenplan...</p> : null}
-                {!isCakeLoading && !filteredCakeRecords.length ? <p className="font-work text-sm text-muted-foreground">No Kuchenplan items found.</p> : null}
-                {filteredCakeRecords.map((record) => (
-                  <article key={record.id} className="rounded-md bg-background/70 p-4">
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <div>
-                        {record.category ? <Badge variant="secondary" className="mb-2">{cleanDisplayText(record.category)}</Badge> : null}
-                        <h3 className="font-cormorant text-2xl font-semibold text-foreground">{cleanDisplayText(record.title)}</h3>
-                      </div>
-                      <span className="font-work text-xs text-muted-foreground">{cleanDisplayText(record.sourceSheet)}</span>
-                    </div>
-                    {record.description ? <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
-                    {record.ingredients.length ? <p className="mt-3 font-work text-sm leading-relaxed text-foreground"><span className="font-semibold">Ingredients:</span> {joinDisplayText(record.ingredients, ", ")}</p> : null}
-                    {record.allergens.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(record.allergens, ", ")}</p> : null}
-                    {record.notes.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Notes:</span> {joinDisplayText(record.notes, ", ")}</p> : null}
-                    <details className="mt-4 border-t border-border/60 pt-3">
-                      <summary className="cursor-pointer font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">All sheet fields</summary>
-                      <dl className="mt-3 grid gap-2">
-                        {record.fields.map((field) => (
-                          <div key={`${record.id}-${field.label}`} className="grid gap-1 rounded-sm bg-card/70 p-2 sm:grid-cols-[11rem_1fr]">
-                            <dt className="font-work text-xs font-semibold text-foreground/80">{cleanDisplayText(field.label)}</dt>
-                            <dd className="font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(field.value)}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </details>
-                  </article>
-                ))}
+                {!archiveSearchRecords.length ? <p className="font-work text-sm text-muted-foreground">No archive items found.</p> : null}
+                {archiveSearchRecords.map((record) => <KuchenplanCard key={record.id} record={record} showSnapshot />)}
               </div>
             </section>
           </TabsContent>
@@ -260,5 +248,36 @@ const StaffHub = () => {
     </div>
   );
 };
+
+const KuchenplanCard = ({ record, showSnapshot = false }: { record: StaffMenuRecord; showSnapshot?: boolean }) => (
+  <article className="rounded-md border border-border/60 bg-card/80 p-4">
+    <div className="flex flex-wrap items-start justify-between gap-2">
+      <div>
+        <div className="mb-2 flex flex-wrap gap-2">
+          {record.isCurrent ? <Badge variant="default">Current</Badge> : showSnapshot ? <Badge variant="secondary">Archive</Badge> : null}
+          {record.category ? <Badge variant="secondary">{cleanDisplayText(record.category)}</Badge> : null}
+          {record.menuDay ? <Badge variant="outline">{cleanDisplayText(record.menuDay)}</Badge> : null}
+        </div>
+        <h3 className="font-cormorant text-2xl font-semibold text-foreground">{cleanDisplayText(record.title)}</h3>
+      </div>
+      {showSnapshot && record.snapshotPeriod ? <span className="font-work text-xs text-muted-foreground">{cleanDisplayText(record.snapshotPeriod)}</span> : null}
+    </div>
+    {record.description ? <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
+    {record.ingredients.length ? <p className="mt-3 font-work text-sm leading-relaxed text-foreground"><span className="font-semibold">Ingredients:</span> {joinDisplayText(record.ingredients, ", ")}</p> : null}
+    {record.allergens.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(record.allergens, ", ")}</p> : null}
+    {record.notes.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Notes:</span> {joinDisplayText(record.notes, ", ")}</p> : null}
+    <details className="mt-4 border-t border-border/60 pt-3">
+      <summary className="cursor-pointer font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">All sheet fields</summary>
+      <dl className="mt-3 grid gap-2">
+        {record.fields.map((field) => (
+          <div key={`${record.id}-${field.label}-${field.value}`} className="grid gap-1 rounded-sm bg-background/70 p-2 sm:grid-cols-[11rem_1fr]">
+            <dt className="font-work text-xs font-semibold text-foreground/80">{cleanDisplayText(field.label)}</dt>
+            <dd className="font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(field.value)}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  </article>
+);
 
 export default StaffHub;
