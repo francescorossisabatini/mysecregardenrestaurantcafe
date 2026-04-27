@@ -523,7 +523,7 @@ export const MenuSection = () => {
             
             <div className="space-y-8">
               {klassikerMenu.categories.map((category) => (
-                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-36">
+                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
                   <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
                     {category.name[language]}
                   </h3>
@@ -596,7 +596,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-36 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
