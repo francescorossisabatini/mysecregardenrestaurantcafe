@@ -66,7 +66,7 @@ const AboutUs = () => {
       spaceNote: "Komm auf ein schnelles Mittagessen. Oder bleib noch fünf Minuten länger.",
       inspirationLabel: "Unsere Inspiration",
       inspirationTitle: "Sri Chinmoy",
-      inspirationPara1: "Sri Chinmoy (1931–2007) war ein spiritueller Lehrer, der Meditation, Musik und Kunst als Wege zum inneren Frieden lehrte.",
+      inspirationPara1: "Sri Chinmoy (1931 bis 2007) war ein spiritueller Lehrer, der Meditation, Musik und Kunst als Wege zum inneren Frieden lehrte.",
       inspirationPara2: "Aus diesem Umfeld sind weltweit vegetarische Restaurants entstanden. Kleine Orte, an denen Kochen nicht nur Arbeit ist, sondern tägliche Übung.",
       inspirationNote: "Bei uns zeigt sich das leise: im Umgang am Tresen, in der Musik, in der Art, wie ein Teller angerichtet wird.",
       artTitle: "Jharna-Kala",
