@@ -48,6 +48,7 @@ const dayNames = [
   "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag",
   "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
   "mo", "di", "mi", "do", "fr", "sa", "so",
+  "mon", "tue", "wed", "thu", "fri", "sat", "sun",
 ];
 
 const isDayLabel = (value: string) => {
@@ -58,6 +59,20 @@ const isDayLabel = (value: string) => {
 const fieldKindFromRowLabel = (label: string) => {
   const kind = headerKind(label);
   return kind === "field" ? "description" : kind;
+};
+
+const dayDisplayName = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase().replace(/[.:]/g, "").trim();
+  const names: Record<string, string> = {
+    mo: "Monday", mon: "Monday", montag: "Monday", monday: "Monday",
+    di: "Tuesday", tue: "Tuesday", dienstag: "Tuesday", tuesday: "Tuesday",
+    mi: "Wednesday", wed: "Wednesday", mittwoch: "Wednesday", wednesday: "Wednesday",
+    do: "Thursday", thu: "Thursday", donnerstag: "Thursday", thursday: "Thursday",
+    fr: "Friday", fri: "Friday", freitag: "Friday", friday: "Friday",
+    sa: "Saturday", sat: "Saturday", samstag: "Saturday", saturday: "Saturday",
+    so: "Sunday", sun: "Sunday", sonntag: "Sunday", sunday: "Sunday",
+  };
+  return names[normalized.split(" ")[0]] ?? clean(value, 80);
 };
 
 const parseGviz = (text: string): string[][] => {
@@ -86,6 +101,53 @@ const normalizeRows = (rows: string[][]) => rows.map((row) => {
 
 const makeId = (sourceSheet: string, rowIndex: number, title: string, fields: Array<{ label: string; value: string }>) =>
   `${sourceSheet}_${rowIndex}_${title}_${fields.map((field) => field.value).join("_")}`.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 120);
+
+function rowsToWeeklyDayRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const usableRows = normalizeRows(rows);
+  const records: StaffMenuRecord[] = [];
+
+  usableRows.forEach((row, rowIndex) => {
+    const dayCellIndex = row.findIndex(isDayLabel);
+    if (dayCellIndex < 0) return;
+
+    const day = dayDisplayName(row[dayCellIndex]);
+    const fields = row.map((value, index) => ({ label: index === dayCellIndex ? "day" : `column ${index + 1}`, value: clean(value) })).filter((field) => field.value);
+    const afterDay = row.slice(dayCellIndex + 1).map((value) => clean(value)).filter(Boolean);
+    if (afterDay.length < 2) return;
+
+    const typedFields = [
+      { label: "day", value: day },
+      { label: "soup", value: afterDay[0] ?? "" },
+      { label: "green dish", value: afterDay[1] ?? "" },
+      { label: "blue dish", value: afterDay[2] ?? "" },
+      { label: "prep", value: afterDay.slice(3).join(", ") },
+    ].filter((field) => field.value);
+
+    const dishes = [
+      { category: "Soup", title: afterDay[0] },
+      { category: "Green dish", title: afterDay[1] },
+      { category: "Blue dish", title: afterDay[2] },
+    ].filter((dish) => dish.title && !isDayLabel(dish.title));
+
+    dishes.forEach((dish, dishIndex) => {
+      const recordFields = [...typedFields, ...fields].filter((field, index, list) => list.findIndex((item) => item.label === field.label && item.value === field.value) === index);
+      records.push({
+        id: makeId(sourceSheet, rowIndex * 10 + dishIndex, `${day}_${dish.category}_${dish.title}`, recordFields),
+        title: dish.title,
+        category: dish.category,
+        menuDay: day,
+        description: undefined,
+        ingredients: afterDay.slice(3),
+        allergens: [],
+        notes: afterDay.slice(3).length ? [`Prep: ${afterDay.slice(3).join(", ")}`] : [],
+        sourceSheet,
+        fields: recordFields,
+      });
+    });
+  });
+
+  return records;
+}
 
 function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
   const usableRows = normalizeRows(rows);
@@ -159,6 +221,9 @@ function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMen
 }
 
 function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const weeklyDayRecords = rowsToWeeklyDayRecords(rows, sourceSheet);
+  if (weeklyDayRecords.length >= 5) return weeklyDayRecords;
+
   const dayColumnRecords = rowsToDayColumnRecords(rows, sourceSheet);
   if (dayColumnRecords.length) return dayColumnRecords;
 
@@ -230,7 +295,7 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
 }
 
 const digestRows = async (rows: string[][]) => {
-  const bytes = new TextEncoder().encode(JSON.stringify(normalizeRows(rows)));
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "day-weekly-v2", rows: normalizeRows(rows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 };
