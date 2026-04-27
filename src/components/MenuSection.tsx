@@ -235,9 +235,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
@@ -257,9 +257,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
@@ -279,9 +279,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
