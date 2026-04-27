@@ -26,7 +26,7 @@ export const Philosophy = () => {
               <div className="aspect-[3/4] overflow-hidden rounded-2xl shadow-xl">
                 <img 
                   src={sriChinmoyImage} 
-                  alt="Sri Chinmoy - Spiritual Master"
+                  alt="Sri Chinmoy Spiritual Master"
                   className="w-full h-full object-cover"
                 />
               </div>
