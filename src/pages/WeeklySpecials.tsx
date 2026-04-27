@@ -11,6 +11,7 @@ import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { translatePeriod } from "@/lib/translatePeriod";
+import { splitDishText } from "@/lib/splitDishText";
 import {
   getTodayHoliday,
   getDateForMenuDay,
@@ -53,6 +54,48 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       {labels.isBio && (
         <span className="text-xs font-work font-semibold text-accent">bio</span>
       )}
+    </div>
+  );
+};
+
+const dishLabels = {
+  soup: { de: "Suppe", en: "Soup" },
+  green: { de: "Grünes Gericht", en: "Green Dish" },
+  blue: { de: "Blaues Gericht", en: "Blue Dish" },
+} as const;
+
+const WeeklyDish = ({
+  kind,
+  text,
+  price,
+  language,
+}: {
+  kind: keyof typeof dishLabels;
+  text: string;
+  price: string;
+  language: "de" | "en";
+}) => {
+  const dishCopy = splitDishText(text, language, kind);
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2">
+        <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+          {dishCopy.name}
+        </h3>
+        <span className={`rounded-full border px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
+          kind === "blue" ? "border-blue/25 bg-blue/10 text-blue" : "border-accent/25 bg-accent/10 text-accent"
+        }`}>
+          {dishLabels[kind][language]}
+        </span>
+        <span className="ml-auto font-work text-xs font-semibold text-accent">{price}</span>
+      </div>
+      {dishCopy.description && (
+        <p className="mt-1 font-work text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
+          {dishCopy.description}
+        </p>
+      )}
+      <DietaryBadges text={text} language={language} />
     </div>
   );
 };
@@ -161,37 +204,13 @@ const WeeklySpecials = () => {
                     ) : (
                       <div className="space-y-3">
                         {isValidMenuText(day.soup[language]) && (
-                          <div>
-                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
-                              {language === "de" ? "Suppe" : "Soup"}
-                            </span>
-                            <p className="text-foreground font-work text-sm mt-0.5">
-                              {day.soup[language]}
-                            </p>
-                            <DietaryBadges text={day.soup[language]} language={language} />
-                          </div>
+                          <WeeklyDish kind="soup" text={day.soup[language]} price="6,90" language={language} />
                         )}
                         {isValidMenuText(day.green[language]) && (
-                          <div>
-                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
-                              {language === "de" ? "Grün" : "Green"}
-                            </span>
-                            <p className="text-foreground font-work text-sm mt-0.5">
-                              {day.green[language]}
-                            </p>
-                            <DietaryBadges text={day.green[language]} language={language} />
-                          </div>
+                          <WeeklyDish kind="green" text={day.green[language]} price="15,90" language={language} />
                         )}
                         {isValidMenuText(day.blue[language]) && (
-                          <div>
-                            <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
-                              {language === "de" ? "Blau" : "Blue"}
-                            </span>
-                            <p className="text-foreground font-work text-sm mt-0.5">
-                              {day.blue[language]}
-                            </p>
-                            <DietaryBadges text={day.blue[language]} language={language} />
-                          </div>
+                          <WeeklyDish kind="blue" text={day.blue[language]} price="15,90" language={language} />
                         )}
                       </div>
                     )}
