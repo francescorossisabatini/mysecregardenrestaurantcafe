@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
@@ -36,6 +36,25 @@ const PageLoader = () => (
   </div>
 );
 
+const RouteAnalytics = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const pagePath = `${location.pathname}${location.search}`;
+    const pageLocation = `${window.location.origin}${pagePath}`;
+
+    window.gtag?.("event", "page_view", {
+      page_path: pagePath,
+      page_location: pageLocation,
+      page_title: document.title,
+    });
+
+    window._uxa?.push(["trackPageview", pagePath]);
+  }, [location.pathname, location.search]);
+
+  return null;
+};
+
 
 function AppContent() {
   useHtmlLang();
@@ -60,6 +79,7 @@ function AppContent() {
 
   return (
     <BrowserRouter>
+      <RouteAnalytics />
       <ScrollToTop />
       
       <Routes>
