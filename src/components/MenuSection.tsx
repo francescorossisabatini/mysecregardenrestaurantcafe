@@ -712,7 +712,7 @@ export const MenuSection = () => {
             </div>
             <AllergenLegend />
           </div>
-          
+          </div>
         </div>
       </div>
     </section>
