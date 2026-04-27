@@ -112,7 +112,7 @@ const translations = {
     "contact.hours.time": "11:00 bis 19:00 Uhr",
     "contact.hours.closed": "Feiertags geschlossen",
     "contact.social": "Social Media",
-    "contact.social.desc": "Folgen Sie uns für Updates und Tagesmenüs",
+    "contact.social.desc": "Tagesgerichte und kleine Momente aus dem Hof",
     "contact.garden": "Eingang zum Secret Garden im Raimundhof",
     "contact.call": "Jetzt Anrufen",
   },
