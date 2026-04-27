@@ -101,26 +101,42 @@ export default {
         "accordion-down": {
           from: {
             height: "0",
+            opacity: "0",
           },
           to: {
             height: "var(--radix-accordion-content-height)",
+            opacity: "1",
           },
         },
         "accordion-up": {
           from: {
             height: "var(--radix-accordion-content-height)",
+            opacity: "1",
           },
           to: {
             height: "0",
+            opacity: "0",
           },
         },
         "fade-in": {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in-hero": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "hero-background": {
+          "0%": { opacity: "0", transform: "scale(1.04)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "status-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.6" },
+        },
+        "skeleton-shimmer": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
         },
         "slide-up": {
           "0%": { transform: "translateY(20px)", opacity: "0" },
@@ -132,11 +148,14 @@ export default {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.6s ease-out",
-        "fade-in-hero": "fade-in-hero 1s ease-out forwards",
-        "slide-up": "slide-up 0.6s ease-out",
+        "accordion-down": "accordion-down 250ms cubic-bezier(0, 0, 0.2, 1)",
+        "accordion-up": "accordion-up 250ms cubic-bezier(0.4, 0, 1, 1)",
+        "fade-in": "fade-in 250ms cubic-bezier(0, 0, 0.2, 1) forwards",
+        "fade-in-hero": "fade-in-hero 400ms cubic-bezier(0, 0, 0.2, 1) 200ms forwards",
+        "hero-background": "hero-background 400ms cubic-bezier(0, 0, 0.2, 1) forwards",
+        "status-pulse": "status-pulse 2400ms cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        "skeleton-shimmer": "skeleton-shimmer 1200ms linear infinite",
+        "slide-up": "slide-up 300ms cubic-bezier(0, 0, 0.2, 1)",
         "float": "float 3s ease-in-out infinite",
       },
       backgroundImage: {
