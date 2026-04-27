@@ -186,6 +186,7 @@ export type Database = {
           party_size: number
           reservation_date: string
           reservation_time: string
+          staff_notes: string | null
           status: string
           updated_at: string
         }
@@ -199,6 +200,7 @@ export type Database = {
           party_size: number
           reservation_date: string
           reservation_time: string
+          staff_notes?: string | null
           status?: string
           updated_at?: string
         }
@@ -212,6 +214,7 @@ export type Database = {
           party_size?: number
           reservation_date?: string
           reservation_time?: string
+          staff_notes?: string | null
           status?: string
           updated_at?: string
         }
