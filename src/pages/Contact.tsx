@@ -42,8 +42,8 @@ const ContactPage = () => {
   }, []);
 
   const enterSteps = language === "de"
-    ? ["Durch den Torbogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof links halten, bis sich der Garten öffnet.", "Direkt am Tresen bestellen oder kurz nach deinem Tisch fragen."]
-    : ["Walk through the archway at Mariahilferstraße 45.", "Keep left inside Raimundhof until the garden opens up.", "Order at the counter or ask for your table."];
+    ? ["Vom Gehsteig aus durch den Torbogen gehen.", "Dann links halten, bis sich der Garten hinter der Einfahrt öffnet.", "Am Tresen bestellen oder kurz nach deinem Tisch fragen."]
+    : ["From the street, walk through the archway.", "Then turn left until the garden opens up behind the entrance.", "Order at the counter or ask for your table."];
 
   const visitJsonLd = {
     "@context": "https://schema.org",
@@ -222,7 +222,7 @@ const ContactPage = () => {
                 <HandPlatter className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "So funktioniert es" : "How it works"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
-                  {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
+                      {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
