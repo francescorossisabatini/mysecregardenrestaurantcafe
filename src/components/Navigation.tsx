@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
@@ -11,33 +11,11 @@ export const Navigation = () => {
   const { language } = useLanguage();
   const location = useLocation();
   const isHeroOverlay = false;
-  const [showTopbarLanguage, setShowTopbarLanguage] = useState(true);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname, setIsMobileMenuOpen]);
-
-  useEffect(() => {
-    let frame: number | null = null;
-
-    const handleScroll = () => {
-      if (frame) return;
-
-      frame = requestAnimationFrame(() => {
-        setShowTopbarLanguage(window.scrollY <= 80);
-        frame = null;
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, [location.pathname]);
 
   // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
   const navLinks = [
@@ -106,13 +84,7 @@ export const Navigation = () => {
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
           <div className="flex items-center justify-end lg:hidden">
-            <div
-              className={`transition-all duration-300 ease-out ${
-                showTopbarLanguage && !isMobileMenuOpen
-                  ? "translate-y-0 opacity-100"
-                  : "-translate-y-2 opacity-0 pointer-events-none"
-              }`}
-            >
+            <div className={isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"}>
               <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
             </div>
           </div>
