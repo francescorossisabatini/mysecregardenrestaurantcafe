@@ -143,7 +143,7 @@ const StaffHub = () => {
 
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
 
-        <section className="mb-8 grid gap-4 md:grid-cols-3">
+        <section className="mb-8 grid gap-4 md:grid-cols-4">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <ChefHat className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
             <p className="font-work text-sm text-muted-foreground">Menu days</p>
@@ -151,19 +151,32 @@ const StaffHub = () => {
           </div>
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:col-span-2">
             <p className="font-work text-sm text-muted-foreground">Week</p>
-            <strong className="mt-1 block font-cormorant text-3xl text-foreground">{menu.period}</strong>
+            <strong className="mt-1 block font-cormorant text-3xl text-foreground">{cleanDisplayText(menu.period)}</strong>
+          </div>
+          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
+            <CakeSlice className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
+            <p className="font-work text-sm text-muted-foreground">Kuchenplan items</p>
+            <strong className="font-cormorant text-4xl text-foreground">{cakeRecords.length}</strong>
           </div>
         </section>
 
-        <div className="grid gap-8">
-          <aside className="grid gap-6">
+        <Tabs defaultValue="weekly" className="grid gap-6">
+          <TabsList className="w-full justify-start overflow-x-auto bg-card/85">
+            <TabsTrigger value="weekly">Weekly menu</TabsTrigger>
+            <TabsTrigger value="cakes">Kuchenplan</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="weekly" className="mt-0">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly menu and ingredients</h2>
+                <div>
+                  <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly menu and ingredients</h2>
+                  <p className="font-work text-sm text-muted-foreground">Soup, green dish and blue dish with details for staff.</p>
+                </div>
                 <Button variant="outline" size="sm" onClick={refresh}>Sync</Button>
               </div>
               <div className="grid gap-4 xl:grid-cols-2">
-                {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Loading menu…</p> : menu.days.map((day) => (
+                {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Loading menu...</p> : menu.days.map((day) => (
                   <article key={day.day.de} className="rounded-md bg-background/70 p-4">
                     <h3 className="font-cormorant text-2xl font-semibold text-foreground">{day.day.en}</h3>
                     {[
@@ -178,7 +191,7 @@ const StaffHub = () => {
                           <p className="mt-1 font-work text-sm font-medium leading-relaxed text-foreground">{cleanDisplayText(dish.name)}</p>
                           {details.descriptionShort ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(details.descriptionShort)}</p> : null}
                           {details.ingredientsMain?.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Ingredients:</span> {joinDisplayText(details.ingredientsMain, ", ")}</p> : null}
-                          {details.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {details.allergens.join(", ")}</p> : null}
+                          {details.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(details.allergens, ", ")}</p> : null}
                           {details.gfDisclaimer ? <p className="mt-1 font-work text-xs text-muted-foreground">No gluten containing ingredients by recipe.</p> : null}
                         </div>
                       );
@@ -187,8 +200,62 @@ const StaffHub = () => {
                 ))}
               </div>
             </section>
-          </aside>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="cakes" className="mt-0">
+            <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
+              <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <ClipboardList className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <h2 className="font-cormorant text-3xl font-semibold text-foreground">Kuchenplan ingredient details</h2>
+                  </div>
+                  <p className="mt-1 font-work text-sm text-muted-foreground">Detailed cake and dessert data read from the Kuchenplan sheet.</p>
+                </div>
+                <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
+                  <div className="relative min-w-0 sm:w-72">
+                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search ingredients" className="pl-9" />
+                  </div>
+                  <Button variant="outline" onClick={loadCakePlan} disabled={isCakeLoading}>{isCakeLoading ? "Loading" : "Sync Kuchenplan"}</Button>
+                </div>
+              </div>
+
+              {cakeError ? <p className="mb-4 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{cakeError}</p> : null}
+
+              <div className="grid gap-4 xl:grid-cols-2">
+                {isCakeLoading && !cakeRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Kuchenplan...</p> : null}
+                {!isCakeLoading && !filteredCakeRecords.length ? <p className="font-work text-sm text-muted-foreground">No Kuchenplan items found.</p> : null}
+                {filteredCakeRecords.map((record) => (
+                  <article key={record.id} className="rounded-md bg-background/70 p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div>
+                        {record.category ? <Badge variant="secondary" className="mb-2">{cleanDisplayText(record.category)}</Badge> : null}
+                        <h3 className="font-cormorant text-2xl font-semibold text-foreground">{cleanDisplayText(record.title)}</h3>
+                      </div>
+                      <span className="font-work text-xs text-muted-foreground">{cleanDisplayText(record.sourceSheet)}</span>
+                    </div>
+                    {record.description ? <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
+                    {record.ingredients.length ? <p className="mt-3 font-work text-sm leading-relaxed text-foreground"><span className="font-semibold">Ingredients:</span> {joinDisplayText(record.ingredients, ", ")}</p> : null}
+                    {record.allergens.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(record.allergens, ", ")}</p> : null}
+                    {record.notes.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Notes:</span> {joinDisplayText(record.notes, ", ")}</p> : null}
+                    <details className="mt-4 border-t border-border/60 pt-3">
+                      <summary className="cursor-pointer font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">All sheet fields</summary>
+                      <dl className="mt-3 grid gap-2">
+                        {record.fields.map((field) => (
+                          <div key={`${record.id}-${field.label}`} className="grid gap-1 rounded-sm bg-card/70 p-2 sm:grid-cols-[11rem_1fr]">
+                            <dt className="font-work text-xs font-semibold text-foreground/80">{cleanDisplayText(field.label)}</dt>
+                            <dd className="font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(field.value)}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </details>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
