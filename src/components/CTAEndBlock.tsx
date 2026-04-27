@@ -23,16 +23,16 @@ export const CTAEndBlock = ({
   const defaultTitle = language === "de" ? "Besuche uns" : "Visit Us";
 
   return (
-    <section className={`py-16 md:py-20 bg-section-accent ${className}`}>
+    <section className={`py-16 md:py-20 lg:py-28 bg-section-accent ${className}`}>
       <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto text-center rounded-2xl border border-border/70 bg-card/55 p-6 shadow-card md:p-8">
+        <div className="max-w-md lg:max-w-3xl mx-auto text-center rounded-2xl border border-border/70 bg-card/55 p-6 shadow-card md:p-8 lg:p-10">
           <h2 className="text-3xl md:text-4xl text-primary mb-4">
             {title || defaultTitle}
           </h2>
           <p className="text-sm text-muted-foreground font-work mb-8">
             {SITE.addressShort}
           </p>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-3">
             {/* Primary CTAs - Call & Directions */}
             {show.includes("call") && (
               <Button
