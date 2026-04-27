@@ -107,7 +107,7 @@ export const Hero = () => {
   const showCarousel = carouselMounted && !isMobileHero;
 
   return (
-    <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] lg:h-[88dvh] lg:min-h-[680px] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
         className={`absolute inset-0 animate-hero-background transition-opacity duration-slow ease-out ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
@@ -136,14 +136,14 @@ export const Hero = () => {
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-16 md:pt-20 pb-6 md:pb-8 flex flex-col justify-center h-full pointer-events-none">
-        <div className="max-w-4xl mx-auto text-center space-y-2.5 sm:space-y-4 md:space-y-5">
+        <div className="max-w-4xl mx-auto text-center space-y-2.5 sm:space-y-4 md:space-y-5 lg:max-w-5xl">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
             {SITE.name}
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className={`text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-all duration-slow ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+          <p className={`text-xs sm:text-base md:text-lg lg:text-xl font-lora text-background drop-shadow-xl transition-all duration-slow ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
@@ -226,7 +226,7 @@ export const Hero = () => {
             {/* Primary: View Menu */}
             <Button
               size="lg"
-              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 py-5 sm:py-6 shadow-lg"
+              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6 shadow-lg"
               asChild
             >
               <Link to="/#menu" onClick={() => trackHeroAbEvent('click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
@@ -239,7 +239,7 @@ export const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6"
+              className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6"
               asChild
             >
               <Link to="/menu" onClick={() => trackHeroAbEvent('click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
