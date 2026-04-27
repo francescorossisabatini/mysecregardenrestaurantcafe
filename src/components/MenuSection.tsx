@@ -261,10 +261,10 @@ export const MenuSection = () => {
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16 lg:scroll-mt-28">
             <div className="text-center mb-8 lg:text-left">
-              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-2">
+              <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl lg:text-6xl mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
+              <p className="font-lora text-base leading-relaxed text-foreground/78 md:text-lg max-w-sm mx-auto lg:mx-0 lg:max-w-2xl">
                 {language === "de" 
                   ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
@@ -287,18 +287,18 @@ export const MenuSection = () => {
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">6,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
@@ -309,18 +309,18 @@ export const MenuSection = () => {
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-accent">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
@@ -331,18 +331,18 @@ export const MenuSection = () => {
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-blue">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
