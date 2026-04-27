@@ -22,6 +22,19 @@ type StaffMenuRecord = {
   fields: Array<{ label: string; value: string }>;
 };
 
+type MenuDish = {
+  id: string;
+  category: string;
+  cook: string;
+  headerEn: string;
+  headerDe: string;
+  textEn: string;
+  textDe: string;
+  ingredients: string[];
+  prep: string[];
+  badges: string[];
+};
+
 const clean = (value: unknown, max = 1200) =>
   typeof value === "string"
     ? value.replace(/<[^>]*>/g, "").replace(/javascript:/gi, "").replace(/on\w+=/gi, "").replace(/[\u002d\u2010\u2011\u2012\u2013\u2014\u2212]/g, " ").trim().slice(0, max)
@@ -31,6 +44,37 @@ const clean = (value: unknown, max = 1200) =>
 
 const splitList = (value: string) =>
   value.split(/[;,|\n]+/).map((item) => clean(item, 160)).filter(Boolean).slice(0, 80);
+
+const splitLines = (value: string) =>
+  value.split(/\n+/).map((item) => clean(item, 240).replace(/^\d+(?:[.,]\d+)?\s*(?:kg|g|l|ml|tsp|tbsp|cup|pkg?|stk\.?|bund|bd\.?|dose[n]?|can|bag|bunch)\s+/i, "")).filter(Boolean).slice(0, 80);
+
+const normalizeCategory = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase();
+  if (normalized.includes("soup")) return "soup";
+  if (normalized.includes("green")) return "green";
+  if (normalized.includes("blue")) return "blue";
+  return normalized || "seasonal";
+};
+
+const detectBadges = (...values: string[]) => {
+  const text = values.join(" ").toLowerCase();
+  const badges: string[] = [];
+  if (/chili|chilli|jalapeño|cayenne|harissa|sriracha|scharf|pikant/.test(text)) badges.push("spicy");
+  const garlicKg = text.match(/(\d+(?:\.\d+)?)\s*kg\s*(?:\w+\s+)?(?:garlic|knoblauch)/);
+  const garlicPcs = text.match(/(\d+)\s*(?:pieces?|cloves?|zehen|knoblauchzehen)/);
+  if (garlicKg && Number(garlicKg[1]) >= 0.3) badges.push("garlic-high");
+  else if (garlicPcs && Number(garlicPcs[1]) >= 20) badges.push("garlic-high");
+  else if (garlicPcs && Number(garlicPcs[1]) >= 5) badges.push("garlic-med");
+  else if (/garlic|knoblauch/.test(text)) badges.push("garlic-low");
+  const onionKgs = [...text.matchAll(/(\d+(?:\.\d+)?)\s*kg\s*(?:\w+\s+)?(?:onion|zwiebel)/g)];
+  if (onionKgs.length) {
+    const total = onionKgs.reduce((sum, match) => sum + Number(match[1]), 0);
+    badges.push(total >= 3 ? "onion-high" : total >= 1 ? "onion-med" : "onion-low");
+  } else if (/onion|zwiebel/.test(text)) badges.push("onion-low");
+  if (/cashew|almond|mandel|walnut|walnuss|peanut|erdnuss|nut/.test(text)) badges.push("nuts");
+  if (/cheese|käse|butter|cream(?! of)|parmesan|bergkäse|goat|ziegen|soyananda/.test(text)) badges.push("dairy");
+  return [...new Set(badges)];
+};
 
 const headerKind = (label: string) => {
   const h = label.toLowerCase();
@@ -73,6 +117,27 @@ const dayDisplayName = (value: string) => {
     so: "Sunday", sun: "Sunday", sonntag: "Sunday", sunday: "Sunday",
   };
   return names[normalized.split(" ")[0]] ?? clean(value, 80);
+};
+
+const dayKeyFromLabel = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase().replace(/[.:]/g, "").trim();
+  const key = normalized.split(" ")[0];
+  const keys: Record<string, string> = {
+    mo: "mon", mon: "mon", montag: "mon", monday: "mon",
+    di: "tue", tue: "tue", dienstag: "tue", tuesday: "tue",
+    mi: "wed", wed: "wed", mittwoch: "wed", wednesday: "wed",
+    do: "thu", thu: "thu", donnerstag: "thu", thursday: "thu",
+    fr: "fri", fri: "fri", freitag: "fri", friday: "fri",
+    sa: "sat", sat: "sat", samstag: "sat", saturday: "sat",
+    so: "sun", sun: "sun", sonntag: "sun", sunday: "sun",
+  };
+  return keys[key] ?? key;
+};
+
+const addDaysIso = (date: Date, offset: number) => {
+  const next = new Date(date);
+  next.setDate(next.getDate() + offset);
+  return next.toISOString().split("T")[0];
 };
 
 const parseGviz = (text: string): string[][] => {
@@ -142,6 +207,98 @@ function rowsToWeeklyDayRecords(rows: string[][], sourceSheet: string): StaffMen
         notes: afterDay.slice(3).length ? [`Prep: ${afterDay.slice(3).join(", ")}`] : [],
         sourceSheet,
         fields: recordFields,
+      });
+    });
+  });
+
+  return records;
+}
+
+function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[][]): StaffMenuRecord[] {
+  const input = normalizeRows(inputRows);
+  const menu = normalizeRows(menuRows);
+  if (!input.length || !menu.length) return [];
+
+  const menuHeaderIndex = menu.findIndex((row) => row.some((cell) => /\bID\b/i.test(cell)) && row.some((cell) => /header/i.test(cell)));
+  if (menuHeaderIndex < 0) return [];
+
+  const dishes = new Map<string, MenuDish>();
+  menu.slice(menuHeaderIndex + 1).forEach((row) => {
+    const id = clean(row[2], 160).toLowerCase();
+    if (!id) return;
+    const ingredientsRaw = clean(row[7], 3000);
+    const prepRaw = clean(row[8], 3000);
+    const dish: MenuDish = {
+      id,
+      category: normalizeCategory(row[0]),
+      cook: clean(row[1], 80),
+      headerEn: clean(row[3], 240),
+      textEn: clean(row[4], 800),
+      headerDe: clean(row[5], 240),
+      textDe: clean(row[6], 800),
+      ingredients: splitLines(ingredientsRaw),
+      prep: splitLines(prepRaw).filter((line) => line.toUpperCase() !== "PREP:"),
+      badges: detectBadges(ingredientsRaw, prepRaw, row[4], row[6]),
+    };
+    dishes.set(id, dish);
+  });
+
+  const mondayCell = input[0]?.[1];
+  const mondayDate = mondayCell ? new Date(mondayCell) : null;
+  const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
+  const records: StaffMenuRecord[] = [];
+
+  input.slice(1).forEach((row, rowIndex) => {
+    const dayKey = dayKeyFromLabel(row[1] || row[0] || "");
+    if (!(dayKey in dayOffsets)) return;
+    const day = dayDisplayName(dayKey);
+    const date = mondayDate && !Number.isNaN(mondayDate.getTime()) ? addDaysIso(mondayDate, dayOffsets[dayKey]) : "";
+    const ids = [row[2], row[3], row[4]].map((value) => clean(value, 160).toLowerCase());
+    const isHoliday = ids.some((id) => id === "feiertag");
+
+    if (isHoliday) {
+      records.push({
+        id: makeId("input data", rowIndex, `${day}_feiertag`, [{ label: "day", value: day }, { label: "is_holiday", value: "true" }]),
+        title: "Feiertag",
+        category: "holiday",
+        menuDay: day,
+        description: date,
+        ingredients: [],
+        allergens: [],
+        notes: [],
+        sourceSheet: "input data",
+        fields: [{ label: "day", value: day }, { label: "date", value: date }, { label: "is_holiday", value: "true" }],
+      });
+      return;
+    }
+
+    ids.forEach((dishId, dishIndex) => {
+      const dish = dishes.get(dishId);
+      if (!dish) return;
+      const fields = [
+        { label: "id", value: dish.id },
+        { label: "day", value: day },
+        { label: "date", value: date },
+        { label: "category", value: dish.category },
+        { label: "cook", value: dish.cook },
+        { label: "header_en", value: dish.headerEn },
+        { label: "header_de", value: dish.headerDe },
+        { label: "text_en", value: dish.textEn },
+        { label: "text_de", value: dish.textDe },
+        { label: "badges", value: dish.badges.join(", ") },
+        { label: "prep", value: dish.prep.join("\n") },
+      ].filter((field) => field.value);
+      records.push({
+        id: makeId("menudata", rowIndex * 10 + dishIndex, `${day}_${dish.category}_${dish.id}`, fields),
+        title: dish.headerEn || dish.headerDe || dish.id,
+        category: dish.category,
+        menuDay: day,
+        description: dish.textEn || dish.textDe || date,
+        ingredients: dish.ingredients,
+        allergens: dish.badges,
+        notes: dish.prep,
+        sourceSheet: "menudata",
+        fields,
       });
     });
   });
@@ -294,8 +451,8 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
   }).filter((record) => record.title && record.fields.length >= 2);
 }
 
-const digestRows = async (rows: string[][]) => {
-  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "day-weekly-v2", rows: normalizeRows(rows) }));
+const digestRows = async (rows: string[][], extraRows: string[][] = []) => {
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v1", rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 };
@@ -358,7 +515,19 @@ serve(async (req) => {
   let imported: { sheetName: string; rows: string[][]; records: StaffMenuRecord[]; sourceHash: string } | null = null;
   const importErrors: string[] = [];
 
-  for (const sheetName of sheetNames) {
+  try {
+    const inputRows = await fetchSheetRows(sheetId, "input data");
+    const menuRows = await fetchSheetRows(sheetId, "menudata");
+    const records = rowsToStructuredKitchenRecords(inputRows, menuRows);
+    if (records.length) {
+      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows) };
+    }
+  } catch (error) {
+    importErrors.push(`input data + menudata: ${error instanceof Error ? error.message : "Unknown error"}`);
+    console.warn("Unable to import structured kitchen sheets", error);
+  }
+
+  for (const sheetName of imported ? [] : sheetNames) {
     try {
       const rows = await fetchSheetRows(sheetId, sheetName);
       const records = rowsToRecords(rows, sheetName);
