@@ -250,16 +250,16 @@ const AboutUs = () => {
       </section>
 
       {/* INSPIRATION - Sri Chinmoy integrated section */}
-      <section className="py-16 md:py-24 bg-muted/20">
+      <section className="bg-section-soft py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-16">
             {/* Portrait */}
             <div className="order-2 md:order-1">
               <div className="relative max-w-sm mx-auto">
-                <div className="aspect-[3/4] overflow-hidden rounded-3xl shadow-2xl">
+                <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                   <img src={sriChinmoyImage} alt="Sri Chinmoy" className="w-full h-full object-cover" />
                 </div>
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-2 rounded-full shadow-lg">
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-border/75 bg-card px-6 py-2 shadow-card">
                   <p className="font-caveat text-lg text-primary">1931 bis 2007</p>
                 </div>
               </div>
@@ -270,6 +270,7 @@ const AboutUs = () => {
               <h2 className="text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara2}</p>
+              <p className="font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.inspirationNote}</p>
               <a 
                 href="https://www.srichinmoy.org" 
                 target="_blank" 
@@ -290,7 +291,7 @@ const AboutUs = () => {
             <div className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4 md:justify-center md:overflow-visible">
               {artworks.map((art, index) => (
                 <div key={index} className="flex-shrink-0 w-48 md:w-56 snap-center">
-                  <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
+                  <div className="aspect-square overflow-hidden rounded-2xl border border-border/75 shadow-card">
                     <img src={art.src} alt={art.alt} className="w-full h-full object-cover" />
                   </div>
                 </div>
@@ -309,14 +310,14 @@ const AboutUs = () => {
               </div>
               <button 
                 onClick={prevPoem}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-10 h-10 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:-translate-x-12"
                 aria-label="Previous poem"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button 
                 onClick={nextPoem}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-10 h-10 rounded-full bg-background shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:translate-x-12"
                 aria-label="Next poem"
               >
                 <ChevronRight className="w-5 h-5" />
