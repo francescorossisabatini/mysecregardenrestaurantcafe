@@ -7,7 +7,7 @@ export interface KlassikerItem {
   description?: { de: string; en: string };
   descriptionShort?: string;
   ingredientsMain?: string[];
-  allergens?: number[];
+  allergens?: string[];
   gfDisclaimer?: boolean;
   ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
   sizeNote?: string;
@@ -72,7 +72,7 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, saisonales Gemüse",
           ingredientsMain: ["Blattsalat", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: [10],
+          allergens: ["M"],
           gfDisclaimer: true,
         },
         {
@@ -87,7 +87,7 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, Avocado, saisonal",
           ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: [10],
+          allergens: ["M"],
           gfDisclaimer: true,
         },
         {
@@ -101,7 +101,7 @@ export const klassikerMenu = {
           isGlutenFree: true,
           descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenkäse", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: [7, 10],
+          allergens: ["G", "M"],
           gfDisclaimer: true,
         },
         {
@@ -117,7 +117,7 @@ export const klassikerMenu = {
           isBio: true,
           descriptionShort: "frisch, Bio-Tofu, saisonal",
           ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gemüse", "hausgemachtes Dressing"],
-          allergens: [6, 10],
+          allergens: ["F", "M"],
           gfDisclaimer: true,
           ingredientProducers: { Tofu: { certification: "bio" } },
         },
@@ -138,7 +138,7 @@ export const klassikerMenu = {
           isVegan: true,
           descriptionShort: "cremig, vegan, süß",
           ingredientsMain: ["vegane Creme", "Kuchenboden"],
-          allergens: [1, 6, 8],
+          allergens: ["A", "F", "H"],
         },
         {
           id: "karamellschnitte",
@@ -150,7 +150,7 @@ export const klassikerMenu = {
           price: "4,90",
           descriptionShort: "süß, Karamell, hausgemacht",
           ingredientsMain: ["Karamell", "Kuchenboden"],
-          allergens: [1, 3, 7],
+          allergens: ["A", "C", "G"],
         },
         {
           id: "walnuss-brownie",
@@ -162,7 +162,7 @@ export const klassikerMenu = {
           price: "4,7",
           descriptionShort: "schokoladig, Walnuss",
           ingredientsMain: ["Schokolade", "Walnüsse"],
-          allergens: [1, 3, 7, 8],
+          allergens: ["A", "C", "G", "H"],
         },
         {
           id: "schoko-mousse-torte",
@@ -174,7 +174,7 @@ export const klassikerMenu = {
           price: "4,7",
           descriptionShort: "cremig, Schokolade",
           ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
-          allergens: [1, 3, 7],
+          allergens: ["A", "C", "G"],
         },
         {
           id: "karotten-gewuerztorte",
@@ -186,7 +186,7 @@ export const klassikerMenu = {
           price: "4,5",
           descriptionShort: "würzig, Karotte, cremig",
           ingredientsMain: ["Karotten", "Gewürze", "Frischkäse-Topping"],
-          allergens: [1, 3, 7, 8],
+          allergens: ["A", "C", "G", "H"],
         },
       ],
     },
@@ -229,7 +229,7 @@ export const klassikerMenu = {
           price: "4,9",
           descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
-          allergens: [7],
+          allergens: ["G"],
         },
       ],
     },

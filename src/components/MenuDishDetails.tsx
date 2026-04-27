@@ -8,7 +8,7 @@ interface MenuDishDetailsProps {
   compact?: boolean;
 }
 
-export const AllergenCodes = ({ codes }: { codes?: number[] }) => {
+export const AllergenCodes = ({ codes }: { codes?: string[] }) => {
   if (!codes?.length) return null;
 
   return (

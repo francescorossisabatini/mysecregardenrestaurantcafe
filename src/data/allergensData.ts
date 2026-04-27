@@ -1,7 +1,7 @@
 export type LanguageCode = "de" | "en";
 
 export interface AllergenInfo {
-  code: number;
+  code: string;
   label: Record<LanguageCode, string>;
   note?: Record<LanguageCode, string>;
 }
@@ -9,26 +9,26 @@ export interface AllergenInfo {
 export interface DishDetails {
   descriptionShort?: string;
   ingredientsMain?: string[];
-  allergens?: number[];
+  allergens?: string[];
   gfDisclaimer?: boolean;
   ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
 }
 
 export const ALLERGENS: AllergenInfo[] = [
-  { code: 1, label: { de: "Gluten", en: "Gluten" } },
-  { code: 2, label: { de: "Krebstiere", en: "Crustaceans" }, note: { de: "nicht verwendet", en: "not used" } },
-  { code: 3, label: { de: "Eier", en: "Eggs" } },
-  { code: 4, label: { de: "Fisch", en: "Fish" }, note: { de: "nicht verwendet", en: "not used" } },
-  { code: 5, label: { de: "Erdnüsse", en: "Peanuts" } },
-  { code: 6, label: { de: "Soja", en: "Soya" } },
-  { code: 7, label: { de: "Milch / Laktose", en: "Milk / Lactose" } },
-  { code: 8, label: { de: "Schalenfrüchte", en: "Tree nuts" } },
-  { code: 9, label: { de: "Sellerie", en: "Celery" } },
-  { code: 10, label: { de: "Senf", en: "Mustard" } },
-  { code: 11, label: { de: "Sesam", en: "Sesame" } },
-  { code: 12, label: { de: "Schwefeldioxid / Sulfite", en: "Sulphur dioxide / Sulphites" } },
-  { code: 13, label: { de: "Lupinen", en: "Lupin" } },
-  { code: 14, label: { de: "Weichtiere", en: "Molluscs" }, note: { de: "nicht verwendet", en: "not used" } },
+  { code: "A", label: { de: "Glutenhaltiges Getreide", en: "Cereals containing gluten" } },
+  { code: "B", label: { de: "Krebstiere", en: "Crustaceans" }, note: { de: "nicht verwendet", en: "not used" } },
+  { code: "C", label: { de: "Eier", en: "Eggs" } },
+  { code: "D", label: { de: "Fisch", en: "Fish" }, note: { de: "nicht verwendet", en: "not used" } },
+  { code: "E", label: { de: "Erdnüsse", en: "Peanuts" } },
+  { code: "F", label: { de: "Soja", en: "Soya" } },
+  { code: "G", label: { de: "Milch / Laktose", en: "Milk / Lactose" } },
+  { code: "H", label: { de: "Schalenfrüchte", en: "Nuts" } },
+  { code: "L", label: { de: "Sellerie", en: "Celery" } },
+  { code: "M", label: { de: "Senf", en: "Mustard" } },
+  { code: "N", label: { de: "Sesam", en: "Sesame" } },
+  { code: "O", label: { de: "Schwefeldioxid / Sulfite", en: "Sulphur dioxide / Sulphites" } },
+  { code: "P", label: { de: "Lupinen", en: "Lupin" } },
+  { code: "R", label: { de: "Weichtiere", en: "Molluscs" }, note: { de: "nicht verwendet", en: "not used" } },
 ];
 
-export const getAllergenByCode = (code: number) => ALLERGENS.find((allergen) => allergen.code === code);
+export const getAllergenByCode = (code: string) => ALLERGENS.find((allergen) => allergen.code === code);
