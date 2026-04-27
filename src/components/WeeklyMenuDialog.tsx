@@ -19,13 +19,13 @@ interface WeeklyMenuDialogProps {
 }
 
 const introText = {
-  de: `Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für ${MENU_PRICES.DISH}. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.`,
-  en: `Every day you have the choice between two fresh, seasonal daily dishes for ${MENU_PRICES.DISH}. We always prepare the 'green' vegan & gluten-free - the 'blue' may also contain dairy products, gluten-containing grains or eggs.`,
+  de: `Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für ${MENU_PRICES.DISH}. Das grüne Gericht bereiten wir vegan und ohne glutenhaltige Zutaten zu; das blaue kann Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.`,
+  en: `Every day you have the choice between two fresh, seasonal daily dishes for ${MENU_PRICES.DISH}. The green dish is vegan and made without gluten-containing ingredients; the blue dish may contain dairy products, gluten-containing grains or eggs.`,
 };
 
 const soupInfo = {
-  de: `Unsere schmackhaften Tagessuppen sind immer vegan & glutenfrei und gibt's klein um ${MENU_PRICES.SOUP_SMALL} / groß um ${MENU_PRICES.SOUP_LARGE}. Ein frisches Bio-Weckerl dazu? – ${MENU_PRICES.ROLL_EXTRA}`,
-  en: `Our delicious daily soups are always vegan & gluten-free and are available small for ${MENU_PRICES.SOUP_SMALL} / large for ${MENU_PRICES.SOUP_LARGE}. A fresh organic roll with it? - ${MENU_PRICES.ROLL_EXTRA}`,
+  de: `Unsere Tagessuppen sind vegan und ohne glutenhaltige Zutaten gekocht, klein um ${MENU_PRICES.SOUP_SMALL} / groß um ${MENU_PRICES.SOUP_LARGE}. Ein frisches Bio-Weckerl dazu? ${MENU_PRICES.ROLL_EXTRA}`,
+  en: `Our daily soups are vegan and made without gluten-containing ingredients, small for ${MENU_PRICES.SOUP_SMALL} / large for ${MENU_PRICES.SOUP_LARGE}. A fresh organic roll with it? ${MENU_PRICES.ROLL_EXTRA}`,
 };
 
 export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) => {
