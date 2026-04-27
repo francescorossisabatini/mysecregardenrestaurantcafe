@@ -119,6 +119,27 @@ const dayDisplayName = (value: string) => {
   return names[normalized.split(" ")[0]] ?? clean(value, 80);
 };
 
+const dayKeyFromLabel = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase().replace(/[.:]/g, "").trim();
+  const key = normalized.split(" ")[0];
+  const keys: Record<string, string> = {
+    mo: "mon", mon: "mon", montag: "mon", monday: "mon",
+    di: "tue", tue: "tue", dienstag: "tue", tuesday: "tue",
+    mi: "wed", wed: "wed", mittwoch: "wed", wednesday: "wed",
+    do: "thu", thu: "thu", donnerstag: "thu", thursday: "thu",
+    fr: "fri", fri: "fri", freitag: "fri", friday: "fri",
+    sa: "sat", sat: "sat", samstag: "sat", saturday: "sat",
+    so: "sun", sun: "sun", sonntag: "sun", sunday: "sun",
+  };
+  return keys[key] ?? key;
+};
+
+const addDaysIso = (date: Date, offset: number) => {
+  const next = new Date(date);
+  next.setDate(next.getDate() + offset);
+  return next.toISOString().split("T")[0];
+};
+
 const parseGviz = (text: string): string[][] => {
   const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?\s*$/s);
   if (!match) throw new Error("Invalid sheet response");
