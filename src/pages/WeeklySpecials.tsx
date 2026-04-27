@@ -47,7 +47,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       )}
       {labels.isGlutenFree && (
         <span className="text-xs font-work font-semibold text-primary">
-          {language === "de" ? "glutenfrei" : "gluten-free"}
+          {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
         </span>
       )}
       {labels.isBio && (
@@ -73,8 +73,8 @@ const WeeklySpecials = () => {
       <SEOHead 
         title={language === "de" ? "Wochenmenü" : "Weekly Specials"}
         description={language === "de" 
-          ? "Entdecke unser wechselndes Wochenmenü mit frischen vegetarischen und veganen Gerichten."
-          : "Discover our changing weekly menu with fresh vegetarian and vegan dishes."}
+          ? "Das Wochenmenü von My Secret Garden: Suppe, grünes Gericht und blaues Gericht von Montag bis Samstag."
+          : "The weekly menu at My Secret Garden: soup, green dish and blue dish from Monday to Saturday."}
         path="/wochenkarte"
       />
       <Navigation />
@@ -90,8 +90,8 @@ const WeeklySpecials = () => {
           </p>
           <p className="text-sm text-muted-foreground font-work max-w-md mx-auto">
             {language === "de"
-              ? "Jeden Tag frisch gekocht mit saisonalen Bio-Zutaten."
-              : "Freshly cooked every day with seasonal organic ingredients."}
+              ? "Was diese Woche mittags am Tresen steht. Kurz prüfen, dann vorbeikommen."
+              : "What is at the counter for lunch this week. Check it, then come by."}
           </p>
           
           {/* Top CTA Row */}
