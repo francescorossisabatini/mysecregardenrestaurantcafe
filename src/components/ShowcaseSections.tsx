@@ -12,12 +12,12 @@ export const ShowcaseSections = () => {
   return (
     <>
       {/* SHOWCASE 1: Menu - Image Left, Text Right */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center rounded-2xl border border-border/70 bg-card/45 p-5 shadow-card md:p-8">
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl lg:max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center md:p-8">
             {/* Image */}
             <div>
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-lg lg:aspect-[5/6]">
                 <img 
                   src={curryOfTheDay} 
                   alt={language === "de" ? "Tagesmenü" : "Today's special"}
@@ -27,7 +27,7 @@ export const ShowcaseSections = () => {
             </div>
             
             {/* Text */}
-            <div className="space-y-6">
+            <div className="space-y-6 lg:max-w-lg">
               <span className="text-xs font-work uppercase tracking-widest text-accent">
                 {language === "de" ? "Heute am Tresen" : "At the counter today"}
               </span>
@@ -56,11 +56,11 @@ export const ShowcaseSections = () => {
       </section>
 
       {/* SHOWCASE 2: Visit - Text Left, Image Right (Reversed) */}
-      <section className="py-16 md:py-24 bg-section-accent">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center rounded-2xl border border-border/70 bg-card/50 p-5 shadow-card md:p-8">
+      <section className="py-16 md:py-24 lg:py-28 bg-section-accent">
+        <div className="container mx-auto px-4 max-w-6xl lg:max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center md:p-8">
             {/* Text - Left on desktop */}
-            <div className="space-y-6 order-2 md:order-1">
+            <div className="space-y-6 order-2 md:order-1 lg:max-w-lg">
               <span className="text-xs font-work uppercase tracking-widest text-accent">
                 {language === "de" ? "Unser Garten" : "Our Garden"}
               </span>
@@ -94,7 +94,7 @@ export const ShowcaseSections = () => {
             
             {/* Image - Right on desktop */}
             <div className="order-1 md:order-2">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-lg lg:aspect-[5/6]">
                 <img 
                   src={entranceGarden} 
                   alt={language === "de" ? "Eingang zum Garten" : "Garden entrance"}
