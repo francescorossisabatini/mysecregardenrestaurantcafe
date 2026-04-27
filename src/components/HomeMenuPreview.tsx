@@ -7,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
-import { inferDishDetails } from "@/lib/menuDetails";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -78,9 +77,9 @@ export const HomeMenuPreview = () => {
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
   const dishes = todayMenu ? [
-    { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language] },
-    { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language] },
-    { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language] },
+    { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
+    { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
+    { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language], allergens: todayMenu.blueMeta?.allergens },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
   return (
@@ -137,7 +136,7 @@ export const HomeMenuPreview = () => {
                     <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
                   </div>
                   <DietaryBadges text={dish.text} language={language} />
-                  <AllergenCodes codes={inferDishDetails(dish.text).allergens} />
+                  <AllergenCodes codes={dish.allergens} />
                 </div>
                 );
               })}
