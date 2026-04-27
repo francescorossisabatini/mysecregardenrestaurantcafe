@@ -130,73 +130,16 @@ const StaffHub = () => {
 
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
 
-        <section className="mb-8 grid gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
-            <ClipboardList className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Nuove richieste</p>
-            <strong className="font-cormorant text-4xl text-foreground">{reservations.filter((item) => item.status === "new").length}</strong>
-          </div>
-          <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
-            <CalendarDays className="mb-3 h-5 w-5 text-accent" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Questa settimana</p>
-            <strong className="font-cormorant text-4xl text-foreground">{reservations.filter((item) => item.status !== "archived").length}</strong>
-          </div>
+        <section className="mb-8 grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <ChefHat className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Giorni menu</p>
+            <p className="font-work text-sm text-muted-foreground">Menu days</p>
             <strong className="font-cormorant text-4xl text-foreground">{menu.days.length}</strong>
           </div>
         </section>
 
-        <div className="grid gap-8 xl:grid-cols-[1.25fr_0.75fr]">
-          <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
-            <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <h2 className="font-cormorant text-3xl font-semibold text-foreground">Prenotazioni</h2>
-              <div className="flex flex-wrap gap-2">
-                {(Object.keys(statusLabels) as ReservationStatus[]).map((status) => (
-                  <button
-                    key={status}
-                    type="button"
-                    onClick={() => setActiveStatus(status)}
-                    className={`rounded-full px-3 py-1.5 font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors ${activeStatus === status ? "bg-primary text-primary-foreground" : "bg-muted text-primary hover:bg-primary/10"}`}
-                  >
-                    {statusLabels[status]}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid gap-3">
-              {isLoadingReservations ? (
-                <p className="font-work text-sm text-muted-foreground">Caricamento prenotazioni…</p>
-              ) : filteredReservations.length === 0 ? (
-                <p className="rounded-md bg-muted/60 px-4 py-5 font-work text-sm text-muted-foreground">Nessuna richiesta in questa sezione.</p>
-              ) : filteredReservations.map((reservation) => (
-                <article key={reservation.id} className="rounded-md border border-border/70 bg-background/70 p-4">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <h3 className="font-cormorant text-2xl font-semibold text-foreground">{reservation.full_name}</h3>
-                      <p className="font-work text-sm text-muted-foreground">
-                        {reservation.reservation_date} · {reservation.reservation_time.slice(0, 5)} · {reservation.party_size} persone
-                      </p>
-                      <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 font-work text-sm text-primary underline-offset-4 hover:underline">
-                        <Phone className="h-4 w-4" aria-hidden="true" />
-                        {reservation.contact}
-                      </a>
-                      {reservation.notes && <p className="mt-3 font-work text-sm leading-relaxed text-foreground/85">{reservation.notes}</p>}
-                    </div>
-                    <div className="flex flex-wrap gap-2 md:justify-end">
-                      {activeStatus !== "confirmed" && <Button size="sm" onClick={() => updateReservationStatus(reservation.id, "confirmed")}>Conferma</Button>}
-                      {activeStatus !== "declined" && <Button size="sm" variant="outline" onClick={() => updateReservationStatus(reservation.id, "declined")}>Rifiuta</Button>}
-                      {activeStatus !== "archived" && <Button size="sm" variant="ghost" onClick={() => updateReservationStatus(reservation.id, "archived")}>Archivia</Button>}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <aside className="grid gap-6">
+        <div className="grid gap-8">
+          <aside className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <h2 className="font-cormorant text-3xl font-semibold text-foreground">Piatti e ingredienti</h2>
