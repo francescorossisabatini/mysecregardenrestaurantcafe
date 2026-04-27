@@ -441,14 +441,14 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu Anchor Label */}
-          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
-            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase">
+          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8 lg:scroll-mt-28">
+            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase lg:text-left">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
+          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5 lg:p-6">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
@@ -461,6 +461,7 @@ export const MenuSection = () => {
                       <p className="text-xs text-muted-foreground text-center font-work mb-4">
                         {translatePeriod(menu.period, language)}
                       </p>
+                      <div className="lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-5">
                       {menu.days.map((day, index) => {
                         const dayDate = getDateForMenuDay(menu.period, index);
                         const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
@@ -475,7 +476,7 @@ export const MenuSection = () => {
 
                         
                         return (
-                          <div key={index} className="border-b border-border/30 pb-4 last:border-0">
+                          <div key={index} className="border-b border-border/30 pb-4 last:border-0 lg:rounded-2xl lg:border lg:border-border/60 lg:bg-background/45 lg:p-4 lg:last:border">
                             <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
                               {day.day[language]}
                             </h4>
@@ -509,6 +510,7 @@ export const MenuSection = () => {
                           </div>
                         );
                       })}
+                      </div>
                     </>
                   )}
                 </div>
