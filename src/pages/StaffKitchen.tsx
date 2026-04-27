@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Archive, CalendarDays, ChefHat, ClipboardList, RefreshCw, Search } from "lucide-react";
+import { Archive, CalendarDays, ChefHat, ClipboardList, LogOut, RefreshCw, Search, ShieldCheck } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -208,6 +208,11 @@ const StaffKitchen = () => {
   const [language, setLanguage] = useState<DashboardLanguage>("en");
   const labels = text[language];
 
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+  };
+
   const loadKuchenplan = async () => {
     setIsLoading(true);
     setError(null);
@@ -275,11 +280,26 @@ const StaffKitchen = () => {
   }, [categoryFilter, currentRecords, kuchenplan.archiveRecords, kuchenplan.records, searchTerm]);
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
-  if (!isCheckingAccess && session && !isStaff) return <Navigate to="/staff" replace />;
+  if (!isCheckingAccess && session && !isStaff) {
+    return (
+      <div className="min-h-screen bg-background px-4 py-12 font-work text-foreground">
+        <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex />
+        <main className="mx-auto max-w-xl rounded-lg border border-border bg-card p-6 text-center shadow-card">
+          <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
+          <h1 className="text-3xl font-bold tracking-normal text-foreground">Unauthorized access</h1>
+          <p className="mt-3 text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
+          <Button onClick={signOut} className="mt-6">
+            <LogOut className="h-4 w-4" />
+            Sign out
+          </Button>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background font-work text-foreground">
-      <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff/kitchen" noindex />
+      <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
       <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
         <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
           <div className="min-w-0">
