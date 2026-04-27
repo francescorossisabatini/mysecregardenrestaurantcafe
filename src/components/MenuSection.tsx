@@ -10,7 +10,6 @@ import {
 } from "@/data/holidaysData";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
@@ -40,25 +39,18 @@ const isValidMenuText = (text?: string) => {
 // Using explicit dark colors that GUARANTEE 4.5:1+ contrast on #FAF7F3
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
+  const visibleLabels = [
+    labels.isVegan ? "vegan" : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients") : null,
+    labels.isBio ? "bio" : null,
+  ].filter(Boolean);
+
+  if (visibleLabels.length === 0) return null;
   
   return (
-    <div className="flex items-center gap-2 mt-2 flex-wrap">
-      {labels.isVegan && (
-        <span className="rounded-full bg-accent-light/45 px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-vegan">
-          vegan
-        </span>
-      )}
-      {labels.isGlutenFree && (
-        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-glutenFree">
-          {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
-        </span>
-      )}
-      {labels.isBio && (
-        <span className="rounded-full bg-dailyAlt px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-bio">
-          bio
-        </span>
-      )}
-    </div>
+    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+      {visibleLabels.join(" · ")}
+    </p>
   );
 };
 
