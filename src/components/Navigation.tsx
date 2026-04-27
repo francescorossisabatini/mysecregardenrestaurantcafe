@@ -83,9 +83,7 @@ export const Navigation = () => {
           <div className="hidden items-center justify-end gap-3 lg:flex">
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
-          <div className="flex items-center justify-end lg:hidden">
-            <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
-          </div>
+          <div className="flex items-center justify-end lg:hidden" aria-hidden="true" />
         </div>
       </nav>
 
