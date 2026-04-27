@@ -40,6 +40,8 @@ type DishCategory = "soup" | "green" | "blue" | "holiday" | "seasonal";
 type DashboardLanguage = "en" | "de";
 type ReservationStatus = "new" | "confirmed" | "cancelled" | "arrived" | "no_show";
 type ReservationStatusFilter = "all" | ReservationStatus;
+type CakeOrderStatus = "pending" | "confirmed" | "cancelled" | "fulfilled";
+type CakeOrderStatusFilter = "all" | CakeOrderStatus;
 
 type StaffReservation = {
   id: string;
@@ -51,6 +53,22 @@ type StaffReservation = {
   notes: string | null;
   staff_notes?: string | null;
   status: ReservationStatus;
+  language: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type StaffCakeOrder = {
+  id: string;
+  name: string;
+  phone: string;
+  cake_choice: string;
+  quantity: number;
+  pickup_date: string;
+  notes: string | null;
+  payment_acknowledged: boolean;
+  status: CakeOrderStatus;
+  staff_notes?: string | null;
   language: string;
   created_at: string;
   updated_at: string;
