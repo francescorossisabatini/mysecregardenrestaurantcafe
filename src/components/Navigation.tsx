@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X } from "lucide-react";
+import { LockKeyhole, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -173,6 +173,14 @@ export const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            <Link
+              to="/staff/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-4 flex items-center gap-2 rounded-full border border-border/75 px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] text-primary/85 transition-colors hover:bg-muted hover:text-primary"
+            >
+              <LockKeyhole className="h-4 w-4" aria-hidden="true" />
+              Staff
+            </Link>
           </nav>
 
         </div>
