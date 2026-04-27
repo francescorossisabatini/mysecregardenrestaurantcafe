@@ -167,7 +167,7 @@ export const Hero = () => {
                 </span>
                 {status.closesAt && (
                   <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `• schließt um ${status.closesAt}` : `• closes at ${status.closesAt}`}
+                    {language === "de" ? `schließt um ${status.closesAt}` : `closes at ${status.closesAt}`}
                   </span>
                 )}
               </>
@@ -188,12 +188,12 @@ export const Hero = () => {
                 </span>
                 {status.tomorrowOpensAt && !status.tomorrowClosed && (
                   <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
+                    {language === "de" ? `morgen ab ${status.tomorrowOpensAt}` : `tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
                 {status.tomorrowClosed && (
                   <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? "• morgen geschlossen" : "• closed tomorrow"}
+                    {language === "de" ? "morgen geschlossen" : "closed tomorrow"}
                   </span>
                 )}
               </>
@@ -207,12 +207,12 @@ export const Hero = () => {
                 </span>
                 {closedReason === "no-menu" && (
                   <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? "• kein Menü heute" : "• no menu today"}
+                    {language === "de" ? "kein Menü heute" : "no menu today"}
                   </span>
                 )}
                 {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
                   <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `• morgen ab ${status.tomorrowOpensAt}` : `• tomorrow at ${status.tomorrowOpensAt}`}
+                    {language === "de" ? `morgen ab ${status.tomorrowOpensAt}` : `tomorrow at ${status.tomorrowOpensAt}`}
                   </span>
                 )}
               </>
