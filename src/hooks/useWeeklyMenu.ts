@@ -17,7 +17,7 @@ interface MenuDay {
 interface MenuItemMeta {
   descriptionShort?: string;
   ingredientsMain?: string[];
-  allergens?: number[];
+  allergens?: string[];
   gfDisclaimer?: boolean;
 }
 
