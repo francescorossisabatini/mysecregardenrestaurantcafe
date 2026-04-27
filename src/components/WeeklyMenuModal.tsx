@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { BotanicalDecoration } from "./BotanicalDecoration";
 import { fixedDishes } from "@/data/fixedMenuData";
+import { cleanDisplayText } from "@/lib/displayText";
 
 interface MenuDay {
   day: { de: string; en: string };
@@ -103,7 +104,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                         {language === "de" ? "Suppe" : "Soup"}
                       </p>
                       <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-                        {day.soup[language]}
+                        {cleanDisplayText(day.soup[language])}
                       </p>
                       <p className="text-xs text-muted-foreground">4,50 / 6,50 €</p>
                     </div>
@@ -116,11 +117,11 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                         {language === "de" ? "Grün" : "Green"}
                       </Badge>
                       <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-                        {day.green[language]}
+                        {cleanDisplayText(day.green[language])}
                       </p>
                       {day.greenNote && day.greenNote[language] && (
                         <p className="text-xs text-muted-foreground italic">
-                          {day.greenNote[language]}
+                          {cleanDisplayText(day.greenNote[language])}
                         </p>
                       )}
                       <p className="text-xs text-muted-foreground">15,20 €</p>
@@ -134,11 +135,11 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                         {language === "de" ? "Blau" : "Blue"}
                       </Badge>
                       <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-                        {day.blue[language]}
+                        {cleanDisplayText(day.blue[language])}
                       </p>
                       {day.blueNote && day.blueNote[language] && (
                         <p className="text-xs text-muted-foreground italic">
-                          {day.blueNote[language]}
+                          {cleanDisplayText(day.blueNote[language])}
                         </p>
                       )}
                       <p className="text-xs text-muted-foreground">15,20 €</p>
@@ -160,9 +161,9 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
               {fixedDishes.salads[language].map((salad, idx) => (
                 <div key={idx} className="flex justify-between items-start gap-3 bg-background/20 p-3 rounded-lg">
                   <div className="flex-1">
-                    <p className="text-sm sm:text-base font-medium">{salad.name}</p>
+                    <p className="text-sm sm:text-base font-medium">{cleanDisplayText(salad.name)}</p>
                     {salad.size && (
-                      <p className="text-xs text-muted-foreground">({salad.size})</p>
+                        <p className="text-xs text-muted-foreground">({cleanDisplayText(salad.size)})</p>
                     )}
                   </div>
                   <span className="text-xs sm:text-sm font-light whitespace-nowrap">{salad.price}</span>
@@ -180,8 +181,8 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
             </h3>
             <div className="flex justify-between items-start gap-3 bg-background/20 p-4 rounded-lg max-w-2xl mx-auto">
               <div className="flex-1">
-                <p className="text-sm sm:text-base font-medium">{dal.name}</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">{dal.description}</p>
+                <p className="text-sm sm:text-base font-medium">{cleanDisplayText(dal.name)}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{cleanDisplayText(dal.description)}</p>
               </div>
               <span className="text-xs sm:text-sm font-light whitespace-nowrap">{dal.price}</span>
             </div>
@@ -197,7 +198,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
             <div className="grid sm:grid-cols-2 gap-2 md:gap-3 max-w-3xl mx-auto">
               {fixedDishes.drinks[language].map((drink, idx) => (
                 <div key={idx} className="flex justify-between items-center gap-3 bg-background/20 p-2 rounded">
-                  <span className="text-xs sm:text-sm font-light">{drink.name}</span>
+                  <span className="text-xs sm:text-sm font-light">{cleanDisplayText(drink.name)}</span>
                   <span className="text-xs sm:text-sm font-light whitespace-nowrap">{drink.price}</span>
                 </div>
               ))}
@@ -208,8 +209,8 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
           <div className="mt-8 pt-6 border-t border-border/30 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">
               {language === "de" 
-                ? "Alle Preise in Euro · Änderungen vorbehalten" 
-                : "All prices in Euro · Subject to change"}
+                ? "Alle Preise in Euro. Änderungen vorbehalten" 
+                : "All prices in Euro. Subject to change"}
             </p>
           </div>
         </div>
