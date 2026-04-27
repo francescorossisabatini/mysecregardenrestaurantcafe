@@ -478,10 +478,10 @@ export const MenuSection = () => {
           <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
-                {klassikerMenu.title[language]}
+                {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
               <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
-                {klassikerMenu.subtitle[language]}
+                {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
               <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
@@ -489,7 +489,7 @@ export const MenuSection = () => {
             </div>
             <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-                {language === "de" ? "Immer da · direkt wählen" : "Always · choose directly"}
+                {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
               <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
                 {fixedMenuAnchors.map((anchor) => (
@@ -504,7 +504,7 @@ export const MenuSection = () => {
                         : "border-border/75 bg-card text-primary hover:border-primary/35 hover:bg-muted"
                     }`}
                   >
-                    {anchor.label}
+                    {cleanDisplayText(anchor.label)}
                   </button>
                 ))}
               </div>
@@ -514,7 +514,7 @@ export const MenuSection = () => {
               {klassikerMenu.categories.map((category) => (
                 <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
                   <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
-                    {category.name[language]}
+                    {cleanDisplayText(category.name[language])}
                   </h3>
                   
                   {/* Regular items (non-drinks categories) */}
@@ -528,7 +528,7 @@ export const MenuSection = () => {
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
                               <h4 className={`font-cormorant text-base font-semibold mb-1 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
-                                {item.name[language]}
+                                {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-foreground italic">
                                     ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
@@ -537,7 +537,7 @@ export const MenuSection = () => {
                               </h4>
                               {item.description && (
                                 <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
-                                  {item.description[language]}
+                                  {cleanDisplayText(item.description[language])}
                                 </p>
                               )}
                               {/* Dietary labels - WCAG AAA compliant with explicit colors */}
@@ -550,7 +550,7 @@ export const MenuSection = () => {
                                   )}
                                   {item.isGlutenFree && (
                                     <span className="text-xs font-work font-semibold text-state-glutenFree">
-                                      {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
+                                      {language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients"}
                                     </span>
                                   )}
                                   {item.isBio && (
@@ -589,7 +589,7 @@ export const MenuSection = () => {
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
-                                {subcategory.name[language]}
+                                {cleanDisplayText(subcategory.name[language])}
                               </h4>
                               {subcategory.sizeNote && (
                                 <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
@@ -612,7 +612,7 @@ export const MenuSection = () => {
                                     </span>
                                     {item.sizeNote && (
                                       <p className="mt-1 text-xs font-work text-muted-foreground">
-                                        {item.sizeNote}
+                                        {cleanDisplayText(item.sizeNote)}
                                       </p>
                                     )}
                                   </div>
