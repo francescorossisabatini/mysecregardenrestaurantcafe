@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { ChefHat, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,40 +6,13 @@ import { SEOHead } from "@/components/SEOHead";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
-import type { Tables } from "@/integrations/supabase/types";
-
-type Reservation = Tables<"reservation_requests">;
-type ReservationStatus = "new" | "confirmed" | "declined" | "archived";
 
 const StaffHub = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
-  const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [activeStatus, setActiveStatus] = useState<ReservationStatus>("new");
-  const [isLoadingReservations, setIsLoadingReservations] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { menu, isLoading: isMenuLoading, refresh } = useWeeklyMenu();
-
-  const loadReservations = async () => {
-    setIsLoadingReservations(true);
-    setError(null);
-
-    const { data, error: reservationError } = await supabase
-      .from("reservation_requests")
-      .select("*")
-      .order("reservation_date", { ascending: true })
-      .order("reservation_time", { ascending: true });
-
-    setIsLoadingReservations(false);
-
-    if (reservationError) {
-      setError("Prenotazioni non disponibili.");
-      return;
-    }
-
-    setReservations(data ?? []);
-  };
 
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -63,31 +36,10 @@ const StaffHub = () => {
       const allowed = Boolean(roleRows?.length);
       setIsStaff(allowed);
       setIsChecking(false);
-      if (allowed) loadReservations();
     });
 
     return () => listener.subscription.unsubscribe();
   }, []);
-
-  const filteredReservations = useMemo(
-    () => reservations.filter((reservation) => reservation.status === activeStatus),
-    [reservations, activeStatus]
-  );
-
-  const updateReservationStatus = async (id: string, status: ReservationStatus) => {
-    const previous = reservations;
-    setReservations((current) => current.map((reservation) => reservation.id === id ? { ...reservation, status } : reservation));
-
-    const { error: updateError } = await supabase
-      .from("reservation_requests")
-      .update({ status })
-      .eq("id", id);
-
-    if (updateError) {
-      setReservations(previous);
-      setError("Stato non aggiornato. Riprova.");
-    }
-  };
 
   const signOut = async () => {
     await supabase.auth.signOut();
