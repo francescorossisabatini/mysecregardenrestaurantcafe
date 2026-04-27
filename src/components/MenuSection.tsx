@@ -450,43 +450,13 @@ export const MenuSection = () => {
                             ) : (
                               <div className="space-y-2 text-sm font-work">
                                 {isValidMenuText(day.soup[language]) && (
-                                  <div className="flex justify-between items-start gap-2">
-                                    <div className="flex-1">
-                                      <span className="text-muted-foreground text-xs">
-                                        {language === "de" ? "Suppe" : "Soup"}:
-                                      </span>
-                                      <p className="text-foreground/90">{day.soup[language]}</p>
-                                      <DietaryBadges text={day.soup[language]} language={language} />
-                                      <WeeklyDishDetails text={day.soup[language]} meta={day.soupMeta} />
-                                    </div>
-                                    <span className="text-primary text-xs font-medium shrink-0">6,90</span>
-                                  </div>
+                                  <WeeklyDishRow kind="soup" text={day.soup[language]} price="6,90" meta={day.soupMeta} language={language} />
                                 )}
                                 {isValidMenuText(day.green[language]) && (
-                                  <div className="flex justify-between items-start gap-2">
-                                    <div className="flex-1">
-                                      <span className="text-muted-foreground text-xs">
-                                        {language === "de" ? "Grün" : "Green"}:
-                                      </span>
-                                      <p className="text-foreground/90">{day.green[language]}</p>
-                                      <DietaryBadges text={day.green[language]} language={language} />
-                                      <WeeklyDishDetails text={day.green[language]} meta={day.greenMeta} />
-                                    </div>
-                                    <span className="text-primary text-xs font-medium shrink-0">15,90</span>
-                                  </div>
+                                  <WeeklyDishRow kind="green" text={day.green[language]} price="15,90" meta={day.greenMeta} language={language} />
                                 )}
                                 {isValidMenuText(day.blue[language]) && (
-                                  <div className="flex justify-between items-start gap-2">
-                                    <div className="flex-1">
-                                      <span className="text-muted-foreground text-xs">
-                                        {language === "de" ? "Blau" : "Blue"}:
-                                      </span>
-                                      <p className="text-foreground/90">{day.blue[language]}</p>
-                                      <DietaryBadges text={day.blue[language]} language={language} />
-                                      <WeeklyDishDetails text={day.blue[language]} meta={day.blueMeta} />
-                                    </div>
-                                    <span className="text-primary text-xs font-medium shrink-0">15,90</span>
-                                  </div>
+                                  <WeeklyDishRow kind="blue" text={day.blue[language]} price="15,90" meta={day.blueMeta} language={language} />
                                 )}
                               </div>
                             )}
