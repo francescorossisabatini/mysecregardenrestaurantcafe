@@ -8,13 +8,12 @@ import { SITE } from "@/config/site";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import foodBowl from "@/assets/food-bowl-real.jpg";
 import foodDetail from "@/assets/food-detail-real.jpg";
-import poppyFlower from "@/assets/poppy-flower-real.jpg";
-import alpenpolenta from "@/assets/alpenpolenta.jpg";
 import curryOfTheDay from "@/assets/curry-of-the-day.webp";
-// New images - replacing redundant ones
-import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
-import tableSpreadMenu from "@/assets/table-spread-menu.jpg";
 import diningScene from "@/assets/dining-scene.jpg";
+import piattoBowlBlue from "@/assets/piatto-bowl-blue.jpg";
+import tavolata from "@/assets/tavolata-3.jpg";
+import torta from "@/assets/torta-2.jpg";
+import maniMangianoCibo from "@/assets/primo-piano-mani-mangiano-cibo.jpg";
 
 const GalleryReveal = ({
   children,
@@ -83,7 +82,7 @@ export const GallerySection = () => {
     // Row 2: Pair - food focus
     { layout: "pair", images: [
       { src: foodBowl, alt: "Fresh bowl creation" },
-      { src: dalRiceBowl, alt: "Dal with rice and pomegranate" }
+      { src: piattoBowlBlue, alt: "Blue plate bowl with salad and vegetables" }
     ]},
     
     // Row 3: Full - torta/quiche - hero shot
@@ -91,8 +90,8 @@ export const GallerySection = () => {
     
     // Row 4: Pair - table spread + polenta
     { layout: "pair", images: [
-      { src: tableSpreadMenu, alt: "Selection of vegan dishes" },
-      { src: alpenpolenta, alt: "Alpenpolenta" }
+      { src: tavolata, alt: "Table with several vegetarian dishes" },
+      { src: torta, alt: "Homemade cake with berries and coconut" }
     ]},
     
     // Row 5: Full - entrance
@@ -101,8 +100,7 @@ export const GallerySection = () => {
     // Row 6: Triple - details
     { layout: "triple", images: [
       { src: foodDetail, alt: "Food detail" },
-      { src: poppyFlower, alt: "Poppy flower" },
-      { src: foodBowl, alt: "Bowl detail" }
+      { src: maniMangianoCibo, alt: "Guest eating vegetarian food" }
     ]},
   ];
 
@@ -156,10 +154,10 @@ export const GallerySection = () => {
               );
             }
 
-            // Triple layout - 3 columns on desktop, stacked on mobile
+            // Triple layout - up to 3 columns on desktop, stacked on mobile
             if (row.layout === "triple") {
               return (
-                <div key={rowIndex} className="space-y-5 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
+                <div key={rowIndex} className="space-y-5 md:space-y-0 md:grid md:grid-cols-2 md:gap-6">
                   {row.images.map((image, imgIndex) => (
                     <GalleryReveal key={imgIndex} delay={imgIndex * 100}>
                       <ImageFrame src={image.src} alt={image.alt} ratio="aspect-[4/5] md:aspect-square" />
