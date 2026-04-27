@@ -29,20 +29,20 @@ export const ShowcaseSections = () => {
             {/* Text */}
             <div className="space-y-6">
               <span className="text-xs font-work uppercase tracking-widest text-accent">
-                {language === "de" ? "Täglich Frisch" : "Fresh Daily"}
+                {language === "de" ? "Heute am Tresen" : "At the counter today"}
               </span>
               <h2 className="text-4xl md:text-5xl text-primary">
-                {language === "de" ? "Saisonale Küche" : "Seasonal Kitchen"}
+                {language === "de" ? "Was heute gut passt" : "What works today"}
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Jeden Tag kochen wir zwei frische Hauptgerichte und eine Suppe. Die Auswahl richtet sich nach dem, was gerade Saison hat." 
-                  : "Every day we cook two fresh main dishes and a soup. The menu follows what is in season."}
+                  ? "Jeden Tag kochen wir zwei Hauptgerichte und eine Suppe. Manchmal entscheidet die Saison, manchmal ein gutes Gemüse, das morgens in der Küche steht." 
+                  : "Every day we cook two main dishes and a soup. Sometimes the season decides, sometimes it is a good vegetable that arrives in the morning."}
               </p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Dazu bieten wir unsere beliebten Klassiker, die es immer gibt." 
-                  : "Plus our beloved classics, available every day."}
+                  ? "Und ja, ein paar Klassiker bleiben. Manche bestellt ihr einfach zu oft." 
+                  : "And yes, a few classics stay. People ask for them too often."}
               </p>
               <Button className="font-work" asChild>
                 <Link to="/menu">
@@ -65,17 +65,17 @@ export const ShowcaseSections = () => {
                 {language === "de" ? "Unser Garten" : "Our Garden"}
               </span>
               <h2 className="text-4xl md:text-5xl text-primary">
-                {language === "de" ? "Ein verstecktes Refugium" : "A Hidden Refuge"}
+                {language === "de" ? "Der Hof hinter dem Bogen" : "The courtyard behind the arch"}
               </h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Im Raimundhof, abseits der Mariahilferstraße, liegt unser ruhiger Innenhof. Ein grüner Platz mitten in Wien." 
-                  : "In the Raimundhof, just off Mariahilferstraße, you find our quiet courtyard. A green place in the heart of Vienna."}
+                  ? "Du gehst durch den Bogen an der Mariahilferstraße. Ein paar Schritte später wird es leiser, und der Raimundhof öffnet sich." 
+                  : "You walk through the arch on Mariahilferstraße. A few steps later it gets quieter, and Raimundhof opens up."}
               </p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">
                 {language === "de" 
-                  ? "Grüne Pflanzen, Holztische und sanfte Musik. Ein Ort zum Durchatmen." 
-                  : "Green plants, wooden tables, and soft music. A place to breathe."}
+                  ? "Pflanzen, Holztische, Teller vom Tresen. Kein großes Theater, eher ein guter Platz für eine Pause." 
+                  : "Plants, wooden tables, plates from the counter. No big show, just a good place to pause."}
               </p>
               <Button variant="outline" className="font-work group" asChild>
                 <a
