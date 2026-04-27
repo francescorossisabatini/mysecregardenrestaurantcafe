@@ -275,7 +275,7 @@ export const MenuSection = () => {
                   </div>
                 )}
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-3 text-left shadow-card">
+              <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
                   {language === "de"
@@ -285,7 +285,7 @@ export const MenuSection = () => {
               </div>
               </>
             ) : (
-              <div className="space-y-6 rounded-2xl border border-border/75 bg-card p-8 text-center shadow-card">
+              <div className="space-y-6 rounded-2xl border p-8 text-center surface-card">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
@@ -373,7 +373,7 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-5 shadow-card md:px-5">
+          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
