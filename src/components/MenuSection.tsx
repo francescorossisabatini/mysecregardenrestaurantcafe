@@ -167,7 +167,7 @@ export const MenuSection = () => {
     if (!target) return;
 
     setActiveMenuTab(tab);
-    const offset = 128;
+    const offset = window.matchMedia("(min-width: 1024px)").matches ? 112 : 128;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
@@ -180,14 +180,57 @@ export const MenuSection = () => {
     const target = document.getElementById(`menu-${id}`);
     if (!target) return;
     setActiveFixedAnchor(id);
-    const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
+    const offset = window.matchMedia("(min-width: 1024px)").matches ? 112 : window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
   return (
-    <section id="menu" className="py-16 md:py-24 bg-section-soft">
+    <section id="menu" className="py-16 md:py-24 lg:py-28 bg-section-soft">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-6xl lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start lg:gap-10">
+          <aside className="hidden lg:block lg:sticky lg:top-28">
+            <nav className="rounded-2xl border border-border/75 bg-card/80 p-3 shadow-card backdrop-blur-md" aria-label={language === "de" ? "Menünavigation" : "Menu navigation"}>
+              <p className="px-3 pb-2 font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                {language === "de" ? "Speisekarte" : "Menu"}
+              </p>
+              <div className="space-y-1 border-b border-border/50 pb-3">
+                {[
+                  { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
+                  { id: "week" as const, label: language === "de" ? "Wochenmenü" : "This week" },
+                  { id: "fixed" as const, label: language === "de" ? "Klassiker" : "Classics" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => scrollToMenuBlock(tab.id)}
+                    className={`block w-full rounded-xl px-3 py-2 text-left font-work text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                      activeMenuTab === tab.id ? "bg-primary text-primary-foreground" : "text-foreground/80 hover:bg-muted hover:text-primary"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+              <div className="space-y-1 pt-3">
+                <p className="px-3 pb-1 font-work text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  {language === "de" ? "Direkt zu" : "Jump to"}
+                </p>
+                {fixedMenuAnchors.map((anchor) => (
+                  <button
+                    key={anchor.id}
+                    type="button"
+                    onClick={() => scrollToFixedAnchor(anchor.id)}
+                    className={`block w-full rounded-xl px-3 py-2 text-left font-work text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                      activeFixedAnchor === anchor.id ? "bg-muted text-primary" : "text-muted-foreground hover:bg-muted hover:text-primary"
+                    }`}
+                  >
+                    {cleanDisplayText(anchor.label)}
+                  </button>
+                ))}
+              </div>
+            </nav>
+          </aside>
+          <div className="min-w-0 max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
           <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
             <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
