@@ -10,7 +10,7 @@ export const SITE = {
   phoneTel: "+4315862839",
 
   // Address
-  addressShort: "Mariahilferstraße 45, Im Raimundhof – 1060 Wien",
+  addressShort: "Mariahilferstraße 45, Im Raimundhof 1060 Wien",
 
   // Trust signals
   rating: "4.7",
@@ -18,12 +18,12 @@ export const SITE = {
 
   // Practical visit notes
   courtyardInstruction: {
-    de: "My Secret Garden liegt im Innenhof des Raimundhofs – Mariahilferstraße 45, 1060 Wien. Vom Gehsteig aus durch den Torbogen, dann links. Der Garten öffnet sich hinter der Einfahrt.",
-    en: "My Secret Garden is in the courtyard of Raimundhof – Mariahilferstraße 45, 1060 Vienna. From the street, walk through the archway and turn left. The garden opens up behind the entrance.",
+    de: "My Secret Garden liegt im Innenhof des Raimundhofs in der Mariahilferstraße 45, 1060 Wien. Vom Gehsteig aus durch den Torbogen, dann links. Der Garten öffnet sich hinter der Einfahrt.",
+    en: "My Secret Garden is in the courtyard of Raimundhof at Mariahilferstraße 45, 1060 Vienna. From the street, walk through the archway and turn left. The garden opens up behind the entrance.",
   },
   counterServiceNote: {
-    de: "Bei uns bestellst du direkt am Tresen – kein Kellner, keine Wartezeit. Du suchst dir deinen Platz aus, wir bringen dir das Essen.",
-    en: "Order at the counter – no waiter, no waiting. Pick your seat, we’ll bring your food to you.",
+    de: "Bei uns bestellst du direkt am Tresen. Kein Kellner, keine Wartezeit. Du suchst dir deinen Platz aus, wir bringen dir das Essen.",
+    en: "Order at the counter. No waiter, no waiting. Pick your seat, we’ll bring your food to you.",
   },
 
   transportNote: {
@@ -32,8 +32,8 @@ export const SITE = {
   },
 
   parkingNote: {
-    de: "Wipark Windmühlgasse, Windmühlgasse 22–24 – die erste Stunde Parken schenken wir dir.",
-    en: "Wipark Windmühlgasse, Windmühlgasse 22–24 – the first hour of parking is on us.",
+    de: "Wipark Windmühlgasse, Windmühlgasse 22 bis 24. Die erste Stunde Parken schenken wir dir.",
+    en: "Wipark Windmühlgasse, Windmühlgasse 22 to 24. The first hour of parking is on us.",
   },
 
   // Google Maps share link (direct link to restaurant)
