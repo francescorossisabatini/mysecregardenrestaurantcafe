@@ -189,10 +189,10 @@ const archiveMatches = (record: StaffMenuRecord, query: string) => [
   ...record.notes,
 ].filter(Boolean).some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
 
-const weekRange = (records: StaffMenuRecord[]) => {
+const weekRange = (records: StaffMenuRecord[], language: DashboardLanguage) => {
   const dates = records.map(recordDate).filter(Boolean).sort();
-  if (dates.length < 2) return "This Week";
-  const formatter = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "long", year: "numeric" });
+  if (dates.length < 2) return text[language].fallbackWeek;
+  const formatter = new Intl.DateTimeFormat(language === "de" ? "de-AT" : "en-GB", { day: "2-digit", month: "long", year: "numeric" });
   return `${formatter.format(new Date(dates[0]))} – ${formatter.format(new Date(dates[dates.length - 1]))}`;
 };
 
@@ -205,6 +205,8 @@ const StaffKitchen = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<"all" | DishCategory>("all");
+  const [language, setLanguage] = useState<DashboardLanguage>("en");
+  const labels = text[language];
 
   const loadKuchenplan = async () => {
     setIsLoading(true);
@@ -212,7 +214,7 @@ const StaffKitchen = () => {
     const { data, error: functionError } = await supabase.functions.invoke("get-staff-menu-details");
 
     if (functionError || !data?.success) {
-      setError("Küchenplan could not be loaded from Google Sheets.");
+      setError(text[language].loadError);
       setKuchenplan(emptyKuchenplanData);
     } else {
       setKuchenplan({ ...emptyKuchenplanData, ...data.data });
@@ -282,13 +284,22 @@ const StaffKitchen = () => {
         <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords)}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Detailed Küchenplan from Google Sheets, ordered by day.</p>
+            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
+            <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
-          <Button onClick={loadKuchenplan} disabled={isLoading} className="justify-self-start md:justify-self-end">
-            <RefreshCw className="h-4 w-4" />
-            {isLoading ? "Sync..." : "Sync Google Sheet"}
-          </Button>
+          <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
+            <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
+              {(["en", "de"] as const).map((option) => (
+                <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
+                  {option.toUpperCase()}
+                </Button>
+              ))}
+            </div>
+            <Button onClick={loadKuchenplan} disabled={isLoading}>
+              <RefreshCw className="h-4 w-4" />
+              {isLoading ? labels.syncLoading : labels.sync}
+            </Button>
+          </div>
         </header>
 
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
