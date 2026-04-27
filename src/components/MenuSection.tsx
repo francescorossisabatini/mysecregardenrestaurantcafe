@@ -259,12 +259,12 @@ export const MenuSection = () => {
           {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
           {SHOW_WEEKLY_MENU ? (
           <>
-          <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
-            <div className="text-center mb-8">
-              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
+          <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16 lg:scroll-mt-28">
+            <div className="text-center mb-8 lg:text-left">
+              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
                 {language === "de" 
                   ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
@@ -283,10 +283,10 @@ export const MenuSection = () => {
               </div>
             ) : !isClosed && todayMenu ? (
               <>
-              <div className="space-y-4">
+              <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:space-y-0">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -298,7 +298,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
@@ -308,7 +308,7 @@ export const MenuSection = () => {
 
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -320,7 +320,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
@@ -330,7 +330,7 @@ export const MenuSection = () => {
 
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -342,7 +342,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
