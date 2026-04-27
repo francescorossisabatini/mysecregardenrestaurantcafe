@@ -201,7 +201,11 @@ const ContactPage = () => {
                 <p className="font-work leading-relaxed text-muted-foreground">
                   Wipark Windmühlgasse<br />
                   Windmühlgasse 22–24<br />
-                  {language === "de" ? "Eine Stunde kostenlos für unsere Gäste." : "One hour free for our guests."}
+                  {language === "de" ? "Eine Stunde kostenlos für unsere Gäste.*" : "One hour free for our guests.*"}
+                  <br />
+                  <span className="text-sm">
+                    {language === "de" ? "*Gültig ab einer Konsumation von mindestens 27 €." : "*Valid with a minimum spend of €27."}
+                  </span>
                 </p>
               </div>
             </section>
