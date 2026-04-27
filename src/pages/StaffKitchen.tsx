@@ -44,12 +44,12 @@ const emptyKuchenplanData: KuchenplanData = {
 
 const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const dayLabels: Record<string, string> = {
-  Monday: "Lunedì",
-  Tuesday: "Martedì",
-  Wednesday: "Mercoledì",
-  Thursday: "Giovedì",
-  Friday: "Venerdì",
-  Saturday: "Sabato",
+  Monday: "Monday",
+  Tuesday: "Tuesday",
+  Wednesday: "Wednesday",
+  Thursday: "Thursday",
+  Friday: "Friday",
+  Saturday: "Saturday",
 };
 
 const categoryLabels: Record<DishCategory, string> = {
@@ -109,7 +109,7 @@ const archiveMatches = (record: StaffMenuRecord, query: string) => [
 
 const weekRange = (records: StaffMenuRecord[]) => {
   const dates = records.map(recordDate).filter(Boolean).sort();
-  if (dates.length < 2) return "Questa settimana";
+  if (dates.length < 2) return "This Week";
   const formatter = new Intl.DateTimeFormat("de-AT", { day: "2-digit", month: "long", year: "numeric" });
   return `${formatter.format(new Date(dates[0]))} – ${formatter.format(new Date(dates[dates.length - 1]))}`;
 };
@@ -173,7 +173,7 @@ const StaffKitchen = () => {
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
             <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords)}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Küchenplan dettagliato da Google Sheet, ordinato per giorno.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Detailed Küchenplan from Google Sheets, ordered by day.</p>
           </div>
           <Button onClick={loadKuchenplan} disabled={isLoading} className="justify-self-start md:justify-self-end">
             <RefreshCw className="h-4 w-4" />
