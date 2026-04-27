@@ -14,6 +14,7 @@ import dalRiceBowl from "@/assets/dal-rice-bowl.jpg";
 import tavolata from "@/assets/tavolata-3.jpg";
 import torta from "@/assets/torta-2.jpg";
 import maniMangianoCibo from "@/assets/primo-piano-mani-mangiano-cibo.jpg";
+import gastgarten from "@/assets/gastgarten.jpg";
 
 const GalleryReveal = ({
   children,
@@ -96,8 +97,11 @@ export const GallerySection = () => {
     
     // Row 5: Full - entrance
     { layout: "full", images: [{ src: entranceGarden, alt: "Entrance to the secret garden" }] },
+
+    // Row 6: Full - courtyard garden
+    { layout: "full", images: [{ src: gastgarten, alt: "Courtyard garden with outdoor seating" }] },
     
-    // Row 6: Triple - details
+    // Row 7: Triple - details
     { layout: "triple", images: [
       { src: foodDetail, alt: "Food detail" },
       { src: maniMangianoCibo, alt: "Guest eating vegetarian food" }
