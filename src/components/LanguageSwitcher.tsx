@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface LanguageSwitcherProps {
-  variant?: "navbar" | "mobile";
+  variant?: "navbar" | "mobile" | "floatingMobile";
   tone?: "default" | "overlay";
 }
 
@@ -30,6 +30,37 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
             language === "en"
               ? (isOverlay ? "bg-background text-primary shadow-sm" : "bg-primary text-primary-foreground shadow-sm")
               : (isOverlay ? "text-background/85 hover:text-background" : "text-primary/75 hover:text-primary")
+          }`}
+          aria-pressed={language === "en"}
+          aria-label="English"
+        >
+          EN
+        </button>
+      </div>
+    );
+  }
+
+  if (variant === "floatingMobile") {
+    return (
+      <div className="inline-flex h-11 shrink-0 items-center rounded-full border border-border/75 bg-card/95 p-1 shadow-card backdrop-blur-md" role="group" aria-label="Language selection">
+        <button
+          onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
+          className={`flex h-9 min-w-10 items-center justify-center rounded-full px-3 font-work text-xs font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
+            language === "de"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-primary/75 hover:text-primary"
+          }`}
+          aria-pressed={language === "de"}
+          aria-label="Deutsch"
+        >
+          DE
+        </button>
+        <button
+          onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
+          className={`flex h-9 min-w-10 items-center justify-center rounded-full px-3 font-work text-xs font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
+            language === "en"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-primary/75 hover:text-primary"
           }`}
           aria-pressed={language === "en"}
           aria-label="English"
