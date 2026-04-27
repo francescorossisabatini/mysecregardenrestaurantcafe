@@ -19,7 +19,7 @@ import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-import supermindLogo from "@/assets/supermind-logo.png";
+import supermindLogo from "@/assets/supermind-logo-cropped.png";
 
 const cakeMenuItems = [
   "Chocolate Mousse Cake",
@@ -670,11 +670,13 @@ export const MenuSection = () => {
                                         href="https://supermind.at/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:border-primary/35 hover:text-primary"
+                                        className="mt-2 inline-flex min-h-9 items-center gap-2 rounded-full border border-primary/20 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:border-primary/40 hover:bg-muted"
                                         aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind coffee website"}
                                       >
-                                        <img src={supermindLogo} alt="" className="h-4 w-auto object-contain" loading="lazy" />
-                                        {language === "de" ? "Kaffee by Supermind" : "Coffee by Supermind"}
+                                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-background">
+                                          <img src={supermindLogo} alt="" className="h-5 w-auto object-contain" loading="lazy" />
+                                        </span>
+                                        {language === "de" ? "Supermind Kaffee" : "Supermind Coffee"}
                                       </a>
                                     )}
                                   </div>
