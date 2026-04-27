@@ -89,6 +89,92 @@ export type Database = {
         }
         Relationships: []
       }
+      kuechenplan_items: {
+        Row: {
+          allergens: string[]
+          category: string | null
+          created_at: string
+          description: string | null
+          fields: Json
+          id: string
+          ingredients: string[]
+          menu_day: string | null
+          notes: string[]
+          row_index: number
+          search_text: string
+          snapshot_id: string
+          title: string
+        }
+        Insert: {
+          allergens?: string[]
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          fields?: Json
+          id?: string
+          ingredients?: string[]
+          menu_day?: string | null
+          notes?: string[]
+          row_index: number
+          search_text?: string
+          snapshot_id: string
+          title: string
+        }
+        Update: {
+          allergens?: string[]
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          fields?: Json
+          id?: string
+          ingredients?: string[]
+          menu_day?: string | null
+          notes?: string[]
+          row_index?: number
+          search_text?: string
+          snapshot_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kuechenplan_items_snapshot_id_fkey"
+            columns: ["snapshot_id"]
+            isOneToOne: false
+            referencedRelation: "kuechenplan_snapshots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      kuechenplan_snapshots: {
+        Row: {
+          archived_at: string | null
+          created_at: string
+          id: string
+          is_current: boolean
+          period: string | null
+          sheet_name: string
+          source_hash: string
+        }
+        Insert: {
+          archived_at?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          period?: string | null
+          sheet_name?: string
+          source_hash: string
+        }
+        Update: {
+          archived_at?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          period?: string | null
+          sheet_name?: string
+          source_hash?: string
+        }
+        Relationships: []
+      }
       reservation_requests: {
         Row: {
           contact: string
