@@ -48,7 +48,6 @@ export const Footer = () => {
             >
               {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
-            <span className="text-primary-foreground/50" aria-hidden="true">•</span>
             <Link 
               to="/impressum" 
               className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
@@ -56,7 +55,6 @@ export const Footer = () => {
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
-            <span className="text-primary-foreground/50" aria-hidden="true">•</span>
             <Link 
               to="/privacy" 
               className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
