@@ -302,7 +302,7 @@ export const MenuSection = () => {
                 <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
                   {language === "de"
                     ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Unsere Küche ist klein und nicht für Zöliakie geeignet. Bei Allergien bitte kurz fragen."
-                    : "Marked options are made without gluten-containing ingredients. Our kitchen is small and not suitable for coeliac disease. If you have allergies, please ask us first."}
+                    : "Marked options are made without gluten containing ingredients. Our kitchen is small and not suitable for coeliac disease. If you have allergies, please ask us first."}
                 </p>
               </div>
               </>
