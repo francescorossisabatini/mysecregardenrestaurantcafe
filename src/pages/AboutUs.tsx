@@ -144,13 +144,16 @@ const AboutUs = () => {
       <div className="h-20" />
 
       {/* ABOUT HERO */}
-      <section className="py-16 md:py-24 text-center">
+      <section className="bg-section-soft py-14 text-center md:py-20">
         <div className="container mx-auto px-4">
-          <h1 className="font-caveat text-5xl md:text-7xl text-primary mb-4">
+          <h1 className="mb-4 font-caveat text-5xl text-primary md:text-7xl">
             {t.heroTitle}
           </h1>
-          <p className="font-lora text-xl text-foreground/80 max-w-xl mx-auto">
-            {t.heroTagline}
+          <p className="mx-auto max-w-xl font-lora text-xl leading-relaxed text-foreground/85">
+            {t.manifesto}
+          </p>
+          <p className="mx-auto mt-4 max-w-md font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+            {t.heroTagline} {t.dietaryLine}
           </p>
         </div>
       </section>
@@ -160,7 +163,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div className="order-2 md:order-1">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
                 <img src={entranceGarden} alt="Garden entrance" className="w-full h-full object-cover" />
               </div>
             </div>
@@ -168,7 +171,7 @@ const AboutUs = () => {
               <span className="text-xs font-work uppercase tracking-widest text-accent">{t.philosophyLabel}</span>
               <h2 className="text-4xl md:text-5xl text-primary">{t.philosophyTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara1}</p>
-              <blockquote className="font-lora text-xl md:text-2xl italic text-primary/90 border-l-4 border-accent pl-6 py-2">
+              <blockquote className="border-l-4 border-accent py-2 pl-6 font-lora text-xl italic text-primary/90 md:text-2xl">
                 "{t.philosophyQuote}"
               </blockquote>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara2}</p>
