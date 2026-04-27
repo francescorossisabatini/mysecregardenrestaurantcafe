@@ -915,7 +915,7 @@ if (isSunday) {
         {language === 'de' ? 'Sonntag' : 'Sunday'}
       </h3>
       <p className="text-muted-foreground">
-        {language === 'de' ? 'Tag der Ruhe — Geschlossen' : 'Day of Rest — Closed'}
+        {language === 'de' ? 'Tag der Ruhe – Geschlossen' : 'Day of Rest – Closed'}
       </p>
     </div>
   );
@@ -1452,7 +1452,7 @@ export function GallerySection() {
             )}
           </p>
           <cite className="text-sm text-muted-foreground mt-2 block">
-            — Sri Chinmoy
+            – Sri Chinmoy
           </cite>
         </blockquote>
 

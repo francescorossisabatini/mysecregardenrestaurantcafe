@@ -98,7 +98,7 @@ Background: Warm cream #F5F0E8
     --shadow-card: 0 8px 24px -20px hsl(var(--navy-500) / 0.25);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Motion tokens — MSG Motion Spec */
+    /* Motion tokens – MSG Motion Spec */
     --motion-duration-instant: 100ms;
     --motion-duration-fast: 150ms;
     --motion-duration-base: 250ms;
