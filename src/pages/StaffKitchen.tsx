@@ -178,6 +178,10 @@ const text = {
     statusArrived: "Arrived",
     statusCancelled: "Cancelled",
     statusNoShow: "No-show",
+    nextRequest: "Next request",
+    openRequests: "Open requests",
+    archiveItems: "Archive items",
+    noNextRequest: "No upcoming request",
   },
   de: {
     subtitle: "Detaillierter Küchenplan aus Google Sheets, nach Tagen sortiert.",
@@ -230,6 +234,10 @@ const text = {
     statusArrived: "Angekommen",
     statusCancelled: "Storniert",
     statusNoShow: "No-show",
+    nextRequest: "Nächste Anfrage",
+    openRequests: "Offene Anfragen",
+    archiveItems: "Archiv-Einträge",
+    noNextRequest: "Keine kommende Anfrage",
   },
 } satisfies Record<DashboardLanguage, Record<string, string>>;
 
@@ -469,6 +477,8 @@ const StaffKitchen = () => {
   const dailyProgress = Math.min(100, Math.round((reservations.length / dailyCap) * 100));
   const dailyProgressTone = reservations.length >= 19 ? "bg-destructive" : reservations.length >= 15 ? "bg-warning" : "bg-accent";
   const selectedDateIsPast = isPastReservationDate(selectedReservationDate);
+  const openReservationCount = reservations.filter((reservation) => reservation.status === "new" || reservation.status === "confirmed").length;
+  const nextReservation = reservations.find((reservation) => reservation.status === "new" || reservation.status === "confirmed");
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
@@ -491,14 +501,14 @@ const StaffKitchen = () => {
   return (
     <div className="min-h-screen bg-background font-work text-foreground">
       <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
-      <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
-        <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
+      <main className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-5 md:px-8 md:py-7">
+        <header className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card lg:grid-cols-[1fr_auto] lg:items-center lg:p-5">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
+            <h1 className="mt-1 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{weekRange(currentRecords, language)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
+          <div className="flex flex-wrap items-center gap-2 justify-self-start lg:justify-self-end">
             <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
               {(["en", "de"] as const).map((option) => (
                 <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
@@ -513,13 +523,38 @@ const StaffKitchen = () => {
           </div>
         </header>
 
+        <section className="grid gap-3 md:grid-cols-3" aria-label="Staff dashboard summary">
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.openRequests}</p>
+              <Users className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{openReservationCount}</p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.nextRequest}</p>
+              <CalendarDays className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-3xl font-semibold text-primary">{nextReservation ? nextReservation.reservation_time.slice(0, 5) : "—"}</p>
+            <p className="text-sm text-muted-foreground">{nextReservation ? cleanDisplayText(nextReservation.full_name) : labels.noNextRequest}</p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.archiveItems}</p>
+              <Archive className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{archiveRecords.length}</p>
+          </div>
+        </section>
+
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
         <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
-            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
+          <TabsList className="sticky top-2 z-20 mx-auto grid h-auto w-full max-w-3xl grid-cols-3 rounded-full border border-border bg-card/95 p-1 shadow-card backdrop-blur-md">
+            <TabsTrigger value="plan" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -535,14 +570,14 @@ const StaffKitchen = () => {
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
               {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
 
-              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3">
+              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3 lg:grid-cols-2 lg:items-start">
                 {dayGroups.map(([day, records]) => {
                   const holiday = records.some((record) => normalizeCategory(record.category) === "holiday" || record.title.toLowerCase().includes("feiertag"));
                   return (
                     <AccordionItem key={day} value={day} className="overflow-hidden rounded-lg border border-border bg-card px-4 shadow-card">
                       <AccordionTrigger className="py-4 text-left hover:no-underline">
                         <span className="grid gap-1">
-                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[language][day] || day}</span>
+                          <span className="font-cormorant text-3xl font-semibold leading-tight text-primary">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
                         {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
@@ -587,19 +622,19 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="requests" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
               <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
                     <Users className="h-5 w-5" aria-hidden="true" />
-                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTitle}</h2>
+                    <h2 className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{labels.requestsTitle}</h2>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
               </div>
 
-              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
+              <div className="grid gap-4 rounded-lg border border-border bg-background/70 p-3 lg:grid-cols-[1fr_16rem] lg:items-center">
                 <div className="grid grid-cols-3 gap-2">
                   <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
                     <ChevronLeft className="h-4 w-4" />
@@ -611,10 +646,12 @@ const StaffKitchen = () => {
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-muted">
-                  <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
+                <div>
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
                 </div>
-                <p className="text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
               <div className="flex gap-2 overflow-x-auto pb-1">
@@ -629,7 +666,7 @@ const StaffKitchen = () => {
               {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
               {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                 {filteredReservations.map((reservation) => (
                   <ReservationCard
                     key={reservation.id}
@@ -680,7 +717,7 @@ const ReservationCard = ({
       <div className="flex items-start justify-between gap-3">
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
-          <span>{time}</span>
+          <span className="font-cormorant text-3xl font-semibold leading-none">{time}</span>
           <span className="inline-flex items-center gap-1 text-muted-foreground">
             <Users className="h-4 w-4" aria-hidden="true" />
             {reservation.party_size}
@@ -689,8 +726,8 @@ const ReservationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(reservation.contact)}
         </a>
@@ -703,18 +740,18 @@ const ReservationCard = ({
       </div>
 
       {!readOnly ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {reservation.status === "new" ? (
             <>
-              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
-              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
           {reservation.status === "confirmed" ? (
             <>
-              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
-              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
-              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
+              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
+              <Button type="button" size="sm" className="h-10 sm:col-span-2" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
         </div>
@@ -760,9 +797,9 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
     <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
-          <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
-          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-accent">{categoryLabels[language][category]}</p>
+          <h3 className="mt-1 font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(record.title)}</h3>
+          {record.description ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-2 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
           {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
