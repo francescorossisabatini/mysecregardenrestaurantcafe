@@ -123,7 +123,7 @@ export const Navigation = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-[70] lg:hidden transition-all duration-300 ${
           isMobileMenuOpen ? "visible" : "invisible"
         }`}
       >
@@ -137,7 +137,7 @@ export const Navigation = () => {
 
         {/* Drawer */}
         <div
-          className={`absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-300 ease-out flex flex-col border-r border-border/75 ${
+          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-300 ease-out flex flex-col border-r border-border/75 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -149,7 +149,7 @@ export const Navigation = () => {
               className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
             >
-              <Logo className="w-10 h-10" aria-hidden="true" />
+              <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
             </Link>
             <button
