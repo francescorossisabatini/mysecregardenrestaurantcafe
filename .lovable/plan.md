@@ -1,81 +1,147 @@
-Implementerei il design system come un raffinamento coerente, non come redesign completo. L’obiettivo è far emergere le nuove linee guida — crema, navy, verde, pill buttons, card più morbide, spaziature più disciplinate — mantenendo struttura, contenuti e identità attuali del sito.
+Propongo di dividerlo in due fasi: prima sistemiamo il form in modo utile e sicuro, poi costruiamo l’hub staff quando abbiamo confermato la struttura del Google Sheet.
 
-## Piano di integrazione
+## Obiettivo
 
-1. Fondamenta visive globali
-   - Allineare i token CSS esistenti ai colori del design system:
-     - page cream più caldo: `#F5F0E8`
-     - card cream chiaro: `#FDFAF5`
-     - primary navy: `#264195`
-     - foreground navy profondo: `#111E45`
-     - accent verde: `#5A7A2E`
-   - Mantenere i nomi Tailwind già usati (`primary`, `accent`, `background`, `card`, ecc.) per evitare modifiche invasive.
-   - Raffinare border, shadow e radius per ottenere card più eleganti e meno “default shadcn”.
+Creare un flusso in cui:
 
-2. Bottoni e CTA
-   - Aggiornare `Button` per seguire il design system:
-     - forma pill/rounded-full per CTA principali
-     - primary verde per le azioni principali
-     - secondary/navy per azioni secondarie
-     - outline più morbido, con bordo navy/cream e hover leggero
-   - Applicare questa logica senza cambiare i testi o la gerarchia delle CTA già presenti.
+1. Il cliente invia una richiesta tavolo dalla pagina Visit.
+2. La richiesta non resta solo “finta” nel frontend, ma viene salvata.
+3. Il personale accede a una pagina riservata con login.
+4. Nello stesso hub staff può vedere:
+   - richieste di prenotazione
+   - ingredienti e allergeni dei piatti dal Google Sheet esistente
+   - richieste/ordinazioni torte, in una seconda fase
 
-3. Top bar e navigazione
-   - Usare la guida del design system per una top bar più ordinata:
-     - background cream semi-trasparente
-     - border bottom più visibile ma delicato
-     - controlli mobile con proporzioni coerenti
-     - language switcher pill, navy attivo, cream passivo
-   - Non reintrodurre “My Secret Garden” nella top bar mobile, rispettando la richiesta precedente.
-   - Non reintrodurre CTA nella navbar/drawer.
+## Fase 1: Prenotazioni reali, senza hub completo
 
-4. Menu e card
-   - Portare le card del menu verso lo stile del design system:
-     - card cream chiaro
-     - bordo cream più caldo
-     - radius 16px
-     - badge/tag pill più coerenti
-     - prezzi in verde accent
-   - Mantenere l’architettura menu unica già impostata: Heute/Immer da/Woche.
+Intervento consigliato ora:
 
-5. Mobile sticky bar
-   - Allinearla ai componenti del design system:
-     - barra navy/cream più premium
-     - bottoni pill con primary verde e secondary navy
-     - spacing più chiaro
-   - Mantenerla mobile-only e senza interferire con cookie banner/menu aperto.
+- Tenere il form in `/visit`, ma trasformarlo da feedback locale a richiesta reale.
+- Salvare ogni richiesta in una tabella backend `reservation_requests`.
+- Campi base:
+  - nome
+  - email o telefono
+  - data
+  - ora
+  - persone
+  - note
+  - lingua
+  - stato: `new`, `confirmed`, `declined`, `archived`
+  - data di invio
+- Mostrare al cliente un messaggio più preciso: “Richiesta ricevuta. Ti confermiamo appena possibile.”
+- Aggiungere validazioni semplici: data futura, orario coerente con apertura, persone obbligatorie, contatto obbligatorio.
 
-6. Micro-coerenza tipografica e spacing
-   - Conservare i font già corretti per il brand: Caveat, Cormorant Garamond, Lora, Work Sans.
-   - Uniformare alcuni pattern:
-     - eyebrow in Work Sans uppercase
-     - heading Cormorant/Caveat dove già previsto
-     - body Lora
-     - UI Work Sans
-   - Applicare piccoli aggiustamenti solo dove aumentano coerenza e leggibilità.
+Questa fase risolve subito il problema più importante: non perdere le richieste.
 
-## Cosa non farò
+## Fase 2: Login staff e hub interno
 
-- Non stravolgerò layout, sezioni o contenuti.
-- Non cambierò immagini o introdurrò immagini generate.
-- Non reintrodurrò parallax/zoom o animazioni aggressive.
-- Non aggiungerò CTA alla navbar.
-- Non trasformerò il sito in una copia del file HTML: userò il design system come fondazione visiva, non come template rigido.
+Creare una nuova area riservata, ad esempio:
 
-## File principali coinvolti
+- `/staff/login`
+- `/staff`
 
-- `src/index.css` — token globali, colori, shadow, radius, utilities leggere.
-- `tailwind.config.ts` — eventuali token aggiuntivi se necessari.
-- `src/components/ui/button.tsx` — stile base dei bottoni.
-- `src/components/ui/card.tsx` — card più coerenti con il design system.
-- `src/components/Navigation.tsx` — top bar/nav refinement.
-- `src/components/LanguageSwitcher.tsx` — pill segmented control più fedele al design system.
-- `src/components/MenuSection.tsx` — menu cards, badge, tabs mobile.
-- `src/components/MobileStickyBar.tsx` — CTA mobile più coerenti.
+Dopo il login, il personale vede una dashboard semplice con 3 blocchi:
 
-## Verifica
+```text
+Staff Hub
+├── Prenotazioni
+│   ├── nuove richieste
+│   ├── confermate
+│   └── archiviate
+├── Piatti e ingredienti
+│   ├── menu corrente dal Google Sheet
+│   ├── ingredienti principali
+│   └── allergeni / note glutine
+└── Torte
+    ├── richieste nuove
+    ├── data ritiro
+    └── note cliente
+```
 
-Dopo l’implementazione eseguirò:
-- controllo TypeScript con `bunx tsc --noEmit`
-- controllo visivo mirato su mobile e desktop, soprattutto top bar, menu e CTA
-- verifica che le richieste precedenti restino rispettate: niente CTA in navbar, niente brand text nella top bar mobile, menu/specials unificati.
+## Login e sicurezza
+
+Per lo staff serve autenticazione vera, non password hardcoded e non localStorage.
+
+Implementazione proposta:
+
+- Login email/password, eventualmente Google login per lo staff.
+- Ruoli in tabella separata `user_roles`, non dentro profili o users.
+- Solo utenti con ruolo `admin` o `staff` possono accedere a `/staff`.
+- Le richieste di prenotazione sono scrivibili dal pubblico, ma leggibili solo dallo staff autenticato.
+
+Questo evita che le prenotazioni siano visibili dal sito pubblico.
+
+## Google Sheet: come usarlo bene
+
+Il sito già usa `GOOGLE_SHEET_ID` e la funzione `get-daily-menu` per leggere il menu.
+
+Per l’hub staff proporrei di non mischiare tutto nella funzione pubblica esistente. Meglio creare una funzione separata, ad esempio `get-staff-sheet-data`, che legge dallo stesso Sheet ID ma restituisce dati più operativi:
+
+- ingredienti completi
+- allergeni
+- note interne, se presenti
+- eventuali prodotti/torte, se aggiungiamo tab dedicati
+
+Possibile struttura del Google Sheet:
+
+```text
+web                -> menu pubblico già esistente
+ingredients        -> dati staff su ingredienti, allergeni, note interne
+cake_orders        -> opzionale, se vogliamo usare Google Sheet anche per torte
+```
+
+Per le prenotazioni consiglio invece il database interno, non Google Sheet, perché:
+
+- è più sicuro per dati personali
+- permette stati e filtri migliori
+- evita problemi di scrittura concorrente sul foglio
+- è più facile proteggere l’accesso allo staff
+
+Se però vuoi che anche le prenotazioni finiscano nello stesso Google Sheet, si può fare in una fase successiva con append automatico.
+
+## Torte: fase separata
+
+Per le ordinazioni torte farei dopo, perché serve decidere bene:
+
+- quali torte sono disponibili
+- anticipo minimo per ordinare
+- campi obbligatori: data ritiro, persone/porzioni, gusto, allergie, telefono
+- se è solo richiesta o ordine confermato
+- se serve acconto o no
+
+In prima versione dell’hub possiamo lasciare il blocco “Torte” come modulo/filtro pronto ma non attivo, oppure implementarlo subito solo come raccolta richieste.
+
+## Cosa implementerei adesso se approvi
+
+Versione prudente e concreta:
+
+1. Sistemare il form `/visit` per salvare davvero le richieste tavolo.
+2. Creare tabella protetta `reservation_requests` con policy corrette.
+3. Aggiungere login staff con pagina dedicata.
+4. Creare una prima pagina `/staff` minimale:
+   - lista richieste prenotazione
+   - dettagli richiesta
+   - cambio stato richiesta
+5. Lasciare “ingredienti” e “torte” come sezioni predisposte ma non ancora complete, oppure collegare subito ingredienti al Google Sheet se il formato attuale contiene già i dati necessari.
+
+## Domande da confermare prima dell’implementazione completa
+
+Non bloccherei la Fase 1, ma prima dell’hub completo servono queste decisioni:
+
+- Lo staff deve accedere con email/password, Google, o entrambi?
+- Chi sono gli utenti staff iniziali?
+- Le prenotazioni devono restare solo nel backend interno o vuoi anche copiarle nel Google Sheet?
+- Nel Google Sheet esistono già tab/colonne per ingredienti completi e torte, o vanno create?
+
+## Nota editoriale/UI
+
+L’hub staff non deve avere lo stesso tono emozionale del sito pubblico. Lo farei operativo, chiaro, con copy breve:
+
+- “Neue Anfragen”
+- “Heute / Morgen / Diese Woche”
+- “Kontakt”
+- “Notizen”
+- “Bestätigen”
+- “Archivieren”
+
+Niente testi marketing, niente frasi AI, niente decorazioni inutili.
