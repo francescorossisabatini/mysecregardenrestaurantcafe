@@ -8,6 +8,7 @@ import type { Session } from "@supabase/supabase-js";
 
 const STAFF_USERNAME_EMAIL: Record<string, string> = {
   staffprova: "staffprova@secretgardenrestaurant.at",
+  stafftest: "stafftest@secretgardenrestaurant.at",
 };
 
 const StaffLogin = () => {
