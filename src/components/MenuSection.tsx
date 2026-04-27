@@ -167,7 +167,7 @@ export const MenuSection = () => {
     if (!target) return;
 
     setActiveMenuTab(tab);
-    const offset = 128;
+    const offset = window.matchMedia("(min-width: 1024px)").matches ? 112 : 128;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
@@ -180,14 +180,57 @@ export const MenuSection = () => {
     const target = document.getElementById(`menu-${id}`);
     if (!target) return;
     setActiveFixedAnchor(id);
-    const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
+    const offset = window.matchMedia("(min-width: 1024px)").matches ? 112 : window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
   return (
-    <section id="menu" className="py-16 md:py-24 bg-section-soft">
+    <section id="menu" className="py-16 md:py-24 lg:py-28 bg-section-soft">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-6xl lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start lg:gap-10">
+          <aside className="hidden lg:block lg:sticky lg:top-28">
+            <nav className="rounded-2xl border border-border/75 bg-card/80 p-3 shadow-card backdrop-blur-md" aria-label={language === "de" ? "Menünavigation" : "Menu navigation"}>
+              <p className="px-3 pb-2 font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                {language === "de" ? "Speisekarte" : "Menu"}
+              </p>
+              <div className="space-y-1 border-b border-border/50 pb-3">
+                {[
+                  { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
+                  { id: "week" as const, label: language === "de" ? "Wochenmenü" : "This week" },
+                  { id: "fixed" as const, label: language === "de" ? "Klassiker" : "Classics" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => scrollToMenuBlock(tab.id)}
+                    className={`block w-full rounded-xl px-3 py-2 text-left font-work text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                      activeMenuTab === tab.id ? "bg-primary text-primary-foreground" : "text-foreground/80 hover:bg-muted hover:text-primary"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+              <div className="space-y-1 pt-3">
+                <p className="px-3 pb-1 font-work text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                  {language === "de" ? "Direkt zu" : "Jump to"}
+                </p>
+                {fixedMenuAnchors.map((anchor) => (
+                  <button
+                    key={anchor.id}
+                    type="button"
+                    onClick={() => scrollToFixedAnchor(anchor.id)}
+                    className={`block w-full rounded-xl px-3 py-2 text-left font-work text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                      activeFixedAnchor === anchor.id ? "bg-muted text-primary" : "text-muted-foreground hover:bg-muted hover:text-primary"
+                    }`}
+                  >
+                    {cleanDisplayText(anchor.label)}
+                  </button>
+                ))}
+              </div>
+            </nav>
+          </aside>
+          <div className="min-w-0 max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
           <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
             <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
@@ -216,12 +259,12 @@ export const MenuSection = () => {
           {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
           {SHOW_WEEKLY_MENU ? (
           <>
-          <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
-            <div className="text-center mb-8">
-              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
+          <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16 lg:scroll-mt-28">
+            <div className="text-center mb-8 lg:text-left">
+              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
                 {language === "de" 
                   ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
@@ -240,10 +283,10 @@ export const MenuSection = () => {
               </div>
             ) : !isClosed && todayMenu ? (
               <>
-              <div className="space-y-4">
+              <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:space-y-0">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -255,7 +298,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
@@ -265,7 +308,7 @@ export const MenuSection = () => {
 
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -277,7 +320,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
@@ -287,7 +330,7 @@ export const MenuSection = () => {
 
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
@@ -299,7 +342,7 @@ export const MenuSection = () => {
                       </div>
                        <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
+                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
@@ -398,14 +441,14 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu Anchor Label */}
-          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
-            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase">
+          <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8 lg:scroll-mt-28">
+            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase lg:text-left">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
+          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5 lg:p-6">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
@@ -418,6 +461,7 @@ export const MenuSection = () => {
                       <p className="text-xs text-muted-foreground text-center font-work mb-4">
                         {translatePeriod(menu.period, language)}
                       </p>
+                      <div className="lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-5">
                       {menu.days.map((day, index) => {
                         const dayDate = getDateForMenuDay(menu.period, index);
                         const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
@@ -432,7 +476,7 @@ export const MenuSection = () => {
 
                         
                         return (
-                          <div key={index} className="border-b border-border/30 pb-4 last:border-0">
+                          <div key={index} className="border-b border-border/30 pb-4 last:border-0 lg:rounded-2xl lg:border lg:border-border/60 lg:bg-background/45 lg:p-4 lg:last:border">
                             <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
                               {day.day[language]}
                             </h4>
@@ -466,6 +510,7 @@ export const MenuSection = () => {
                           </div>
                         );
                       })}
+                      </div>
                     </>
                   )}
                 </div>
@@ -485,19 +530,19 @@ export const MenuSection = () => {
           </div>
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
-          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
-            <div className="text-center mb-8">
-              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
+          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32 lg:scroll-mt-28">
+            <div className="text-center mb-8 lg:text-left">
+              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-3">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
               <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
-            <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
+            <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card lg:hidden">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
@@ -520,16 +565,16 @@ export const MenuSection = () => {
               </div>
             </div>
             
-            <div className="space-y-8">
+            <div className="space-y-10 lg:space-y-12">
               {klassikerMenu.categories.map((category) => (
-                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
-                  <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
+                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40 lg:scroll-mt-28">
+                  <h3 className="font-cormorant text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
                     {cleanDisplayText(category.name[language])}
                   </h3>
                   
                   {/* Regular items (non-drinks categories) */}
                   {category.items && (
-                    <div className="space-y-3">
+                    <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
                       {category.items.map((item) => (
                         <div 
                           key={item.id} 
@@ -595,7 +640,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
+                          <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5 lg:scroll-mt-28">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
@@ -609,7 +654,7 @@ export const MenuSection = () => {
                               {language === "de" ? "Getränke" : "Drinks"}
                             </span>
                           </div>
-                          <div className="grid gap-2 sm:grid-cols-2">
+                          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                             {subcategory.items.map((item: KlassikerItem) => {
                               const isSupermindCoffee = supermindCoffeeItemIds.has(item.id);
 
@@ -669,7 +714,7 @@ export const MenuSection = () => {
             </div>
             <AllergenLegend />
           </div>
-          
+          </div>
         </div>
       </div>
     </section>
