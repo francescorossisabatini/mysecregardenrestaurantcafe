@@ -130,13 +130,13 @@ export const Navigation = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-[70] lg:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-[70] lg:hidden transition-all duration-base ease-out ${
           isMobileMenuOpen ? "visible" : "invisible"
         }`}
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-foreground/50 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-foreground/50 transition-opacity duration-base ease-out ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setIsMobileMenuOpen(false)}

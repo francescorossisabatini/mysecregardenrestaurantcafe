@@ -65,9 +65,9 @@ const Index = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen animate-page-enter">
       <SEOHead path="/" />
-      <div className={`transition-opacity duration-[2000ms] ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+      <div className={`transition-opacity duration-base ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
       </div>
       

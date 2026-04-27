@@ -110,7 +110,7 @@ export const Hero = () => {
     <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
-        className={`absolute inset-0 transition-opacity duration-500 ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`absolute inset-0 animate-hero-background transition-opacity duration-slow ease-out ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         style={{
           backgroundImage: `url(${staticHeroImage.src})`,
           backgroundSize: "cover",
@@ -143,11 +143,11 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className="text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl">
+          <p className={`text-xs sm:text-base md:text-lg font-lora text-background drop-shadow-xl transition-all duration-slow ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
-          <div className="flex items-center justify-center gap-2 drop-shadow-lg">
+          <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-base ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
             <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/25 bg-primary/95 px-3.5 py-1.5 text-xs font-work font-semibold text-primary-foreground shadow-elevated sm:text-sm">
               <Star className="w-3.5 h-3.5 fill-current text-brand-star" aria-hidden="true" />
               {SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}
@@ -155,14 +155,14 @@ export const Hero = () => {
           </div>
 
           {/* Open/Closed chip - soft style */}
-          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-[1500ms] ease-out ${
+          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-base ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             {/* Case 1: Open now */}
             {effectivelyOpen && (
               <>
                 <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-pulse" />
+                  <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
@@ -220,8 +220,8 @@ export const Hero = () => {
           </div>
 
           {/* CTA Buttons: Menu (primary), Specials (secondary) */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
-            showButtons ? "opacity-100" : "opacity-0"
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
+            showButtons ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}>
             {/* Primary: View Menu */}
             <Button
@@ -250,7 +250,7 @@ export const Hero = () => {
           </div>
 
           {/* Carousel dots */}
-          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[1500ms] ease-out pointer-events-auto ${
+          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-base ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {carouselImages.map((_, index) => (
@@ -282,7 +282,7 @@ export const Hero = () => {
           <span className="text-xs font-work tracking-wide uppercase">
             {language === "de" ? "Weiter" : "More below"}
           </span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
+          <ChevronDown className="w-5 h-5" />
         </div>
       </div>
     </section>
