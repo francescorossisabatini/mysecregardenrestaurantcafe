@@ -18,12 +18,22 @@ export const SITE = {
 
   // Practical visit notes
   courtyardInstruction: {
-    de: "Durch den Bogen bei Mariahilferstraße 45 in den Raimundhof gehen.",
-    en: "Enter through the arch at Mariahilferstraße 45 into Raimundhof.",
+    de: "My Secret Garden liegt im Innenhof des Raimundhofs. Vom Gehsteig aus durch den Torbogen gehen, dann links. Der Garten öffnet sich hinter der Einfahrt.",
+    en: "My Secret Garden is in the courtyard of Raimundhof. From the street, walk through the archway and turn left. The garden opens up behind the entrance.",
   },
   counterServiceNote: {
-    de: "Am Tresen bestellen, dann im ruhigen Gartenhof Platz nehmen.",
-    en: "Order at the counter, then choose a seat in the quiet garden courtyard.",
+    de: "Bei uns bestellst du direkt am Tresen. Du suchst dir deinen Platz aus, wir bringen dir das Essen.",
+    en: "Order directly at the counter. Pick your seat, and we’ll bring your food to you.",
+  },
+
+  transportNote: {
+    de: "U-Bahn: U3 Neubaugasse, 2 Gehminuten.",
+    en: "By metro: U3 Neubaugasse, 2 minutes on foot.",
+  },
+
+  parkingNote: {
+    de: "Wipark Windmühlgasse, Windmühlgasse 22–24 — die erste Stunde Parken schenken wir dir.",
+    en: "Wipark Windmühlgasse, Windmühlgasse 22–24 — the first hour of parking is on us.",
   },
 
   // Google Maps share link (direct link to restaurant)

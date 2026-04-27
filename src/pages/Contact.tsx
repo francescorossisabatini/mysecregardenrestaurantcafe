@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, MapPin, Phone, Users } from "lucide-react";
+import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -42,8 +42,30 @@ const ContactPage = () => {
   }, []);
 
   const enterSteps = language === "de"
-    ? ["Durch den Bogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof dem ruhigen Innenhof folgen.", "Am Tresen bestellen oder kurz nach deinem Tisch fragen."]
-    : ["Enter through the arch at Mariahilferstraße 45.", "Follow Raimundhof into the quiet courtyard.", "Order at the counter or ask for your table."];
+    ? ["Durch den Torbogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof links halten, bis sich der Garten öffnet.", "Direkt am Tresen bestellen oder kurz nach deinem Tisch fragen."]
+    : ["Walk through the archway at Mariahilferstraße 45.", "Keep left inside Raimundhof until the garden opens up.", "Order at the counter or ask for your table."];
+
+  const visitJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: "My Secret Garden",
+    url: `https://secretgardenrestaurant.at${location.pathname}`,
+    telephone: SITE.phoneTel,
+    servesCuisine: ["Vegetarian", "Vegan", "World Cuisine"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Mariahilferstraße 45, Im Raimundhof",
+      postalCode: "1060",
+      addressLocality: "Wien",
+      addressCountry: "AT",
+    },
+    openingHoursSpecification: [{
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "11:00",
+      closes: "19:00",
+    }],
+  };
 
   const updateReservationField = (field: keyof ReservationForm, value: string) => {
     setReservationForm((current) => ({ ...current, [field]: value }));
@@ -80,11 +102,12 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={language === "de" ? "Besuche uns" : "Visit Us"}
+        title={language === "de" ? "Öffnungszeiten & Anfahrt" : "Hours & Directions"}
         description={language === "de"
-          ? "So findest du My Secret Garden im Raimundhof: Eingang, Öffnungszeiten, Barrierefreiheit, Parken und Tischanfrage."
-          : "How to find My Secret Garden in Raimundhof: entrance, opening hours, accessibility, parking and table requests."}
+          ? "Vegetarisches Café im Innenhof, Mariahilferstraße 45, 1060 Wien. Mo–Sa 11–19 Uhr. U3 Neubaugasse, 2 Minuten zu Fuß."
+          : "Vegetarian café in a hidden courtyard, Mariahilferstraße 45, Vienna. Open Mon–Sat 11am–7pm. 2 min from U3 Neubaugasse."}
         path={location.pathname}
+        jsonLd={visitJsonLd}
       />
       <Navigation />
 
@@ -93,12 +116,12 @@ const ContactPage = () => {
           <div className="mx-auto max-w-5xl">
             <header className="mb-10 text-center md:mb-14">
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
-                {language === "de" ? "Besuche uns" : "Visit Us"}
+                {language === "de" ? "Besuch uns" : "Visit us"}
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
                 {language === "de"
-                  ? "My Secret Garden liegt im Raimundhof. Der Eingang ist leicht zu übersehen. Hier findest du den Weg, die Zeiten und die wichtigsten Infos vor deinem Besuch."
-                  : "My Secret Garden is inside Raimundhof. The entrance is easy to miss. Here is the way in, the hours and the practical details before you visit."}
+                  ? "My Secret Garden liegt im Innenhof des Raimundhofs — Mariahilferstraße 45, 1060 Wien. Hier findest du den Weg, die Öffnungszeiten und die wichtigsten Infos vor deinem Besuch."
+                  : "My Secret Garden is in the courtyard of Raimundhof — Mariahilferstraße 45, 1060 Vienna. Here is the way in, the opening hours and the practical details before you visit."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
@@ -177,13 +200,13 @@ const ContactPage = () => {
               </div>
             </section>
 
-            <section className="mb-14 grid gap-6 md:grid-cols-3">
+            <section className="mb-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <Clock className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffnungszeiten" : "Opening hours"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
                   {language === "de" ? "Mo–Sa: 11:00–19:00" : "Mon–Sat: 11:00–19:00"}<br />
-                  {language === "de" ? "So + Feiertage: geschlossen" : "Sun + holidays: closed"}
+                  {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
@@ -191,21 +214,23 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Unser Garten hat Stufen, aber keine Hürden. Bitte ruf uns kurz an, wir helfen dir gerne beim Zugang."
-                    : "Our garden has steps, but no barriers. Give us a call and we'll make sure you can get in."}
+                    ? "Unser Garten hat Stufen — aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
+                    : "Our garden has steps — but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step-free access."}
+                </p>
+              </div>
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
+                <HandPlatter className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "So funktioniert es" : "How it works"}</h2>
+                <p className="font-work leading-relaxed text-muted-foreground">
+                  {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <Car className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Parken" : "Parking"}</h2>
                 <p className="font-work leading-relaxed text-muted-foreground">
-                  Wipark Windmühlgasse<br />
-                  Windmühlgasse 22–24<br />
-                  {language === "de" ? "Eine Stunde kostenlos für unsere Gäste.*" : "One hour free for our guests.*"}
-                  <br />
-                  <span className="text-sm">
-                    {language === "de" ? "*Gültig ab einer Konsumation von mindestens 27 €." : "*Valid with a minimum spend of €27."}
-                  </span>
+                  {SITE.transportNote[language]}<br />
+                  {SITE.parkingNote[language]}
                 </p>
               </div>
             </section>
@@ -218,8 +243,8 @@ const ContactPage = () => {
                 </h2>
                 <p className="mb-6 font-work leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Walk-ins sind willkommen. Wenn du sicher planen möchtest, schick uns eine Anfrage oder ruf direkt an."
-                    : "Walk-ins are welcome. If you want to plan ahead, send a request or call us directly."}
+                    ? "Du möchtest sicher gehen, dass ein Tisch auf dich wartet? Ruf uns an — das geht am schnellsten. Oder schick uns eine kurze Anfrage."
+                    : "Want to make sure there’s a table waiting for you? Give us a call — it’s the fastest way. Or send us a short request."}
                 </p>
                 <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
                   <a href={`tel:${SITE.phoneTel}`}><Phone className="mr-2 h-4 w-4" />{SITE.phoneDisplay}</a>

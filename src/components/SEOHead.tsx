@@ -6,6 +6,7 @@ interface SEOHeadProps {
   path?: string;
   image?: string;
   noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const BASE_URL = "https://secretgardenrestaurant.at";
@@ -17,6 +18,7 @@ export const SEOHead = ({
   path = "/",
   image = DEFAULT_IMAGE,
   noindex = false,
+  jsonLd,
 }: SEOHeadProps) => {
   const fullTitle = title
     ? `${title} | My Secret Garden Wien`
@@ -41,6 +43,11 @@ export const SEOHead = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      {jsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
+      )}
     </Helmet>
   );
 };
