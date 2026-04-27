@@ -35,6 +35,7 @@ type KuchenplanData = {
 };
 
 type DishCategory = "soup" | "green" | "blue" | "holiday" | "seasonal";
+type DashboardLanguage = "en" | "de";
 
 const emptyKuchenplanData: KuchenplanData = {
   sheetName: "Küchenplan",
@@ -45,34 +46,113 @@ const emptyKuchenplanData: KuchenplanData = {
 };
 
 const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const dayLabels: Record<string, string> = {
-  Monday: "Monday",
-  Tuesday: "Tuesday",
-  Wednesday: "Wednesday",
-  Thursday: "Thursday",
-  Friday: "Friday",
-  Saturday: "Saturday",
+const dayLabels: Record<DashboardLanguage, Record<string, string>> = {
+  en: {
+    Monday: "Monday",
+    Tuesday: "Tuesday",
+    Wednesday: "Wednesday",
+    Thursday: "Thursday",
+    Friday: "Friday",
+    Saturday: "Saturday",
+  },
+  de: {
+    Monday: "Montag",
+    Tuesday: "Dienstag",
+    Wednesday: "Mittwoch",
+    Thursday: "Donnerstag",
+    Friday: "Freitag",
+    Saturday: "Samstag",
+  },
 };
 
-const categoryLabels: Record<DishCategory, string> = {
-  soup: "Soup",
-  green: "Green",
-  blue: "Blue",
-  holiday: "Feiertag",
-  seasonal: "Seasonal",
+const categoryLabels: Record<DashboardLanguage, Record<DishCategory, string>> = {
+  en: {
+    soup: "Soup",
+    green: "Green",
+    blue: "Blue",
+    holiday: "Holiday",
+    seasonal: "Seasonal",
+  },
+  de: {
+    soup: "Suppe",
+    green: "Grün",
+    blue: "Blau",
+    holiday: "Feiertag",
+    seasonal: "Saisonal",
+  },
 };
 
-const badgeLabels: Record<string, string> = {
-  spicy: "🌶 Spicy",
-  "garlic-high": "🧄🧄🧄 Much Garlic",
-  "garlic-med": "🧄🧄 Garlic",
-  "garlic-low": "🧄 Light Garlic",
-  "onion-high": "🧅🧅🧅 Much Onion",
-  "onion-med": "🧅🧅 Onion",
-  "onion-low": "🧅 Light Onion",
-  nuts: "🥜 Nuts",
-  dairy: "🧀 Dairy",
+const badgeLabels: Record<DashboardLanguage, Record<string, string>> = {
+  en: {
+    spicy: "🌶 Spicy",
+    "garlic-high": "🧄🧄🧄 Much Garlic",
+    "garlic-med": "🧄🧄 Garlic",
+    "garlic-low": "🧄 Light Garlic",
+    "onion-high": "🧅🧅🧅 Much Onion",
+    "onion-med": "🧅🧅 Onion",
+    "onion-low": "🧅 Light Onion",
+    nuts: "🥜 Nuts",
+    dairy: "🧀 Dairy",
+  },
+  de: {
+    spicy: "🌶 Scharf",
+    "garlic-high": "🧄🧄🧄 Viel Knoblauch",
+    "garlic-med": "🧄🧄 Knoblauch",
+    "garlic-low": "🧄 Wenig Knoblauch",
+    "onion-high": "🧅🧅🧅 Viel Zwiebel",
+    "onion-med": "🧅🧅 Zwiebel",
+    "onion-low": "🧅 Wenig Zwiebel",
+    nuts: "🥜 Nüsse",
+    dairy: "🧀 Milchprodukte",
+  },
 };
+
+const text = {
+  en: {
+    subtitle: "Detailed Küchenplan from Google Sheets, ordered by day.",
+    syncLoading: "Sync...",
+    sync: "Sync Google Sheet",
+    planTab: "Kitchen plan",
+    archiveTab: "Archive",
+    thisWeek: "This Week",
+    items: "items",
+    dishes: "dishes",
+    loading: "Loading kitchen plan...",
+    emptyCurrent: "No current kitchen plan items found.",
+    holiday: "Holiday",
+    archiveTitle: "Dish Archive",
+    searchPlaceholder: "Search header, German title or ID",
+    all: "All",
+    emptyArchive: "No archive items found.",
+    ingredients: "Ingredients",
+    prep: "Prep",
+    chef: "Chef",
+    fallbackWeek: "This Week",
+    loadError: "Kitchen plan could not be loaded from Google Sheets.",
+  },
+  de: {
+    subtitle: "Detaillierter Küchenplan aus Google Sheets, nach Tagen sortiert.",
+    syncLoading: "Sync...",
+    sync: "Google Sheet synchronisieren",
+    planTab: "Küchenplan",
+    archiveTab: "Archiv",
+    thisWeek: "Diese Woche",
+    items: "Einträge",
+    dishes: "Gerichte",
+    loading: "Küchenplan wird geladen...",
+    emptyCurrent: "Keine aktuellen Küchenplan-Einträge gefunden.",
+    holiday: "Feiertag",
+    archiveTitle: "Gerichte-Archiv",
+    searchPlaceholder: "Header, deutschen Titel oder ID suchen",
+    all: "Alle",
+    emptyArchive: "Keine Archiv-Einträge gefunden.",
+    ingredients: "Zutaten",
+    prep: "Vorbereitung",
+    chef: "Koch",
+    fallbackWeek: "Diese Woche",
+    loadError: "Küchenplan konnte nicht aus Google Sheets geladen werden.",
+  },
+} satisfies Record<DashboardLanguage, Record<string, string>>;
 
 const dayKey = (value?: string) => cleanDisplayText(value || "");
 
