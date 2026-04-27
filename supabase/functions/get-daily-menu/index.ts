@@ -88,7 +88,7 @@ function checkRateLimit(clientIP: string): boolean {
 interface DishMeta {
   descriptionShort?: string;
   ingredientsMain?: string[];
-  allergens?: number[];
+  allergens?: string[];
   gfDisclaimer?: boolean;
   ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
 }
@@ -184,11 +184,24 @@ function parseListCell(value: unknown): string[] {
   return text.split(/[;|]/).map((item) => sanitizeText(item, 120)).filter(Boolean).slice(0, 8);
 }
 
-function parseAllergenCell(value: unknown): number[] {
+const NUMERIC_ALLERGEN_TO_LETTER: Record<string, string> = {
+  "1": "A", "2": "B", "3": "C", "4": "D", "5": "E", "6": "F", "7": "G",
+  "8": "H", "9": "L", "10": "M", "11": "N", "12": "O", "13": "P", "14": "R",
+};
+
+const AUSTRIAN_ALLERGEN_CODES = new Set(["A", "B", "C", "D", "E", "F", "G", "H", "L", "M", "N", "O", "P", "R"]);
+
+function parseAllergenCell(value: unknown): string[] {
   const text = sanitizeText(value, 200);
   if (!text) return [];
-  const matches = text.match(/\d+/g) ?? [];
-  return [...new Set(matches.map(Number).filter((code) => code >= 1 && code <= 14))].sort((a, b) => a - b);
+  const letterMatches = text.toUpperCase().match(/\b[A-HLMNOPR]\b/g) ?? [];
+  const numberMatches = text.match(/\d+/g) ?? [];
+  return [
+    ...new Set([
+      ...letterMatches.filter((code) => AUSTRIAN_ALLERGEN_CODES.has(code)),
+      ...numberMatches.map((code) => NUMERIC_ALLERGEN_TO_LETTER[code]).filter(Boolean),
+    ]),
+  ].sort();
 }
 
 function parseBooleanCell(value: unknown): boolean {
