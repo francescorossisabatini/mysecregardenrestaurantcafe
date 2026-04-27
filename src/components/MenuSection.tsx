@@ -646,14 +646,14 @@ export const MenuSection = () => {
                           <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5 lg:scroll-mt-28">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
-                              <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
+                              <h4 className="font-cormorant text-2xl font-semibold leading-tight text-primary md:text-3xl">
                                 {cleanDisplayText(subcategory.name[language])}
                               </h4>
                               {subcategory.sizeNote && (
                                 <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
                               )}
                             </div>
-                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.1em] text-accent">
                               {language === "de" ? "Getränke" : "Drinks"}
                             </span>
                           </div>
@@ -668,7 +668,7 @@ export const MenuSection = () => {
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
-                                    <span className="font-work text-sm font-semibold text-foreground">
+                                    <span className="font-cormorant text-xl font-semibold leading-snug text-foreground">
                                       {item.name[language]}
                                     </span>
                                     {item.sizeNote && (
@@ -681,7 +681,7 @@ export const MenuSection = () => {
                                         href="https://supermind.at/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:border-primary/35 hover:text-primary"
+                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-primary/80 transition-colors hover:border-primary/35 hover:text-primary"
                                         aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind coffee website"}
                                       >
                                         <img src={supermindLogo} alt="" className="h-4 w-auto object-contain" loading="lazy" />
@@ -689,7 +689,7 @@ export const MenuSection = () => {
                                       </a>
                                     )}
                                   </div>
-                                  <span className="text-accent font-semibold text-sm font-work shrink-0">
+                                  <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">
                                     {item.price}
                                   </span>
                                 </div>
