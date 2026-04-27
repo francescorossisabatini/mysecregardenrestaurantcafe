@@ -501,14 +501,14 @@ const StaffKitchen = () => {
   return (
     <div className="min-h-screen bg-background font-work text-foreground">
       <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
-      <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
-        <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
+      <main className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-5 md:px-8 md:py-7">
+        <header className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card lg:grid-cols-[1fr_auto] lg:items-center lg:p-5">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
+            <h1 className="mt-1 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{weekRange(currentRecords, language)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
+          <div className="flex flex-wrap items-center gap-2 justify-self-start lg:justify-self-end">
             <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
               {(["en", "de"] as const).map((option) => (
                 <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
@@ -523,13 +523,38 @@ const StaffKitchen = () => {
           </div>
         </header>
 
+        <section className="grid gap-3 md:grid-cols-3" aria-label="Staff dashboard summary">
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.openRequests}</p>
+              <Users className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{openReservationCount}</p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.nextRequest}</p>
+              <CalendarDays className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-3xl font-semibold text-primary">{nextReservation ? nextReservation.reservation_time.slice(0, 5) : "—"}</p>
+            <p className="text-sm text-muted-foreground">{nextReservation ? cleanDisplayText(nextReservation.full_name) : labels.noNextRequest}</p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.archiveItems}</p>
+              <Archive className="h-4 w-4 text-accent" aria-hidden="true" />
+            </div>
+            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{archiveRecords.length}</p>
+          </div>
+        </section>
+
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
         <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
-            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
+          <TabsList className="sticky top-2 z-20 mx-auto grid h-auto w-full max-w-3xl grid-cols-3 rounded-full border border-border bg-card/95 p-1 shadow-card backdrop-blur-md">
+            <TabsTrigger value="plan" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
