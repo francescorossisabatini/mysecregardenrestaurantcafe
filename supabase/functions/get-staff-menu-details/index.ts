@@ -214,6 +214,98 @@ function rowsToWeeklyDayRecords(rows: string[][], sourceSheet: string): StaffMen
   return records;
 }
 
+function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[][]): StaffMenuRecord[] {
+  const input = normalizeRows(inputRows);
+  const menu = normalizeRows(menuRows);
+  if (!input.length || !menu.length) return [];
+
+  const menuHeaderIndex = menu.findIndex((row) => row.some((cell) => /\bID\b/i.test(cell)) && row.some((cell) => /header/i.test(cell)));
+  if (menuHeaderIndex < 0) return [];
+
+  const dishes = new Map<string, MenuDish>();
+  menu.slice(menuHeaderIndex + 1).forEach((row) => {
+    const id = clean(row[2], 160).toLowerCase();
+    if (!id) return;
+    const ingredientsRaw = clean(row[7], 3000);
+    const prepRaw = clean(row[8], 3000);
+    const dish: MenuDish = {
+      id,
+      category: normalizeCategory(row[0]),
+      cook: clean(row[1], 80),
+      headerEn: clean(row[3], 240),
+      textEn: clean(row[4], 800),
+      headerDe: clean(row[5], 240),
+      textDe: clean(row[6], 800),
+      ingredients: splitLines(ingredientsRaw),
+      prep: splitLines(prepRaw).filter((line) => line.toUpperCase() !== "PREP:"),
+      badges: detectBadges(ingredientsRaw, prepRaw, row[4], row[6]),
+    };
+    dishes.set(id, dish);
+  });
+
+  const mondayCell = input[0]?.[1];
+  const mondayDate = mondayCell ? new Date(mondayCell) : null;
+  const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
+  const records: StaffMenuRecord[] = [];
+
+  input.slice(1).forEach((row, rowIndex) => {
+    const dayKey = dayKeyFromLabel(row[1] || row[0] || "");
+    if (!(dayKey in dayOffsets)) return;
+    const day = dayDisplayName(dayKey);
+    const date = mondayDate && !Number.isNaN(mondayDate.getTime()) ? addDaysIso(mondayDate, dayOffsets[dayKey]) : "";
+    const ids = [row[2], row[3], row[4]].map((value) => clean(value, 160).toLowerCase());
+    const isHoliday = ids.some((id) => id === "feiertag");
+
+    if (isHoliday) {
+      records.push({
+        id: makeId("input data", rowIndex, `${day}_feiertag`, [{ label: "day", value: day }, { label: "is_holiday", value: "true" }]),
+        title: "Feiertag",
+        category: "holiday",
+        menuDay: day,
+        description: date,
+        ingredients: [],
+        allergens: [],
+        notes: [],
+        sourceSheet: "input data",
+        fields: [{ label: "day", value: day }, { label: "date", value: date }, { label: "is_holiday", value: "true" }],
+      });
+      return;
+    }
+
+    ids.forEach((dishId, dishIndex) => {
+      const dish = dishes.get(dishId);
+      if (!dish) return;
+      const fields = [
+        { label: "id", value: dish.id },
+        { label: "day", value: day },
+        { label: "date", value: date },
+        { label: "category", value: dish.category },
+        { label: "cook", value: dish.cook },
+        { label: "header_en", value: dish.headerEn },
+        { label: "header_de", value: dish.headerDe },
+        { label: "text_en", value: dish.textEn },
+        { label: "text_de", value: dish.textDe },
+        { label: "badges", value: dish.badges.join(", ") },
+        { label: "prep", value: dish.prep.join("\n") },
+      ].filter((field) => field.value);
+      records.push({
+        id: makeId("menudata", rowIndex * 10 + dishIndex, `${day}_${dish.category}_${dish.id}`, fields),
+        title: dish.headerEn || dish.headerDe || dish.id,
+        category: dish.category,
+        menuDay: day,
+        description: dish.textEn || dish.textDe || date,
+        ingredients: dish.ingredients,
+        allergens: dish.badges,
+        notes: dish.prep,
+        sourceSheet: "menudata",
+        fields,
+      });
+    });
+  });
+
+  return records;
+}
+
 function rowsToDayColumnRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
   const usableRows = normalizeRows(rows);
   const dayHeaderIndex = usableRows.findIndex((row) => row.filter(isDayLabel).length >= 2);
