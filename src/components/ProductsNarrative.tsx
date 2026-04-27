@@ -32,8 +32,8 @@ export const ProductsNarrative = () => {
           <div className="space-y-8 lg:space-y-10 order-2 lg:order-1">
             <p className="font-lora text-lg lg:text-xl leading-relaxed text-foreground/90">
               {language === "de"
-                ? "Alle unsere Gerichte werden täglich frisch zubereitet. Wir verwenden biologische und natürliche Zutaten, die Ihrem Körper und Geist Kraft geben."
-                : "All our dishes are freshly prepared daily. We use organic and natural ingredients that give your body and mind strength."}
+                ? "Wir bereiten die meisten Dinge selbst vor: Suppen, Dressings, Kuchen, Gewürzmischungen. Nicht alles ist kompliziert. Es muss einfach gut schmecken."
+                : "We prepare most things ourselves: soups, dressings, cakes, spice mixes. Not everything is complicated. It just has to taste good."}
             </p>
 
             {/* Key Points - Responsive grid on desktop */}
@@ -52,8 +52,8 @@ export const ProductsNarrative = () => {
                   en: "Natural spices"
                 },
                 {
-                  de: "Glutenfreie Optionen",
-                  en: "Gluten-free options"
+                  de: "Ohne Gluten-Zutaten möglich",
+                  en: "No gluten ingredients available"
                 }
               ].map((point, index) => (
                 <div key={index} className="flex items-center gap-3 lg:gap-4 p-3 lg:p-4 rounded-xl bg-background/50 border border-border/30">
