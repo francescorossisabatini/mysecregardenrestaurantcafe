@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
+import { splitDishText } from "@/lib/splitDishText";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -34,34 +35,6 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       {labels.isBio && <span className="rounded-full bg-dailyAlt px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-bio">bio</span>}
     </div>
   );
-};
-
-const splitDishText = (text: string, language: "de" | "en", dishKey?: string) => {
-  const trimmed = text.trim();
-  const firstPeriod = trimmed.indexOf(".");
-
-  if (dishKey === "soup" && firstPeriod > 8) {
-    return {
-      name: trimmed.slice(0, firstPeriod).trim(),
-      description: trimmed.slice(firstPeriod + 1).trim(),
-    };
-  }
-
-  const separators = [":", ";", language === "de" ? " mit " : " with ", language === "de" ? " auf " : " on "];
-  const match = separators
-    .map((separator) => ({ separator, index: trimmed.toLowerCase().indexOf(separator) }))
-    .filter(({ index }) => index > 8)
-    .sort((a, b) => a.index - b.index)[0];
-
-  if (!match) return { name: trimmed, description: "" };
-
-  const name = trimmed.slice(0, match.index).trim();
-  const rawDescription = trimmed.slice(match.index + match.separator.length).trim();
-  const description = match.separator.trim().length > 1
-    ? `${match.separator.trim()} ${rawDescription}`
-    : rawDescription;
-
-  return { name, description };
 };
 
 export const HomeMenuPreview = () => {
