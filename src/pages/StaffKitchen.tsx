@@ -703,11 +703,14 @@ const StaffKitchen = () => {
                 <div>
                   <div className="flex items-center gap-2 text-primary">
                     <Users className="h-5 w-5" aria-hidden="true" />
-                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTitle}</h2>
+                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTab}</h2>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
-                <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                  <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                </div>
               </div>
 
               <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
@@ -725,33 +728,56 @@ const StaffKitchen = () => {
                 <div className="h-2 overflow-hidden rounded-full bg-muted">
                   <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
                 </div>
-                <p className="text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
+                <p className="text-xs text-muted-foreground">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {reservationStatuses.map((status) => (
-                  <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
-                    {reservationFilterLabel(status, labels)}
-                  </Button>
-                ))}
-              </div>
+              <div className="grid gap-5 xl:grid-cols-2">
+                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
+                    <Badge variant="outline" className="rounded-full">{filteredReservations.length}</Badge>
+                  </div>
 
-              {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
-              {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
-              {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {reservationStatuses.map((status) => (
+                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
+                        {reservationFilterLabel(status, labels)}
+                      </Button>
+                    ))}
+                  </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
-                {filteredReservations.map((reservation) => (
-                  <ReservationCard
-                    key={reservation.id}
-                    reservation={reservation}
-                    language={language}
-                    labels={labels}
-                    readOnly={selectedDateIsPast}
-                    isUpdating={updatingReservationIds.includes(reservation.id)}
-                    onUpdate={updateReservation}
-                  />
-                ))}
+                  {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
+                  {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
+                  {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+
+                  <div className="grid gap-4">
+                    {filteredReservations.map((reservation) => (
+                      <ReservationCard key={reservation.id} reservation={reservation} language={language} labels={labels} readOnly={selectedDateIsPast} isUpdating={updatingReservationIds.includes(reservation.id)} onUpdate={updateReservation} />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
+                    <Badge variant="outline" className="rounded-full">{filteredCakeOrders.length}</Badge>
+                  </div>
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {cakeOrderStatuses.map((status) => (
+                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-full">
+                        {cakeOrderFilterLabel(status, labels)}
+                      </Button>
+                    ))}
+                  </div>
+                  {cakeOrderError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{cakeOrderError}</p> : null}
+                  {isCakeOrdersLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.cakeOrderLoading}</p> : null}
+                  {!isCakeOrdersLoading && !filteredCakeOrders.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyCakeOrders}</p> : null}
+                  <div className="grid gap-4">
+                    {filteredCakeOrders.map((order) => (
+                      <CakeOrderCard key={order.id} order={order} language={language} labels={labels} readOnly={selectedDateIsPast} isUpdating={updatingCakeOrderIds.includes(order.id)} onUpdate={updateCakeOrder} />
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           </TabsContent>
