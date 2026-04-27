@@ -25,8 +25,8 @@ export const Reviews = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="reviews" className="py-16 md:py-24 bg-muted/20">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <section id="reviews" className="py-16 md:py-24 lg:py-28 bg-muted/20">
+      <div className="container mx-auto px-4 max-w-4xl lg:max-w-6xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-cormorant font-semibold text-foreground mb-4">
             {language === "de" ? "Stimmen aus dem Garten" : "Voices from the Garden"}
@@ -42,9 +42,9 @@ export const Reviews = () => {
         </div>
 
         {/* Mobile: vertical, Desktop: horizontal */}
-        <div className="flex flex-col md:flex-row md:gap-8 gap-12">
+        <div className="flex flex-col md:flex-row md:gap-8 lg:gap-10 gap-12">
           {reviews.map((review, index) => (
-            <div key={index} className="flex-1 text-center md:text-left">
+            <div key={index} className="flex-1 text-center md:text-left lg:rounded-lg lg:border lg:border-border/70 lg:bg-card/55 lg:p-7 lg:shadow-card">
               <div className="flex gap-0.5 mb-4 justify-center md:justify-start text-brand-star">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />
