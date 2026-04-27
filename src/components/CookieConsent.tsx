@@ -67,7 +67,7 @@ export const CookieConsent = () => {
       style={{ paddingBottom: mobileBottomOffset }}
     >
       <div className="container mx-auto max-w-xl md:max-w-2xl">
-        <div className="bg-background border border-border rounded-lg shadow-xl p-3 md:p-6">
+        <div className="border rounded-lg p-3 shadow-design-elevated surface-card md:p-6">
           <div className="flex items-start gap-2.5 md:gap-4">
             <div className="flex-1 space-y-2 md:space-y-3 min-w-0">
               <p className="font-lora text-xs md:text-base text-foreground/80 leading-snug md:leading-relaxed">

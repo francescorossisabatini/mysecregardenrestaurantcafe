@@ -153,7 +153,7 @@ export const MenuSection = () => {
   };
 
   return (
-    <section id="menu" className="py-16 md:py-24 bg-background">
+    <section id="menu" className="py-16 md:py-24 bg-section-soft">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
@@ -211,7 +211,7 @@ export const MenuSection = () => {
               <div className="space-y-4">
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
@@ -233,7 +233,7 @@ export const MenuSection = () => {
 
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
@@ -255,7 +255,7 @@ export const MenuSection = () => {
 
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                  <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
                       <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
@@ -275,7 +275,7 @@ export const MenuSection = () => {
                   </div>
                 )}
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-3 text-left shadow-card">
+              <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
                   {language === "de"
@@ -285,7 +285,7 @@ export const MenuSection = () => {
               </div>
               </>
             ) : (
-              <div className="space-y-6 rounded-2xl border border-border/75 bg-card p-8 text-center shadow-card">
+              <div className="space-y-6 rounded-2xl border p-8 text-center surface-card">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
@@ -373,7 +373,7 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-5 shadow-card md:px-5">
+          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">

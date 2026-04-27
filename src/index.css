@@ -41,7 +41,7 @@ Background: Warm cream #F5F0E8
     --background: var(--cream-100);
     --foreground: var(--navy-500);
 
-    --card: var(--cream-50);
+    --card: 39 58% 97%;
     --card-foreground: var(--navy-500);
 
     --popover: var(--cream-50);
@@ -54,8 +54,8 @@ Background: Warm cream #F5F0E8
     --secondary: var(--navy-300);
     --secondary-foreground: 0 0% 100%;
 
-    --muted: var(--cream-200);
-    --muted-foreground: var(--navy-200);
+    --muted: 39 36% 91%;
+    --muted-foreground: var(--navy-400);
 
     /* Accent: Botanical green for primary actions */
     --accent: var(--verde-300);
@@ -80,8 +80,8 @@ Background: Warm cream #F5F0E8
     --destructive: 0 84% 45%; /* Darker for better contrast */
     --destructive-foreground: 0 0% 100%;
 
-    --border: var(--cream-300);
-    --input: var(--cream-300);
+    --border: 39 24% 78%;
+    --input: 39 24% 78%;
     --ring: var(--navy-300);
     
     /* Focus ring - visible and accessible */
@@ -92,7 +92,7 @@ Background: Warm cream #F5F0E8
     /* Custom design tokens - botanical theme */
     --gradient-green: linear-gradient(135deg, hsl(var(--verde-300)) 0%, hsl(var(--verde-200)) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(var(--navy-500)) 0%, hsl(var(--navy-300)) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--cream-50)) 0%, hsl(var(--cream-100)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--cream-50)) 0%, hsl(var(--cream-100)) 58%, hsl(var(--cream-200)) 100%);
     --shadow-soft: 0 6px 22px -14px hsl(var(--navy-500) / 0.22);
     --shadow-elevated: 0 14px 42px -22px hsl(var(--navy-500) / 0.32);
     --shadow-card: 0 8px 24px -20px hsl(var(--navy-500) / 0.25);
@@ -228,7 +228,21 @@ Background: Warm cream #F5F0E8
 /* Improved contrast for muted/micro-copy text */
 @layer utilities {
   .bg-nav-surface {
-    background: hsl(var(--background) / 0.95);
+    background: hsl(var(--card) / 0.94);
+  }
+
+  .bg-section-soft {
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.42) 100%);
+  }
+
+  .bg-section-accent {
+    background: linear-gradient(180deg, hsl(var(--accent-light) / 0.24) 0%, hsl(var(--background)) 100%);
+  }
+
+  .surface-card {
+    background: hsl(var(--card) / 0.92);
+    border-color: hsl(var(--border) / 0.78);
+    box-shadow: var(--shadow-card);
   }
 
   .border-soft {

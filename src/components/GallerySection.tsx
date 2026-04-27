@@ -108,7 +108,7 @@ export const GallerySection = () => {
 
   return (
     <section id="gallery" className="overflow-hidden bg-background py-16 md:py-24">
-      <div className="container mx-auto max-w-3xl px-6 text-center mb-12 md:mb-16">
+      <div className="container mx-auto max-w-3xl px-6 text-center mb-12 md:mb-16 rounded-2xl border border-border/70 bg-card/45 py-8 shadow-card md:py-10">
         <p className="mb-3 font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
           {language === "de" ? "Ein Blick in den Garten" : "A glimpse into the garden"}
         </p>
@@ -183,7 +183,7 @@ export const GallerySection = () => {
           <Button
             size="lg"
             variant="outline"
-            className="border-primary/30 hover:bg-primary/5 text-foreground font-work"
+            className="border-primary/30 bg-card/70 hover:bg-primary/5 text-foreground font-work"
             asChild
           >
             <a
