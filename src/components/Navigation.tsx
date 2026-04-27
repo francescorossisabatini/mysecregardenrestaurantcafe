@@ -66,26 +66,9 @@ export const Navigation = () => {
           showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
         } ${isHeroOverlay ? "border-b border-background/10 bg-transparent backdrop-blur-[2px]" : "border-b border-border/75 bg-nav-surface backdrop-blur-md shadow-design-card"}`}
       >
-        <div className="container mx-auto flex min-h-16 items-center justify-between gap-4 px-5 md:min-h-14 md:px-4">
-          {/* Logo + Subtitle */}
-          <Link 
-            to="/" 
-            className="group flex min-w-0 flex-1 items-center gap-3 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 lg:flex-none"
-            aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
-          >
-            <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" aria-hidden="true" />
-            <div className="hidden min-w-0 leading-tight lg:block">
-              <span className={`block max-w-[9.75rem] truncate font-cormorant text-xl font-bold transition-colors sm:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
-                My Secret Garden
-              </span>
-              <p className={`hidden sm:block text-[11px] md:text-xs font-work truncate ${isHeroOverlay ? "text-background/75 drop-shadow-sm" : "text-muted-foreground"}`}>
-                Vegetarian Café • Vienna
-              </p>
-            </div>
-          </Link>
-
+        <div className="container relative mx-auto grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 px-5 md:min-h-14 md:px-4 lg:grid-cols-[1fr_auto_1fr]">
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -97,14 +80,8 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* Desktop Language */}
-          <div className="hidden lg:flex items-center gap-3">
-            <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
-          </div>
-
-          {/* Mobile nav actions */}
-          <div className="flex flex-shrink-0 items-center gap-3 lg:hidden">
-            <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
+          {/* Mobile Menu */}
+          <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/25 bg-background/10 text-background backdrop-blur-sm hover:bg-background/15" : "border-border/75 bg-card/85 text-primary hover:bg-muted"}`}
@@ -115,6 +92,31 @@ export const Navigation = () => {
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
+          </div>
+
+          {/* Centered Logo */}
+          <Link 
+            to="/" 
+            className="group justify-self-center flex min-w-0 items-center gap-2 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary/50 md:gap-3"
+            aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
+          >
+            <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" showTagline={false} aria-hidden="true" />
+            <div className="hidden min-w-0 text-center leading-tight sm:block">
+              <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
+                My Secret Garden
+              </span>
+              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-background/75 drop-shadow-sm" : "text-muted-foreground"}`}>
+                Vegetarian Café • Vienna
+              </p>
+            </div>
+          </Link>
+
+          {/* Language */}
+          <div className="hidden items-center justify-end gap-3 lg:flex">
+            <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
+          </div>
+          <div className="flex items-center justify-end lg:hidden">
+            <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
         </div>
       </nav>
