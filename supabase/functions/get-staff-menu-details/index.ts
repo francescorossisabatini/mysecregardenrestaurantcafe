@@ -451,8 +451,8 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
   }).filter((record) => record.title && record.fields.length >= 2);
 }
 
-const digestRows = async (rows: string[][]) => {
-  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "day-weekly-v2", rows: normalizeRows(rows) }));
+const digestRows = async (rows: string[][], extraRows: string[][] = []) => {
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v1", rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 };
@@ -515,7 +515,19 @@ serve(async (req) => {
   let imported: { sheetName: string; rows: string[][]; records: StaffMenuRecord[]; sourceHash: string } | null = null;
   const importErrors: string[] = [];
 
-  for (const sheetName of sheetNames) {
+  try {
+    const inputRows = await fetchSheetRows(sheetId, "input data");
+    const menuRows = await fetchSheetRows(sheetId, "menudata");
+    const records = rowsToStructuredKitchenRecords(inputRows, menuRows);
+    if (records.length) {
+      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows) };
+    }
+  } catch (error) {
+    importErrors.push(`input data + menudata: ${error instanceof Error ? error.message : "Unknown error"}`);
+    console.warn("Unable to import structured kitchen sheets", error);
+  }
+
+  for (const sheetName of imported ? [] : sheetNames) {
     try {
       const rows = await fetchSheetRows(sheetId, sheetName);
       const records = rowsToRecords(rows, sheetName);
