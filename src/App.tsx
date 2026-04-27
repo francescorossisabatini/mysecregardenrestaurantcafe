@@ -21,6 +21,8 @@ const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const LinkPage = lazy(() => import("./pages/Link"));
 const MenuPage = lazy(() => import("./pages/Menu"));
+const StaffLogin = lazy(() => import("./pages/StaffLogin"));
+const StaffHub = lazy(() => import("./pages/StaffHub"));
 
 // Minimal loading fallback
 const PageLoader = () => (
@@ -64,6 +66,8 @@ function AppContent() {
         <Route path="/contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/visit" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
+        <Route path="/staff/login" element={<Suspense fallback={<PageLoader />}><StaffLogin /></Suspense>} />
+        <Route path="/staff" element={<Suspense fallback={<PageLoader />}><StaffHub /></Suspense>} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
         <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
