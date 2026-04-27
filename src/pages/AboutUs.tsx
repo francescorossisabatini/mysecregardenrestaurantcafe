@@ -227,6 +227,29 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* COFFEE PARTNERSHIP */}
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid items-center gap-8 rounded-2xl border border-border/75 bg-card/70 p-6 shadow-card md:grid-cols-[1fr_auto] md:p-8">
+            <div className="space-y-3">
+              <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{t.coffeeLabel}</span>
+              <h2 className="font-cormorant text-3xl font-semibold text-foreground md:text-4xl">{t.coffeeTitle}</h2>
+              <p className="max-w-2xl font-lora text-lg leading-relaxed text-foreground/80">{t.coffeePara}</p>
+              <a
+                href="https://supermind.at/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-work text-sm font-semibold text-accent transition-colors hover:text-accent/80"
+              >
+                supermind.at
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+            <img src={supermindLogo} alt="Supermind Kaffee" className="mx-auto h-36 w-auto object-contain md:h-44" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
       {/* SPACE - Two column reversed */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-6xl">
