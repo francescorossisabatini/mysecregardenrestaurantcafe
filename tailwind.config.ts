@@ -171,6 +171,12 @@ export default {
       transitionTimingFunction: {
         'smooth': 'var(--transition-smooth)',
       },
+      transitionDuration: {
+        instant: "100ms",
+        fast: "150ms",
+        base: "250ms",
+        slow: "400ms",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
