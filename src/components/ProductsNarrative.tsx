@@ -52,7 +52,7 @@ export const ProductsNarrative = () => {
                   en: "Natural spices"
                 },
                 {
-                  de: "Ohne Gluten-Zutaten möglich",
+                  de: "Ohne Gluten Zutaten möglich",
                   en: "No gluten ingredients available"
                 }
               ].map((point, index) => (
