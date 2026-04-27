@@ -178,6 +178,10 @@ const text = {
     statusArrived: "Arrived",
     statusCancelled: "Cancelled",
     statusNoShow: "No-show",
+    nextRequest: "Next request",
+    openRequests: "Open requests",
+    archiveItems: "Archive items",
+    noNextRequest: "No upcoming request",
   },
   de: {
     subtitle: "Detaillierter Küchenplan aus Google Sheets, nach Tagen sortiert.",
@@ -230,6 +234,10 @@ const text = {
     statusArrived: "Angekommen",
     statusCancelled: "Storniert",
     statusNoShow: "No-show",
+    nextRequest: "Nächste Anfrage",
+    openRequests: "Offene Anfragen",
+    archiveItems: "Archiv-Einträge",
+    noNextRequest: "Keine kommende Anfrage",
   },
 } satisfies Record<DashboardLanguage, Record<string, string>>;
 
@@ -469,6 +477,8 @@ const StaffKitchen = () => {
   const dailyProgress = Math.min(100, Math.round((reservations.length / dailyCap) * 100));
   const dailyProgressTone = reservations.length >= 19 ? "bg-destructive" : reservations.length >= 15 ? "bg-warning" : "bg-accent";
   const selectedDateIsPast = isPastReservationDate(selectedReservationDate);
+  const openReservationCount = reservations.filter((reservation) => reservation.status === "new" || reservation.status === "confirmed").length;
+  const nextReservation = reservations.find((reservation) => reservation.status === "new" || reservation.status === "confirmed");
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
