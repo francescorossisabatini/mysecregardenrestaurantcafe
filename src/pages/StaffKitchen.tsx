@@ -379,31 +379,32 @@ const StaffKitchen = () => {
   );
 };
 
-const DishCard = ({ record }: { record: StaffMenuRecord }) => {
+const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
   const badges = recordBadges(record);
   const titleDe = fieldValue(record, ["header_de"]);
+  const labels = text[language];
 
   return (
     <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[category]}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
           <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[badge] || badge}</Badge>)}
+          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
         </div>
       </div>
 
       <div className="mt-4 grid gap-4 md:grid-cols-2">
-        <DetailList title="Ingredients" icon="•" items={record.ingredients} />
-        <DetailList title="Prep" icon="→" items={record.notes} />
+        <DetailList title={labels.ingredients} icon="•" items={record.ingredients} />
+        <DetailList title={labels.prep} icon="→" items={record.notes} />
       </div>
 
-      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-full"><ChefHat className="mr-1 h-3 w-3" />Chef {cleanDisplayText(chef)}</Badge>)}</div> : null}
+      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-full"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
     </article>
   );
 };
@@ -418,20 +419,20 @@ const DetailList = ({ title, icon, items }: { title: string; icon: string; items
   </div>
 );
 
-const ArchiveCard = ({ record }: { record: StaffMenuRecord }) => {
+const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const badges = recordBadges(record);
   return (
     <article className="rounded-lg border border-border bg-background p-4 shadow-card">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Badge variant="outline" className="mb-2 rounded-full">{categoryLabels[category]}</Badge>
+          <Badge variant="outline" className="mb-2 rounded-full">{categoryLabels[language][category]}</Badge>
           <h3 className="font-work text-xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[badge] || badge}</Badge>)}</div> : null}
+      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
