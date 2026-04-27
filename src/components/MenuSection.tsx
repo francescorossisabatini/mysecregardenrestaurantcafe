@@ -507,6 +507,33 @@ export const MenuSection = () => {
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
+
+            <div className="mb-8 rounded-lg border border-border bg-card p-5 shadow-card md:p-6">
+              <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-start">
+                <div>
+                  <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{language === "de" ? "Hausgemachte Torten" : "Homemade cakes"}</p>
+                  <h3 className="mt-2 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">{language === "de" ? "Ganze Torten vorbestellen" : "Pre-order whole cakes"}</h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    {language === "de" ? "Alle sechs Sorten kosten €39,00 als ganze Torte. Zahlung bei Abholung, mindestens 24h im Voraus." : "All six cakes are €39.00 as whole cakes. Payment at pickup, at least 24h in advance."}
+                  </p>
+                </div>
+                <Link
+                  to="/order"
+                  onClick={() => window.gtag?.("event", "cake_cta_click", { event_category: "engagement", source: "menu_always_here" })}
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                >
+                  {language === "de" ? "Torte bestellen" : "Order a cake"}
+                </Link>
+              </div>
+              <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {cakeMenuItems.map((cake) => (
+                  <Link key={cake} to="/cakes" className="rounded-md border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/35 hover:text-primary">
+                    {cake}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
