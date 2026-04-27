@@ -65,7 +65,7 @@ export const HomeMenuPreview = () => {
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
   return (
-    <section id="menu" className="bg-background py-16 md:py-24">
+    <section id="menu" className="bg-section-soft py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl">
           <div className="mb-8 text-center">
@@ -95,7 +95,7 @@ export const HomeMenuPreview = () => {
           ) : !isClosed && dishes.length > 0 ? (
             <div className="space-y-4">
               {dishes.map((dish) => (
-                <div key={dish.key} className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5">
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge className="border-accent/25 bg-accent/10 font-work text-[11px] uppercase tracking-[0.08em] text-accent">
@@ -112,7 +112,7 @@ export const HomeMenuPreview = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-border/75 bg-card p-8 text-center shadow-card">
+            <div className="rounded-2xl border p-8 text-center surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
                 {todayHoliday
                   ? todayHoliday.name[language]
@@ -126,7 +126,7 @@ export const HomeMenuPreview = () => {
             </div>
           )}
 
-          <div className="mt-4 flex items-start gap-2 rounded-2xl border border-border/75 bg-card/70 px-4 py-3 text-left shadow-card">
+          <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
             <p className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {language === "de"
