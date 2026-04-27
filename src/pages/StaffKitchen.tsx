@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Archive, CalendarDays, ChefHat, ClipboardList, LogOut, RefreshCw, Search, ShieldCheck } from "lucide-react";
+import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { z } from "zod";
 
 type StaffMenuRecord = {
   id: string;
@@ -36,6 +38,23 @@ type KuchenplanData = {
 
 type DishCategory = "soup" | "green" | "blue" | "holiday" | "seasonal";
 type DashboardLanguage = "en" | "de";
+type ReservationStatus = "new" | "confirmed" | "cancelled" | "arrived" | "no_show";
+type ReservationStatusFilter = "all" | ReservationStatus;
+
+type StaffReservation = {
+  id: string;
+  full_name: string;
+  contact: string;
+  reservation_date: string;
+  reservation_time: string;
+  party_size: number;
+  notes: string | null;
+  staff_notes?: string | null;
+  status: ReservationStatus;
+  language: string;
+  created_at: string;
+  updated_at: string;
+};
 
 const emptyKuchenplanData: KuchenplanData = {
   sheetName: "Küchenplan",
@@ -129,6 +148,36 @@ const text = {
     chef: "Chef",
     fallbackWeek: "This Week",
     loadError: "Kitchen plan could not be loaded from Google Sheets.",
+    requestsTab: "Requests",
+    requestsTitle: "Table requests",
+    requestsLoading: "Loading requests...",
+    requestsError: "Requests could not be loaded.",
+    emptyRequests: "No requests for this day.",
+    today: "Today",
+    prevDay: "Prev day",
+    nextDay: "Next day",
+    totalRequests: "requests",
+    dailyCap: "requests today",
+    staffNotes: "Staff notes",
+    guestNotes: "Guest notes",
+    saveNotes: "Save notes",
+    confirm: "Confirm",
+    arrived: "Arrived",
+    cancel: "Cancel",
+    noShow: "No-show",
+    call: "Call",
+    guests: "guests",
+    filterAll: "All",
+    filterNew: "Pending",
+    filterConfirmed: "Confirmed",
+    filterArrived: "Arrived",
+    filterCancelled: "Cancelled",
+    filterNoShow: "No-show",
+    statusNew: "Pending",
+    statusConfirmed: "Confirmed",
+    statusArrived: "Arrived",
+    statusCancelled: "Cancelled",
+    statusNoShow: "No-show",
   },
   de: {
     subtitle: "Detaillierter Küchenplan aus Google Sheets, nach Tagen sortiert.",
@@ -151,6 +200,36 @@ const text = {
     chef: "Koch",
     fallbackWeek: "Diese Woche",
     loadError: "Küchenplan konnte nicht aus Google Sheets geladen werden.",
+    requestsTab: "Anfragen",
+    requestsTitle: "Tischanfragen",
+    requestsLoading: "Anfragen werden geladen...",
+    requestsError: "Anfragen konnten nicht geladen werden.",
+    emptyRequests: "Heute keine Anfragen.",
+    today: "Heute",
+    prevDay: "Vortag",
+    nextDay: "Nächster Tag",
+    totalRequests: "Anfragen",
+    dailyCap: "Anfragen heute",
+    staffNotes: "Team-Notizen",
+    guestNotes: "Gastnotizen",
+    saveNotes: "Notizen speichern",
+    confirm: "Bestätigen",
+    arrived: "Angekommen",
+    cancel: "Stornieren",
+    noShow: "No-show",
+    call: "Anrufen",
+    guests: "Gäste",
+    filterAll: "Alle",
+    filterNew: "Ausstehend",
+    filterConfirmed: "Bestätigt",
+    filterArrived: "Angekommen",
+    filterCancelled: "Storniert",
+    filterNoShow: "No-show",
+    statusNew: "Ausstehend",
+    statusConfirmed: "Bestätigt",
+    statusArrived: "Angekommen",
+    statusCancelled: "Storniert",
+    statusNoShow: "No-show",
   },
 } satisfies Record<DashboardLanguage, Record<string, string>>;
 
@@ -196,6 +275,41 @@ const weekRange = (records: StaffMenuRecord[], language: DashboardLanguage) => {
   return `${formatter.format(new Date(dates[0]))} – ${formatter.format(new Date(dates[dates.length - 1]))}`;
 };
 
+const reservationStatuses: ReservationStatusFilter[] = ["all", "new", "confirmed", "arrived", "cancelled", "no_show"];
+const reservationUpdateSchema = z.object({
+  status: z.enum(["new", "confirmed", "cancelled", "arrived", "no_show"]).optional(),
+  staff_notes: z.string().trim().max(500).nullable().optional(),
+});
+
+const todayIso = () => new Date().toISOString().split("T")[0];
+
+const addDaysToIso = (value: string, offset: number) => {
+  const date = new Date(`${value}T12:00:00`);
+  date.setDate(date.getDate() + offset);
+  return date.toISOString().split("T")[0];
+};
+
+const formatReservationDate = (value: string, language: DashboardLanguage) => new Intl.DateTimeFormat(language === "de" ? "de-AT" : "en-GB", { weekday: "short", day: "2-digit", month: "long" }).format(new Date(`${value}T12:00:00`));
+
+const isPastReservationDate = (value: string) => value < todayIso();
+
+const reservationStatusLabel = (status: ReservationStatus, labels: Record<string, string>) => ({
+  new: labels.statusNew,
+  confirmed: labels.statusConfirmed,
+  arrived: labels.statusArrived,
+  cancelled: labels.statusCancelled,
+  no_show: labels.statusNoShow,
+}[status]);
+
+const reservationFilterLabel = (status: ReservationStatusFilter, labels: Record<string, string>) => ({
+  all: labels.filterAll,
+  new: labels.filterNew,
+  confirmed: labels.filterConfirmed,
+  arrived: labels.filterArrived,
+  cancelled: labels.filterCancelled,
+  no_show: labels.filterNoShow,
+}[status]);
+
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
@@ -206,6 +320,12 @@ const StaffKitchen = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<"all" | DishCategory>("all");
   const [language, setLanguage] = useState<DashboardLanguage>("en");
+  const [selectedReservationDate, setSelectedReservationDate] = useState(todayIso);
+  const [reservationStatusFilter, setReservationStatusFilter] = useState<ReservationStatusFilter>("all");
+  const [reservations, setReservations] = useState<StaffReservation[]>([]);
+  const [isReservationsLoading, setIsReservationsLoading] = useState(false);
+  const [reservationError, setReservationError] = useState<string | null>(null);
+  const [updatingReservationIds, setUpdatingReservationIds] = useState<string[]>([]);
   const labels = text[language];
 
   const signOut = async () => {
@@ -226,6 +346,49 @@ const StaffKitchen = () => {
     }
 
     setIsLoading(false);
+  };
+
+  const loadReservations = async (date = selectedReservationDate) => {
+    setIsReservationsLoading(true);
+    setReservationError(null);
+
+    const { data, error: requestError } = await supabase
+      .from("reservation_requests")
+      .select("id, full_name, contact, reservation_date, reservation_time, party_size, notes, staff_notes, status, language, created_at, updated_at")
+      .eq("reservation_date", date)
+      .order("reservation_time", { ascending: true });
+
+    if (requestError) {
+      setReservationError(text[language].requestsError);
+      setReservations([]);
+    } else {
+      setReservations(((data ?? []) as unknown as StaffReservation[]).map((reservation) => ({ ...reservation, status: reservation.status || "new" })));
+    }
+
+    setIsReservationsLoading(false);
+  };
+
+  const updateReservation = async (reservation: StaffReservation, update: Partial<Pick<StaffReservation, "status" | "staff_notes">>) => {
+    const parsed = reservationUpdateSchema.safeParse(update);
+    if (!parsed.success) {
+      setReservationError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
+      return;
+    }
+
+    const previous = reservations;
+    setUpdatingReservationIds((ids) => [...ids, reservation.id]);
+    setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed.data } : item));
+
+    const { error: updateError } = await (supabase.from("reservation_requests") as any)
+      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .eq("id", reservation.id);
+
+    setUpdatingReservationIds((ids) => ids.filter((id) => id !== reservation.id));
+
+    if (updateError) {
+      setReservations(previous);
+      setReservationError(language === "de" ? "Fehler, bitte nochmal versuchen." : "Error, please try again.");
+    }
   };
 
   useEffect(() => {
@@ -254,6 +417,26 @@ const StaffKitchen = () => {
     return () => listener.subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (!session || !isStaff) return;
+    void loadReservations(selectedReservationDate);
+  }, [selectedReservationDate, session, isStaff]);
+
+  useEffect(() => {
+    if (!session || !isStaff) return;
+
+    const channel = supabase
+      .channel("reservation-requests-changes")
+      .on("postgres_changes", { event: "*", schema: "public", table: "reservation_requests" }, () => {
+        void loadReservations(selectedReservationDate);
+      })
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [selectedReservationDate, session, isStaff]);
+
   const currentRecords = kuchenplan.currentRecords.length
     ? kuchenplan.currentRecords
     : kuchenplan.records.filter((record) => record.isCurrent);
@@ -278,6 +461,14 @@ const StaffKitchen = () => {
       .filter((record) => query ? archiveMatches(record, query) : true)
       .sort((a, b) => (recordDate(b) || b.snapshotPeriod || "").localeCompare(recordDate(a) || a.snapshotPeriod || ""));
   }, [categoryFilter, currentRecords, kuchenplan.archiveRecords, kuchenplan.records, searchTerm]);
+
+  const filteredReservations = useMemo(() => reservationStatusFilter === "all"
+    ? reservations
+    : reservations.filter((reservation) => reservation.status === reservationStatusFilter), [reservationStatusFilter, reservations]);
+  const dailyCap = 20;
+  const dailyProgress = Math.min(100, Math.round((reservations.length / dailyCap) * 100));
+  const dailyProgressTone = reservations.length >= 19 ? "bg-destructive" : reservations.length >= 15 ? "bg-warning" : "bg-accent";
+  const selectedDateIsPast = isPastReservationDate(selectedReservationDate);
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
@@ -325,9 +516,10 @@ const StaffKitchen = () => {
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
         <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="mx-auto grid h-auto w-full max-w-md grid-cols-2 rounded-full bg-card p-1 shadow-card">
+          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
             <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
             <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -390,6 +582,65 @@ const StaffKitchen = () => {
               <div className="grid gap-4 md:grid-cols-2">
                 {!archiveRecords.length ? <p className="text-sm text-muted-foreground">{labels.emptyArchive}</p> : null}
                 {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} language={language} />)}
+              </div>
+            </section>
+          </TabsContent>
+
+          <TabsContent value="requests" className="mt-0">
+            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+              <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                  <div className="flex items-center gap-2 text-primary">
+                    <Users className="h-5 w-5" aria-hidden="true" />
+                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTitle}</h2>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
+                </div>
+                <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+              </div>
+
+              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
+                <div className="grid grid-cols-3 gap-2">
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
+                    <ChevronLeft className="h-4 w-4" />
+                    <span className="hidden sm:inline">{labels.prevDay}</span>
+                  </Button>
+                  <Button type="button" variant="default" onClick={() => setSelectedReservationDate(todayIso())} className="h-11 rounded-full">{labels.today}</Button>
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, 1))} className="h-11 rounded-full">
+                    <span className="hidden sm:inline">{labels.nextDay}</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-muted">
+                  <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
+                </div>
+                <p className="text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
+              </div>
+
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {reservationStatuses.map((status) => (
+                  <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
+                    {reservationFilterLabel(status, labels)}
+                  </Button>
+                ))}
+              </div>
+
+              {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
+              {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
+              {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {filteredReservations.map((reservation) => (
+                  <ReservationCard
+                    key={reservation.id}
+                    reservation={reservation}
+                    language={language}
+                    labels={labels}
+                    readOnly={selectedDateIsPast}
+                    isUpdating={updatingReservationIds.includes(reservation.id)}
+                    onUpdate={updateReservation}
+                  />
+                ))}
               </div>
             </section>
           </TabsContent>
