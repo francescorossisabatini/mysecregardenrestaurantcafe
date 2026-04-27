@@ -11,39 +11,44 @@ type StaffMenuRecord = {
   id: string;
   title: string;
   category?: string;
+  menuDay?: string;
   description?: string;
   ingredients: string[];
   allergens: string[];
   notes: string[];
   sourceSheet: string;
+  snapshotPeriod?: string;
+  isCurrent?: boolean;
   fields: Array<{ label: string; value: string }>;
 };
 
-const clean = (value: unknown, max = 500) =>
+const clean = (value: unknown, max = 1200) =>
   typeof value === "string"
-    ? value.replace(/<[^>]*>/g, "").replace(/javascript:/gi, "").replace(/on\w+=/gi, "").trim().slice(0, max)
+    ? value.replace(/<[^>]*>/g, "").replace(/javascript:/gi, "").replace(/on\w+=/gi, "").replace(/[\u002d\u2010\u2011\u2012\u2013\u2014\u2212]/g, " ").trim().slice(0, max)
     : value == null
       ? ""
-      : String(value).trim().slice(0, max);
+      : String(value).replace(/[\u002d\u2010\u2011\u2012\u2013\u2014\u2212]/g, " ").trim().slice(0, max);
 
 const splitList = (value: string) =>
-  value.split(/[;,|\n]+/).map((item) => clean(item, 120)).filter(Boolean).slice(0, 40);
+  value.split(/[;,|\n]+/).map((item) => clean(item, 160)).filter(Boolean).slice(0, 80);
 
 const headerKind = (label: string) => {
   const h = label.toLowerCase();
-  if (/(name|dish|gericht|speise|kuchen|cake|titel|title|produkt|product)/.test(h)) return "title";
-  if (/(kategorie|category|gruppe|type|typ)/.test(h)) return "category";
-  if (/(beschreibung|description|desc)/.test(h)) return "description";
-  if (/(ingredient|zutat|zutaten|inhalt|content|bestandteil)/.test(h)) return "ingredients";
+  if (/(tag|day|wochen|datum|date)/.test(h)) return "day";
+  if (/(name|dish|gericht|speise|kuchen|cake|titel|title|produkt|product|artikel|item)/.test(h)) return "title";
+  if (/(kategorie|category|gruppe|type|typ|section|bereich)/.test(h)) return "category";
+  if (/(beschreibung|description|desc|details)/.test(h)) return "description";
+  if (/(ingredient|zutat|zutaten|inhalt|content|bestandteil|rezept|recipe)/.test(h)) return "ingredients";
   if (/(allergen|allergene|allergy)/.test(h)) return "allergens";
-  if (/(note|notiz|hinweis|info|bemerkung)/.test(h)) return "notes";
+  if (/(note|notiz|hinweis|info|bemerkung|vorbereitung|prep)/.test(h)) return "notes";
   return "field";
 };
 
 const parseGviz = (text: string): string[][] => {
-  const jsonText = text.substring(47).slice(0, -2);
-  const json = JSON.parse(jsonText) as { table?: { rows?: Array<{ c?: Array<{ v?: unknown }> }> } };
-  return (json.table?.rows ?? []).map((row) => (row.c ?? []).map((cell) => clean(cell?.v, 1200)));
+  const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?\s*$/s);
+  if (!match) throw new Error("Invalid sheet response");
+  const json = JSON.parse(match[1]) as { table?: { rows?: Array<{ c?: Array<{ v?: unknown; f?: unknown }> }> } };
+  return (json.table?.rows ?? []).map((row) => (row.c ?? []).map((cell) => clean(cell?.f ?? cell?.v, 1200)));
 };
 
 async function fetchSheetRows(sheetId: string, sheetName: string): Promise<string[][]> {
@@ -55,25 +60,46 @@ async function fetchSheetRows(sheetId: string, sheetName: string): Promise<strin
     },
   });
   if (!response.ok) throw new Error(`Sheet fetch failed ${response.status}`);
-  const text = await response.text();
-  if (!text.includes("google.visualization.Query.setResponse")) throw new Error("Invalid sheet response");
-  return parseGviz(text);
+  return parseGviz(await response.text());
 }
 
-function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
-  const headerIndex = rows.findIndex((row) => row.filter(Boolean).length >= 2);
-  if (headerIndex < 0) return [];
+const normalizeRows = (rows: string[][]) => rows.map((row) => {
+  const last = row.reduce((index, value, current) => value ? current : index, 0);
+  return row.slice(0, last + 1).map((value) => clean(value));
+}).filter((row) => row.some(Boolean));
 
-  const headers = rows[headerIndex].map((value, index) => clean(value || `Column ${index + 1}`, 80));
-  const body = rows.slice(headerIndex + 1).filter((row) => row.some(Boolean));
+const makeId = (sourceSheet: string, rowIndex: number, title: string, fields: Array<{ label: string; value: string }>) =>
+  `${sourceSheet}_${rowIndex}_${title}_${fields.map((field) => field.value).join("_")}`.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 120);
+
+function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[] {
+  const usableRows = normalizeRows(rows);
+  if (!usableRows.length) return [];
+
+  const headerIndex = usableRows.findIndex((row) => {
+    const labels = row.map((cell) => headerKind(cell));
+    return row.filter(Boolean).length >= 2 && (labels.includes("title") || labels.includes("ingredients") || labels.includes("allergens"));
+  });
+
+  const headers = headerIndex >= 0
+    ? usableRows[headerIndex].map((value, index) => clean(value || `Column ${index + 1}`, 80))
+    : Array.from({ length: Math.max(...usableRows.map((row) => row.length)) }, (_, index) => index === 0 ? "Section" : index === 1 ? "Item" : index === 2 ? "Ingredients" : `Detail ${index + 1}`);
+
+  const body = (headerIndex >= 0 ? usableRows.slice(headerIndex + 1) : usableRows)
+    .filter((row) => row.filter(Boolean).length >= 2);
+
+  let activeSection = "";
 
   return body.map((row, rowIndex) => {
+    const filled = row.filter(Boolean);
+    if (filled.length === 1) activeSection = filled[0];
+
     const fields = headers
       .map((label, index) => ({ label, value: clean(row[index], 1200) }))
       .filter((field) => field.value && !/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(field.value));
 
     let title = "";
-    let category = "";
+    let category = activeSection;
+    let menuDay = "";
     let description = "";
     const ingredients: string[] = [];
     const allergens: string[] = [];
@@ -81,6 +107,7 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
 
     for (const field of fields) {
       const kind = headerKind(field.label);
+      if (kind === "day" && !menuDay) menuDay = field.value;
       if (kind === "title" && !title) title = field.value;
       if (kind === "category" && !category) category = field.value;
       if (kind === "description" && !description) description = field.value;
@@ -89,21 +116,60 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
       if (kind === "notes") notes.push(field.value);
     }
 
-    if (!title) title = fields[0]?.value || `Item ${rowIndex + 1}`;
+    if (!title) title = fields.find((field) => !/(datum|date|tag|day|woche|week)/i.test(field.label))?.value || fields[0]?.value || `Item ${rowIndex + 1}`;
+
+    if (!ingredients.length) {
+      fields.slice(1).forEach((field) => {
+        if (!/(allergen|note|notiz|hinweis|datum|date|tag|day)/i.test(field.label) && field.value !== title) ingredients.push(field.value);
+      });
+    }
 
     return {
-      id: `${sourceSheet}-${rowIndex}-${title}`.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 80),
+      id: makeId(sourceSheet, rowIndex, title, fields),
       title,
       category: category || undefined,
+      menuDay: menuDay || undefined,
       description: description || undefined,
-      ingredients: [...new Set(ingredients)],
+      ingredients: [...new Set(ingredients)].filter((value) => value !== title),
       allergens: [...new Set(allergens)],
       notes: [...new Set(notes)],
       sourceSheet,
       fields,
     };
-  });
+  }).filter((record) => record.title && record.fields.length >= 2);
 }
+
+const digestRows = async (rows: string[][]) => {
+  const bytes = new TextEncoder().encode(JSON.stringify(normalizeRows(rows)));
+  const hash = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const recordSearchText = (record: StaffMenuRecord) => clean([
+  record.title,
+  record.category,
+  record.menuDay,
+  record.description,
+  ...record.ingredients,
+  ...record.allergens,
+  ...record.notes,
+  ...record.fields.map((field) => `${field.label} ${field.value}`),
+].filter(Boolean).join(" "), 6000).toLowerCase();
+
+const dbItemToRecord = (item: any, snapshot: any): StaffMenuRecord => ({
+  id: item.id,
+  title: item.title,
+  category: item.category ?? undefined,
+  menuDay: item.menu_day ?? undefined,
+  description: item.description ?? undefined,
+  ingredients: item.ingredients ?? [],
+  allergens: item.allergens ?? [],
+  notes: item.notes ?? [],
+  sourceSheet: snapshot?.sheet_name ?? "Küchenplan",
+  snapshotPeriod: snapshot?.period ?? undefined,
+  isCurrent: Boolean(snapshot?.is_current),
+  fields: Array.isArray(item.fields) ? item.fields : [],
+});
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -113,7 +179,7 @@ serve(async (req) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  let sheetId = Deno.env.get("GOOGLE_SHEET_ID") || "";
+  let sheetId = Deno.env.get("GOOGLE_SHEET_ID") || Deno.env.get("VITE_GOOGLE_SHEETS_ID") || "";
 
   if (!supabaseUrl || !serviceRoleKey || !sheetId) {
     return new Response(JSON.stringify({ error: "Backend configuration missing" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -133,16 +199,86 @@ serve(async (req) => {
   if (match) sheetId = match[1];
   sheetId = sheetId.split("?")[0].split("/")[0].trim();
 
-  const sheetNames = ["Kuchenplan", "kuchenplan", "KUCHENPLAN"];
+  const sheetNames = ["Küchenplan", "Kuechenplan", "Kuchenplan", "küchenplan", "kuechenplan", "kuchenplan", "KÜCHENPLAN", "KUCHENPLAN"];
+  let imported: { sheetName: string; rows: string[][]; records: StaffMenuRecord[]; sourceHash: string } | null = null;
+  const importErrors: string[] = [];
+
   for (const sheetName of sheetNames) {
     try {
       const rows = await fetchSheetRows(sheetId, sheetName);
       const records = rowsToRecords(rows, sheetName);
-      return new Response(JSON.stringify({ success: true, data: { sheetName, records } }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      if (!records.length) throw new Error("No usable rows found");
+      imported = { sheetName, rows, records, sourceHash: await digestRows(rows) };
+      break;
     } catch (error) {
-      console.warn(`Unable to read ${sheetName}`, error);
+      importErrors.push(`${sheetName}: ${error instanceof Error ? error.message : "Unknown error"}`);
+      console.warn(`Unable to import ${sheetName}`, error);
     }
   }
 
-  return new Response(JSON.stringify({ success: false, error: "Kuchenplan sheet not found" }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  if (!imported) {
+    return new Response(JSON.stringify({ success: false, error: "Küchenplan sheet not found or empty", details: importErrors }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  }
+
+  const { data: currentSnapshot } = await admin.from("kuechenplan_snapshots").select("id, source_hash").eq("is_current", true).maybeSingle();
+
+  let snapshotId = currentSnapshot?.id;
+  if (!currentSnapshot || currentSnapshot.source_hash !== imported.sourceHash) {
+    await admin.from("kuechenplan_snapshots").update({ is_current: false, archived_at: new Date().toISOString() }).eq("is_current", true);
+    const { data: newSnapshot, error: snapshotError } = await admin.from("kuechenplan_snapshots").insert({
+      source_hash: imported.sourceHash,
+      sheet_name: imported.sheetName,
+      period: imported.records.find((record) => record.menuDay)?.menuDay ?? null,
+      is_current: true,
+    }).select("id").single();
+    if (snapshotError) throw snapshotError;
+    snapshotId = newSnapshot.id;
+
+    const items = imported.records.map((record, index) => ({
+      snapshot_id: snapshotId,
+      row_index: index,
+      title: record.title,
+      category: record.category ?? null,
+      menu_day: record.menuDay ?? null,
+      description: record.description ?? null,
+      ingredients: record.ingredients,
+      allergens: record.allergens,
+      notes: record.notes,
+      fields: record.fields,
+      search_text: recordSearchText(record),
+    }));
+    const { error: itemsError } = await admin.from("kuechenplan_items").insert(items);
+    if (itemsError) throw itemsError;
+  }
+
+  const { data: snapshots, error: snapshotsError } = await admin
+    .from("kuechenplan_snapshots")
+    .select("id, sheet_name, period, is_current, created_at")
+    .order("created_at", { ascending: false })
+    .limit(12);
+  if (snapshotsError) throw snapshotsError;
+
+  const snapshotIds = (snapshots ?? []).map((snapshot) => snapshot.id);
+  const { data: items, error: itemsError } = await admin
+    .from("kuechenplan_items")
+    .select("*")
+    .in("snapshot_id", snapshotIds)
+    .order("row_index", { ascending: true });
+  if (itemsError) throw itemsError;
+
+  const snapshotById = new Map((snapshots ?? []).map((snapshot) => [snapshot.id, snapshot]));
+  const records = (items ?? []).map((item) => dbItemToRecord(item, snapshotById.get(item.snapshot_id)));
+  const currentRecords = records.filter((record) => record.isCurrent);
+  const archiveRecords = records.filter((record) => !record.isCurrent);
+
+  return new Response(JSON.stringify({
+    success: true,
+    data: {
+      sheetName: imported.sheetName,
+      records,
+      currentRecords,
+      archiveRecords,
+      snapshots: snapshots ?? [],
+    },
+  }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
 });
