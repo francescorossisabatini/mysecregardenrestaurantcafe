@@ -7,7 +7,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { useLanguage } from "@/contexts/LanguageContext";
-import gardenImg from "@/assets/garden-real.jpg";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
 

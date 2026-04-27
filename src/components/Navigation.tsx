@@ -56,7 +56,7 @@ export const Navigation = () => {
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
     { to: "/about", label: language === "de" ? "Über uns" : "About" },
-    { to: "/contact", label: language === "de" ? "Besuche uns" : "Visit" },
+    { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
 
   return (

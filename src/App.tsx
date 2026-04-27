@@ -62,6 +62,7 @@ function AppContent() {
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<Suspense fallback={<PageLoader />}><AboutUs /></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
+        <Route path="/visit" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
