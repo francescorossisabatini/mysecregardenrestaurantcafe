@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
@@ -8,43 +8,18 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
-  const [showNavbar, setShowNavbar] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isHeroOverlay = isHomePage && !scrolled && !isMobileMenuOpen;
-  const rafRef = useRef<number | null>(null);
-
-  const handleScroll = useCallback(() => {
-    if (rafRef.current || showNavbar) return; // Skip if already visible
-    
-    rafRef.current = requestAnimationFrame(() => {
-      if (window.scrollY > 50) {
-        setShowNavbar(true);
-      }
-      rafRef.current = null;
-    });
-  }, [showNavbar]);
 
   useEffect(() => {
-    const handleScrollShadow = () => setScrolled(window.scrollY > 0);
+    const handleScrollShadow = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScrollShadow, { passive: true });
+    handleScrollShadow();
     return () => window.removeEventListener("scroll", handleScrollShadow);
   }, []);
-
-  useEffect(() => {
-    if (isHomePage) {
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        if (rafRef.current) {
-          cancelAnimationFrame(rafRef.current);
-        }
-      };
-    }
-    setShowNavbar(true);
-  }, [isHomePage, handleScroll]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -62,11 +37,13 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 py-2 md:py-3 transition-all duration-500 ease-in-out ${
-          showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } ${isHeroOverlay ? "border-b border-background/10 bg-transparent backdrop-blur-[2px]" : "border-b border-border/75 bg-nav-surface backdrop-blur-md shadow-design-card"}`}
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
+          isHeroOverlay
+            ? "border-b border-background/10 bg-transparent py-2 backdrop-blur-[2px] md:py-3"
+            : "border-b border-border/55 bg-background/82 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
+        }`}
       >
-        <div className="container relative mx-auto grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 px-5 md:min-h-14 md:px-4 lg:grid-cols-[1fr_auto_1fr]">
+        <div className={`container relative mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 px-5 transition-[min-height] duration-500 md:px-4 lg:grid-cols-[1fr_auto_1fr] ${isHeroOverlay ? "min-h-16 md:min-h-14" : "min-h-12 md:min-h-11"}`}>
           {/* Desktop Navigation Links */}
           <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => (
@@ -100,7 +77,7 @@ export const Navigation = () => {
             className="group justify-self-center flex min-w-0 items-center gap-2 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary/50 md:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
-            <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" showTagline={false} aria-hidden="true" />
+            <Logo className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-11 w-11 md:h-12 md:w-12" : "h-9 w-9 md:h-10 md:w-10"}`} showTagline={false} aria-hidden="true" />
             <div className="hidden min-w-0 text-center leading-tight sm:block">
               <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
