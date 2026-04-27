@@ -8,17 +8,9 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
-  const [scrolled, setScrolled] = useState(false);
   const { language } = useLanguage();
   const location = useLocation();
   const isHeroOverlay = false;
-
-  useEffect(() => {
-    const handleScrollShadow = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", handleScrollShadow, { passive: true });
-    handleScrollShadow();
-    return () => window.removeEventListener("scroll", handleScrollShadow);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
