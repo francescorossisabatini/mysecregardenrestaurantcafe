@@ -13,7 +13,7 @@ const translations = {
     // Hero
     "hero.title": "My Secret Garden",
     "hero.subtitle": "Vegetarisches & Veganes Restaurant",
-    "hero.address": "Mariahilferstraße 45 – Im Raimundhof – 1060 Wien",
+    "hero.address": "Mariahilferstraße 45, Im Raimundhof, 1060 Wien",
     "hero.hours": "Geöffnet Mo-Sa von 11-19 Uhr",
     "hero.dailyMenu": "Menü von Heute",
     "hero.fullMenu": "Gesamte Speisekarte",
@@ -29,21 +29,21 @@ const translations = {
     
     // About
     "about.title": "WIR über uns",
-    "about.intro": "Wir servieren Geschmack, der entzückt. Erleben Sie eine spannende vegetarische & vegane Küche mit schmackhaften Gerichten aus aller Welt.",
+    "about.intro": "Wir kochen vegetarisch und vegan, jeden Tag frisch. Manchmal klassisch, manchmal mit einem Abstecher in eine andere Küche.",
     "about.bio": "bio",
     "about.fair": "fair",
     "about.regional": "regional",
     "about.seasonal": "saisonal",
-    "about.p1": "Wir lieben bio, fair, regional und saisonal. In der Früh liefern Dogi vom Naschmarkt und Biogast feldfrisches Gemüse, knackige Salate und biologisches Getreide, aus dem unsere Köche mit Talent, Erfindungsreichtum und aromatischen Kräutern und authentischen Gewürzen für Sie gesunde Mahlzeiten zaubern, die satt machen und Kraft für den Tag geben.",
-    "about.p2": "In unseren umweltfreundlichen 'TO GO'-Boxen lassen sich unsere Speisen auch schnell und unkompliziert überallhin mitnehmen und genießen.",
-    "about.p3": "Von Montag bis Samstag gibt's von 11:00 bis 19:00 Uhr warmes Essen, reichhaltige Salate, Spezialitätenkaffee, auch mit veganen Milchsorten, und raffinierte Heißgetränke, sowie hausgemachte Torten und roh-köstliche süße Verführungen. Bei allem kommt auch die glutenfreie Ernährung nicht zu kurz!",
+    "about.p1": "In der Früh kommen Gemüse, Salate und Getreide in die Küche. Was gerade gut aussieht, wird geschnitten, gekocht, gewürzt und landet oft noch am selben Tag auf dem Teller.",
+    "about.p2": "Wenn du es eilig hast, packen wir dein Essen ein. Nicht besonders feierlich, aber praktisch. Und manchmal rettet genau das den Mittag.",
+    "about.p3": "Montag bis Samstag gibt es von 11:00 bis 19:00 Uhr warmes Essen, Salate, Kaffee mit pflanzlicher Milch, Tee und hausgemachte Kuchen. Viele Gerichte kochen wir ohne glutenhaltige Zutaten. Bei Allergien bitte kurz nachfragen.",
     "about.p4": "Neben unseren zwei gemütlichen Gasträumen lockt unser ruhiger, begrünter Innenhof im Biedermeierstil, nur 80 m von der belebten Mariahilferstraße entfernt. Schaut doch herein! 🙂",
     
     // Philosophy
     "philosophy.title": "Unsere Inspiration",
     "philosophy.sri.title": "Sri Chinmoy",
     "philosophy.sri.subtitle": "Spiritueller Meister, Dichter, Künstler und Friedensbotschafter (1931–2007)",
-    "philosophy.sri.intro": "Hinter My Secret Garden steht eine tiefe Quelle der Inspiration – ein Mann, dessen Leben selbst ein Kunstwerk war.",
+    "philosophy.sri.intro": "Sri Chinmoy ist eine wichtige Inspiration für My Secret Garden. Nicht laut, eher im Hintergrund spürbar.",
     "philosophy.sri.story1": "Sri Chinmoy wurde 1931 in Bengalen geboren und verbrachte zwanzig Jahre in einem spirituellen Ashram, wo er tief in Meditation und innere Disziplin eintauchte. 1964 folgte er einem inneren Ruf und zog nach New York, um seine Botschaft von innerem Frieden und Harmonie mit der westlichen Welt zu teilen.",
     "philosophy.sri.story2": "Was ihn einzigartig machte: Er lebte, was er lehrte. Er komponierte über 23.000 Lieder, malte mehr als 200.000 Gemälde, schrieb 1.600 Bücher und gab weltweit über 800 Friedenskonzerte – alles aus dem Zustand der Meditation heraus. Für ihn war jede Handlung eine Form des Gebets, jede Mahlzeit ein Akt der Dankbarkeit.",
     "philosophy.sri.story3": "Sri Chinmoy inspirierte Menschen aus allen Lebensbereichen – von UN-Generalsekretären bis zu olympischen Athleten – stets mit derselben Botschaft: Der Weg zum äußeren Frieden führt durch den inneren Frieden.",
@@ -72,7 +72,7 @@ const translations = {
     // Menu
     "menu.title": "Unsere Speisekarte",
     "menu.weeklyUpdate": "Jede Woche ein neues, saisonales Menü",
-    "menu.description": "Jeden Tag haben Sie die Wahl zwischen zwei frischen Tagesgerichten für 15.20€. Das 'grüne' bereiten wir immer vegan & glutenfrei zu – das 'blaue' kann auch mal Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.",
+    "menu.description": "Jeden Tag gibt es zwei Tagesgerichte für 15.20€. Das grüne Gericht ist vegan und ohne glutenhaltige Zutaten gekocht. Das blaue Gericht kann Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.",
     "menu.weeklyMenu": "Wochenkarte",
     "menu.soup": "Suppe",
     "menu.greenDish": "Tagesgericht GRÜN",
@@ -88,7 +88,7 @@ const translations = {
     
     // Products
     "products.title": "Unsere Produkte",
-    "products.subtitle": "Entdecken Sie unsere sorgfältig ausgewählten Produkte – von frischen Bio-Zutaten bis zu hausgemachten Spezialitäten",
+    "products.subtitle": "Ein paar Dinge, die wir gerne verwenden: frisches Gemüse, Bio-Zutaten und Hausgemachtes aus der Küche.",
     "products.featured": "Empfohlene Produkte",
     "products.all": "Alle Produkte",
     "products.clickToLearnMore": "Klicken Sie für weitere Informationen",
