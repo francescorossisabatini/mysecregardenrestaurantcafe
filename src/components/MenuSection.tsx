@@ -594,9 +594,9 @@ export const MenuSection = () => {
                                 <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
                               )}
                             </div>
-                            <Badge className="border-accent/25 bg-accent/10 text-accent text-[10px] font-work uppercase tracking-[0.08em]">
+                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                               {language === "de" ? "Getränke" : "Drinks"}
-                            </Badge>
+                            </span>
                           </div>
                           <div className="grid gap-2 sm:grid-cols-2">
                             {subcategory.items.map((item: KlassikerItem) => (
