@@ -17,7 +17,6 @@ import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import type { DishDetails } from "@/data/allergensData";
-import { inferDishDetails } from "@/lib/menuDetails";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -62,13 +61,8 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
-const dishDetails = (text: string, meta?: DishDetails) => ({
-  ...inferDishDetails(text),
-  ...meta,
-});
-
 const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
-  <MenuDishDetails details={dishDetails(text, meta)} compact />
+  <MenuDishDetails details={meta ?? {}} compact />
 );
 
 export const MenuSection = () => {
