@@ -31,7 +31,7 @@ export const InstagramFeed = () => {
               {language === "de" ? "Impressionen aus unserem Secret Garden" : "Impressions from our Secret Garden"}
             </h2>
             <p className="text-base text-muted-foreground mb-4">
-              {language === "de" ? "Folgen Sie uns auf Instagram für die neuesten Einblicke" : "Follow us on Instagram for the latest insights"}
+              {language === "de" ? "Auf Instagram zeigen wir oft, was gerade am Tresen steht." : "On Instagram we often show what is at the counter right now."}
             </p>
             <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
           </div>
@@ -79,8 +79,8 @@ export const InstagramFeed = () => {
               <div className="text-center">
                 <p className="text-sm md:text-base text-muted-foreground mb-4">
                   {language === "de" 
-                    ? "Besuchen Sie unsere Instagram-Seite für aktuelle Fotos und Updates" 
-                    : "Visit our Instagram page for current photos and updates"}
+                    ? "Neue Teller, kleine Hofmomente und manchmal ein Blick in die Küche." 
+                    : "New plates, small courtyard moments and sometimes a look into the kitchen."}
                 </p>
                 <Button
                   size="default"
@@ -94,7 +94,7 @@ export const InstagramFeed = () => {
                     className="inline-flex items-center gap-2"
                   >
                     <Instagram className="w-4 h-4" />
-                    {language === "de" ? "Besuchen Sie uns auf Instagram" : "Visit us on Instagram"}
+                    {language === "de" ? "Auf Instagram schauen" : "Open Instagram"}
                   </a>
                 </Button>
               </div>
