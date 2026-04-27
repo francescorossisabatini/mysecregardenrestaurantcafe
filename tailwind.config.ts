@@ -46,7 +46,7 @@ export default {
         warning: "hsl(var(--semantic-warning))",
         success: "hsl(var(--semantic-success))",
         brand: {
-          star: '#F59E0B',
+          star: "hsl(var(--semantic-warning))",
         },
         state: {
           vegan: 'var(--color-vegan)',
