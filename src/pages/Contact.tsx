@@ -49,6 +49,19 @@ const ContactPage = () => {
     ? "Geh einfach durch den Bogen in den Raimundhof und weiter geradeaus, bis du My Secret Garden siehst. Du kannst von zwei Seiten hineinkommen: je nach Eingang gehst du die Stufen hinauf oder hinunter."
     : "Just enter through the archway into Raimundhof and keep going until you see My Secret Garden. You can come in from two sides: depending on the entrance, you’ll walk up the stairs or down them.";
 
+  const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
+  const parkingDetails = language === "de"
+    ? [
+      { label: "Garage", value: "Wipark Windmühlgasse" },
+      { label: "Adresse", value: "Windmühlgasse 22 bis 24" },
+      { label: "Vorteil", value: "1 Stunde inklusive ab 27 Euro Konsumation" },
+    ]
+    : [
+      { label: "Garage", value: "Wipark Windmühlgasse" },
+      { label: "Address", value: "Windmühlgasse 22 to 24" },
+      { label: "Benefit", value: "1 hour included with a 27 euro spend" },
+    ];
+
   const visitJsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
@@ -229,14 +242,34 @@ const ContactPage = () => {
                       {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
-                <Car className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
-                <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Parken" : "Parking"}</h2>
-                <p className="font-work leading-relaxed text-muted-foreground">
-                  {SITE.transportNote[language]}<br />
-                  {SITE.parkingNote[language]}<br />
-                  {language === "de" ? "1 Stunde Parken inklusive ab 27 Euro Konsumation." : "1 hour of parking included with a 27 euro spend."}
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card md:col-span-2 xl:col-span-1">
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <div>
+                    <Car className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
+                    <h2 className="font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Parken" : "Parking"}</h2>
+                  </div>
+                  <span className="rounded-full bg-primary/10 px-3 py-1 font-work text-xs font-semibold text-primary">
+                    {language === "de" ? "1h frei" : "1h free"}
+                  </span>
+                </div>
+                <p className="font-work text-sm leading-relaxed text-muted-foreground">
+                  {SITE.transportNote[language]}
                 </p>
+                <dl className="mt-5 grid gap-3">
+                  {parkingDetails.map((detail) => (
+                    <div key={detail.label} className="rounded-md border border-border/60 bg-background/60 p-3">
+                      <dt className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">{detail.label}</dt>
+                      <dd className="mt-1 font-work text-sm leading-relaxed text-foreground">{detail.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <Button variant="outline" className="mt-5 w-full font-work" asChild>
+                  <a href={parkingMapsUrl} target="_blank" rel="noopener noreferrer">
+                    <MapPin className="mr-2 h-4 w-4" />
+                    {language === "de" ? "Garage öffnen" : "Open garage map"}
+                    <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </a>
+                </Button>
               </div>
             </section>
 
