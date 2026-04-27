@@ -64,7 +64,7 @@ const StaffHub = () => {
 
   return (
     <div className="min-h-screen bg-section-soft">
-      <SEOHead title="Staff Hub" description="Prenotazioni, ingredienti e richieste interne." path="/staff" noindex />
+      <SEOHead title="Staff Hub" description="Current menu, ingredients and internal notes." path="/staff" noindex />
       <main className="container mx-auto px-4 py-8 md:py-10">
         <header className="mb-8 flex flex-col gap-4 border-b border-border/70 pb-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -94,23 +94,23 @@ const StaffHub = () => {
           <aside className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
-                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Piatti e ingredienti</h2>
+                <h2 className="font-cormorant text-3xl font-semibold text-foreground">Dishes and ingredients</h2>
                 <Button variant="outline" size="sm" onClick={refresh}>Sync</Button>
               </div>
               <div className="grid gap-4">
-                {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Menu in caricamento…</p> : menu.days.map((day) => (
+                {isMenuLoading ? <p className="font-work text-sm text-muted-foreground">Loading menu…</p> : menu.days.map((day) => (
                   <article key={day.day.de} className="rounded-md bg-background/70 p-4">
                     <h3 className="font-work text-xs font-semibold uppercase tracking-[0.1em] text-primary">{day.day.de}</h3>
                     {[
-                      { label: "Suppe", name: day.soup.de, meta: day.soupMeta },
+                      { label: "Soup", name: day.soup.en || day.soup.de, meta: day.soupMeta },
                       { label: "Green dish", name: day.green.de, meta: day.greenMeta },
                       { label: "Blue dish", name: day.blue.de, meta: day.blueMeta },
                     ].map((dish) => (
                       <div key={`${day.day.de}-${dish.label}`} className="mt-3 border-t border-border/60 pt-3">
                         <p className="font-work text-xs font-semibold text-muted-foreground">{dish.label}</p>
                         <p className="font-work text-sm font-medium text-foreground">{dish.name}</p>
-                        {dish.meta?.ingredientsMain?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Ingredienti: {dish.meta.ingredientsMain.join(", ")}</p> : null}
-                        {dish.meta?.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Allergeni: {dish.meta.allergens.join(", ")}</p> : null}
+                        {dish.meta?.ingredientsMain?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Ingredients: {dish.meta.ingredientsMain.join(", ")}</p> : null}
+                        {dish.meta?.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground">Allergens: {dish.meta.allergens.join(", ")}</p> : null}
                       </div>
                     ))}
                   </article>
@@ -119,9 +119,9 @@ const StaffHub = () => {
             </section>
 
             <section className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card md:p-6">
-              <h2 className="font-cormorant text-3xl font-semibold text-foreground">Torte</h2>
+              <h2 className="font-cormorant text-3xl font-semibold text-foreground">Cakes</h2>
               <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">
-                Sezione pronta per le richieste torte. La attiviamo quando sono definiti prodotti, anticipo minimo e campi ordine.
+                This section is ready for cake requests. We can activate it once products, minimum notice and order fields are defined.
               </p>
             </section>
           </aside>
