@@ -17,6 +17,7 @@ import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import type { DishDetails } from "@/data/allergensData";
+import { splitDishText } from "@/lib/splitDishText";
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -64,6 +65,37 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
 const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
   <MenuDishDetails details={meta ?? {}} compact />
 );
+
+const weeklyDishLabels = {
+  soup: { de: "Suppe", en: "Soup" },
+  green: { de: "Grünes Gericht", en: "Green Dish" },
+  blue: { de: "Blaues Gericht", en: "Blue Dish" },
+} as const;
+
+const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof typeof weeklyDishLabels; text: string; price: string; meta?: DishDetails; language: "de" | "en" }) => {
+  const dishCopy = splitDishText(text, language, kind);
+
+  return (
+    <div className="flex justify-between items-start gap-2">
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
+            {dishCopy.name}
+          </p>
+          <span className={`rounded-full border px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "border-blue/25 bg-blue/10 text-blue" : "border-accent/25 bg-accent/10 text-accent"}`}>
+            {weeklyDishLabels[kind][language]}
+          </span>
+        </div>
+        {dishCopy.description && (
+          <p className="mt-1 text-muted-foreground whitespace-pre-line">{dishCopy.description}</p>
+        )}
+        <DietaryBadges text={text} language={language} />
+        <WeeklyDishDetails text={text} meta={meta} />
+      </div>
+      <span className="text-primary text-xs font-medium shrink-0">{price}</span>
+    </div>
+  );
+};
 
 export const MenuSection = () => {
   const { language } = useLanguage();
