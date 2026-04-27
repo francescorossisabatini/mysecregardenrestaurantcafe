@@ -572,9 +572,13 @@ const StaffKitchen = () => {
   const filteredReservations = useMemo(() => reservationStatusFilter === "all"
     ? reservations
     : reservations.filter((reservation) => reservation.status === reservationStatusFilter), [reservationStatusFilter, reservations]);
+  const filteredCakeOrders = useMemo(() => cakeOrderStatusFilter === "all"
+    ? cakeOrders
+    : cakeOrders.filter((order) => order.status === cakeOrderStatusFilter), [cakeOrderStatusFilter, cakeOrders]);
   const dailyCap = 20;
-  const dailyProgress = Math.min(100, Math.round((reservations.length / dailyCap) * 100));
-  const dailyProgressTone = reservations.length >= 19 ? "bg-destructive" : reservations.length >= 15 ? "bg-warning" : "bg-accent";
+  const dailyWorkload = reservations.length + cakeOrders.reduce((sum, order) => sum + order.quantity, 0);
+  const dailyProgress = Math.min(100, Math.round((dailyWorkload / dailyCap) * 100));
+  const dailyProgressTone = dailyWorkload >= 19 ? "bg-destructive" : dailyWorkload >= 15 ? "bg-warning" : "bg-accent";
   const selectedDateIsPast = isPastReservationDate(selectedReservationDate);
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
