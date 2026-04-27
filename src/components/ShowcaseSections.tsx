@@ -12,16 +12,16 @@ export const ShowcaseSections = () => {
   return (
     <>
       {/* SHOWCASE 1: Menu - Image Left, Text Right */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center rounded-2xl border border-border/70 bg-card/45 p-5 shadow-card md:p-8">
             {/* Image */}
             <div>
               <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-lg">
                 <img 
                   src={curryOfTheDay} 
                   alt={language === "de" ? "Tagesmenü" : "Today's special"}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover saturate-[0.96]"
                 />
               </div>
             </div>
@@ -56,9 +56,9 @@ export const ShowcaseSections = () => {
       </section>
 
       {/* SHOWCASE 2: Visit - Text Left, Image Right (Reversed) */}
-      <section className="py-16 md:py-24 bg-muted/20">
+      <section className="py-16 md:py-24 bg-section-accent">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center rounded-2xl border border-border/70 bg-card/50 p-5 shadow-card md:p-8">
             {/* Text - Left on desktop */}
             <div className="space-y-6 order-2 md:order-1">
               <span className="text-xs font-work uppercase tracking-widest text-accent">
@@ -98,7 +98,7 @@ export const ShowcaseSections = () => {
                 <img 
                   src={entranceGarden} 
                   alt={language === "de" ? "Eingang zum Garten" : "Garden entrance"}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover saturate-[0.96]"
                 />
               </div>
             </div>
