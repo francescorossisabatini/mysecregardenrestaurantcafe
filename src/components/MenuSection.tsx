@@ -70,11 +70,11 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
   return (
     <div className="flex justify-between items-start gap-2">
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
           <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
             {dishCopy.name}
           </p>
-          <span className={`rounded-full border px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "border-blue/25 bg-blue/10 text-blue" : "border-accent/25 bg-accent/10 text-accent"}`}>
+          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
             {weeklyDishLabels[kind][language]}
           </span>
         </div>
