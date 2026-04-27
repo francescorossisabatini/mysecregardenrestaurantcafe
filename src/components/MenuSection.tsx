@@ -640,7 +640,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
+                          <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5 lg:scroll-mt-28">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
@@ -654,7 +654,7 @@ export const MenuSection = () => {
                               {language === "de" ? "Getränke" : "Drinks"}
                             </span>
                           </div>
-                          <div className="grid gap-2 sm:grid-cols-2">
+                          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                             {subcategory.items.map((item: KlassikerItem) => {
                               const isSupermindCoffee = supermindCoffeeItemIds.has(item.id);
 
