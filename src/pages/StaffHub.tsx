@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { CalendarDays, ChefHat, ClipboardList, LogOut, Phone, RefreshCw, ShieldCheck } from "lucide-react";
+import { ChefHat, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
@@ -10,13 +10,6 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Reservation = Tables<"reservation_requests">;
 type ReservationStatus = "new" | "confirmed" | "declined" | "archived";
-
-const statusLabels: Record<ReservationStatus, string> = {
-  new: "Nuove",
-  confirmed: "Confermate",
-  declined: "Rifiutate",
-  archived: "Archiviate",
-};
 
 const StaffHub = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -106,12 +99,12 @@ const StaffHub = () => {
   if (!isChecking && session && !isStaff) {
     return (
       <div className="min-h-screen bg-section-soft px-4 py-12">
-        <SEOHead title="Staff Hub" description="Area riservata al personale." path="/staff" noindex />
+          <SEOHead title="Staff Hub" description="Restricted staff area." path="/staff" noindex />
         <main className="mx-auto max-w-xl rounded-lg border border-border/70 bg-card/90 p-6 text-center shadow-card">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
-          <h1 className="font-cormorant text-3xl font-semibold text-foreground">Accesso non autorizzato</h1>
-          <p className="mt-3 font-work text-sm text-muted-foreground">Questo account non è ancora abilitato come staff.</p>
-          <Button onClick={signOut} className="mt-6">Esci</Button>
+          <h1 className="font-cormorant text-3xl font-semibold text-foreground">Unauthorized access</h1>
+          <p className="mt-3 font-work text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
+          <Button onClick={signOut} className="mt-6">Sign out</Button>
         </main>
       </div>
     );
@@ -125,16 +118,12 @@ const StaffHub = () => {
           <div>
             <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">My Secret Garden</p>
             <h1 className="mt-2 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">Staff Hub</h1>
-            <p className="mt-2 font-work text-sm text-muted-foreground">Prenotazioni, menu corrente e appunti operativi.</p>
+            <p className="mt-2 font-work text-sm text-muted-foreground">Current menu, ingredients and internal notes.</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" onClick={loadReservations} disabled={isLoadingReservations}>
-              <RefreshCw className="h-4 w-4" />
-              Aggiorna
-            </Button>
             <Button variant="ghost" onClick={signOut}>
               <LogOut className="h-4 w-4" />
-              Esci
+              Sign out
             </Button>
           </div>
         </header>
