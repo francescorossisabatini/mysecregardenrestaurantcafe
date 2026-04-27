@@ -77,7 +77,7 @@ export const Navigation = () => {
             className="group justify-self-center flex min-w-0 items-center gap-2 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary/50 md:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
-            <Logo className="h-11 w-11 flex-shrink-0 md:h-12 md:w-12" showTagline={false} aria-hidden="true" />
+            <Logo className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-11 w-11 md:h-12 md:w-12" : "h-9 w-9 md:h-10 md:w-10"}`} showTagline={false} aria-hidden="true" />
             <div className="hidden min-w-0 text-center leading-tight sm:block">
               <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
