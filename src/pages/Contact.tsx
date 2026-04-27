@@ -42,8 +42,12 @@ const ContactPage = () => {
   }, []);
 
   const enterSteps = language === "de"
-    ? ["Vom Gehsteig aus durch den Torbogen gehen.", "Dann links halten, bis sich der Garten hinter der Einfahrt öffnet.", "Am Tresen bestellen oder kurz nach deinem Tisch fragen."]
-    : ["From the street, walk through the archway.", "Then turn left until the garden opens up behind the entrance.", "Order at the counter or ask for your table."];
+    ? ["Geh durch den Bogen in den Raimundhof.", "Folge dem Durchgang weiter, bis du uns siehst.", "Es gibt zwei Eingänge: von einer Seite gehst du mehrere Stufen hinauf, von der anderen Seite gehst du sie hinunter."]
+    : ["Walk through the archway into Raimundhof.", "Keep going through the passage until you see us.", "There are two entrances: from one side you walk up several stairs, from the other side you walk down them."];
+
+  const courtyardInstruction = language === "de"
+    ? "Geh einfach durch den Bogen in den Raimundhof und weiter geradeaus, bis du My Secret Garden siehst. Du kannst von zwei Seiten hineinkommen: je nach Eingang gehst du die Stufen hinauf oder hinunter."
+    : "Just enter through the archway into Raimundhof and keep going until you see My Secret Garden. You can come in from two sides: depending on the entrance, you’ll walk up the stairs or down them.";
 
   const visitJsonLd = {
     "@context": "https://schema.org",
@@ -120,8 +124,8 @@ const ContactPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
                 {language === "de"
-                  ? "Du gehst durch den Bogen an der Mariahilferstraße. Ein paar Schritte später wird es leiser, und der Raimundhof öffnet sich. Hier findest du alles Praktische vor deinem Besuch."
-                  : "Walk through the archway on Mariahilferstraße. A few steps later it gets quieter, and Raimundhof opens up. Here are the practical details before you visit."}
+                  ? "Geh durch den Bogen in den Raimundhof und weiter, bis du uns siehst. Hier findest du die wichtigsten Infos vor deinem Besuch."
+                  : "Walk through the archway into Raimundhof and keep going until you see us. Here are the key details before you visit."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
@@ -167,7 +171,7 @@ const ContactPage = () => {
                       1060 Wien
                     </p>
                     <p className="mt-5 font-work leading-relaxed text-foreground/90">
-                      {SITE.courtyardInstruction[language]}
+                      {courtyardInstruction}
                     </p>
                   </div>
 
