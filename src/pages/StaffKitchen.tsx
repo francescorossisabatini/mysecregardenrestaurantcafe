@@ -749,9 +749,9 @@ const ReservationCard = ({
           ) : null}
           {reservation.status === "confirmed" ? (
             <>
-              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
-              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
-              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
+              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
+              <Button type="button" size="sm" className="h-10 sm:col-span-2" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
         </div>
