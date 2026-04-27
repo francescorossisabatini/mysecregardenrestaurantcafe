@@ -42,8 +42,30 @@ const ContactPage = () => {
   }, []);
 
   const enterSteps = language === "de"
-    ? ["Durch den Bogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof dem ruhigen Innenhof folgen.", "Am Tresen bestellen oder kurz nach deinem Tisch fragen."]
-    : ["Enter through the arch at Mariahilferstraße 45.", "Follow Raimundhof into the quiet courtyard.", "Order at the counter or ask for your table."];
+    ? ["Durch den Torbogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof links halten, bis sich der Garten öffnet.", "Direkt am Tresen bestellen oder kurz nach deinem Tisch fragen."]
+    : ["Walk through the archway at Mariahilferstraße 45.", "Keep left inside Raimundhof until the garden opens up.", "Order at the counter or ask for your table."];
+
+  const visitJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: "My Secret Garden",
+    url: `https://secretgardenrestaurant.at${location.pathname}`,
+    telephone: SITE.phoneTel,
+    servesCuisine: ["Vegetarian", "Vegan", "World Cuisine"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Mariahilferstraße 45, Im Raimundhof",
+      postalCode: "1060",
+      addressLocality: "Wien",
+      addressCountry: "AT",
+    },
+    openingHoursSpecification: [{
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "11:00",
+      closes: "19:00",
+    }],
+  };
 
   const updateReservationField = (field: keyof ReservationForm, value: string) => {
     setReservationForm((current) => ({ ...current, [field]: value }));
@@ -80,11 +102,12 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={language === "de" ? "Besuche uns" : "Visit Us"}
+        title={language === "de" ? "Öffnungszeiten & Anfahrt" : "Hours & Directions"}
         description={language === "de"
-          ? "So findest du My Secret Garden im Raimundhof: Eingang, Öffnungszeiten, Barrierefreiheit, Parken und Tischanfrage."
-          : "How to find My Secret Garden in Raimundhof: entrance, opening hours, accessibility, parking and table requests."}
+          ? "Vegetarisches Café im Innenhof, Mariahilferstraße 45, 1060 Wien. Mo–Sa 11–19 Uhr. U3 Neubaugasse, 2 Minuten zu Fuß."
+          : "Vegetarian café in a hidden courtyard, Mariahilferstraße 45, Vienna. Open Mon–Sat 11am–7pm. 2 min from U3 Neubaugasse."}
         path={location.pathname}
+        jsonLd={visitJsonLd}
       />
       <Navigation />
 
@@ -93,12 +116,12 @@ const ContactPage = () => {
           <div className="mx-auto max-w-5xl">
             <header className="mb-10 text-center md:mb-14">
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
-                {language === "de" ? "Besuche uns" : "Visit Us"}
+                {language === "de" ? "Besuch uns" : "Visit us"}
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
                 {language === "de"
-                  ? "My Secret Garden liegt im Raimundhof. Der Eingang ist leicht zu übersehen. Hier findest du den Weg, die Zeiten und die wichtigsten Infos vor deinem Besuch."
-                  : "My Secret Garden is inside Raimundhof. The entrance is easy to miss. Here is the way in, the hours and the practical details before you visit."}
+                  ? "My Secret Garden liegt im Innenhof des Raimundhofs — Mariahilferstraße 45, 1060 Wien. Hier findest du den Weg, die Öffnungszeiten und die wichtigsten Infos vor deinem Besuch."
+                  : "My Secret Garden is in the courtyard of Raimundhof — Mariahilferstraße 45, 1060 Vienna. Here is the way in, the opening hours and the practical details before you visit."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
