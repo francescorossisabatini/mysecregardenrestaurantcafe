@@ -9,11 +9,31 @@ import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { useLanguage } from "@/contexts/LanguageContext";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
+import { supabase } from "@/integrations/supabase/client";
+
+type ReservationForm = {
+  fullName: string;
+  date: string;
+  time: string;
+  partySize: string;
+  contact: string;
+  notes: string;
+};
 
 const ContactPage = () => {
   const { language } = useLanguage();
   const location = useLocation();
   const [requestSent, setRequestSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [reservationForm, setReservationForm] = useState<ReservationForm>({
+    fullName: "",
+    date: "",
+    time: "",
+    partySize: "2",
+    contact: "",
+    notes: "",
+  });
 
   const tomorrow = useMemo(() => {
     const date = new Date();
@@ -25,9 +45,36 @@ const ContactPage = () => {
     ? ["Durch den Bogen bei Mariahilferstraße 45 gehen.", "Im Raimundhof dem ruhigen Innenhof folgen.", "Am Tresen bestellen oder kurz nach deinem Tisch fragen."]
     : ["Enter through the arch at Mariahilferstraße 45.", "Follow Raimundhof into the quiet courtyard.", "Order at the counter or ask for your table."];
 
-  const handleReservationSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const updateReservationField = (field: keyof ReservationForm, value: string) => {
+    setReservationForm((current) => ({ ...current, [field]: value }));
+    setSubmitError(null);
+    setRequestSent(false);
+  };
+
+  const handleReservationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const { error } = await supabase.from("reservation_requests").insert({
+      full_name: reservationForm.fullName.trim(),
+      contact: reservationForm.contact.trim(),
+      reservation_date: reservationForm.date,
+      reservation_time: reservationForm.time,
+      party_size: Number(reservationForm.partySize),
+      notes: reservationForm.notes.trim() || null,
+      language,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      setSubmitError(language === "de" ? "Die Anfrage konnte nicht gesendet werden. Bitte ruf uns kurz an." : "We could not send the request. Please call us instead.");
+      return;
+    }
+
     setRequestSent(true);
+    setReservationForm({ fullName: "", date: "", time: "", partySize: "2", contact: "", notes: "" });
   };
 
   return (
