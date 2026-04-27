@@ -535,13 +535,13 @@ export const MenuSection = () => {
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
           <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32 lg:scroll-mt-28">
             <div className="text-center mb-8 lg:text-left">
-              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-3">
+              <h2 className="mb-3 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl lg:text-6xl">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
+              <p className="mx-auto max-w-sm font-lora text-base leading-relaxed text-foreground/78 md:text-lg lg:mx-0 lg:max-w-2xl">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
-              <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
+              <p className="mt-3 font-work text-xs font-semibold uppercase tracking-[0.1em] text-accent">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
@@ -571,7 +571,7 @@ export const MenuSection = () => {
             <div className="space-y-10 lg:space-y-12">
               {klassikerMenu.categories.map((category) => (
                 <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40 lg:scroll-mt-28">
-                  <h3 className="font-cormorant text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
+                  <h3 className="mb-4 border-b border-border/50 pb-3 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">
                     {cleanDisplayText(category.name[language])}
                   </h3>
                   
@@ -585,7 +585,7 @@ export const MenuSection = () => {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className={`font-cormorant text-base font-semibold mb-1 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
+                              <h4 className={`mb-1 font-cormorant text-2xl font-semibold leading-snug ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                                 {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-foreground italic">
@@ -594,7 +594,7 @@ export const MenuSection = () => {
                                 )}
                               </h4>
                               {item.description && (
-                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+                                <p className={`font-lora text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground/72'}`}>
                                   {cleanDisplayText(item.description[language])}
                                 </p>
                               )}
@@ -630,7 +630,7 @@ export const MenuSection = () => {
                                 />
                               )}
                             </div>
-                            <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
+                            <span className={`shrink-0 rounded-full px-2.5 py-1 font-work text-sm font-semibold ${item.isUnavailable ? 'bg-muted text-muted-foreground' : 'bg-accent/10 text-accent'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
