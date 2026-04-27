@@ -149,7 +149,7 @@ export const Navigation = () => {
               className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
             >
-              <Logo className="w-10 h-10" aria-hidden="true" />
+              <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
             </Link>
             <button
