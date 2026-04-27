@@ -49,7 +49,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       )}
       {labels.isGlutenFree && (
         <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-glutenFree">
-          {language === "de" ? "glutenfrei" : "gluten-free"}
+          {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
         </span>
       )}
       {labels.isBio && (
@@ -276,8 +276,8 @@ export const MenuSection = () => {
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-foreground font-work leading-relaxed">
                   {language === "de"
-                    ? "Glutenfreie Optionen sind markiert. Unsere Küche ist aber klein und nicht rein glutenfrei. Bei Allergien bitte kurz fragen, lieber einmal zu viel."
-                    : "Gluten-free options are marked. Our kitchen is small and not fully gluten-free. If you have allergies, please ask us first."}
+                    ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Unsere Küche ist klein und nicht für Zöliakie geeignet. Bei Allergien bitte kurz fragen."
+                    : "Marked options are made without gluten-containing ingredients. Our kitchen is small and not suitable for coeliac disease. If you have allergies, please ask us first."}
                 </p>
               </div>
               </>
@@ -555,7 +555,7 @@ export const MenuSection = () => {
                                   )}
                                   {item.isGlutenFree && (
                                     <span className="text-xs font-work font-semibold text-state-glutenFree">
-                                      {language === "de" ? "glutenfrei" : "gluten-free"}
+                                      {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
                                     </span>
                                   )}
                                   {item.isBio && (
