@@ -382,6 +382,11 @@ const StaffKitchen = () => {
   const [isReservationsLoading, setIsReservationsLoading] = useState(false);
   const [reservationError, setReservationError] = useState<string | null>(null);
   const [updatingReservationIds, setUpdatingReservationIds] = useState<string[]>([]);
+  const [cakeOrders, setCakeOrders] = useState<StaffCakeOrder[]>([]);
+  const [cakeOrderStatusFilter, setCakeOrderStatusFilter] = useState<CakeOrderStatusFilter>("all");
+  const [isCakeOrdersLoading, setIsCakeOrdersLoading] = useState(false);
+  const [cakeOrderError, setCakeOrderError] = useState<string | null>(null);
+  const [updatingCakeOrderIds, setUpdatingCakeOrderIds] = useState<string[]>([]);
   const labels = text[language];
 
   const signOut = async () => {
@@ -444,6 +449,48 @@ const StaffKitchen = () => {
     if (updateError) {
       setReservations(previous);
       setReservationError(language === "de" ? "Fehler, bitte nochmal versuchen." : "Error, please try again.");
+    }
+  };
+
+  const loadCakeOrders = async (date = selectedReservationDate) => {
+    setIsCakeOrdersLoading(true);
+    setCakeOrderError(null);
+
+    const { data, error: requestError } = await (supabase.from("cake_orders") as any)
+      .select("id, name, phone, cake_choice, quantity, pickup_date, notes, payment_acknowledged, status, staff_notes, language, created_at, updated_at")
+      .eq("pickup_date", date)
+      .order("created_at", { ascending: true });
+
+    if (requestError) {
+      setCakeOrderError(text[language].cakeOrderError);
+      setCakeOrders([]);
+    } else {
+      setCakeOrders(((data ?? []) as StaffCakeOrder[]).map((order) => ({ ...order, status: order.status || "pending" })));
+    }
+
+    setIsCakeOrdersLoading(false);
+  };
+
+  const updateCakeOrder = async (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => {
+    const parsed = cakeOrderUpdateSchema.safeParse(update);
+    if (!parsed.success) {
+      setCakeOrderError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
+      return;
+    }
+
+    const previous = cakeOrders;
+    setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
+    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
+
+    const { error: updateError } = await (supabase.from("cake_orders") as any)
+      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .eq("id", order.id);
+
+    setUpdatingCakeOrderIds((ids) => ids.filter((id) => id !== order.id));
+
+    if (updateError) {
+      setCakeOrders(previous);
+      setCakeOrderError(language === "de" ? "Fehler, bitte nochmal versuchen." : "Error, please try again.");
     }
   };
 
