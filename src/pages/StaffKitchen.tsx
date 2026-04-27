@@ -322,6 +322,11 @@ const reservationUpdateSchema = z.object({
   status: z.enum(["new", "confirmed", "cancelled", "arrived", "no_show"]).optional(),
   staff_notes: z.string().trim().max(500).nullable().optional(),
 });
+const cakeOrderStatuses: CakeOrderStatusFilter[] = ["all", "pending", "confirmed", "fulfilled", "cancelled"];
+const cakeOrderUpdateSchema = z.object({
+  status: z.enum(["pending", "confirmed", "cancelled", "fulfilled"]).optional(),
+  staff_notes: z.string().trim().max(500).nullable().optional(),
+});
 
 const todayIso = () => new Date().toISOString().split("T")[0];
 
@@ -351,6 +356,15 @@ const reservationFilterLabel = (status: ReservationStatusFilter, labels: Record<
   cancelled: labels.filterCancelled,
   no_show: labels.filterNoShow,
 }[status]);
+
+const cakeOrderStatusLabel = (status: CakeOrderStatus, labels: Record<string, string>) => ({
+  pending: labels.statusPending,
+  confirmed: labels.statusConfirmed,
+  fulfilled: labels.statusFulfilled,
+  cancelled: labels.statusCancelled,
+}[status]);
+
+const cakeOrderFilterLabel = (status: CakeOrderStatusFilter, labels: Record<string, string>) => status === "all" ? labels.filterAll : cakeOrderStatusLabel(status, labels);
 
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
