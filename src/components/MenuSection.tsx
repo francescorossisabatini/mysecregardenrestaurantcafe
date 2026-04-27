@@ -12,6 +12,7 @@ import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
@@ -19,6 +20,15 @@ import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 import supermindLogo from "@/assets/supermind-logo.png";
+
+const cakeMenuItems = [
+  "Chocolate Mousse Cake",
+  "Poppy Seeds Hazelnut Cake",
+  "Carrot Spice Cake",
+  "Walnut Brownie",
+  "Salty Caramel Slice",
+  "Vegan Cheesecake (Cashew Paste)",
+];
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
