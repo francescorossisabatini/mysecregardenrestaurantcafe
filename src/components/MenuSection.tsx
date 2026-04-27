@@ -610,7 +610,10 @@ export const MenuSection = () => {
                             </span>
                           </div>
                           <div className="grid gap-2 sm:grid-cols-2">
-                            {subcategory.items.map((item: KlassikerItem) => (
+                            {subcategory.items.map((item: KlassikerItem) => {
+                              const isSupermindCoffee = supermindCoffeeItemIds.has(item.id);
+
+                              return (
                               <div 
                                 key={item.id} 
                                 className="rounded-xl border border-border/50 bg-background/60 p-3"
@@ -624,6 +627,18 @@ export const MenuSection = () => {
                                       <p className="mt-1 text-xs font-work text-muted-foreground">
                                         {cleanDisplayText(item.sizeNote)}
                                       </p>
+                                    )}
+                                    {isSupermindCoffee && (
+                                      <a
+                                        href="https://supermind.at/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:border-primary/35 hover:text-primary"
+                                        aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind coffee website"}
+                                      >
+                                        <img src={supermindLogo} alt="" className="h-4 w-auto object-contain" loading="lazy" />
+                                        {language === "de" ? "Kaffee by Supermind" : "Coffee by Supermind"}
+                                      </a>
                                     )}
                                   </div>
                                   <span className="text-accent font-semibold text-sm font-work shrink-0">
@@ -642,7 +657,8 @@ export const MenuSection = () => {
                                   />
                                 )}
                               </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
