@@ -225,40 +225,40 @@ const ContactPage = () => {
               <form className="grid gap-4" onSubmit={handleReservationSubmit}>
                 <label className="grid gap-2 font-work text-sm text-foreground">
                   {language === "de" ? "Name und Nachname" : "Full name"}
-                  <input required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                  <input value={reservationForm.fullName} onChange={(event) => updateReservationField("fullName", event.target.value)} required minLength={2} maxLength={120} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                 </label>
                 <div className="grid gap-4 sm:grid-cols-3">
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Datum" : "Date"}
-                    <input type="date" min={tomorrow} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                    <input type="date" value={reservationForm.date} onChange={(event) => updateReservationField("date", event.target.value)} min={tomorrow} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                   </label>
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Uhrzeit" : "Time"}
-                    <input type="time" min="11:00" max="19:00" required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                    <input type="time" value={reservationForm.time} onChange={(event) => updateReservationField("time", event.target.value)} min="11:00" max="19:00" required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                   </label>
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Personen" : "People"}
-                    <select required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
-                      {Array.from({ length: 10 }, (_, index) => index + 1).map((count) => <option key={count}>{count}</option>)}
+                    <select value={reservationForm.partySize} onChange={(event) => updateReservationField("partySize", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
+                      {Array.from({ length: 20 }, (_, index) => index + 1).map((count) => <option key={count} value={count}>{count}</option>)}
                     </select>
                   </label>
                 </div>
                 <label className="grid gap-2 font-work text-sm text-foreground">
                   {language === "de" ? "Email oder Telefon" : "Email or phone"}
-                  <input required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                  <input value={reservationForm.contact} onChange={(event) => updateReservationField("contact", event.target.value)} required minLength={3} maxLength={160} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                 </label>
                 <label className="grid gap-2 font-work text-sm text-foreground">
                   {language === "de" ? "Notizen" : "Notes"}
-                  <textarea rows={3} placeholder={language === "de" ? "Allergie, besondere Anlässe…" : "Allergies, special occasions…"} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                  <textarea value={reservationForm.notes} onChange={(event) => updateReservationField("notes", event.target.value)} rows={3} maxLength={600} placeholder={language === "de" ? "Allergie, besondere Anlässe…" : "Allergies, special occasions…"} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                 </label>
-                <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button type="submit" disabled={isSubmitting} className="bg-primary text-primary-foreground hover:bg-primary/90">
                   <Users className="mr-2 h-4 w-4" />
-                  {language === "de" ? "Tisch anfragen" : "Send request"}
+                  {isSubmitting ? (language === "de" ? "Wird gesendet…" : "Sending…") : (language === "de" ? "Tisch anfragen" : "Send request")}
                 </Button>
                 <p className="font-work text-sm text-muted-foreground">
-                  {requestSent
-                    ? (language === "de" ? "Anfrage erhalten. Wir melden uns bald." : "Request received. We'll get back to you soon.")
-                    : (language === "de" ? "Wir bestätigen deine Anfrage innerhalb von 24 Stunden." : "We confirm your request within 24 hours.")}
+                  {submitError ?? (requestSent
+                    ? (language === "de" ? "Anfrage erhalten. Wir melden uns bald zur Bestätigung." : "Request received. We'll get back to you soon to confirm.")
+                    : (language === "de" ? "Wir bestätigen deine Anfrage innerhalb von 24 Stunden." : "We confirm your request within 24 hours."))}
                 </p>
               </form>
             </section>
