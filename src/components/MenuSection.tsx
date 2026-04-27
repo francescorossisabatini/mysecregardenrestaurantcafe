@@ -50,7 +50,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   if (visibleLabels.length === 0) return null;
   
   return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+    <p className="mt-3 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary/85">
       {joinDisplayText(visibleLabels)}
     </p>
   );
@@ -82,20 +82,20 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
     <div className="flex justify-between items-start gap-2">
       <div className="min-w-0 flex-1">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
-          <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
+          <p className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
             {cleanDisplayText(dishCopy.name)}
           </p>
-          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
+          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.1em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
             {weeklyDishLabels[kind][language]}
           </span>
         </div>
         {dishCopy.description && (
-          <p className="mt-1 text-muted-foreground whitespace-pre-line">{cleanDisplayText(dishCopy.description)}</p>
+          <p className="mt-1 font-lora leading-relaxed text-foreground/78 whitespace-pre-line">{cleanDisplayText(dishCopy.description)}</p>
         )}
         <DietaryBadges text={text} language={language} />
         <WeeklyDishDetails text={text} meta={meta} />
       </div>
-      <span className="text-primary text-xs font-medium shrink-0">{price}</span>
+      <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-xs font-semibold text-accent">{price}</span>
     </div>
   );
 };
