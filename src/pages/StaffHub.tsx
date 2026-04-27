@@ -28,7 +28,17 @@ type StaffMenuRecord = {
   allergens: string[];
   notes: string[];
   sourceSheet: string;
+  snapshotPeriod?: string;
+  menuDay?: string;
+  isCurrent: boolean;
   fields: Array<{ label: string; value: string }>;
+};
+
+type StaffMenuResponse = {
+  currentPeriod?: string;
+  currentRecords: StaffMenuRecord[];
+  archivedRecords: StaffMenuRecord[];
+  allRecords: StaffMenuRecord[];
 };
 
 const mergeDishMeta = (dishText: string, sheetMeta?: DishMeta): DishMeta => {
@@ -46,7 +56,7 @@ const StaffHub = () => {
   const [isChecking, setIsChecking] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [cakeRecords, setCakeRecords] = useState<StaffMenuRecord[]>([]);
+  const [cakePlan, setCakePlan] = useState<StaffMenuResponse>({ currentRecords: [], archivedRecords: [], allRecords: [] });
   const [isCakeLoading, setIsCakeLoading] = useState(false);
   const [cakeError, setCakeError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,9 +68,14 @@ const StaffHub = () => {
     const { data, error: functionError } = await supabase.functions.invoke("get-staff-menu-details");
     if (functionError || !data?.success) {
       setCakeError("Kuchenplan could not be loaded from Google Sheets.");
-      setCakeRecords([]);
+      setCakePlan({ currentRecords: [], archivedRecords: [], allRecords: [] });
     } else {
-      setCakeRecords(data.data.records ?? []);
+      setCakePlan({
+        currentPeriod: data.data.currentPeriod,
+        currentRecords: data.data.currentRecords ?? [],
+        archivedRecords: data.data.archivedRecords ?? [],
+        allRecords: data.data.allRecords ?? [],
+      });
     }
     setIsCakeLoading(false);
   };
@@ -99,10 +114,12 @@ const StaffHub = () => {
     setSession(null);
   };
 
-  const filteredCakeRecords = cakeRecords.filter((record) => {
+  const searchableCakeRecords = searchTerm.trim() ? cakePlan.allRecords : cakePlan.currentRecords;
+
+  const filteredCakeRecords = searchableCakeRecords.filter((record) => {
     const query = searchTerm.trim().toLowerCase();
     if (!query) return true;
-    return [record.title, record.category, record.description, ...record.ingredients, ...record.allergens, ...record.notes]
+    return [record.title, record.category, record.menuDay, record.description, record.snapshotPeriod, ...record.ingredients, ...record.allergens, ...record.notes]
       .filter(Boolean)
       .some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
   });
@@ -155,15 +172,15 @@ const StaffHub = () => {
           </div>
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <CakeSlice className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Kuchenplan items</p>
-            <strong className="font-cormorant text-4xl text-foreground">{cakeRecords.length}</strong>
+            <p className="font-work text-sm text-muted-foreground">Küchenplan current</p>
+            <strong className="font-cormorant text-4xl text-foreground">{cakePlan.currentRecords.length}</strong>
           </div>
         </section>
 
         <Tabs defaultValue="weekly" className="grid gap-6">
           <TabsList className="w-full justify-start overflow-x-auto bg-card/85">
             <TabsTrigger value="weekly">Weekly menu</TabsTrigger>
-            <TabsTrigger value="cakes">Kuchenplan</TabsTrigger>
+            <TabsTrigger value="cakes">Küchenplan</TabsTrigger>
           </TabsList>
 
           <TabsContent value="weekly" className="mt-0">
@@ -208,24 +225,24 @@ const StaffHub = () => {
                 <div>
                   <div className="flex items-center gap-2">
                     <ClipboardList className="h-5 w-5 text-primary" aria-hidden="true" />
-                    <h2 className="font-cormorant text-3xl font-semibold text-foreground">Kuchenplan ingredient details</h2>
+                    <h2 className="font-cormorant text-3xl font-semibold text-foreground">Küchenplan weekly prep</h2>
                   </div>
-                  <p className="mt-1 font-work text-sm text-muted-foreground">Detailed cake and dessert data read from the Kuchenplan sheet.</p>
+                  <p className="mt-1 font-work text-sm text-muted-foreground">Current Küchenplan sections from Google Sheets, with archived dishes searchable below.</p>
                 </div>
                 <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto">
                   <div className="relative min-w-0 sm:w-72">
                     <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search ingredients" className="pl-9" />
+                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search current and archive" className="pl-9" />
                   </div>
-                  <Button variant="outline" onClick={loadCakePlan} disabled={isCakeLoading}>{isCakeLoading ? "Loading" : "Sync Kuchenplan"}</Button>
+                  <Button variant="outline" onClick={loadCakePlan} disabled={isCakeLoading}>{isCakeLoading ? "Loading" : "Sync Küchenplan"}</Button>
                 </div>
               </div>
 
               {cakeError ? <p className="mb-4 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{cakeError}</p> : null}
 
               <div className="grid gap-4 xl:grid-cols-2">
-                {isCakeLoading && !cakeRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Kuchenplan...</p> : null}
-                {!isCakeLoading && !filteredCakeRecords.length ? <p className="font-work text-sm text-muted-foreground">No Kuchenplan items found.</p> : null}
+                {isCakeLoading && !cakePlan.allRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Küchenplan...</p> : null}
+                {!isCakeLoading && !filteredCakeRecords.length ? <p className="font-work text-sm text-muted-foreground">No Küchenplan items found.</p> : null}
                 {filteredCakeRecords.map((record) => (
                   <article key={record.id} className="rounded-md bg-background/70 p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
