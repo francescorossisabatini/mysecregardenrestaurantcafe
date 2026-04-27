@@ -30,7 +30,7 @@ export const ValueProposition = () => {
             <p className="font-lora text-base md:text-lg text-muted-foreground italic">
               {language === "de" 
                 ? "Vegetarisch und vegan. Viele Gerichte ohne glutenhaltige Zutaten, aber keine zertifiziert glutenfreie Küche." 
-                : "Vegetarian and vegan. Many dishes without gluten-containing ingredients, but not a certified gluten-free kitchen."}
+                : "Vegetarian and vegan. Many dishes without gluten containing ingredients, but not a certified gluten free kitchen."}
             </p>
           </div>
           
