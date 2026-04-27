@@ -75,8 +75,8 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
                 <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden="true" />
                 <p className="font-work text-xs leading-relaxed text-muted-foreground">
                   {language === "de"
-                    ? "Glutenfrei nach Rezept. Nicht geeignet bei Zöliakie — wir arbeiten in einer Küche, in der Gluten verwendet wird."
-                    : "Gluten-free by recipe. Not suitable for coeliac disease — our kitchen uses gluten-containing ingredients."}
+                    ? "Ohne glutenhaltige Zutaten nach Rezept. Nicht geeignet bei Zöliakie, da wir in derselben Küche auch Gluten verarbeiten."
+                    : "Made without gluten-containing ingredients by recipe. Not suitable for coeliac disease, as we also handle gluten in the same kitchen."}
                 </p>
               </div>
             )}
