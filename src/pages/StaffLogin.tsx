@@ -1,16 +1,20 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { LockKeyhole, Mail } from "lucide-react";
+import { LockKeyhole, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 
+const STAFF_USERNAME_EMAIL: Record<string, string> = {
+  staffprova: "staffprova@secretgardenrestaurant.at",
+};
+
 const StaffLogin = () => {
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,11 +37,18 @@ const StaffLogin = () => {
     setIsSubmitting(true);
     setError(null);
 
+    const email = STAFF_USERNAME_EMAIL[username.trim().toLowerCase()];
+    if (!email) {
+      setIsSubmitting(false);
+      setError("Access denied. Check your username and password.");
+      return;
+    }
+
     const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
     setIsSubmitting(false);
 
     if (loginError) {
-      setError("Accesso non riuscito. Controlla email e password.");
+      setError("Access denied. Check your username and password.");
       return;
     }
 
@@ -48,7 +59,7 @@ const StaffLogin = () => {
 
   return (
     <div className="min-h-screen bg-section-soft px-4 py-12">
-      <SEOHead title="Staff Login" description="Accesso riservato al personale di My Secret Garden." path="/staff/login" noindex />
+      <SEOHead title="Staff Login" description="Restricted staff access for My Secret Garden." path="/staff/login" noindex />
       <main className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-md items-center">
         <section className="w-full rounded-lg border border-border/70 bg-card/90 p-6 shadow-card md:p-8">
           <div className="mb-8 text-center">
@@ -57,21 +68,21 @@ const StaffLogin = () => {
             </div>
             <h1 className="font-cormorant text-4xl font-semibold text-foreground">Staff Hub</h1>
             <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">
-              Accesso riservato al personale.
+              Restricted access for the team.
             </p>
           </div>
 
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <label className="grid gap-2 font-work text-sm text-foreground">
-              Email
+              Username
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
                 <input
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+                  type="text"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
                   required
-                  autoComplete="email"
+                  autoComplete="username"
                   className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
                 />
               </div>
@@ -88,7 +99,7 @@ const StaffLogin = () => {
               />
             </label>
             <Button type="submit" disabled={isSubmitting} className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90">
-              {isSubmitting ? "Accesso…" : "Entra"}
+              {isSubmitting ? "Signing in…" : "Sign in"}
             </Button>
             {error && <p className="font-work text-sm text-destructive">{error}</p>}
           </form>
