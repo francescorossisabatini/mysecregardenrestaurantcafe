@@ -17,7 +17,7 @@ export default {
         'ui':      ['0.875rem', { lineHeight: '1.5' }],
         'body':    ['1rem',     { lineHeight: '1.7' }],
         'section': ['1.313rem', { lineHeight: '1.3' }],
-        'hero':    ['3rem',     { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'hero':    ['3rem',     { lineHeight: '1.1', letterSpacing: '0' }],
       },
       fontFamily: {
         'caveat': ['Caveat', 'Brush Script MT', 'cursive'],
