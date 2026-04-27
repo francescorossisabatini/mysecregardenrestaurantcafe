@@ -622,19 +622,19 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="requests" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
               <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
                     <Users className="h-5 w-5" aria-hidden="true" />
-                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTitle}</h2>
+                    <h2 className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{labels.requestsTitle}</h2>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
               </div>
 
-              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
+              <div className="grid gap-4 rounded-lg border border-border bg-background/70 p-3 lg:grid-cols-[1fr_16rem] lg:items-center">
                 <div className="grid grid-cols-3 gap-2">
                   <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
                     <ChevronLeft className="h-4 w-4" />
@@ -646,10 +646,12 @@ const StaffKitchen = () => {
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-muted">
-                  <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
+                <div>
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
                 </div>
-                <p className="text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
               <div className="flex gap-2 overflow-x-auto pb-1">
@@ -664,7 +666,7 @@ const StaffKitchen = () => {
               {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
               {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                 {filteredReservations.map((reservation) => (
                   <ReservationCard
                     key={reservation.id}
