@@ -53,7 +53,7 @@ const LinkPage = () => {
         <div className="mt-8 text-center">
           <p className="text-xs text-muted-foreground font-work">{SITE.addressShort}</p>
           <p className="text-xs text-muted-foreground font-work mt-1">
-            {language === "de" ? "Mo–Sa 11:00–19:00" : "Mon–Sat 11:00–19:00"}
+            {language === "de" ? "Mo bis Sa 11:00 bis 19:00" : "Mon to Sat 11:00 to 19:00"}
           </p>
         </div>
       </div>
