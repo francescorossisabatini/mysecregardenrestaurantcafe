@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-import supermindLogo from "@/assets/supermind-logo.png";
+import supermindLogo from "@/assets/supermind-logo-cropped.png";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -161,12 +161,15 @@ export const HomeMenuPreview = () => {
             href="https://supermind.at/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 flex items-center justify-between gap-4 rounded-2xl border border-border/75 px-4 py-3 text-left surface-card transition-colors hover:border-primary/35"
+            className="mt-3 grid items-center gap-4 rounded-lg border border-border/75 px-4 py-3 text-left surface-card transition-colors hover:border-primary/35 sm:grid-cols-[1fr_auto]"
           >
             <span className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
-              {language === "de" ? "Unser Kaffee: Supermind Kaffee, Wien" : "Our coffee: Supermind Kaffee, Vienna"}
+              <span className="font-semibold uppercase tracking-[0.08em] text-primary">Secret Garden × Supermind</span><br />
+              {language === "de" ? "Wiener Kaffee für unseren ruhigen Gartenmoment." : "Viennese coffee for our quiet garden moment."}
             </span>
-            <img src={supermindLogo} alt="Supermind Kaffee" className="h-9 w-auto shrink-0 object-contain" loading="lazy" />
+            <span className="flex h-14 w-28 items-center justify-center rounded-md border border-border bg-background px-3">
+              <img src={supermindLogo} alt="Supermind Kaffee" className="h-11 w-auto shrink-0 object-contain" loading="lazy" />
+            </span>
           </a>
 
           <div className="mt-8 flex justify-center">
