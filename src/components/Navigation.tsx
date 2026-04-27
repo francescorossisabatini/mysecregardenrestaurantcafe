@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { LockKeyhole, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -113,13 +113,6 @@ export const Navigation = () => {
 
           {/* Language */}
           <div className="hidden items-center justify-end gap-3 lg:flex">
-            <Link
-              to="/staff/login"
-              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors ${isHeroOverlay ? "border-background/25 bg-background/10 text-background hover:bg-background/15" : "border-border/75 bg-card/85 text-primary hover:bg-muted"}`}
-            >
-              <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
-              Staff
-            </Link>
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
           <div className="flex items-center justify-end lg:hidden">
@@ -180,14 +173,6 @@ export const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/staff/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-4 flex items-center gap-2 rounded-full border border-border/75 px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] text-primary/85 transition-colors hover:bg-muted hover:text-primary"
-            >
-              <LockKeyhole className="h-4 w-4" aria-hidden="true" />
-              Staff
-            </Link>
           </nav>
 
         </div>
