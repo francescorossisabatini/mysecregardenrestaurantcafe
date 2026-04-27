@@ -30,7 +30,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   return (
     <div className="mt-2 flex flex-wrap items-center gap-2">
       {labels.isVegan && <span className="rounded-full bg-accent-light/45 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-vegan">vegan</span>}
-      {labels.isGlutenFree && <span className="rounded-full bg-muted px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-glutenFree">{language === "de" ? "glutenfrei" : "gluten-free"}</span>}
+      {labels.isGlutenFree && <span className="rounded-full bg-muted px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-glutenFree">{language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}</span>}
       {labels.isBio && <span className="rounded-full bg-dailyAlt px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-bio">bio</span>}
     </div>
   );
@@ -173,8 +173,8 @@ export const HomeMenuPreview = () => {
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
             <p className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {language === "de"
-                ? "Glutenfreie Optionen sind markiert. Bei Allergien bitte kurz bei uns nachfragen."
-                : "Gluten-free options are marked. If you have allergies, please ask us first."}
+                ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
+                : "Marked options are made without gluten-containing ingredients. If you have allergies, please ask us first."}
             </p>
           </div>
 
