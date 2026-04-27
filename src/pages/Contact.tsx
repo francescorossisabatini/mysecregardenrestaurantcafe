@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, MapPin, Phone, Users } from "lucide-react";
+import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -200,7 +200,7 @@ const ContactPage = () => {
               </div>
             </section>
 
-            <section className="mb-14 grid gap-6 md:grid-cols-3">
+            <section className="mb-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <Clock className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffnungszeiten" : "Opening hours"}</h2>
@@ -216,6 +216,13 @@ const ContactPage = () => {
                   {language === "de"
                     ? "Unser Garten hat Stufen — aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
                     : "Our garden has steps — but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step-free access."}
+                </p>
+              </div>
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
+                <HandPlatter className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "So funktioniert es" : "How it works"}</h2>
+                <p className="font-work leading-relaxed text-muted-foreground">
+                  {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
