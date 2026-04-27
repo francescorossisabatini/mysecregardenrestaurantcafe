@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Archive, CakeSlice, ClipboardList, LogOut, Search, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -163,6 +163,9 @@ const StaffHub = () => {
             <p className="mt-2 font-work text-sm text-muted-foreground">Küchenplan details from Google Sheets with searchable archive.</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <Button variant="default" asChild>
+              <Link to="/staff/kitchen">Kitchen dashboard</Link>
+            </Button>
             <Button variant="outline" onClick={loadKuchenplan} disabled={isKuchenplanLoading}>{isKuchenplanLoading ? "Loading" : "Sync Küchenplan"}</Button>
             <Button variant="ghost" onClick={signOut}>
               <LogOut className="h-4 w-4" />

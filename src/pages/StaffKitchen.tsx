@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { Archive, CalendarDays, ChefHat, ClipboardList, RefreshCw, Search } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
+import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 
 type StaffMenuRecord = {
@@ -115,6 +117,9 @@ const weekRange = (records: StaffMenuRecord[]) => {
 };
 
 const StaffKitchen = () => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
+  const [isStaff, setIsStaff] = useState(false);
   const [kuchenplan, setKuchenplan] = useState<KuchenplanData>(emptyKuchenplanData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -137,7 +142,29 @@ const StaffKitchen = () => {
   };
 
   useEffect(() => {
-    void loadKuchenplan();
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+    });
+
+    supabase.auth.getSession().then(async ({ data }) => {
+      setSession(data.session);
+
+      if (!data.session?.user) {
+        setIsCheckingAccess(false);
+        setIsLoading(false);
+        return;
+      }
+
+      const { data: accessData, error: accessError } = await supabase.functions.invoke("check-staff-access");
+      const hasStaffAccess = !accessError && Boolean(accessData?.isStaff);
+      setIsStaff(hasStaffAccess);
+      setIsCheckingAccess(false);
+
+      if (hasStaffAccess) void loadKuchenplan();
+      else setIsLoading(false);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const currentRecords = kuchenplan.currentRecords.length
@@ -164,6 +191,9 @@ const StaffKitchen = () => {
       .filter((record) => query ? archiveMatches(record, query) : true)
       .sort((a, b) => (recordDate(b) || b.snapshotPeriod || "").localeCompare(recordDate(a) || a.snapshotPeriod || ""));
   }, [categoryFilter, currentRecords, kuchenplan.archiveRecords, kuchenplan.records, searchTerm]);
+
+  if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
+  if (!isCheckingAccess && session && !isStaff) return <Navigate to="/staff" replace />;
 
   return (
     <div className="min-h-screen bg-background font-work text-foreground">
