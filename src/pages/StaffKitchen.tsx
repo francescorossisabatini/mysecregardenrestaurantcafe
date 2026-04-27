@@ -886,6 +886,96 @@ const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus;
   return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
 };
 
+const CakeOrderCard = ({
+  order,
+  language,
+  labels,
+  readOnly,
+  isUpdating,
+  onUpdate,
+}: {
+  order: StaffCakeOrder;
+  language: DashboardLanguage;
+  labels: Record<string, string>;
+  readOnly: boolean;
+  isUpdating: boolean;
+  onUpdate: (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => void;
+}) => {
+  const [staffNotes, setStaffNotes] = useState(order.staff_notes ?? "");
+
+  useEffect(() => {
+    setStaffNotes(order.staff_notes ?? "");
+  }, [order.staff_notes]);
+
+  const canAct = !readOnly && !isUpdating;
+
+  return (
+    <article className="rounded-lg border border-border bg-card p-4 shadow-card">
+      <div className="flex items-start justify-between gap-3">
+        <CakeOrderStatusBadge status={order.status} labels={labels} />
+        <span className="rounded-full bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
+      </div>
+
+      <div className="mt-4">
+        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-primary">{cleanDisplayText(order.cake_choice)}</h3>
+        <p className="mt-1 text-sm font-semibold text-foreground">{cleanDisplayText(order.name)}</p>
+        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-3 text-sm font-medium text-primary hover:border-primary/35" aria-label={`${labels.call} ${order.name}`}>
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          {cleanDisplayText(order.phone)}
+        </a>
+        {order.notes ? (
+          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-foreground">
+            <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <span><span className="font-semibold text-foreground/80">{labels.guestNotes}:</span> {cleanDisplayText(order.notes)}</span>
+          </p>
+        ) : null}
+      </div>
+
+      {!readOnly ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {order.status === "pending" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(order, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(order, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+          {order.status === "confirmed" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(order, { status: "fulfilled" })}>{labels.fulfill}</Button>
+              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(order, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div className="mt-4 border-t border-border pt-4">
+        <label className="grid gap-2 text-sm font-semibold text-foreground">
+          {labels.staffNotes}
+          <Textarea
+            value={staffNotes}
+            onChange={(event) => setStaffNotes(event.target.value.slice(0, 500))}
+            onBlur={() => onUpdate(order, { staff_notes: staffNotes.trim() || null })}
+            placeholder={language === "de" ? "Interne Notiz hinzufügen" : "Add internal note"}
+            className="min-h-20 resize-none font-work font-normal"
+            maxLength={500}
+          />
+        </label>
+      </div>
+    </article>
+  );
+};
+
+const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; labels: Record<string, string> }) => {
+  const className = {
+    pending: "border-warning/40 bg-warning/15 text-warning-foreground",
+    confirmed: "border-accent/40 bg-accent/15 text-accent",
+    fulfilled: "border-primary/40 bg-primary/10 text-primary",
+    cancelled: "border-border bg-muted text-muted-foreground",
+  }[status];
+
+  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
+};
+
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
