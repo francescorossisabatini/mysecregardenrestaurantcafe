@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
 import { CookieConsent } from "@/components/CookieConsent";
+import { FloatingMobileLanguageSwitcher } from "@/components/FloatingMobileLanguageSwitcher";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 // Critical: Load Index immediately for fast FCP
@@ -75,6 +76,7 @@ function AppContent() {
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
+      <FloatingMobileLanguageSwitcher />
       <CookieConsent />
     </BrowserRouter>
   );
