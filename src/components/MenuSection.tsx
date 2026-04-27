@@ -530,19 +530,19 @@ export const MenuSection = () => {
           </div>
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
-          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
-            <div className="text-center mb-8">
-              <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
+          <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32 lg:scroll-mt-28">
+            <div className="text-center mb-8 lg:text-left">
+              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-3">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
               <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
-            <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card">
+            <div className="sticky top-[118px] z-20 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:rounded-2xl md:border md:shadow-card lg:hidden">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
@@ -565,16 +565,16 @@ export const MenuSection = () => {
               </div>
             </div>
             
-            <div className="space-y-8">
+            <div className="space-y-10 lg:space-y-12">
               {klassikerMenu.categories.map((category) => (
-                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
-                  <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
+                <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40 lg:scroll-mt-28">
+                  <h3 className="font-cormorant text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
                     {cleanDisplayText(category.name[language])}
                   </h3>
                   
                   {/* Regular items (non-drinks categories) */}
                   {category.items && (
-                    <div className="space-y-3">
+                    <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
                       {category.items.map((item) => (
                         <div 
                           key={item.id} 
