@@ -797,9 +797,9 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
     <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
-          <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
-          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-accent">{categoryLabels[language][category]}</p>
+          <h3 className="mt-1 font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(record.title)}</h3>
+          {record.description ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-2 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
           {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
