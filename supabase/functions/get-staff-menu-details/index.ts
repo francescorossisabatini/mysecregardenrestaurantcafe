@@ -44,6 +44,22 @@ const headerKind = (label: string) => {
   return "field";
 };
 
+const dayNames = [
+  "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag", "sonntag",
+  "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+  "mo", "di", "mi", "do", "fr", "sa", "so",
+];
+
+const isDayLabel = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase().replace(/[.:]/g, "").trim();
+  return dayNames.some((day) => normalized === day || normalized.startsWith(`${day} `));
+};
+
+const fieldKindFromRowLabel = (label: string) => {
+  const kind = headerKind(label);
+  return kind === "field" ? "description" : kind;
+};
+
 const parseGviz = (text: string): string[][] => {
   const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?\s*$/s);
   if (!match) throw new Error("Invalid sheet response");
