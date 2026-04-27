@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { ExternalLink, ChevronLeft, ChevronRight, Leaf, Heart, Sparkles } from "lucide-react";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { SITE } from "@/config/site";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import gardenReal from "@/assets/garden-real.jpg";
@@ -46,12 +44,15 @@ const AboutUs = () => {
     de: {
       heroTitle: "Unsere Geschichte",
       heroTagline: "Ein Ort der Ruhe mitten in Wien.",
+      manifesto: "Ein Raum für Ruhe und Begegnung.",
+      dietaryLine: "Vegetarisch, vegan, glutenfrei – vieles von Produzenten aus der Region.",
       philosophyLabel: "Unsere Philosophie",
       philosophyTitle: "Unser Ansatz",
       philosophyPara1: "Im Jahr 2018 entstand My Secret Garden als ein Traum: ein Ort, wo achtsames Kochen und friedliche Atmosphäre zusammenkommen.",
       philosophyQuote: "Kochen ist Gebet. Essen ist Dankbarkeit.",
       philosophyPara2: "Wir kochen täglich frisch mit biologischen und regionalen Zutaten. Ohne Eile, mit Aufmerksamkeit und Freude.",
       pillarsTitle: "Was uns ausmacht",
+      pillarsIntro: "Unsere Küche ist World Cuisine: inspiriert von vielen vegetarischen Traditionen, gekocht mit Sorgfalt und ohne Alkohol.",
       pillar1Title: "Weltküche",
       pillar1Desc: "Wir lassen uns von vegetarischen und veganen Küchen aus aller Welt inspirieren. Von Indien bis Japan, vom Mittelmeer bis Lateinamerika. Jeden Tag eine andere kulinarische Reise.",
       pillar2Title: "Regionale Produkte",
@@ -62,10 +63,12 @@ const AboutUs = () => {
       spaceTitle: "Im Herzen von Wien",
       spacePara1: "Versteckt im Raimundhof an der Mariahilferstraße. Ein ruhiger Innenhof abseits vom Trubel.",
       spacePara2: "Hier vergisst man die Stadt. Grüne Pflanzen, Holztische, sanfte Musik. Ein Ort zum Durchatmen.",
+      spaceNote: "Komm für ein schnelles Mittagessen. Bleib, wenn du einen stillen Moment brauchst.",
       inspirationLabel: "Unsere Inspiration",
       inspirationTitle: "Sri Chinmoy",
       inspirationPara1: "Sri Chinmoy (1931–2007) war ein spiritueller Lehrer, der Meditation, Musik und Kunst als Wege zum inneren Frieden lehrte.",
       inspirationPara2: "Seine Schüler gründeten weltweit vegetarische Restaurants. Orte, wo Kochen und Servieren als meditative Praxis verstanden werden.",
+      inspirationNote: "Diese Haltung prägt den Alltag im Secret Garden: aufmerksam kochen, freundlich servieren, Raum lassen.",
       artTitle: "Jharna-Kala",
       artSubtitle: "Kunst aus der Quelle",
       poemTitle: "Seine Worte",
@@ -74,12 +77,15 @@ const AboutUs = () => {
     en: {
       heroTitle: "Our Story",
       heroTagline: "A place of peace in the heart of Vienna.",
+      manifesto: "A room for stillness and meeting.",
+      dietaryLine: "Vegetarian, vegan, gluten-free – mostly from farmers in the region.",
       philosophyLabel: "Our Philosophy",
       philosophyTitle: "Our Approach",
       philosophyPara1: "My Secret Garden began in 2018 from a simple wish: to create a peaceful place for fresh vegetarian cooking in the middle of Vienna.",
       philosophyQuote: "Cooking is prayer. Eating is gratitude.",
       philosophyPara2: "We cook fresh daily with organic and regional ingredients. Without haste, with attention and joy.",
       pillarsTitle: "What Makes Us Special",
+      pillarsIntro: "Our kitchen is World Cuisine: inspired by vegetarian traditions from many places, cooked with care and always alcohol-free.",
       pillar1Title: "World Cuisine",
       pillar1Desc: "We draw inspiration from vegetarian and vegan cuisines around the world to create our daily dishes. From India to Japan, from the Mediterranean to Latin America. A different culinary journey every day.",
       pillar2Title: "Local Products",
@@ -90,10 +96,12 @@ const AboutUs = () => {
       spaceTitle: "In the Heart of Vienna",
       spacePara1: "Hidden in the Raimundhof on Mariahilferstraße. A quiet courtyard away from the bustle.",
       spacePara2: "Here you forget the city. Green plants, wooden tables, soft music. A place to breathe.",
+      spaceNote: "Come for a quick lunch. Stay when you need a quiet moment.",
       inspirationLabel: "Our Inspiration",
       inspirationTitle: "Sri Chinmoy",
       inspirationPara1: "Sri Chinmoy lived from 1931 to 2007. He was a spiritual teacher who taught meditation, music and art as paths to inner peace.",
       inspirationPara2: "His students founded vegetarian restaurants around the world. In these places, cooking and serving are part of a mindful daily practice.",
+      inspirationNote: "This spirit shapes daily life at Secret Garden: attentive cooking, kind service, and space to breathe.",
       artTitle: "Jharna-Kala",
       artSubtitle: "Art from the Source",
       poemTitle: "His Words",
