@@ -19,14 +19,6 @@ const reviews = [
     dateDe: "vor 2 Wochen",
     dateEn: "2 weeks ago",
   },
-  {
-    textDe: "Der Ort ist wirklich wunderbar: Er bietet raffiniertes, hochwertiges veganes Essen in einer ruhigen und spirituellen Atmosphäre.",
-    textEn: "The place is truly wonderful: it offers refined, high-quality vegan food in a serene and spiritual atmosphere.",
-    author: "b.kishore Bala",
-    role: "Google Maps",
-    dateDe: "vor 2 Wochen",
-    dateEn: "2 weeks ago",
-  },
 ];
 
 export const Reviews = () => {
