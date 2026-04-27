@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { splitDishText } from "@/lib/splitDishText";
+import { cleanDisplayText } from "@/lib/displayText";
 import {
   getTodayHoliday,
   getDateForMenuDay,
@@ -48,7 +49,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
       )}
       {labels.isGlutenFree && (
         <span className="text-xs font-work font-semibold text-primary">
-          {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
+          {language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients"}
         </span>
       )}
       {labels.isBio && (
@@ -81,7 +82,7 @@ const WeeklyDish = ({
     <div>
       <div className="flex flex-wrap items-center gap-2">
         <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground">
-          {dishCopy.name}
+          {cleanDisplayText(dishCopy.name)}
         </h3>
         <span className={`rounded-full border px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
           kind === "blue" ? "border-blue/25 bg-blue/10 text-blue" : "border-accent/25 bg-accent/10 text-accent"
@@ -92,7 +93,7 @@ const WeeklyDish = ({
       </div>
       {dishCopy.description && (
         <p className="mt-1 font-work text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
-          {dishCopy.description}
+          {cleanDisplayText(dishCopy.description)}
         </p>
       )}
       <DietaryBadges text={text} language={language} />

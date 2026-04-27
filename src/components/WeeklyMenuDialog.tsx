@@ -12,6 +12,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Separator } from "@/components/ui/separator";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { MENU_PRICES } from "@/constants/menuPrices";
+import { cleanDisplayText } from "@/lib/displayText";
 
 interface WeeklyMenuDialogProps {
   open: boolean;
@@ -20,12 +21,12 @@ interface WeeklyMenuDialogProps {
 
 const introText = {
   de: `Jeden Tag haben Sie die Wahl zwischen zwei frischen, saisonalen Tagesgerichten für ${MENU_PRICES.DISH}. Das grüne Gericht bereiten wir vegan und ohne glutenhaltige Zutaten zu; das blaue kann Milchprodukte, glutenhaltiges Getreide oder Ei enthalten.`,
-  en: `Every day you have the choice between two fresh, seasonal daily dishes for ${MENU_PRICES.DISH}. The green dish is vegan and made without gluten-containing ingredients; the blue dish may contain dairy products, gluten-containing grains or eggs.`,
+  en: `Every day you have the choice between two fresh, seasonal daily dishes for ${MENU_PRICES.DISH}. The green dish is vegan and made without gluten containing ingredients; the blue dish may contain dairy products, gluten containing grains or eggs.`,
 };
 
 const soupInfo = {
   de: `Unsere Tagessuppen sind vegan und ohne glutenhaltige Zutaten gekocht, klein um ${MENU_PRICES.SOUP_SMALL} / groß um ${MENU_PRICES.SOUP_LARGE}. Ein frisches Bio-Weckerl dazu? ${MENU_PRICES.ROLL_EXTRA}`,
-  en: `Our daily soups are vegan and made without gluten-containing ingredients, small for ${MENU_PRICES.SOUP_SMALL} / large for ${MENU_PRICES.SOUP_LARGE}. A fresh organic roll with it? ${MENU_PRICES.ROLL_EXTRA}`,
+  en: `Our daily soups are vegan and made without gluten containing ingredients, small for ${MENU_PRICES.SOUP_SMALL} / large for ${MENU_PRICES.SOUP_LARGE}. A fresh organic roll with it? ${MENU_PRICES.ROLL_EXTRA}`,
 };
 
 export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) => {
@@ -83,7 +84,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                       </span>
                       <Separator className="flex-1" />
                     </div>
-                    <p className="text-sm leading-relaxed text-foreground">{dayMenu.soup[language]}</p>
+                    <p className="text-sm leading-relaxed text-foreground">{cleanDisplayText(dayMenu.soup[language])}</p>
                   </div>
                 </div>
 
@@ -97,7 +98,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                       </Badge>
                       <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
                     </div>
-                    <p className="text-sm leading-relaxed text-foreground font-medium">{dayMenu.green[language]}</p>
+                    <p className="text-sm leading-relaxed text-foreground font-medium">{cleanDisplayText(dayMenu.green[language])}</p>
                   </div>
                 </div>
 
@@ -113,7 +114,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                         <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
                       </div>
                       <p className="text-sm leading-relaxed text-foreground font-medium">
-                        {dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en}
+                        {cleanDisplayText(dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en)}
                       </p>
                     </div>
                   </div>
@@ -129,8 +130,8 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
             <span className="font-bold text-primary">{language === 'de' ? 'Preise:' : 'Prices:'}</span>{' '}
             <span className="text-foreground/80">
               {language === 'de' 
-                ? `Tagesgerichte ${MENU_PRICES.DISH} • Suppe klein ${MENU_PRICES.SOUP_SMALL} / groß ${MENU_PRICES.SOUP_LARGE} • Bio-Weckerl +${MENU_PRICES.ROLL_EXTRA}`
-                : `Daily dishes ${MENU_PRICES.DISH} • Soup small ${MENU_PRICES.SOUP_SMALL} / large ${MENU_PRICES.SOUP_LARGE} • Organic roll +${MENU_PRICES.ROLL_EXTRA}`}
+                ? `Tagesgerichte ${MENU_PRICES.DISH}. Suppe klein ${MENU_PRICES.SOUP_SMALL} / groß ${MENU_PRICES.SOUP_LARGE}. Bio Weckerl +${MENU_PRICES.ROLL_EXTRA}`
+                : `Daily dishes ${MENU_PRICES.DISH}. Soup small ${MENU_PRICES.SOUP_SMALL} / large ${MENU_PRICES.SOUP_LARGE}. Organic roll +${MENU_PRICES.ROLL_EXTRA}`}
             </span>
           </p>
         </div>

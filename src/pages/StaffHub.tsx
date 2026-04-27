@@ -7,6 +7,7 @@ import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { inferDishDetails } from "@/lib/menuDetails";
+import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 
 type DishMeta = {
   descriptionShort?: string;
@@ -132,11 +133,11 @@ const StaffHub = () => {
                       return (
                         <div key={`${day.day.de}-${dish.label}`} className="mt-4 border-t border-border/60 pt-4">
                           <p className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">{dish.label}</p>
-                          <p className="mt-1 font-work text-sm font-medium leading-relaxed text-foreground">{dish.name}</p>
-                          {details.descriptionShort ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground">{details.descriptionShort}</p> : null}
-                          {details.ingredientsMain?.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Ingredients:</span> {details.ingredientsMain.join(", ")}</p> : null}
+                          <p className="mt-1 font-work text-sm font-medium leading-relaxed text-foreground">{cleanDisplayText(dish.name)}</p>
+                          {details.descriptionShort ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(details.descriptionShort)}</p> : null}
+                          {details.ingredientsMain?.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Ingredients:</span> {joinDisplayText(details.ingredientsMain, ", ")}</p> : null}
                           {details.allergens?.length ? <p className="mt-1 font-work text-xs text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {details.allergens.join(", ")}</p> : null}
-                          {details.gfDisclaimer ? <p className="mt-1 font-work text-xs text-muted-foreground">No gluten-containing ingredients by recipe.</p> : null}
+                          {details.gfDisclaimer ? <p className="mt-1 font-work text-xs text-muted-foreground">No gluten containing ingredients by recipe.</p> : null}
                         </div>
                       );
                     })}

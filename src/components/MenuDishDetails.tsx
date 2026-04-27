@@ -2,6 +2,7 @@ import { ChevronDown, Info } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ALLERGENS, getAllergenByCode, type DishDetails } from "@/data/allergensData";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 
 interface MenuDishDetailsProps {
   details: DishDetails;
@@ -31,7 +32,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
   return (
     <div className="mt-3">
       {details.descriptionShort && (
-        <p className="font-work text-xs leading-relaxed text-muted-foreground">{details.descriptionShort}</p>
+        <p className="font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(details.descriptionShort)}</p>
       )}
       <AllergenCodes codes={details.allergens} />
 
@@ -47,7 +48,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
                 <p className="mb-1 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                   {language === "de" ? "Zutaten" : "Ingredients"}
                 </p>
-                <p className="font-work text-sm leading-relaxed text-foreground/90">{details.ingredientsMain.join(", ")}</p>
+                <p className="font-work text-sm leading-relaxed text-foreground/90">{joinDisplayText(details.ingredientsMain, ", ")}</p>
               </div>
             )}
 
@@ -62,7 +63,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
                     if (!allergen) return null;
                     return (
                       <span key={code} className="rounded-full bg-muted px-2 py-1 font-work text-xs text-foreground/90">
-                        {code} · {allergen.label[language]}
+                        {code} {cleanDisplayText(allergen.label[language])}
                       </span>
                     );
                   })}
@@ -76,7 +77,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
                 <p className="font-work text-xs leading-relaxed text-muted-foreground">
                   {language === "de"
                     ? "Ohne glutenhaltige Zutaten nach Rezept. Nicht geeignet bei Zöliakie, da wir in derselben Küche auch Gluten verarbeiten."
-                    : "Made without gluten-containing ingredients by recipe. Not suitable for coeliac disease, as we also handle gluten in the same kitchen."}
+                    : "Made without gluten containing ingredients by recipe. Not suitable for coeliac disease, as we also handle gluten in the same kitchen."}
                 </p>
               </div>
             )}

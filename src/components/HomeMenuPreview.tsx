@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
 import { splitDishText } from "@/lib/splitDishText";
+import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -28,7 +29,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   const labels = parseDietaryLabels(text);
   const visibleLabels = [
     labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients") : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
     labels.isBio ? "bio" : null,
   ].filter(Boolean);
 
@@ -36,7 +37,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
 
   return (
     <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
-      {visibleLabels.join(" · ")}
+      {joinDisplayText(visibleLabels)}
     </p>
   );
 };
@@ -107,7 +108,7 @@ export const HomeMenuPreview = () => {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
-                          {dishCopy.name}
+                          {cleanDisplayText(dishCopy.name)}
                         </h3>
                         <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
                           dish.key === "blue"
@@ -119,7 +120,7 @@ export const HomeMenuPreview = () => {
                       </div>
                       {dishCopy.description && (
                         <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground md:text-base">
-                          {dishCopy.description}
+                          {cleanDisplayText(dishCopy.description)}
                         </p>
                       )}
                     </div>
@@ -151,7 +152,7 @@ export const HomeMenuPreview = () => {
             <p className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {language === "de"
                 ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
-                : "Marked options are made without gluten-containing ingredients. If you have allergies, please ask us first."}
+                : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
             </p>
           </div>
 

@@ -8,7 +8,7 @@ export const AboutSection = () => {
   const { ref, isVisible } = useScrollReveal(0.1);
 
   const aboutRestaurant = {
-    de: "My Secret Garden ist ein friedliches vegetarisches & veganes Restaurant im Raimundhof in Wien. Wir bieten eine entspannte Atmosphäre in einem ruhigen Innenhof-Garten und bereiten täglich frische, hausgemachte Gerichte mit natürlichen und biologischen Zutaten zu. Unsere Küche vereint einfache, nährende Speisen, die Körper und Geist stärken.",
+    de: "My Secret Garden ist ein friedliches vegetarisches & veganes Restaurant im Raimundhof in Wien. Wir bieten eine entspannte Atmosphäre in einem ruhigen Innenhof Garten und bereiten täglich frische, hausgemachte Gerichte mit natürlichen und biologischen Zutaten zu. Unsere Küche vereint einfache, nährende Speisen, die Körper und Geist stärken.",
     en: "My Secret Garden is a peaceful vegetarian and vegan restaurant inside Vienna's Raimundhof. In our quiet courtyard garden, we cook fresh homemade dishes every day with natural and organic ingredients. The food is simple, nourishing and made to strengthen body and mind."
   };
 
@@ -24,7 +24,7 @@ export const AboutSection = () => {
     },
     {
       icon: Droplets,
-      title: { de: "Alkoholfrei", en: "Alcohol-free" },
+      title: { de: "Alkoholfrei", en: "Alcohol free" },
     },
   ];
 

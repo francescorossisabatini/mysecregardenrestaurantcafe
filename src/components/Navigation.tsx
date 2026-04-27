@@ -74,7 +74,7 @@ export const Navigation = () => {
                 My Secret Garden
               </span>
               <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-background/75 drop-shadow-sm" : "text-muted-foreground"}`}>
-                Vegetarian Café • Vienna
+                Vegetarian Café Vienna
               </p>
             </div>
           </Link>
