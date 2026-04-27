@@ -147,8 +147,8 @@ export const Hero = () => {
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
-          <div className="flex items-center justify-center gap-2 text-background/95 drop-shadow-lg">
-            <span className="inline-flex items-center gap-1 rounded-full bg-background/10 border border-background/25 backdrop-blur-md px-3 py-1 text-xs sm:text-sm font-work font-medium">
+          <div className="flex items-center justify-center gap-2 drop-shadow-lg">
+            <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/25 bg-primary/95 px-3.5 py-1.5 text-xs font-work font-semibold text-primary-foreground shadow-elevated sm:text-sm">
               <Star className="w-3.5 h-3.5 fill-current text-brand-star" aria-hidden="true" />
               {SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}
             </span>
@@ -161,8 +161,8 @@ export const Hero = () => {
             {/* Case 1: Open now */}
             {effectivelyOpen && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-accent/25 text-background border border-background/30 shadow-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-accent-light animate-pulse" />
+                <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-pulse" />
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
@@ -174,7 +174,7 @@ export const Hero = () => {
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-warning/25 text-background border border-background/30 shadow-sm">
+              <span className="inline-flex items-center rounded-full border border-warning/45 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
                 <span className="w-2 h-2 rounded-full mr-2 bg-warning" />
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
@@ -182,7 +182,7 @@ export const Hero = () => {
             {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
             {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-destructive/25 text-background border border-background/30 shadow-sm">
+                <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
                   <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
                   {language === "de" ? "Jetzt geschlossen" : "Closed now"}
                 </span>
@@ -201,7 +201,7 @@ export const Hero = () => {
             {/* Case 4: Closed today (Sunday, holiday, no menu) */}
             {!effectivelyOpen && isClosedToday && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-destructive/25 text-background border border-background/30 shadow-sm">
+                <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
                   <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
                   {language === "de" ? "Heute geschlossen" : "Closed today"}
                 </span>
