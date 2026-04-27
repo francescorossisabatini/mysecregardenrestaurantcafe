@@ -1,4 +1,5 @@
 import { Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -58,8 +59,8 @@ export const MobileStickyBar = () => {
 
   const callLabel = language === "de" ? "Anrufen" : "Call";
   const callAriaLabel = language === "de" ? "Restaurant anrufen" : "Call the restaurant";
-  const directionsLabel = language === "de" ? "Route" : "Directions";
-  const directionsAriaLabel = language === "de" ? "Route zum Restaurant (öffnet in neuem Tab)" : "Get directions to restaurant (opens in new tab)";
+  const visitLabel = language === "de" ? "Besuch" : "Visit";
+  const visitAriaLabel = language === "de" ? "Besuchsinfos öffnen" : "Open visit information";
   const heroVariant = getHeroAbVariant({ assign: false });
 
   // Hide sticky bar when cookie consent is pending
@@ -103,11 +104,9 @@ export const MobileStickyBar = () => {
           <span>{callLabel}</span>
         </a>
 
-        <a
-          href={SITE.mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackHeroAbEvent('click_directions', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
+        <Link
+          to="/visit"
+          onClick={() => trackHeroAbEvent('click_visit', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 flex items-center justify-center gap-2
             bg-primary text-primary-foreground
             rounded-full py-3 px-4
@@ -117,11 +116,11 @@ export const MobileStickyBar = () => {
             transition-all duration-200
             touch-manipulation
             focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
-          aria-label={directionsAriaLabel}
+          aria-label={visitAriaLabel}
         >
           <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
-          <span>{directionsLabel}</span>
-        </a>
+          <span>{visitLabel}</span>
+        </Link>
       </div>
     </div>
   );
