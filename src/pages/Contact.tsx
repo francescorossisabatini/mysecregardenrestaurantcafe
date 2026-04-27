@@ -102,10 +102,10 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={language === "de" ? "Öffnungszeiten & Anfahrt" : "Hours & Directions"}
+        title={language === "de" ? "Besuch uns" : "Visit us"}
         description={language === "de"
-          ? "Vegetarisches Café im Innenhof, Mariahilferstraße 45, 1060 Wien. Mo–Sa 11–19 Uhr. U3 Neubaugasse, 2 Minuten zu Fuß."
-          : "Vegetarian café in a hidden courtyard, Mariahilferstraße 45, Vienna. Open Mon–Sat 11am–7pm. 2 min from U3 Neubaugasse."}
+          ? "So findest du My Secret Garden im Raimundhof: Eingang, Öffnungszeiten, Anreise, Barrierefreiheit und Tischanfrage."
+          : "How to find My Secret Garden in Raimundhof: entrance, opening hours, directions, accessibility and table requests."}
         path={location.pathname}
         jsonLd={visitJsonLd}
       />
@@ -120,8 +120,8 @@ const ContactPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
                 {language === "de"
-                  ? "My Secret Garden liegt im Innenhof des Raimundhofs — Mariahilferstraße 45, 1060 Wien. Hier findest du den Weg, die Öffnungszeiten und die wichtigsten Infos vor deinem Besuch."
-                  : "My Secret Garden is in the courtyard of Raimundhof — Mariahilferstraße 45, 1060 Vienna. Here is the way in, the opening hours and the practical details before you visit."}
+                  ? "Du gehst durch den Bogen an der Mariahilferstraße. Ein paar Schritte später wird es leiser, und der Raimundhof öffnet sich. Hier findest du alles Praktische vor deinem Besuch."
+                  : "Walk through the archway on Mariahilferstraße. A few steps later it gets quieter, and Raimundhof opens up. Here are the practical details before you visit."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
