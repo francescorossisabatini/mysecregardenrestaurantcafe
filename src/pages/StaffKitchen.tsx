@@ -650,6 +650,105 @@ const StaffKitchen = () => {
   );
 };
 
+
+const ReservationCard = ({
+  reservation,
+  language,
+  labels,
+  readOnly,
+  isUpdating,
+  onUpdate,
+}: {
+  reservation: StaffReservation;
+  language: DashboardLanguage;
+  labels: Record<string, string>;
+  readOnly: boolean;
+  isUpdating: boolean;
+  onUpdate: (reservation: StaffReservation, update: Partial<Pick<StaffReservation, "status" | "staff_notes">>) => void;
+}) => {
+  const [staffNotes, setStaffNotes] = useState(reservation.staff_notes ?? "");
+
+  useEffect(() => {
+    setStaffNotes(reservation.staff_notes ?? "");
+  }, [reservation.staff_notes]);
+
+  const time = reservation.reservation_time.slice(0, 5);
+  const canAct = !readOnly && !isUpdating;
+
+  return (
+    <article className="rounded-lg border border-border bg-background p-4 shadow-card">
+      <div className="flex items-start justify-between gap-3">
+        <ReservationStatusBadge status={reservation.status} labels={labels} />
+        <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
+          <span>{time}</span>
+          <span className="inline-flex items-center gap-1 text-muted-foreground">
+            <Users className="h-4 w-4" aria-hidden="true" />
+            {reservation.party_size}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          {cleanDisplayText(reservation.contact)}
+        </a>
+        {reservation.notes ? (
+          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-foreground">
+            <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <span><span className="font-semibold text-foreground/80">{labels.guestNotes}:</span> {cleanDisplayText(reservation.notes)}</span>
+          </p>
+        ) : null}
+      </div>
+
+      {!readOnly ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {reservation.status === "new" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+          {reservation.status === "confirmed" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
+              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div className="mt-4 border-t border-border pt-4">
+        <label className="grid gap-2 text-sm font-semibold text-foreground">
+          {labels.staffNotes}
+          <Textarea
+            value={staffNotes}
+            onChange={(event) => setStaffNotes(event.target.value.slice(0, 500))}
+            onBlur={() => onUpdate(reservation, { staff_notes: staffNotes.trim() || null })}
+            placeholder={language === "de" ? "Interne Notiz hinzufügen" : "Add internal note"}
+            className="min-h-20 resize-none font-work font-normal"
+            maxLength={500}
+          />
+        </label>
+      </div>
+    </article>
+  );
+};
+
+const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus; labels: Record<string, string> }) => {
+  const className = {
+    new: "border-warning/40 bg-warning/15 text-warning-foreground",
+    confirmed: "border-accent/40 bg-accent/15 text-accent",
+    arrived: "border-primary/40 bg-primary/10 text-primary",
+    cancelled: "border-border bg-muted text-muted-foreground",
+    no_show: "border-destructive/40 bg-destructive/10 text-destructive",
+  }[status];
+
+  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
+};
+
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
