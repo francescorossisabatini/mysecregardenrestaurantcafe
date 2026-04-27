@@ -6,21 +6,21 @@ export const ValueProposition = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="py-20 md:py-32 bg-section-soft relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-4xl relative z-10">
+    <section className="py-20 md:py-32 lg:py-36 bg-section-soft relative overflow-hidden">
+      <div className="container mx-auto px-4 max-w-4xl lg:max-w-5xl relative z-10">
         {/* Poetic intro */}
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-8 lg:space-y-10">
           <p className="font-caveat text-2xl md:text-3xl text-accent">
             {language === "de" ? "Mitten im Raimundhof" : "Inside the Raimundhof"}
           </p>
           
-          <h2 className="text-4xl md:text-6xl text-primary leading-tight">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl text-primary leading-tight">
             {language === "de" 
               ? "Kochen ein Gebet und\nEssen Dankbarkeit ist." 
               : "Cooking is prayer and\neating is gratitude."}
           </h2>
           
-          <div className="max-w-2xl mx-auto space-y-6">
+          <div className="max-w-2xl lg:max-w-3xl mx-auto space-y-6">
             <p className="font-lora text-lg md:text-xl text-foreground/80 leading-relaxed">
               {language === "de" 
                 ? "Wir kochen jeden Tag frisch. Morgens kommen Gemüse, Kräuter und Getreide in die Küche, mittags stehen die ersten Teller am Tresen." 
