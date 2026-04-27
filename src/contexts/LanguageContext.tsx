@@ -143,7 +143,7 @@ const translations = {
     "about.seasonal": "seasonal",
     "about.p1": "Vegetables, salads and grains arrive in the kitchen in the morning. What looks good gets chopped, cooked, seasoned and often lands on a plate the same day.",
     "about.p2": "If you are in a hurry, we pack your food to go. Not very ceremonial, but useful. Some days that saves lunch.",
-    "about.p3": "Monday to Saturday, from 11:00 to 19:00, we serve warm food, salads, coffee with plant milk, tea and homemade cakes. Many dishes are cooked without gluten-containing ingredients. If you have allergies, please ask us first.",
+    "about.p3": "Monday to Saturday, from 11:00 to 19:00, we serve warm food, salads, coffee with plant milk, tea and homemade cakes. Many dishes are cooked without gluten containing ingredients. If you have allergies, please ask us first.",
     "about.p4": "Behind the busy Mariahilferstraße there is our green courtyard in Raimundhof. It is close to the street, but it feels a little tucked away. Come in when you need a pause.",
     
     // Philosophy
@@ -179,14 +179,14 @@ const translations = {
     // Menu
     "menu.title": "Our Menu",
     "menu.weeklyUpdate": "A new, seasonal menu every week",
-    "menu.description": "Every day there are two daily dishes for €15.20. The green dish is vegan and cooked without gluten-containing ingredients. The blue dish may contain dairy, gluten-containing grains or eggs.",
+    "menu.description": "Every day there are two daily dishes for €15.20. The green dish is vegan and cooked without gluten containing ingredients. The blue dish may contain dairy, gluten containing grains or eggs.",
     "menu.weeklyMenu": "Weekly Menu",
     "menu.soup": "Soup",
     "menu.greenDish": "Daily Dish GREEN",
     "menu.blueDish": "Daily Dish BLUE",
     "menu.dailyDishPrice": "Daily Dish: €15.20",
     "menu.soupPrice": "small €4.50 / large €6.50",
-    "menu.soupInfo": "Our daily soups are vegan and cooked without gluten-containing ingredients. Add a fresh organic roll: €1.90",
+    "menu.soupInfo": "Our daily soups are vegan and cooked without gluten containing ingredients. Add a fresh organic roll: €1.90",
     "menu.warm": "Warm Dishes",
     "menu.salads": "Fresh Salads",
     "menu.desserts": "Sweets",
