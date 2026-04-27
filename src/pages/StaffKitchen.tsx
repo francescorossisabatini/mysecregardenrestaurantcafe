@@ -306,8 +306,8 @@ const StaffKitchen = () => {
 
         <Tabs defaultValue="plan" className="grid gap-5">
           <TabsList className="mx-auto grid h-auto w-full max-w-md grid-cols-2 rounded-full bg-card p-1 shadow-card">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-base">Küchenplan</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-base">Archiv</TabsTrigger>
+            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -315,13 +315,13 @@ const StaffKitchen = () => {
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-primary">
                   <CalendarDays className="h-5 w-5" aria-hidden="true" />
-                  <h2 className="font-work text-xl font-bold tracking-normal">This Week</h2>
+                  <h2 className="font-work text-xl font-bold tracking-normal">{labels.thisWeek}</h2>
                 </div>
-                <Badge variant="outline">{currentRecords.length} items</Badge>
+                <Badge variant="outline">{currentRecords.length} {labels.items}</Badge>
               </div>
 
-              {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">Loading Küchenplan...</p> : null}
-              {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">No current Küchenplan items found.</p> : null}
+              {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
+              {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
 
               <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3">
                 {dayGroups.map(([day, records]) => {
@@ -330,13 +330,13 @@ const StaffKitchen = () => {
                     <AccordionItem key={day} value={day} className="overflow-hidden rounded-lg border border-border bg-card px-4 shadow-card">
                       <AccordionTrigger className="py-4 text-left hover:no-underline">
                         <span className="grid gap-1">
-                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[day] || day}</span>
-                          <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} piatti`}</span>
+                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[language][day] || day}</span>
+                          <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
-                        {holiday ? <Badge variant="secondary">Feiertag</Badge> : <Badge variant="outline">{records.length} dishes</Badge>}
+                        {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
                       </AccordionTrigger>
                       <AccordionContent className="grid gap-4 pb-5">
-                        {holiday ? <div className="rounded-lg bg-muted p-5 text-lg font-semibold text-primary">Feiertag</div> : records.map((record) => <DishCard key={record.id} record={record} />)}
+                        {holiday ? <div className="rounded-lg bg-muted p-5 text-lg font-semibold text-primary">{labels.holiday}</div> : records.map((record) => <DishCard key={record.id} record={record} language={language} />)}
                       </AccordionContent>
                     </AccordionItem>
                   );
@@ -351,25 +351,25 @@ const StaffKitchen = () => {
                 <div>
                   <div className="flex items-center gap-2 text-primary">
                     <Archive className="h-5 w-5" aria-hidden="true" />
-                    <h2 className="font-work text-xl font-bold tracking-normal">Dish Archive</h2>
+                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.archiveTitle}</h2>
                   </div>
                   <div className="relative mt-3">
                     <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search header, German title or ID" className="h-12 pl-9 text-base" />
+                    <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={labels.searchPlaceholder} className="h-12 pl-9 text-base" />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {(["all", "soup", "green", "blue"] as const).map((filter) => (
                     <Button key={filter} type="button" variant={categoryFilter === filter ? "default" : "outline"} onClick={() => setCategoryFilter(filter)} className="rounded-full">
-                      {filter === "all" ? "All" : categoryLabels[filter]}
+                      {filter === "all" ? labels.all : categoryLabels[language][filter]}
                     </Button>
                   ))}
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                {!archiveRecords.length ? <p className="text-sm text-muted-foreground">No archive items found.</p> : null}
-                {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} />)}
+                {!archiveRecords.length ? <p className="text-sm text-muted-foreground">{labels.emptyArchive}</p> : null}
+                {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} language={language} />)}
               </div>
             </section>
           </TabsContent>
