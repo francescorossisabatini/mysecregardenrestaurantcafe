@@ -120,7 +120,7 @@ const translations = {
     // Hero
     "hero.title": "My Secret Garden",
     "hero.subtitle": "Vegetarian & Vegan Restaurant",
-    "hero.address": "Mariahilferstraße 45 – Im Raimundhof – 1060 Vienna",
+    "hero.address": "Mariahilferstraße 45, Im Raimundhof, 1060 Vienna",
     "hero.hours": "Open Mon-Sat from 11am-7pm",
     "hero.dailyMenu": "Today's Menu",
     "hero.fullMenu": "Full Menu",
@@ -136,21 +136,21 @@ const translations = {
     
     // About
     "about.title": "About US",
-    "about.intro": "We serve delightful taste. Experience an exciting vegetarian & vegan cuisine with flavorful dishes from around the world.",
+    "about.intro": "We cook vegetarian and vegan food fresh every day. Sometimes classic, sometimes with a detour through another kitchen.",
     "about.bio": "organic",
     "about.fair": "fair",
     "about.regional": "regional",
     "about.seasonal": "seasonal",
-    "about.p1": "We love organic, fair, regional and seasonal. In the morning, Dogi from Naschmarkt and Biogast deliver farm-fresh vegetables, crisp salads and organic grains, which our chefs transform with talent, creativity and aromatic herbs and authentic spices into healthy meals that satisfy and give you energy for the day.",
-    "about.p2": "Our environmentally friendly 'TO GO' boxes make it quick and easy to take our dishes anywhere and enjoy them.",
-    "about.p3": "From Monday to Saturday, from 11:00 to 19:00, we serve warm meals, hearty salads, specialty coffee including vegan milk options, and refined hot beverages, as well as homemade cakes and raw vegan sweet treats. Gluten-free options are always available!",
-    "about.p4": "In addition to our two cozy dining rooms, our quiet, green courtyard in Biedermeier style beckons, only 80 meters from busy Mariahilferstraße. Come visit us! 🙂",
+    "about.p1": "Vegetables, salads and grains arrive in the kitchen in the morning. What looks good gets chopped, cooked, seasoned and often lands on a plate the same day.",
+    "about.p2": "If you are in a hurry, we pack your food to go. Not very ceremonial, but useful. Some days that saves lunch.",
+    "about.p3": "Monday to Saturday, from 11:00 to 19:00, we serve warm food, salads, coffee with plant milk, tea and homemade cakes. Many dishes are cooked without gluten-containing ingredients. If you have allergies, please ask us first.",
+    "about.p4": "Behind the busy Mariahilferstraße there is our green courtyard in Raimundhof. It is close to the street, but it feels a little tucked away. Come in when you need a pause.",
     
     // Philosophy
     "philosophy.title": "Our Inspiration",
     "philosophy.sri.title": "Sri Chinmoy",
     "philosophy.sri.subtitle": "Spiritual Master, Poet, Artist and Peace Ambassador (1931–2007)",
-    "philosophy.sri.intro": "Behind My Secret Garden lies a profound source of inspiration – a man whose life itself was a work of art.",
+    "philosophy.sri.intro": "Sri Chinmoy is an important inspiration for My Secret Garden. Not loudly, more as something you notice in the background.",
     "philosophy.sri.story1": "Sri Chinmoy was born in Bengal in 1931 and spent twenty years in a spiritual ashram, immersing himself deeply in meditation and inner discipline. In 1964, following an inner calling, he moved to New York to share his message of inner peace and harmony with the Western world.",
     "philosophy.sri.story2": "What made him unique: he lived what he taught. He composed over 23,000 songs, created more than 200,000 paintings, wrote 1,600 books, and gave over 800 peace concerts worldwide – all from a state of meditation. For him, every action was a form of prayer, every meal an act of gratitude.",
     "philosophy.sri.story3": "Sri Chinmoy inspired people from all walks of life – from UN Secretary-Generals to Olympic athletes – always with the same message: the path to outer peace leads through inner peace.",
@@ -179,7 +179,7 @@ const translations = {
     // Menu
     "menu.title": "Our Menu",
     "menu.weeklyUpdate": "A new, seasonal menu every week",
-    "menu.description": "Every day you can choose between two fresh daily dishes for €15.20. The 'green' one is always prepared vegan & gluten-free – the 'blue' one may contain dairy, gluten-containing grains or eggs.",
+    "menu.description": "Every day there are two daily dishes for €15.20. The green dish is vegan and cooked without gluten-containing ingredients. The blue dish may contain dairy, gluten-containing grains or eggs.",
     "menu.weeklyMenu": "Weekly Menu",
     "menu.soup": "Soup",
     "menu.greenDish": "Daily Dish GREEN",
@@ -195,7 +195,7 @@ const translations = {
     
     // Products
     "products.title": "Our Products",
-    "products.subtitle": "Discover our carefully selected products – from fresh organic ingredients to homemade specialties",
+    "products.subtitle": "A few things we like to use: fresh vegetables, organic ingredients and homemade staples from the kitchen.",
     "products.featured": "Featured Products",
     "products.all": "All Products",
     "products.clickToLearnMore": "Click for more information",
