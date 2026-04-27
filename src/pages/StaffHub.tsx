@@ -27,13 +27,10 @@ const StaffHub = () => {
         return;
       }
 
-      const { data: roleRows } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", data.session.user.id)
-        .in("role", ["admin", "staff"]);
+      const { data: allowed } = await supabase.rpc("is_staff_user", {
+        _user_id: data.session.user.id,
+      });
 
-      const allowed = Boolean(roleRows?.length);
       setIsStaff(allowed);
       setIsChecking(false);
     });
