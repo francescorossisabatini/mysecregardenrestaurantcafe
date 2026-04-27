@@ -301,7 +301,7 @@ const Privacy = () => {
             </h2>
             <p className="mb-3">
               {isGerman 
-                ? "Wir nutzen Google Analytics zur Analyse des Website-Verhaltens. Die Nutzung erfolgt nur mit Ihrer Einwilligung (Cookie-Banner)."
+                ? "Wir nutzen Google Analytics zur Analyse des Website Verhaltens. Die Nutzung erfolgt nur mit Ihrer Einwilligung über das Cookie Banner."
                 : "We use Google Analytics to analyze website behavior. Use is only with your consent (cookie banner)."
               }
             </p>
