@@ -10,7 +10,6 @@ import {
 } from "@/data/holidaysData";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
@@ -40,25 +39,18 @@ const isValidMenuText = (text?: string) => {
 // Using explicit dark colors that GUARANTEE 4.5:1+ contrast on #FAF7F3
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
+  const visibleLabels = [
+    labels.isVegan ? "vegan" : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients") : null,
+    labels.isBio ? "bio" : null,
+  ].filter(Boolean);
+
+  if (visibleLabels.length === 0) return null;
   
   return (
-    <div className="flex items-center gap-2 mt-2 flex-wrap">
-      {labels.isVegan && (
-        <span className="rounded-full bg-accent-light/45 px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-vegan">
-          vegan
-        </span>
-      )}
-      {labels.isGlutenFree && (
-        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-glutenFree">
-          {language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}
-        </span>
-      )}
-      {labels.isBio && (
-        <span className="rounded-full bg-dailyAlt px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.06em] text-state-bio">
-          bio
-        </span>
-      )}
-    </div>
+    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+      {visibleLabels.join(" · ")}
+    </p>
   );
 };
 
@@ -78,11 +70,11 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
   return (
     <div className="flex justify-between items-start gap-2">
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
           <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
             {dishCopy.name}
           </p>
-          <span className={`rounded-full border px-2 py-0.5 text-[10px] font-work font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "border-blue/25 bg-blue/10 text-blue" : "border-accent/25 bg-accent/10 text-accent"}`}>
+          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
             {weeklyDishLabels[kind][language]}
           </span>
         </div>
@@ -243,9 +235,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
@@ -265,9 +257,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
@@ -287,9 +279,9 @@ export const MenuSection = () => {
                   <div className="rounded-2xl border p-4 surface-card md:p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="border-accent/25 bg-accent/10 text-accent text-[11px] font-work uppercase tracking-[0.08em]">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
@@ -602,9 +594,9 @@ export const MenuSection = () => {
                                 <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
                               )}
                             </div>
-                            <Badge className="border-accent/25 bg-accent/10 text-accent text-[10px] font-work uppercase tracking-[0.08em]">
+                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                               {language === "de" ? "Getränke" : "Drinks"}
-                            </Badge>
+                            </span>
                           </div>
                           <div className="grid gap-2 sm:grid-cols-2">
                             {subcategory.items.map((item: KlassikerItem) => (

@@ -4,7 +4,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
 import { splitDishText } from "@/lib/splitDishText";
@@ -27,13 +26,18 @@ const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boo
 
 const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
+  const visibleLabels = [
+    labels.isVegan ? "vegan" : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients") : null,
+    labels.isBio ? "bio" : null,
+  ].filter(Boolean);
+
+  if (visibleLabels.length === 0) return null;
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-2">
-      {labels.isVegan && <span className="rounded-full bg-accent-light/45 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-vegan">vegan</span>}
-      {labels.isGlutenFree && <span className="rounded-full bg-muted px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-glutenFree">{language === "de" ? "ohne Gluten-Zutaten" : "no gluten ingredients"}</span>}
-      {labels.isBio && <span className="rounded-full bg-dailyAlt px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.06em] text-state-bio">bio</span>}
-    </div>
+    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+      {visibleLabels.join(" · ")}
+    </p>
   );
 };
 
@@ -105,13 +109,13 @@ export const HomeMenuPreview = () => {
                         <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
                           {dishCopy.name}
                         </h3>
-                        <Badge className={`font-work text-[10px] uppercase tracking-[0.08em] ${
+                        <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
                           dish.key === "blue"
-                            ? "border-blue/25 bg-blue/10 text-blue"
-                            : "border-accent/25 bg-accent/10 text-accent"
+                            ? "text-blue"
+                            : "text-accent"
                         }`}>
                           {dish.label}
-                        </Badge>
+                        </span>
                       </div>
                       {dishCopy.description && (
                         <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground md:text-base">
