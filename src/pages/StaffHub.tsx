@@ -124,6 +124,14 @@ const StaffHub = () => {
       .some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
   });
 
+  const currentSections = cakePlan.currentRecords.reduce<Record<string, StaffMenuRecord[]>>((groups, record) => {
+    const key = cleanDisplayText(record.menuDay || record.category || "General prep");
+    groups[key] = [...(groups[key] ?? []), record];
+    return groups;
+  }, {});
+
+  const isSearchingArchive = searchTerm.trim().length > 0;
+
   if (!isChecking && !session) return <Navigate to="/staff/login" replace />;
 
   if (!isChecking && session && !isStaff) {
