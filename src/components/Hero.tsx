@@ -131,8 +131,8 @@ export const Hero = () => {
       )}
 
       {/* Overlay - reduced for better image visibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
-      <div className="absolute inset-0 bg-black/20 md:hidden" />
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/45 via-foreground/24 to-foreground/52" />
+      <div className="absolute inset-0 bg-foreground/18 md:hidden" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-16 md:pt-20 pb-6 md:pb-8 flex flex-col justify-center h-full pointer-events-none">
@@ -161,8 +161,8 @@ export const Hero = () => {
             {/* Case 1: Open now */}
             {effectivelyOpen && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-green-500/25 text-green-100 border border-green-400/40 shadow-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-green-400 animate-pulse" />
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-accent/25 text-background border border-background/30 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-accent-light animate-pulse" />
                   {language === "de" ? "Jetzt geöffnet" : "Open now"}
                 </span>
                 {status.closesAt && (
@@ -174,16 +174,16 @@ export const Hero = () => {
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-warning/25 text-amber-100 border border-amber-400/40 shadow-sm">
-                <span className="w-2 h-2 rounded-full mr-2 bg-amber-400" />
+              <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-warning/25 text-background border border-background/30 shadow-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-warning" />
                 {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
               </span>
             )}
             {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
             {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-destructive/25 text-background border border-background/30 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
                   {language === "de" ? "Jetzt geschlossen" : "Closed now"}
                 </span>
                 {status.tomorrowOpensAt && !status.tomorrowClosed && (
@@ -201,8 +201,8 @@ export const Hero = () => {
             {/* Case 4: Closed today (Sunday, holiday, no menu) */}
             {!effectivelyOpen && isClosedToday && (
               <>
-                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-red-500/25 text-red-100 border border-red-400/40 shadow-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-red-400" />
+                <span className="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium backdrop-blur-md bg-destructive/25 text-background border border-background/30 shadow-sm">
+                  <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
                   {language === "de" ? "Heute geschlossen" : "Closed today"}
                 </span>
                 {closedReason === "no-menu" && (
