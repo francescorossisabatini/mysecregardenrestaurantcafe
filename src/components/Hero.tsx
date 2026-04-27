@@ -110,7 +110,7 @@ export const Hero = () => {
     <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] flex items-center justify-center overflow-hidden">
       {/* Static first image - shown immediately for FCP */}
       <div 
-        className={`absolute inset-0 animate-hero-background transition-opacity duration-[400ms] ease-out ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`absolute inset-0 animate-hero-background transition-opacity duration-slow ease-out ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         style={{
           backgroundImage: `url(${staticHeroImage.src})`,
           backgroundSize: "cover",
@@ -147,7 +147,7 @@ export const Hero = () => {
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
-          <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-[250ms] ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
+          <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-base ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
             <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/25 bg-primary/95 px-3.5 py-1.5 text-xs font-work font-semibold text-primary-foreground shadow-elevated sm:text-sm">
               <Star className="w-3.5 h-3.5 fill-current text-brand-star" aria-hidden="true" />
               {SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}
@@ -155,7 +155,7 @@ export const Hero = () => {
           </div>
 
           {/* Open/Closed chip - soft style */}
-          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-[250ms] ease-out ${
+          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-base ease-out ${
             showSubtitle ? "opacity-100" : "opacity-0"
           }`}>
             {/* Case 1: Open now */}
@@ -220,7 +220,7 @@ export const Hero = () => {
           </div>
 
           {/* CTA Buttons: Menu (primary), Specials (secondary) */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-[300ms] ease-out pointer-events-auto ${
+          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
             showButtons ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}>
             {/* Primary: View Menu */}
@@ -250,7 +250,7 @@ export const Hero = () => {
           </div>
 
           {/* Carousel dots */}
-          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-[250ms] ease-out pointer-events-auto ${
+          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-base ease-out pointer-events-auto ${
             showDots ? "opacity-100" : "opacity-0"
           }`}>
             {carouselImages.map((_, index) => (
