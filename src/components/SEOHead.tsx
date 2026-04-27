@@ -5,6 +5,7 @@ interface SEOHeadProps {
   description?: string;
   path?: string;
   image?: string;
+  noindex?: boolean;
 }
 
 const BASE_URL = "https://secretgardenrestaurant.at";
@@ -15,6 +16,7 @@ export const SEOHead = ({
   description = "Vegetarisches & veganes Restaurant in Wien. Geschmack, der entzückt. Bio, fair, regional & saisonal.",
   path = "/",
   image = DEFAULT_IMAGE,
+  noindex = false,
 }: SEOHeadProps) => {
   const fullTitle = title
     ? `${title} | My Secret Garden Wien`
@@ -26,6 +28,7 @@ export const SEOHead = ({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex,nofollow" />}
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Open Graph */}
