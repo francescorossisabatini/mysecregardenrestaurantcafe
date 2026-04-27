@@ -17,7 +17,7 @@ export default {
         'ui':      ['0.875rem', { lineHeight: '1.5' }],
         'body':    ['1rem',     { lineHeight: '1.7' }],
         'section': ['1.313rem', { lineHeight: '1.3' }],
-        'hero':    ['3rem',     { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'hero':    ['3rem',     { lineHeight: '1.1', letterSpacing: '0' }],
       },
       fontFamily: {
         'caveat': ['Caveat', 'Brush Script MT', 'cursive'],
@@ -127,8 +127,8 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "hero-background": {
-          "0%": { opacity: "0", transform: "scale(1.04)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
         "status-pulse": {
           "0%, 100%": { opacity: "1" },
@@ -143,8 +143,8 @@ export default {
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
+          "0%, 100%": { opacity: "0.1" },
+          "50%": { opacity: "0.16" },
         },
       },
       animation: {

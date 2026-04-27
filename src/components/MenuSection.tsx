@@ -520,7 +520,7 @@ export const MenuSection = () => {
                 <Link
                   to="/order"
                   onClick={() => window.gtag?.("event", "cake_cta_click", { event_category: "engagement", source: "menu_always_here" })}
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-6 font-work text-sm font-medium text-accent-foreground shadow-soft transition-colors hover:bg-[hsl(var(--btn-primary-hover))] focus:outline-none focus:ring-2 focus:ring-primary/50"
                 >
                   {language === "de" ? "Torte bestellen" : "Order a cake"}
                 </Link>
