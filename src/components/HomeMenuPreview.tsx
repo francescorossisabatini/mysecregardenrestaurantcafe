@@ -36,8 +36,17 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   );
 };
 
-const splitDishText = (text: string, language: "de" | "en") => {
+const splitDishText = (text: string, language: "de" | "en", dishKey?: string) => {
   const trimmed = text.trim();
+  const firstPeriod = trimmed.indexOf(".");
+
+  if (dishKey === "soup" && firstPeriod > 8) {
+    return {
+      name: trimmed.slice(0, firstPeriod).trim(),
+      description: trimmed.slice(firstPeriod + 1).trim(),
+    };
+  }
+
   const separators = [":", ";", language === "de" ? " mit " : " with ", language === "de" ? " auf " : " on "];
   const match = separators
     .map((separator) => ({ separator, index: trimmed.toLowerCase().indexOf(separator) }))
@@ -113,7 +122,7 @@ export const HomeMenuPreview = () => {
           ) : !isClosed && dishes.length > 0 ? (
             <div className="space-y-4">
               {dishes.map((dish) => {
-                const dishCopy = splitDishText(dish.text, language);
+                const dishCopy = splitDishText(dish.text, language, dish.key);
 
                 return (
                 <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5">
@@ -123,7 +132,11 @@ export const HomeMenuPreview = () => {
                         <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
                           {dishCopy.name}
                         </h3>
-                        <Badge className="border-accent/25 bg-accent/10 font-work text-[10px] uppercase tracking-[0.08em] text-accent">
+                        <Badge className={`font-work text-[10px] uppercase tracking-[0.08em] ${
+                          dish.key === "blue"
+                            ? "border-blue/25 bg-blue/10 text-blue"
+                            : "border-accent/25 bg-accent/10 text-accent"
+                        }`}>
                           {dish.label}
                         </Badge>
                       </div>
