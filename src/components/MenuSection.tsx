@@ -442,9 +442,12 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8 lg:scroll-mt-28">
-            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase lg:text-left">
+            <p className="mb-3 text-center font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent lg:text-left">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
+            <h2 className="mb-6 text-center font-cormorant text-3xl font-semibold text-primary md:text-4xl lg:text-left lg:text-5xl">
+              {language === "de" ? "Die ganze Woche" : "The full week"}
+            </h2>
           </div>
           
           {/* Weekly Menu */}
@@ -458,7 +461,7 @@ export const MenuSection = () => {
                     </div>
                   ) : (
                     <>
-                      <p className="text-xs text-muted-foreground text-center font-work mb-4">
+                      <p className="mb-5 text-center font-work text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground lg:text-left">
                         {translatePeriod(menu.period, language)}
                       </p>
                       <div className="lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-5">
@@ -477,20 +480,20 @@ export const MenuSection = () => {
                         
                         return (
                           <div key={index} className="border-b border-border/30 pb-4 last:border-0 lg:rounded-2xl lg:border lg:border-border/60 lg:bg-background/45 lg:p-4 lg:last:border">
-                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
+                            <h4 className="mb-3 font-cormorant text-2xl font-semibold leading-tight text-primary">
                               {day.day[language]}
                             </h4>
                             
                             {isDayClosed ? (
                               <div className="text-center py-3">
-                                <p className="font-cormorant text-base text-foreground/85 italic">
+                                <p className="font-cormorant text-xl text-foreground/85 italic">
                                   {dayHoliday
                                     ? dayHoliday.name[language]
                                     : isDaySunday
                                       ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
                                       : (language === "de" ? "Heute geschlossen" : "Closed")}
                                 </p>
-                                <p className="text-muted-foreground text-xs font-work mt-1">
+                                <p className="mt-1 font-work text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                                   {language === "de" ? "Geschlossen" : "Closed"}
                                 </p>
                               </div>
