@@ -717,7 +717,7 @@ const ReservationCard = ({
       <div className="flex items-start justify-between gap-3">
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
-          <span>{time}</span>
+          <span className="font-cormorant text-3xl font-semibold leading-none">{time}</span>
           <span className="inline-flex items-center gap-1 text-muted-foreground">
             <Users className="h-4 w-4" aria-hidden="true" />
             {reservation.party_size}
@@ -726,8 +726,8 @@ const ReservationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(reservation.contact)}
         </a>
@@ -740,11 +740,11 @@ const ReservationCard = ({
       </div>
 
       {!readOnly ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {reservation.status === "new" ? (
             <>
-              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
-              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
           {reservation.status === "confirmed" ? (
