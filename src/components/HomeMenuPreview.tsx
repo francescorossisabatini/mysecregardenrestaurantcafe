@@ -109,13 +109,13 @@ export const HomeMenuPreview = () => {
                         <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
                           {dishCopy.name}
                         </h3>
-                        <Badge className={`font-work text-[10px] uppercase tracking-[0.08em] ${
+                        <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
                           dish.key === "blue"
-                            ? "border-blue/25 bg-blue/10 text-blue"
-                            : "border-accent/25 bg-accent/10 text-accent"
+                            ? "text-blue"
+                            : "text-accent"
                         }`}>
                           {dish.label}
-                        </Badge>
+                        </span>
                       </div>
                       {dishCopy.description && (
                         <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground md:text-base">
