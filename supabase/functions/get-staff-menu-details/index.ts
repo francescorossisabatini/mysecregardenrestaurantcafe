@@ -22,6 +22,19 @@ type StaffMenuRecord = {
   fields: Array<{ label: string; value: string }>;
 };
 
+type MenuDish = {
+  id: string;
+  category: string;
+  cook: string;
+  headerEn: string;
+  headerDe: string;
+  textEn: string;
+  textDe: string;
+  ingredients: string[];
+  prep: string[];
+  badges: string[];
+};
+
 const clean = (value: unknown, max = 1200) =>
   typeof value === "string"
     ? value.replace(/<[^>]*>/g, "").replace(/javascript:/gi, "").replace(/on\w+=/gi, "").replace(/[\u002d\u2010\u2011\u2012\u2013\u2014\u2212]/g, " ").trim().slice(0, max)
@@ -31,6 +44,37 @@ const clean = (value: unknown, max = 1200) =>
 
 const splitList = (value: string) =>
   value.split(/[;,|\n]+/).map((item) => clean(item, 160)).filter(Boolean).slice(0, 80);
+
+const splitLines = (value: string) =>
+  value.split(/\n+/).map((item) => clean(item, 240).replace(/^\d+(?:[.,]\d+)?\s*(?:kg|g|l|ml|tsp|tbsp|cup|pkg?|stk\.?|bund|bd\.?|dose[n]?|can|bag|bunch)\s+/i, "")).filter(Boolean).slice(0, 80);
+
+const normalizeCategory = (value: string) => {
+  const normalized = clean(value, 80).toLowerCase();
+  if (normalized.includes("soup")) return "soup";
+  if (normalized.includes("green")) return "green";
+  if (normalized.includes("blue")) return "blue";
+  return normalized || "seasonal";
+};
+
+const detectBadges = (...values: string[]) => {
+  const text = values.join(" ").toLowerCase();
+  const badges: string[] = [];
+  if (/chili|chilli|jalapeño|cayenne|harissa|sriracha|scharf|pikant/.test(text)) badges.push("spicy");
+  const garlicKg = text.match(/(\d+(?:\.\d+)?)\s*kg\s*(?:\w+\s+)?(?:garlic|knoblauch)/);
+  const garlicPcs = text.match(/(\d+)\s*(?:pieces?|cloves?|zehen|knoblauchzehen)/);
+  if (garlicKg && Number(garlicKg[1]) >= 0.3) badges.push("garlic-high");
+  else if (garlicPcs && Number(garlicPcs[1]) >= 20) badges.push("garlic-high");
+  else if (garlicPcs && Number(garlicPcs[1]) >= 5) badges.push("garlic-med");
+  else if (/garlic|knoblauch/.test(text)) badges.push("garlic-low");
+  const onionKgs = [...text.matchAll(/(\d+(?:\.\d+)?)\s*kg\s*(?:\w+\s+)?(?:onion|zwiebel)/g)];
+  if (onionKgs.length) {
+    const total = onionKgs.reduce((sum, match) => sum + Number(match[1]), 0);
+    badges.push(total >= 3 ? "onion-high" : total >= 1 ? "onion-med" : "onion-low");
+  } else if (/onion|zwiebel/.test(text)) badges.push("onion-low");
+  if (/cashew|almond|mandel|walnut|walnuss|peanut|erdnuss|nut/.test(text)) badges.push("nuts");
+  if (/cheese|käse|butter|cream(?! of)|parmesan|bergkäse|goat|ziegen|soyananda/.test(text)) badges.push("dairy");
+  return [...new Set(badges)];
+};
 
 const headerKind = (label: string) => {
   const h = label.toLowerCase();
