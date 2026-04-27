@@ -50,7 +50,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   if (visibleLabels.length === 0) return null;
   
   return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+    <p className="mt-3 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary/85">
       {joinDisplayText(visibleLabels)}
     </p>
   );
@@ -82,20 +82,20 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
     <div className="flex justify-between items-start gap-2">
       <div className="min-w-0 flex-1">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
-          <p className="font-cormorant text-lg font-semibold leading-snug text-foreground">
+          <p className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
             {cleanDisplayText(dishCopy.name)}
           </p>
-          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
+          <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.1em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
             {weeklyDishLabels[kind][language]}
           </span>
         </div>
         {dishCopy.description && (
-          <p className="mt-1 text-muted-foreground whitespace-pre-line">{cleanDisplayText(dishCopy.description)}</p>
+          <p className="mt-1 font-lora leading-relaxed text-foreground/78 whitespace-pre-line">{cleanDisplayText(dishCopy.description)}</p>
         )}
         <DietaryBadges text={text} language={language} />
         <WeeklyDishDetails text={text} meta={meta} />
       </div>
-      <span className="text-primary text-xs font-medium shrink-0">{price}</span>
+      <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-xs font-semibold text-accent">{price}</span>
     </div>
   );
 };
@@ -261,10 +261,10 @@ export const MenuSection = () => {
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16 lg:scroll-mt-28">
             <div className="text-center mb-8 lg:text-left">
-              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-2">
+              <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl lg:text-6xl mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
+              <p className="font-lora text-base leading-relaxed text-foreground/78 md:text-lg max-w-sm mx-auto lg:mx-0 lg:max-w-2xl">
                 {language === "de" 
                   ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
@@ -287,18 +287,18 @@ export const MenuSection = () => {
                 {/* Soup */}
                 {isValidMenuText(todayMenu.soup[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                         {language === "de" ? "Suppe" : "Soup"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">6,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.soup[language]}
                     </p>
                     <DietaryBadges text={todayMenu.soup[language]} language={language} />
@@ -309,18 +309,18 @@ export const MenuSection = () => {
                 {/* Green Dish */}
                 {isValidMenuText(todayMenu.green[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-accent">
                         {language === "de" ? "Grünes Gericht" : "Green Dish"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.green[language]}
                     </p>
                     <DietaryBadges text={todayMenu.green[language]} language={language} />
@@ -331,18 +331,18 @@ export const MenuSection = () => {
                 {/* Blue Dish */}
                 {isValidMenuText(todayMenu.blue[language]) && (
                   <div className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[15rem] lg:flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
+                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.1em] text-primary">
                         {language === "de" ? "Heute" : "Today"}
                       </span>
-                      <span className="text-xs text-muted-foreground font-work uppercase tracking-wide">
+                      <span className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-blue">
                         {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                       </span>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                       <p className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">15,90</p>
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2 lg:text-[15px]">
+                    <p className="mb-2 font-lora text-lg leading-relaxed text-foreground/88 lg:text-base">
                       {todayMenu.blue[language]}
                     </p>
                     <DietaryBadges text={todayMenu.blue[language]} language={language} />
@@ -442,9 +442,12 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8 lg:scroll-mt-28">
-            <p className="text-xs text-muted-foreground font-work font-medium tracking-wide mb-6 text-center uppercase lg:text-left">
+            <p className="mb-3 text-center font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent lg:text-left">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
+            <h2 className="mb-6 text-center font-cormorant text-3xl font-semibold text-primary md:text-4xl lg:text-left lg:text-5xl">
+              {language === "de" ? "Die ganze Woche" : "The full week"}
+            </h2>
           </div>
           
           {/* Weekly Menu */}
@@ -458,7 +461,7 @@ export const MenuSection = () => {
                     </div>
                   ) : (
                     <>
-                      <p className="text-xs text-muted-foreground text-center font-work mb-4">
+                      <p className="mb-5 text-center font-work text-xs font-semibold uppercase tracking-[0.1em] text-muted-foreground lg:text-left">
                         {translatePeriod(menu.period, language)}
                       </p>
                       <div className="lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-5">
@@ -477,20 +480,20 @@ export const MenuSection = () => {
                         
                         return (
                           <div key={index} className="border-b border-border/30 pb-4 last:border-0 lg:rounded-2xl lg:border lg:border-border/60 lg:bg-background/45 lg:p-4 lg:last:border">
-                            <h4 className="font-cormorant text-base font-semibold text-foreground mb-2">
+                            <h4 className="mb-3 font-cormorant text-2xl font-semibold leading-tight text-primary">
                               {day.day[language]}
                             </h4>
                             
                             {isDayClosed ? (
                               <div className="text-center py-3">
-                                <p className="font-cormorant text-base text-foreground/85 italic">
+                                <p className="font-cormorant text-xl text-foreground/85 italic">
                                   {dayHoliday
                                     ? dayHoliday.name[language]
                                     : isDaySunday
                                       ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
                                       : (language === "de" ? "Heute geschlossen" : "Closed")}
                                 </p>
-                                <p className="text-muted-foreground text-xs font-work mt-1">
+                                <p className="mt-1 font-work text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                                   {language === "de" ? "Geschlossen" : "Closed"}
                                 </p>
                               </div>
@@ -532,13 +535,13 @@ export const MenuSection = () => {
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
           <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32 lg:scroll-mt-28">
             <div className="text-center mb-8 lg:text-left">
-              <h2 className="font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-3">
+              <h2 className="mb-3 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl lg:text-6xl">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base font-work max-w-sm mx-auto lg:mx-0 lg:max-w-2xl leading-relaxed">
+              <p className="mx-auto max-w-sm font-lora text-base leading-relaxed text-foreground/78 md:text-lg lg:mx-0 lg:max-w-2xl">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
-              <p className="text-muted-foreground text-xs font-work font-medium mt-2 uppercase tracking-wide">
+              <p className="mt-3 font-work text-xs font-semibold uppercase tracking-[0.1em] text-accent">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
             </div>
@@ -568,7 +571,7 @@ export const MenuSection = () => {
             <div className="space-y-10 lg:space-y-12">
               {klassikerMenu.categories.map((category) => (
                 <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40 lg:scroll-mt-28">
-                  <h3 className="font-cormorant text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
+                  <h3 className="mb-4 border-b border-border/50 pb-3 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">
                     {cleanDisplayText(category.name[language])}
                   </h3>
                   
@@ -582,7 +585,7 @@ export const MenuSection = () => {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className={`font-cormorant text-base font-semibold mb-1 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
+                              <h4 className={`mb-1 font-cormorant text-2xl font-semibold leading-snug ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
                                 {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-foreground italic">
@@ -591,7 +594,7 @@ export const MenuSection = () => {
                                 )}
                               </h4>
                               {item.description && (
-                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+                                <p className={`font-lora text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground/72'}`}>
                                   {cleanDisplayText(item.description[language])}
                                 </p>
                               )}
@@ -627,7 +630,7 @@ export const MenuSection = () => {
                                 />
                               )}
                             </div>
-                            <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-foreground' : 'text-foreground'}`}>
+                            <span className={`shrink-0 rounded-full px-2.5 py-1 font-work text-sm font-semibold ${item.isUnavailable ? 'bg-muted text-muted-foreground' : 'bg-accent/10 text-accent'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
@@ -643,14 +646,14 @@ export const MenuSection = () => {
                           <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5 lg:scroll-mt-28">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
-                              <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
+                              <h4 className="font-cormorant text-2xl font-semibold leading-tight text-primary md:text-3xl">
                                 {cleanDisplayText(subcategory.name[language])}
                               </h4>
                               {subcategory.sizeNote && (
                                 <p className="mt-1 text-xs font-work text-muted-foreground">{subcategory.sizeNote}</p>
                               )}
                             </div>
-                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                            <span className="font-work text-[10px] font-semibold uppercase tracking-[0.1em] text-accent">
                               {language === "de" ? "Getränke" : "Drinks"}
                             </span>
                           </div>
@@ -665,7 +668,7 @@ export const MenuSection = () => {
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
-                                    <span className="font-work text-sm font-semibold text-foreground">
+                                    <span className="font-cormorant text-xl font-semibold leading-snug text-foreground">
                                       {item.name[language]}
                                     </span>
                                     {item.sizeNote && (
@@ -678,7 +681,7 @@ export const MenuSection = () => {
                                         href="https://supermind.at/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground transition-colors hover:border-primary/35 hover:text-primary"
+                                        className="mt-2 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-primary/80 transition-colors hover:border-primary/35 hover:text-primary"
                                         aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind coffee website"}
                                       >
                                         <img src={supermindLogo} alt="" className="h-4 w-auto object-contain" loading="lazy" />
@@ -686,7 +689,7 @@ export const MenuSection = () => {
                                       </a>
                                     )}
                                   </div>
-                                  <span className="text-accent font-semibold text-sm font-work shrink-0">
+                                  <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 font-work text-sm font-semibold text-accent">
                                     {item.price}
                                   </span>
                                 </div>
