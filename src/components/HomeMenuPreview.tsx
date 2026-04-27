@@ -70,9 +70,9 @@ export const HomeMenuPreview = () => {
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
   return (
-    <section id="menu" className="bg-section-soft py-16 md:py-24">
+    <section id="menu" className="bg-section-soft py-16 md:py-24 lg:py-28">
       <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-2xl">
+        <div className="mx-auto max-w-2xl lg:max-w-5xl">
           <div className="mb-8 text-center">
             <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
               {language === "de" ? "Heute" : "Today"}
@@ -80,7 +80,7 @@ export const HomeMenuPreview = () => {
             <h2 className="mt-2 font-cormorant text-3xl font-semibold text-foreground md:text-4xl">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
-            <p className="mx-auto mt-3 max-w-sm font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+            <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-foreground md:text-base">
               {language === "de"
                 ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
                 : "A quick look at today’s menu. Classics, drinks and details are on the menu page."}
@@ -88,7 +88,7 @@ export const HomeMenuPreview = () => {
           </div>
 
           {isLoading ? (
-            <div className="space-y-4">
+            <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:space-y-0">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
                   <Skeleton className="mb-3 h-5 w-24" />
@@ -103,7 +103,7 @@ export const HomeMenuPreview = () => {
                 const dishCopy = splitDishText(dish.text, language, dish.key);
 
                 return (
-                <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5">
+                <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[18rem] lg:flex-col">
                   <div className="mb-3 flex items-start justify-between gap-4">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
@@ -127,7 +127,7 @@ export const HomeMenuPreview = () => {
                     <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
                   </div>
                   <DietaryBadges text={dish.text} language={language} />
-                  <AllergenCodes codes={dish.allergens} />
+                  <div className="lg:mt-auto"><AllergenCodes codes={dish.allergens} /></div>
                 </div>
                 );
               })}
