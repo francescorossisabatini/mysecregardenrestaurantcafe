@@ -89,6 +89,54 @@ export type Database = {
         }
         Relationships: []
       }
+      cake_orders: {
+        Row: {
+          cake_choice: string
+          created_at: string
+          id: string
+          language: string
+          name: string
+          notes: string | null
+          payment_acknowledged: boolean
+          phone: string
+          pickup_date: string
+          quantity: number
+          staff_notes: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cake_choice: string
+          created_at?: string
+          id?: string
+          language?: string
+          name: string
+          notes?: string | null
+          payment_acknowledged?: boolean
+          phone: string
+          pickup_date: string
+          quantity: number
+          staff_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          cake_choice?: string
+          created_at?: string
+          id?: string
+          language?: string
+          name?: string
+          notes?: string | null
+          payment_acknowledged?: boolean
+          phone?: string
+          pickup_date?: string
+          quantity?: number
+          staff_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       kuechenplan_items: {
         Row: {
           allergens: string[]

@@ -40,6 +40,8 @@ type DishCategory = "soup" | "green" | "blue" | "holiday" | "seasonal";
 type DashboardLanguage = "en" | "de";
 type ReservationStatus = "new" | "confirmed" | "cancelled" | "arrived" | "no_show";
 type ReservationStatusFilter = "all" | ReservationStatus;
+type CakeOrderStatus = "pending" | "confirmed" | "cancelled" | "fulfilled";
+type CakeOrderStatusFilter = "all" | CakeOrderStatus;
 
 type StaffReservation = {
   id: string;
@@ -51,6 +53,22 @@ type StaffReservation = {
   notes: string | null;
   staff_notes?: string | null;
   status: ReservationStatus;
+  language: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type StaffCakeOrder = {
+  id: string;
+  name: string;
+  phone: string;
+  cake_choice: string;
+  quantity: number;
+  pickup_date: string;
+  notes: string | null;
+  payment_acknowledged: boolean;
+  status: CakeOrderStatus;
+  staff_notes?: string | null;
   language: string;
   created_at: string;
   updated_at: string;
@@ -150,9 +168,13 @@ const text = {
     loadError: "Kitchen plan could not be loaded from Google Sheets.",
     requestsTab: "Requests",
     requestsTitle: "Table requests",
+    cakesTitle: "Cake orders",
+    tableRequests: "Tables",
+    cakeRequests: "Cakes",
     requestsLoading: "Loading requests...",
     requestsError: "Requests could not be loaded.",
     emptyRequests: "No requests for this day.",
+    emptyCakeOrders: "No cake orders for this day.",
     today: "Today",
     prevDay: "Prev day",
     nextDay: "Next day",
@@ -178,10 +200,14 @@ const text = {
     statusArrived: "Arrived",
     statusCancelled: "Cancelled",
     statusNoShow: "No-show",
-    nextRequest: "Next request",
-    openRequests: "Open requests",
-    archiveItems: "Archive items",
-    noNextRequest: "No upcoming request",
+    totalCakeOrders: "cake orders",
+    cakeOrderLoading: "Loading cake orders...",
+    cakeOrderError: "Cake orders could not be loaded.",
+    cakesToday: "cakes today",
+    pickup: "Pickup",
+    fulfill: "Fulfilled",
+    statusPending: "Pending",
+    statusFulfilled: "Fulfilled",
   },
   de: {
     subtitle: "Detaillierter Küchenplan aus Google Sheets, nach Tagen sortiert.",
@@ -206,9 +232,13 @@ const text = {
     loadError: "Küchenplan konnte nicht aus Google Sheets geladen werden.",
     requestsTab: "Anfragen",
     requestsTitle: "Tischanfragen",
+    cakesTitle: "Tortenbestellungen",
+    tableRequests: "Tische",
+    cakeRequests: "Torten",
     requestsLoading: "Anfragen werden geladen...",
     requestsError: "Anfragen konnten nicht geladen werden.",
     emptyRequests: "Heute keine Anfragen.",
+    emptyCakeOrders: "Heute keine Tortenbestellungen.",
     today: "Heute",
     prevDay: "Vortag",
     nextDay: "Nächster Tag",
@@ -234,10 +264,14 @@ const text = {
     statusArrived: "Angekommen",
     statusCancelled: "Storniert",
     statusNoShow: "No-show",
-    nextRequest: "Nächste Anfrage",
-    openRequests: "Offene Anfragen",
-    archiveItems: "Archiv-Einträge",
-    noNextRequest: "Keine kommende Anfrage",
+    totalCakeOrders: "Tortenbestellungen",
+    cakeOrderLoading: "Tortenbestellungen werden geladen...",
+    cakeOrderError: "Tortenbestellungen konnten nicht geladen werden.",
+    cakesToday: "Torten heute",
+    pickup: "Abholung",
+    fulfill: "Erledigt",
+    statusPending: "Ausstehend",
+    statusFulfilled: "Erledigt",
   },
 } satisfies Record<DashboardLanguage, Record<string, string>>;
 
@@ -288,6 +322,11 @@ const reservationUpdateSchema = z.object({
   status: z.enum(["new", "confirmed", "cancelled", "arrived", "no_show"]).optional(),
   staff_notes: z.string().trim().max(500).nullable().optional(),
 });
+const cakeOrderStatuses: CakeOrderStatusFilter[] = ["all", "pending", "confirmed", "fulfilled", "cancelled"];
+const cakeOrderUpdateSchema = z.object({
+  status: z.enum(["pending", "confirmed", "cancelled", "fulfilled"]).optional(),
+  staff_notes: z.string().trim().max(500).nullable().optional(),
+});
 
 const todayIso = () => new Date().toISOString().split("T")[0];
 
@@ -318,6 +357,15 @@ const reservationFilterLabel = (status: ReservationStatusFilter, labels: Record<
   no_show: labels.filterNoShow,
 }[status]);
 
+const cakeOrderStatusLabel = (status: CakeOrderStatus, labels: Record<string, string>) => ({
+  pending: labels.statusPending,
+  confirmed: labels.statusConfirmed,
+  fulfilled: labels.statusFulfilled,
+  cancelled: labels.statusCancelled,
+}[status]);
+
+const cakeOrderFilterLabel = (status: CakeOrderStatusFilter, labels: Record<string, string>) => status === "all" ? labels.filterAll : cakeOrderStatusLabel(status, labels);
+
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
@@ -334,6 +382,11 @@ const StaffKitchen = () => {
   const [isReservationsLoading, setIsReservationsLoading] = useState(false);
   const [reservationError, setReservationError] = useState<string | null>(null);
   const [updatingReservationIds, setUpdatingReservationIds] = useState<string[]>([]);
+  const [cakeOrders, setCakeOrders] = useState<StaffCakeOrder[]>([]);
+  const [cakeOrderStatusFilter, setCakeOrderStatusFilter] = useState<CakeOrderStatusFilter>("all");
+  const [isCakeOrdersLoading, setIsCakeOrdersLoading] = useState(false);
+  const [cakeOrderError, setCakeOrderError] = useState<string | null>(null);
+  const [updatingCakeOrderIds, setUpdatingCakeOrderIds] = useState<string[]>([]);
   const labels = text[language];
 
   const signOut = async () => {
@@ -399,6 +452,48 @@ const StaffKitchen = () => {
     }
   };
 
+  const loadCakeOrders = async (date = selectedReservationDate) => {
+    setIsCakeOrdersLoading(true);
+    setCakeOrderError(null);
+
+    const { data, error: requestError } = await (supabase.from("cake_orders") as any)
+      .select("id, name, phone, cake_choice, quantity, pickup_date, notes, payment_acknowledged, status, staff_notes, language, created_at, updated_at")
+      .eq("pickup_date", date)
+      .order("created_at", { ascending: true });
+
+    if (requestError) {
+      setCakeOrderError(text[language].cakeOrderError);
+      setCakeOrders([]);
+    } else {
+      setCakeOrders(((data ?? []) as StaffCakeOrder[]).map((order) => ({ ...order, status: order.status || "pending" })));
+    }
+
+    setIsCakeOrdersLoading(false);
+  };
+
+  const updateCakeOrder = async (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => {
+    const parsed = cakeOrderUpdateSchema.safeParse(update);
+    if (!parsed.success) {
+      setCakeOrderError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
+      return;
+    }
+
+    const previous = cakeOrders;
+    setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
+    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
+
+    const { error: updateError } = await (supabase.from("cake_orders") as any)
+      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .eq("id", order.id);
+
+    setUpdatingCakeOrderIds((ids) => ids.filter((id) => id !== order.id));
+
+    if (updateError) {
+      setCakeOrders(previous);
+      setCakeOrderError(language === "de" ? "Fehler, bitte nochmal versuchen." : "Error, please try again.");
+    }
+  };
+
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession);
@@ -428,6 +523,7 @@ const StaffKitchen = () => {
   useEffect(() => {
     if (!session || !isStaff) return;
     void loadReservations(selectedReservationDate);
+    void loadCakeOrders(selectedReservationDate);
   }, [selectedReservationDate, session, isStaff]);
 
   useEffect(() => {
@@ -437,6 +533,9 @@ const StaffKitchen = () => {
       .channel("reservation-requests-changes")
       .on("postgres_changes", { event: "*", schema: "public", table: "reservation_requests" }, () => {
         void loadReservations(selectedReservationDate);
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "cake_orders" }, () => {
+        void loadCakeOrders(selectedReservationDate);
       })
       .subscribe();
 
@@ -473,12 +572,14 @@ const StaffKitchen = () => {
   const filteredReservations = useMemo(() => reservationStatusFilter === "all"
     ? reservations
     : reservations.filter((reservation) => reservation.status === reservationStatusFilter), [reservationStatusFilter, reservations]);
+  const filteredCakeOrders = useMemo(() => cakeOrderStatusFilter === "all"
+    ? cakeOrders
+    : cakeOrders.filter((order) => order.status === cakeOrderStatusFilter), [cakeOrderStatusFilter, cakeOrders]);
   const dailyCap = 20;
-  const dailyProgress = Math.min(100, Math.round((reservations.length / dailyCap) * 100));
-  const dailyProgressTone = reservations.length >= 19 ? "bg-destructive" : reservations.length >= 15 ? "bg-warning" : "bg-accent";
+  const dailyWorkload = reservations.length + cakeOrders.reduce((sum, order) => sum + order.quantity, 0);
+  const dailyProgress = Math.min(100, Math.round((dailyWorkload / dailyCap) * 100));
+  const dailyProgressTone = dailyWorkload >= 19 ? "bg-destructive" : dailyWorkload >= 15 ? "bg-warning" : "bg-accent";
   const selectedDateIsPast = isPastReservationDate(selectedReservationDate);
-  const openReservationCount = reservations.filter((reservation) => reservation.status === "new" || reservation.status === "confirmed").length;
-  const nextReservation = reservations.find((reservation) => reservation.status === "new" || reservation.status === "confirmed");
 
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
@@ -501,14 +602,14 @@ const StaffKitchen = () => {
   return (
     <div className="min-h-screen bg-background font-work text-foreground">
       <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
-      <main className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-5 md:px-8 md:py-7">
-        <header className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card lg:grid-cols-[1fr_auto] lg:items-center lg:p-5">
+      <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
+        <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{weekRange(currentRecords, language)}</h1>
+            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-2 justify-self-start lg:justify-self-end">
+          <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
             <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
               {(["en", "de"] as const).map((option) => (
                 <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
@@ -523,38 +624,13 @@ const StaffKitchen = () => {
           </div>
         </header>
 
-        <section className="grid gap-3 md:grid-cols-3" aria-label="Staff dashboard summary">
-          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.openRequests}</p>
-              <Users className="h-4 w-4 text-accent" aria-hidden="true" />
-            </div>
-            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{openReservationCount}</p>
-          </div>
-          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.nextRequest}</p>
-              <CalendarDays className="h-4 w-4 text-accent" aria-hidden="true" />
-            </div>
-            <p className="mt-2 font-cormorant text-3xl font-semibold text-primary">{nextReservation ? nextReservation.reservation_time.slice(0, 5) : "—"}</p>
-            <p className="text-sm text-muted-foreground">{nextReservation ? cleanDisplayText(nextReservation.full_name) : labels.noNextRequest}</p>
-          </div>
-          <div className="rounded-lg border border-border bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">{labels.archiveItems}</p>
-              <Archive className="h-4 w-4 text-accent" aria-hidden="true" />
-            </div>
-            <p className="mt-2 font-cormorant text-4xl font-semibold text-primary">{archiveRecords.length}</p>
-          </div>
-        </section>
-
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
         <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="sticky top-2 z-20 mx-auto grid h-auto w-full max-w-3xl grid-cols-3 rounded-full border border-border bg-card/95 p-1 shadow-card backdrop-blur-md">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.planTab}</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.archiveTab}</TabsTrigger>
-            <TabsTrigger value="requests" className="rounded-full py-3 text-sm font-semibold md:text-base">{labels.requestsTab}</TabsTrigger>
+          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
+            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -570,14 +646,14 @@ const StaffKitchen = () => {
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
               {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
 
-              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3 lg:grid-cols-2 lg:items-start">
+              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3">
                 {dayGroups.map(([day, records]) => {
                   const holiday = records.some((record) => normalizeCategory(record.category) === "holiday" || record.title.toLowerCase().includes("feiertag"));
                   return (
                     <AccordionItem key={day} value={day} className="overflow-hidden rounded-lg border border-border bg-card px-4 shadow-card">
                       <AccordionTrigger className="py-4 text-left hover:no-underline">
                         <span className="grid gap-1">
-                          <span className="font-cormorant text-3xl font-semibold leading-tight text-primary">{dayLabels[language][day] || day}</span>
+                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
                         {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
@@ -622,19 +698,22 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="requests" className="mt-0">
-            <section className="grid gap-5 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
               <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
                     <Users className="h-5 w-5" aria-hidden="true" />
-                    <h2 className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{labels.requestsTitle}</h2>
+                    <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTab}</h2>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
-                <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                  <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                </div>
               </div>
 
-              <div className="grid gap-4 rounded-lg border border-border bg-background/70 p-3 lg:grid-cols-[1fr_16rem] lg:items-center">
+              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
                 <div className="grid grid-cols-3 gap-2">
                   <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
                     <ChevronLeft className="h-4 w-4" />
@@ -646,38 +725,59 @@ const StaffKitchen = () => {
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
-                <div>
-                  <div className="h-2 overflow-hidden rounded-full bg-muted">
-                    <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
-                  </div>
-                  <p className="mt-2 text-xs text-muted-foreground">{reservations.length} / {dailyCap} {labels.dailyCap}</p>
+                <div className="h-2 overflow-hidden rounded-full bg-muted">
+                  <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
                 </div>
+                <p className="text-xs text-muted-foreground">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {reservationStatuses.map((status) => (
-                  <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
-                    {reservationFilterLabel(status, labels)}
-                  </Button>
-                ))}
-              </div>
+              <div className="grid gap-5 xl:grid-cols-2">
+                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
+                    <Badge variant="outline" className="rounded-full">{filteredReservations.length}</Badge>
+                  </div>
 
-              {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
-              {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
-              {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {reservationStatuses.map((status) => (
+                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
+                        {reservationFilterLabel(status, labels)}
+                      </Button>
+                    ))}
+                  </div>
 
-              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                {filteredReservations.map((reservation) => (
-                  <ReservationCard
-                    key={reservation.id}
-                    reservation={reservation}
-                    language={language}
-                    labels={labels}
-                    readOnly={selectedDateIsPast}
-                    isUpdating={updatingReservationIds.includes(reservation.id)}
-                    onUpdate={updateReservation}
-                  />
-                ))}
+                  {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
+                  {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
+                  {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+
+                  <div className="grid gap-4">
+                    {filteredReservations.map((reservation) => (
+                      <ReservationCard key={reservation.id} reservation={reservation} language={language} labels={labels} readOnly={selectedDateIsPast} isUpdating={updatingReservationIds.includes(reservation.id)} onUpdate={updateReservation} />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
+                    <Badge variant="outline" className="rounded-full">{filteredCakeOrders.length}</Badge>
+                  </div>
+                  <div className="flex gap-2 overflow-x-auto pb-1">
+                    {cakeOrderStatuses.map((status) => (
+                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-full">
+                        {cakeOrderFilterLabel(status, labels)}
+                      </Button>
+                    ))}
+                  </div>
+                  {cakeOrderError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{cakeOrderError}</p> : null}
+                  {isCakeOrdersLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.cakeOrderLoading}</p> : null}
+                  {!isCakeOrdersLoading && !filteredCakeOrders.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyCakeOrders}</p> : null}
+                  <div className="grid gap-4">
+                    {filteredCakeOrders.map((order) => (
+                      <CakeOrderCard key={order.id} order={order} language={language} labels={labels} readOnly={selectedDateIsPast} isUpdating={updatingCakeOrderIds.includes(order.id)} onUpdate={updateCakeOrder} />
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           </TabsContent>
@@ -717,7 +817,7 @@ const ReservationCard = ({
       <div className="flex items-start justify-between gap-3">
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
-          <span className="font-cormorant text-3xl font-semibold leading-none">{time}</span>
+          <span>{time}</span>
           <span className="inline-flex items-center gap-1 text-muted-foreground">
             <Users className="h-4 w-4" aria-hidden="true" />
             {reservation.party_size}
@@ -726,8 +826,8 @@ const ReservationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(reservation.contact)}
         </a>
@@ -740,18 +840,18 @@ const ReservationCard = ({
       </div>
 
       {!readOnly ? (
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {reservation.status === "new" ? (
             <>
-              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
-              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
           {reservation.status === "confirmed" ? (
             <>
-              <Button type="button" size="sm" className="h-10" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
-              <Button type="button" size="sm" className="h-10" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
-              <Button type="button" size="sm" className="h-10 sm:col-span-2" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "arrived" })}>{labels.arrived}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "no_show" })}>{labels.noShow}</Button>
+              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(reservation, { status: "cancelled" })}>{labels.cancel}</Button>
             </>
           ) : null}
         </div>
@@ -786,6 +886,96 @@ const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus;
   return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
 };
 
+const CakeOrderCard = ({
+  order,
+  language,
+  labels,
+  readOnly,
+  isUpdating,
+  onUpdate,
+}: {
+  order: StaffCakeOrder;
+  language: DashboardLanguage;
+  labels: Record<string, string>;
+  readOnly: boolean;
+  isUpdating: boolean;
+  onUpdate: (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => void;
+}) => {
+  const [staffNotes, setStaffNotes] = useState(order.staff_notes ?? "");
+
+  useEffect(() => {
+    setStaffNotes(order.staff_notes ?? "");
+  }, [order.staff_notes]);
+
+  const canAct = !readOnly && !isUpdating;
+
+  return (
+    <article className="rounded-lg border border-border bg-card p-4 shadow-card">
+      <div className="flex items-start justify-between gap-3">
+        <CakeOrderStatusBadge status={order.status} labels={labels} />
+        <span className="rounded-full bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
+      </div>
+
+      <div className="mt-4">
+        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-primary">{cleanDisplayText(order.cake_choice)}</h3>
+        <p className="mt-1 text-sm font-semibold text-foreground">{cleanDisplayText(order.name)}</p>
+        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-3 text-sm font-medium text-primary hover:border-primary/35" aria-label={`${labels.call} ${order.name}`}>
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          {cleanDisplayText(order.phone)}
+        </a>
+        {order.notes ? (
+          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-foreground">
+            <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <span><span className="font-semibold text-foreground/80">{labels.guestNotes}:</span> {cleanDisplayText(order.notes)}</span>
+          </p>
+        ) : null}
+      </div>
+
+      {!readOnly ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {order.status === "pending" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(order, { status: "confirmed" })}>{labels.confirm}</Button>
+              <Button type="button" size="sm" variant="outline" disabled={!canAct} onClick={() => onUpdate(order, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+          {order.status === "confirmed" ? (
+            <>
+              <Button type="button" size="sm" disabled={!canAct} onClick={() => onUpdate(order, { status: "fulfilled" })}>{labels.fulfill}</Button>
+              <Button type="button" size="sm" variant="ghost" disabled={!canAct} onClick={() => onUpdate(order, { status: "cancelled" })}>{labels.cancel}</Button>
+            </>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div className="mt-4 border-t border-border pt-4">
+        <label className="grid gap-2 text-sm font-semibold text-foreground">
+          {labels.staffNotes}
+          <Textarea
+            value={staffNotes}
+            onChange={(event) => setStaffNotes(event.target.value.slice(0, 500))}
+            onBlur={() => onUpdate(order, { staff_notes: staffNotes.trim() || null })}
+            placeholder={language === "de" ? "Interne Notiz hinzufügen" : "Add internal note"}
+            className="min-h-20 resize-none font-work font-normal"
+            maxLength={500}
+          />
+        </label>
+      </div>
+    </article>
+  );
+};
+
+const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; labels: Record<string, string> }) => {
+  const className = {
+    pending: "border-warning/40 bg-warning/15 text-warning-foreground",
+    confirmed: "border-accent/40 bg-accent/15 text-accent",
+    fulfilled: "border-primary/40 bg-primary/10 text-primary",
+    cancelled: "border-border bg-muted text-muted-foreground",
+  }[status];
+
+  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
+};
+
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
@@ -797,9 +987,9 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
     <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-accent">{categoryLabels[language][category]}</p>
-          <h3 className="mt-1 font-cormorant text-3xl font-semibold leading-tight text-foreground">{cleanDisplayText(record.title)}</h3>
-          {record.description ? <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-2 text-sm text-muted-foreground">{titleDe}</p> : null}
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
+          <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
+          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
           {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
