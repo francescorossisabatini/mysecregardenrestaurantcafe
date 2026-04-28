@@ -7,6 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    loadContentsquare?: () => void;
   }
 }
 
@@ -42,6 +43,7 @@ export const CookieConsent = () => {
     closeWithAnimation();
     // Enable Google Analytics tracking after consent
     window.gtag?.('consent', 'update', { 'analytics_storage': 'granted' });
+    window.loadContentsquare?.();
   };
 
   const handleReject = () => {
@@ -72,8 +74,8 @@ export const CookieConsent = () => {
             <div className="flex-1 space-y-2 md:space-y-3 min-w-0">
               <p className="font-lora text-xs md:text-base text-foreground/80 leading-snug md:leading-relaxed">
                 {language === "de" 
-                  ? "Cookies für Analyse. Du entscheidest."
-                  : "Analytics cookies. You decide."
+                  ? "Wir nutzen Google Analytics und Contentsquare/Hotjar für Analyse und Nutzerverhalten nur mit deiner Zustimmung."
+                  : "We use Google Analytics and Contentsquare/Hotjar for analytics and user behavior only with your consent."
                 }
               </p>
               
