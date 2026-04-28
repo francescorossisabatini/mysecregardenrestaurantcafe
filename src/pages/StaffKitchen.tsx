@@ -626,11 +626,11 @@ const StaffKitchen = () => {
 
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
-        <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
-            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
+        <Tabs defaultValue="plan" className="grid gap-4">
+          <TabsList className="grid h-auto w-full grid-cols-3 rounded-md border border-border bg-card p-1 shadow-soft lg:w-[36rem]">
+            <TabsTrigger value="plan" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -646,14 +646,14 @@ const StaffKitchen = () => {
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
               {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
 
-              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3">
+              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3 xl:grid-cols-2">
                 {dayGroups.map(([day, records]) => {
                   const holiday = records.some((record) => normalizeCategory(record.category) === "holiday" || record.title.toLowerCase().includes("feiertag"));
                   return (
-                    <AccordionItem key={day} value={day} className="overflow-hidden rounded-lg border border-border bg-card px-4 shadow-card">
-                      <AccordionTrigger className="py-4 text-left hover:no-underline">
+                    <AccordionItem key={day} value={day} className="overflow-hidden rounded-md border border-border bg-card px-3 shadow-soft md:px-4">
+                      <AccordionTrigger className="py-3 text-left hover:no-underline">
                         <span className="grid gap-1">
-                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[language][day] || day}</span>
+                          <span className="font-work text-xl font-extrabold tracking-normal text-foreground">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
                         {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
@@ -669,7 +669,7 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="archive" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-4 rounded-md border border-border bg-card p-3 shadow-soft md:p-5">
               <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
@@ -683,14 +683,14 @@ const StaffKitchen = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {(["all", "soup", "green", "blue"] as const).map((filter) => (
-                    <Button key={filter} type="button" variant={categoryFilter === filter ? "default" : "outline"} onClick={() => setCategoryFilter(filter)} className="rounded-full">
+                    <Button key={filter} type="button" variant={categoryFilter === filter ? "default" : "outline"} onClick={() => setCategoryFilter(filter)} className="rounded-md">
                       {filter === "all" ? labels.all : categoryLabels[language][filter]}
                     </Button>
                   ))}
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {!archiveRecords.length ? <p className="text-sm text-muted-foreground">{labels.emptyArchive}</p> : null}
                 {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} language={language} />)}
               </div>
