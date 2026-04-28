@@ -41,6 +41,9 @@ type ReservationStatus = "new" | "confirmed" | "cancelled" | "arrived" | "no_sho
 type ReservationStatusFilter = "all" | ReservationStatus;
 type CakeOrderStatus = "pending" | "confirmed" | "cancelled" | "fulfilled";
 type CakeOrderStatusFilter = "all" | CakeOrderStatus;
+type StaffSignalKind = "spicy" | "garlic" | "onion" | "allergen";
+type StaffSignalIntensity = "low" | "medium" | "high";
+type StaffSignal = { key: string; labelKey: string; kind: StaffSignalKind; intensity?: StaffSignalIntensity };
 
 type StaffReservation = {
   id: string;
@@ -120,26 +123,30 @@ const categoryLabels: Record<DashboardLanguage, Record<DishCategory, string>> = 
 
 const badgeLabels: Record<DashboardLanguage, Record<string, string>> = {
   en: {
-    spicy: "🌶 Spicy",
-    "garlic-high": "🧄🧄🧄 Much Garlic",
-    "garlic-med": "🧄🧄 Garlic",
-    "garlic-low": "🧄 Light Garlic",
-    "onion-high": "🧅🧅🧅 Much Onion",
-    "onion-med": "🧅🧅 Onion",
-    "onion-low": "🧅 Light Onion",
-    nuts: "🥜 Nuts",
-    dairy: "🧀 Dairy",
+    "spicy-high": "Very spicy",
+    "spicy-med": "Spicy",
+    "spicy-low": "Mild heat",
+    "garlic-high": "High garlic",
+    "garlic-med": "Garlic",
+    "garlic-low": "Light garlic",
+    "onion-high": "High onion",
+    "onion-med": "Onion",
+    "onion-low": "Light onion",
+    nuts: "Nuts",
+    dairy: "Dairy",
   },
   de: {
-    spicy: "🌶 Scharf",
-    "garlic-high": "🧄🧄🧄 Viel Knoblauch",
-    "garlic-med": "🧄🧄 Knoblauch",
-    "garlic-low": "🧄 Wenig Knoblauch",
-    "onion-high": "🧅🧅🧅 Viel Zwiebel",
-    "onion-med": "🧅🧅 Zwiebel",
-    "onion-low": "🧅 Wenig Zwiebel",
-    nuts: "🥜 Nüsse",
-    dairy: "🧀 Milchprodukte",
+    "spicy-high": "Sehr scharf",
+    "spicy-med": "Scharf",
+    "spicy-low": "Leichte Schärfe",
+    "garlic-high": "Viel Knoblauch",
+    "garlic-med": "Knoblauch",
+    "garlic-low": "Wenig Knoblauch",
+    "onion-high": "Viel Zwiebel",
+    "onion-med": "Zwiebel",
+    "onion-low": "Wenig Zwiebel",
+    nuts: "Nüsse",
+    dairy: "Milchprodukte",
   },
 };
 
@@ -290,9 +297,56 @@ const normalizeCategory = (value?: string): DishCategory => {
   return "seasonal";
 };
 
-const recordBadges = (record: StaffMenuRecord) => {
-  const raw = [fieldValue(record, ["badges"]), ...record.allergens].join(",");
-  return raw.split(/[,;|]+/).map((badge) => cleanDisplayText(badge).toLowerCase()).filter(Boolean);
+const includesAny = (value: string, terms: string[]) => terms.some((term) => value.includes(term));
+
+const signalIntensity = (value: string, terms: { high: string[]; low: string[] }): StaffSignalIntensity => {
+  if (includesAny(value, terms.high)) return "high";
+  if (includesAny(value, terms.low)) return "low";
+  return "medium";
+};
+
+const recordSignals = (record: StaffMenuRecord): StaffSignal[] => {
+  const rawBadges = [fieldValue(record, ["badges"]), ...record.allergens]
+    .join(",")
+    .split(/[,;|]+/)
+    .map((badge) => cleanDisplayText(badge).toLowerCase())
+    .filter(Boolean);
+  const searchableText = cleanDisplayText([
+    record.title,
+    record.description,
+    ...record.ingredients,
+    ...record.notes,
+    ...record.fields.map((field) => field.value),
+    ...rawBadges,
+  ].filter(Boolean).join(" ")).toLowerCase();
+  const signals = new Map<string, StaffSignal>();
+  const add = (signal: StaffSignal) => signals.set(signal.key, signal);
+
+  if (includesAny(searchableText, ["spicy", "scharf", "piccante", "chili", "chilli", "hot", "jalapeno", "jalapeño", "peperoncino", "cayenne"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["very spicy", "sehr scharf", "extra scharf", "hot", "viel chili", "chili++"],
+      low: ["mild spicy", "leicht scharf", "mild", "wenig chili"],
+    });
+    add({ key: `spicy-${intensity}`, labelKey: intensity === "high" ? "spicy-high" : intensity === "low" ? "spicy-low" : "spicy-med", kind: "spicy", intensity });
+  }
+  if (includesAny(searchableText, ["garlic", "knoblauch", "aglio"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["much garlic", "extra garlic", "viel knoblauch", "knoblauch++"],
+      low: ["light garlic", "little garlic", "wenig knoblauch", "ohne knoblauch"],
+    });
+    add({ key: `garlic-${intensity}`, labelKey: intensity === "high" ? "garlic-high" : intensity === "low" ? "garlic-low" : "garlic-med", kind: "garlic", intensity });
+  }
+  if (includesAny(searchableText, ["onion", "zwiebel", "cipolla", "shallot", "schalotte"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["much onion", "extra onion", "viel zwiebel", "zwiebel++"],
+      low: ["light onion", "little onion", "wenig zwiebel", "ohne zwiebel"],
+    });
+    add({ key: `onion-${intensity}`, labelKey: intensity === "high" ? "onion-high" : intensity === "low" ? "onion-low" : "onion-med", kind: "onion", intensity });
+  }
+  if (rawBadges.some((badge) => includesAny(badge, ["nuts", "nüsse", "nuss", "peanut", "erdnuss", "h"]))) add({ key: "nuts", labelKey: "nuts", kind: "allergen" });
+  if (rawBadges.some((badge) => includesAny(badge, ["dairy", "milk", "milch", "laktose", "lactose", "g"]))) add({ key: "dairy", labelKey: "dairy", kind: "allergen" });
+
+  return [...signals.values()];
 };
 
 const recordCook = (record: StaffMenuRecord) => fieldValue(record, ["cook", "chef"]);
