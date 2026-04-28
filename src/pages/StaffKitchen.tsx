@@ -2,7 +2,6 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
