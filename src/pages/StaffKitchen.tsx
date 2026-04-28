@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -368,6 +367,32 @@ const cakeOrderStatusLabel = (status: CakeOrderStatus, labels: Record<string, st
 
 const cakeOrderFilterLabel = (status: CakeOrderStatusFilter, labels: Record<string, string>) => status === "all" ? labels.filterAll : cakeOrderStatusLabel(status, labels);
 
+const countPillClasses = {
+  neutral: "border-border bg-background text-foreground",
+  table: "border-primary/25 bg-primary/10 text-primary",
+  cake: "border-accent/25 bg-accent/10 text-accent",
+} as const;
+
+const categoryChipClasses: Record<DishCategory, string> = {
+  soup: "border-warning/30 bg-warning/15 text-foreground",
+  green: "border-accent/30 bg-accent/12 text-accent",
+  blue: "border-primary/30 bg-primary/10 text-primary",
+  holiday: "border-destructive/30 bg-destructive/10 text-destructive",
+  seasonal: "border-border bg-muted text-muted-foreground",
+};
+
+const CountPill = ({ children, tone = "neutral" }: { children: ReactNode; tone?: keyof typeof countPillClasses }) => (
+  <span className={`inline-flex min-h-8 items-center rounded-md border px-3 text-sm font-extrabold tabular-nums ${countPillClasses[tone]}`}>{children}</span>
+);
+
+const CategoryChip = ({ category, children }: { category: DishCategory; children: ReactNode }) => (
+  <span className={`inline-flex min-h-7 items-center rounded-sm border px-2.5 text-xs font-extrabold uppercase tracking-[0.08em] ${categoryChipClasses[category]}`}>{children}</span>
+);
+
+const InfoTag = ({ children }: { children: ReactNode }) => (
+  <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-foreground">{children}</span>
+);
+
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
@@ -642,7 +667,7 @@ const StaffKitchen = () => {
                   <CalendarDays className="h-5 w-5" aria-hidden="true" />
                   <h2 className="font-work text-xl font-bold tracking-normal">{labels.thisWeek}</h2>
                 </div>
-                <Badge variant="outline">{currentRecords.length} {labels.items}</Badge>
+                <CountPill>{currentRecords.length} {labels.items}</CountPill>
               </div>
 
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
@@ -658,7 +683,7 @@ const StaffKitchen = () => {
                           <span className="font-work text-xl font-extrabold tracking-normal text-foreground">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
-                        {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
+                        {holiday ? <CategoryChip category="holiday">{labels.holiday}</CategoryChip> : <CountPill>{records.length} {labels.dishes}</CountPill>}
                       </AccordionTrigger>
                       <AccordionContent className="grid gap-4 pb-5">
                         {holiday ? <div className="rounded-lg bg-muted p-5 text-lg font-semibold text-primary">{labels.holiday}</div> : records.map((record) => <DishCard key={record.id} record={record} language={language} />)}
@@ -710,8 +735,8 @@ const StaffKitchen = () => {
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="w-fit rounded-md px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
-                  <Badge variant="secondary" className="w-fit rounded-md px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                  <CountPill tone="table">{reservations.length} {labels.totalRequests}</CountPill>
+                  <CountPill tone="cake">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</CountPill>
                 </div>
               </div>
 
@@ -737,7 +762,7 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
-                    <Badge variant="outline" className="rounded-md">{filteredReservations.length}</Badge>
+                    <CountPill tone="table">{filteredReservations.length}</CountPill>
                   </div>
 
                   <div className="flex gap-2 overflow-x-auto pb-1">
@@ -762,7 +787,7 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
-                    <Badge variant="outline" className="rounded-md">{filteredCakeOrders.length}</Badge>
+                    <CountPill tone="cake">{filteredCakeOrders.length}</CountPill>
                   </div>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {cakeOrderStatuses.map((status) => (
@@ -915,7 +940,7 @@ const CakeOrderCard = ({
     <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <CakeOrderStatusBadge status={order.status} labels={labels} />
-        <span className="rounded-md bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
+        <CountPill tone="cake">× {order.quantity}</CountPill>
       </div>
 
       <div className="mt-4">
@@ -994,7 +1019,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}
+          {badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}
         </div>
       </div>
 
@@ -1003,7 +1028,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
         <DetailList title={labels.prep} icon="→" items={record.notes} />
       </div>
 
-      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-md"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
+      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <InfoTag key={chef}><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</InfoTag>)}</div> : null}
     </article>
   );
 };
@@ -1025,13 +1050,13 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
     <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Badge variant="outline" className="mb-2 rounded-md">{categoryLabels[language][category]}</Badge>
+          <CategoryChip category={category}>{categoryLabels[language][category]}</CategoryChip>
           <h3 className="font-work text-xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
+      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
