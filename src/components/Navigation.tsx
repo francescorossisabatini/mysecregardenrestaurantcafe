@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
@@ -10,12 +10,21 @@ export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
   const { language } = useLanguage();
   const location = useLocation();
-  const isHeroOverlay = false;
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isHome = location.pathname === "/";
+  const isHeroOverlay = isHome && !isScrolled && !isMobileMenuOpen;
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname, setIsMobileMenuOpen]);
+
+  useEffect(() => {
+    const updateScrolled = () => setIsScrolled(window.scrollY > 28);
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrolled);
+  }, [location.pathname]);
 
   // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
   const navLinks = [
@@ -30,7 +39,7 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "border-b border-background/10 bg-transparent py-2 backdrop-blur-[2px] md:py-3"
+            ? "border-b border-background/15 bg-gradient-to-b from-foreground/45 via-foreground/18 to-transparent py-2 shadow-none backdrop-blur-[1px] md:py-3"
             : "border-b border-border/55 bg-background/82 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
         }`}
       >
@@ -73,7 +82,7 @@ export const Navigation = () => {
               <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
               </span>
-              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-background/75 drop-shadow-sm" : "text-muted-foreground"}`}>
+              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-background/78 drop-shadow-sm" : "text-muted-foreground"}`}>
                 Vegetarian Café Vienna
               </p>
             </div>
