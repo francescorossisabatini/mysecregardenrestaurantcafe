@@ -327,6 +327,8 @@ const cakeOrderUpdateSchema = z.object({
   status: z.enum(["pending", "confirmed", "cancelled", "fulfilled"]).optional(),
   staff_notes: z.string().trim().max(500).nullable().optional(),
 });
+type StaffUpdateTable = { update: (values: Record<string, unknown>) => { eq: (column: string, value: string) => PromiseLike<{ error: unknown }> } };
+type StaffSelectTable = { select: (columns: string) => { eq: (column: string, value: string) => { order: (column: string, options: { ascending: boolean }) => PromiseLike<{ data: unknown[] | null; error: unknown }> } } };
 
 const todayIso = () => new Date().toISOString().split("T")[0];
 
@@ -440,7 +442,7 @@ const StaffKitchen = () => {
     setUpdatingReservationIds((ids) => [...ids, reservation.id]);
     setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed.data } : item));
 
-    const { error: updateError } = await (supabase.from("reservation_requests") as any)
+    const { error: updateError } = await (supabase.from("reservation_requests") as unknown as StaffUpdateTable)
       .update({ ...parsed.data, updated_at: new Date().toISOString() })
       .eq("id", reservation.id);
 
@@ -456,7 +458,7 @@ const StaffKitchen = () => {
     setIsCakeOrdersLoading(true);
     setCakeOrderError(null);
 
-    const { data, error: requestError } = await (supabase.from("cake_orders") as any)
+    const { data, error: requestError } = await (supabase.from("cake_orders") as unknown as StaffSelectTable)
       .select("id, name, phone, cake_choice, quantity, pickup_date, notes, payment_acknowledged, status, staff_notes, language, created_at, updated_at")
       .eq("pickup_date", date)
       .order("created_at", { ascending: true });
@@ -482,7 +484,7 @@ const StaffKitchen = () => {
     setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
     setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
 
-    const { error: updateError } = await (supabase.from("cake_orders") as any)
+    const { error: updateError } = await (supabase.from("cake_orders") as unknown as StaffUpdateTable)
       .update({ ...parsed.data, updated_at: new Date().toISOString() })
       .eq("id", order.id);
 
@@ -584,9 +586,9 @@ const StaffKitchen = () => {
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
     return (
-      <div className="min-h-screen bg-background px-4 py-12 font-work text-foreground">
+      <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
         <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex />
-        <main className="mx-auto max-w-xl rounded-lg border border-border bg-card p-6 text-center shadow-card">
+        <main className="mx-auto max-w-xl rounded-md border border-border bg-card p-6 text-center shadow-soft">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="text-3xl font-bold tracking-normal text-foreground">Unauthorized access</h1>
           <p className="mt-3 text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
@@ -600,24 +602,24 @@ const StaffKitchen = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background font-work text-foreground">
+    <div className="staff-app min-h-screen bg-background font-work text-foreground">
       <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
-      <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
-        <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
+      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-3 py-3 md:px-6 md:py-5">
+        <header className="sticky top-0 z-20 -mx-3 grid gap-3 border-b border-border bg-background/95 px-3 py-3 backdrop-blur md:-mx-6 md:grid-cols-[1fr_auto] md:items-center md:px-6">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Staff operations</p>
+            <h1 className="mt-1 truncate font-work text-2xl font-extrabold tracking-normal text-foreground md:text-3xl">{weekRange(currentRecords, language)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
-            <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
+            <div className="flex rounded-md border border-border bg-card p-1" aria-label="Dashboard language">
               {(["en", "de"] as const).map((option) => (
-                <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
+                <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded px-3" onClick={() => setLanguage(option)}>
                   {option.toUpperCase()}
                 </Button>
               ))}
             </div>
-            <Button onClick={loadKuchenplan} disabled={isLoading}>
+            <Button onClick={loadKuchenplan} disabled={isLoading} className="rounded-md">
               <RefreshCw className="h-4 w-4" />
               {isLoading ? labels.syncLoading : labels.sync}
             </Button>
@@ -626,11 +628,11 @@ const StaffKitchen = () => {
 
         {error ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p> : null}
 
-        <Tabs defaultValue="plan" className="grid gap-5">
-          <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-3 rounded-full bg-card p-1 shadow-card">
-            <TabsTrigger value="plan" className="rounded-full py-3 text-base">{labels.planTab}</TabsTrigger>
-            <TabsTrigger value="archive" className="rounded-full py-3 text-base">{labels.archiveTab}</TabsTrigger>
-            <TabsTrigger value="requests" className="rounded-full py-3 text-base">{labels.requestsTab}</TabsTrigger>
+        <Tabs defaultValue="plan" className="grid gap-4">
+          <TabsList className="grid h-auto w-full grid-cols-3 rounded-md border border-border bg-card p-1 shadow-soft lg:w-[36rem]">
+            <TabsTrigger value="plan" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.planTab}</TabsTrigger>
+            <TabsTrigger value="archive" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.archiveTab}</TabsTrigger>
+            <TabsTrigger value="requests" className="rounded py-2.5 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">{labels.requestsTab}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plan" className="mt-0">
@@ -646,14 +648,14 @@ const StaffKitchen = () => {
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
               {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
 
-              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3">
+              <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3 xl:grid-cols-2">
                 {dayGroups.map(([day, records]) => {
                   const holiday = records.some((record) => normalizeCategory(record.category) === "holiday" || record.title.toLowerCase().includes("feiertag"));
                   return (
-                    <AccordionItem key={day} value={day} className="overflow-hidden rounded-lg border border-border bg-card px-4 shadow-card">
-                      <AccordionTrigger className="py-4 text-left hover:no-underline">
+                    <AccordionItem key={day} value={day} className="overflow-hidden rounded-md border border-border bg-card px-3 shadow-soft md:px-4">
+                      <AccordionTrigger className="py-3 text-left hover:no-underline">
                         <span className="grid gap-1">
-                          <span className="font-work text-2xl font-bold tracking-normal text-primary">{dayLabels[language][day] || day}</span>
+                          <span className="font-work text-xl font-extrabold tracking-normal text-foreground">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
                         {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
@@ -669,7 +671,7 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="archive" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-4 rounded-md border border-border bg-card p-3 shadow-soft md:p-5">
               <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
@@ -683,14 +685,14 @@ const StaffKitchen = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {(["all", "soup", "green", "blue"] as const).map((filter) => (
-                    <Button key={filter} type="button" variant={categoryFilter === filter ? "default" : "outline"} onClick={() => setCategoryFilter(filter)} className="rounded-full">
+                    <Button key={filter} type="button" variant={categoryFilter === filter ? "default" : "outline"} onClick={() => setCategoryFilter(filter)} className="rounded-md">
                       {filter === "all" ? labels.all : categoryLabels[language][filter]}
                     </Button>
                   ))}
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {!archiveRecords.length ? <p className="text-sm text-muted-foreground">{labels.emptyArchive}</p> : null}
                 {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} language={language} />)}
               </div>
@@ -698,7 +700,7 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="requests" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-4 rounded-md border border-border bg-card p-3 shadow-soft md:p-5">
               <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
@@ -708,19 +710,19 @@ const StaffKitchen = () => {
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
-                  <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                  <Badge variant="outline" className="w-fit rounded-md px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                  <Badge variant="secondary" className="w-fit rounded-md px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
                 </div>
               </div>
 
-              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
+              <div className="grid gap-3 rounded-md border border-border bg-background p-3">
                 <div className="grid grid-cols-3 gap-2">
-                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-md">
                     <ChevronLeft className="h-4 w-4" />
                     <span className="hidden sm:inline">{labels.prevDay}</span>
                   </Button>
-                  <Button type="button" variant="default" onClick={() => setSelectedReservationDate(todayIso())} className="h-11 rounded-full">{labels.today}</Button>
-                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, 1))} className="h-11 rounded-full">
+                  <Button type="button" variant="default" onClick={() => setSelectedReservationDate(todayIso())} className="h-11 rounded-md">{labels.today}</Button>
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, 1))} className="h-11 rounded-md">
                     <span className="hidden sm:inline">{labels.nextDay}</span>
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -731,16 +733,16 @@ const StaffKitchen = () => {
                 <p className="text-xs text-muted-foreground">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
-              <div className="grid gap-5 xl:grid-cols-2">
-                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+              <div className="grid gap-4 xl:grid-cols-2">
+                <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
-                    <Badge variant="outline" className="rounded-full">{filteredReservations.length}</Badge>
+                    <Badge variant="outline" className="rounded-md">{filteredReservations.length}</Badge>
                   </div>
 
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {reservationStatuses.map((status) => (
-                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
+                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-md">
                         {reservationFilterLabel(status, labels)}
                       </Button>
                     ))}
@@ -757,14 +759,14 @@ const StaffKitchen = () => {
                   </div>
                 </div>
 
-                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
-                    <Badge variant="outline" className="rounded-full">{filteredCakeOrders.length}</Badge>
+                    <Badge variant="outline" className="rounded-md">{filteredCakeOrders.length}</Badge>
                   </div>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {cakeOrderStatuses.map((status) => (
-                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-full">
+                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-md">
                         {cakeOrderFilterLabel(status, labels)}
                       </Button>
                     ))}
@@ -813,7 +815,7 @@ const ReservationCard = ({
   const canAct = !readOnly && !isUpdating;
 
   return (
-    <article className="rounded-lg border border-border bg-background p-4 shadow-card">
+    <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
@@ -826,8 +828,8 @@ const ReservationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+        <h3 className="font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${reservation.full_name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(reservation.contact)}
         </a>
@@ -883,7 +885,7 @@ const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus;
     no_show: "border-destructive/40 bg-destructive/10 text-destructive",
   }[status];
 
-  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
+  return <span className={`rounded-md border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
 };
 
 const CakeOrderCard = ({
@@ -910,16 +912,16 @@ const CakeOrderCard = ({
   const canAct = !readOnly && !isUpdating;
 
   return (
-    <article className="rounded-lg border border-border bg-card p-4 shadow-card">
+    <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <CakeOrderStatusBadge status={order.status} labels={labels} />
-        <span className="rounded-full bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
+        <span className="rounded-md bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
       </div>
 
       <div className="mt-4">
-        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-primary">{cleanDisplayText(order.cake_choice)}</h3>
+        <h3 className="font-work text-xl font-extrabold leading-tight tracking-normal text-foreground">{cleanDisplayText(order.cake_choice)}</h3>
         <p className="mt-1 text-sm font-semibold text-foreground">{cleanDisplayText(order.name)}</p>
-        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-3 text-sm font-medium text-primary hover:border-primary/35" aria-label={`${labels.call} ${order.name}`}>
+        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${order.name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(order.phone)}
         </a>
@@ -973,7 +975,7 @@ const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; lab
     cancelled: "border-border bg-muted text-muted-foreground",
   }[status];
 
-  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
+  return <span className={`rounded-md border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
 };
 
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
@@ -984,15 +986,15 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
   const labels = text[language];
 
   return (
-    <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
+    <article className={`rounded-md border border-border bg-background p-3 shadow-soft md:p-4 ${category === "soup" ? "border-l-4 border-l-warning" : category === "green" ? "border-l-4 border-l-accent" : "border-l-4 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
-          <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
+          <h3 className="mt-1 font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
+          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}
         </div>
       </div>
 
@@ -1001,7 +1003,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
         <DetailList title={labels.prep} icon="→" items={record.notes} />
       </div>
 
-      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-full"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
+      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-md"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
     </article>
   );
 };
@@ -1020,16 +1022,16 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
   const category = normalizeCategory(record.category);
   const badges = recordBadges(record);
   return (
-    <article className="rounded-lg border border-border bg-background p-4 shadow-card">
+    <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Badge variant="outline" className="mb-2 rounded-full">{categoryLabels[language][category]}</Badge>
+          <Badge variant="outline" className="mb-2 rounded-md">{categoryLabels[language][category]}</Badge>
           <h3 className="font-work text-xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
+      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
