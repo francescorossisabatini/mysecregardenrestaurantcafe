@@ -68,8 +68,8 @@ export const CookieConsent = () => {
       }`}
       style={{ paddingBottom: mobileBottomOffset }}
     >
-      <div className="container mx-auto max-w-xl md:max-w-2xl">
-        <div className="border rounded-lg p-3 shadow-design-elevated surface-card md:p-6">
+      <div className="container mx-auto max-w-xl md:mr-0 md:max-w-lg lg:max-w-xl">
+        <div className="border rounded-lg p-3 shadow-design-elevated surface-card md:p-5 lg:p-6">
           <div className="flex items-start gap-2.5 md:gap-4">
             <div className="flex-1 space-y-2 md:space-y-3 min-w-0">
               <div className="space-y-1">
@@ -88,7 +88,7 @@ export const CookieConsent = () => {
                 <Button
                   onClick={handleAccept}
                   size="sm"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm h-8 md:h-9 px-3 md:px-4 rounded-md"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm h-8 md:h-10 px-3 md:px-5 rounded-md"
                 >
                   {language === "de" ? "Analyse erlauben" : "Allow analytics"}
                 </Button>
@@ -96,7 +96,7 @@ export const CookieConsent = () => {
                   onClick={handleReject}
                   variant="outline"
                   size="sm"
-                  className="text-xs md:text-sm h-8 md:h-9 px-3 md:px-4 rounded-md"
+                  className="text-xs md:text-sm h-8 md:h-10 px-3 md:px-5 rounded-md bg-background/60"
                 >
                   {language === "de" ? "Nur notwendige" : "Necessary only"}
                 </Button>
