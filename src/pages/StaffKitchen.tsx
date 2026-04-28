@@ -883,7 +883,7 @@ const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus;
     no_show: "border-destructive/40 bg-destructive/10 text-destructive",
   }[status];
 
-  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
+  return <span className={`rounded-md border px-3 py-1 text-xs font-semibold ${className}`}>{reservationStatusLabel(status, labels)}</span>;
 };
 
 const CakeOrderCard = ({
@@ -973,7 +973,7 @@ const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; lab
     cancelled: "border-border bg-muted text-muted-foreground",
   }[status];
 
-  return <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
+  return <span className={`rounded-md border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
 };
 
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
@@ -992,7 +992,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}
+          {badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}
         </div>
       </div>
 
@@ -1001,7 +1001,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
         <DetailList title={labels.prep} icon="→" items={record.notes} />
       </div>
 
-      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-full"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
+      {cook ? <div className="mt-4 flex flex-wrap gap-2">{cook.split(/[,;/]+/).map((chef) => <Badge key={chef} variant="outline" className="rounded-md"><ChefHat className="mr-1 h-3 w-3" />{labels.chef} {cleanDisplayText(chef)}</Badge>)}</div> : null}
     </article>
   );
 };
@@ -1023,13 +1023,13 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
     <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Badge variant="outline" className="mb-2 rounded-full">{categoryLabels[language][category]}</Badge>
+          <Badge variant="outline" className="mb-2 rounded-md">{categoryLabels[language][category]}</Badge>
           <h3 className="font-work text-xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-full">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
+      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <Badge key={badge} variant="secondary" className="rounded-md">{badgeLabels[language][badge] || badge}</Badge>)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
