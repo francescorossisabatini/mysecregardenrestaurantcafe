@@ -13,8 +13,6 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Contentsquare / Hotjar tracking -->
-    <script src="https://t.contentsquare.net/uxa/ec6d26c7759d7.js" async></script>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
     <title>My Secret Garden - Vegetarisches & Veganes Restaurant Wien</title>
@@ -144,13 +142,26 @@
           gtag('config', 'G-NMVX2R7493');
         };
       }
+
+      function loadContentsquare() {
+        if (localStorage.getItem('cookie_consent') !== 'accepted') return;
+        if (window._contentsquareLoaded) return;
+        window._contentsquareLoaded = true;
+
+        var script = document.createElement('script');
+        script.src = 'https://t.contentsquare.net/uxa/ec6d26c7759d7.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
       
       // Defer analytics until browser is idle (better for mobile performance)
       if ('requestIdleCallback' in window) {
         requestIdleCallback(loadAnalytics, { timeout: 4000 });
+        requestIdleCallback(loadContentsquare, { timeout: 4500 });
       } else {
         // Fallback: load after 3s delay
         setTimeout(loadAnalytics, 3000);
+        setTimeout(loadContentsquare, 3500);
       }
     </script>
   </body>
