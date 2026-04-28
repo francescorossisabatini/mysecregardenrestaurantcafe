@@ -33,11 +33,11 @@ export const MenuHighlight = () => {
               <span className="font-dancing text-4xl md:text-6xl text-primary">{t("menu.title")}</span>
             </h2>
             
-            <p className="text-lg md:text-xl mb-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl mb-4 text-muted-high-contrast max-w-2xl mx-auto leading-relaxed">
               {t("menu.weeklyUpdate")}
             </p>
             
-            <p className="text-base text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-base text-muted-high-contrast max-w-3xl mx-auto mb-8">
               {t("menu.description")}
             </p>
           </div>
@@ -88,7 +88,7 @@ export const MenuHighlight = () => {
                         </Badge>
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.soup[language]}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{language === 'de' ? 'Klein 4,5€ / Groß 6,5€' : 'Small €4.5 / Large €6.5'}</p>
+                      <p className="text-xs text-muted-high-contrast mt-1">{language === 'de' ? 'Klein 4,5€ / Groß 6,5€' : 'Small €4.5 / Large €6.5'}</p>
                     </div>
 
                     {/* Green Dish */}
@@ -100,7 +100,7 @@ export const MenuHighlight = () => {
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.green[language]}</p>
                       {day.greenNote && day.greenNote[language] && (
-                        <p className="text-xs text-muted-foreground mt-1 italic">{day.greenNote[language]}</p>
+                        <p className="text-xs text-muted-high-contrast mt-1 italic">{day.greenNote[language]}</p>
                       )}
                     </div>
 
@@ -113,7 +113,7 @@ export const MenuHighlight = () => {
                       </div>
                       <p className="text-sm md:text-base text-foreground">{day.blue[language]}</p>
                       {day.blueNote && day.blueNote[language] && (
-                        <p className="text-xs text-muted-foreground mt-1 italic">{day.blueNote[language]}</p>
+                        <p className="text-xs text-muted-high-contrast mt-1 italic">{day.blueNote[language]}</p>
                       )}
                     </div>
                   </div>
@@ -129,7 +129,7 @@ export const MenuHighlight = () => {
             <p className="text-lg font-semibold text-foreground mb-2">
               {t("menu.dailyDishPrice")}
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-high-contrast">
               {t("menu.soupInfo")}
             </p>
           </Card>

@@ -49,7 +49,7 @@ export const Philosophy = () => {
                     )}
                   </p>
                 </div>
-                <p className="text-xs md:text-base font-lora text-muted-foreground italic px-2">
+                <p className="text-xs md:text-base font-lora text-muted-high-contrast italic px-2">
                   {t("philosophy.sri.subtitle")}
                 </p>
               </div>
@@ -170,7 +170,7 @@ export const Philosophy = () => {
                 <Heart className="w-8 h-8 text-accent" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature1.title")}</h3>
-              <p className="font-lora text-base text-muted-foreground">
+              <p className="font-lora text-base text-muted-high-contrast">
                 {t("philosophy.feature1.desc")}
               </p>
             </div>
@@ -180,7 +180,7 @@ export const Philosophy = () => {
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature2.title")}</h3>
-              <p className="font-lora text-base text-muted-foreground">
+              <p className="font-lora text-base text-muted-high-contrast">
                 {t("philosophy.feature2.desc")}
               </p>
             </div>
@@ -190,7 +190,7 @@ export const Philosophy = () => {
                 <Leaf className="w-8 h-8 text-accent" />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">{t("philosophy.feature3.title")}</h3>
-              <p className="font-lora text-base text-muted-foreground">
+              <p className="font-lora text-base text-muted-high-contrast">
                 {t("philosophy.feature3.desc")}
               </p>
             </div>

@@ -52,7 +52,7 @@ const Privacy = () => {
           >
             {isGerman ? "Datenschutzerklärung" : "Privacy Policy"}
           </h1>
-          <p className="text-center text-muted-foreground mt-2 text-sm">
+          <p className="text-center text-muted-high-contrast mt-2 text-sm">
             {isGerman 
               ? "Informationen zum Schutz Ihrer persönlichen Daten" 
               : "Information about the protection of your personal data"
@@ -245,7 +245,7 @@ const Privacy = () => {
                   <li>{isGerman ? "Uhrzeit des Zugriffs" : "Time of access"}</li>
                   <li>{isGerman ? "IP-Adresse" : "IP address"}</li>
                 </ul>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-2 text-sm text-muted-high-contrast">
                   {isGerman 
                     ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse)"
                     : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest)"
@@ -278,7 +278,7 @@ const Privacy = () => {
                 : "On our contact page, we use Google Maps (provider: Google Ireland Limited, Dublin). When loading the map, your IP address is transmitted to Google."
               }
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-high-contrast">
               {isGerman 
                 ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Mehr Infos: "
                 : "Legal basis: Art. 6 para. 1 lit. f GDPR. More info: "
@@ -309,7 +309,7 @@ const Privacy = () => {
               <li>{isGerman ? "Google Analytics, Anbieter: Google Ireland Limited, Dublin" : "Google Analytics, provider: Google Ireland Limited, Dublin"}</li>
               <li>{isGerman ? "Contentsquare/Hotjar, Anbieter: Contentsquare SAS und verbundene Unternehmen" : "Contentsquare/Hotjar, provider: Contentsquare SAS and affiliated companies"}</li>
             </ul>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-high-contrast">
               {isGerman 
                 ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können die Einwilligung jederzeit widerrufen. Dabei können technische Daten wie IP Adresse, Geräteinformationen, Seitenaufrufe, Klicks und Interaktionen verarbeitet werden."
                 : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Technical data such as IP address, device information, page views, clicks and interactions may be processed."
@@ -356,7 +356,7 @@ const Privacy = () => {
                 </a>
               </li>
             </ul>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="mt-3 text-sm text-muted-high-contrast">
               {isGerman 
                 ? "Diese Plattformen verarbeiten Daten gemäß ihrer eigenen Datenschutzerklärungen."
                 : "These platforms process data according to their own privacy policies."
@@ -408,12 +408,12 @@ const Privacy = () => {
         </article>
         
         <footer className="mt-12 pt-8 border-t border-border text-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-high-contrast">
             <time dateTime="2025-12">
               {isGerman ? "Stand: Dezember 2025" : "Last updated: December 2025"}
             </time>
           </p>
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-sm text-muted-high-contrast mt-2">
             {isGerman 
               ? "Fragen? Kontaktieren Sie uns unter "
               : "Questions? Contact us at "

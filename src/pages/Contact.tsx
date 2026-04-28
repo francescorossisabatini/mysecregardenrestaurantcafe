@@ -135,7 +135,7 @@ const ContactPage = () => {
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
                 {language === "de" ? "Besuch uns" : "Visit us"}
               </h1>
-              <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
                 {language === "de"
                   ? "Geh durch den Bogen in den Raimundhof und weiter, bis du uns siehst. Hier findest du die wichtigsten Infos vor deinem Besuch."
                   : "Walk through the archway into Raimundhof and keep going until you see us. Here are the key details before you visit."}
@@ -178,7 +178,7 @@ const ContactPage = () => {
                         {language === "de" ? "So findest du uns" : "How to find us"}
                       </h2>
                     </div>
-                    <p className="font-work leading-relaxed text-muted-foreground">
+                    <p className="font-work leading-relaxed text-muted-high-contrast">
                       Mariahilferstraße 45<br />
                       Im Raimundhof<br />
                       1060 Wien
@@ -221,7 +221,7 @@ const ContactPage = () => {
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <Clock className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffnungszeiten" : "Opening hours"}</h2>
-                <p className="font-work leading-relaxed text-muted-foreground">
+                <p className="font-work leading-relaxed text-muted-high-contrast">
                   {language === "de" ? "Mo bis Sa: 11:00 bis 19:00" : "Mon to Sat: 11:00 to 19:00"}<br />
                   {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
                 </p>
@@ -229,7 +229,7 @@ const ContactPage = () => {
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <Accessibility className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
-                <p className="font-work leading-relaxed text-muted-foreground">
+                <p className="font-work leading-relaxed text-muted-high-contrast">
                   {language === "de"
                     ? "Unser Garten hat Stufen, aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
                     : "Our garden has steps, but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step free access."}
@@ -238,7 +238,7 @@ const ContactPage = () => {
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
                 <HandPlatter className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "So funktioniert es" : "How it works"}</h2>
-                <p className="font-work leading-relaxed text-muted-foreground">
+                <p className="font-work leading-relaxed text-muted-high-contrast">
                       {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
@@ -252,7 +252,7 @@ const ContactPage = () => {
                     {language === "de" ? "1h frei" : "1h free"}
                   </span>
                 </div>
-                <p className="font-work text-sm leading-relaxed text-muted-foreground">
+                <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
                   {SITE.transportNote[language]}
                 </p>
                 <dl className="mt-5 grid gap-3">
@@ -279,7 +279,7 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-3xl font-semibold text-foreground">
                   {language === "de" ? "Tisch anfragen" : "Request a table"}
                 </h2>
-                <p className="mb-6 font-work leading-relaxed text-muted-foreground">
+                <p className="mb-6 font-work leading-relaxed text-muted-high-contrast">
                   {language === "de"
                     ? "Du möchtest sicher gehen, dass ein Tisch auf dich wartet? Ruf uns an, das geht am schnellsten. Oder schick uns eine kurze Anfrage."
                     : "Want to make sure there’s a table waiting for you? Give us a call, it’s the fastest way. Or send us a short request."}
@@ -322,7 +322,7 @@ const ContactPage = () => {
                   <Users className="mr-2 h-4 w-4" />
                   {isSubmitting ? (language === "de" ? "Wird gesendet…" : "Sending…") : (language === "de" ? "Tisch anfragen" : "Send request")}
                 </Button>
-                <p className="font-work text-sm text-muted-foreground">
+                <p className="font-work text-sm text-muted-high-contrast">
                   {submitError ?? (requestSent
                     ? (language === "de" ? "Anfrage erhalten. Wir melden uns bald zur Bestätigung." : "Request received. We'll get back to you soon to confirm.")
                     : (language === "de" ? "Wir bestätigen deine Anfrage innerhalb von 24 Stunden." : "We confirm your request within 24 hours."))}

@@ -29,7 +29,7 @@ export const CTAEndBlock = ({
           <h2 className="text-3xl md:text-4xl text-primary mb-4">
             {title || defaultTitle}
           </h2>
-          <p className="text-sm text-muted-foreground font-work mb-8">
+          <p className="text-sm text-muted-high-contrast font-work mb-8">
             {SITE.addressShort}
           </p>
           <div className="flex flex-col gap-3 lg:grid lg:grid-cols-3">

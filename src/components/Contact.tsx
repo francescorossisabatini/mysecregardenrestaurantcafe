@@ -25,12 +25,12 @@ export const Contact = () => {
                 <MapPin className="w-6 h-6 text-primary" />
                 <h3 className="font-semibold text-lg text-foreground">{t("contact.address")}</h3>
               </div>
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-high-contrast leading-relaxed">
                 Mariahilferstraße 45<br />
                 Im Raimundhof<br />
                 1060 Wien, Österreich
               </p>
-              <div className="mt-4 space-y-2 text-sm text-muted-foreground font-work leading-relaxed">
+              <div className="mt-4 space-y-2 text-sm text-muted-high-contrast font-work leading-relaxed">
                 <p className="flex items-start justify-center sm:justify-start gap-2">
                   <DoorOpen className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                   <span>{SITE.courtyardInstruction[language]}</span>
@@ -49,7 +49,7 @@ export const Contact = () => {
               </div>
               <a
                 href={`tel:${SITE.phoneTel}`}
-                className="text-base text-muted-foreground hover:text-accent transition-colors"
+                className="text-base text-muted-high-contrast hover:text-accent transition-colors"
               >
                 {SITE.phoneDisplay}
               </a>
@@ -60,7 +60,7 @@ export const Contact = () => {
                 <Clock className="w-6 h-6 text-primary" />
                 <h3 className="font-semibold text-lg text-foreground">{t("contact.hours")}</h3>
               </div>
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-high-contrast leading-relaxed">
                 {t("contact.hours.days")}<br />
                 {t("contact.hours.time")}<br />
                 <span className="text-sm">{t("contact.hours.closed")}</span>
@@ -72,7 +72,7 @@ export const Contact = () => {
                 <Mail className="w-6 h-6 text-accent" />
                 <h3 className="font-semibold text-lg text-foreground">{t("contact.social")}</h3>
               </div>
-              <p className="text-base text-muted-foreground">
+              <p className="text-base text-muted-high-contrast">
                 {t("contact.social.desc")}
               </p>
             </div>

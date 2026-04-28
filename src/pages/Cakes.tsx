@@ -50,7 +50,7 @@ const Cakes = () => {
           <h1 className="mt-2 font-cormorant text-5xl font-semibold leading-tight text-primary md:text-7xl">
             {language === "de" ? "Hausgemachte Torten" : "Homemade cakes"}
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-high-contrast md:text-lg">
             {language === "de" ? "Unsere sechs festen Torten können als ganze Torte vorbestellt und im Restaurant abgeholt werden." : "Our six house cakes can be pre-ordered as whole cakes and picked up at the restaurant."}
           </p>
         </header>
@@ -60,13 +60,13 @@ const Cakes = () => {
             <article key={cake} className="rounded-lg border border-border bg-card p-5 shadow-card">
               <p className="text-xs font-semibold uppercase tracking-[0.1em] text-accent">€ 39,00</p>
               <h2 className="mt-2 font-cormorant text-3xl font-semibold leading-tight text-foreground">{cake}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{descriptions[language][index]}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-high-contrast">{descriptions[language][index]}</p>
             </article>
           ))}
         </div>
 
         <div className="flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm leading-relaxed text-muted-foreground">
+          <p className="text-sm leading-relaxed text-muted-high-contrast">
             {language === "de" ? "Mindestens 24h im Voraus. Bei 3 oder mehr Torten mindestens 48h." : "At least 24h in advance. For 3 or more cakes, at least 48h."}
           </p>
           <Button type="button" size="lg" className="h-12" onClick={openOrder}>{language === "de" ? "Torte bestellen" : "Order a cake"}</Button>

@@ -82,7 +82,7 @@ export const Navigation = () => {
               <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-foreground group-hover:text-primary" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
               </span>
-              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-muted-foreground" : "text-muted-foreground"}`}>
+              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-muted-high-contrast" : "text-muted-high-contrast"}`}>
                 Vegetarian Café Vienna
               </p>
             </div>
@@ -133,7 +133,7 @@ export const Navigation = () => {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="p-2 rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
             >
               <X className="w-5 h-5" />

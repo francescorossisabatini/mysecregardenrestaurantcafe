@@ -40,7 +40,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
           <DialogTitle className="text-3xl md:text-4xl font-bold text-primary text-center">
             {language === 'de' ? 'Wochenkarte' : 'Weekly Menu'}
           </DialogTitle>
-          <p className="text-center text-sm text-muted-foreground font-lora pt-1">
+          <p className="text-center text-sm text-muted-high-contrast font-lora pt-1">
             {translatePeriod(menu.period, language)}
           </p>
         </DialogHeader>
@@ -79,7 +79,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                   <div className="flex-shrink-0 w-2 h-2 rounded-full bg-muted-foreground/40 mt-2"></div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                      <span className="text-xs font-bold uppercase tracking-wide text-muted-high-contrast">
                         {language === 'de' ? 'Suppe' : 'Soup'}
                       </span>
                       <Separator className="flex-1" />
@@ -96,7 +96,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                       <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                         {language === 'de' ? 'Grün' : 'Green'}
                       </Badge>
-                      <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
+                      <span className="text-xs text-muted-high-contrast">{MENU_PRICES.DISH}</span>
                     </div>
                     <p className="text-sm leading-relaxed text-foreground font-medium">{cleanDisplayText(dayMenu.green[language])}</p>
                   </div>
@@ -111,7 +111,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                         <Badge className="bg-primary text-primary-foreground text-xs font-bold uppercase px-2 py-0.5">
                           {language === 'de' ? 'Blau' : 'Blue'}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">{MENU_PRICES.DISH}</span>
+                        <span className="text-xs text-muted-high-contrast">{MENU_PRICES.DISH}</span>
                       </div>
                       <p className="text-sm leading-relaxed text-foreground font-medium">
                         {cleanDisplayText(dayMenu.blue[language] || dayMenu.blue.de || dayMenu.blue.en)}

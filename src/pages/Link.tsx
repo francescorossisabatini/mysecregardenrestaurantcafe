@@ -22,7 +22,7 @@ const LinkPage = () => {
         <div className="text-center mb-8">
           <Logo className="w-16 h-16 mx-auto mb-4" showTagline={false} />
           <h1 className="font-caveat text-3xl text-primary mb-1">{SITE.name}</h1>
-          <p className="text-sm text-muted-foreground font-work">
+          <p className="text-sm text-muted-high-contrast font-work">
             {language === "de" ? "Vegetarisches Café & Restaurant" : "Vegetarian Café & Restaurant"}
           </p>
         </div>
@@ -51,8 +51,8 @@ const LinkPage = () => {
 
         {/* Info */}
         <div className="mt-8 text-center">
-          <p className="text-xs text-muted-foreground font-work">{SITE.addressShort}</p>
-          <p className="text-xs text-muted-foreground font-work mt-1">
+          <p className="text-xs text-muted-high-contrast font-work">{SITE.addressShort}</p>
+          <p className="text-xs text-muted-high-contrast font-work mt-1">
             {language === "de" ? "Mo bis Sa 11:00 bis 19:00" : "Mon to Sat 11:00 to 19:00"}
           </p>
         </div>

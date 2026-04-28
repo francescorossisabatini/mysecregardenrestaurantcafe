@@ -102,7 +102,7 @@ export const CookieConsent = () => {
                 </Button>
                 <a 
                   href="/privacy" 
-                  className="text-xs text-muted-foreground underline hover:text-foreground ml-1"
+                  className="text-xs text-muted-high-contrast underline hover:text-foreground ml-1"
                 >
                   {language === "de" ? "Datenschutz" : "Privacy"}
                 </a>
@@ -111,7 +111,7 @@ export const CookieConsent = () => {
             
             <button 
               onClick={handleReject}
-              className="text-muted-foreground hover:text-foreground transition-colors p-1 -mt-1 rounded focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="text-muted-high-contrast hover:text-foreground transition-colors p-1 -mt-1 rounded focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Cookie Banner schließen" : "Close cookie banner"}
               title={language === "de" ? "Schließen" : "Close"}
             >

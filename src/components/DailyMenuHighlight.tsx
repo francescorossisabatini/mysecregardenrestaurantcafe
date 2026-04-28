@@ -66,7 +66,7 @@ export const DailyMenuHighlight = () => {
           <h2 className="text-5xl md:text-7xl font-bold text-primary mb-4">
             {language === "de" ? "Wochenmenü" : "Weekly Menu"}
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground">
+          <p className="text-lg md:text-xl text-muted-high-contrast">
             {translatePeriod(menu.period, language)}
           </p>
         </div>
@@ -135,7 +135,7 @@ export const DailyMenuHighlight = () => {
                             <p className="font-lora text-sm text-foreground leading-relaxed">
                               {day.soup[language]}
                             </p>
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-muted-high-contrast mt-1">
                               {language === "de" ? `Klein ${MENU_PRICES.SOUP_SMALL} / Groß ${MENU_PRICES.SOUP_LARGE}` : `Small ${MENU_PRICES.SOUP_SMALL} / Large ${MENU_PRICES.SOUP_LARGE}`}
                             </p>
                           </div>
@@ -155,7 +155,7 @@ export const DailyMenuHighlight = () => {
                               {day.green[language]}
                             </p>
                             {day.greenNote && day.greenNote[language] && (
-                              <p className="text-xs text-muted-foreground mt-1 italic">
+                              <p className="text-xs text-muted-high-contrast mt-1 italic">
                                 {day.greenNote[language]}
                               </p>
                             )}
@@ -177,7 +177,7 @@ export const DailyMenuHighlight = () => {
                                 {day.blue[language]}
                               </p>
                               {day.blueNote && day.blueNote[language] && (
-                                <p className="text-xs text-muted-foreground mt-1 italic">
+                                <p className="text-xs text-muted-high-contrast mt-1 italic">
                                   {day.blueNote[language]}
                                 </p>
                               )}
@@ -219,7 +219,7 @@ export const DailyMenuHighlight = () => {
 
         {/* Footer Note */}
         <div className="text-center mt-12">
-          <p className="text-base md:text-lg font-lora text-muted-foreground">
+          <p className="text-base md:text-lg font-lora text-muted-high-contrast">
             {language === "de"
               ? "Alle Gerichte werden mit frischen Bio-Zutaten zubereitet"
               : "All dishes are prepared with fresh organic ingredients"}
