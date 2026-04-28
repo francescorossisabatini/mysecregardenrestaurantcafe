@@ -3,6 +3,8 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
+import { Button } from "@/components/ui/button";
+import { resetCookieConsent } from "@/components/CookieConsent";
 
 const Privacy = () => {
   const { language } = useLanguage();
@@ -315,6 +317,9 @@ const Privacy = () => {
                 : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Technical data such as IP address, device information, page views, clicks and interactions may be processed."
               }
             </p>
+            <Button type="button" variant="outline" size="sm" className="mt-4 font-work" onClick={resetCookieConsent}>
+              {isGerman ? "Cookie Entscheidung ändern" : "Change cookie choice"}
+            </Button>
           </section>
 
           {/* Section 6 - Social Media */}
