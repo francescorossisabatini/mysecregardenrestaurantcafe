@@ -75,8 +75,8 @@ export const Hero = () => {
       />
 
       {/* Overlay shaped for readability while keeping the room visible */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/58 via-foreground/22 to-foreground/68" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/28 via-transparent to-foreground/18" />
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/66 via-foreground/30 to-foreground/72" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/36 via-transparent to-foreground/22" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">
@@ -87,7 +87,7 @@ export const Hero = () => {
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className={`mx-auto max-w-2xl text-base font-lora leading-relaxed text-background drop-shadow-xl transition-all duration-slow ease-out sm:text-lg md:text-xl ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+          <p className={`mx-auto max-w-2xl text-base font-lora leading-relaxed text-background drop-shadow-2xl transition-all duration-slow ease-out sm:text-lg md:text-xl ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
