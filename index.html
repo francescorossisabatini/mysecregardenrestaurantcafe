@@ -153,6 +153,7 @@
         script.async = true;
         document.head.appendChild(script);
       }
+      window.loadContentsquare = loadContentsquare;
       
       // Defer analytics until browser is idle (better for mobile performance)
       if ('requestIdleCallback' in window) {
