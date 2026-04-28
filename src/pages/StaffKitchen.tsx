@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -367,6 +367,32 @@ const cakeOrderStatusLabel = (status: CakeOrderStatus, labels: Record<string, st
 }[status]);
 
 const cakeOrderFilterLabel = (status: CakeOrderStatusFilter, labels: Record<string, string>) => status === "all" ? labels.filterAll : cakeOrderStatusLabel(status, labels);
+
+const countPillClasses = {
+  neutral: "border-border bg-background text-foreground",
+  table: "border-primary/25 bg-primary/10 text-primary",
+  cake: "border-accent/25 bg-accent/10 text-accent",
+} as const;
+
+const categoryChipClasses: Record<DishCategory, string> = {
+  soup: "border-warning/30 bg-warning/15 text-foreground",
+  green: "border-accent/30 bg-accent/12 text-accent",
+  blue: "border-primary/30 bg-primary/10 text-primary",
+  holiday: "border-destructive/30 bg-destructive/10 text-destructive",
+  seasonal: "border-border bg-muted text-muted-foreground",
+};
+
+const CountPill = ({ children, tone = "neutral" }: { children: ReactNode; tone?: keyof typeof countPillClasses }) => (
+  <span className={`inline-flex min-h-8 items-center rounded-md border px-3 text-sm font-extrabold tabular-nums ${countPillClasses[tone]}`}>{children}</span>
+);
+
+const CategoryChip = ({ category, children }: { category: DishCategory; children: ReactNode }) => (
+  <span className={`inline-flex min-h-7 items-center rounded-sm border px-2.5 text-xs font-extrabold uppercase tracking-[0.08em] ${categoryChipClasses[category]}`}>{children}</span>
+);
+
+const InfoTag = ({ children }: { children: ReactNode }) => (
+  <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-foreground">{children}</span>
+);
 
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
