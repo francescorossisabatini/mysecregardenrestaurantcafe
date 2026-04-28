@@ -327,6 +327,8 @@ const cakeOrderUpdateSchema = z.object({
   status: z.enum(["pending", "confirmed", "cancelled", "fulfilled"]).optional(),
   staff_notes: z.string().trim().max(500).nullable().optional(),
 });
+type StaffUpdateTable = { update: (values: Record<string, unknown>) => { eq: (column: string, value: string) => PromiseLike<{ error: unknown }> } };
+type StaffSelectTable = { select: (columns: string) => { eq: (column: string, value: string) => { order: (column: string, options: { ascending: boolean }) => PromiseLike<{ data: unknown[] | null; error: unknown }> } } };
 
 const todayIso = () => new Date().toISOString().split("T")[0];
 
@@ -440,7 +442,7 @@ const StaffKitchen = () => {
     setUpdatingReservationIds((ids) => [...ids, reservation.id]);
     setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed.data } : item));
 
-    const { error: updateError } = await (supabase.from("reservation_requests") as any)
+    const { error: updateError } = await (supabase.from("reservation_requests") as unknown as StaffUpdateTable)
       .update({ ...parsed.data, updated_at: new Date().toISOString() })
       .eq("id", reservation.id);
 
@@ -456,7 +458,7 @@ const StaffKitchen = () => {
     setIsCakeOrdersLoading(true);
     setCakeOrderError(null);
 
-    const { data, error: requestError } = await (supabase.from("cake_orders") as any)
+    const { data, error: requestError } = await (supabase.from("cake_orders") as unknown as StaffSelectTable)
       .select("id, name, phone, cake_choice, quantity, pickup_date, notes, payment_acknowledged, status, staff_notes, language, created_at, updated_at")
       .eq("pickup_date", date)
       .order("created_at", { ascending: true });
@@ -482,7 +484,7 @@ const StaffKitchen = () => {
     setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
     setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
 
-    const { error: updateError } = await (supabase.from("cake_orders") as any)
+    const { error: updateError } = await (supabase.from("cake_orders") as unknown as StaffUpdateTable)
       .update({ ...parsed.data, updated_at: new Date().toISOString() })
       .eq("id", order.id);
 
