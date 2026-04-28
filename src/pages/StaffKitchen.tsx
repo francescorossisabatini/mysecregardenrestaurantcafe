@@ -41,6 +41,9 @@ type ReservationStatus = "new" | "confirmed" | "cancelled" | "arrived" | "no_sho
 type ReservationStatusFilter = "all" | ReservationStatus;
 type CakeOrderStatus = "pending" | "confirmed" | "cancelled" | "fulfilled";
 type CakeOrderStatusFilter = "all" | CakeOrderStatus;
+type StaffSignalKind = "spicy" | "garlic" | "onion" | "allergen";
+type StaffSignalIntensity = "low" | "medium" | "high";
+type StaffSignal = { key: string; labelKey: string; kind: StaffSignalKind; intensity?: StaffSignalIntensity };
 
 type StaffReservation = {
   id: string;
@@ -120,26 +123,30 @@ const categoryLabels: Record<DashboardLanguage, Record<DishCategory, string>> = 
 
 const badgeLabels: Record<DashboardLanguage, Record<string, string>> = {
   en: {
-    spicy: "🌶 Spicy",
-    "garlic-high": "🧄🧄🧄 Much Garlic",
-    "garlic-med": "🧄🧄 Garlic",
-    "garlic-low": "🧄 Light Garlic",
-    "onion-high": "🧅🧅🧅 Much Onion",
-    "onion-med": "🧅🧅 Onion",
-    "onion-low": "🧅 Light Onion",
-    nuts: "🥜 Nuts",
-    dairy: "🧀 Dairy",
+    "spicy-high": "Very spicy",
+    "spicy-med": "Spicy",
+    "spicy-low": "Mild heat",
+    "garlic-high": "High garlic",
+    "garlic-med": "Garlic",
+    "garlic-low": "Light garlic",
+    "onion-high": "High onion",
+    "onion-med": "Onion",
+    "onion-low": "Light onion",
+    nuts: "Nuts",
+    dairy: "Dairy",
   },
   de: {
-    spicy: "🌶 Scharf",
-    "garlic-high": "🧄🧄🧄 Viel Knoblauch",
-    "garlic-med": "🧄🧄 Knoblauch",
-    "garlic-low": "🧄 Wenig Knoblauch",
-    "onion-high": "🧅🧅🧅 Viel Zwiebel",
-    "onion-med": "🧅🧅 Zwiebel",
-    "onion-low": "🧅 Wenig Zwiebel",
-    nuts: "🥜 Nüsse",
-    dairy: "🧀 Milchprodukte",
+    "spicy-high": "Sehr scharf",
+    "spicy-med": "Scharf",
+    "spicy-low": "Leichte Schärfe",
+    "garlic-high": "Viel Knoblauch",
+    "garlic-med": "Knoblauch",
+    "garlic-low": "Wenig Knoblauch",
+    "onion-high": "Viel Zwiebel",
+    "onion-med": "Zwiebel",
+    "onion-low": "Wenig Zwiebel",
+    nuts: "Nüsse",
+    dairy: "Milchprodukte",
   },
 };
 
@@ -290,9 +297,56 @@ const normalizeCategory = (value?: string): DishCategory => {
   return "seasonal";
 };
 
-const recordBadges = (record: StaffMenuRecord) => {
-  const raw = [fieldValue(record, ["badges"]), ...record.allergens].join(",");
-  return raw.split(/[,;|]+/).map((badge) => cleanDisplayText(badge).toLowerCase()).filter(Boolean);
+const includesAny = (value: string, terms: string[]) => terms.some((term) => value.includes(term));
+
+const signalIntensity = (value: string, terms: { high: string[]; low: string[] }): StaffSignalIntensity => {
+  if (includesAny(value, terms.high)) return "high";
+  if (includesAny(value, terms.low)) return "low";
+  return "medium";
+};
+
+const recordSignals = (record: StaffMenuRecord): StaffSignal[] => {
+  const rawBadges = [fieldValue(record, ["badges"]), ...record.allergens]
+    .join(",")
+    .split(/[,;|]+/)
+    .map((badge) => cleanDisplayText(badge).toLowerCase())
+    .filter(Boolean);
+  const searchableText = cleanDisplayText([
+    record.title,
+    record.description,
+    ...record.ingredients,
+    ...record.notes,
+    ...record.fields.map((field) => field.value),
+    ...rawBadges,
+  ].filter(Boolean).join(" ")).toLowerCase();
+  const signals = new Map<string, StaffSignal>();
+  const add = (signal: StaffSignal) => signals.set(signal.key, signal);
+
+  if (includesAny(searchableText, ["spicy", "scharf", "piccante", "chili", "chilli", "hot", "jalapeno", "jalapeño", "peperoncino", "cayenne"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["very spicy", "sehr scharf", "extra scharf", "hot", "viel chili", "chili++"],
+      low: ["mild spicy", "leicht scharf", "mild", "wenig chili"],
+    });
+    add({ key: `spicy-${intensity}`, labelKey: intensity === "high" ? "spicy-high" : intensity === "low" ? "spicy-low" : "spicy-med", kind: "spicy", intensity });
+  }
+  if (includesAny(searchableText, ["garlic", "knoblauch", "aglio"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["much garlic", "extra garlic", "viel knoblauch", "knoblauch++"],
+      low: ["light garlic", "little garlic", "wenig knoblauch", "ohne knoblauch"],
+    });
+    add({ key: `garlic-${intensity}`, labelKey: intensity === "high" ? "garlic-high" : intensity === "low" ? "garlic-low" : "garlic-med", kind: "garlic", intensity });
+  }
+  if (includesAny(searchableText, ["onion", "zwiebel", "cipolla", "shallot", "schalotte"])) {
+    const intensity = signalIntensity(searchableText, {
+      high: ["much onion", "extra onion", "viel zwiebel", "zwiebel++"],
+      low: ["light onion", "little onion", "wenig zwiebel", "ohne zwiebel"],
+    });
+    add({ key: `onion-${intensity}`, labelKey: intensity === "high" ? "onion-high" : intensity === "low" ? "onion-low" : "onion-med", kind: "onion", intensity });
+  }
+  if (rawBadges.some((badge) => includesAny(badge, ["nuts", "nüsse", "nuss", "peanut", "erdnuss", "h"]))) add({ key: "nuts", labelKey: "nuts", kind: "allergen" });
+  if (rawBadges.some((badge) => includesAny(badge, ["dairy", "milk", "milch", "laktose", "lactose", "g"]))) add({ key: "dairy", labelKey: "dairy", kind: "allergen" });
+
+  return [...signals.values()];
 };
 
 const recordCook = (record: StaffMenuRecord) => fieldValue(record, ["cook", "chef"]);
@@ -391,6 +445,27 @@ const CategoryChip = ({ category, children }: { category: DishCategory; children
 
 const InfoTag = ({ children }: { children: ReactNode }) => (
   <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-foreground">{children}</span>
+);
+
+const signalBadgeClasses: Record<StaffSignalKind, string> = {
+  spicy: "border-destructive/35 bg-destructive/10 text-destructive",
+  garlic: "border-warning/35 bg-warning/15 text-warning-foreground",
+  onion: "border-primary/25 bg-primary/10 text-primary",
+  allergen: "border-border bg-muted text-foreground",
+};
+
+const signalIcons: Record<StaffSignalKind, string> = {
+  spicy: "🌶",
+  garlic: "🧄",
+  onion: "🧅",
+  allergen: "!",
+};
+
+const SignalBadge = ({ signal, language }: { signal: StaffSignal; language: DashboardLanguage }) => (
+  <span className={`inline-flex min-h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-extrabold ${signalBadgeClasses[signal.kind]}`}>
+    <span aria-hidden="true">{signalIcons[signal.kind]}</span>
+    {badgeLabels[language][signal.labelKey] || signal.labelKey}
+  </span>
 );
 
 const StaffKitchen = () => {
@@ -1006,7 +1081,7 @@ const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; lab
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
-  const badges = recordBadges(record);
+  const signals = recordSignals(record);
   const titleDe = fieldValue(record, ["header_de"]);
   const labels = text[language];
 
@@ -1019,7 +1094,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}
+          {signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}
         </div>
       </div>
 
@@ -1045,7 +1120,7 @@ const DetailList = ({ title, icon, items }: { title: string; icon: string; items
 
 const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
-  const badges = recordBadges(record);
+  const signals = recordSignals(record);
   return (
     <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
@@ -1056,7 +1131,7 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}</div> : null}
+      {signals.length ? <div className="mt-3 flex flex-wrap gap-2">{signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
