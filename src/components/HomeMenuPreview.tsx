@@ -99,7 +99,7 @@ export const HomeMenuPreview = () => {
               ))}
             </div>
           ) : !isClosed && dishes.length > 0 ? (
-            <div className="space-y-4">
+            <div className="grid gap-4 lg:grid-cols-3 lg:items-stretch">
               {dishes.map((dish) => {
                 const dishCopy = splitDishText(dish.text, language, dish.key);
 
