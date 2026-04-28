@@ -59,22 +59,22 @@ const StaffLogin = () => {
   if (!isChecking && session) return <Navigate to="/staff" replace />;
 
   return (
-    <div className="min-h-screen bg-section-soft px-4 py-12">
+    <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
       <SEOHead title="Staff Login" description="Restricted staff access for My Secret Garden." path="/staff/login" noindex />
       <main className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-md items-center">
-        <section className="w-full rounded-lg border border-border/70 bg-card/90 p-6 shadow-card md:p-8">
-          <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <section className="w-full rounded-md border border-border bg-card p-6 shadow-card md:p-8">
+          <div className="mb-8">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary">
               <LockKeyhole className="h-5 w-5" aria-hidden="true" />
             </div>
-            <h1 className="font-cormorant text-4xl font-semibold text-foreground">Staff Hub</h1>
-            <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">
+            <h1 className="font-work text-3xl font-extrabold tracking-normal text-foreground">Staff Hub</h1>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               Restricted access for the team.
             </p>
           </div>
 
           <form className="grid gap-4" onSubmit={handleSubmit}>
-            <label className="grid gap-2 font-work text-sm text-foreground">
+            <label className="grid gap-2 text-sm font-bold text-foreground">
               Username
               <div className="relative">
                 <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
@@ -84,11 +84,11 @@ const StaffLogin = () => {
                   onChange={(event) => setUsername(event.target.value)}
                   required
                   autoComplete="username"
-                  className="w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                  className="h-11 w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
                 />
               </div>
             </label>
-            <label className="grid gap-2 font-work text-sm text-foreground">
+            <label className="grid gap-2 text-sm font-bold text-foreground">
               Password
               <input
                 type="password"
@@ -96,10 +96,10 @@ const StaffLogin = () => {
                 onChange={(event) => setPassword(event.target.value)}
                 required
                 autoComplete="current-password"
-                className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                className="h-11 rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
               />
             </label>
-            <Button type="submit" disabled={isSubmitting} className="mt-2 w-full bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button type="submit" disabled={isSubmitting} className="mt-2 w-full rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
               {isSubmitting ? "Signing in…" : "Sign in"}
             </Button>
             {error && <p className="font-work text-sm text-destructive">{error}</p>}
