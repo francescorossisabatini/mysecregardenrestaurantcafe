@@ -698,7 +698,7 @@ const StaffKitchen = () => {
           </TabsContent>
 
           <TabsContent value="requests" className="mt-0">
-            <section className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:p-5">
+            <section className="grid gap-4 rounded-md border border-border bg-card p-3 shadow-soft md:p-5">
               <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
                   <div className="flex items-center gap-2 text-primary">
@@ -713,14 +713,14 @@ const StaffKitchen = () => {
                 </div>
               </div>
 
-              <div className="grid gap-3 rounded-lg border border-border bg-background/70 p-3">
+              <div className="grid gap-3 rounded-md border border-border bg-background p-3">
                 <div className="grid grid-cols-3 gap-2">
-                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-full">
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, -1))} className="h-11 rounded-md">
                     <ChevronLeft className="h-4 w-4" />
                     <span className="hidden sm:inline">{labels.prevDay}</span>
                   </Button>
-                  <Button type="button" variant="default" onClick={() => setSelectedReservationDate(todayIso())} className="h-11 rounded-full">{labels.today}</Button>
-                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, 1))} className="h-11 rounded-full">
+                  <Button type="button" variant="default" onClick={() => setSelectedReservationDate(todayIso())} className="h-11 rounded-md">{labels.today}</Button>
+                  <Button type="button" variant="outline" onClick={() => setSelectedReservationDate(addDaysToIso(selectedReservationDate, 1))} className="h-11 rounded-md">
                     <span className="hidden sm:inline">{labels.nextDay}</span>
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -731,8 +731,8 @@ const StaffKitchen = () => {
                 <p className="text-xs text-muted-foreground">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
-              <div className="grid gap-5 xl:grid-cols-2">
-                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+              <div className="grid gap-4 xl:grid-cols-2">
+                <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
                     <Badge variant="outline" className="rounded-full">{filteredReservations.length}</Badge>
@@ -757,7 +757,7 @@ const StaffKitchen = () => {
                   </div>
                 </div>
 
-                <div className="grid gap-4 rounded-lg border border-border bg-background/60 p-3 md:p-4">
+                <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
                     <Badge variant="outline" className="rounded-full">{filteredCakeOrders.length}</Badge>
