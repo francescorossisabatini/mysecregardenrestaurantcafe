@@ -584,7 +584,7 @@ const StaffKitchen = () => {
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
     return (
-      <div className="min-h-screen bg-background px-4 py-12 font-work text-foreground">
+      <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
         <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex />
         <main className="mx-auto max-w-xl rounded-lg border border-border bg-card p-6 text-center shadow-card">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
@@ -600,24 +600,24 @@ const StaffKitchen = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background font-work text-foreground">
+    <div className="staff-app min-h-screen bg-background font-work text-foreground">
       <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
-      <main className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-5 md:px-8 md:py-7">
-        <header className="grid gap-4 rounded-lg border border-border bg-card p-4 shadow-card md:grid-cols-[1fr_auto] md:items-center md:p-5">
+      <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-3 py-3 md:px-6 md:py-5">
+        <header className="sticky top-0 z-20 -mx-3 grid gap-3 border-b border-border bg-background/95 px-3 py-3 backdrop-blur md:-mx-6 md:grid-cols-[1fr_auto] md:items-center md:px-6">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">My Secret Garden Kitchen</p>
-            <h1 className="mt-1 font-work text-3xl font-bold tracking-normal text-primary md:text-4xl">{weekRange(currentRecords, language)}</h1>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Staff operations</p>
+            <h1 className="mt-1 truncate font-work text-2xl font-extrabold tracking-normal text-foreground md:text-3xl">{weekRange(currentRecords, language)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
-            <div className="flex rounded-full border border-border bg-background p-1" aria-label="Dashboard language">
+            <div className="flex rounded-md border border-border bg-card p-1" aria-label="Dashboard language">
               {(["en", "de"] as const).map((option) => (
-                <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded-full px-3" onClick={() => setLanguage(option)}>
+                <Button key={option} type="button" size="sm" variant={language === option ? "default" : "ghost"} className="h-8 rounded px-3" onClick={() => setLanguage(option)}>
                   {option.toUpperCase()}
                 </Button>
               ))}
             </div>
-            <Button onClick={loadKuchenplan} disabled={isLoading}>
+            <Button onClick={loadKuchenplan} disabled={isLoading} className="rounded-md">
               <RefreshCw className="h-4 w-4" />
               {isLoading ? labels.syncLoading : labels.sync}
             </Button>
