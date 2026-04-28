@@ -447,6 +447,27 @@ const InfoTag = ({ children }: { children: ReactNode }) => (
   <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-foreground">{children}</span>
 );
 
+const signalBadgeClasses: Record<StaffSignalKind, string> = {
+  spicy: "border-destructive/35 bg-destructive/10 text-destructive",
+  garlic: "border-warning/35 bg-warning/15 text-warning-foreground",
+  onion: "border-primary/25 bg-primary/10 text-primary",
+  allergen: "border-border bg-muted text-foreground",
+};
+
+const signalIcons: Record<StaffSignalKind, string> = {
+  spicy: "🌶",
+  garlic: "🧄",
+  onion: "🧅",
+  allergen: "!",
+};
+
+const SignalBadge = ({ signal, language }: { signal: StaffSignal; language: DashboardLanguage }) => (
+  <span className={`inline-flex min-h-8 items-center gap-1.5 rounded-md border px-2.5 text-xs font-extrabold ${signalBadgeClasses[signal.kind]}`}>
+    <span aria-hidden="true">{signalIcons[signal.kind]}</span>
+    {badgeLabels[language][signal.labelKey] || signal.labelKey}
+  </span>
+);
+
 const StaffKitchen = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
@@ -1060,7 +1081,7 @@ const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; lab
 const DishCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
   const cook = recordCook(record);
-  const badges = recordBadges(record);
+  const signals = recordSignals(record);
   const titleDe = fieldValue(record, ["header_de"]);
   const labels = text[language];
 
@@ -1073,7 +1094,7 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
-          {badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}
+          {signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}
         </div>
       </div>
 
@@ -1099,7 +1120,7 @@ const DetailList = ({ title, icon, items }: { title: string; icon: string; items
 
 const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: DashboardLanguage }) => {
   const category = normalizeCategory(record.category);
-  const badges = recordBadges(record);
+  const signals = recordSignals(record);
   return (
     <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
@@ -1110,7 +1131,7 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
         </div>
         <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
-      {badges.length ? <div className="mt-3 flex flex-wrap gap-2">{badges.map((badge) => <InfoTag key={badge}>{badgeLabels[language][badge] || badge}</InfoTag>)}</div> : null}
+      {signals.length ? <div className="mt-3 flex flex-wrap gap-2">{signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}</div> : null}
       {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
