@@ -668,7 +668,7 @@ const StaffKitchen = () => {
                   <CalendarDays className="h-5 w-5" aria-hidden="true" />
                   <h2 className="font-work text-xl font-bold tracking-normal">{labels.thisWeek}</h2>
                 </div>
-                <Badge variant="outline">{currentRecords.length} {labels.items}</Badge>
+                <CountPill>{currentRecords.length} {labels.items}</CountPill>
               </div>
 
               {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
@@ -684,7 +684,7 @@ const StaffKitchen = () => {
                           <span className="font-work text-xl font-extrabold tracking-normal text-foreground">{dayLabels[language][day] || day}</span>
                           <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
-                        {holiday ? <Badge variant="secondary">{labels.holiday}</Badge> : <Badge variant="outline">{records.length} {labels.dishes}</Badge>}
+                        {holiday ? <CategoryChip category="holiday">{labels.holiday}</CategoryChip> : <CountPill>{records.length} {labels.dishes}</CountPill>}
                       </AccordionTrigger>
                       <AccordionContent className="grid gap-4 pb-5">
                         {holiday ? <div className="rounded-lg bg-muted p-5 text-lg font-semibold text-primary">{labels.holiday}</div> : records.map((record) => <DishCard key={record.id} record={record} language={language} />)}
@@ -736,8 +736,8 @@ const StaffKitchen = () => {
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="w-fit rounded-md px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
-                  <Badge variant="secondary" className="w-fit rounded-md px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                  <CountPill tone="table">{reservations.length} {labels.totalRequests}</CountPill>
+                  <CountPill tone="cake">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</CountPill>
                 </div>
               </div>
 
@@ -763,7 +763,7 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
-                    <Badge variant="outline" className="rounded-md">{filteredReservations.length}</Badge>
+                    <CountPill tone="table">{filteredReservations.length}</CountPill>
                   </div>
 
                   <div className="flex gap-2 overflow-x-auto pb-1">
@@ -788,7 +788,7 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
-                    <Badge variant="outline" className="rounded-md">{filteredCakeOrders.length}</Badge>
+                    <CountPill tone="cake">{filteredCakeOrders.length}</CountPill>
                   </div>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {cakeOrderStatuses.map((status) => (
