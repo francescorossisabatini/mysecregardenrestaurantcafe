@@ -586,7 +586,7 @@ const StaffKitchen = () => {
     return (
       <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
         <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex />
-        <main className="mx-auto max-w-xl rounded-lg border border-border bg-card p-6 text-center shadow-card">
+        <main className="mx-auto max-w-xl rounded-md border border-border bg-card p-6 text-center shadow-soft">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="text-3xl font-bold tracking-normal text-foreground">Unauthorized access</h1>
           <p className="mt-3 text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
@@ -708,8 +708,8 @@ const StaffKitchen = () => {
                   <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline" className="w-fit rounded-full px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
-                  <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
+                  <Badge variant="outline" className="w-fit rounded-md px-3 py-1">{reservations.length} {labels.totalRequests}</Badge>
+                  <Badge variant="secondary" className="w-fit rounded-md px-3 py-1">{cakeOrders.reduce((sum, order) => sum + order.quantity, 0)} {labels.cakesToday}</Badge>
                 </div>
               </div>
 
@@ -735,12 +735,12 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.tableRequests}</h3>
-                    <Badge variant="outline" className="rounded-full">{filteredReservations.length}</Badge>
+                    <Badge variant="outline" className="rounded-md">{filteredReservations.length}</Badge>
                   </div>
 
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {reservationStatuses.map((status) => (
-                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-full">
+                      <Button key={status} type="button" size="sm" variant={reservationStatusFilter === status ? "default" : "outline"} onClick={() => setReservationStatusFilter(status)} className="shrink-0 rounded-md">
                         {reservationFilterLabel(status, labels)}
                       </Button>
                     ))}
@@ -760,11 +760,11 @@ const StaffKitchen = () => {
                 <div className="grid content-start gap-3 rounded-md border border-border bg-background p-3 md:p-4">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-work text-lg font-bold tracking-normal text-primary">{labels.cakesTitle}</h3>
-                    <Badge variant="outline" className="rounded-full">{filteredCakeOrders.length}</Badge>
+                    <Badge variant="outline" className="rounded-md">{filteredCakeOrders.length}</Badge>
                   </div>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {cakeOrderStatuses.map((status) => (
-                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-full">
+                      <Button key={status} type="button" size="sm" variant={cakeOrderStatusFilter === status ? "default" : "outline"} onClick={() => setCakeOrderStatusFilter(status)} className="shrink-0 rounded-md">
                         {cakeOrderFilterLabel(status, labels)}
                       </Button>
                     ))}
