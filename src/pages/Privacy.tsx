@@ -14,7 +14,7 @@ const Privacy = () => {
     { id: "general", de: "Allgemeine Hinweise", en: "General Information" },
     { id: "data-collection", de: "Datenerfassung", en: "Data Collection" },
     { id: "google-maps", de: "Google Maps", en: "Google Maps" },
-    { id: "google-analytics", de: "Google Analytics", en: "Google Analytics" },
+    { id: "analytics", de: "Analyse Tools", en: "Analytics Tools" },
     { id: "social-media", de: "Social Media", en: "Social Media" },
     { id: "social-networks", de: "Soziale Netzwerke", en: "Social Networks" },
     { id: "changes", de: "Änderungen", en: "Changes" },
@@ -294,21 +294,25 @@ const Privacy = () => {
             </p>
           </section>
 
-          {/* Section 5 - Google Analytics */}
-          <section id="google-analytics" aria-labelledby="google-analytics-title" className="scroll-mt-24">
-            <h2 id="google-analytics-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "5. Google Analytics" : "5. Google Analytics"}
+          {/* Section 5 - Analytics Tools */}
+          <section id="analytics" aria-labelledby="analytics-title" className="scroll-mt-24">
+            <h2 id="analytics-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "5. Analyse Tools" : "5. Analytics Tools"}
             </h2>
             <p className="mb-3">
               {isGerman 
-                ? "Wir nutzen Google Analytics zur Analyse des Website Verhaltens. Die Nutzung erfolgt nur mit Ihrer Einwilligung über das Cookie Banner."
-                : "We use Google Analytics to analyze website behavior. Use is only with your consent (cookie banner)."
+                ? "Wir nutzen Google Analytics sowie Contentsquare/Hotjar zur Analyse der Website Nutzung und des Nutzerverhaltens. Diese Dienste werden erst nach Ihrer Einwilligung über das Cookie Banner geladen."
+                : "We use Google Analytics and Contentsquare/Hotjar to analyze website usage and user behavior. These services are loaded only after your consent via the cookie banner."
               }
             </p>
+            <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
+              <li>{isGerman ? "Google Analytics, Anbieter: Google Ireland Limited, Dublin" : "Google Analytics, provider: Google Ireland Limited, Dublin"}</li>
+              <li>{isGerman ? "Contentsquare/Hotjar, Anbieter: Contentsquare SAS und verbundene Unternehmen" : "Contentsquare/Hotjar, provider: Contentsquare SAS and affiliated companies"}</li>
+            </ul>
             <p className="text-sm text-muted-foreground">
               {isGerman 
-                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können die Einwilligung jederzeit widerrufen."
-                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time."
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können die Einwilligung jederzeit widerrufen. Dabei können technische Daten wie IP Adresse, Geräteinformationen, Seitenaufrufe, Klicks und Interaktionen verarbeitet werden."
+                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Technical data such as IP address, device information, page views, clicks and interactions may be processed."
               }
             </p>
           </section>
