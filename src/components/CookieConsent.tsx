@@ -72,12 +72,17 @@ export const CookieConsent = () => {
         <div className="border rounded-lg p-3 shadow-design-elevated surface-card md:p-6">
           <div className="flex items-start gap-2.5 md:gap-4">
             <div className="flex-1 space-y-2 md:space-y-3 min-w-0">
-              <p className="font-lora text-xs md:text-base text-foreground/80 leading-snug md:leading-relaxed">
-                {language === "de" 
-                  ? "Wir nutzen Google Analytics und Contentsquare/Hotjar für Analyse und Nutzerverhalten nur mit deiner Zustimmung."
-                  : "We use Google Analytics and Contentsquare/Hotjar for analytics and user behavior only with your consent."
-                }
-              </p>
+              <div className="space-y-1">
+                <p className="font-work text-[0.68rem] md:text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                  {language === "de" ? "Analyse Cookies" : "Analytics cookies"}
+                </p>
+                <p className="font-lora text-xs md:text-base text-foreground/80 leading-snug md:leading-relaxed">
+                  {language === "de" 
+                    ? "Wir nutzen Google Analytics und Contentsquare/Hotjar, um zu verstehen, welche Inhalte helfen und wo die Website hakt. Keine Werbeprofile, kein Verkauf von Daten. Aktivierung nur mit Ihrer Zustimmung."
+                    : "We use Google Analytics and Contentsquare/Hotjar to understand which content helps and where the website can improve. No advertising profiles, no sale of data. Activated only with your consent."
+                  }
+                </p>
+              </div>
               
               <div className="flex items-center gap-2 md:gap-3 flex-wrap">
                 <Button
@@ -85,7 +90,7 @@ export const CookieConsent = () => {
                   size="sm"
                   className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm h-8 md:h-9 px-3 md:px-4 rounded-md"
                 >
-                  {language === "de" ? "Akzeptieren" : "Accept"}
+                  {language === "de" ? "Analyse erlauben" : "Allow analytics"}
                 </Button>
                 <Button
                   onClick={handleReject}
@@ -93,11 +98,11 @@ export const CookieConsent = () => {
                   size="sm"
                   className="text-xs md:text-sm h-8 md:h-9 px-3 md:px-4 rounded-md"
                 >
-                  {language === "de" ? "Ablehnen" : "Decline"}
+                  {language === "de" ? "Nur notwendige" : "Necessary only"}
                 </Button>
                 <a 
                   href="/privacy" 
-                  className="text-xs text-muted-foreground underline hover:text-foreground ml-1 hidden sm:inline"
+                  className="text-xs text-muted-foreground underline hover:text-foreground ml-1"
                 >
                   {language === "de" ? "Datenschutz" : "Privacy"}
                 </a>
