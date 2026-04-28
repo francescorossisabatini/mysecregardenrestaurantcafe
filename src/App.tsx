@@ -77,6 +77,50 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const observed = new WeakSet<Element>();
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+    );
+
+    const scanSections = () => {
+      const sections = Array.from(document.querySelectorAll("section"));
+      sections.forEach((section, index) => {
+        if (observed.has(section)) return;
+        if (location.pathname === "/" && index === 0) return;
+
+        section.classList.add("section-animate");
+        observed.add(section);
+
+        if (section.getBoundingClientRect().top < window.innerHeight * 0.9) {
+          section.classList.add("in-view");
+        } else {
+          revealObserver.observe(section);
+        }
+      });
+    };
+
+    scanSections();
+    const mutationObserver = new MutationObserver(scanSections);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      revealObserver.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <RouteAnalytics />
