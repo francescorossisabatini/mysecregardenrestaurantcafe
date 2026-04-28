@@ -61,6 +61,7 @@ const ContactPage = () => {
       { label: "Address", value: "Windmühlgasse 22 to 24" },
       { label: "Benefit", value: "1 hour included with a 27 euro spend" },
     ];
+  const showReservationRequest = false;
 
   const visitJsonLd = {
     "@context": "https://schema.org",
@@ -273,7 +274,7 @@ const ContactPage = () => {
               </div>
             </section>
 
-            {false && <section className="grid gap-6 rounded-lg border border-border/70 bg-section-accent p-6 shadow-card md:grid-cols-[0.9fr_1.1fr] md:p-8">
+            {showReservationRequest && <section className="grid gap-6 rounded-lg border border-border/70 bg-section-accent p-6 shadow-card md:grid-cols-[0.9fr_1.1fr] md:p-8">
               <div>
                 <CalendarDays className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-3xl font-semibold text-foreground">
