@@ -765,6 +765,7 @@ export const MenuSection = () => {
           </div>
           
         </div>
+        </div>
       </div>
     </section>
   );
