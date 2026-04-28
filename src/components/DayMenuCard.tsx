@@ -56,7 +56,7 @@ export const DayMenuCard = ({ day, isToday }: DayMenuCardProps) => {
           <p className="font-lora text-sm text-foreground leading-relaxed">
             {day.soup[language]}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-muted-high-contrast mt-1">
             {language === "de"
               ? `Klein ${MENU_PRICES.SOUP_SMALL} / Groß ${MENU_PRICES.SOUP_LARGE}`
               : `Small ${MENU_PRICES.SOUP_SMALL} / Large ${MENU_PRICES.SOUP_LARGE}`}
@@ -78,7 +78,7 @@ export const DayMenuCard = ({ day, isToday }: DayMenuCardProps) => {
             {day.green[language]}
           </p>
           {day.greenNote && day.greenNote[language] && (
-            <p className="text-xs text-muted-foreground mt-1 italic">
+            <p className="text-xs text-muted-high-contrast mt-1 italic">
               {day.greenNote[language]}
             </p>
           )}
@@ -100,7 +100,7 @@ export const DayMenuCard = ({ day, isToday }: DayMenuCardProps) => {
               {day.blue[language]}
             </p>
             {day.blueNote && day.blueNote[language] && (
-              <p className="text-xs text-muted-foreground mt-1 italic">
+              <p className="text-xs text-muted-high-contrast mt-1 italic">
                 {day.blueNote[language]}
               </p>
             )}

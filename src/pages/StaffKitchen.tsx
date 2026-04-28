@@ -432,7 +432,7 @@ const categoryChipClasses: Record<DishCategory, string> = {
   green: "border-accent/30 bg-accent/12 text-accent",
   blue: "border-primary/30 bg-primary/10 text-primary",
   holiday: "border-destructive/30 bg-destructive/10 text-destructive",
-  seasonal: "border-border bg-muted text-muted-foreground",
+  seasonal: "border-border bg-muted text-muted-high-contrast",
 };
 
 const CountPill = ({ children, tone = "neutral" }: { children: ReactNode; tone?: keyof typeof countPillClasses }) => (
@@ -444,7 +444,7 @@ const CategoryChip = ({ category, children }: { category: DishCategory; children
 );
 
 const InfoTag = ({ children }: { children: ReactNode }) => (
-  <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-foreground">{children}</span>
+  <span className="inline-flex min-h-7 items-center rounded-sm border border-border bg-muted px-2.5 text-xs font-bold text-muted-high-contrast">{children}</span>
 );
 
 const signalBadgeClasses: Record<StaffSignalKind, string> = {
@@ -691,7 +691,7 @@ const StaffKitchen = () => {
         <main className="mx-auto max-w-xl rounded-md border border-border bg-card p-6 text-center shadow-soft">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="text-3xl font-bold tracking-normal text-foreground">Unauthorized access</h1>
-          <p className="mt-3 text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
+          <p className="mt-3 text-sm text-muted-high-contrast">This account is not enabled for staff access yet.</p>
           <Button onClick={signOut} className="mt-6">
             <LogOut className="h-4 w-4" />
             Sign out
@@ -707,9 +707,9 @@ const StaffKitchen = () => {
       <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-3 py-3 md:px-6 md:py-5">
         <header className="sticky top-0 z-20 -mx-3 grid gap-3 border-b border-border bg-background/95 px-3 py-3 backdrop-blur md:-mx-6 md:grid-cols-[1fr_auto] md:items-center md:px-6">
           <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">Staff operations</p>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-high-contrast">Staff operations</p>
             <h1 className="mt-1 truncate font-work text-2xl font-extrabold tracking-normal text-foreground md:text-3xl">{weekRange(currentRecords, language)}</h1>
-            <p className="mt-1 text-sm text-muted-foreground">{labels.subtitle}</p>
+            <p className="mt-1 text-sm text-muted-high-contrast">{labels.subtitle}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2 justify-self-start md:justify-self-end">
             <div className="flex rounded-md border border-border bg-card p-1" aria-label="Dashboard language">
@@ -745,8 +745,8 @@ const StaffKitchen = () => {
                 <CountPill>{currentRecords.length} {labels.items}</CountPill>
               </div>
 
-              {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.loading}</p> : null}
-              {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-foreground">{labels.emptyCurrent}</p> : null}
+              {isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-high-contrast">{labels.loading}</p> : null}
+              {!isLoading && !currentRecords.length ? <p className="rounded-lg border border-border bg-card p-5 text-sm text-muted-high-contrast">{labels.emptyCurrent}</p> : null}
 
               <Accordion type="multiple" defaultValue={[dayGroups[0]?.[0]].filter(Boolean)} className="grid gap-3 xl:grid-cols-2">
                 {dayGroups.map(([day, records]) => {
@@ -756,7 +756,7 @@ const StaffKitchen = () => {
                       <AccordionTrigger className="py-3 text-left hover:no-underline">
                         <span className="grid gap-1">
                           <span className="font-work text-xl font-extrabold tracking-normal text-foreground">{dayLabels[language][day] || day}</span>
-                          <span className="text-sm font-normal text-muted-foreground">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
+                          <span className="text-sm font-normal text-muted-high-contrast">{recordDate(records[0]) || `${records.length} ${labels.dishes}`}</span>
                         </span>
                         {holiday ? <CategoryChip category="holiday">{labels.holiday}</CategoryChip> : <CountPill>{records.length} {labels.dishes}</CountPill>}
                       </AccordionTrigger>
@@ -779,7 +779,7 @@ const StaffKitchen = () => {
                     <h2 className="font-work text-xl font-bold tracking-normal">{labels.archiveTitle}</h2>
                   </div>
                   <div className="relative mt-3">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" aria-hidden="true" />
                     <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder={labels.searchPlaceholder} className="h-12 pl-9 text-base" />
                   </div>
                 </div>
@@ -793,7 +793,7 @@ const StaffKitchen = () => {
               </div>
 
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {!archiveRecords.length ? <p className="text-sm text-muted-foreground">{labels.emptyArchive}</p> : null}
+                {!archiveRecords.length ? <p className="text-sm text-muted-high-contrast">{labels.emptyArchive}</p> : null}
                 {archiveRecords.map((record) => <ArchiveCard key={record.id} record={record} language={language} />)}
               </div>
             </section>
@@ -807,7 +807,7 @@ const StaffKitchen = () => {
                     <Users className="h-5 w-5" aria-hidden="true" />
                     <h2 className="font-work text-xl font-bold tracking-normal">{labels.requestsTab}</h2>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">{formatReservationDate(selectedReservationDate, language)}</p>
+                  <p className="mt-1 text-sm text-muted-high-contrast">{formatReservationDate(selectedReservationDate, language)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <CountPill tone="table">{reservations.length} {labels.totalRequests}</CountPill>
@@ -830,7 +830,7 @@ const StaffKitchen = () => {
                 <div className="h-2 overflow-hidden rounded-full bg-muted">
                   <div className={`h-full rounded-full transition-all ${dailyProgressTone}`} style={{ width: `${dailyProgress}%` }} />
                 </div>
-                <p className="text-xs text-muted-foreground">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
+                <p className="text-xs text-muted-high-contrast">{dailyWorkload} / {dailyCap} {labels.dailyCap}</p>
               </div>
 
               <div className="grid gap-4 xl:grid-cols-2">
@@ -849,8 +849,8 @@ const StaffKitchen = () => {
                   </div>
 
                   {reservationError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{reservationError}</p> : null}
-                  {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.requestsLoading}</p> : null}
-                  {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyRequests}</p> : null}
+                  {isReservationsLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-high-contrast">{labels.requestsLoading}</p> : null}
+                  {!isReservationsLoading && !filteredReservations.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-high-contrast">{labels.emptyRequests}</p> : null}
 
                   <div className="grid gap-4">
                     {filteredReservations.map((reservation) => (
@@ -872,8 +872,8 @@ const StaffKitchen = () => {
                     ))}
                   </div>
                   {cakeOrderError ? <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{cakeOrderError}</p> : null}
-                  {isCakeOrdersLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-foreground">{labels.cakeOrderLoading}</p> : null}
-                  {!isCakeOrdersLoading && !filteredCakeOrders.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-foreground">{labels.emptyCakeOrders}</p> : null}
+                  {isCakeOrdersLoading ? <p className="rounded-lg border border-border bg-background p-5 text-sm text-muted-high-contrast">{labels.cakeOrderLoading}</p> : null}
+                  {!isCakeOrdersLoading && !filteredCakeOrders.length ? <p className="rounded-lg border border-border bg-background p-8 text-center text-sm text-muted-high-contrast">{labels.emptyCakeOrders}</p> : null}
                   <div className="grid gap-4">
                     {filteredCakeOrders.map((order) => (
                       <CakeOrderCard key={order.id} order={order} language={language} labels={labels} readOnly={selectedDateIsPast} isUpdating={updatingCakeOrderIds.includes(order.id)} onUpdate={updateCakeOrder} />
@@ -920,7 +920,7 @@ const ReservationCard = ({
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
           <span>{time}</span>
-          <span className="inline-flex items-center gap-1 text-muted-foreground">
+          <span className="inline-flex items-center gap-1 text-muted-high-contrast">
             <Users className="h-4 w-4" aria-hidden="true" />
             {reservation.party_size}
           </span>
@@ -934,7 +934,7 @@ const ReservationCard = ({
           {cleanDisplayText(reservation.contact)}
         </a>
         {reservation.notes ? (
-          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-high-contrast">
             <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
             <span><span className="font-semibold text-foreground/80">{labels.guestNotes}:</span> {cleanDisplayText(reservation.notes)}</span>
           </p>
@@ -981,7 +981,7 @@ const ReservationStatusBadge = ({ status, labels }: { status: ReservationStatus;
     new: "border-warning/40 bg-warning/15 text-warning-foreground",
     confirmed: "border-accent/40 bg-accent/15 text-accent",
     arrived: "border-primary/40 bg-primary/10 text-primary",
-    cancelled: "border-border bg-muted text-muted-foreground",
+    cancelled: "border-border bg-muted text-muted-high-contrast",
     no_show: "border-destructive/40 bg-destructive/10 text-destructive",
   }[status];
 
@@ -1026,7 +1026,7 @@ const CakeOrderCard = ({
           {cleanDisplayText(order.phone)}
         </a>
         {order.notes ? (
-          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-high-contrast">
             <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
             <span><span className="font-semibold text-foreground/80">{labels.guestNotes}:</span> {cleanDisplayText(order.notes)}</span>
           </p>
@@ -1072,7 +1072,7 @@ const CakeOrderStatusBadge = ({ status, labels }: { status: CakeOrderStatus; lab
     pending: "border-warning/40 bg-warning/15 text-warning-foreground",
     confirmed: "border-accent/40 bg-accent/15 text-accent",
     fulfilled: "border-primary/40 bg-primary/10 text-primary",
-    cancelled: "border-border bg-muted text-muted-foreground",
+    cancelled: "border-border bg-muted text-muted-high-contrast",
   }[status];
 
   return <span className={`rounded-md border px-3 py-1 text-xs font-semibold ${className}`}>{cakeOrderStatusLabel(status, labels)}</span>;
@@ -1089,9 +1089,9 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
     <article className={`rounded-md border border-border bg-background p-3 shadow-soft md:p-4 ${category === "soup" ? "border-l-4 border-l-warning" : category === "green" ? "border-l-4 border-l-accent" : "border-l-4 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-high-contrast">{categoryLabels[language][category]}</p>
           <h3 className="mt-1 font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
-          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
+          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-high-contrast">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-high-contrast">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
           {signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}
@@ -1114,7 +1114,7 @@ const DetailList = ({ title, icon, items }: { title: string; icon: string; items
       <ClipboardList className="h-4 w-4" aria-hidden="true" />
       <h4 className="font-work text-sm font-bold tracking-normal">{title}</h4>
     </div>
-    {items.length ? <ul className="grid gap-1 text-sm leading-relaxed text-foreground">{items.map((item) => <li key={`${title}-${item}`}>{icon} {cleanDisplayText(item)}</li>)}</ul> : <p className="text-sm text-muted-foreground">—</p>}
+    {items.length ? <ul className="grid gap-1 text-sm leading-relaxed text-foreground">{items.map((item) => <li key={`${title}-${item}`}>{icon} {cleanDisplayText(item)}</li>)}</ul> : <p className="text-sm text-muted-high-contrast">—</p>}
   </div>
 );
 
@@ -1127,12 +1127,12 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
         <div>
           <CategoryChip category={category}>{categoryLabels[language][category]}</CategoryChip>
           <h3 className="font-work text-xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
-          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
+          {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-high-contrast">{cleanDisplayText(record.description)}</p> : null}
         </div>
-        <span className="shrink-0 text-xs text-muted-foreground">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
+        <span className="shrink-0 text-xs text-muted-high-contrast">{recordDate(record) || cleanDisplayText(record.snapshotPeriod || "")}</span>
       </div>
       {signals.length ? <div className="mt-3 flex flex-wrap gap-2">{signals.map((signal) => <SignalBadge key={signal.key} signal={signal} language={language} />)}</div> : null}
-      {record.ingredients.length ? <p className="mt-3 text-sm text-muted-foreground">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
+      {record.ingredients.length ? <p className="mt-3 text-sm text-muted-high-contrast">{joinDisplayText(record.ingredients.slice(0, 5), ", ")}</p> : null}
     </article>
   );
 };

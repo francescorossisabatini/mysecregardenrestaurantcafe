@@ -21,7 +21,7 @@ export const Products = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
             {t("products.title")}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-high-contrast max-w-2xl mx-auto">
             {t("products.subtitle")}
           </p>
         </div>
@@ -41,7 +41,7 @@ export const Products = () => {
                   onClick={() => setSelectedProduct(product)}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted/30 flex items-center justify-center border border-border/50">
-                    <span className="text-muted-foreground/50 text-sm font-medium">Product Image Placeholder</span>
+                    <span className="text-muted-high-contrast/50 text-sm font-medium">Product Image Placeholder</span>
                   </div>
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
@@ -57,7 +57,7 @@ export const Products = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-high-contrast">
                       {t("products.clickToLearnMore")}
                     </p>
                   </CardContent>
@@ -81,7 +81,7 @@ export const Products = () => {
                   onClick={() => setSelectedProduct(product)}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted/30 flex items-center justify-center border border-border/50">
-                    <span className="text-muted-foreground/50 text-sm font-medium">Product Image Placeholder</span>
+                    <span className="text-muted-high-contrast/50 text-sm font-medium">Product Image Placeholder</span>
                   </div>
                   <CardHeader>
                     <div className="flex items-start justify-between mb-2">
@@ -97,7 +97,7 @@ export const Products = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-high-contrast">
                       {t("products.clickToLearnMore")}
                     </p>
                   </CardContent>
@@ -114,7 +114,7 @@ export const Products = () => {
           {selectedProduct && (
             <>
               <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted/30 mb-4 flex items-center justify-center border border-border/50">
-                <span className="text-muted-foreground/50 font-medium">Product Image Placeholder</span>
+                <span className="text-muted-high-contrast/50 font-medium">Product Image Placeholder</span>
               </div>
               <DialogHeader>
                 <div className="flex items-start justify-between mb-2">

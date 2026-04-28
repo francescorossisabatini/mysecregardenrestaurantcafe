@@ -161,7 +161,7 @@ const AboutUs = () => {
           <p className="mx-auto max-w-xl font-lora text-xl leading-relaxed text-foreground/85">
             {t.manifesto}
           </p>
-          <p className="mx-auto mt-4 max-w-md font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+          <p className="mx-auto mt-4 max-w-md font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
             {t.heroTagline} {t.dietaryLine}
           </p>
         </div>
@@ -194,7 +194,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="mx-auto mb-14 max-w-2xl text-center md:mb-16">
             <h2 className="text-4xl text-primary md:text-5xl">{t.pillarsTitle}</h2>
-            <p className="mt-4 font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.pillarsIntro}</p>
+            <p className="mt-4 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.pillarsIntro}</p>
           </div>
           
           <div className="space-y-16 md:space-y-24">
@@ -236,12 +236,12 @@ const AboutUs = () => {
             <div className="space-y-5">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{t.coffeeLabel}</span>
-                <span className="font-work text-xs text-muted-foreground">✿</span>
+                <span className="font-work text-xs text-muted-high-contrast">✿</span>
                 <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">Secret Garden × Supermind</span>
               </div>
               <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{t.coffeeTitle}</h2>
               <p className="max-w-2xl font-lora text-xl leading-relaxed text-foreground/85">{t.coffeeBridge}</p>
-              <p className="max-w-2xl font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.coffeePara}</p>
+              <p className="max-w-2xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.coffeePara}</p>
               <a
                 href="https://supermind.at/"
                 target="_blank"
@@ -315,7 +315,7 @@ const AboutUs = () => {
               <h2 className="text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara1}</p>
               <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara2}</p>
-              <p className="font-work text-sm leading-relaxed text-muted-foreground md:text-base">{t.inspirationNote}</p>
+              <p className="font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.inspirationNote}</p>
               <a 
                 href="https://www.srichinmoy.org" 
                 target="_blank" 
@@ -355,20 +355,20 @@ const AboutUs = () => {
               </div>
               <button 
                 onClick={prevPoem}
-                className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:-translate-x-12"
+                className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:-translate-x-12"
                 aria-label="Previous poem"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button 
                 onClick={nextPoem}
-                className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-border/75 bg-card text-muted-foreground shadow-card transition-colors hover:text-primary md:translate-x-12"
+                className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:translate-x-12"
                 aria-label="Next poem"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-center text-sm text-muted-foreground mt-6 font-lora italic">{t.poemHint}</p>
+            <p className="text-center text-sm text-muted-high-contrast mt-6 font-lora italic">{t.poemHint}</p>
           </div>
         </div>
       </section>

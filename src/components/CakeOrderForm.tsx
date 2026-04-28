@@ -141,7 +141,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
     <form onSubmit={submit} className={`grid gap-5 ${compact ? "" : "rounded-lg border border-border bg-card p-4 shadow-card md:p-6"}`}>
       <div>
         <h1 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{labels.title}</h1>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{labels.subline}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-high-contrast">{labels.subline}</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -171,7 +171,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
         <div className="grid gap-2 text-sm font-semibold text-foreground">
           <span>{labels.quantity}</span>
           <div className="grid h-12 grid-cols-[3rem_1fr_3rem] overflow-hidden rounded-md border border-input bg-background">
-            <button type="button" className="grid place-items-center border-r border-border text-primary disabled:text-muted-foreground" disabled={quantity <= 1} onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity">
+            <button type="button" className="grid place-items-center border-r border-border text-primary disabled:text-muted-high-contrast" disabled={quantity <= 1} onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity">
               <Minus className="h-4 w-4" />
             </button>
             <span className="grid place-items-center text-lg font-bold text-foreground">{quantity}</span>
@@ -184,10 +184,10 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
         <label className="grid gap-2 text-sm font-semibold text-foreground">
           {labels.pickup}
           <div className="relative">
-            <CalendarDays className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <CalendarDays className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" />
             <Input value={normalizedPickupDate} onChange={(event) => setPickupDate(event.target.value)} type="date" min={minPickupDate} required className="h-12 pl-10 text-base" />
           </div>
-          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-foreground"}`}>{hasClosedDay ? labels.closedDay : quantity >= 3 ? labels.largeLead : labels.standardLead}</p>
+          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-high-contrast"}`}>{hasClosedDay ? labels.closedDay : quantity >= 3 ? labels.largeLead : labels.standardLead}</p>
         </label>
       </div>
 

@@ -40,7 +40,7 @@ const Impressum = () => {
           >
             {isGerman ? "Impressum" : "Legal Notice"}
           </h1>
-          <p className="text-center text-muted-foreground mt-2 text-sm">
+          <p className="text-center text-muted-high-contrast mt-2 text-sm">
             {isGerman 
               ? "Rechtliche Informationen gemäß österreichischem Recht" 
               : "Legal information according to Austrian law"
@@ -176,7 +176,7 @@ const Impressum = () => {
         </article>
         
         <footer className="mt-12 pt-8 border-t border-border text-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-high-contrast">
             <time dateTime="2025-12">
               {isGerman ? "Stand: Dezember 2025" : "Last updated: December 2025"}
             </time>

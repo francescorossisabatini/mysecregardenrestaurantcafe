@@ -37,7 +37,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   if (visibleLabels.length === 0) return null;
 
   return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
+    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
       {joinDisplayText(visibleLabels)}
     </p>
   );
@@ -81,7 +81,7 @@ export const HomeMenuPreview = () => {
             <h2 className="mt-2 font-cormorant text-3xl font-semibold text-foreground md:text-4xl">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
-            <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+            <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
               {language === "de"
                 ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
                 : "A quick look at today’s menu. Classics, drinks and details are on the menu page."}
@@ -120,7 +120,7 @@ export const HomeMenuPreview = () => {
                         </span>
                       </div>
                       {dishCopy.description && (
-                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground md:text-base">
+                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
                           {cleanDisplayText(dishCopy.description)}
                         </p>
                       )}
@@ -142,7 +142,7 @@ export const HomeMenuPreview = () => {
                     ? language === "de" ? "Für heute geschlossen" : "Closed for today"
                     : language === "de" ? "Heute geschlossen" : "Closed today"}
               </p>
-              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-foreground">
+              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
                 {language === "de" ? "Schau gern in die komplette Speisekarte für Klassiker und Getränke." : "You can still browse the full menu for classics and drinks."}
               </p>
             </div>
@@ -150,7 +150,7 @@ export const HomeMenuPreview = () => {
 
           <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-            <p className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
               {language === "de"
                 ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
                 : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
@@ -163,7 +163,7 @@ export const HomeMenuPreview = () => {
             rel="noopener noreferrer"
             className="mt-3 grid items-center gap-4 rounded-lg border border-border/75 px-4 py-3 text-left surface-card transition-colors hover:border-primary/35 sm:grid-cols-[1fr_auto]"
           >
-            <span className="font-work text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            <span className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
               <span className="font-semibold uppercase tracking-[0.08em] text-primary">Secret Garden × Supermind</span><br />
               {language === "de" ? "Wiener Kaffee für unseren ruhigen Gartenmoment." : "Viennese coffee for our quiet garden moment."}
             </span>

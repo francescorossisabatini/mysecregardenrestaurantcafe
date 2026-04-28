@@ -27,7 +27,7 @@ export const ValueProposition = () => {
                 : "We cook fresh every day. Vegetables, herbs and grains arrive in the morning; by lunch, the first plates are at the counter."}
             </p>
             
-            <p className="font-lora text-base md:text-lg text-muted-foreground italic">
+            <p className="font-lora text-base md:text-lg text-muted-high-contrast italic">
               {language === "de" 
                 ? "Vegetarisch und vegan. Viele Gerichte ohne glutenhaltige Zutaten, aber keine zertifiziert glutenfreie Küche." 
                 : "Vegetarian and vegan. Many dishes without gluten containing ingredients, but not a certified gluten free kitchen."}

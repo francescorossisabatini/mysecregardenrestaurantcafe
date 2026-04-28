@@ -13,7 +13,7 @@ export const WeeklyMenuUnavailable = () => {
           ? "Das Wochenmenü wird gerade aktualisiert."
           : "The weekly menu is being updated."}
       </p>
-      <p className="text-sm text-muted-foreground font-work">
+      <p className="text-sm text-muted-high-contrast font-work">
         {language === "de"
           ? "Ruf uns an, um das aktuelle Menü zu erfahren!"
           : "Call us to find out the current menu!"}

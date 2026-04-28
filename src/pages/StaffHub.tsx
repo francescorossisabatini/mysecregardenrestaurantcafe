@@ -145,7 +145,7 @@ const StaffHub = () => {
         <main className="mx-auto max-w-xl rounded-lg border border-border/70 bg-card/90 p-6 text-center shadow-card">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="font-cormorant text-3xl font-semibold text-foreground">Unauthorized access</h1>
-          <p className="mt-3 font-work text-sm text-muted-foreground">This account is not enabled for staff access yet.</p>
+          <p className="mt-3 font-work text-sm text-muted-high-contrast">This account is not enabled for staff access yet.</p>
           <Button onClick={signOut} className="mt-6">Sign out</Button>
         </main>
       </div>
@@ -160,7 +160,7 @@ const StaffHub = () => {
           <div>
             <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">My Secret Garden</p>
             <h1 className="mt-2 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">Staff Hub</h1>
-            <p className="mt-2 font-work text-sm text-muted-foreground">Küchenplan details from Google Sheets with searchable archive.</p>
+            <p className="mt-2 font-work text-sm text-muted-high-contrast">Küchenplan details from Google Sheets with searchable archive.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="default" asChild>
@@ -180,17 +180,17 @@ const StaffHub = () => {
         <section className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <CakeSlice className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Current Küchenplan items</p>
+            <p className="font-work text-sm text-muted-high-contrast">Current Küchenplan items</p>
             <strong className="font-cormorant text-4xl text-foreground">{currentRecords.length}</strong>
           </div>
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <Archive className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Archived items</p>
+            <p className="font-work text-sm text-muted-high-contrast">Archived items</p>
             <strong className="font-cormorant text-4xl text-foreground">{kuchenplan.archiveRecords.length}</strong>
           </div>
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
             <ClipboardList className="mb-3 h-5 w-5 text-primary" aria-hidden="true" />
-            <p className="font-work text-sm text-muted-foreground">Source sheet</p>
+            <p className="font-work text-sm text-muted-high-contrast">Source sheet</p>
             <strong className="font-cormorant text-3xl text-foreground">{cleanDisplayText(kuchenplan.sheetName)}</strong>
           </div>
         </section>
@@ -208,8 +208,8 @@ const StaffHub = () => {
                 <h2 className="font-cormorant text-3xl font-semibold text-foreground">Weekly Küchenplan details</h2>
               </div>
 
-              {isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-foreground">Loading Küchenplan...</p> : null}
-              {!isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-foreground">No current Küchenplan items found.</p> : null}
+              {isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-high-contrast">Loading Küchenplan...</p> : null}
+              {!isKuchenplanLoading && !currentRecords.length ? <p className="font-work text-sm text-muted-high-contrast">No current Küchenplan items found.</p> : null}
 
               <div className="grid gap-6">
                 {Object.entries(currentSections).map(([section, records]) => (
@@ -232,16 +232,16 @@ const StaffHub = () => {
                     <Search className="h-5 w-5 text-primary" aria-hidden="true" />
                     <h2 className="font-cormorant text-3xl font-semibold text-foreground">Archive dish search</h2>
                   </div>
-                  <p className="mt-1 font-work text-sm text-muted-foreground">Search current and archived Küchenplan dishes by name, ingredient or allergen.</p>
+                  <p className="mt-1 font-work text-sm text-muted-high-contrast">Search current and archived Küchenplan dishes by name, ingredient or allergen.</p>
                 </div>
                 <div className="relative min-w-0 sm:w-80">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" aria-hidden="true" />
                   <Input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search dish name" className="pl-9" />
                 </div>
               </div>
 
               <div className="grid gap-4 xl:grid-cols-2">
-                {!archiveSearchRecords.length ? <p className="font-work text-sm text-muted-foreground">No archive items found.</p> : null}
+                {!archiveSearchRecords.length ? <p className="font-work text-sm text-muted-high-contrast">No archive items found.</p> : null}
                 {archiveSearchRecords.map((record) => <KuchenplanCard key={record.id} record={record} showSnapshot />)}
               </div>
             </section>
@@ -263,19 +263,19 @@ const KuchenplanCard = ({ record, showSnapshot = false }: { record: StaffMenuRec
         </div>
         <h3 className="font-cormorant text-2xl font-semibold text-foreground">{cleanDisplayText(record.title)}</h3>
       </div>
-      {showSnapshot && record.snapshotPeriod ? <span className="font-work text-xs text-muted-foreground">{cleanDisplayText(record.snapshotPeriod)}</span> : null}
+      {showSnapshot && record.snapshotPeriod ? <span className="font-work text-xs text-muted-high-contrast">{cleanDisplayText(record.snapshotPeriod)}</span> : null}
     </div>
-    {record.description ? <p className="mt-2 font-work text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : null}
+    {record.description ? <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast">{cleanDisplayText(record.description)}</p> : null}
     {record.ingredients.length ? <p className="mt-3 font-work text-sm leading-relaxed text-foreground"><span className="font-semibold">Ingredients:</span> {joinDisplayText(record.ingredients, ", ")}</p> : null}
-    {record.allergens.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(record.allergens, ", ")}</p> : null}
-    {record.notes.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-foreground"><span className="font-semibold text-foreground/80">Notes:</span> {joinDisplayText(record.notes, ", ")}</p> : null}
+    {record.allergens.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-high-contrast"><span className="font-semibold text-foreground/80">Allergens:</span> {joinDisplayText(record.allergens, ", ")}</p> : null}
+    {record.notes.length ? <p className="mt-2 font-work text-xs leading-relaxed text-muted-high-contrast"><span className="font-semibold text-foreground/80">Notes:</span> {joinDisplayText(record.notes, ", ")}</p> : null}
     <details className="mt-4 border-t border-border/60 pt-3">
       <summary className="cursor-pointer font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">All sheet fields</summary>
       <dl className="mt-3 grid gap-2">
         {record.fields.map((field) => (
           <div key={`${record.id}-${field.label}-${field.value}`} className="grid gap-1 rounded-sm bg-background/70 p-2 sm:grid-cols-[11rem_1fr]">
             <dt className="font-work text-xs font-semibold text-foreground/80">{cleanDisplayText(field.label)}</dt>
-            <dd className="font-work text-xs leading-relaxed text-muted-foreground">{cleanDisplayText(field.value)}</dd>
+            <dd className="font-work text-xs leading-relaxed text-muted-high-contrast">{cleanDisplayText(field.value)}</dd>
           </div>
         ))}
       </dl>

@@ -39,18 +39,18 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "border-b border-background/15 bg-gradient-to-b from-foreground/45 via-foreground/18 to-transparent py-2 shadow-none backdrop-blur-[1px] md:py-3"
-            : "border-b border-border/55 bg-background/82 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
+            ? "bg-transparent py-2 md:py-3"
+            : "border-b border-border/70 bg-background/94 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
         }`}
       >
-        <div className={`container relative mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 px-5 transition-[min-height] duration-500 md:px-4 lg:grid-cols-[1fr_auto_1fr] ${isHeroOverlay ? "min-h-16 md:min-h-14" : "min-h-12 md:min-h-11"}`}>
+        <div className={`container relative mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 px-5 transition-all duration-500 md:px-4 lg:grid-cols-[1fr_auto_1fr] ${isHeroOverlay ? "min-h-16 rounded-full border border-border/65 bg-background/90 shadow-elevated backdrop-blur-xl md:min-h-14" : "min-h-12 md:min-h-11"}`}>
           {/* Desktop Navigation Links */}
           <div className="hidden items-center gap-6 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-work text-xs font-medium uppercase tracking-[0.08em] transition-colors ${isHeroOverlay ? "text-background/85 hover:text-background drop-shadow-sm" : "text-primary/80 hover:text-primary"}`}
+                className={`font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors ${isHeroOverlay ? "text-primary/85 hover:text-primary" : "text-primary/85 hover:text-primary"}`}
               >
                 {link.label}
               </Link>
@@ -61,7 +61,7 @@ export const Navigation = () => {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/25 bg-background/10 text-background backdrop-blur-sm hover:bg-background/15" : "border-border/75 bg-card/85 text-primary hover:bg-muted"}`}
+              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-border/75 bg-card/90 text-primary hover:bg-muted" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
               aria-label={isMobileMenuOpen 
                 ? (language === "de" ? "Menü schließen" : "Close menu") 
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -79,10 +79,10 @@ export const Navigation = () => {
           >
             <Logo className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-11 w-11 md:h-12 md:w-12" : "h-9 w-9 md:h-10 md:w-10"}`} showTagline={false} aria-hidden="true" />
             <div className="hidden min-w-0 text-center leading-tight sm:block">
-              <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-background drop-shadow-md group-hover:text-background" : "text-foreground group-hover:text-primary"}`}>
+              <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-foreground group-hover:text-primary" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
               </span>
-              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-background/78 drop-shadow-sm" : "text-muted-foreground"}`}>
+              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-muted-high-contrast" : "text-muted-high-contrast"}`}>
                 Vegetarian Café Vienna
               </p>
             </div>
@@ -133,7 +133,7 @@ export const Navigation = () => {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="p-2 rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
             >
               <X className="w-5 h-5" />

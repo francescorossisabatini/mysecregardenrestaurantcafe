@@ -68,7 +68,7 @@ const StaffLogin = () => {
               <LockKeyhole className="h-5 w-5" aria-hidden="true" />
             </div>
             <h1 className="font-work text-3xl font-extrabold tracking-normal text-foreground">Staff Hub</h1>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 text-sm leading-relaxed text-muted-high-contrast">
               Restricted access for the team.
             </p>
           </div>
@@ -77,7 +77,7 @@ const StaffLogin = () => {
             <label className="grid gap-2 text-sm font-bold text-foreground">
               Username
               <div className="relative">
-                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" aria-hidden="true" />
                 <input
                   type="text"
                   value={username}

@@ -74,7 +74,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
         <div className="overflow-y-auto p-6 sm:p-8 md:p-12" style={{ maxHeight: '90vh' }}>
           {/* Header */}
           <div className="text-center mb-8 md:mb-10">
-            <p className="text-xs sm:text-sm text-muted-foreground mb-2 uppercase tracking-wider">
+            <p className="text-xs sm:text-sm text-muted-high-contrast mb-2 uppercase tracking-wider">
               {language === "de" ? "Diese Woche" : "This Week"}
             </p>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-2">
@@ -106,7 +106,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                       <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
                         {cleanDisplayText(day.soup[language])}
                       </p>
-                      <p className="text-xs text-muted-foreground">4,50 / 6,50 €</p>
+                      <p className="text-xs text-muted-high-contrast">4,50 / 6,50 €</p>
                     </div>
                   )}
                   
@@ -120,11 +120,11 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                         {cleanDisplayText(day.green[language])}
                       </p>
                       {day.greenNote && day.greenNote[language] && (
-                        <p className="text-xs text-muted-foreground italic">
+                        <p className="text-xs text-muted-high-contrast italic">
                           {cleanDisplayText(day.greenNote[language])}
                         </p>
                       )}
-                      <p className="text-xs text-muted-foreground">15,20 €</p>
+                      <p className="text-xs text-muted-high-contrast">15,20 €</p>
                     </div>
                   )}
 
@@ -138,11 +138,11 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                         {cleanDisplayText(day.blue[language])}
                       </p>
                       {day.blueNote && day.blueNote[language] && (
-                        <p className="text-xs text-muted-foreground italic">
+                        <p className="text-xs text-muted-high-contrast italic">
                           {cleanDisplayText(day.blueNote[language])}
                         </p>
                       )}
-                      <p className="text-xs text-muted-foreground">15,20 €</p>
+                      <p className="text-xs text-muted-high-contrast">15,20 €</p>
                     </div>
                   )}
                 </div>
@@ -163,7 +163,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
                   <div className="flex-1">
                     <p className="text-sm sm:text-base font-medium">{cleanDisplayText(salad.name)}</p>
                     {salad.size && (
-                        <p className="text-xs text-muted-foreground">({cleanDisplayText(salad.size)})</p>
+                        <p className="text-xs text-muted-high-contrast">({cleanDisplayText(salad.size)})</p>
                     )}
                   </div>
                   <span className="text-xs sm:text-sm font-light whitespace-nowrap">{salad.price}</span>
@@ -182,7 +182,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
             <div className="flex justify-between items-start gap-3 bg-background/20 p-4 rounded-lg max-w-2xl mx-auto">
               <div className="flex-1">
                 <p className="text-sm sm:text-base font-medium">{cleanDisplayText(dal.name)}</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">{cleanDisplayText(dal.description)}</p>
+                <p className="text-xs sm:text-sm text-muted-high-contrast">{cleanDisplayText(dal.description)}</p>
               </div>
               <span className="text-xs sm:text-sm font-light whitespace-nowrap">{dal.price}</span>
             </div>
@@ -207,7 +207,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
 
           {/* Footer info */}
           <div className="mt-8 pt-6 border-t border-border/30 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-high-contrast">
               {language === "de" 
                 ? "Alle Preise in Euro. Änderungen vorbehalten" 
                 : "All prices in Euro. Subject to change"}

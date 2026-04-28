@@ -117,7 +117,7 @@ export const GallerySection = () => {
         <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-4">
           {language === "de" ? "Teller, Tische, kleine Spuren" : "Plates, tables, small traces"}
         </h2>
-        <p className="mx-auto max-w-2xl font-work text-sm md:text-base leading-relaxed text-muted-foreground mb-8">
+        <p className="mx-auto max-w-2xl font-work text-sm md:text-base leading-relaxed text-muted-high-contrast mb-8">
           {language === "de"
             ? "Ein paar Bilder aus dem Alltag: Schüsseln am Tisch, Blumen am Eingang, Licht im Hof. Nicht alles ist gestellt. Genau das mögen wir."
             : "A few pictures from daily life: bowls on the table, flowers by the entrance, light in the courtyard. Not everything is staged. We like that."}
@@ -127,7 +127,7 @@ export const GallerySection = () => {
             ? "Das Gute in anderen zu sehen, ist der Anfang von Frieden." 
             : "To see the good in others is the beginning of peace."}
         </blockquote>
-        <cite className="block mt-3 text-sm text-muted-foreground font-lora font-medium tracking-wide">
+        <cite className="block mt-3 text-sm text-muted-high-contrast font-lora font-medium tracking-wide">
           Sri Chinmoy
         </cite>
       </div>
@@ -197,7 +197,7 @@ export const GallerySection = () => {
               {language === "de" ? "Folge uns auf Instagram" : "Follow us on Instagram"}
             </a>
           </Button>
-          <p className="text-sm text-muted-foreground font-work">
+          <p className="text-sm text-muted-high-contrast font-work">
             {SITE.instagramHandle}
           </p>
         </div>

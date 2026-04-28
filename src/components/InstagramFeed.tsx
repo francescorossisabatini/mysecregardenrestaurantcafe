@@ -30,7 +30,7 @@ export const InstagramFeed = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">
               {language === "de" ? "Impressionen aus unserem Secret Garden" : "Impressions from our Secret Garden"}
             </h2>
-            <p className="text-base text-muted-foreground mb-4">
+            <p className="text-base text-muted-high-contrast mb-4">
               {language === "de" ? "Auf Instagram zeigen wir oft, was gerade am Tresen steht." : "On Instagram we often show what is at the counter right now."}
             </p>
             <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
@@ -77,7 +77,7 @@ export const InstagramFeed = () => {
               </div>
               
               <div className="text-center">
-                <p className="text-sm md:text-base text-muted-foreground mb-4">
+                <p className="text-sm md:text-base text-muted-high-contrast mb-4">
                   {language === "de" 
                     ? "Neue Teller, kleine Hofmomente und manchmal ein Blick in die Küche." 
                     : "New plates, small courtyard moments and sometimes a look into the kitchen."}
@@ -103,7 +103,7 @@ export const InstagramFeed = () => {
 
           {/* Call to Action */}
           <div className="text-center">
-            <p className="text-sm md:text-base text-muted-foreground">
+            <p className="text-sm md:text-base text-muted-high-contrast">
               {language === "de" ? "Folgen Sie uns:" : "Follow us:"} 
               <a 
                 href="https://www.instagram.com/mysecretgardencafewien/" 

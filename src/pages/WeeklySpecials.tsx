@@ -92,7 +92,7 @@ const WeeklyDish = ({
         <span className="ml-auto font-work text-xs font-semibold text-accent">{price}</span>
       </div>
       {dishCopy.description && (
-        <p className="mt-1 font-work text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
+        <p className="mt-1 font-work text-sm leading-relaxed text-muted-high-contrast whitespace-pre-line">
           {cleanDisplayText(dishCopy.description)}
         </p>
       )}
@@ -129,10 +129,10 @@ const WeeklySpecials = () => {
           <h1 className="font-cormorant text-4xl md:text-5xl font-semibold text-foreground mb-3">
             {language === "de" ? "Wochenmenü" : "Weekly Specials"}
           </h1>
-          <p className="text-muted-foreground font-work text-base mb-2">
+          <p className="text-muted-high-contrast font-work text-base mb-2">
             {translatePeriod(menu.period, language)}
           </p>
-          <p className="text-sm text-muted-foreground font-work max-w-md mx-auto">
+          <p className="text-sm text-muted-high-contrast font-work max-w-md mx-auto">
             {language === "de"
               ? "Was diese Woche mittags am Tresen steht. Kurz prüfen, dann vorbeikommen."
               : "What is at the counter for lunch this week. Check it, then come by."}
@@ -198,7 +198,7 @@ const WeeklySpecials = () => {
                               ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
                               : (language === "de" ? "Heute geschlossen" : "Closed")}
                         </p>
-                        <p className="text-muted-foreground text-xs font-work mt-1">
+                        <p className="text-muted-high-contrast text-xs font-work mt-1">
                           {language === "de" ? "Geschlossen" : "Closed"}
                         </p>
                       </div>
