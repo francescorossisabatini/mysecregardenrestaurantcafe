@@ -7,6 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    loadContentsquare?: () => void;
   }
 }
 
@@ -42,6 +43,7 @@ export const CookieConsent = () => {
     closeWithAnimation();
     // Enable Google Analytics tracking after consent
     window.gtag?.('consent', 'update', { 'analytics_storage': 'granted' });
+    window.loadContentsquare?.();
   };
 
   const handleReject = () => {
