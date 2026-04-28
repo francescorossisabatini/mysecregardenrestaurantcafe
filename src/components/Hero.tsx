@@ -1,33 +1,16 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
 
-import minnesotaBowl from "@/assets/minnesota-bowl.webp";
 import diningScene from "@/assets/dining-scene.jpg";
-import heroGarden from "@/assets/garden-real.webp";
-import heroInterior from "@/assets/interior-real.webp";
 
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
-import { getHeroAbVariant, isMobileHeroViewport, trackHeroAbEvent, trackHeroAbImpression, type HeroAbVariantId } from "@/lib/heroAbTest";
 
-// Lazy load the carousel - it's not needed for initial paint
-const HeroCarousel = lazy(() => import("@/components/HeroCarousel"));
-
-const heroImages = [
-  { src: minnesotaBowl, position: "center center", alt: "Piatto del giorno" },
-  { src: heroGarden, position: "center 45%", alt: "Cortile interno" },
-  { src: heroInterior, position: "center 35%", alt: "Interni del ristorante" },
-];
-
-const mobileHeroVariants: Record<HeroAbVariantId, { src: string; position: string; alt: string }> = {
-  food: { src: minnesotaBowl, position: "center center", alt: "Piatto vegetariano del giorno" },
-  dining: { src: diningScene, position: "center center", alt: "Tavola con piatti vegetariani" },
-  garden: { src: heroGarden, position: "center 45%", alt: "Cortile giardino del ristorante" },
-};
+const heroImage = { src: diningScene, position: "center center", alt: "Tavola con piatti vegetariani" };
 
 function useMinuteNow() {
   const [now, setNow] = useState(() => new Date());
@@ -39,48 +22,22 @@ function useMinuteNow() {
 }
 
 export const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(0);
   // Remove showTitle state - H1 renders immediately for better LCP
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
-  const [showDots, setShowDots] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
-  const [carouselMounted, setCarouselMounted] = useState(false);
-  const [carouselVisible, setCarouselVisible] = useState(false);
-  const [heroVariant, setHeroVariant] = useState<HeroAbVariantId | null>(null);
-  const [isMobileHero, setIsMobileHero] = useState(false);
   const { language } = useLanguage();
-
-  const handleSlideChange = useCallback((index: number) => {
-    setCurrentImage(index);
-  }, []);
 
   useEffect(() => {
     // Title now uses CSS animation, no JS delay needed
     const timer2 = setTimeout(() => setShowSubtitle(true), 400);
     const timer3 = setTimeout(() => setShowButtons(true), 800);
-    const timer4 = setTimeout(() => setShowDots(true), 1200);
 
     return () => {
       clearTimeout(timer2);
       clearTimeout(timer3);
-      clearTimeout(timer4);
     };
   }, []);
-
-  useEffect(() => {
-    const variant = getHeroAbVariant();
-    setHeroVariant(variant);
-    setIsMobileHero(isMobileHeroViewport());
-    trackHeroAbImpression(variant);
-  }, []);
-
-  useEffect(() => {
-    if (isMobileHero) return;
-
-    const timer = setTimeout(() => setCarouselMounted(true), 100);
-    return () => clearTimeout(timer);
-  }, [isMobileHero]);
 
   // Hide scroll indicator on scroll
   useEffect(() => {
@@ -102,48 +59,35 @@ export const Hero = () => {
   
   // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
-  const staticHeroImage = heroVariant ? mobileHeroVariants[heroVariant] : heroImages[0];
-  const carouselImages = heroVariant ? [staticHeroImage, ...heroImages.filter((image) => image.src !== staticHeroImage.src)] : heroImages;
-  const showCarousel = carouselMounted && !isMobileHero;
 
   return (
-    <section className="relative h-[92svh] min-h-[520px] md:h-[100dvh] md:min-h-[640px] lg:h-[88dvh] lg:min-h-[680px] flex items-center justify-center overflow-hidden">
-      {/* Static first image - shown immediately for FCP */}
+    <section className="relative flex h-[92svh] min-h-[540px] items-center justify-center overflow-hidden md:h-[100dvh] md:min-h-[660px] lg:h-[90dvh] lg:min-h-[700px]">
+      {/* Static real photo for FCP and immersive consistency */}
       <div 
-        className={`absolute inset-0 animate-hero-background transition-opacity duration-slow ease-out ${carouselVisible && !isMobileHero ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className="absolute inset-0 animate-hero-background"
         style={{
-          backgroundImage: `url(${staticHeroImage.src})`,
+          backgroundImage: `url(${heroImage.src})`,
           backgroundSize: "cover",
-          backgroundPosition: staticHeroImage.position,
+          backgroundPosition: heroImage.position,
         }}
-        aria-hidden={carouselVisible && !isMobileHero}
+        role="img"
+        aria-label={heroImage.alt}
       />
 
-      {/* Lazy-loaded carousel - desktop only; mobile A/B test keeps one static image */}
-      {showCarousel && (
-        <Suspense fallback={null}>
-          <HeroCarousel 
-            images={carouselImages} 
-            onSlideChange={handleSlideChange}
-            onReady={() => setCarouselVisible(true)}
-          />
-        </Suspense>
-      )}
-
-      {/* Overlay - reduced for better image visibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/45 via-foreground/24 to-foreground/52" />
-      <div className="absolute inset-0 bg-foreground/18 md:hidden" />
+      {/* Overlay shaped for readability while keeping the room visible */}
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/58 via-foreground/22 to-foreground/68" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/28 via-transparent to-foreground/18" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-16 md:pt-20 pb-6 md:pb-8 flex flex-col justify-center h-full pointer-events-none">
-        <div className="max-w-4xl mx-auto text-center space-y-2.5 sm:space-y-4 md:space-y-5 lg:max-w-5xl">
+      <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">
+        <div className="mx-auto max-w-5xl space-y-3 text-center sm:space-y-4 md:space-y-5">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
             {SITE.name}
           </h1>
 
           {/* Subtitle - visible immediately for LCP */}
-          <p className={`text-xs sm:text-base md:text-lg lg:text-xl font-lora text-background drop-shadow-xl transition-all duration-slow ease-out ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+          <p className={`mx-auto max-w-2xl text-base font-lora leading-relaxed text-background drop-shadow-xl transition-all duration-slow ease-out sm:text-lg md:text-xl ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
           </p>
 
@@ -229,7 +173,7 @@ export const Hero = () => {
               className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6 shadow-lg"
               asChild
             >
-              <Link to="/#menu" onClick={() => trackHeroAbEvent('click_menu_today', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
+              <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
               </Link>
@@ -242,30 +186,11 @@ export const Hero = () => {
               className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6"
               asChild
             >
-              <Link to="/menu" onClick={() => trackHeroAbEvent('click_weekly_specials', { event_category: 'engagement', event_label: 'hero_cta' }, heroVariant)}>
+              <Link to="/menu">
                 <CalendarDays className="w-4 h-4 mr-2" />
                 {language === "de" ? "Speisekarte" : "Full Menu"}
               </Link>
             </Button>
-          </div>
-
-          {/* Carousel dots */}
-          <div className={`hidden md:flex gap-2 justify-center pt-4 sm:pt-6 transition-opacity duration-base ease-out pointer-events-auto ${
-            showDots ? "opacity-100" : "opacity-0"
-          }`}>
-            {carouselImages.map((_, index) => (
-              <div
-                key={index}
-                className="w-8 h-8 flex items-center justify-center"
-                aria-hidden="true"
-              >
-                <span className={`rounded-full transition-all duration-300 ${
-                  currentImage === index
-                    ? "bg-background w-8 h-2.5 shadow-lg"
-                    : "bg-background/80 w-2.5 h-2.5"
-                }`} />
-              </div>
-            ))}
           </div>
 
         </div>
@@ -274,7 +199,7 @@ export const Hero = () => {
       {/* Scroll indicator */}
       <div 
         className={`hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-500 ${
-          showScrollIndicator && showDots ? "opacity-100" : "opacity-0 pointer-events-none"
+          showScrollIndicator && showButtons ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
       >
