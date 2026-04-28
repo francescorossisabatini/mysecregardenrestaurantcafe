@@ -813,7 +813,7 @@ const ReservationCard = ({
   const canAct = !readOnly && !isUpdating;
 
   return (
-    <article className="rounded-lg border border-border bg-background p-4 shadow-card">
+    <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <ReservationStatusBadge status={reservation.status} labels={labels} />
         <div className="flex shrink-0 items-center gap-3 text-sm font-semibold text-primary">
@@ -826,8 +826,8 @@ const ReservationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline" aria-label={`${labels.call} ${reservation.full_name}`}>
+        <h3 className="font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
+        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${reservation.full_name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(reservation.contact)}
         </a>
@@ -910,16 +910,16 @@ const CakeOrderCard = ({
   const canAct = !readOnly && !isUpdating;
 
   return (
-    <article className="rounded-lg border border-border bg-card p-4 shadow-card">
+    <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <CakeOrderStatusBadge status={order.status} labels={labels} />
-        <span className="rounded-full bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
+        <span className="rounded-md bg-accent/10 px-3 py-1 text-sm font-bold text-accent">× {order.quantity}</span>
       </div>
 
       <div className="mt-4">
-        <h3 className="font-cormorant text-3xl font-semibold leading-tight text-primary">{cleanDisplayText(order.cake_choice)}</h3>
+        <h3 className="font-work text-xl font-extrabold leading-tight tracking-normal text-foreground">{cleanDisplayText(order.cake_choice)}</h3>
         <p className="mt-1 text-sm font-semibold text-foreground">{cleanDisplayText(order.name)}</p>
-        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-3 text-sm font-medium text-primary hover:border-primary/35" aria-label={`${labels.call} ${order.name}`}>
+        <a href={`tel:${order.phone}`} className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${order.name}`}>
           <Phone className="h-4 w-4" aria-hidden="true" />
           {cleanDisplayText(order.phone)}
         </a>
@@ -984,11 +984,11 @@ const DishCard = ({ record, language }: { record: StaffMenuRecord; language: Das
   const labels = text[language];
 
   return (
-    <article className={`rounded-lg border border-border bg-background p-4 shadow-card active:scale-[0.99] ${category === "soup" ? "border-l-8 border-l-warning" : category === "green" ? "border-l-8 border-l-accent" : "border-l-8 border-l-primary"}`}>
+    <article className={`rounded-md border border-border bg-background p-3 shadow-soft md:p-4 ${category === "soup" ? "border-l-4 border-l-warning" : category === "green" ? "border-l-4 border-l-accent" : "border-l-4 border-l-primary"}`}>
       <div className="grid gap-3 md:grid-cols-[1fr_auto]">
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">{categoryLabels[language][category]}</p>
-          <h3 className="mt-1 font-work text-2xl font-bold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
+          <h3 className="mt-1 font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(record.title)}</h3>
           {record.description ? <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{cleanDisplayText(record.description)}</p> : titleDe ? <p className="mt-1 text-sm text-muted-foreground">{titleDe}</p> : null}
         </div>
         <div className="flex flex-wrap items-start gap-2 md:max-w-72 md:justify-end">
@@ -1020,7 +1020,7 @@ const ArchiveCard = ({ record, language }: { record: StaffMenuRecord; language: 
   const category = normalizeCategory(record.category);
   const badges = recordBadges(record);
   return (
-    <article className="rounded-lg border border-border bg-background p-4 shadow-card">
+    <article className="rounded-md border border-border bg-background p-3 shadow-soft md:p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <Badge variant="outline" className="mb-2 rounded-full">{categoryLabels[language][category]}</Badge>
