@@ -277,7 +277,7 @@ const AboutUs = () => {
           </div>
         </section>
 
-        <RevealSection id="place" className="bg-background py-18 md:py-28">
+        <RevealSection id="place" className="bg-background py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4">
             <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-16 stagger-children in-view">
               <div className="space-y-5">
@@ -307,7 +307,7 @@ const AboutUs = () => {
           </div>
         </RevealSection>
 
-        <RevealSection id="kitchen" className="bg-section-accent py-18 md:py-28">
+        <RevealSection id="kitchen" className="bg-section-accent py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4">
             <div className="mx-auto mb-12 max-w-3xl text-center stagger-children in-view md:mb-16">
               <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
@@ -341,7 +341,7 @@ const AboutUs = () => {
           </div>
         </RevealSection>
 
-        <RevealSection id="rhythm" className="bg-background py-18 md:py-28">
+        <RevealSection id="rhythm" className="bg-background py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4">
             <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-16 stagger-children in-view">
               <div className="order-2 md:order-1">
@@ -370,7 +370,7 @@ const AboutUs = () => {
           </div>
         </RevealSection>
 
-        <RevealSection id="sri-chinmoy" className="bg-section-soft py-18 md:py-28">
+        <RevealSection id="sri-chinmoy" className="bg-section-soft py-20 md:py-28">
           <div className="container mx-auto max-w-6xl px-4">
             <div className="grid gap-12 md:grid-cols-[0.86fr_1.14fr] md:items-start md:gap-16 stagger-children in-view">
               <div className="md:sticky md:top-28">
@@ -406,13 +406,17 @@ const AboutUs = () => {
                 <div className="rounded-lg border border-border/75 bg-card p-5 shadow-card md:p-7">
                   <h3 className="font-cormorant text-3xl font-semibold text-primary">{t.factsTitle}</h3>
                   <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                    {t.facts.map((fact) => (
-                      <div key={fact.title} className="rounded-lg border border-border/60 bg-background/65 p-4">
-                        <fact.icon className="mb-3 h-5 w-5 text-accent" aria-hidden="true" />
-                        <h4 className="font-cormorant text-xl font-semibold text-foreground">{fact.title}</h4>
-                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast">{fact.text}</p>
-                      </div>
-                    ))}
+                    {t.facts.map((fact) => {
+                      const Icon = fact.icon;
+
+                      return (
+                        <div key={fact.title} className="rounded-lg border border-border/60 bg-background/65 p-4">
+                          <Icon className="mb-3 h-5 w-5 text-accent" aria-hidden="true" />
+                          <h4 className="font-cormorant text-xl font-semibold text-foreground">{fact.title}</h4>
+                          <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast">{fact.text}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
