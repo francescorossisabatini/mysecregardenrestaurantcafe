@@ -223,8 +223,8 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
                   {language === "de"
-                    ? "Unser Garten hat Stufen, aber keine Hürden. Wer mit Rollstuhl kommt: einfach anrufen, wir helfen gerne. Der Aufzug im Wipark Windmühlgasse ermöglicht einen barrierefreien Zugang."
-                    : "Our garden has steps, but no barriers. Wheelchair users: give us a call, we’ll be happy to help. The lift at Wipark Windmühlgasse provides step free access."}
+                    ? "Unser Garten ist historisch gewachsen und nicht überall eben. Wenn du besondere Unterstützung brauchst, melde dich kurz vor deinem Besuch."
+                    : "Our garden is part of an old courtyard and not level everywhere. If you need specific support, please contact us before your visit."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
