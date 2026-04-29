@@ -93,8 +93,12 @@ export const Hero = () => {
 
           <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-base ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
             <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/25 bg-primary/95 px-3.5 py-1.5 text-xs font-work font-semibold text-primary-foreground shadow-elevated sm:text-sm">
-              <Star className="w-3.5 h-3.5 fill-current text-brand-star" aria-hidden="true" />
-              {SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}
+              <span className="inline-flex items-center gap-0.5" aria-label={language === "de" ? "5 Sterne" : "5 stars"}>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} className="h-3.5 w-3.5 fill-current text-brand-star" aria-hidden="true" />
+                ))}
+              </span>
+              <span className="ml-1">{SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}</span>
             </span>
           </div>
 
