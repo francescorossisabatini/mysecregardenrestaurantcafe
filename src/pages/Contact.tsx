@@ -196,10 +196,6 @@ const ContactPage = () => {
                     </ul>
                   </div>
 
-                  <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-work text-sm font-medium text-primary underline-offset-4 hover:underline">
-                    {language === "de" ? "In Google Maps öffnen" : "Open in Google Maps"}
-                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  </a>
                 </div>
               </div>
             </section>
