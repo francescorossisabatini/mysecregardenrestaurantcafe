@@ -19,14 +19,6 @@ import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 
-const cakeMenuItems = [
-  "Chocolate Mousse Cake",
-  "Poppy Seeds Hazelnut Cake",
-  "Carrot Spice Cake",
-  "Walnut Brownie",
-  "Salty Caramel Slice",
-  "Vegan Cheesecake (Cashew Paste)",
-];
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
   const lowerText = text.toLowerCase();
@@ -601,25 +593,6 @@ export const MenuSection = () => {
               <p className="text-muted-high-contrast text-xs font-work font-medium mt-2 uppercase tracking-wide">
                 {language === "de" ? "Preise in Euro" : "Prices in Euro"}
               </p>
-            </div>
-
-            <div className="mb-8 rounded-lg border border-border bg-card p-5 shadow-card md:p-6">
-              <div>
-                <div>
-                  <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{language === "de" ? "Hausgemachte Torten" : "Homemade cakes"}</p>
-                  <h3 className="mt-2 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">{language === "de" ? "Unsere Torten am Tresen" : "Our cakes at the counter"}</h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-high-contrast">
-                    {language === "de" ? "Die Sorten wechseln je nach Verfügbarkeit. Ganze Torten zur Vorbestellung pausieren wir momentan." : "Varieties change depending on availability. Whole cake pre-orders are paused for now."}
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {cakeMenuItems.map((cake) => (
-                  <div key={cake} className="rounded-md border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground">
-                    {cake}
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="sticky top-[118px] z-20 -mx-4 mb-8 max-w-full border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:mx-0 md:rounded-2xl md:border md:shadow-card">
