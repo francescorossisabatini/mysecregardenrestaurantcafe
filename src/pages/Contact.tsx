@@ -1,71 +1,18 @@
-import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
+import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { ReservationRequestForm } from "@/components/ReservationRequestForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
-import { supabase } from "@/integrations/supabase/client";
-
-type ReservationForm = {
-  fullName: string;
-  date: string;
-  time: string;
-  partySize: string;
-  seatingArea: "inside" | "outside";
-  contact: string;
-  notes: string;
-};
 
 const ContactPage = () => {
   const { language } = useLanguage();
   const location = useLocation();
-  const [requestSent, setRequestSent] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [reservationForm, setReservationForm] = useState<ReservationForm>({
-    fullName: "",
-    date: "",
-    time: "",
-    partySize: "2",
-    seatingArea: "inside",
-    contact: "",
-    notes: "",
-  });
-
-  const minimumReservationDate = useMemo(() => {
-    const now = new Date();
-    const viennaTime = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Europe/Vienna",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      hour12: false,
-    }).formatToParts(now);
-    const part = (type: string) => viennaTime.find((item) => item.type === type)?.value ?? "";
-    const date = `${part("year")}-${part("month")}-${part("day")}`;
-    const hour = Number(part("hour"));
-
-    if (hour < 9) return date;
-
-    const nextDay = new Date(`${date}T12:00:00`);
-    nextDay.setDate(nextDay.getDate() + 1);
-    return nextDay.toISOString().split("T")[0];
-  }, []);
-
-  const reservationTimeSlots = useMemo(() => {
-    const slots: string[] = [];
-    for (let hour = 11; hour <= 19; hour += 1) {
-      slots.push(`${String(hour).padStart(2, "0")}:00`);
-      if (hour < 19) slots.push(`${String(hour).padStart(2, "0")}:30`);
-    }
-    return slots;
-  }, []);
 
   const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
   const parkingDetails = language === "de"
@@ -101,41 +48,6 @@ const ContactPage = () => {
       opens: "11:00",
       closes: "19:00",
     }],
-  };
-
-  const updateReservationField = <K extends keyof ReservationForm>(field: K, value: ReservationForm[K]) => {
-    setReservationForm((current) => ({ ...current, [field]: value }));
-    setSubmitError(null);
-    setRequestSent(false);
-  };
-
-  const handleReservationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    const reservationRequest = {
-      full_name: reservationForm.fullName.trim(),
-      contact: reservationForm.contact.trim(),
-      reservation_date: reservationForm.date,
-      reservation_time: reservationForm.time,
-      party_size: Number(reservationForm.partySize),
-      seating_area: reservationForm.seatingArea,
-      notes: reservationForm.notes.trim() || null,
-      language,
-    };
-
-    const { error } = await supabase.from("reservation_requests").insert(reservationRequest as never);
-
-    setIsSubmitting(false);
-
-    if (error) {
-      setSubmitError(language === "de" ? "Die Anfrage konnte nicht gesendet werden. Bitte ruf uns kurz an." : "We could not send the request. Please call us instead.");
-      return;
-    }
-
-    setRequestSent(true);
-    setReservationForm({ fullName: "", date: "", time: "", partySize: "2", seatingArea: "inside", contact: "", notes: "" });
   };
 
   return (
