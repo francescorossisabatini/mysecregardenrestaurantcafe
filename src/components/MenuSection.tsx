@@ -307,70 +307,94 @@ export const MenuSection = () => {
               <>
               <div className="space-y-4">
                 {/* Soup */}
-                {isValidMenuText(todayMenu.soup[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
-                        {language === "de" ? "Heute" : "Today"}
-                      </span>
-                      <span className="text-xs text-muted-high-contrast font-work uppercase tracking-wide">
-                        {language === "de" ? "Suppe" : "Soup"}
-                      </span>
+                {isValidMenuText(todayMenu.soup[language]) && (() => {
+                  const dishCopy = splitDishText(todayMenu.soup[language], language, "soup");
+
+                  return (
+                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-cormorant text-2xl font-semibold leading-snug text-foreground md:text-3xl">
+                            {cleanDisplayText(dishCopy.name)}
+                          </h3>
+                          <div className="mt-2 flex flex-wrap items-center gap-2">
+                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Suppe" : "Soup"}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="shrink-0 font-work text-sm font-semibold text-accent">6,90</p>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">6,90</p>
+                      {dishCopy.description && (
+                        <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                          {cleanDisplayText(dishCopy.description)}
+                        </p>
+                      )}
+                      <DietaryBadges text={todayMenu.soup[language]} language={language} />
+                      <WeeklyDishDetails text={todayMenu.soup[language]} meta={todayMenu.soupMeta} />
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
-                      {todayMenu.soup[language]}
-                    </p>
-                    <DietaryBadges text={todayMenu.soup[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.soup[language]} meta={todayMenu.soupMeta} />
-                  </div>
-                )}
+                  );
+                })()}
 
                 {/* Green Dish */}
-                {isValidMenuText(todayMenu.green[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
-                        {language === "de" ? "Heute" : "Today"}
-                      </span>
-                      <span className="text-xs text-muted-high-contrast font-work uppercase tracking-wide">
-                        {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                      </span>
+                {isValidMenuText(todayMenu.green[language]) && (() => {
+                  const dishCopy = splitDishText(todayMenu.green[language], language, "green");
+
+                  return (
+                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-cormorant text-2xl font-semibold leading-snug text-foreground md:text-3xl">
+                            {cleanDisplayText(dishCopy.name)}
+                          </h3>
+                          <div className="mt-2 flex flex-wrap items-center gap-2">
+                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                      {dishCopy.description && (
+                        <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                          {cleanDisplayText(dishCopy.description)}
+                        </p>
+                      )}
+                      <DietaryBadges text={todayMenu.green[language]} language={language} />
+                      <WeeklyDishDetails text={todayMenu.green[language]} meta={todayMenu.greenMeta} />
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
-                      {todayMenu.green[language]}
-                    </p>
-                    <DietaryBadges text={todayMenu.green[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.green[language]} meta={todayMenu.greenMeta} />
-                  </div>
-                )}
+                  );
+                })()}
 
                 {/* Blue Dish */}
-                {isValidMenuText(todayMenu.blue[language]) && (
-                  <div className="rounded-2xl border p-4 surface-card md:p-5">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-primary">
-                        {language === "de" ? "Heute" : "Today"}
-                      </span>
-                      <span className="text-xs text-muted-high-contrast font-work uppercase tracking-wide">
-                        {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                      </span>
+                {isValidMenuText(todayMenu.blue[language]) && (() => {
+                  const dishCopy = splitDishText(todayMenu.blue[language], language, "blue");
+
+                  return (
+                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-cormorant text-2xl font-semibold leading-snug text-foreground md:text-3xl">
+                            {cleanDisplayText(dishCopy.name)}
+                          </h3>
+                          <div className="mt-2 flex flex-wrap items-center gap-2">
+                            <span className="rounded-full border border-blue/25 bg-blue/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
                       </div>
-                       <p className="text-accent font-semibold text-sm font-work shrink-0">15,90</p>
+                      {dishCopy.description && (
+                        <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                          {cleanDisplayText(dishCopy.description)}
+                        </p>
+                      )}
+                      <DietaryBadges text={todayMenu.blue[language]} language={language} />
+                      <WeeklyDishDetails text={todayMenu.blue[language]} meta={todayMenu.blueMeta} />
                     </div>
-                    <p className="text-foreground font-work text-base md:text-base leading-relaxed mb-2">
-                      {todayMenu.blue[language]}
-                    </p>
-                    <DietaryBadges text={todayMenu.blue[language]} language={language} />
-                    <WeeklyDishDetails text={todayMenu.blue[language]} meta={todayMenu.blueMeta} />
-                  </div>
-                )}
+                  );
+                })()}
               </div>
               <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
@@ -425,36 +449,63 @@ export const MenuSection = () => {
                       {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
                     </p>
                     <div className="space-y-3 text-left">
-                      {isValidMenuText(nextDayMenu.soup[language]) && (
+                      {isValidMenuText(nextDayMenu.soup[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.soup[language], language, "soup");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Suppe" : "Soup"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1">
-                            {nextDayMenu.soup[language]}
-                          </p>
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.green[language]) && (
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Suppe" : "Soup"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
+                      {isValidMenuText(nextDayMenu.green[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.green[language], language, "green");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
-                            {nextDayMenu.green[language]}
-                          </p>
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.blue[language]) && (
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
+                      {isValidMenuText(nextDayMenu.blue[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.blue[language], language, "blue");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
-                            {nextDayMenu.blue[language]}
-                          </p>
-                        </div>
-                      )}
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-blue/25 bg-blue/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </div>
                   </div>
                 )}

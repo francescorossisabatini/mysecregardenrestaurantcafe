@@ -41,10 +41,6 @@ const ContactPage = () => {
     return date.toISOString().split("T")[0];
   }, []);
 
-  const enterSteps = language === "de"
-    ? ["Geh durch den Bogen in den Raimundhof.", "Folge dem Durchgang weiter, bis du uns siehst.", "Es gibt zwei Eingänge: von einer Seite gehst du mehrere Stufen hinauf, von der anderen Seite gehst du sie hinunter."]
-    : ["Walk through the archway into Raimundhof.", "Keep going through the passage until you see us.", "There are two entrances: from one side you walk up several stairs, from the other side you walk down them."];
-
   const courtyardInstruction = language === "de"
     ? "Geh einfach durch den Bogen in den Raimundhof und weiter geradeaus, bis du My Secret Garden siehst. Du kannst von zwei Seiten hineinkommen: je nach Eingang gehst du die Stufen hinauf oder hinunter."
     : "Just enter through the archway into Raimundhof and keep going until you see My Secret Garden. You can come in from two sides: depending on the entrance, you’ll walk up the stairs or down them.";
@@ -193,21 +189,18 @@ const ContactPage = () => {
                     <img src={entranceGarden} alt={language === "de" ? "Eingang im Raimundhof zu My Secret Garden" : "Entrance in Raimundhof to My Secret Garden"} className="aspect-[4/3] w-full object-cover" loading="lazy" />
                   </div>
 
-                  <div>
-                    <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-lg border border-border/70 bg-background/60 p-5">
+                    <div className="mb-3 flex items-center gap-3">
                       <DoorOpen className="h-5 w-5 text-primary" aria-hidden="true" />
                       <h3 className="font-cormorant text-2xl font-semibold text-foreground">
-                        {language === "de" ? "Der Weg hinein" : "The way in"}
+                        {language === "de" ? "Eingänge und Stufen" : "Entrances and steps"}
                       </h3>
                     </div>
-                    <ol className="space-y-4">
-                      {enterSteps.map((step, index) => (
-                        <li key={step} className="flex gap-4 font-work text-foreground/90">
-                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">{index + 1}</span>
-                          <span className="pt-0.5 leading-relaxed">{step}</span>
-                        </li>
-                      ))}
-                    </ol>
+                    <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
+                      {language === "de"
+                        ? "Du erreichst uns von zwei Seiten des Raimundhofs. Je nach Eingang gehst du einige Stufen hinauf oder hinunter. Wenn du Unterstützung brauchst, ruf uns kurz an."
+                        : "You can reach us from two sides of Raimundhof. Depending on the entrance, you walk a few steps up or down. If you need support, please call us."}
+                    </p>
                   </div>
 
                   <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-work text-sm font-medium text-primary underline-offset-4 hover:underline">
