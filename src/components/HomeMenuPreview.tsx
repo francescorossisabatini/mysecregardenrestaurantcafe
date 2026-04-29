@@ -75,10 +75,7 @@ export const HomeMenuPreview = () => {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl lg:max-w-5xl">
           <div className="mb-8 text-center">
-            <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
-              {language === "de" ? "Heute" : "Today"}
-            </span>
-            <h2 className="mt-2 font-cormorant text-3xl font-semibold text-foreground md:text-4xl">
+            <h2 className="font-cormorant text-3xl font-semibold text-foreground md:text-4xl">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
             <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
