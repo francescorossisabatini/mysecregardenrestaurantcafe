@@ -42,8 +42,8 @@ const ContactPage = () => {
   }, []);
 
   const courtyardInstruction = language === "de"
-    ? "Geh einfach durch den Bogen in den Raimundhof und weiter geradeaus, bis du My Secret Garden siehst. Du kannst von zwei Seiten hineinkommen: je nach Eingang gehst du die Stufen hinauf oder hinunter."
-    : "Just enter through the archway into Raimundhof and keep going until you see My Secret Garden. You can come in from two sides: depending on the entrance, you’ll walk up the stairs or down them.";
+    ? "Die Adresse führt dich zum Raimundhof. Achte auf den Durchgang bei Mariahilferstraße 45 und folge dem Hof nach innen, bis du den grünen Gartenbereich erreichst."
+    : "The address brings you to Raimundhof. Look for the passage at Mariahilferstraße 45 and follow the courtyard inward until you reach the green garden area.";
 
   const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
   const parkingDetails = language === "de"
@@ -134,8 +134,8 @@ const ContactPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
                 {language === "de"
-                  ? "Geh durch den Bogen in den Raimundhof und weiter, bis du uns siehst. Hier findest du die wichtigsten Infos vor deinem Besuch."
-                  : "Walk through the archway into Raimundhof and keep going until you see us. Here are the key details before you visit."}
+                  ? "Adresse, Route, Öffnungszeiten und praktische Hinweise für deinen Besuch im Raimundhof."
+                  : "Address, directions, opening hours and practical notes for your visit inside Raimundhof."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
@@ -198,8 +198,8 @@ const ContactPage = () => {
                     </div>
                     <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
                       {language === "de"
-                        ? "Du erreichst uns von zwei Seiten des Raimundhofs. Je nach Eingang gehst du einige Stufen hinauf oder hinunter. Wenn du Unterstützung brauchst, ruf uns kurz an."
-                        : "You can reach us from two sides of Raimundhof. Depending on the entrance, you walk a few steps up or down. If you need support, please call us."}
+                        ? "Es gibt zwei Wege in den Hof: von der Mariahilferstraße und von der Windmühlgasse. Von der einen Seite kommst du über Stufen hinauf, von der anderen über Stufen hinunter. Für barrierefreien Zugang empfehlen wir den Aufzug bei Wipark Windmühlgasse."
+                        : "There are two ways into the courtyard: from Mariahilferstraße and from Windmühlgasse. One side brings you up a few steps, the other down a few steps. For step free access, we recommend the lift at Wipark Windmühlgasse."}
                     </p>
                   </div>
 
