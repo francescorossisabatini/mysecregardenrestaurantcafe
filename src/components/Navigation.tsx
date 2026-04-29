@@ -26,11 +26,11 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", updateScrolled);
   }, [location.pathname]);
 
-  // Required nav links per master template: Home, Menu, Specials, About, Visit, Contact
+  // Primary navigation labels
   const navLinks = [
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
-    { to: "/about", label: language === "de" ? "Über uns" : "About" },
+    { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
     { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
 
