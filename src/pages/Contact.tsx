@@ -41,10 +41,6 @@ const ContactPage = () => {
     return date.toISOString().split("T")[0];
   }, []);
 
-  const courtyardInstruction = language === "de"
-    ? "Die Adresse führt dich zum Raimundhof. Achte auf den Durchgang bei Mariahilferstraße 45 und folge dem Hof nach innen, bis du den grünen Gartenbereich erreichst."
-    : "The address brings you to Raimundhof. Look for the passage at Mariahilferstraße 45 and follow the courtyard inward until you reach the green garden area.";
-
   const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
   const parkingDetails = language === "de"
     ? [
@@ -134,8 +130,8 @@ const ContactPage = () => {
               </h1>
               <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
                 {language === "de"
-                  ? "Adresse, Route, Öffnungszeiten und praktische Hinweise für deinen Besuch im Raimundhof."
-                  : "Address, directions, opening hours and practical notes for your visit inside Raimundhof."}
+                  ? "Alles Wichtige für deinen Besuch: Adresse, Öffnungszeiten, Anreise und Unterstützung vor Ort."
+                  : "Everything you need for your visit: address, opening hours, travel options and on-site support."}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
@@ -181,7 +177,9 @@ const ContactPage = () => {
                       1060 Wien
                     </p>
                     <p className="mt-5 font-work leading-relaxed text-foreground/90">
-                      {courtyardInstruction}
+                      {language === "de"
+                        ? "Der Eingang liegt nicht direkt an der Straße, sondern im Raimundhof. Google Maps führt dich zur richtigen Adresse."
+                        : "The entrance is not directly on the street, but inside Raimundhof. Google Maps brings you to the right address."}
                     </p>
                   </div>
 
@@ -193,14 +191,14 @@ const ContactPage = () => {
                     <div className="mb-3 flex items-center gap-3">
                       <DoorOpen className="h-5 w-5 text-primary" aria-hidden="true" />
                       <h3 className="font-cormorant text-2xl font-semibold text-foreground">
-                        {language === "de" ? "Eingänge und Stufen" : "Entrances and steps"}
+                        {language === "de" ? "Zugang vor Ort" : "On-site access"}
                       </h3>
                     </div>
-                    <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
-                      {language === "de"
-                        ? "Es gibt zwei Wege in den Hof: von der Mariahilferstraße und von der Windmühlgasse. Von der einen Seite kommst du über Stufen hinauf, von der anderen über Stufen hinunter. Für barrierefreien Zugang empfehlen wir den Aufzug bei Wipark Windmühlgasse."
-                        : "There are two ways into the courtyard: from Mariahilferstraße and from Windmühlgasse. One side brings you up a few steps, the other down a few steps. For step free access, we recommend the lift at Wipark Windmühlgasse."}
-                    </p>
+                    <ul className="space-y-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                      <li>{language === "de" ? "Mariahilferstraße: Durchgang beim Haus Nummer 45." : "Mariahilferstraße: passage at number 45."}</li>
+                      <li>{language === "de" ? "Windmühlgasse: praktischer Zugang über die Rückseite des Hofs." : "Windmühlgasse: practical access from the back side of the courtyard."}</li>
+                      <li>{language === "de" ? "Stufenlos: bitte den Aufzug bei Wipark Windmühlgasse nutzen oder kurz anrufen." : "Step free: use the lift at Wipark Windmühlgasse or call us briefly."}</li>
+                    </ul>
                   </div>
 
                   <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-work text-sm font-medium text-primary underline-offset-4 hover:underline">
