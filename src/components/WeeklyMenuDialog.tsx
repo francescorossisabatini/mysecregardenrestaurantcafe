@@ -47,10 +47,10 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
 
         {/* Info boxes - Gestalt: Proximity & Similarity */}
         <div className="grid md:grid-cols-2 gap-3 mt-4 mb-6">
-          <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 shadow-soft">
             <p className="text-sm leading-relaxed text-foreground/90">{introText[language]}</p>
           </div>
-          <div className="bg-accent/5 border-l-4 border-accent p-4 rounded-r-lg">
+          <div className="rounded-lg border border-accent/20 bg-accent/5 p-4 shadow-soft">
             <p className="text-sm leading-relaxed text-foreground/90">{soupInfo[language]}</p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
                 </div>
 
                 {/* Green Dish - Gestalt: Color coding for grouping */}
-                <div className="flex gap-3 items-start bg-primary/10 p-3 rounded-lg border-l-4 border-primary">
+                <div className="flex gap-3 items-start rounded-lg border border-primary/20 bg-primary/10 p-3">
                   <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -104,7 +104,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
 
                 {/* Blue Dish - Gestalt: Color coding for grouping */}
                 {dayMenu.blue && (dayMenu.blue.de || dayMenu.blue.en) && (
-                  <div className="flex gap-3 items-start bg-primary/10 p-3 rounded-lg border-l-4 border-primary">
+                  <div className="flex gap-3 items-start rounded-lg border border-primary/20 bg-primary/10 p-3">
                     <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">

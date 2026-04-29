@@ -362,8 +362,11 @@ const AboutUs = () => {
                 <p className="font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
                   {t.rhythmText2}
                 </p>
-                <blockquote className="border-l-4 border-accent py-2 pl-5 font-lora text-2xl italic leading-relaxed text-primary/90">
-                  {t.rhythmQuote}
+                <blockquote className="rounded-lg border border-border/70 bg-card/70 px-6 py-5 text-center shadow-soft">
+                  <span className="mx-auto mb-4 block h-px w-20 bg-accent/50" aria-hidden="true" />
+                  <p className="font-lora text-2xl italic leading-relaxed text-primary/90">
+                    {t.rhythmQuote}
+                  </p>
                 </blockquote>
               </div>
             </div>
