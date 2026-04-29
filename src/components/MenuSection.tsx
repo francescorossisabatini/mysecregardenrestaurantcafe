@@ -19,7 +19,6 @@ import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-import supermindLogo from "@/assets/supermind-logo-cropped.png";
 
 const cakeMenuItems = [
   "Chocolate Mousse Cake",
@@ -75,15 +74,6 @@ const weeklyDishLabels = {
   green: { de: "Grünes Gericht", en: "Green Dish" },
   blue: { de: "Blaues Gericht", en: "Blue Dish" },
 } as const;
-
-const supermindCoffeeItemIds = new Set([
-  "espresso",
-  "verlaengerter",
-  "cappuccino",
-  "flat-white",
-  "latte-macchiato",
-  "chaga-kaffee",
-]);
 
 const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof typeof weeklyDishLabels; text: string; price: string; meta?: DishDetails; language: "de" | "en" }) => {
   const dishCopy = splitDishText(text, language, kind);
