@@ -62,7 +62,7 @@ export const klassikerMenu = {
       items: [
         {
           id: "bunter-salat",
-          name: { de: "Bunter Salat", en: "Mixed Salad" },
+          name: { de: "Secret Garden Salat", en: "Secret Garden Salad" },
           description: {
             de: "Frischer Blattsalat mit saisonalem Gemüse und hausgemachtem Dressing",
             en: "Fresh leaf salad with seasonal vegetables and homemade dressing"

@@ -20,7 +20,7 @@ export const fixedDishes = {
   salads: {
     de: [
       {
-        name: "Bunter Salat",
+        name: "Secret Garden Salat",
         price: "5,90 / 9,90 €",
         size: "klein / groß",
         description: "Reichhaltige Mischung aus Lollo Rosso, Babyspinat, Rucola, Radicchio, Karotten, Rote Rüben, Kaiserschoten, Sprossen, Äpfeln und Granatapfelkernen.",
@@ -47,7 +47,7 @@ export const fixedDishes = {
     ],
     en: [
       {
-        name: "Colorful Salad",
+        name: "Secret Garden Salad",
         price: "5,90 / 9,90 €",
         size: "small / large",
         description: "Rich mixture of Lollo Rosso, baby spinach, arugula, radicchio, carrots, beetroot, snow peas, sprouts, apples and pomegranate seeds.",
