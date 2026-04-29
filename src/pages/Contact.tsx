@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
+import { CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -191,8 +191,8 @@ const ContactPage = () => {
                     </div>
                     <ul className="space-y-2 font-work text-sm leading-relaxed text-muted-high-contrast">
                       <li>{language === "de" ? "Straßenseite: durch den Hausbogen gehen." : "Street side: walk through the building arch."}</li>
-                      <li>{language === "de" ? "Rückseite: über Windmühlgasse kommst du näher zum Lift." : "Back side: Windmühlgasse brings you closer to the lift."}</li>
-                      <li>{language === "de" ? "Im Hof: den grünen Gartenbereich suchen." : "Inside: look for the green garden area."}</li>
+                      <li>{language === "de" ? "Rückseite: besser, wenn du den Lift nutzen möchtest." : "Back side: better if you want to use the lift."}</li>
+                      <li>{language === "de" ? "Im Hof: halte dich zum grünen Gartenbereich." : "Inside: head toward the green garden area."}</li>
                     </ul>
                   </div>
 
@@ -214,12 +214,10 @@ const ContactPage = () => {
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
-                <Accessibility className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
-                <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
+                <MapPin className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffentlich" : "Public transport"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
-                  {language === "de"
-                    ? "Der historische Hof ist nicht überall eben. Für Gäste mit Kinderwagen, Rollstuhl oder Mobilitätseinschränkung planen wir gern den passendsten Weg."
-                    : "The historic courtyard is not level everywhere. For guests with strollers, wheelchairs or reduced mobility, we are happy to suggest the easiest route."}
+                  {SITE.transportNote[language]}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
@@ -240,7 +238,7 @@ const ContactPage = () => {
                   </span>
                 </div>
                 <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
-                  {SITE.transportNote[language]}
+                  {language === "de" ? "Die Garage ist die nächste Option, wenn du mit dem Auto kommst." : "This is the closest option if you arrive by car."}
                 </p>
                 <dl className="mt-5 grid gap-3">
                   {parkingDetails.map((detail) => (
