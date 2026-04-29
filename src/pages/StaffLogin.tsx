@@ -6,11 +6,6 @@ import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 
-const STAFF_USERNAME_EMAIL: Record<string, string> = {
-  staffprova: "staffprova@secretgardenrestaurant.at",
-  stafftest: "stafftest@secretgardenrestaurant.at",
-};
-
 const StaffLogin = () => {
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
@@ -38,17 +33,26 @@ const StaffLogin = () => {
     setIsSubmitting(true);
     setError(null);
 
-    const email = STAFF_USERNAME_EMAIL[username.trim().toLowerCase()];
-    if (!email) {
-      setIsSubmitting(false);
-      setError("Access denied. Check your username and password.");
-      return;
+    const { data, error: loginError } = await supabase.functions.invoke("staff-login", {
+      body: { username, password },
+    });
+
+    if (!loginError && data?.access_token && data?.refresh_token) {
+      const { error: sessionError } = await supabase.auth.setSession({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+      });
+
+      if (sessionError) {
+        setIsSubmitting(false);
+        setError("Access denied. Check your username and password.");
+        return;
+      }
     }
 
-    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
     setIsSubmitting(false);
 
-    if (loginError) {
+    if (loginError || !data?.access_token || !data?.refresh_token) {
       setError("Access denied. Check your username and password.");
       return;
     }
