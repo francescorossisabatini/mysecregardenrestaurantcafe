@@ -30,9 +30,10 @@ export const Navigation = () => {
   const navLinks = [
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
-    { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
+    { to: "/about", label: "Our Story" },
     { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
+  const activeNavLabel = navLinks.find((link) => link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to))?.label ?? "";
 
   return (
     <>
@@ -78,6 +79,9 @@ export const Navigation = () => {
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-11 w-11 md:h-12 md:w-12" : "h-9 w-9 md:h-10 md:w-10"}`} showTagline={false} aria-hidden="true" />
+            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-semibold uppercase tracking-[0.08em] sm:hidden ${isHeroOverlay ? "text-primary/85" : "text-primary/85"}`}>
+              {activeNavLabel}
+            </span>
             <div className="hidden min-w-0 text-center leading-tight sm:block">
               <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-foreground group-hover:text-primary" : "text-foreground group-hover:text-primary"}`}>
                 My Secret Garden
@@ -142,16 +146,21 @@ export const Navigation = () => {
 
           {/* Navigation Links */}
           <nav className="flex-1 p-6 space-y-1 overflow-y-auto">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] text-primary/85 transition-colors hover:bg-muted hover:text-primary"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
+
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors hover:bg-muted hover:text-primary ${isActive ? "bg-muted text-primary" : "text-primary/85"}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
         </div>
