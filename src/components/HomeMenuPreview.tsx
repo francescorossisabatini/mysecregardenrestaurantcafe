@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-import supermindLogo from "@/assets/supermind-logo-cropped.png";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -153,21 +152,6 @@ export const HomeMenuPreview = () => {
                 : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
             </p>
           </div>
-
-          <a
-            href="https://supermind.at/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 grid items-center gap-4 rounded-lg border border-border/75 px-4 py-3 text-left surface-card transition-colors hover:border-primary/35 sm:grid-cols-[1fr_auto]"
-          >
-            <span className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
-              <span className="font-semibold uppercase tracking-[0.08em] text-primary">Secret Garden × Supermind</span><br />
-              {language === "de" ? "Wiener Kaffee für unseren ruhigen Gartenmoment." : "Viennese coffee for our quiet garden moment."}
-            </span>
-            <span className="flex h-14 w-28 items-center justify-center rounded-md border border-border bg-background px-3">
-              <img src={supermindLogo} alt="Supermind Kaffee" className="h-11 w-auto shrink-0 object-contain" loading="lazy" />
-            </span>
-          </a>
 
           <div className="mt-8 flex justify-center">
             <Button size="lg" asChild>
