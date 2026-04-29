@@ -449,36 +449,63 @@ export const MenuSection = () => {
                       {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
                     </p>
                     <div className="space-y-3 text-left">
-                      {isValidMenuText(nextDayMenu.soup[language]) && (
+                      {isValidMenuText(nextDayMenu.soup[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.soup[language], language, "soup");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Suppe" : "Soup"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1">
-                            {nextDayMenu.soup[language]}
-                          </p>
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.green[language]) && (
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Suppe" : "Soup"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
+                      {isValidMenuText(nextDayMenu.green[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.green[language], language, "green");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
-                            {nextDayMenu.green[language]}
-                          </p>
-                        </div>
-                      )}
-                      {isValidMenuText(nextDayMenu.blue[language]) && (
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
+                      {isValidMenuText(nextDayMenu.blue[language]) && (() => {
+                        const dishCopy = splitDishText(nextDayMenu.blue[language], language, "blue");
+
+                        return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                          <span className="text-xs text-primary font-work font-semibold uppercase tracking-wide">
-                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                          </span>
-                          <p className="text-foreground font-work text-sm mt-1 line-clamp-2">
-                            {nextDayMenu.blue[language]}
-                          </p>
-                        </div>
-                      )}
+                            <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                              {cleanDisplayText(dishCopy.name)}
+                            </p>
+                            <span className="mt-2 inline-flex rounded-full border border-blue/25 bg-blue/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                            </span>
+                            {dishCopy.description && (
+                              <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                                {cleanDisplayText(dishCopy.description)}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </div>
                   </div>
                 )}
