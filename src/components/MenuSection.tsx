@@ -12,7 +12,6 @@ import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
-import { Link } from "react-router-dom";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
@@ -605,27 +604,20 @@ export const MenuSection = () => {
             </div>
 
             <div className="mb-8 rounded-lg border border-border bg-card p-5 shadow-card md:p-6">
-              <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-start">
+              <div>
                 <div>
                   <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{language === "de" ? "Hausgemachte Torten" : "Homemade cakes"}</p>
-                  <h3 className="mt-2 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">{language === "de" ? "Ganze Torten vorbestellen" : "Pre-order whole cakes"}</h3>
+                  <h3 className="mt-2 font-cormorant text-3xl font-semibold leading-tight text-primary md:text-4xl">{language === "de" ? "Unsere Torten am Tresen" : "Our cakes at the counter"}</h3>
                   <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-high-contrast">
-                    {language === "de" ? "Alle sechs Sorten kosten €39,00 als ganze Torte. Zahlung bei Abholung, mindestens 24h im Voraus." : "All six cakes are €39.00 as whole cakes. Payment at pickup, at least 24h in advance."}
+                    {language === "de" ? "Die Sorten wechseln je nach Verfügbarkeit. Ganze Torten zur Vorbestellung pausieren wir momentan." : "Varieties change depending on availability. Whole cake pre-orders are paused for now."}
                   </p>
                 </div>
-                <Link
-                  to="/order"
-                  onClick={() => window.gtag?.("event", "cake_cta_click", { event_category: "engagement", source: "menu_always_here" })}
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-accent px-6 font-work text-sm font-medium text-accent-foreground shadow-soft transition-colors hover:bg-[hsl(var(--btn-primary-hover))] focus:outline-none focus:ring-2 focus:ring-primary/50"
-                >
-                  {language === "de" ? "Torte bestellen" : "Order a cake"}
-                </Link>
               </div>
               <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 {cakeMenuItems.map((cake) => (
-                  <Link key={cake} to="/cakes" className="rounded-md border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/35 hover:text-primary">
+                  <div key={cake} className="rounded-md border border-border bg-background/70 px-3 py-2 text-sm font-medium text-foreground">
                     {cake}
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>
