@@ -103,7 +103,7 @@ const ContactPage = () => {
     }],
   };
 
-  const updateReservationField = (field: keyof ReservationForm, value: string) => {
+  const updateReservationField = <K extends keyof ReservationForm>(field: K, value: ReservationForm[K]) => {
     setReservationForm((current) => ({ ...current, [field]: value }));
     setSubmitError(null);
     setRequestSent(false);
@@ -338,7 +338,7 @@ const ContactPage = () => {
                 </div>
                 <label className="grid gap-2 font-work text-sm text-foreground">
                   {language === "de" ? "Bereich" : "Area"}
-                  <select value={reservationForm.seatingArea} onChange={(event) => updateReservationField("seatingArea", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
+                  <select value={reservationForm.seatingArea} onChange={(event) => updateReservationField("seatingArea", event.target.value as ReservationForm["seatingArea"])} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
                     <option value="inside">{language === "de" ? "Drinnen" : "Inside"}</option>
                     <option value="outside">{language === "de" ? "Draußen" : "Outside"}</option>
                   </select>
