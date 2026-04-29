@@ -1,71 +1,18 @@
-import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
+import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
+import { ReservationRequestForm } from "@/components/ReservationRequestForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
-import { supabase } from "@/integrations/supabase/client";
-
-type ReservationForm = {
-  fullName: string;
-  date: string;
-  time: string;
-  partySize: string;
-  seatingArea: "inside" | "outside";
-  contact: string;
-  notes: string;
-};
 
 const ContactPage = () => {
   const { language } = useLanguage();
   const location = useLocation();
-  const [requestSent, setRequestSent] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [reservationForm, setReservationForm] = useState<ReservationForm>({
-    fullName: "",
-    date: "",
-    time: "",
-    partySize: "2",
-    seatingArea: "inside",
-    contact: "",
-    notes: "",
-  });
-
-  const minimumReservationDate = useMemo(() => {
-    const now = new Date();
-    const viennaTime = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Europe/Vienna",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      hour12: false,
-    }).formatToParts(now);
-    const part = (type: string) => viennaTime.find((item) => item.type === type)?.value ?? "";
-    const date = `${part("year")}-${part("month")}-${part("day")}`;
-    const hour = Number(part("hour"));
-
-    if (hour < 9) return date;
-
-    const nextDay = new Date(`${date}T12:00:00`);
-    nextDay.setDate(nextDay.getDate() + 1);
-    return nextDay.toISOString().split("T")[0];
-  }, []);
-
-  const reservationTimeSlots = useMemo(() => {
-    const slots: string[] = [];
-    for (let hour = 11; hour <= 19; hour += 1) {
-      slots.push(`${String(hour).padStart(2, "0")}:00`);
-      if (hour < 19) slots.push(`${String(hour).padStart(2, "0")}:30`);
-    }
-    return slots;
-  }, []);
 
   const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
   const parkingDetails = language === "de"
@@ -101,41 +48,6 @@ const ContactPage = () => {
       opens: "11:00",
       closes: "19:00",
     }],
-  };
-
-  const updateReservationField = <K extends keyof ReservationForm>(field: K, value: ReservationForm[K]) => {
-    setReservationForm((current) => ({ ...current, [field]: value }));
-    setSubmitError(null);
-    setRequestSent(false);
-  };
-
-  const handleReservationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    const reservationRequest = {
-      full_name: reservationForm.fullName.trim(),
-      contact: reservationForm.contact.trim(),
-      reservation_date: reservationForm.date,
-      reservation_time: reservationForm.time,
-      party_size: Number(reservationForm.partySize),
-      seating_area: reservationForm.seatingArea,
-      notes: reservationForm.notes.trim() || null,
-      language,
-    };
-
-    const { error } = await supabase.from("reservation_requests").insert(reservationRequest as never);
-
-    setIsSubmitting(false);
-
-    if (error) {
-      setSubmitError(language === "de" ? "Die Anfrage konnte nicht gesendet werden. Bitte ruf uns kurz an." : "We could not send the request. Please call us instead.");
-      return;
-    }
-
-    setRequestSent(true);
-    setReservationForm({ fullName: "", date: "", time: "", partySize: "2", seatingArea: "inside", contact: "", notes: "" });
   };
 
   return (
@@ -296,72 +208,7 @@ const ContactPage = () => {
               </div>
             </section>
 
-            {showReservationRequest && <section className="grid gap-6 rounded-lg border border-border/70 bg-section-accent p-6 shadow-card md:grid-cols-[0.9fr_1.1fr] md:p-8">
-              <div>
-                <CalendarDays className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
-                <h2 className="mb-3 font-cormorant text-3xl font-semibold text-foreground">
-                  {language === "de" ? "Tisch anfragen" : "Request a table"}
-                </h2>
-                <p className="mb-6 font-work leading-relaxed text-muted-high-contrast">
-                  {language === "de"
-                    ? "Du möchtest sicher gehen, dass ein Tisch auf dich wartet? Ruf uns an, das geht am schnellsten. Oder schick uns eine kurze Anfrage."
-                    : "Want to make sure there’s a table waiting for you? Give us a call, it’s the fastest way. Or send us a short request."}
-                </p>
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                  <a href={`tel:${SITE.phoneTel}`}><Phone className="mr-2 h-4 w-4" />{SITE.phoneDisplay}</a>
-                </Button>
-              </div>
-
-              <form className="grid gap-4" onSubmit={handleReservationSubmit}>
-                <label className="grid gap-2 font-work text-sm text-foreground">
-                  {language === "de" ? "Name und Nachname" : "Full name"}
-                  <input value={reservationForm.fullName} onChange={(event) => updateReservationField("fullName", event.target.value)} required minLength={2} maxLength={120} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
-                </label>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
-                    {language === "de" ? "Datum" : "Date"}
-                    <input type="date" value={reservationForm.date} onChange={(event) => updateReservationField("date", event.target.value)} min={minimumReservationDate} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
-                  </label>
-                  <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
-                    {language === "de" ? "Uhrzeit" : "Time"}
-                    <select value={reservationForm.time} onChange={(event) => updateReservationField("time", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
-                      <option value="">{language === "de" ? "Slot wählen" : "Choose slot"}</option>
-                      {reservationTimeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
-                    </select>
-                  </label>
-                  <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
-                    {language === "de" ? "Personen" : "People"}
-                    <select value={reservationForm.partySize} onChange={(event) => updateReservationField("partySize", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
-                      {Array.from({ length: 10 }, (_, index) => index + 1).map((count) => <option key={count} value={count}>{count}</option>)}
-                    </select>
-                  </label>
-                </div>
-                <label className="grid gap-2 font-work text-sm text-foreground">
-                  {language === "de" ? "Bereich" : "Area"}
-                  <select value={reservationForm.seatingArea} onChange={(event) => updateReservationField("seatingArea", event.target.value as ReservationForm["seatingArea"])} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
-                    <option value="inside">{language === "de" ? "Drinnen" : "Inside"}</option>
-                    <option value="outside">{language === "de" ? "Draußen" : "Outside"}</option>
-                  </select>
-                </label>
-                <label className="grid gap-2 font-work text-sm text-foreground">
-                  {language === "de" ? "Email oder Telefon" : "Email or phone"}
-                  <input value={reservationForm.contact} onChange={(event) => updateReservationField("contact", event.target.value)} required minLength={3} maxLength={160} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
-                </label>
-                <label className="grid gap-2 font-work text-sm text-foreground">
-                  {language === "de" ? "Notizen" : "Notes"}
-                  <textarea value={reservationForm.notes} onChange={(event) => updateReservationField("notes", event.target.value)} rows={3} maxLength={600} placeholder={language === "de" ? "Allergie, besondere Anlässe…" : "Allergies, special occasions…"} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
-                </label>
-                <Button type="submit" disabled={isSubmitting} className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Users className="mr-2 h-4 w-4" />
-                  {isSubmitting ? (language === "de" ? "Wird gesendet…" : "Sending…") : (language === "de" ? "Tisch anfragen" : "Send request")}
-                </Button>
-                <p className="font-work text-sm text-muted-high-contrast">
-                  {submitError ?? (requestSent
-                    ? (language === "de" ? "Anfrage erhalten. Wir melden uns bald zur Bestätigung." : "Request received. We'll get back to you soon to confirm.")
-                    : (language === "de" ? "Wir bestätigen deine Anfrage innerhalb von 24 Stunden." : "We confirm your request within 24 hours."))}
-                </p>
-              </form>
-            </section>}
+            {showReservationRequest && <ReservationRequestForm headingLevel="h2" />}
           </div>
         </div>
       </main>
