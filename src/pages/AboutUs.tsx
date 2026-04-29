@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { ExternalLink, ChevronLeft, ChevronRight, BookOpen, Brush, Music, Globe2, HeartHandshake, Leaf, MapPin, Sparkles } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -12,12 +12,54 @@ import gardenReal from "@/assets/garden-real.jpg";
 import koreanBowl from "@/assets/korean-bowl.jpg";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
 import interiorReal from "@/assets/interior-real.jpg";
+import foodGarden from "@/assets/food-garden.jpg";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
 import sriChinmoyWaves from "@/assets/sri-chinmoy-waves.jpg";
 import sriChinmoyAbstract from "@/assets/sri-chinmoy-abstract.jpg";
-import supermindLogo from "@/assets/supermind-logo-cropped.png";
+
+type Language = "de" | "en";
+
+type RevealSectionProps = {
+  id?: string;
+  className?: string;
+  children: ReactNode;
+};
+
+const RevealSection = ({ id, className = "", children }: RevealSectionProps) => {
+  const ref = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} id={id} className={`section-animate ${isVisible ? "in-view" : ""} ${className}`}>
+      {children}
+    </section>
+  );
+};
 
 const poems = [
   { en: "World peace can be achieved\nWhen the power of love\nReplaces the love of power.", de: "Weltfrieden kann erreicht werden,\nwenn die Kraft der Liebe\ndie Liebe zur Macht ersetzt." },
@@ -29,10 +71,41 @@ const poems = [
 
 const artworks = [
   { src: sriChinmoyBirds, alt: "Soul-Birds" },
-  { src: sriChinmoyFlowers, alt: "Flowers" },
-  { src: sriChinmoyWaves, alt: "Waves" },
-  { src: sriChinmoyAbstract, alt: "Abstract" },
+  { src: sriChinmoyFlowers, alt: "Jharna-Kala flowers" },
+  { src: sriChinmoyWaves, alt: "Jharna-Kala waves" },
+  { src: sriChinmoyAbstract, alt: "Jharna-Kala abstract work" },
 ];
+
+const sourceLinks = [
+  { href: "https://srichinmoy.org/sri_chinmoy/biography/", label: { de: "Offizielle Biografie", en: "Official biography" } },
+  { href: "https://srichinmoy.org/", label: { de: "Offizielle Website", en: "Official site" } },
+  { href: "https://www.srichinmoy.org/sri_chinmoy/landmarks/cultural_offerings/", label: { de: "Kulturelle Werke", en: "Cultural offerings" } },
+  { href: "https://srichinmoy.org/sri_chinmoy/art", label: { de: "Jharna-Kala Kunst", en: "Jharna-Kala art" } },
+  { href: "https://www.srichinmoylibrary.com/srichinmoy", label: { de: "Sri Chinmoy Library", en: "Sri Chinmoy Library" } },
+  { href: "https://www.srichinmoycentre.org/enterprises", label: { de: "Restaurants und Cafés", en: "Restaurants and cafés" } },
+];
+
+const restaurantLinks = [
+  { href: "https://www.heartofjoy.at/en/", name: "The Heart of Joy", place: "Salzburg" },
+  { href: "https://www.smileofthebeyond.com/", name: "The Smile of the Beyond", place: "Queens, New York" },
+  { href: "https://myrainbowdreams.org/our-story", name: "My Rainbow-Dreams", place: "Canberra" },
+  { href: "https://www.happiness-heart-cafe.de/", name: "Happiness-Heart Café", place: "Berlin" },
+  { href: "https://vegelateria.ch/", name: "The Sacred / Vegelateria", place: "Zürich" },
+];
+
+const chapterLabel = (language: Language, number: string) => language === "de" ? `Kapitel ${number}` : `Chapter ${number}`;
+
+const ExternalTextLink = ({ href, children, className = "" }: { href: string; children: ReactNode; className?: string }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`inline-flex items-center gap-2 text-primary transition-colors hover:text-primary/80 ${className}`}
+  >
+    {children}
+    <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
+  </a>
+);
 
 const AboutUs = () => {
   const { language } = useLanguage();
@@ -44,338 +117,390 @@ const AboutUs = () => {
   const content = {
     de: {
       heroTitle: "Unsere Geschichte",
-      heroTagline: "Drinnen riecht es oft nach Kaffee, draußen wartet der Hof.",
-      manifesto: "Ein kleiner Gartenhof, ein Teller warmes Essen, kurz Pause.",
-      dietaryLine: "Vegetarisch und vegan. Viele Gerichte kochen wir ohne glutenhaltige Zutaten, aber nicht in einer zertifiziert glutenfreien Küche.",
-      philosophyLabel: "Unsere Philosophie",
-      philosophyTitle: "Unser Ansatz",
-      philosophyPara1: "2018 haben wir My Secret Garden eröffnet. Nicht als großes Konzept auf Papier, eher als klare Idee: gutes vegetarisches Essen, ein ruhiger Hof und Menschen, die nicht durch den Mittag hetzen müssen.",
-      philosophyQuote: "Kochen ist Gebet. Essen ist Dankbarkeit.",
-      philosophyPara2: "Wir kochen jeden Tag frisch. Manchmal wird es mittags eng, manchmal ist der Hof ganz still. Beides gehört dazu.",
-      pillarsTitle: "Was uns ausmacht",
-      pillarsIntro: "Unsere Küche reist ein bisschen. Indien, Japan, Mittelmeer, Wien. Am Ende landet alles in unserer kleinen Küche im Raimundhof.",
-      pillar1Title: "Weltküche",
-      pillar1Desc: "Dal, Curry, Bowl, Polenta, Suppe. Nicht alles an einem Tag, aber genau diese Mischung mögen wir. Das Tagesmenü darf wechseln, sonst wird es langweilig.",
-      pillar2Title: "Regionale Produkte",
-      pillar2Desc: "Morgens kommen Gemüse, Salate und Getreide in die Küche. Was gut aussieht und zur Saison passt, findet oft noch am selben Tag auf die Karte.",
-      pillar3Title: "Achtsam & Alkoholfrei",
-      pillar3Desc: "Bei uns gibt es keinen Alkohol. Dafür Kaffee, Tee, hausgemachte Kuchen und viele Gerichte ohne glutenhaltige Zutaten. Wenn du Zöliakie hast, sag bitte vorher Bescheid.",
-      coffeeLabel: "Unser Kaffee",
-      coffeeTitle: "Supermind Kaffee, Wien",
-      coffeePara: "Supermind röstet in Wien mit einem ruhigen, klaren Qualitätsanspruch. Wir bringen diesen Kaffee in unseren Garten: alkoholfrei, bewusst, warm und passend zu hausgemachten Kuchen.",
-      coffeeBridge: "Zwei Welten, ein ruhiger Moment: Supermind bringt die Bohne, My Secret Garden den Ort.",
-      spaceLabel: "Unser Garten",
-      spaceTitle: "Im Herzen von Wien",
-      spacePara1: "Du gehst durch den Bogen auf der Mariahilferstraße und plötzlich wird es leiser. Der Hof liegt ein paar Schritte zurück, fast ein bisschen versteckt.",
-      spacePara2: "Grüne Pflanzen, Holztische, Stimmen vom Tresen. Kein perfekter Rückzugsort, eher ein echter. Gerade deshalb bleibt man gern sitzen.",
-      spaceNote: "Komm auf ein schnelles Mittagessen. Oder bleib noch fünf Minuten länger.",
+      heroKicker: "Vegetarisches Restaurant im Raimundhof",
+      heroLead: "Ein stiller Innenhof, frisches Essen, ein kurzer Moment zum Durchatmen mitten in Wien.",
+      heroText: "My Secret Garden ist kein lautes Konzept. Es ist ein Ort, an dem Küche, Garten und eine spirituelle Idee langsam zusammenfinden.",
+      navPlace: "Der Ort",
+      navKitchen: "Küche",
+      navRhythm: "Alltag",
+      navInspiration: "Sri Chinmoy",
+      placeLabel: "Der Ort",
+      placeTitle: "Ein Garten hinter dem Bogen",
+      placeText1: "Von der Mariahilferstraße sind es nur wenige Schritte. Dann wird es leiser, der Raimundhof öffnet sich, und zwischen Pflanzen, Holztischen und Stimmen vom Tresen entsteht ein anderer Rhythmus.",
+      placeText2: "Wir mögen Orte, die nicht perfekt wirken müssen. Der Hof ist echt, manchmal belebt, manchmal ganz ruhig. Genau darin liegt sein Charme.",
+      placeCaption: "Der Eingang führt durch den Raimundhof in unseren begrünten Innenhof.",
+      kitchenLabel: "Die Küche",
+      kitchenTitle: "Vegetarisch, vegan, täglich frisch",
+      kitchenIntro: "Unsere Küche reist ein bisschen: Indien, Japan, Mittelmeer, Wien. Am Ende landet alles als ehrlicher Teller am Tresen.",
+      kitchenCards: [
+        { title: "Weltküche", text: "Dal, Curry, Bowl, Polenta, Suppe. Nicht alles an einem Tag, aber immer mit Lust auf Abwechslung." },
+        { title: "Lokale Produkte", text: "Gemüse, Salate und Getreide kommen morgens in die Küche. Was zur Saison passt, darf auf die Karte." },
+        { title: "Bewusst alkoholfrei", text: "Bei uns gibt es keinen Alkohol. Dafür Tee, Kaffee, hausgemachte Kuchen und viele Gerichte ohne glutenhaltige Zutaten." },
+      ],
+      kitchenNote: "Wenn du Zöliakie oder Allergien hast, sag bitte vor der Bestellung Bescheid. Unsere Küche ist nicht zertifiziert glutenfrei.",
+      rhythmLabel: "Der Alltag",
+      rhythmTitle: "Mittags schnell, im Garten langsam",
+      rhythmText1: "Zwischen 11 und 19 Uhr verändert sich der Raum mehrmals. Erst kommt der Duft vom Tagesmenü, dann die Gespräche am Tresen, später Kaffee, Kuchen und ein ruhiger Hofmoment.",
+      rhythmText2: "Manche Gäste nehmen ihr Essen mit, andere bleiben länger als geplant. Beides gehört zu uns. Der Teller soll nicht inszeniert wirken, sondern gut tun.",
+      rhythmQuote: "Ein Teller kann den Tag nicht lösen. Aber er kann ihn kurz leichter machen.",
       inspirationLabel: "Unsere Inspiration",
       inspirationTitle: "Sri Chinmoy",
-      inspirationPara1: "Sri Chinmoy (1931 bis 2007) war ein spiritueller Lehrer, der Meditation, Musik und Kunst als Wege zum inneren Frieden lehrte.",
-      inspirationPara2: "Aus diesem Umfeld sind weltweit vegetarische Restaurants entstanden. Kleine Orte, an denen Kochen nicht nur Arbeit ist, sondern tägliche Übung.",
-      inspirationNote: "Bei uns zeigt sich das leise: im Umgang am Tresen, in der Musik, in der Art, wie ein Teller angerichtet wird.",
-      artTitle: "Jharna-Kala",
-      artSubtitle: "Kunst aus der Quelle",
+      inspirationIntro: "Sri Chinmoy (1931 bis 2007) war ein spiritueller Lehrer, Dichter, Künstler, Musiker und Friedensvisionär. Seine Botschaft war einfach und anspruchsvoll zugleich: äußerer Frieden beginnt mit innerem Frieden.",
+      inspirationStory1: "Geboren in Bengalen, verbrachte er viele Jahre in spiritueller Praxis in Indien. 1964 zog er nach New York, wo er Meditation, Musik, Kunst, Dichtung und Friedensinitiativen miteinander verband.",
+      inspirationStory2: "Er hielt Friedensmeditationen bei den Vereinten Nationen, gab weltweit Konzerte und entwickelte mit Jharna-Kala eine spontane Kunstform. Seine Soul-Birds stehen für Freiheit, Einheit und inneres Streben.",
+      inspirationStory3: "Für uns ist diese Inspiration nicht dekorativ. Sie zeigt sich leise: in vegetarischer Küche, in achtsamem Service, in einem Raum, der Menschen nicht beschleunigen will.",
+      factsTitle: "Ein Leben in vielen Ausdrucksformen",
+      facts: [
+        { icon: BookOpen, title: "Dichtung und Bücher", text: "Über 1.500 veröffentlichte Bücher und eine große Sammlung kurzer Gedichte und Aphorismen." },
+        { icon: Brush, title: "Jharna-Kala", text: "Spontane Kunst und Millionen von Soul-Birds als Zeichen innerer Freiheit." },
+        { icon: Music, title: "Musik und Frieden", text: "Konzerte, Lieder und Friedensinitiativen als Angebote für Harmonie." },
+        { icon: HeartHandshake, title: "Dienst am Menschen", text: "Meditation sollte nicht Flucht sein, sondern im Alltag durch selbstlosen Dienst sichtbar werden." },
+      ],
+      artTitle: "Jharna-Kala und Soul-Birds",
+      artText: "Die Kunstwerke geben der Seite einen ruhigen, offenen Rhythmus. Sie sind nicht Dekoration allein, sondern Teil der Sprache, die unser Restaurant geprägt hat.",
       poemTitle: "Seine Worte",
       poemHint: "Mit jedem Kaffee erhältst du eine Karte mit einem seiner Gedichte.",
+      widerTitle: "Eine größere Familie vegetarischer Cafés",
+      widerText: "Weltweit entstanden Restaurants und Cafés, die von Sri Chinmoys Schülern geführt oder inspiriert wurden. Sie sind unabhängig, teilen aber oft dieselbe Idee: vegetarisches Essen als einfache Form von Gastfreundschaft und Service.",
+      readMoreTitle: "Weiterlesen",
+      readMoreText: "Ausgewählte Quellen zu Biografie, Kunst, Literatur und den inspirierten Restaurants.",
     },
     en: {
       heroTitle: "Our Story",
-      heroTagline: "Inside, there is often coffee in the air. Outside, the courtyard waits.",
-      manifesto: "A small garden courtyard, a warm plate, a short pause.",
-      dietaryLine: "Vegetarian and vegan. Many dishes are cooked without gluten containing ingredients, but this is not a certified gluten free kitchen.",
-      philosophyLabel: "Our Philosophy",
-      philosophyTitle: "Our Approach",
-      philosophyPara1: "My Secret Garden opened in 2018. Not as a polished concept on paper, more as a clear idea: good vegetarian food, a quiet courtyard and people who do not have to rush through lunch.",
-      philosophyQuote: "Cooking is prayer. Eating is gratitude.",
-      philosophyPara2: "We cook fresh every day. Sometimes lunch gets busy, sometimes the courtyard is almost silent. Both belong here.",
-      pillarsTitle: "What Makes Us Special",
-      pillarsIntro: "Our kitchen travels a little. India, Japan, the Mediterranean, Vienna. In the end, everything lands in our small kitchen in Raimundhof.",
-      pillar1Title: "World Cuisine",
-      pillar1Desc: "Dal, curry, bowls, polenta, soup. Not all on the same day, but this is the kind of mix we like. The daily menu should move a bit.",
-      pillar2Title: "Local Products",
-      pillar2Desc: "Vegetables, salads and grains arrive in the morning. What looks good and fits the season often ends up on the menu the same day.",
-      pillar3Title: "Mindful & Alcohol Free",
-      pillar3Desc: "We do not serve alcohol. We do serve coffee, tea, homemade cakes and many dishes without gluten containing ingredients. If you are coeliac, please tell us before ordering.",
-      coffeeLabel: "Our Coffee",
-      coffeeTitle: "Supermind Kaffee, Vienna",
-      coffeePara: "Supermind roasts in Vienna with a quiet, clear commitment to quality. We bring that coffee into our garden: alcohol free, mindful, warm and made to sit beside homemade cake.",
-      coffeeBridge: "Two worlds, one calm moment: Supermind brings the bean, My Secret Garden brings the place.",
-      spaceLabel: "Our Garden",
-      spaceTitle: "In the Heart of Vienna",
-      spacePara1: "You walk through the arch on Mariahilferstraße and, a few steps later, it gets quieter. The courtyard sits back from the street, almost hidden.",
-      spacePara2: "Green plants, wooden tables, voices from the counter. Not a perfect retreat, a real one. That is why people stay.",
-      spaceNote: "Come for a quick lunch. Or stay five minutes longer.",
-      inspirationLabel: "Our Inspiration",
+      heroKicker: "Vegetarian restaurant in Raimundhof",
+      heroLead: "A quiet courtyard, fresh food and a short moment to breathe in the middle of Vienna.",
+      heroText: "My Secret Garden is not a loud concept. It is a place where kitchen, garden and a spiritual idea slowly come together.",
+      navPlace: "Place",
+      navKitchen: "Kitchen",
+      navRhythm: "Daily rhythm",
+      navInspiration: "Sri Chinmoy",
+      placeLabel: "The place",
+      placeTitle: "A garden behind the arch",
+      placeText1: "It is only a few steps from Mariahilferstraße. Then it gets quieter, Raimundhof opens up, and between plants, wooden tables and voices from the counter, another rhythm begins.",
+      placeText2: "We like places that do not have to feel perfect. The courtyard is real, sometimes lively, sometimes almost still. That is its charm.",
+      placeCaption: "The entrance leads through Raimundhof into our green courtyard.",
+      kitchenLabel: "The kitchen",
+      kitchenTitle: "Vegetarian, vegan, fresh every day",
+      kitchenIntro: "Our kitchen travels a little: India, Japan, the Mediterranean, Vienna. In the end, everything lands as an honest plate at the counter.",
+      kitchenCards: [
+        { title: "World cuisine", text: "Dal, curry, bowls, polenta, soup. Not all on the same day, but always with room for change." },
+        { title: "Local produce", text: "Vegetables, salads and grains arrive in the morning. What fits the season may end up on the menu." },
+        { title: "Mindful and alcohol free", text: "We do not serve alcohol. We do serve tea, coffee, homemade cakes and many dishes without gluten containing ingredients." },
+      ],
+      kitchenNote: "If you are coeliac or have allergies, please tell us before ordering. Our kitchen is not certified gluten free.",
+      rhythmLabel: "The daily rhythm",
+      rhythmTitle: "Quick at lunch, slower in the garden",
+      rhythmText1: "Between 11 and 19, the room changes more than once. First comes the smell of the daily menu, then conversations at the counter, later coffee, cake and a quiet courtyard moment.",
+      rhythmText2: "Some guests take food away, others stay longer than planned. Both belong here. A plate should not feel staged, it should feel good.",
+      rhythmQuote: "A plate cannot fix the day. But it can make it lighter for a moment.",
+      inspirationLabel: "Our inspiration",
       inspirationTitle: "Sri Chinmoy",
-      inspirationPara1: "Sri Chinmoy lived from 1931 to 2007. He was a spiritual teacher who taught meditation, music and art as paths to inner peace.",
-      inspirationPara2: "Vegetarian restaurants grew from that same circle around the world. Small places where cooking is not only work, but a daily practice.",
-      inspirationNote: "Here it shows quietly: at the counter, in the music, in the way a plate is put together.",
-      artTitle: "Jharna-Kala",
-      artSubtitle: "Art from the Source",
-      poemTitle: "His Words",
+      inspirationIntro: "Sri Chinmoy (1931 to 2007) was a spiritual teacher, poet, artist, musician and peace visionary. His message was simple and demanding at the same time: outer peace begins with inner peace.",
+      inspirationStory1: "Born in Bengal, he spent many years in spiritual practice in India. In 1964 he moved to New York, where he brought together meditation, music, art, poetry and peace initiatives.",
+      inspirationStory2: "He offered peace meditations at the United Nations, gave concerts around the world and developed Jharna-Kala, a spontaneous form of art. His Soul-Birds stand for freedom, unity and inner aspiration.",
+      inspirationStory3: "For us, this inspiration is not decorative. It shows quietly: in vegetarian cooking, in mindful service, in a room that does not try to rush people.",
+      factsTitle: "A life in many forms of expression",
+      facts: [
+        { icon: BookOpen, title: "Poetry and books", text: "Over 1,500 published books and a large body of short poems and aphorisms." },
+        { icon: Brush, title: "Jharna-Kala", text: "Spontaneous art and millions of Soul-Birds as signs of inner freedom." },
+        { icon: Music, title: "Music and peace", text: "Concerts, songs and peace initiatives offered as gestures of harmony." },
+        { icon: HeartHandshake, title: "Service to people", text: "Meditation was not meant as escape, but as something visible in daily selfless service." },
+      ],
+      artTitle: "Jharna-Kala and Soul-Birds",
+      artText: "The artworks give the page a calm, open rhythm. They are not decoration alone, but part of the language that shaped our restaurant.",
+      poemTitle: "His words",
       poemHint: "With every coffee, you receive a card with one of his poems.",
+      widerTitle: "A wider family of vegetarian cafés",
+      widerText: "Around the world, restaurants and cafés were opened or inspired by students of Sri Chinmoy. They are independent, but often share the same idea: vegetarian food as a simple form of hospitality and service.",
+      readMoreTitle: "Read more",
+      readMoreText: "Selected sources about biography, art, literature and the inspired restaurants.",
     },
-  };
+  } as const;
 
   const t = content[language];
-  const pillarsData = [
-    { 
-      image: koreanBowl, 
-      imageAlt: language === "de" ? "Internationale Küche" : "World cuisine",
-      title: t.pillar1Title, 
-      desc: t.pillar1Desc 
-    },
-    { 
-      image: alpenpolenta, 
-      imageAlt: language === "de" ? "Lokale Produkte" : "Local products",
-      title: t.pillar2Title, 
-      desc: t.pillar2Desc 
-    },
-    { 
-      image: interiorReal, 
-      imageAlt: language === "de" ? "Ruhige Atmosphäre" : "Peaceful atmosphere",
-      title: t.pillar3Title, 
-      desc: t.pillar3Desc 
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead 
+      <SEOHead
         title={language === "de" ? "Über Uns" : "About Us"}
-        description={language === "de" 
-          ? "Erfahre mehr über My Secret Garden, unser vegetarisches Restaurant inspiriert von Sri Chinmoys Philosophie in Wien."
-          : "Learn more about My Secret Garden, our vegetarian restaurant inspired by Sri Chinmoy's philosophy in Vienna."}
+        description={language === "de"
+          ? "Die Geschichte von My Secret Garden im Raimundhof: vegetarische Küche, Gartenatmosphäre und Inspiration durch Sri Chinmoy."
+          : "The story of My Secret Garden in Raimundhof: vegetarian cooking, courtyard atmosphere and inspiration from Sri Chinmoy."}
         path="/about"
       />
       <Navigation />
-      <div className="h-20" />
-
-      {/* ABOUT HERO */}
-      <section className="bg-section-soft py-14 text-center md:py-20">
-        <div className="container mx-auto px-4">
-          <h1 className="mb-4 font-caveat text-5xl text-primary md:text-7xl">
-            {t.heroTitle}
-          </h1>
-          <p className="mx-auto max-w-xl font-lora text-xl leading-relaxed text-foreground/85">
-            {t.manifesto}
-          </p>
-          <p className="mx-auto mt-4 max-w-md font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
-            {t.heroTagline} {t.dietaryLine}
-          </p>
-        </div>
-      </section>
-
-      {/* PHILOSOPHY - Two column */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            <div className="order-2 md:order-1">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
-                <img src={entranceGarden} alt="Garden entrance" className="w-full h-full object-cover" />
-              </div>
-            </div>
-            <div className="order-1 md:order-2 space-y-6">
-              <span className="text-xs font-work uppercase tracking-widest text-accent">{t.philosophyLabel}</span>
-              <h2 className="text-4xl md:text-5xl text-primary">{t.philosophyTitle}</h2>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara1}</p>
-              <blockquote className="border-l-4 border-accent py-2 pl-6 font-lora text-xl italic text-primary/90 md:text-2xl">
-                "{t.philosophyQuote}"
-              </blockquote>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.philosophyPara2}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PILLARS / OFFERING - Alternating sections with photos */}
-      <section className="bg-section-accent py-16 md:py-24">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="mx-auto mb-14 max-w-2xl text-center md:mb-16">
-            <h2 className="text-4xl text-primary md:text-5xl">{t.pillarsTitle}</h2>
-            <p className="mt-4 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.pillarsIntro}</p>
-          </div>
-          
-          <div className="space-y-16 md:space-y-24">
-            {pillarsData.map((pillar, index) => (
-              <div 
-                key={index} 
-                className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${
-                  index % 2 === 1 ? 'md:flex-row-reverse' : ''
-                }`}
-              >
-                <div className={`${index % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
-                  <div className="aspect-[4/3] overflow-hidden rounded-2xl border border-border/75 shadow-card">
-                    <img 
-                      src={pillar.image} 
-                      alt={pillar.imageAlt} 
-                      className="w-full h-full object-cover" 
-                    />
-                  </div>
-                </div>
-                <div className={`space-y-4 ${index % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
-                  <p className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">✿</p>
-                  <h3 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground">
-                    {pillar.title}
-                  </h3>
-                  <p className="font-lora text-lg text-foreground/80 leading-relaxed">
-                    {pillar.desc}
+      <main className="pt-20">
+        <section className="relative overflow-hidden border-b border-border/70 bg-section-soft py-16 md:py-24">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.08fr_0.92fr] md:items-end md:gap-14">
+              <div className="space-y-7 animate-fade-in">
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  {t.heroKicker}
+                </span>
+                <div className="space-y-5">
+                  <h1 className="font-caveat text-5xl leading-none text-primary md:text-7xl lg:text-8xl">
+                    {t.heroTitle}
+                  </h1>
+                  <p className="max-w-2xl font-lora text-2xl leading-relaxed text-foreground md:text-3xl">
+                    {t.heroLead}
+                  </p>
+                  <p className="max-w-xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                    {t.heroText}
                   </p>
                 </div>
+                <nav className="flex flex-wrap gap-2" aria-label={language === "de" ? "Abschnitte der Seite" : "Page sections"}>
+                  {[
+                    { href: "#place", label: t.navPlace },
+                    { href: "#kitchen", label: t.navKitchen },
+                    { href: "#rhythm", label: t.navRhythm },
+                    { href: "#sri-chinmoy", label: t.navInspiration },
+                  ].map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="rounded-full border border-primary/20 bg-card px-4 py-2 font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:border-primary/45 hover:bg-muted"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* COFFEE PARTNERSHIP */}
-      <section className="bg-section-soft py-16 md:py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid items-center gap-8 border-y border-border/75 py-10 md:grid-cols-[1.35fr_0.65fr] md:gap-12 md:py-12">
-            <div className="space-y-5">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">{t.coffeeLabel}</span>
-                <span className="font-work text-xs text-muted-high-contrast">✿</span>
-                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-primary">Secret Garden × Supermind</span>
-              </div>
-              <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">{t.coffeeTitle}</h2>
-              <p className="max-w-2xl font-lora text-xl leading-relaxed text-foreground/85">{t.coffeeBridge}</p>
-              <p className="max-w-2xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.coffeePara}</p>
-              <a
-                href="https://supermind.at/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary/25 bg-card px-4 font-work text-sm font-semibold text-primary transition-colors hover:border-primary/45 hover:bg-muted"
-              >
-                supermind.at
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
-            <a
-              href="https://supermind.at/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto flex w-full max-w-xs items-center justify-center rounded-lg border border-border bg-card px-8 py-10 shadow-card transition-colors hover:border-primary/35 md:justify-self-end"
-              aria-label={language === "de" ? "Supermind Kaffee Website öffnen" : "Open Supermind Kaffee website"}
-            >
-              <img src={supermindLogo} alt="Supermind Kaffee" className="h-48 w-auto object-contain md:h-56" loading="lazy" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* SPACE - Two column reversed */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            <div className="space-y-6">
-              <span className="text-xs font-work uppercase tracking-widest text-accent">{t.spaceLabel}</span>
-              <h2 className="text-4xl md:text-5xl text-primary">{t.spaceTitle}</h2>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara1}</p>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.spacePara2}</p>
-              <p className="font-cormorant text-2xl italic leading-relaxed text-primary/90">{t.spaceNote}</p>
-              <a 
-                href={SITE.instagramUrl}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block font-work text-accent hover:text-accent/80 transition-colors"
-                aria-label={`${SITE.instagramHandle} (opens in new tab)`}
-              >
-                {SITE.instagramHandle}
-              </a>
-            </div>
-            <div>
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-border/75 shadow-card">
-                <img src={gardenReal} alt="Our garden" className="w-full h-full object-cover" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INSPIRATION - Sri Chinmoy integrated section */}
-      <section className="bg-section-soft py-16 md:py-24">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-16">
-            {/* Portrait */}
-            <div className="order-2 md:order-1">
-              <div className="relative max-w-sm mx-auto">
-                <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-border/75 shadow-card">
-                  <img src={sriChinmoyImage} alt="Sri Chinmoy" className="w-full h-full object-cover" />
+              <div className="animate-fade-in md:pt-8">
+                <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
+                  <img src={entranceGarden} alt={language === "de" ? "Eingang zu My Secret Garden" : "Entrance to My Secret Garden"} className="h-full w-full object-cover" />
                 </div>
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-border/75 bg-card px-6 py-2 shadow-card">
-                  <p className="font-caveat text-lg text-primary">1931 bis 2007</p>
-                </div>
-              </div>
-            </div>
-            {/* Text */}
-            <div className="order-1 md:order-2 space-y-6">
-              <span className="text-xs font-work uppercase tracking-widest text-accent">{t.inspirationLabel}</span>
-              <h2 className="text-4xl md:text-5xl text-primary">{t.inspirationTitle}</h2>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara1}</p>
-              <p className="font-lora text-lg text-foreground/85 leading-relaxed">{t.inspirationPara2}</p>
-              <p className="font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.inspirationNote}</p>
-              <a 
-                href="https://www.srichinmoy.org" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-work text-accent hover:text-accent/80 transition-colors"
-              >
-                srichinmoy.org
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Art Gallery - Jharna-Kala */}
-          <div className="mb-16">
-            <p className="font-caveat text-xl md:text-2xl text-accent text-center mb-6">
-              {t.artTitle}. {t.artSubtitle}
-            </p>
-            <div className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4 md:justify-center md:overflow-visible">
-              {artworks.map((art, index) => (
-                <div key={index} className="flex-shrink-0 w-48 md:w-56 snap-center">
-                  <div className="aspect-square overflow-hidden rounded-2xl border border-border/75 shadow-card">
-                    <img src={art.src} alt={art.alt} className="w-full h-full object-cover" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Poem Carousel */}
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl md:text-3xl text-accent text-center mb-8">{t.poemTitle}</h3>
-            <div className="relative">
-              <div className="bg-background/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-lg min-h-[160px] flex items-center justify-center">
-                <p className="font-lora text-lg md:text-xl text-foreground/90 text-center whitespace-pre-line leading-relaxed italic">
-                  "{poems[currentPoem][language]}"
+                <p className="mt-3 font-work text-xs leading-relaxed text-muted-high-contrast">
+                  {t.placeCaption}
                 </p>
               </div>
-              <button 
-                onClick={prevPoem}
-                className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:-translate-x-12"
-                aria-label="Previous poem"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={nextPoem}
-                className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:translate-x-12"
-                aria-label="Next poem"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
             </div>
-            <p className="text-center text-sm text-muted-high-contrast mt-6 font-lora italic">{t.poemHint}</p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
+        <RevealSection id="place" className="bg-background py-20 md:py-28">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-16 stagger-children in-view">
+              <div className="space-y-5">
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  {chapterLabel(language, "01")} · {t.placeLabel}
+                </span>
+                <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-6xl">
+                  {t.placeTitle}
+                </h2>
+                <p className="font-lora text-lg leading-relaxed text-foreground/85 md:text-xl">
+                  {t.placeText1}
+                </p>
+                <p className="font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                  {t.placeText2}
+                </p>
+                <ExternalTextLink href={SITE.mapsUrl} className="font-work text-sm font-semibold">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  {language === "de" ? "Route zum Raimundhof" : "Directions to Raimundhof"}
+                </ExternalTextLink>
+              </div>
+              <div>
+                <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
+                  <img src={gardenReal} alt={language === "de" ? "Begrünter Innenhof" : "Green courtyard"} className="aspect-[4/5] w-full object-cover" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+
+        <RevealSection id="kitchen" className="bg-section-accent py-20 md:py-28">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="mx-auto mb-12 max-w-3xl text-center stagger-children in-view md:mb-16">
+              <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                {chapterLabel(language, "02")} · {t.kitchenLabel}
+              </span>
+              <h2 className="mt-3 font-cormorant text-4xl font-semibold leading-tight text-primary md:text-6xl">
+                {t.kitchenTitle}
+              </h2>
+              <p className="mt-5 font-lora text-xl leading-relaxed text-foreground/85">
+                {t.kitchenIntro}
+              </p>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3 stagger-children in-view">
+              {t.kitchenCards.map((card, index) => {
+                const images = [koreanBowl, alpenpolenta, interiorReal];
+                return (
+                  <article key={card.title} className="overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
+                    <img src={images[index]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+                    <div className="space-y-3 p-5">
+                      <Leaf className="h-5 w-5 text-accent" aria-hidden="true" />
+                      <h3 className="font-cormorant text-2xl font-semibold text-foreground">{card.title}</h3>
+                      <p className="font-work text-sm leading-relaxed text-muted-high-contrast">{card.text}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <p className="mx-auto mt-8 max-w-2xl rounded-lg border border-border/75 bg-card px-5 py-4 text-center font-work text-xs leading-relaxed text-muted-high-contrast shadow-card md:text-sm">
+              {t.kitchenNote}
+            </p>
+          </div>
+        </RevealSection>
+
+        <RevealSection id="rhythm" className="bg-background py-20 md:py-28">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-16 stagger-children in-view">
+              <div className="order-2 md:order-1">
+                <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
+                  <img src={foodGarden} alt={language === "de" ? "Essen im Garten" : "Food in the garden"} className="aspect-[5/4] w-full object-cover" loading="lazy" />
+                </div>
+              </div>
+              <div className="order-1 space-y-5 md:order-2">
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  {chapterLabel(language, "03")} · {t.rhythmLabel}
+                </span>
+                <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-6xl">
+                  {t.rhythmTitle}
+                </h2>
+                <p className="font-lora text-lg leading-relaxed text-foreground/85 md:text-xl">
+                  {t.rhythmText1}
+                </p>
+                <p className="font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                  {t.rhythmText2}
+                </p>
+                <blockquote className="border-l-4 border-accent py-2 pl-5 font-lora text-2xl italic leading-relaxed text-primary/90">
+                  {t.rhythmQuote}
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+
+        <RevealSection id="sri-chinmoy" className="bg-section-soft py-20 md:py-28">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="grid gap-12 md:grid-cols-[0.86fr_1.14fr] md:items-start md:gap-16 stagger-children in-view">
+              <div className="md:sticky md:top-28">
+                <div className="mx-auto max-w-sm overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
+                  <img src={sriChinmoyImage} alt="Sri Chinmoy" className="aspect-[3/4] w-full object-cover" loading="lazy" />
+                  <div className="border-t border-border/75 p-5 text-center">
+                    <p className="font-caveat text-2xl text-primary">1931 bis 2007</p>
+                    <p className="mt-1 font-work text-xs uppercase tracking-[0.12em] text-muted-high-contrast">
+                      {language === "de" ? "Innerer Frieden · Service · Kreativität" : "Inner peace · service · creativity"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-10">
+                <div className="space-y-5">
+                  <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                    {chapterLabel(language, "04")} · {t.inspirationLabel}
+                  </span>
+                  <h2 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-6xl">
+                    {t.inspirationTitle}
+                  </h2>
+                  <p className="font-lora text-xl leading-relaxed text-foreground/90 md:text-2xl">
+                    {t.inspirationIntro}
+                  </p>
+                  <div className="space-y-4 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                    <p>{t.inspirationStory1}</p>
+                    <p>{t.inspirationStory2}</p>
+                    <p>{t.inspirationStory3}</p>
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-border/75 bg-card p-5 shadow-card md:p-7">
+                  <h3 className="font-cormorant text-3xl font-semibold text-primary">{t.factsTitle}</h3>
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                    {t.facts.map((fact) => {
+                      const Icon = fact.icon;
+
+                      return (
+                        <div key={fact.title} className="rounded-lg border border-border/60 bg-background/65 p-4">
+                          <Icon className="mb-3 h-5 w-5 text-accent" aria-hidden="true" />
+                          <h4 className="font-cormorant text-xl font-semibold text-foreground">{fact.title}</h4>
+                          <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast">{fact.text}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-16 grid gap-8 md:grid-cols-[0.92fr_1.08fr] md:items-center md:gap-12 stagger-children in-view">
+              <div className="space-y-5">
+                <span className="font-work text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                  {chapterLabel(language, "05")}
+                </span>
+                <h3 className="font-cormorant text-4xl font-semibold leading-tight text-primary md:text-5xl">
+                  {t.artTitle}
+                </h3>
+                <p className="font-lora text-lg leading-relaxed text-foreground/85">
+                  {t.artText}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {artworks.map((art) => (
+                  <div key={art.alt} className="overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
+                    <img src={art.src} alt={art.alt} className="aspect-square w-full object-cover" loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mx-auto mt-16 max-w-3xl">
+              <h3 className="mb-7 text-center font-cormorant text-3xl font-semibold text-accent md:text-4xl">{t.poemTitle}</h3>
+              <div className="relative">
+                <div className="flex min-h-[180px] items-center justify-center rounded-lg border border-border/75 bg-card p-8 shadow-card md:p-12">
+                  <p className="whitespace-pre-line text-center font-lora text-lg italic leading-relaxed text-foreground/90 md:text-xl">
+                    "{poems[currentPoem][language]}"
+                  </p>
+                </div>
+                <button
+                  onClick={prevPoem}
+                  className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-3 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:-translate-x-12"
+                  aria-label={language === "de" ? "Vorheriges Gedicht" : "Previous poem"}
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={nextPoem}
+                  className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-3 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:translate-x-12"
+                  aria-label={language === "de" ? "Nächstes Gedicht" : "Next poem"}
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+              <p className="mt-5 text-center font-lora text-sm italic text-muted-high-contrast">{t.poemHint}</p>
+            </div>
+
+            <div className="mt-16 grid gap-6 md:grid-cols-2">
+              <div className="rounded-lg border border-border/75 bg-card p-6 shadow-card md:p-8">
+                <Globe2 className="mb-4 h-6 w-6 text-accent" aria-hidden="true" />
+                <h3 className="font-cormorant text-3xl font-semibold text-primary">{t.widerTitle}</h3>
+                <p className="mt-3 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.widerText}</p>
+                <div className="mt-6 grid gap-2">
+                  {restaurantLinks.map((restaurant) => (
+                    <ExternalTextLink key={restaurant.href} href={restaurant.href} className="justify-between rounded-md border border-border/50 bg-background/65 px-3 py-2 font-work text-sm font-semibold">
+                      <span>{restaurant.name} · {restaurant.place}</span>
+                    </ExternalTextLink>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-border/75 bg-card p-6 shadow-card md:p-8">
+                <Sparkles className="mb-4 h-6 w-6 text-accent" aria-hidden="true" />
+                <h3 className="font-cormorant text-3xl font-semibold text-primary">{t.readMoreTitle}</h3>
+                <p className="mt-3 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">{t.readMoreText}</p>
+                <div className="mt-6 grid gap-2">
+                  {sourceLinks.map((link) => (
+                    <ExternalTextLink key={link.href} href={link.href} className="justify-between rounded-md border border-border/50 bg-background/65 px-3 py-2 font-work text-sm font-semibold">
+                      <span>{link.label[language]}</span>
+                    </ExternalTextLink>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </RevealSection>
+      </main>
+
       <CTAEndBlock show={["call", "directions", "weekly"]} />
-
       <Footer />
       <MobileStickyBar />
     </div>
