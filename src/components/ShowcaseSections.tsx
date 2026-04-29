@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { BookOpen, MapPin } from "lucide-react";
+import { BookOpen, Clock, MapPin } from "lucide-react";
 import { SITE } from "@/config/site";
 import curryOfTheDay from "@/assets/curry-of-the-day.webp";
 import entranceGarden from "@/assets/entrance-garden.webp";
@@ -77,6 +77,18 @@ export const ShowcaseSections = () => {
                   ? "Pflanzen, Holztische, Teller vom Tresen. Kein großes Theater, eher ein guter Platz für eine Pause." 
                   : "Plants, wooden tables, plates from the counter. No big show, just a good place to pause."}
               </p>
+              <div className="rounded-lg border border-border/70 bg-background/60 p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-primary" aria-hidden="true" />
+                  <h3 className="font-work text-sm font-semibold text-foreground">
+                    {language === "de" ? "Öffnungszeiten" : "Opening hours"}
+                  </h3>
+                </div>
+                <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
+                  {language === "de" ? "Montag bis Samstag: 11:00 bis 19:00" : "Monday to Saturday: 11:00 to 19:00"}<br />
+                  {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
+                </p>
+              </div>
               <Button variant="outline" className="font-work group" asChild>
                 <a
                   href={SITE.mapsUrl}
