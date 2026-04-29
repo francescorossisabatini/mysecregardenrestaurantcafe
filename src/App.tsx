@@ -21,6 +21,7 @@ const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const LinkPage = lazy(() => import("./pages/Link"));
 const MenuPage = lazy(() => import("./pages/Menu"));
+const ReservationPreview = lazy(() => import("./pages/ReservationPreview"));
 const StaffLogin = lazy(() => import("./pages/StaffLogin"));
 const StaffKitchen = lazy(() => import("./pages/StaffKitchen"));
 
@@ -132,6 +133,7 @@ function AppContent() {
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/cakes" element={<Navigate to="/menu" replace />} />
         <Route path="/order" element={<Navigate to="/menu" replace />} />
+        <Route path="/reservation-preview" element={<Suspense fallback={<PageLoader />}><ReservationPreview /></Suspense>} />
         <Route path="/staff/login" element={<Suspense fallback={<PageLoader />}><StaffLogin /></Suspense>} />
         <Route path="/staff" element={<Suspense fallback={<PageLoader />}><StaffKitchen /></Suspense>} />
         <Route path="/staff/kitchen" element={<Navigate to="/staff" replace />} />
