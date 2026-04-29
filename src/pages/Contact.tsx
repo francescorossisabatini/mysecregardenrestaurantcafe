@@ -16,6 +16,7 @@ type ReservationForm = {
   date: string;
   time: string;
   partySize: string;
+  seatingArea: "inside" | "outside";
   contact: string;
   notes: string;
 };
@@ -31,14 +32,39 @@ const ContactPage = () => {
     date: "",
     time: "",
     partySize: "2",
+    seatingArea: "inside",
     contact: "",
     notes: "",
   });
 
-  const tomorrow = useMemo(() => {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-    return date.toISOString().split("T")[0];
+  const minimumReservationDate = useMemo(() => {
+    const now = new Date();
+    const viennaTime = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Europe/Vienna",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      hour12: false,
+    }).formatToParts(now);
+    const part = (type: string) => viennaTime.find((item) => item.type === type)?.value ?? "";
+    const date = `${part("year")}-${part("month")}-${part("day")}`;
+    const hour = Number(part("hour"));
+
+    if (hour < 9) return date;
+
+    const nextDay = new Date(`${date}T12:00:00`);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return nextDay.toISOString().split("T")[0];
+  }, []);
+
+  const reservationTimeSlots = useMemo(() => {
+    const slots: string[] = [];
+    for (let hour = 11; hour <= 19; hour += 1) {
+      slots.push(`${String(hour).padStart(2, "0")}:00`);
+      if (hour < 19) slots.push(`${String(hour).padStart(2, "0")}:30`);
+    }
+    return slots;
   }, []);
 
   const parkingMapsUrl = "https://www.google.com/maps/search/?api=1&query=Wipark%20Windm%C3%BChlgasse%2022-24%201060%20Wien";
@@ -88,15 +114,18 @@ const ContactPage = () => {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const { error } = await supabase.from("reservation_requests").insert({
+    const reservationRequest = {
       full_name: reservationForm.fullName.trim(),
       contact: reservationForm.contact.trim(),
       reservation_date: reservationForm.date,
       reservation_time: reservationForm.time,
       party_size: Number(reservationForm.partySize),
+      seating_area: reservationForm.seatingArea,
       notes: reservationForm.notes.trim() || null,
       language,
-    });
+    };
+
+    const { error } = await supabase.from("reservation_requests").insert(reservationRequest as never);
 
     setIsSubmitting(false);
 
@@ -106,7 +135,7 @@ const ContactPage = () => {
     }
 
     setRequestSent(true);
-    setReservationForm({ fullName: "", date: "", time: "", partySize: "2", contact: "", notes: "" });
+    setReservationForm({ fullName: "", date: "", time: "", partySize: "2", seatingArea: "inside", contact: "", notes: "" });
   };
 
   return (
@@ -291,19 +320,29 @@ const ContactPage = () => {
                 <div className="grid gap-4 sm:grid-cols-3">
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Datum" : "Date"}
-                    <input type="date" value={reservationForm.date} onChange={(event) => updateReservationField("date", event.target.value)} min={tomorrow} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                    <input type="date" value={reservationForm.date} onChange={(event) => updateReservationField("date", event.target.value)} min={minimumReservationDate} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
                   </label>
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Uhrzeit" : "Time"}
-                    <input type="time" value={reservationForm.time} onChange={(event) => updateReservationField("time", event.target.value)} min="11:00" max="19:00" required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
+                    <select value={reservationForm.time} onChange={(event) => updateReservationField("time", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
+                      <option value="">{language === "de" ? "Slot wählen" : "Choose slot"}</option>
+                      {reservationTimeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
+                    </select>
                   </label>
                   <label className="grid gap-2 font-work text-sm text-foreground sm:col-span-1">
                     {language === "de" ? "Personen" : "People"}
                     <select value={reservationForm.partySize} onChange={(event) => updateReservationField("partySize", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
-                      {Array.from({ length: 20 }, (_, index) => index + 1).map((count) => <option key={count} value={count}>{count}</option>)}
+                      {Array.from({ length: 10 }, (_, index) => index + 1).map((count) => <option key={count} value={count}>{count}</option>)}
                     </select>
                   </label>
                 </div>
+                <label className="grid gap-2 font-work text-sm text-foreground">
+                  {language === "de" ? "Bereich" : "Area"}
+                  <select value={reservationForm.seatingArea} onChange={(event) => updateReservationField("seatingArea", event.target.value)} required className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30">
+                    <option value="inside">{language === "de" ? "Drinnen" : "Inside"}</option>
+                    <option value="outside">{language === "de" ? "Draußen" : "Outside"}</option>
+                  </select>
+                </label>
                 <label className="grid gap-2 font-work text-sm text-foreground">
                   {language === "de" ? "Email oder Telefon" : "Email or phone"}
                   <input value={reservationForm.contact} onChange={(event) => updateReservationField("contact", event.target.value)} required minLength={3} maxLength={160} className="rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30" />
