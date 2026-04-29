@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
+import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, MapPin, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,6 +52,7 @@ type StaffReservation = {
   reservation_date: string;
   reservation_time: string;
   party_size: number;
+  seating_area?: "inside" | "outside" | null;
   notes: string | null;
   staff_notes?: string | null;
   status: ReservationStatus;
@@ -195,6 +196,8 @@ const text = {
     noShow: "No-show",
     call: "Call",
     guests: "guests",
+    inside: "Inside",
+    outside: "Outside",
     filterAll: "All",
     filterNew: "Pending",
     filterConfirmed: "Confirmed",
@@ -259,6 +262,8 @@ const text = {
     noShow: "No-show",
     call: "Anrufen",
     guests: "Gäste",
+    inside: "Drinnen",
+    outside: "Draußen",
     filterAll: "Alle",
     filterNew: "Ausstehend",
     filterConfirmed: "Bestätigt",
@@ -517,7 +522,7 @@ const StaffKitchen = () => {
 
     const { data, error: requestError } = await supabase
       .from("reservation_requests")
-      .select("id, full_name, contact, reservation_date, reservation_time, party_size, notes, staff_notes, status, language, created_at, updated_at")
+      .select("id, full_name, contact, reservation_date, reservation_time, party_size, seating_area, notes, staff_notes, status, language, created_at, updated_at")
       .eq("reservation_date", date)
       .order("reservation_time", { ascending: true });
 
@@ -913,6 +918,7 @@ const ReservationCard = ({
 
   const time = reservation.reservation_time.slice(0, 5);
   const canAct = !readOnly && !isUpdating;
+  const seatingAreaLabel = reservation.seating_area === "outside" ? labels.outside : labels.inside;
 
   return (
     <article className="rounded-md border border-border bg-card p-3 shadow-soft md:p-4">
@@ -923,6 +929,10 @@ const ReservationCard = ({
           <span className="inline-flex items-center gap-1 text-muted-high-contrast">
             <Users className="h-4 w-4" aria-hidden="true" />
             {reservation.party_size}
+          </span>
+          <span className="inline-flex items-center gap-1 text-muted-high-contrast">
+            <MapPin className="h-4 w-4" aria-hidden="true" />
+            {seatingAreaLabel}
           </span>
         </div>
       </div>
