@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
+import { Accessibility, CalendarDays, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -194,6 +194,19 @@ const ContactPage = () => {
                       <li>{language === "de" ? "Rückseite: besser, wenn du den Lift nutzen möchtest." : "Back side: better if you want to use the lift."}</li>
                       <li>{language === "de" ? "Im Hof: halte dich zum grünen Gartenbereich." : "Inside: head toward the green garden area."}</li>
                     </ul>
+                    <div className="mt-4 rounded-md border border-border/60 bg-card/70 p-4">
+                      <div className="mb-2 flex items-center gap-2">
+                        <Accessibility className="h-4 w-4 text-primary" aria-hidden="true" />
+                        <h4 className="font-work text-sm font-semibold text-foreground">
+                          {language === "de" ? "Barrierefreiheit" : "Accessibility"}
+                        </h4>
+                      </div>
+                      <p className="font-work text-sm leading-relaxed text-muted-high-contrast">
+                        {language === "de"
+                          ? "Stufenfreier Zugang ist über die Rückseite des Raimundhofs und den Lift möglich. Ruf uns gern kurz an, wenn du Unterstützung beim Ankommen brauchst."
+                          : "Step-free access is available from the back side of Raimundhof via the lift. Please call us if you need help when arriving."}
+                      </p>
+                    </div>
                   </div>
 
                 </div>
