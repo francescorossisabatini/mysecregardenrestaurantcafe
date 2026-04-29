@@ -176,11 +176,6 @@ const ContactPage = () => {
                       Im Raimundhof<br />
                       1060 Wien
                     </p>
-                    <p className="mt-5 font-work leading-relaxed text-foreground/90">
-                      {language === "de"
-                        ? "Der Eingang liegt nicht direkt an der Straße, sondern im Raimundhof. Google Maps führt dich zur richtigen Adresse."
-                        : "The entrance is not directly on the street, but inside Raimundhof. Google Maps brings you to the right address."}
-                    </p>
                   </div>
 
                   <div className="overflow-hidden rounded-lg border border-border/70">
@@ -195,9 +190,9 @@ const ContactPage = () => {
                       </h3>
                     </div>
                     <ul className="space-y-2 font-work text-sm leading-relaxed text-muted-high-contrast">
-                      <li>{language === "de" ? "Mariahilferstraße: Durchgang beim Haus Nummer 45." : "Mariahilferstraße: passage at number 45."}</li>
-                      <li>{language === "de" ? "Windmühlgasse: praktischer Zugang über die Rückseite des Hofs." : "Windmühlgasse: practical access from the back side of the courtyard."}</li>
-                      <li>{language === "de" ? "Stufenlos: bitte den Aufzug bei Wipark Windmühlgasse nutzen oder kurz anrufen." : "Step free: use the lift at Wipark Windmühlgasse or call us briefly."}</li>
+                      <li>{language === "de" ? "Straßenseite: durch den Hausbogen gehen." : "Street side: walk through the building arch."}</li>
+                      <li>{language === "de" ? "Rückseite: über Windmühlgasse kommst du näher zum Lift." : "Back side: Windmühlgasse brings you closer to the lift."}</li>
+                      <li>{language === "de" ? "Im Hof: den grünen Gartenbereich suchen." : "Inside: look for the green garden area."}</li>
                     </ul>
                   </div>
 
@@ -223,8 +218,8 @@ const ContactPage = () => {
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Barrierefreiheit" : "Accessibility"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
                   {language === "de"
-                    ? "Unser Garten ist historisch gewachsen und nicht überall eben. Wenn du besondere Unterstützung brauchst, melde dich kurz vor deinem Besuch."
-                    : "Our garden is part of an old courtyard and not level everywhere. If you need specific support, please contact us before your visit."}
+                    ? "Der historische Hof ist nicht überall eben. Für Gäste mit Kinderwagen, Rollstuhl oder Mobilitätseinschränkung planen wir gern den passendsten Weg."
+                    : "The historic courtyard is not level everywhere. For guests with strollers, wheelchairs or reduced mobility, we are happy to suggest the easiest route."}
                 </p>
               </div>
               <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
