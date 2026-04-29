@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { CakeOrderForm, cakeCatalog } from "@/components/CakeOrderForm";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useEffect } from "react";
+import { cakeCatalog } from "@/components/CakeOrderForm";
 import { SEOHead } from "@/components/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -26,16 +24,10 @@ const descriptions = {
 
 const Cakes = () => {
   const { language } = useLanguage();
-  const [isOrderOpen, setIsOrderOpen] = useState(false);
 
   useEffect(() => {
     window.gtag?.("event", "cakes_page_view", { event_category: "engagement" });
   }, []);
-
-  const openOrder = () => {
-    window.gtag?.("event", "cake_order_start", { event_category: "engagement", source: "cakes" });
-    setIsOrderOpen(true);
-  };
 
   return (
     <main className="min-h-screen bg-section-soft font-work text-foreground">
@@ -51,7 +43,7 @@ const Cakes = () => {
             {language === "de" ? "Hausgemachte Torten" : "Homemade cakes"}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-high-contrast md:text-lg">
-            {language === "de" ? "Unsere sechs festen Torten können als ganze Torte vorbestellt und im Restaurant abgeholt werden." : "Our six house cakes can be pre-ordered as whole cakes and picked up at the restaurant."}
+            {language === "de" ? "Unsere Torten wechseln je nach Verfügbarkeit. Ganze Torten zur Vorbestellung pausieren wir momentan." : "Our cakes change depending on availability. Whole cake pre-orders are paused for now."}
           </p>
         </header>
 
@@ -67,22 +59,10 @@ const Cakes = () => {
 
         <div className="flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-relaxed text-muted-high-contrast">
-            {language === "de" ? "Mindestens 24h im Voraus. Bei 3 oder mehr Torten mindestens 48h." : "At least 24h in advance. For 3 or more cakes, at least 48h."}
+            {language === "de" ? "Frag gern direkt im Restaurant nach den heutigen Sorten." : "Please ask at the restaurant for today’s available cakes."}
           </p>
-          <Button type="button" size="lg" className="h-12" onClick={openOrder}>{language === "de" ? "Torte bestellen" : "Order a cake"}</Button>
         </div>
       </section>
-
-      <Sheet open={isOrderOpen} onOpenChange={setIsOrderOpen}>
-        <SheetContent side="bottom" className="max-h-[92vh] overflow-y-auto rounded-t-2xl p-4 md:p-6">
-          <SheetHeader className="sr-only">
-            <SheetTitle>{language === "de" ? "Torte bestellen" : "Order a cake"}</SheetTitle>
-          </SheetHeader>
-          <div className="mx-auto max-w-2xl pb-4">
-            <CakeOrderForm compact />
-          </div>
-        </SheetContent>
-      </Sheet>
     </main>
   );
 };
