@@ -11,7 +11,7 @@ export const splitDishText = (text: string, language: "de" | "en", dishKey?: str
 
   const firstPeriod = trimmed.indexOf(".");
 
-  if (dishKey === "soup" && firstPeriod > 8) {
+  if (firstPeriod > 8) {
     return {
       name: trimmed.slice(0, firstPeriod).trim(),
       description: trimmed.slice(firstPeriod + 1).trim(),
