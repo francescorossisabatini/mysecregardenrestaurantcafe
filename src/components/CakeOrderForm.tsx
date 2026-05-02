@@ -29,9 +29,9 @@ const copy = {
     pickup: "Abholdatum",
     notes: "Notizen",
     notesPlaceholder: "Allergien, Anlass, besondere Wünsche...",
-    standardLead: "Mindestens 24h im Voraus.",
-    largeLead: "Bei Großbestellungen mindestens 48h im Voraus.",
-    largeHelper: "Bei 3 oder mehr Torten melden wir uns zur Bestätigung.",
+    standardLead: "Mindestens 5 Tage im Voraus.",
+    largeLead: "Mindestens 5 Tage im Voraus.",
+    largeHelper: "Bei mehr als 3 Torten rufen wir dich zur Bestätigung zurück.",
     ack: "Ich verstehe, dass die Zahlung bei Abholung erfolgt. Nicht abgeholte Bestellungen sind nicht erstattungsfähig.",
     submit: "Anfrage senden",
     submitting: "Wird gesendet...",
@@ -51,9 +51,9 @@ const copy = {
     pickup: "Pickup date",
     notes: "Notes",
     notesPlaceholder: "Allergies, occasion, special wishes...",
-    standardLead: "At least 24 hours in advance.",
-    largeLead: "For large orders, at least 48 hours in advance.",
-    largeHelper: "For 3 or more cakes, we'll contact you to confirm.",
+    standardLead: "At least 5 days in advance.",
+    largeLead: "At least 5 days in advance.",
+    largeHelper: "For more than 3 cakes, we'll call you back to confirm.",
     ack: "I understand that payment is made at pickup. Uncollected orders are non-refundable.",
     submit: "Send request",
     submitting: "Sending...",
@@ -85,7 +85,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
   const [phone, setPhone] = useState("");
   const [cakeChoice, setCakeChoice] = useState<(typeof cakeCatalog)[number] | "">("");
   const [quantity, setQuantity] = useState(1);
-  const minPickupDate = useMemo(() => addDays(quantity >= 3 ? 2 : 1), [quantity]);
+  const minPickupDate = useMemo(() => addDays(5), []);
   const [pickupDate, setPickupDate] = useState(minPickupDate);
   const [notes, setNotes] = useState("");
   const [paymentAcknowledged, setPaymentAcknowledged] = useState(false);
@@ -131,7 +131,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
     setPhone("");
     setCakeChoice("");
     setQuantity(1);
-    setPickupDate(addDays(1));
+    setPickupDate(addDays(5));
     setNotes("");
     setPaymentAcknowledged(false);
     onSuccess?.();
@@ -179,7 +179,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
               <Plus className="h-4 w-4" />
             </button>
           </div>
-          {quantity >= 3 ? <p className="text-xs font-normal leading-relaxed text-accent">{labels.largeHelper}</p> : null}
+          {quantity > 3 ? <p className="text-xs font-normal leading-relaxed text-accent">{labels.largeHelper}</p> : null}
         </div>
         <label className="grid gap-2 text-sm font-semibold text-foreground">
           {labels.pickup}
@@ -187,7 +187,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
             <CalendarDays className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" />
             <Input value={normalizedPickupDate} onChange={(event) => setPickupDate(event.target.value)} type="date" min={minPickupDate} required className="h-12 pl-10 text-base" />
           </div>
-          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-high-contrast"}`}>{hasClosedDay ? labels.closedDay : quantity >= 3 ? labels.largeLead : labels.standardLead}</p>
+          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-high-contrast"}`}>{hasClosedDay ? labels.closedDay : labels.standardLead}</p>
         </label>
       </div>
 
