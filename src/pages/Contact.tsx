@@ -3,6 +3,7 @@ import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin,
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
+import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { ReservationRequestForm } from "@/components/ReservationRequestForm";
@@ -60,9 +61,10 @@ const ContactPage = () => {
         path={location.pathname}
         jsonLd={visitJsonLd}
       />
+      <SkipLink />
       <Navigation />
 
-      <main className="pt-24 pb-16">
+      <main id="main-content" tabIndex={-1} className="pt-24 pb-16 focus:outline-none">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <header className="mb-10 text-center md:mb-14">

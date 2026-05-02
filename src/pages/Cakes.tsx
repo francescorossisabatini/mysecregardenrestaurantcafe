@@ -30,7 +30,7 @@ const Cakes = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-section-soft font-work text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-section-soft font-work text-foreground focus:outline-none">
       <SEOHead
         title={language === "de" ? "Torten | My Secret Garden" : "Cakes | My Secret Garden"}
         description={language === "de" ? "Hausgemachte Torten von My Secret Garden zum Vorbestellen in Wien." : "Homemade cakes from My Secret Garden available for pre-order in Vienna."}

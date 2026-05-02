@@ -5,7 +5,7 @@ const CakeOrder = () => {
   const { language } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-section-soft px-4 py-10 font-work text-foreground md:py-16">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-section-soft px-4 py-10 font-work text-foreground focus:outline-none md:py-16">
       <SEOHead
         title={language === "de" ? "Torte bestellen | My Secret Garden" : "Order a Cake | My Secret Garden"}
         description={language === "de" ? "Tortenvorbestellungen pausieren momentan bei My Secret Garden." : "Cake pre-orders are currently paused at My Secret Garden."}

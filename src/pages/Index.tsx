@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { Navigation } from "@/components/Navigation";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { HomeMenuPreview } from "@/components/HomeMenuPreview";
+import { SkipLink } from "@/components/SkipLink";
 
 // Lazy load below-the-fold components to reduce initial JS bundle
 const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
@@ -67,10 +68,12 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <SEOHead path="/" />
+      <SkipLink />
       <div className={`transition-opacity duration-base ease-out ${showNavbar ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <Navigation />
       </div>
-      
+
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
       {/* HERO: Big image, H1, subtitle, 2 CTAs */}
       <Hero />
       
@@ -103,6 +106,8 @@ const Index = () => {
         <CTAEndBlock show={["call", "directions", "menu"]} />
       </Suspense>
       
+      </main>
+
       <Suspense fallback={null}>
         <Footer />
       </Suspense>

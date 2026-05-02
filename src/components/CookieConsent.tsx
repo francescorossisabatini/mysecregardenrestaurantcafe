@@ -151,6 +151,7 @@ export const CookieConsent = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [draft, setDraft] = useState<ConsentCategories>(ALL_DENIED);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const evaluate = () => {
@@ -169,6 +170,43 @@ export const CookieConsent = () => {
       window.removeEventListener(CONSENT_EVENT, evaluate);
     };
   }, []);
+
+  // EAA: when dialog opens, store the previous focus and move focus into the dialog.
+  // When it closes, restore focus.
+  useEffect(() => {
+    if (!isVisible) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    const focusTarget = dialogRef.current?.querySelector<HTMLElement>(
+      "button, [href], [tabindex]:not([tabindex='-1'])"
+    );
+    focusTarget?.focus();
+    return () => {
+      previouslyFocusedRef.current?.focus?.();
+    };
+  }, [isVisible]);
+
+  // EAA: focus trap inside the dialog (Tab / Shift+Tab cycle).
+  useEffect(() => {
+    if (!isVisible) return;
+    const handler = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        "button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex='-1'])"
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [isVisible]);
 
   // Keyboard support: ESC closes the details panel without saving consent (banner stays).
   useEffect(() => {

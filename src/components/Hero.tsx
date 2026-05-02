@@ -61,8 +61,11 @@ export const Hero = () => {
   const effectivelyOpen = status.isOpen && !isClosedToday;
 
   return (
-    <section className="relative flex h-[92svh] min-h-[540px] items-center justify-center overflow-hidden md:h-[100dvh] md:min-h-[660px] lg:h-[90dvh] lg:min-h-[700px]">
-      {/* Static real photo for FCP and immersive consistency */}
+    <section
+      className="relative flex h-[92svh] min-h-[540px] items-center justify-center overflow-hidden md:h-[100dvh] md:min-h-[660px] lg:h-[90dvh] lg:min-h-[700px]"
+      aria-label={language === "de" ? "Willkommen bei My Secret Garden" : "Welcome to My Secret Garden"}
+    >
+      {/* Decorative background photo — text content already conveys meaning to AT */}
       <div 
         className="absolute inset-0 animate-hero-background"
         style={{
@@ -70,13 +73,12 @@ export const Hero = () => {
           backgroundSize: "cover",
           backgroundPosition: heroImage.position,
         }}
-        role="img"
-        aria-label={heroImage.alt}
+        aria-hidden="true"
       />
 
       {/* Overlay shaped for readability while keeping the room visible */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/66 via-foreground/30 to-foreground/72" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/36 via-transparent to-foreground/22" />
+      <div className="absolute inset-0 bg-gradient-to-b from-foreground/66 via-foreground/30 to-foreground/72" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-foreground/36 via-transparent to-foreground/22" aria-hidden="true" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">

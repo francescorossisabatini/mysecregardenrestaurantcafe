@@ -3,6 +3,7 @@ import { ExternalLink, ChevronLeft, ChevronRight, BookOpen, Brush, Music, Globe2
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
+import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
@@ -228,8 +229,9 @@ const AboutUs = () => {
           : "The story of My Secret Garden in Raimundhof: vegetarian cooking, courtyard atmosphere and inspiration from Sri Chinmoy."}
         path="/about"
       />
+      <SkipLink />
       <Navigation />
-      <main className="pt-20">
+      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-none">
         <section className="relative overflow-hidden border-b border-border/70 bg-section-soft py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.08fr_0.92fr] md:items-end md:gap-14">
