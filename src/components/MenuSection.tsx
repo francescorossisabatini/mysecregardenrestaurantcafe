@@ -234,8 +234,8 @@ export const MenuSection = () => {
           </aside>
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
-          <div className="md:hidden sticky top-[72px] z-30 -mx-8 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
-            <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
+          <div className="md:hidden sticky top-[72px] z-30 mx-[calc(50%_-_50vw)] mb-8 w-screen max-w-none overflow-hidden border-y border-border/75 bg-nav-surface px-0 py-2 backdrop-blur-md">
+            <div className="grid grid-cols-3 gap-1 bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
                 { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
                 { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
@@ -595,11 +595,11 @@ export const MenuSection = () => {
               </p>
             </div>
 
-            <div className="sticky top-[118px] z-20 -mx-8 mb-8 max-w-full border-y border-border/75 bg-nav-surface px-4 py-3 backdrop-blur-md md:top-[84px] md:mx-0 md:rounded-2xl md:border md:shadow-card">
+            <div className="sticky top-[118px] z-20 mx-[calc(50%_-_50vw)] mb-8 w-screen max-w-none overflow-hidden border-y border-border/75 bg-nav-surface px-0 py-3 backdrop-blur-md md:top-[84px] md:mx-0 md:w-auto md:rounded-2xl md:border md:px-4 md:shadow-card">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
-              <div className="flex max-w-full gap-2 overflow-x-auto pb-1 md:flex-wrap md:justify-center md:overflow-visible md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
+              <div className="flex max-w-full gap-2 overflow-x-auto px-4 pb-1 md:flex-wrap md:justify-center md:overflow-visible md:px-0 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
                 {fixedMenuAnchors.map((anchor) => (
                   <button
                     key={anchor.id}
