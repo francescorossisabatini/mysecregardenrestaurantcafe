@@ -85,7 +85,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
   const [phone, setPhone] = useState("");
   const [cakeChoice, setCakeChoice] = useState<(typeof cakeCatalog)[number] | "">("");
   const [quantity, setQuantity] = useState(1);
-  const minPickupDate = useMemo(() => addDays(quantity >= 3 ? 2 : 1), [quantity]);
+  const minPickupDate = useMemo(() => addDays(5), []);
   const [pickupDate, setPickupDate] = useState(minPickupDate);
   const [notes, setNotes] = useState("");
   const [paymentAcknowledged, setPaymentAcknowledged] = useState(false);
