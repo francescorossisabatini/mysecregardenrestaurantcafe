@@ -47,7 +47,7 @@ const copy = {
   en: {
     eyebrow: "Homemade cakes",
     title: "Cakes from our kitchen",
-    intro: "Every cake is baked in the garden: simple ingredients, honest flavours and no marzipan theatre. You can pre-order a whole cake for birthdays, small celebrations or simply a good Sunday.",
+    intro: "Every cake is baked in Secret Garden: simple ingredients, honest flavours and no marzipan theatre. You can pre-order a whole cake for birthdays, small celebrations or simply a good Sunday.",
     leadTitle: "How it works",
     lead1: "Order at least 5 days in advance",
     lead2: "Pickup at the restaurant, Mon to Sat",
