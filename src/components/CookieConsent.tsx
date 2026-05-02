@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { ChevronDown, ChevronUp, Lock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 declare global {
@@ -114,33 +115,71 @@ const copy = {
   },
 } as const;
 
-type ToggleProps = {
+type ConsentRowProps = {
+  title: string;
+  description: string;
   checked: boolean;
-  onChange: (next: boolean) => void;
-  label: string;
+  onChange?: (next: boolean) => void;
   disabled?: boolean;
   onLabel: string;
   offLabel: string;
   alwaysLabel: string;
 };
 
-const ConsentToggle = ({ checked, onChange, label, disabled, onLabel, offLabel, alwaysLabel }: ToggleProps) => (
-  <button
-    type="button"
-    role="switch"
-    aria-checked={checked}
-    aria-label={`${label}: ${disabled ? alwaysLabel : checked ? onLabel : offLabel}`}
-    disabled={disabled}
-    onClick={() => !disabled && onChange(!checked)}
-    className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-      disabled ? "bg-muted-high-contrast/40 cursor-not-allowed" : checked ? "bg-primary" : "bg-muted-high-contrast/50"
-    }`}
-  >
-    <span
-      className={`inline-block h-5 w-5 transform rounded-full bg-background shadow-sm transition-transform ${checked ? "translate-x-5" : "translate-x-0.5"}`}
-    />
-  </button>
-);
+const ConsentRow = ({
+  title,
+  description,
+  checked,
+  onChange,
+  disabled,
+  onLabel,
+  offLabel,
+  alwaysLabel,
+}: ConsentRowProps) => {
+  const reactId = useId();
+  const id = `consent-${reactId}`;
+  const stateLabel = disabled ? alwaysLabel : checked ? onLabel : offLabel;
+  return (
+    <div className="flex items-start justify-between gap-4">
+      <div className="min-w-0">
+        <label
+          htmlFor={id}
+          className={`font-work text-sm font-semibold text-foreground ${disabled ? "" : "cursor-pointer"}`}
+        >
+          {title}
+        </label>
+        <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{description}</p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        {disabled ? (
+          <span
+            className="inline-flex items-center gap-1 rounded-full border border-border bg-muted px-2 py-0.5 font-work text-[11px] font-semibold uppercase tracking-wide text-foreground"
+            aria-label={`${title}: ${alwaysLabel}`}
+          >
+            <Lock className="h-3 w-3" aria-hidden="true" />
+            {alwaysLabel}
+          </span>
+        ) : (
+          <>
+            <Switch
+              id={id}
+              checked={checked}
+              onCheckedChange={(value) => onChange?.(Boolean(value))}
+              aria-label={`${title}: ${stateLabel}`}
+              className="data-[state=unchecked]:bg-muted-high-contrast/70 data-[state=checked]:bg-primary border-2 border-foreground/20"
+            />
+            <span
+              aria-hidden="true"
+              className={`font-work text-[11px] font-semibold uppercase tracking-wide ${checked ? "text-primary" : "text-muted-high-contrast"}`}
+            >
+              {stateLabel}
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const CookieConsent = () => {
   const { language } = useLanguage();
@@ -295,46 +334,32 @@ export const CookieConsent = () => {
 
           {showDetails ? (
             <div id="cookie-consent-details" className="mt-4 grid gap-3 rounded-md border border-border bg-background/60 p-3 md:p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.necessary}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.necessaryDesc}</p>
-                </div>
-                <ConsentToggle
-                  checked
-                  disabled
-                  onChange={() => undefined}
-                  label={labels.necessary}
-                  onLabel={labels.on}
-                  offLabel={labels.off}
-                  alwaysLabel={labels.always}
-                />
-              </div>
-
-              <div className="flex items-start justify-between gap-3 border-t border-border/60 pt-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.analytics}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.analyticsDesc}</p>
-                </div>
-                <ConsentToggle
+              <ConsentRow
+                title={labels.necessary}
+                description={labels.necessaryDesc}
+                checked
+                disabled
+                onLabel={labels.on}
+                offLabel={labels.off}
+                alwaysLabel={labels.always}
+              />
+              <div className="border-t border-border/60 pt-3">
+                <ConsentRow
+                  title={labels.analytics}
+                  description={labels.analyticsDesc}
                   checked={draft.analytics}
                   onChange={(value) => setDraft((current) => ({ ...current, analytics: value }))}
-                  label={labels.analytics}
                   onLabel={labels.on}
                   offLabel={labels.off}
                   alwaysLabel={labels.always}
                 />
               </div>
-
-              <div className="flex items-start justify-between gap-3 border-t border-border/60 pt-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.behavioral}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.behavioralDesc}</p>
-                </div>
-                <ConsentToggle
+              <div className="border-t border-border/60 pt-3">
+                <ConsentRow
+                  title={labels.behavioral}
+                  description={labels.behavioralDesc}
                   checked={draft.behavioral}
                   onChange={(value) => setDraft((current) => ({ ...current, behavioral: value }))}
-                  label={labels.behavioral}
                   onLabel={labels.on}
                   offLabel={labels.off}
                   alwaysLabel={labels.always}
