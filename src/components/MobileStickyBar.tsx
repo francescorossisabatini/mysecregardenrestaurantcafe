@@ -5,7 +5,7 @@ import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { getConsentStatus } from "@/components/CookieConsent";
+import { getConsent } from "@/components/CookieConsent";
 import { getHeroAbVariant, trackHeroAbEvent } from "@/lib/heroAbTest";
 
 export const MobileStickyBar = () => {
@@ -20,7 +20,7 @@ export const MobileStickyBar = () => {
   // Check cookie consent status
   useEffect(() => {
     const checkConsent = () => {
-      setCookieConsentPending(getConsentStatus() === "pending");
+      setCookieConsentPending(getConsent() === null);
     };
     checkConsent();
     // Re-check when localStorage changes
