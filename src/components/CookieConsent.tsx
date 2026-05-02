@@ -75,7 +75,7 @@ const copy = {
     intro: "Notwendige Funktionen sind immer aktiv. Optionale Dienste laden wir nur, wenn du zustimmst. Du kannst deine Auswahl jederzeit ändern.",
     rejectAll: "Alle ablehnen",
     acceptAll: "Alle akzeptieren",
-    customize: "Einstellungen",
+    customize: "Anpassen",
     save: "Auswahl speichern",
     necessary: "Notwendig",
     necessaryDesc: "Grundfunktionen wie Sprache und Sicherheit. Diese Cookies sind immer aktiv.",
@@ -96,7 +96,7 @@ const copy = {
     intro: "Necessary functions are always active. Optional services only load if you consent. You can change your choice at any time.",
     rejectAll: "Reject all",
     acceptAll: "Accept all",
-    customize: "Settings",
+    customize: "Customize",
     save: "Save choices",
     necessary: "Necessary",
     necessaryDesc: "Core features like language and security. These cookies are always active.",
@@ -352,25 +352,14 @@ export const CookieConsent = () => {
             >
               {labels.rejectAll}
             </Button>
-            {showDetails ? (
-              <Button
-                onClick={handleSaveSelection}
-                variant="outline"
-                size="sm"
-                className="h-10 rounded-md bg-background text-sm"
-              >
-                {labels.save}
-              </Button>
-            ) : (
-              <Button
-                onClick={() => setShowDetails(true)}
-                variant="outline"
-                size="sm"
-                className="h-10 rounded-md bg-background text-sm"
-              >
-                {labels.customize}
-              </Button>
-            )}
+            <Button
+              onClick={showDetails ? handleSaveSelection : () => setShowDetails(true)}
+              variant="outline"
+              size="sm"
+              className="h-10 rounded-md border-primary/40 bg-background text-sm font-semibold text-primary hover:bg-primary/5"
+            >
+              {showDetails ? labels.save : labels.customize}
+            </Button>
             <Button
               onClick={handleAcceptAll}
               size="sm"
