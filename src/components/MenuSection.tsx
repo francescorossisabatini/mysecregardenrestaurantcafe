@@ -15,6 +15,7 @@ import { useState, useMemo, useRef } from "react";
 import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
+import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
@@ -234,30 +235,8 @@ export const MenuSection = () => {
           </aside>
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
-          <div className="md:hidden sticky top-[72px] z-30 mx-[calc(50%_-_50vw)] mb-8 w-screen max-w-none overflow-hidden border-y border-border/75 bg-nav-surface px-0 py-2 backdrop-blur-md">
-            <div className="grid grid-cols-3 gap-1 bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
-              {[
-                { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
-                { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-                { id: "week" as const, label: language === "de" ? "Woche" : "Week" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeMenuTab === tab.id}
-                  onClick={() => scrollToMenuBlock(tab.id)}
-                  className={`rounded-full px-2 py-2 text-xs font-work font-semibold uppercase tracking-[0.06em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                    activeMenuTab === tab.id
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "text-primary/75 hover:text-primary"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Mobile: floating pill replaces the bulky sticky bars (rendered via portal-like fixed element) */}
+          <MenuFloatingPill activeTab={activeMenuTab} onSelect={scrollToMenuBlock} />
           
           {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
           {SHOW_WEEKLY_MENU ? (
@@ -595,7 +574,7 @@ export const MenuSection = () => {
               </p>
             </div>
 
-            <div className="sticky top-[118px] z-20 mx-[calc(50%_-_50vw)] mb-8 w-screen max-w-none overflow-hidden border-y border-border/75 bg-nav-surface px-0 py-3 backdrop-blur-md md:top-[84px] md:mx-0 md:w-auto md:rounded-2xl md:border md:px-4 md:shadow-card">
+            <div className="relative mb-8 rounded-2xl border border-border/75 bg-nav-surface px-3 py-3 shadow-card md:sticky md:top-[84px] md:z-20 md:px-4 md:backdrop-blur-md">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
