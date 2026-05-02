@@ -574,7 +574,7 @@ export const MenuSection = () => {
               </p>
             </div>
 
-            <div className="sticky top-[118px] z-20 mx-[calc(50%_-_50vw)] mb-8 w-screen max-w-none overflow-hidden border-y border-border/75 bg-nav-surface px-0 py-3 backdrop-blur-md md:top-[84px] md:mx-0 md:w-auto md:rounded-2xl md:border md:px-4 md:shadow-card">
+            <div className="relative mb-8 rounded-2xl border border-border/75 bg-nav-surface px-3 py-3 shadow-card md:sticky md:top-[84px] md:z-20 md:px-4 md:backdrop-blur-md">
               <p className="mb-2 text-center font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
                 {language === "de" ? "Immer da direkt wählen" : "Always choose directly"}
               </p>
