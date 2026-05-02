@@ -5,6 +5,7 @@ import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { SkipLink } from "@/components/SkipLink";
 
 const Menu = () => {
   const { language } = useLanguage();
@@ -18,8 +19,9 @@ const Menu = () => {
           : "Menu at My Secret Garden in Vienna with today’s dishes, weekly menu, classics and drinks."}
         path="/menu"
       />
+      <SkipLink />
       <Navigation />
-      <main className="pt-20">
+      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-none">
         <MenuSection />
       </main>
       <CTAEndBlock show={["call", "directions"]} />
