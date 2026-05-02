@@ -74,6 +74,7 @@ const copy = {
   de: {
     title: "Datenschutz Einstellungen",
     intro: "Notwendige Funktionen sind immer aktiv. Optionale Dienste laden wir nur, wenn du zustimmst. Du kannst deine Auswahl jederzeit ändern.",
+    legal: "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 165 Abs. 3 TKG 2021. Verantwortlich gemäß DSGVO ist My Secret Garden, Wien (Österreich). Details und Widerruf jederzeit möglich:",
     rejectAll: "Alle ablehnen",
     acceptAll: "Alle akzeptieren",
     customize: "Anpassen",
@@ -95,6 +96,7 @@ const copy = {
   en: {
     title: "Privacy settings",
     intro: "Necessary functions are always active. Optional services only load if you consent. You can change your choice at any time.",
+    legal: "Legal basis: Art. 6(1)(a) GDPR (consent) and § 165(3) TKG 2021 (Austria). Data controller under GDPR is My Secret Garden, Vienna (Austria). Details and withdrawal available anytime:",
     rejectAll: "Reject all",
     acceptAll: "Accept all",
     customize: "Customize",
