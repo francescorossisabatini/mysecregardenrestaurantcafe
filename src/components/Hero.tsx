@@ -90,7 +90,7 @@ export const Hero = () => {
 
           {/* Subtitle - visible immediately for LCP */}
           <p className={`mx-auto max-w-2xl text-base font-lora leading-relaxed text-background drop-shadow-2xl transition-all duration-slow ease-out sm:text-lg md:text-xl ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
-            {language === "de" ? "Vegetarische Weltküche im versteckten Gartenhof" : "Vegetarian world cuisine in a hidden garden courtyard"}
+            {language === "de" ? "Das Restaurant, das du fast nicht findest." : "The restaurant you almost don't find."}
           </p>
 
           <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-base ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
