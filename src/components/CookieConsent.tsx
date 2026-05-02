@@ -334,46 +334,32 @@ export const CookieConsent = () => {
 
           {showDetails ? (
             <div id="cookie-consent-details" className="mt-4 grid gap-3 rounded-md border border-border bg-background/60 p-3 md:p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.necessary}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.necessaryDesc}</p>
-                </div>
-                <ConsentToggle
-                  checked
-                  disabled
-                  onChange={() => undefined}
-                  label={labels.necessary}
-                  onLabel={labels.on}
-                  offLabel={labels.off}
-                  alwaysLabel={labels.always}
-                />
-              </div>
-
-              <div className="flex items-start justify-between gap-3 border-t border-border/60 pt-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.analytics}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.analyticsDesc}</p>
-                </div>
-                <ConsentToggle
+              <ConsentRow
+                title={labels.necessary}
+                description={labels.necessaryDesc}
+                checked
+                disabled
+                onLabel={labels.on}
+                offLabel={labels.off}
+                alwaysLabel={labels.always}
+              />
+              <div className="border-t border-border/60 pt-3">
+                <ConsentRow
+                  title={labels.analytics}
+                  description={labels.analyticsDesc}
                   checked={draft.analytics}
                   onChange={(value) => setDraft((current) => ({ ...current, analytics: value }))}
-                  label={labels.analytics}
                   onLabel={labels.on}
                   offLabel={labels.off}
                   alwaysLabel={labels.always}
                 />
               </div>
-
-              <div className="flex items-start justify-between gap-3 border-t border-border/60 pt-3">
-                <div>
-                  <p className="font-work text-sm font-semibold text-foreground">{labels.behavioral}</p>
-                  <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{labels.behavioralDesc}</p>
-                </div>
-                <ConsentToggle
+              <div className="border-t border-border/60 pt-3">
+                <ConsentRow
+                  title={labels.behavioral}
+                  description={labels.behavioralDesc}
                   checked={draft.behavioral}
                   onChange={(value) => setDraft((current) => ({ ...current, behavioral: value }))}
-                  label={labels.behavioral}
                   onLabel={labels.on}
                   offLabel={labels.off}
                   alwaysLabel={labels.always}
