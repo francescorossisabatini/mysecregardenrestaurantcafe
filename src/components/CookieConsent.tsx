@@ -321,6 +321,13 @@ export const CookieConsent = () => {
               >
                 {labels.intro}
               </p>
+              <p className="font-work text-[11px] leading-relaxed text-muted-high-contrast md:text-xs">
+                {labels.legal}{" "}
+                <a href="/privacy" className="underline underline-offset-2 hover:text-foreground">
+                  {labels.privacy}
+                </a>
+                .
+              </p>
             </div>
             <button
               type="button"
