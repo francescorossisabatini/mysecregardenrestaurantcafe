@@ -108,16 +108,41 @@
       ]
     }
     </script>
+
+    <!-- Google Consent Mode v2: deny everything by default. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'functionality_storage': 'granted',
+        'security_storage': 'granted',
+        'wait_for_update': 500
+      });
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Analytics loaders. Analytics scripts are loaded only after explicit consent. -->
+    <!-- Analytics loaders. Analytics scripts are loaded only after explicit, granular consent. -->
     <script>
+      function readConsent() {
+        try {
+          var raw = localStorage.getItem('cookie_consent_v2');
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) { return null; }
+      }
+
       function loadAnalytics() {
-        if (localStorage.getItem('cookie_consent') !== 'accepted') return;
+        var consent = readConsent();
+        if (!consent || consent.analytics !== true) return;
         if (window._analyticsLoaded) return;
         window._analyticsLoaded = true;
 
@@ -125,23 +150,18 @@
         script.src = 'https://www.googletagmanager.com/gtag/js?id=G-NMVX2R7493';
         script.async = true;
         document.head.appendChild(script);
-        
+
         script.onload = function() {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('consent', 'default', {
-            'analytics_storage': 'denied'
-          });
-          gtag('consent', 'update', { 'analytics_storage': 'granted' });
-          gtag('js', new Date());
-          gtag('config', 'G-NMVX2R7493');
+          window.gtag('js', new Date());
+          window.gtag('consent', 'update', { 'analytics_storage': 'granted' });
+          window.gtag('config', 'G-NMVX2R7493', { anonymize_ip: true });
         };
       }
       window.loadAnalytics = loadAnalytics;
 
       function loadContentsquare() {
-        if (localStorage.getItem('cookie_consent') !== 'accepted') return;
+        var consent = readConsent();
+        if (!consent || consent.behavioral !== true) return;
         if (window._contentsquareLoaded) return;
         window._contentsquareLoaded = true;
 
@@ -151,8 +171,9 @@
         document.head.appendChild(script);
       }
       window.loadContentsquare = loadContentsquare;
-      
-      if (localStorage.getItem('cookie_consent') === 'accepted') {
+
+      var initialConsent = readConsent();
+      if (initialConsent) {
         if ('requestIdleCallback' in window) {
           requestIdleCallback(loadAnalytics, { timeout: 4000 });
           requestIdleCallback(loadContentsquare, { timeout: 4500 });
