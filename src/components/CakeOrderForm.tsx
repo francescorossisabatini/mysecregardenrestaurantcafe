@@ -131,7 +131,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
     setPhone("");
     setCakeChoice("");
     setQuantity(1);
-    setPickupDate(addDays(1));
+    setPickupDate(addDays(5));
     setNotes("");
     setPaymentAcknowledged(false);
     onSuccess?.();
@@ -179,7 +179,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
               <Plus className="h-4 w-4" />
             </button>
           </div>
-          {quantity >= 3 ? <p className="text-xs font-normal leading-relaxed text-accent">{labels.largeHelper}</p> : null}
+          {quantity > 3 ? <p className="text-xs font-normal leading-relaxed text-accent">{labels.largeHelper}</p> : null}
         </div>
         <label className="grid gap-2 text-sm font-semibold text-foreground">
           {labels.pickup}
@@ -187,7 +187,7 @@ export const CakeOrderForm = ({ compact = false, onSuccess }: CakeOrderFormProps
             <CalendarDays className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-high-contrast" />
             <Input value={normalizedPickupDate} onChange={(event) => setPickupDate(event.target.value)} type="date" min={minPickupDate} required className="h-12 pl-10 text-base" />
           </div>
-          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-high-contrast"}`}>{hasClosedDay ? labels.closedDay : quantity >= 3 ? labels.largeLead : labels.standardLead}</p>
+          <p className={`text-xs font-normal leading-relaxed ${hasClosedDay ? "text-destructive" : "text-muted-high-contrast"}`}>{hasClosedDay ? labels.closedDay : labels.standardLead}</p>
         </label>
       </div>
 
