@@ -3,6 +3,7 @@ import { ExternalLink, ChevronLeft, ChevronRight, BookOpen, Brush, Music, Globe2
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
+import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";

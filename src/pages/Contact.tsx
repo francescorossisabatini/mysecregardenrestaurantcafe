@@ -3,6 +3,7 @@ import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin,
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
+import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { ReservationRequestForm } from "@/components/ReservationRequestForm";
