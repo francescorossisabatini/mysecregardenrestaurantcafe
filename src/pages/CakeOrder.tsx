@@ -1,25 +1,48 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { CakeOrderForm } from "@/components/CakeOrderForm";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { SkipLink } from "@/components/SkipLink";
 import { SEOHead } from "@/components/SEOHead";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const CakeOrder = () => {
   const { language } = useLanguage();
 
+  useEffect(() => {
+    window.gtag?.("event", "cake_order_page_view", { event_category: "engagement" });
+  }, []);
+
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-section-soft px-4 py-10 font-work text-foreground focus:outline-none md:py-16">
+    <div className="min-h-screen bg-section-soft">
       <SEOHead
         title={language === "de" ? "Torte bestellen | My Secret Garden" : "Order a Cake | My Secret Garden"}
-        description={language === "de" ? "Tortenvorbestellungen pausieren momentan bei My Secret Garden." : "Cake pre-orders are currently paused at My Secret Garden."}
+        description={language === "de" ? "Bestelle deine hausgemachte Torte bei My Secret Garden in Wien." : "Pre-order your homemade cake from My Secret Garden in Vienna."}
         path="/order"
       />
-      <section className="mx-auto max-w-2xl rounded-lg border border-border bg-card p-6 text-center shadow-card md:p-8">
-        <h1 className="font-cormorant text-4xl font-semibold text-primary md:text-5xl">
-          {language === "de" ? "Tortenbestellung pausiert" : "Cake orders paused"}
-        </h1>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-high-contrast md:text-base">
-          {language === "de" ? "Momentan nehmen wir online keine ganzen Torten zur Vorbestellung an. Frag gern direkt im Restaurant nach den heutigen Sorten." : "We are not taking online whole cake pre-orders at the moment. Please ask at the restaurant for today’s available cakes."}
-        </p>
-      </section>
-    </main>
+      <SkipLink />
+      <Navigation />
+
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
+        <section className="mx-auto max-w-3xl px-4 py-12 md:px-8 md:py-16">
+          <Link
+            to="/cakes"
+            className="inline-flex items-center gap-2 font-work text-sm text-muted-high-contrast transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            {language === "de" ? "Zurück zu den Torten" : "Back to cakes"}
+          </Link>
+
+          <div className="mt-6">
+            <CakeOrderForm />
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 
