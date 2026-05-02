@@ -234,7 +234,7 @@ export const MenuSection = () => {
           </aside>
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
-          <div className="md:hidden sticky top-[72px] z-30 -mx-4 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
+          <div className="md:hidden sticky top-[72px] z-30 -mx-8 mb-8 border-y border-border/75 bg-nav-surface px-4 py-2 backdrop-blur-md">
             <div className="grid grid-cols-3 gap-1 rounded-full bg-muted p-1" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
               {[
                 { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
