@@ -352,25 +352,14 @@ export const CookieConsent = () => {
             >
               {labels.rejectAll}
             </Button>
-            {showDetails ? (
-              <Button
-                onClick={handleSaveSelection}
-                variant="outline"
-                size="sm"
-                className="h-10 rounded-md bg-background text-sm"
-              >
-                {labels.save}
-              </Button>
-            ) : (
-              <Button
-                onClick={() => setShowDetails(true)}
-                variant="outline"
-                size="sm"
-                className="h-10 rounded-md bg-background text-sm"
-              >
-                {labels.customize}
-              </Button>
-            )}
+            <Button
+              onClick={showDetails ? handleSaveSelection : () => setShowDetails(true)}
+              variant="outline"
+              size="sm"
+              className="h-10 rounded-md border-primary/40 bg-background text-sm font-semibold text-primary hover:bg-primary/5"
+            >
+              {showDetails ? labels.save : labels.customize}
+            </Button>
             <Button
               onClick={handleAcceptAll}
               size="sm"
