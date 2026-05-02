@@ -90,23 +90,25 @@ export const MobileStickyBar = () => {
       role="region"
       aria-label={language === "de" ? "Schnellaktionen" : "Quick actions"}
       className={`
-        fixed bottom-0 left-0 right-0 z-50
-        bg-nav-surface/95 backdrop-blur-md
+        fixed inset-x-0 bottom-0 z-50 w-full
+        bg-nav-surface
         border-t border-border
-        shadow-[0_-4px_16px_-4px_rgba(0,0,0,0.08)]
-        px-4 pt-3
-        transition-all duration-300 ease-out
+        shadow-[0_-4px_16px_-4px_rgba(0,0,0,0.10)]
+        pt-3
+        transition-transform duration-300 ease-out motion-reduce:transition-none
         ${shouldShow
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-full pointer-events-none"
+          ? "translate-y-0"
+          : "translate-y-full pointer-events-none"
         }
       `}
       style={{
+        paddingLeft: 'max(0.75rem, env(safe-area-inset-left))',
+        paddingRight: 'max(0.75rem, env(safe-area-inset-right))',
         paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))',
         WebkitTapHighlightColor: 'transparent'
       }}
     >
-      <div className="flex max-w-md gap-3 mx-auto">
+      <div className="flex w-full gap-2.5">
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
