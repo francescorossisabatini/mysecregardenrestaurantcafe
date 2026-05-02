@@ -44,14 +44,14 @@ export const Navigation = () => {
             : "border-b border-border/70 bg-background/94 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
         }`}
       >
-        <div className={`container relative mx-auto grid grid-cols-[auto_1fr_auto] items-center gap-3 px-5 transition-all duration-500 md:px-4 lg:grid-cols-[1fr_auto_1fr] ${isHeroOverlay ? "min-h-16 rounded-full border border-border/65 bg-background/90 shadow-elevated backdrop-blur-xl md:min-h-14 lg:min-h-16 lg:rounded-full lg:border-border/40 lg:bg-background/85 lg:shadow-elevated lg:backdrop-blur-xl" : "min-h-12 md:min-h-11"}`}>
+        <div className={`relative mx-auto grid w-full max-w-[1240px] grid-cols-[auto_1fr_auto] items-center gap-3 px-4 transition-all duration-500 sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-4 lg:px-8 xl:gap-6 ${isHeroOverlay ? "min-h-16 rounded-full border border-border/65 bg-background/90 px-5 shadow-elevated backdrop-blur-xl md:min-h-14 md:px-6 lg:min-h-16 lg:rounded-full lg:border-border/40 lg:bg-background/85 lg:px-8 lg:shadow-elevated lg:backdrop-blur-xl" : "min-h-12 md:min-h-11"}`}>
           {/* Desktop Navigation Links */}
-          <div className="hidden items-center gap-6 lg:flex">
+          <div className="hidden items-center gap-4 lg:flex xl:gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-foreground transition-colors hover:text-primary focus-visible:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm"
+                className="whitespace-nowrap font-work text-xs font-semibold uppercase tracking-[0.06em] text-foreground transition-colors hover:text-primary focus-visible:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm xl:tracking-[0.08em]"
               >
                 {link.label}
               </Link>
