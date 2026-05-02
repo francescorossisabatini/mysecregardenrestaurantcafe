@@ -5,7 +5,7 @@ import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { getConsent } from "@/components/CookieConsent";
+import { getConsent, CONSENT_EVENT } from "@/components/CookieConsent";
 import { getHeroAbVariant, trackHeroAbEvent } from "@/lib/heroAbTest";
 
 export const MobileStickyBar = () => {
@@ -24,10 +24,10 @@ export const MobileStickyBar = () => {
     checkConsent();
     const handleChange = () => checkConsent();
     window.addEventListener("storage", handleChange);
-    window.addEventListener("cookie-consent-change", handleChange);
+    window.addEventListener(CONSENT_EVENT, handleChange);
     return () => {
       window.removeEventListener("storage", handleChange);
-      window.removeEventListener("cookie-consent-change", handleChange);
+      window.removeEventListener(CONSENT_EVENT, handleChange);
     };
   }, []);
 

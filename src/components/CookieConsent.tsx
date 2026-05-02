@@ -14,7 +14,7 @@ declare global {
 }
 
 const CONSENT_KEY = "cookie_consent_v2";
-const CONSENT_EVENT = "cookie-consent-updated";
+export const CONSENT_EVENT = "cookie-consent-updated";
 
 export type ConsentCategories = {
   necessary: true;
