@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { BookOpen, Clock, MapPin } from "lucide-react";
 import { SITE } from "@/config/site";
-import curryOfTheDay from "@/assets/curry-of-the-day.webp";
-import entranceGarden from "@/assets/entrance-garden.webp";
+import tavolataDallAlto from "@/assets/photos/tavolata-dall-alto.jpg";
+import gardenCourtyard from "@/assets/photos/garden-courtyard.jpg";
 
 export const ShowcaseSections = () => {
   const { language } = useLanguage();
@@ -19,9 +19,10 @@ export const ShowcaseSections = () => {
             <div>
               <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-lg lg:aspect-[5/6]">
                 <img 
-                  src={curryOfTheDay} 
-                  alt={language === "de" ? "Tagesmenü" : "Today's special"}
+                  src={tavolataDallAlto} 
+                  alt={language === "de" ? "Tisch mit vegetarischen Tagesgerichten von oben" : "Table with vegetarian dishes from above"}
                   className="w-full h-full object-cover saturate-[0.96]"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -108,9 +109,10 @@ export const ShowcaseSections = () => {
             <div className="order-1 md:order-2">
               <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-lg lg:aspect-[5/6]">
                 <img 
-                  src={entranceGarden} 
-                  alt={language === "de" ? "Eingang zum Garten" : "Garden entrance"}
+                  src={gardenCourtyard} 
+                  alt={language === "de" ? "Innenhof mit Holztischen und gelben Sonnenschirmen" : "Courtyard with wooden tables and yellow umbrellas"}
                   className="w-full h-full object-cover saturate-[0.96]"
+                  loading="lazy"
                 />
               </div>
             </div>

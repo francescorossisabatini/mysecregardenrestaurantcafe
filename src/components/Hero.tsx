@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
 
-import diningScene from "@/assets/dining-scene.jpg";
+import gardenHero from "@/assets/photos/garden-courtyard-hero.jpg";
 
 import { SITE } from "@/config/site";
 import { getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
 
-const heroImage = { src: diningScene, position: "center center", alt: "Tavola con piatti vegetariani" };
+const heroImage = { src: gardenHero, position: "center center", alt: "Innenhof im Raimundhof mit gelben Sonnenschirmen" };
 
 function useMinuteNow() {
   const [now, setNow] = useState(() => new Date());
