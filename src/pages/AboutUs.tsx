@@ -8,12 +8,13 @@ import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 import { CTAEndBlock } from "@/components/CTAEndBlock";
 import { SITE } from "@/config/site";
-import entranceGarden from "@/assets/entrance-garden.webp";
-import gardenReal from "@/assets/garden-real.jpg";
-import koreanBowl from "@/assets/korean-bowl.jpg";
-import alpenpolenta from "@/assets/alpenpolenta.jpg";
-import interiorReal from "@/assets/interior-real.jpg";
-import foodGarden from "@/assets/food-garden.jpg";
+import entranceDoorway from "@/assets/photos/entrance-doorway.jpg";
+import gardenCourtyard from "@/assets/photos/garden-courtyard.jpg";
+import tavolataDallAlto from "@/assets/photos/tavolata-dall-alto.jpg";
+import interiorMain from "@/assets/photos/interior-main.jpg";
+import interiorBanquette from "@/assets/photos/interior-banquette.jpg";
+import interiorLibrary from "@/assets/photos/interior-library.jpg";
+import cheersTable from "@/assets/photos/cheers-table.jpg";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
@@ -269,7 +270,7 @@ const AboutUs = () => {
               </div>
               <div className="animate-fade-in md:pt-8">
                 <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
-                  <img src={entranceGarden} alt={language === "de" ? "Eingang zu My Secret Garden" : "Entrance to My Secret Garden"} className="h-full w-full object-cover" />
+                  <img src={entranceDoorway} alt={language === "de" ? "Eingang zu My Secret Garden im Raimundhof" : "Entrance to My Secret Garden in Raimundhof"} className="h-full w-full object-cover" />
                 </div>
                 <p className="mt-3 font-work text-xs leading-relaxed text-muted-high-contrast">
                   {t.placeCaption}
@@ -302,7 +303,7 @@ const AboutUs = () => {
               </div>
               <div>
                 <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
-                  <img src={gardenReal} alt={language === "de" ? "Begrünter Innenhof" : "Green courtyard"} className="aspect-[4/5] w-full object-cover" loading="lazy" />
+                  <img src={gardenCourtyard} alt={language === "de" ? "Begrünter Innenhof mit Holztischen" : "Green courtyard with wooden tables"} className="aspect-[4/5] w-full object-cover" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -324,7 +325,7 @@ const AboutUs = () => {
             </div>
             <div className="grid gap-5 md:grid-cols-3 stagger-children in-view">
               {t.kitchenCards.map((card, index) => {
-                const images = [koreanBowl, alpenpolenta, interiorReal];
+                const images = [tavolataDallAlto, interiorBanquette, interiorLibrary];
                 return (
                   <article key={card.title} className="overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
                     <img src={images[index]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
@@ -348,7 +349,7 @@ const AboutUs = () => {
             <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-16 stagger-children in-view">
               <div className="order-2 md:order-1">
                 <div className="overflow-hidden rounded-lg border border-border/75 shadow-card">
-                  <img src={foodGarden} alt={language === "de" ? "Essen im Garten" : "Food in the garden"} className="aspect-[5/4] w-full object-cover" loading="lazy" />
+                  <img src={cheersTable} alt={language === "de" ? "Anstoßen am Tisch mit frischen Gerichten" : "Cheers at the table with fresh dishes"} className="aspect-[5/4] w-full object-cover" loading="lazy" />
                 </div>
               </div>
               <div className="order-1 space-y-5 md:order-2">
