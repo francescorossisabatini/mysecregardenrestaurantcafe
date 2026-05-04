@@ -26,6 +26,7 @@ const CakeOrderPage = lazy(() => import("./pages/CakeOrder"));
 const ReservationPreview = lazy(() => import("./pages/ReservationPreview"));
 const StaffLogin = lazy(() => import("./pages/StaffLogin"));
 const StaffKitchen = lazy(() => import("./pages/StaffKitchen"));
+const GalleryPage = lazy(() => import("./pages/Gallery"));
 
 // Minimal loading fallback
 const PageLoader = () => (
