@@ -11,10 +11,9 @@ import { SITE } from "@/config/site";
 import entranceDoorway from "@/assets/photos/entrance-doorway.jpg";
 import gardenCourtyard from "@/assets/photos/garden-courtyard.jpg";
 import tavolataDallAlto from "@/assets/photos/tavolata-dall-alto.jpg";
-import interiorMain from "@/assets/photos/interior-main.jpg";
-import interiorBanquette from "@/assets/photos/interior-banquette.jpg";
-import interiorLibrary from "@/assets/photos/interior-library.jpg";
 import cheersTable from "@/assets/photos/cheers-table.jpg";
+import dishesTableTop from "@/assets/dishes-table-top.jpg";
+import tortaCake from "@/assets/torta-2.jpg";
 import sriChinmoyImage from "@/assets/sri-chinmoy-portrait.jpg";
 import sriChinmoyBirds from "@/assets/sri-chinmoy-birds.jpg";
 import sriChinmoyFlowers from "@/assets/sri-chinmoy-flowers.jpg";
@@ -325,7 +324,7 @@ const AboutUs = () => {
             </div>
             <div className="grid gap-5 md:grid-cols-3 stagger-children in-view">
               {t.kitchenCards.map((card, index) => {
-                const images = [tavolataDallAlto, interiorBanquette, interiorLibrary];
+                const images = [tavolataDallAlto, dishesTableTop, tortaCake];
                 return (
                   <article key={card.title} className="overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
                     <img src={images[index]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
