@@ -184,19 +184,6 @@ export const Hero = () => {
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
               </Link>
             </Button>
-
-            {/* Secondary: Today's Specials */}
-            <Button
-              size="lg"
-              variant="outline"
-              className="hidden sm:inline-flex bg-background/10 hover:bg-background/20 text-background border-background/30 font-work text-sm sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6"
-              asChild
-            >
-              <Link to="/menu">
-                <CalendarDays className="w-4 h-4 mr-2" />
-                {language === "de" ? "Speisekarte" : "Full Menu"}
-              </Link>
-            </Button>
           </div>
 
         </div>
