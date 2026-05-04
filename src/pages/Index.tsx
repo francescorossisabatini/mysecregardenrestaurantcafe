@@ -10,7 +10,6 @@ import { SkipLink } from "@/components/SkipLink";
 // Lazy load below-the-fold components to reduce initial JS bundle
 const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
 const ShowcaseSections = lazy(() => import("@/components/ShowcaseSections").then(m => ({ default: m.ShowcaseSections })));
-const CakesHomeSection = lazy(() => import("@/components/CakesHomeSection").then(m => ({ default: m.CakesHomeSection })));
 const Reviews = lazy(() => import("@/components/Reviews").then(m => ({ default: m.Reviews })));
 const GallerySection = lazy(() => import("@/components/GallerySection").then(m => ({ default: m.GallerySection })));
 const CTAEndBlock = lazy(() => import("@/components/CTAEndBlock").then(m => ({ default: m.CTAEndBlock })));
@@ -89,10 +88,6 @@ const Index = () => {
         <ShowcaseSections />
       </Suspense>
 
-      {/* Cakes promo: links to vetrina then order */}
-      <Suspense fallback={<SectionLoader />}>
-        <CakesHomeSection />
-      </Suspense>
 
       {/* Menu preview with today's dishes */}
       <HomeMenuPreview />

@@ -21,8 +21,6 @@ const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 const LinkPage = lazy(() => import("./pages/Link"));
 const MenuPage = lazy(() => import("./pages/Menu"));
-const CakesPage = lazy(() => import("./pages/Cakes"));
-const CakeOrderPage = lazy(() => import("./pages/CakeOrder"));
 const ReservationPreview = lazy(() => import("./pages/ReservationPreview"));
 const StaffLogin = lazy(() => import("./pages/StaffLogin"));
 const StaffKitchen = lazy(() => import("./pages/StaffKitchen"));
@@ -135,8 +133,6 @@ function AppContent() {
         <Route path="/visit" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/gallery" element={<Suspense fallback={<PageLoader />}><GalleryPage /></Suspense>} />
-        <Route path="/cakes" element={<Suspense fallback={<PageLoader />}><CakesPage /></Suspense>} />
-        <Route path="/order" element={<Suspense fallback={<PageLoader />}><CakeOrderPage /></Suspense>} />
         <Route path="/reservation-preview" element={<Suspense fallback={<PageLoader />}><ReservationPreview /></Suspense>} />
         <Route path="/staff/login" element={<Suspense fallback={<PageLoader />}><StaffLogin /></Suspense>} />
         <Route path="/staff" element={<Suspense fallback={<PageLoader />}><StaffKitchen /></Suspense>} />
