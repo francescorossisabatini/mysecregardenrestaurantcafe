@@ -324,7 +324,7 @@ const AboutUs = () => {
             </div>
             <div className="grid gap-5 md:grid-cols-3 stagger-children in-view">
               {t.kitchenCards.map((card, index) => {
-                const images = [tavolataDallAlto, interiorBanquette, interiorLibrary];
+                const images = [tavolataDallAlto, dishesTableTop, tortaCake];
                 return (
                   <article key={card.title} className="overflow-hidden rounded-lg border border-border/75 bg-card shadow-card">
                     <img src={images[index]} alt="" className="aspect-[4/3] w-full object-cover" loading="lazy" />
