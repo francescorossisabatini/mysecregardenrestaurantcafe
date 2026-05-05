@@ -247,10 +247,13 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
   const mondayDate = mondayCell ? new Date(mondayCell) : null;
   const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
   const records: StaffMenuRecord[] = [];
+  const seenDays = new Set<string>();
 
   input.slice(1).forEach((row, rowIndex) => {
     const dayKey = dayKeyFromLabel(row[1] || row[0] || "");
     if (!(dayKey in dayOffsets)) return;
+    if (seenDays.has(dayKey)) return;
+    seenDays.add(dayKey);
     const day = dayDisplayName(dayKey);
     const date = mondayDate && !Number.isNaN(mondayDate.getTime()) ? addDaysIso(mondayDate, dayOffsets[dayKey]) : "";
     const ids = [row[2], row[3], row[4]].map((value) => clean(value, 160).toLowerCase());
