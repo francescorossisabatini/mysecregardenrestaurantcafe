@@ -249,9 +249,14 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
   const records: StaffMenuRecord[] = [];
   const seenDays = new Set<string>();
 
+  const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   input.slice(1).forEach((row, rowIndex) => {
-    const dayKey = dayKeyFromLabel(row[1] || row[0] || "");
-    if (!(dayKey in dayOffsets)) return;
+    let dayKey = dayKeyFromLabel(row[1] || row[0] || "");
+    // Fallback: new sheet format has no day label, rows are implicitly Mon..Sun
+    if (!(dayKey in dayOffsets)) {
+      if (rowIndex >= dayOrder.length) return;
+      dayKey = dayOrder[rowIndex];
+    }
     if (seenDays.has(dayKey)) return;
     seenDays.add(dayKey);
     const day = dayDisplayName(dayKey);
