@@ -616,7 +616,7 @@ serve(async (req) => {
       currentRecords,
       archiveRecords,
       snapshots: snapshots ?? [],
-      _debug: { importErrors, sheetIdPrefix: (imported as any)._debugSheetIdPrefix },
+      _debug: { importErrors, sheetIdPrefix: (imported as any)._debugSheetIdPrefix, structuredCount: debugStructuredCount, inputRowsSample: debugInputRowsSample, menuRowsSample: debugMenuRowsSample },
     },
   }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
 });
