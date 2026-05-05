@@ -523,16 +523,10 @@ serve(async (req) => {
   let imported: { sheetName: string; rows: string[][]; records: StaffMenuRecord[]; sourceHash: string } | null = null;
   const importErrors: string[] = [];
 
-  let debugInputRowsSample: string[][] = [];
-  let debugMenuRowsSample: string[][] = [];
-  let debugStructuredCount = 0;
   try {
     const inputRows = await fetchSheetRows(sheetId, "input data");
     const menuRows = await fetchSheetRows(sheetId, "menudata");
-    debugInputRowsSample = inputRows.slice(0, 5);
-    debugMenuRowsSample = menuRows.slice(0, 5);
     const records = rowsToStructuredKitchenRecords(inputRows, menuRows);
-    debugStructuredCount = records.length;
     if (records.length) {
       imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows) };
     }
