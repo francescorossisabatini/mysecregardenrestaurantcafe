@@ -544,8 +544,12 @@ serve(async (req) => {
   }
 
   if (!imported) {
-    return new Response(JSON.stringify({ success: false, error: "Küchenplan sheet not found or empty", details: importErrors }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ success: false, error: "Küchenplan sheet not found or empty", details: importErrors, sheetIdPrefix: sheetId.slice(0, 12) }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
+
+  // DEBUG: surface import attempts in response
+  (imported as any)._debugImportErrors = importErrors;
+  (imported as any)._debugSheetIdPrefix = sheetId.slice(0, 12);
 
   const { data: currentSnapshot } = await admin.from("kuechenplan_snapshots").select("id, source_hash").eq("is_current", true).maybeSingle();
 
