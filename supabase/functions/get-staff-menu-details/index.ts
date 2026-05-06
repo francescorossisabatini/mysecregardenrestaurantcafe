@@ -263,12 +263,13 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
   });
 
   const mondayCell = input[0]?.[1];
-  const mondayDate = mondayCell ? new Date(mondayCell) : null;
+  const mondayDate = parseSheetDate(mondayCell || "");
   const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
   const records: StaffMenuRecord[] = [];
   const seenDays = new Set<string>();
 
-  const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  // Restaurant is closed on Sundays — skip Sunday rows entirely.
+  const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat"];
   input.slice(1).forEach((row, rowIndex) => {
     let dayKey = dayKeyFromLabel(row[1] || row[0] || "");
     // Fallback: new sheet format has no day label, rows are implicitly Mon..Sun
