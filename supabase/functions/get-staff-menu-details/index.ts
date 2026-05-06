@@ -280,6 +280,7 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
     if (dayKey === "sun") return; // Restaurant closed Sundays
     if (seenDays.has(dayKey)) return;
     seenDays.add(dayKey);
+    const day = dayDisplayName(dayKey);
     const date = mondayDate && !Number.isNaN(mondayDate.getTime()) ? addDaysIso(mondayDate, dayOffsets[dayKey]) : "";
     const ids = [row[2], row[3], row[4]].map((value) => clean(value, 160).toLowerCase());
     const isHoliday = ids.some((id) => id === "feiertag");
