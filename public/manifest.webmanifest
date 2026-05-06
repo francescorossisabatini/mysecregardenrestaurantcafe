@@ -1,0 +1,20 @@
+{
+  "name": "My Secret Garden",
+  "short_name": "Secret Garden",
+  "description": "Vegetarisches & Veganes Restaurant Wien",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F0E8",
+  "theme_color": "#264195",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
