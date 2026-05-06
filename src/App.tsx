@@ -8,6 +8,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
 import { CookieConsent } from "@/components/CookieConsent";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 // Critical: Load Index immediately for fast FCP
@@ -145,6 +146,7 @@ function AppContent() {
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
       <CookieConsent />
+      <InstallPrompt />
     </BrowserRouter>
   );
 }
