@@ -140,6 +140,25 @@ const addDaysIso = (date: Date, offset: number) => {
   return next.toISOString().split("T")[0];
 };
 
+// Parses dates from Google Sheets gviz output. Sheet column type is `date` with
+// pattern `D/M/YYYY` (European). The raw value `cell.v` is "Date(YYYY,M,D)" with
+// month 0-indexed; the formatted `cell.f` is "4/5/2026" (4 May). We must NOT use
+// `new Date("4/5/2026")` because JS engines interpret that as US M/D/YYYY (5 April).
+const parseSheetDate = (raw: string): Date | null => {
+  if (!raw) return null;
+  const gviz = raw.match(/^Date\((\d+),(\d+),(\d+)/);
+  if (gviz) {
+    return new Date(Date.UTC(Number(gviz[1]), Number(gviz[2]), Number(gviz[3])));
+  }
+  const dmy = raw.match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})/);
+  if (dmy) {
+    const year = Number(dmy[3]) < 100 ? 2000 + Number(dmy[3]) : Number(dmy[3]);
+    return new Date(Date.UTC(year, Number(dmy[2]) - 1, Number(dmy[1])));
+  }
+  const fallback = new Date(raw);
+  return Number.isNaN(fallback.getTime()) ? null : fallback;
+};
+
 const parseGviz = (text: string): string[][] => {
   const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?\s*$/s);
   if (!match) throw new Error("Invalid sheet response");
@@ -244,12 +263,13 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
   });
 
   const mondayCell = input[0]?.[1];
-  const mondayDate = mondayCell ? new Date(mondayCell) : null;
+  const mondayDate = parseSheetDate(mondayCell || "");
   const dayOffsets: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 };
   const records: StaffMenuRecord[] = [];
   const seenDays = new Set<string>();
 
-  const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  // Restaurant is closed on Sundays — skip Sunday rows entirely.
+  const dayOrder = ["mon", "tue", "wed", "thu", "fri", "sat"];
   input.slice(1).forEach((row, rowIndex) => {
     let dayKey = dayKeyFromLabel(row[1] || row[0] || "");
     // Fallback: new sheet format has no day label, rows are implicitly Mon..Sun
@@ -257,6 +277,7 @@ function rowsToStructuredKitchenRecords(inputRows: string[][], menuRows: string[
       if (rowIndex >= dayOrder.length) return;
       dayKey = dayOrder[rowIndex];
     }
+    if (dayKey === "sun") return; // Restaurant closed Sundays
     if (seenDays.has(dayKey)) return;
     seenDays.add(dayKey);
     const day = dayDisplayName(dayKey);
