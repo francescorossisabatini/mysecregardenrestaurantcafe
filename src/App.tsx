@@ -146,6 +146,7 @@ function AppContent() {
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
       <CookieConsent />
+      <InstallPrompt />
     </BrowserRouter>
   );
 }
