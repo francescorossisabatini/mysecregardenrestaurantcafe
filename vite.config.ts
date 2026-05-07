@@ -11,6 +11,10 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     sourcemap: true,
+    // Lower target so older iPad/Safari (iOS 12-13) can parse the bundle.
+    // Avoids white-screens on staff devices like the kitchen iPad.
+    target: ["es2017", "safari12"],
+    cssTarget: ["safari12"],
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
