@@ -550,18 +550,18 @@ const StaffKitchen = () => {
   };
 
   const updateReservation = async (reservation: StaffReservation, update: Partial<Pick<StaffReservation, "status" | "staff_notes">>) => {
-    const parsed = reservationUpdateSchema.safeParse(update);
-    if (!parsed.success) {
+    const parsed = sanitizeStaffUpdate(update, reservationUpdateStatuses);
+    if (!parsed) {
       setReservationError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
       return;
     }
 
     const previous = reservations;
     setUpdatingReservationIds((ids) => [...ids, reservation.id]);
-    setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed.data } : item));
+    setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed } : item));
 
     const { error: updateError } = await (supabase.from("reservation_requests") as unknown as StaffUpdateTable)
-      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .update({ ...parsed, updated_at: new Date().toISOString() })
       .eq("id", reservation.id);
 
     setUpdatingReservationIds((ids) => ids.filter((id) => id !== reservation.id));
@@ -592,18 +592,18 @@ const StaffKitchen = () => {
   };
 
   const updateCakeOrder = async (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => {
-    const parsed = cakeOrderUpdateSchema.safeParse(update);
-    if (!parsed.success) {
+    const parsed = sanitizeStaffUpdate(update, cakeOrderUpdateStatuses);
+    if (!parsed) {
       setCakeOrderError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
       return;
     }
 
     const previous = cakeOrders;
     setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
-    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
+    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed } : item));
 
     const { error: updateError } = await (supabase.from("cake_orders") as unknown as StaffUpdateTable)
-      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .update({ ...parsed, updated_at: new Date().toISOString() })
       .eq("id", order.id);
 
     setUpdatingCakeOrderIds((ids) => ids.filter((id) => id !== order.id));
