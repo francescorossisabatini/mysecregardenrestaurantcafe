@@ -615,11 +615,26 @@ const StaffKitchen = () => {
   };
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
+    let mounted = true;
+
+    const { data: listener } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      console.log("[StaffKitchen] auth event:", event, "hasSession:", !!nextSession);
+      if (!mounted) return;
+      // Only react to explicit sign-in / sign-out. Ignore transient INITIAL_SESSION
+      // or TOKEN_REFRESHED events that may briefly emit a null session on older
+      // Safari (iPad), which would otherwise kick the user back to /staff/login.
+      if (event === "SIGNED_IN" && nextSession) {
+        setSession(nextSession);
+      } else if (event === "SIGNED_OUT") {
+        setSession(null);
+        setIsStaff(false);
+      } else if (event === "TOKEN_REFRESHED" && nextSession) {
+        setSession(nextSession);
+      }
     });
 
     supabase.auth.getSession().then(async ({ data }) => {
+      if (!mounted) return;
       setSession(data.session);
 
       if (!data.session?.user) {
@@ -629,6 +644,7 @@ const StaffKitchen = () => {
       }
 
       const { data: accessData, error: accessError } = await supabase.functions.invoke("check-staff-access");
+      if (!mounted) return;
       const hasStaffAccess = !accessError && Boolean(accessData?.isStaff);
       setIsStaff(hasStaffAccess);
       setIsCheckingAccess(false);
@@ -637,7 +653,10 @@ const StaffKitchen = () => {
       else setIsLoading(false);
     });
 
-    return () => listener.subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
