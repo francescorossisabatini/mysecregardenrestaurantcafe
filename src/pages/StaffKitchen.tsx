@@ -10,7 +10,6 @@ import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
-import { z } from "zod";
 
 type StaffMenuRecord = {
   id: string;
@@ -376,15 +375,29 @@ const weekRange = (records: StaffMenuRecord[], language: DashboardLanguage) => {
 };
 
 const reservationStatuses: ReservationStatusFilter[] = ["all", "new", "confirmed", "arrived", "cancelled", "no_show"];
-const reservationUpdateSchema = z.object({
-  status: z.enum(["new", "confirmed", "cancelled", "arrived", "no_show"]).optional(),
-  staff_notes: z.string().trim().max(500).nullable().optional(),
-});
 const cakeOrderStatuses: CakeOrderStatusFilter[] = ["all", "pending", "confirmed", "fulfilled", "cancelled"];
-const cakeOrderUpdateSchema = z.object({
-  status: z.enum(["pending", "confirmed", "cancelled", "fulfilled"]).optional(),
-  staff_notes: z.string().trim().max(500).nullable().optional(),
-});
+const reservationUpdateStatuses: ReservationStatus[] = ["new", "confirmed", "cancelled", "arrived", "no_show"];
+const cakeOrderUpdateStatuses: CakeOrderStatus[] = ["pending", "confirmed", "cancelled", "fulfilled"];
+
+const sanitizeStaffUpdate = <TStatus extends string>(
+  update: { status?: TStatus; staff_notes?: string | null },
+  allowedStatuses: readonly TStatus[],
+) => {
+  const sanitized: { status?: TStatus; staff_notes?: string | null } = {};
+
+  if (update.status !== undefined) {
+    if (!allowedStatuses.includes(update.status)) return null;
+    sanitized.status = update.status;
+  }
+
+  if (update.staff_notes !== undefined) {
+    if (update.staff_notes === null) sanitized.staff_notes = null;
+    else if (typeof update.staff_notes === "string") sanitized.staff_notes = update.staff_notes.trim().slice(0, 500) || null;
+    else return null;
+  }
+
+  return sanitized;
+};
 type StaffUpdateTable = { update: (values: Record<string, unknown>) => { eq: (column: string, value: string) => PromiseLike<{ error: unknown }> } };
 type StaffSelectTable = { select: (columns: string) => { eq: (column: string, value: string) => { order: (column: string, options: { ascending: boolean }) => PromiseLike<{ data: unknown[] | null; error: unknown }> } } };
 
@@ -537,18 +550,18 @@ const StaffKitchen = () => {
   };
 
   const updateReservation = async (reservation: StaffReservation, update: Partial<Pick<StaffReservation, "status" | "staff_notes">>) => {
-    const parsed = reservationUpdateSchema.safeParse(update);
-    if (!parsed.success) {
+    const parsed = sanitizeStaffUpdate(update, reservationUpdateStatuses);
+    if (!parsed) {
       setReservationError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
       return;
     }
 
     const previous = reservations;
     setUpdatingReservationIds((ids) => [...ids, reservation.id]);
-    setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed.data } : item));
+    setReservations((items) => items.map((item) => item.id === reservation.id ? { ...item, ...parsed } : item));
 
     const { error: updateError } = await (supabase.from("reservation_requests") as unknown as StaffUpdateTable)
-      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .update({ ...parsed, updated_at: new Date().toISOString() })
       .eq("id", reservation.id);
 
     setUpdatingReservationIds((ids) => ids.filter((id) => id !== reservation.id));
@@ -579,18 +592,18 @@ const StaffKitchen = () => {
   };
 
   const updateCakeOrder = async (order: StaffCakeOrder, update: Partial<Pick<StaffCakeOrder, "status" | "staff_notes">>) => {
-    const parsed = cakeOrderUpdateSchema.safeParse(update);
-    if (!parsed.success) {
+    const parsed = sanitizeStaffUpdate(update, cakeOrderUpdateStatuses);
+    if (!parsed) {
       setCakeOrderError(language === "de" ? "Ungültige Eingabe." : "Invalid input.");
       return;
     }
 
     const previous = cakeOrders;
     setUpdatingCakeOrderIds((ids) => [...ids, order.id]);
-    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed.data } : item));
+    setCakeOrders((items) => items.map((item) => item.id === order.id ? { ...item, ...parsed } : item));
 
     const { error: updateError } = await (supabase.from("cake_orders") as unknown as StaffUpdateTable)
-      .update({ ...parsed.data, updated_at: new Date().toISOString() })
+      .update({ ...parsed, updated_at: new Date().toISOString() })
       .eq("id", order.id);
 
     setUpdatingCakeOrderIds((ids) => ids.filter((id) => id !== order.id));
