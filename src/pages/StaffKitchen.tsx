@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, MapPin, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -83,6 +83,9 @@ const emptyKuchenplanData: KuchenplanData = {
   archiveRecords: [],
   snapshots: [],
 };
+
+const hasKuchenplanContent = (data: KuchenplanData) =>
+  Boolean(data.records.length || data.currentRecords.length || data.archiveRecords.length);
 
 const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const dayLabels: Record<DashboardLanguage, Record<string, string>> = {
@@ -507,6 +510,7 @@ const StaffKitchen = () => {
   const [isCakeOrdersLoading, setIsCakeOrdersLoading] = useState(false);
   const [cakeOrderError, setCakeOrderError] = useState<string | null>(null);
   const [updatingCakeOrderIds, setUpdatingCakeOrderIds] = useState<string[]>([]);
+  const kuchenplanRequestId = useRef(0);
   const labels = text[language];
 
   const signOut = async () => {
@@ -515,13 +519,17 @@ const StaffKitchen = () => {
   };
 
   const loadKuchenplan = async () => {
+    const requestId = kuchenplanRequestId.current + 1;
+    kuchenplanRequestId.current = requestId;
     setIsLoading(true);
     setError(null);
     const { data, error: functionError } = await supabase.functions.invoke("get-staff-menu-details");
 
+    if (requestId !== kuchenplanRequestId.current) return;
+
     if (functionError || !data?.success) {
       setError(text[language].loadError);
-      setKuchenplan(emptyKuchenplanData);
+      setKuchenplan((current) => hasKuchenplanContent(current) ? current : emptyKuchenplanData);
     } else {
       setKuchenplan({ ...emptyKuchenplanData, ...data.data });
     }
