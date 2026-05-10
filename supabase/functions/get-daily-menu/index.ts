@@ -116,9 +116,44 @@ interface WeeklyMenuResponse {
   error?: string;
 }
 
-// Simple in-memory cache for edge function
-let cachedMenu: { data: WeeklyMenu; timestamp: number } | null = null;
+// Simple in-memory cache for edge function (keyed by sheet id)
+let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
+
+// Fetch the active sheet id + loaded_at from menu_config (fallback to env var)
+async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
+
+  if (!supabaseUrl || !serviceKey) {
+    return { sheetId: envSheetId, loadedAt: null };
+  }
+
+  try {
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/menu_config?select=sheet_id,loaded_at&singleton=eq.true&limit=1`,
+      {
+        headers: {
+          apikey: serviceKey,
+          Authorization: `Bearer ${serviceKey}`,
+        },
+      }
+    );
+    if (res.ok) {
+      const rows = await res.json();
+      if (Array.isArray(rows) && rows.length > 0 && rows[0].sheet_id) {
+        return { sheetId: String(rows[0].sheet_id), loadedAt: rows[0].loaded_at ?? null };
+      }
+    } else {
+      console.warn('menu_config fetch failed:', res.status);
+    }
+  } catch (e) {
+    console.warn('menu_config fetch error:', e);
+  }
+
+  return { sheetId: envSheetId, loadedAt: null };
+}
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
 function sanitizeText(text: unknown, maxLength: number = 500): string {
