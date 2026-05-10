@@ -1,5 +1,5 @@
-import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
-import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
+import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
+import { WeeklyMenuPendingUpdate } from "@/components/WeeklyMenuPendingUpdate";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { SEOHead } from "@/components/SEOHead";
@@ -103,7 +103,8 @@ const WeeklyDish = ({
 
 const WeeklySpecials = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt } = useWeeklyMenu();
+  const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   
   const today = new Date();
   const dayNames = {
@@ -149,8 +150,8 @@ const WeeklySpecials = () => {
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto space-y-6">
-            {!SHOW_WEEKLY_MENU ? (
-              <WeeklyMenuUnavailable />
+            {!weeklyAvailable ? (
+              <WeeklyMenuPendingUpdate />
             ) : isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5, 6].map((i) => (

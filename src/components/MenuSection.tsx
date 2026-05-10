@@ -12,8 +12,8 @@ import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Info } from "lucide-react";
 import { useState, useMemo, useRef } from "react";
-import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
-import { WeeklyMenuUnavailable } from "@/components/WeeklyMenuUnavailable";
+import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
+import { WeeklyMenuPendingUpdate } from "@/components/WeeklyMenuPendingUpdate";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
@@ -94,7 +94,8 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
 
 export const MenuSection = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt } = useWeeklyMenu();
+  const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
   const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
   const todayRef = useRef<HTMLDivElement>(null);
@@ -190,7 +191,7 @@ export const MenuSection = () => {
                 {[
                   { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
                   { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-                  ...(SHOW_WEEKLY_MENU ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
+                  ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -236,10 +237,10 @@ export const MenuSection = () => {
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
           {/* Mobile: floating pill replaces the bulky sticky bars (rendered via portal-like fixed element) */}
-          <MenuFloatingPill activeTab={activeMenuTab} onSelect={scrollToMenuBlock} />
+          <MenuFloatingPill activeTab={activeMenuTab} onSelect={scrollToMenuBlock} showWeekly={weeklyAvailable} />
           
-          {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
-          {SHOW_WEEKLY_MENU ? (
+          {/* BLOCK 1 + Weekly: hidden when weekly menu is not available (Sunday or stale sheet ID) */}
+          {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
             <div className="text-center mb-8">
@@ -548,7 +549,7 @@ export const MenuSection = () => {
           </div>
           </>
           ) : (
-            <WeeklyMenuUnavailable />
+            <WeeklyMenuPendingUpdate />
           )}
           
           {/* BLOCK 2: Visual Transition - WCAG compliant text */}

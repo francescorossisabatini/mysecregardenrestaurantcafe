@@ -114,11 +114,73 @@ interface WeeklyMenuResponse {
   success: boolean;
   data?: WeeklyMenu;
   error?: string;
+  loadedAt?: string | null;
 }
 
-// Simple in-memory cache for edge function
-let cachedMenu: { data: WeeklyMenu; timestamp: number } | null = null;
+// Simple in-memory cache for edge function (keyed by sheet id)
+let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
+
+// Fetch the active sheet id + loaded_at from menu_config.
+// On first deploy (no DB row) we self-bootstrap from the GOOGLE_SHEET_ID env var
+// and persist it so the Sunday-rollover clock starts from now.
+async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
+
+  if (!supabaseUrl || !serviceKey) {
+    return { sheetId: envSheetId, loadedAt: null };
+  }
+
+  const baseHeaders = {
+    apikey: serviceKey,
+    Authorization: `Bearer ${serviceKey}`,
+  };
+
+  try {
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/menu_config?select=sheet_id,loaded_at&singleton=eq.true&limit=1`,
+      { headers: baseHeaders }
+    );
+    if (res.ok) {
+      const rows = await res.json();
+      if (Array.isArray(rows) && rows.length > 0 && rows[0].sheet_id) {
+        return { sheetId: String(rows[0].sheet_id), loadedAt: rows[0].loaded_at ?? null };
+      }
+    } else {
+      console.warn('menu_config fetch failed:', res.status);
+    }
+  } catch (e) {
+    console.warn('menu_config fetch error:', e);
+  }
+
+  // Self-bootstrap from env var
+  if (envSheetId) {
+    const nowIso = new Date().toISOString();
+    try {
+      await fetch(`${supabaseUrl}/rest/v1/menu_config`, {
+        method: 'POST',
+        headers: {
+          ...baseHeaders,
+          'Content-Type': 'application/json',
+          Prefer: 'resolution=merge-duplicates',
+        },
+        body: JSON.stringify({
+          singleton: true,
+          sheet_id: envSheetId,
+          loaded_at: nowIso,
+        }),
+      });
+      console.log('menu_config bootstrapped from env');
+    } catch (e) {
+      console.warn('menu_config bootstrap failed:', e);
+    }
+    return { sheetId: envSheetId, loadedAt: nowIso };
+  }
+
+  return { sheetId: '', loadedAt: null };
+}
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
 function sanitizeText(text: unknown, maxLength: number = 500): string {
@@ -282,8 +344,9 @@ serve(async (req) => {
   console.log('Menu request from:', origin || 'unknown origin', 'IP:', clientIP);
 
   try {
-    let sheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
-    
+    const { sheetId: rawSheetId, loadedAt } = await getActiveMenuConfig();
+    let sheetId = rawSheetId;
+
     // Extract sheet ID from full URL if needed
     const urlMatch = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
     if (urlMatch) {
@@ -291,28 +354,29 @@ serve(async (req) => {
     }
     // Also strip any query params
     sheetId = sheetId.split('?')[0].split('/')[0].trim();
-    
-    console.log('Using sheet ID:', sheetId);
-    
+
+    console.log('Using sheet ID:', sheetId, 'loadedAt:', loadedAt);
+
     if (!sheetId) {
-      console.error('GOOGLE_SHEET_ID not configured');
+      console.error('No sheet ID configured (menu_config empty and GOOGLE_SHEET_ID unset)');
       return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Menu configuration not available'
+        JSON.stringify({
+          success: false,
+          error: 'Menu configuration not available',
+          loadedAt,
         } as WeeklyMenuResponse),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       );
     }
 
-    // Check cache first
-    if (cachedMenu && (Date.now() - cachedMenu.timestamp) < CACHE_DURATION) {
+    // Check cache first (only if same sheet id)
+    if (cachedMenu && cachedMenu.sheetId === sheetId && (Date.now() - cachedMenu.timestamp) < CACHE_DURATION) {
       console.log('Returning cached menu data');
       return new Response(
-        JSON.stringify({ success: true, data: cachedMenu.data } as WeeklyMenuResponse),
+        JSON.stringify({ success: true, data: cachedMenu.data, loadedAt } as WeeklyMenuResponse),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -513,10 +577,10 @@ serve(async (req) => {
     console.log(`Parsed and validated menu with ${validatedMenu.days.length} days`);
     
     // Update cache
-    cachedMenu = { data: validatedMenu, timestamp: Date.now() };
-    
+    cachedMenu = { data: validatedMenu, timestamp: Date.now(), sheetId };
+
     return new Response(
-      JSON.stringify({ success: true, data: validatedMenu } as WeeklyMenuResponse),
+      JSON.stringify({ success: true, data: validatedMenu, loadedAt } as WeeklyMenuResponse),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
     

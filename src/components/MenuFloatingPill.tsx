@@ -3,13 +3,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { getConsent, CONSENT_EVENT } from "@/components/CookieConsent";
-import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 
 type TabId = "today" | "fixed" | "week";
 
 interface Props {
   activeTab: TabId;
   onSelect: (tab: TabId) => void;
+  showWeekly?: boolean;
 }
 
 /**
@@ -19,7 +19,7 @@ interface Props {
  *   when footer in view (handled implicitly via scroll position cap).
  * - Sits above the MobileStickyBar (call/visit), stays centered, narrow width.
  */
-export const MenuFloatingPill = ({ activeTab, onSelect }: Props) => {
+export const MenuFloatingPill = ({ activeTab, onSelect, showWeekly = true }: Props) => {
   const { language } = useLanguage();
   const isMobile = useIsMobile();
   const { isOpen: isMobileMenuOpen } = useMobileMenu();
@@ -67,7 +67,7 @@ export const MenuFloatingPill = ({ activeTab, onSelect }: Props) => {
   const tabs: { id: TabId; label: string }[] = [
     { id: "today", label: language === "de" ? "Heute" : "Today" },
     { id: "fixed", label: language === "de" ? "Immer" : "Always" },
-    ...(SHOW_WEEKLY_MENU ? [{ id: "week" as TabId, label: language === "de" ? "Woche" : "Week" }] : []),
+    ...(showWeekly ? [{ id: "week" as TabId, label: language === "de" ? "Woche" : "Week" }] : []),
   ];
 
   const shouldShow = isVisible && !isMobileMenuOpen && !consentPending;

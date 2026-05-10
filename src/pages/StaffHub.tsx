@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEOHead } from "@/components/SEOHead";
+import { WeeklyMenuConfigCard } from "@/components/WeeklyMenuConfigCard";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
@@ -176,6 +177,8 @@ const StaffHub = () => {
 
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
         {kuchenplanError ? <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{kuchenplanError}</p> : null}
+
+        <WeeklyMenuConfigCard />
 
         <section className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
