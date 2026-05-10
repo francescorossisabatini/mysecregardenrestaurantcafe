@@ -94,7 +94,8 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
 
 export const MenuSection = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt } = useWeeklyMenu();
+  const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
   const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
   const todayRef = useRef<HTMLDivElement>(null);
