@@ -121,28 +121,27 @@ interface WeeklyMenuResponse {
 let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
-// Fetch the active sheet id + loaded_at from menu_config (fallback to env var).
-// When no DB row exists, we synthesize loadedAt = now() so the weekly menu remains
-// visible until the next Sunday rollover (preserves legacy behavior on first deploy).
+// Fetch the active sheet id + loaded_at from menu_config.
+// On first deploy (no DB row) we self-bootstrap from the GOOGLE_SHEET_ID env var
+// and persist it so the Sunday-rollover clock starts from now.
 async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
   const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
   const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
-  const fallback = { sheetId: envSheetId, loadedAt: new Date().toISOString() };
 
   if (!supabaseUrl || !serviceKey) {
-    return fallback;
+    return { sheetId: envSheetId, loadedAt: null };
   }
+
+  const baseHeaders = {
+    apikey: serviceKey,
+    Authorization: `Bearer ${serviceKey}`,
+  };
 
   try {
     const res = await fetch(
       `${supabaseUrl}/rest/v1/menu_config?select=sheet_id,loaded_at&singleton=eq.true&limit=1`,
-      {
-        headers: {
-          apikey: serviceKey,
-          Authorization: `Bearer ${serviceKey}`,
-        },
-      }
+      { headers: baseHeaders }
     );
     if (res.ok) {
       const rows = await res.json();
@@ -156,7 +155,31 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
     console.warn('menu_config fetch error:', e);
   }
 
-  return fallback;
+  // Self-bootstrap from env var
+  if (envSheetId) {
+    const nowIso = new Date().toISOString();
+    try {
+      await fetch(`${supabaseUrl}/rest/v1/menu_config`, {
+        method: 'POST',
+        headers: {
+          ...baseHeaders,
+          'Content-Type': 'application/json',
+          Prefer: 'resolution=merge-duplicates',
+        },
+        body: JSON.stringify({
+          singleton: true,
+          sheet_id: envSheetId,
+          loaded_at: nowIso,
+        }),
+      });
+      console.log('menu_config bootstrapped from env');
+    } catch (e) {
+      console.warn('menu_config bootstrap failed:', e);
+    }
+    return { sheetId: envSheetId, loadedAt: nowIso };
+  }
+
+  return { sheetId: '', loadedAt: null };
 }
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
