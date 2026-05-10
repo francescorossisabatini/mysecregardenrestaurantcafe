@@ -28,10 +28,10 @@ interface WeeklyMenu {
 
 export function useWeeklyMenu() {
   const [menu, setMenu] = useState<WeeklyMenu>(fallbackMenu);
+  const [loadedAt, setLoadedAt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fix: no refresh every 30s.
   // Soft refresh on focus/online/visibility change, with minimum gap.
   const SOFT_REFRESH_MIN_GAP = 10 * 60 * 1000; // 10 min
   const HEARTBEAT_INTERVAL = 15 * 60 * 1000;   // 15 min (tab open long)
@@ -47,15 +47,17 @@ export function useWeeklyMenu() {
         setError(null);
 
         if (force) {
-          clearMenuCache(); // bypass local cache
+          clearMenuCache();
         }
 
-        const data = await fetchMenuFromSheets();
-        setMenu(data);
+        const result = await fetchMenuFromSheets();
+        setMenu(result.menu);
+        setLoadedAt(result.loadedAt);
       } catch (err) {
         console.error("Failed to load menu:", err);
         setError("Failed to load latest menu");
         setMenu(fallbackMenu);
+        setLoadedAt(null);
       } finally {
         if (!silent) setIsLoading(false);
       }
@@ -66,8 +68,6 @@ export function useWeeklyMenu() {
   const softRefresh = useCallback(() => {
     const now = Date.now();
     if (now - lastSoftRefreshRef.current < SOFT_REFRESH_MIN_GAP) return;
-
-    // Soft refresh: does NOT clear cache -> avoids unnecessary calls
     loadMenu({ silent: true });
     lastSoftRefreshRef.current = now;
   }, [loadMenu]);
@@ -94,8 +94,7 @@ export function useWeeklyMenu() {
     };
   }, [loadMenu, softRefresh]);
 
-  // Hard refresh (bypass cache)
   const refresh = () => loadMenu({ force: true });
 
-  return { menu, isLoading, error, refresh };
+  return { menu, loadedAt, isLoading, error, refresh };
 }
