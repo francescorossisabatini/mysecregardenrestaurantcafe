@@ -150,8 +150,8 @@ const WeeklySpecials = () => {
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto space-y-6">
-            {!SHOW_WEEKLY_MENU ? (
-              <WeeklyMenuUnavailable />
+            {!weeklyAvailable ? (
+              <WeeklyMenuPendingUpdate />
             ) : isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
