@@ -19,7 +19,7 @@ interface Props {
  *   when footer in view (handled implicitly via scroll position cap).
  * - Sits above the MobileStickyBar (call/visit), stays centered, narrow width.
  */
-export const MenuFloatingPill = ({ activeTab, onSelect }: Props) => {
+export const MenuFloatingPill = ({ activeTab, onSelect, showWeekly = true }: Props) => {
   const { language } = useLanguage();
   const isMobile = useIsMobile();
   const { isOpen: isMobileMenuOpen } = useMobileMenu();
