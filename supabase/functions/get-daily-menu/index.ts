@@ -317,8 +317,9 @@ serve(async (req) => {
   console.log('Menu request from:', origin || 'unknown origin', 'IP:', clientIP);
 
   try {
-    let sheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
-    
+    const { sheetId: rawSheetId, loadedAt } = await getActiveMenuConfig();
+    let sheetId = rawSheetId;
+
     // Extract sheet ID from full URL if needed
     const urlMatch = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
     if (urlMatch) {
@@ -326,28 +327,29 @@ serve(async (req) => {
     }
     // Also strip any query params
     sheetId = sheetId.split('?')[0].split('/')[0].trim();
-    
-    console.log('Using sheet ID:', sheetId);
-    
+
+    console.log('Using sheet ID:', sheetId, 'loadedAt:', loadedAt);
+
     if (!sheetId) {
-      console.error('GOOGLE_SHEET_ID not configured');
+      console.error('No sheet ID configured (menu_config empty and GOOGLE_SHEET_ID unset)');
       return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Menu configuration not available'
+        JSON.stringify({
+          success: false,
+          error: 'Menu configuration not available',
+          loadedAt,
         } as WeeklyMenuResponse),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       );
     }
 
-    // Check cache first
-    if (cachedMenu && (Date.now() - cachedMenu.timestamp) < CACHE_DURATION) {
+    // Check cache first (only if same sheet id)
+    if (cachedMenu && cachedMenu.sheetId === sheetId && (Date.now() - cachedMenu.timestamp) < CACHE_DURATION) {
       console.log('Returning cached menu data');
       return new Response(
-        JSON.stringify({ success: true, data: cachedMenu.data } as WeeklyMenuResponse),
+        JSON.stringify({ success: true, data: cachedMenu.data, loadedAt } as WeeklyMenuResponse),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
