@@ -3,13 +3,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { getConsent, CONSENT_EVENT } from "@/components/CookieConsent";
-import { SHOW_WEEKLY_MENU } from "@/config/menuFlags";
 
 type TabId = "today" | "fixed" | "week";
 
 interface Props {
   activeTab: TabId;
   onSelect: (tab: TabId) => void;
+  showWeekly?: boolean;
 }
 
 /**
