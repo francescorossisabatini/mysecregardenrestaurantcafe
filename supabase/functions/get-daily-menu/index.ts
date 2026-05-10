@@ -551,10 +551,10 @@ serve(async (req) => {
     console.log(`Parsed and validated menu with ${validatedMenu.days.length} days`);
     
     // Update cache
-    cachedMenu = { data: validatedMenu, timestamp: Date.now() };
-    
+    cachedMenu = { data: validatedMenu, timestamp: Date.now(), sheetId };
+
     return new Response(
-      JSON.stringify({ success: true, data: validatedMenu } as WeeklyMenuResponse),
+      JSON.stringify({ success: true, data: validatedMenu, loadedAt } as WeeklyMenuResponse),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
     
