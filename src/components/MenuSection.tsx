@@ -549,7 +549,7 @@ export const MenuSection = () => {
           </div>
           </>
           ) : (
-            <WeeklyMenuUnavailable />
+            <WeeklyMenuPendingUpdate />
           )}
           
           {/* BLOCK 2: Visual Transition - WCAG compliant text */}
