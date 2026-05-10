@@ -191,7 +191,7 @@ export const MenuSection = () => {
                 {[
                   { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
                   { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-                  ...(SHOW_WEEKLY_MENU ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
+                  ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
                 ].map((tab) => (
                   <button
                     key={tab.id}
