@@ -114,6 +114,7 @@ interface WeeklyMenuResponse {
   success: boolean;
   data?: WeeklyMenu;
   error?: string;
+  loadedAt?: string | null;
 }
 
 // Simple in-memory cache for edge function (keyed by sheet id)
