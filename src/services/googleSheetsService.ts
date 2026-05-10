@@ -24,12 +24,18 @@ interface WeeklyMenu {
   days: MenuDay[];
 }
 
+export interface MenuFetchResult {
+  menu: WeeklyMenu;
+  loadedAt: string | null;
+}
+
 const CACHE_KEY = 'weekly_menu_cache';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes (match server cache)
 const isDev = import.meta.env.DEV;
 
 interface CachedMenu {
   data: WeeklyMenu;
+  loadedAt?: string | null;
   timestamp: number;
 }
 
