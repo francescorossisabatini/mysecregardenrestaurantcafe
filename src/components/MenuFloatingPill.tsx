@@ -67,7 +67,7 @@ export const MenuFloatingPill = ({ activeTab, onSelect, showWeekly = true }: Pro
   const tabs: { id: TabId; label: string }[] = [
     { id: "today", label: language === "de" ? "Heute" : "Today" },
     { id: "fixed", label: language === "de" ? "Immer" : "Always" },
-    ...(SHOW_WEEKLY_MENU ? [{ id: "week" as TabId, label: language === "de" ? "Woche" : "Week" }] : []),
+    ...(showWeekly ? [{ id: "week" as TabId, label: language === "de" ? "Woche" : "Week" }] : []),
   ];
 
   const shouldShow = isVisible && !isMobileMenuOpen && !consentPending;
