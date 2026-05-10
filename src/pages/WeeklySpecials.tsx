@@ -103,7 +103,8 @@ const WeeklyDish = ({
 
 const WeeklySpecials = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt } = useWeeklyMenu();
+  const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   
   const today = new Date();
   const dayNames = {
