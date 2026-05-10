@@ -237,10 +237,10 @@ export const MenuSection = () => {
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
           {/* Mobile: floating pill replaces the bulky sticky bars (rendered via portal-like fixed element) */}
-          <MenuFloatingPill activeTab={activeMenuTab} onSelect={scrollToMenuBlock} />
+          <MenuFloatingPill activeTab={activeMenuTab} onSelect={scrollToMenuBlock} showWeekly={weeklyAvailable} />
           
-          {/* BLOCK 1 + Weekly: hidden when menu is disabled */}
-          {SHOW_WEEKLY_MENU ? (
+          {/* BLOCK 1 + Weekly: hidden when weekly menu is not available (Sunday or stale sheet ID) */}
+          {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
             <div className="text-center mb-8">
