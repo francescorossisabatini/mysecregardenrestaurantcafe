@@ -223,6 +223,36 @@ export type Database = {
         }
         Relationships: []
       }
+      menu_config: {
+        Row: {
+          created_at: string
+          id: string
+          loaded_at: string
+          loaded_by: string | null
+          sheet_id: string
+          singleton: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          loaded_at?: string
+          loaded_by?: string | null
+          sheet_id: string
+          singleton?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          loaded_at?: string
+          loaded_by?: string | null
+          sheet_id?: string
+          singleton?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       reservation_requests: {
         Row: {
           contact: string

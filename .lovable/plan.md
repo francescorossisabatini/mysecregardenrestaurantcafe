@@ -1,115 +1,101 @@
-Piano aggiornato.
+## Obiettivo
 
-Hai ragione: Supermind non deve stare nella pagina About. Lo tratto come elemento di prodotto/menu, non come parte della storia identitaria About.
+Ogni domenica il menu della settimana scade automaticamente. Finché non carichi un nuovo Google Sheet ID dallo staff hub, il sito nasconde il menu settimanale ovunque e mostra un messaggio "wird aktualisiert". Quando carichi il nuovo ID, il menu torna visibile fino alla domenica successiva.
 
-1. About senza Supermind
+## Comportamento
 
-Nella pagina `/about` rimuoverò completamente:
+- **Lun–Sab**: tutto come oggi, menu settimanale visibile (se l'ID è valido per la settimana corrente).
+- **Domenica 00:00**: il menu settimanale viene considerato "scaduto" automaticamente. Tab Woche nascosto, anteprime nascoste, menu page mostra messaggio.
+- **Tu carichi nuovo ID** (da /staff): l'ID viene marcato come valido fino alla domenica successiva 23:59. Il menu torna visibile da subito.
+- Se la domenica non carichi nulla, lunedì rimane comunque nascosto finché non carichi.
 
-- import del logo Supermind
-- testi `coffeeLabel`, `coffeeTitle`, `coffeePara`, `coffeeBridge`
-- blocco “Secret Garden × Supermind”
-- link `supermind.at`
-- logo Supermind
+## Cosa cambia
 
-Al suo posto la pagina passerà direttamente dalla parte “cucina e atmosfera” alla parte “il giardino / il luogo”, poi alla sezione finale su Sri Chinmoy.
+### 1. Database — nuova tabella `menu_config`
+Una sola riga di configurazione:
+- `sheet_id` (testo) — il Google Sheet ID corrente
+- `loaded_at` (timestamp) — quando è stato caricato
+- `loaded_by` (uuid) — quale staff
+- RLS: lettura via edge function (service role), scrittura solo a chi ha ruolo staff/admin
 
-2. About più editoriale e coerente
+### 2. Edge function `get-daily-menu`
+- Legge prima `sheet_id` da `menu_config`, fallback all'env var attuale `GOOGLE_SHEET_ID`
+- Restituisce nella response anche `loadedAt` (timestamp dell'ultimo caricamento)
 
-Ristrutturerò `src/pages/AboutUs.tsx` con un racconto più premium:
+### 3. Nuovo edge function `set-menu-sheet-id`
+- POST con `{ sheetId }`
+- Verifica auth + ruolo staff
+- Aggiorna riga unica in `menu_config`, salva `loaded_at = now()`, `loaded_by = auth.uid()`
+- Restituisce successo / errore di validazione (ID malformato)
 
-```text
-Hero editoriale
-Capitolo 01: Il luogo nel Raimundhof
-Capitolo 02: La cucina vegetariana e vegana
-Capitolo 03: Il ritmo quotidiano del ristorante
-Capitolo 04: Sri Chinmoy come ispirazione
-Capitolo 05: Arte, poesia, servizio e ristoranti collegati nel mondo
-CTA finale
+### 4. Frontend — hook `useWeeklyMenuAvailable()`
+Sostituisce la costante `SHOW_WEEKLY_MENU` (resta come override manuale di emergenza). Il hook restituisce `true` se:
+- `loadedAt` esiste, e
+- `loadedAt` è successivo all'ultima domenica 00:00 (timezone Europe/Vienna), e
+- oggi non è domenica O (è domenica e l'ID è stato caricato oggi)
+
+Logica equivalente: "il menu è valido finché non passa la prossima domenica 00:00".
+
+Tutti i punti che oggi controllano `SHOW_WEEKLY_MENU` (MenuSection, MenuFloatingPill, WeeklySpecials, eventuali preview homepage) usano il nuovo hook.
+
+### 5. Nuovo componente `WeeklyMenuPendingUpdate`
+Sostituisce `WeeklyMenuUnavailable` quando la causa è "domenica + ID non aggiornato".
+
+Copy nuova:
+- **DE**: *Der Wochenplan wird gerade aktualisiert. Schau am Montag wieder vorbei oder ruf uns an: +43 1 586 28 39.*
+- **EN**: *The weekly menu is being updated. Check back on Monday or call us: +43 1 586 28 39.*
+
+Stile: stesso layout di `WeeklyMenuUnavailable`, tono accogliente, niente urgency, link telefono cliccabile.
+
+### 6. Staff hub — sezione "Aggiorna menu della settimana"
+Piccolo blocco in `/staff` (StaffHub):
+- Input testo per incollare URL completo del Google Sheet o solo l'ID
+- Bottone "Carica menu della settimana"
+- Mostra: ultimo caricamento (data + chi), stato (valido/scaduto), prossima scadenza (domenica successiva)
+- Estrae automaticamente l'ID se incolli URL completo (regex già presente nell'edge function attuale)
+- Toast di conferma + invalidazione cache locale del menu
+
+## Dettagli tecnici
+
+### Calcolo "ultima domenica" (Europe/Vienna)
+```ts
+function lastSundayMidnightVienna(now = new Date()): Date {
+  // Converti now in Vienna time, trova la domenica più recente alle 00:00,
+  // poi riporta a UTC. Usa Intl.DateTimeFormat con timeZone Europe/Vienna.
+}
+const isWeeklyMenuValid = loadedAt && loadedAt >= lastSundayMidnightVienna();
 ```
 
-Il tono sarà più editoriale, meno “scheda informativa”. Ogni sezione sarà ben separata, con titolo forte, testo breve, immagine reale o opere già presenti negli asset, didascalie e separatori botanici.
+### Bypass per emergenza
+La costante `SHOW_WEEKLY_MENU` in `src/config/menuFlags.ts` resta come master switch: se `false`, il menu è nascosto comunque. L'hook controlla prima la costante, poi la logica auto.
 
-3. Supermind in Home e Menu
+### Schema DB
+```text
+menu_config
+├── id           uuid   pk default gen_random_uuid()
+├── sheet_id     text   not null
+├── loaded_at    timestamptz not null default now()
+├── loaded_by    uuid   references auth.users(id)
+└── singleton    bool   unique default true   -- forza una sola riga
+```
 
-Supermind è già presente in due punti corretti:
+### File toccati
+- `supabase/migrations/...` — nuova tabella + RLS
+- `supabase/functions/get-daily-menu/index.ts` — leggi da DB
+- `supabase/functions/set-menu-sheet-id/index.ts` — nuovo
+- `src/hooks/useWeeklyMenuAvailable.ts` — nuovo
+- `src/components/WeeklyMenuPendingUpdate.tsx` — nuovo
+- `src/components/MenuSection.tsx` — sostituisci flag con hook
+- `src/components/MenuFloatingPill.tsx` — idem
+- `src/pages/WeeklySpecials.tsx` — idem
+- `src/pages/StaffHub.tsx` — aggiungi blocco upload sheet ID
 
-- Home: `HomeMenuPreview.tsx`, blocco “Secret Garden × Supermind” sotto il menu del giorno
-- Menu: `MenuSection.tsx`, badge/link Supermind sugli item caffè
+### Cosa NON cambia
+- Nessuna modifica al copy del resto del sito
+- Nessuna modifica al design system, ai token, alla nav
+- Nessuna modifica alla struttura del Google Sheet
+- L'env var `GOOGLE_SHEET_ID` resta come fallback iniziale (prima del primo upload)
 
-Lo lascerò lì e, se necessario, lo renderò più chiaro come elemento collegato a caffè e bevande. Non lo porterò più nella narrazione About.
+## Domanda finale prima di implementare
 
-4. Sezioni più evidenti e animate nello scroll
-
-Aggiungerò alla pagina About un sistema di sezioni più riconoscibile:
-
-- etichette “Kapitel 01” / “Chapter 01”
-- fondi alternati crema, verde soft, card chiara
-- bordi editoriali e blocchi citazione
-- immagini con cornici leggere e didascalie
-- cards per concetti chiave
-
-Per le animazioni rispetterò le regole del progetto:
-
-- solo fade-in lento
-- nessun zoom
-- nessun parallax
-- nessun movimento aggressivo
-- supporto `prefers-reduced-motion`
-
-Ogni sezione entrerà nello scroll con fade-in lento e i contenuti interni potranno comparire in sequenza leggera.
-
-5. Sri Chinmoy: più attenzione e dettagli
-
-Amplio molto la parte finale, usando fonti ufficiali e tono rispettoso:
-
-- biografia sintetica: 1931, India/Bengala, New York dal 1964, attività fino al 2007
-- meditazione, pace interiore, servizio, armonia tra culture e religioni
-- arte Jharna-Kala e Soul-Birds
-- poesia e scrittura
-- musica e Peace Concerts
-- vegetarianismo e “divine enterprises”, cioè ristoranti/cafè aperti da studenti ispirati dalla sua filosofia
-- legame concreto con My Secret Garden: cucina vegetariana, calma, servizio quotidiano, atmosfera consapevole
-
-6. Link da inserire nella parte Sri Chinmoy
-
-Inserirò link utili, ordinati e non invasivi:
-
-- Official biography: `https://srichinmoy.org/sri_chinmoy/biography/`
-- Official site: `https://srichinmoy.org/`
-- Cultural offerings: `https://www.srichinmoy.org/sri_chinmoy/landmarks/cultural_offerings/`
-- Art / Jharna-Kala: `https://srichinmoy.org/sri_chinmoy/art`
-- Sri Chinmoy Library: `https://www.srichinmoylibrary.com/srichinmoy`
-- Restaurants and cafés: `https://www.srichinmoycentre.org/enterprises`
-
-7. Ristoranti ispirati da citare
-
-Aggiungerò un piccolo blocco “A wider family of vegetarian cafés” / equivalente tedesco, con pochi esempi selezionati:
-
-- The Heart of Joy, Salzburg: `https://www.heartofjoy.at/en/`
-- The Smile of the Beyond, Queens/New York: `https://www.smileofthebeyond.com/`
-- My Rainbow-Dreams, Canberra: `https://myrainbowdreams.org/our-story`
-- Happiness-Heart Café, Berlin: `https://www.happiness-heart-cafe.de/`
-- The Sacred / Vegelateria, Zürich: `https://vegelateria.ch/`
-
-Questo blocco renderà chiaro che My Secret Garden fa parte di una tradizione più ampia di ristoranti vegetariani ispirati a Sri Chinmoy, senza confondere questa parte con Supermind.
-
-8. File da modificare dopo approvazione
-
-- `src/pages/AboutUs.tsx`
-- `src/index.css`, solo se servono utility editoriali/animazioni locali
-
-Non toccherò il client backend né file generati.
-
-9. Verifica finale
-
-Controllerò:
-
-- About senza alcuna presenza Supermind
-- Supermind ancora presente in Home e Menu
-- desktop e mobile senza overflow
-- sezioni About più evidenti
-- animazioni solo fade-in lento
-- link esterni funzionanti e accessibili
-- testi DE/EN coerenti
-- nessun em dash
+Confermi le copy DE/EN sopra? Se preferisci wording diverso (es. tono più caldo, citare "lo chef sta scegliendo i piatti"), dimmi e lo cambio prima di scrivere codice.
