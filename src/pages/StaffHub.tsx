@@ -178,7 +178,7 @@ const StaffHub = () => {
         {error && <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{error}</p>}
         {kuchenplanError ? <p className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 font-work text-sm text-destructive">{kuchenplanError}</p> : null}
 
-        <WeeklyMenuConfigCard />
+        <WeeklyMenuConfigCard onMenuSynced={loadKuchenplan} />
 
         <section className="mb-8 grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-border/70 bg-card/85 p-5 shadow-card">
