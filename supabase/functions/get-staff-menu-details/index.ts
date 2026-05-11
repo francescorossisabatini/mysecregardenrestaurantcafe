@@ -532,7 +532,7 @@ serve(async (req) => {
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   let sheetId = Deno.env.get("GOOGLE_SHEET_ID") || Deno.env.get("VITE_GOOGLE_SHEETS_ID") || "";
 
-  if (!supabaseUrl || !serviceRoleKey || !sheetId) {
+  if (!supabaseUrl || !serviceRoleKey) {
     return new Response(JSON.stringify({ error: "Backend configuration missing" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 
@@ -545,6 +545,17 @@ serve(async (req) => {
 
   const { data: roles, error: roleError } = await admin.from("user_roles").select("role").eq("user_id", userData.user.id).in("role", ["admin", "staff"]);
   if (roleError || !roles?.length) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+
+  const { data: menuConfig } = await admin
+    .from("menu_config")
+    .select("sheet_id, loaded_at")
+    .eq("singleton", true)
+    .maybeSingle();
+  if (menuConfig?.sheet_id) sheetId = menuConfig.sheet_id;
+
+  if (!sheetId) {
+    return new Response(JSON.stringify({ error: "No weekly menu sheet configured" }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  }
 
   const match = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
   if (match) sheetId = match[1];
@@ -559,7 +570,7 @@ serve(async (req) => {
     const menuRows = await fetchSheetRows(sheetId, "menudata");
     const records = rowsToStructuredKitchenRecords(inputRows, menuRows);
     if (records.length) {
-      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows) };
+      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows, sheetId) };
     }
   } catch (error) {
     importErrors.push(`input data + menudata: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -571,7 +582,7 @@ serve(async (req) => {
       const rows = await fetchSheetRows(sheetId, sheetName);
       const records = rowsToRecords(rows, sheetName);
       if (!records.length) throw new Error("No usable rows found");
-      imported = { sheetName, rows, records, sourceHash: await digestRows(rows) };
+      imported = { sheetName, rows, records, sourceHash: await digestRows(rows, [], sheetId) };
       break;
     } catch (error) {
       importErrors.push(`${sheetName}: ${error instanceof Error ? error.message : "Unknown error"}`);
