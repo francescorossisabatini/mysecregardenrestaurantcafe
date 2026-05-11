@@ -602,7 +602,7 @@ serve(async (req) => {
     const { data: newSnapshot, error: snapshotError } = await admin.from("kuechenplan_snapshots").insert({
       source_hash: imported.sourceHash,
       sheet_name: imported.sheetName,
-      period: imported.records.find((record) => record.menuDay)?.menuDay ?? null,
+      period: snapshotPeriodFromRecords(imported.records),
       is_current: true,
     }).select("id").single();
     if (snapshotError) throw snapshotError;
