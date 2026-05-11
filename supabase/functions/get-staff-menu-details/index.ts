@@ -480,10 +480,20 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
   }).filter((record) => record.title && record.fields.length >= 2);
 }
 
-const digestRows = async (rows: string[][], extraRows: string[][] = []) => {
-  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v1", rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
+const digestRows = async (rows: string[][], extraRows: string[][] = [], sourceKey = "") => {
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v2", sourceKey, rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const snapshotPeriodFromRecords = (records: StaffMenuRecord[]) => {
+  const dates = records
+    .map((record) => record.fields.find((field) => field.label.toLowerCase() === "date")?.value)
+    .filter((value): value is string => Boolean(value));
+  const uniqueDates = [...new Set(dates)];
+  if (uniqueDates.length > 1) return `${uniqueDates[0]} to ${uniqueDates[uniqueDates.length - 1]}`;
+  if (uniqueDates.length === 1) return uniqueDates[0];
+  return records.find((record) => record.menuDay)?.menuDay ?? null;
 };
 
 const recordSearchText = (record: StaffMenuRecord) => clean([
