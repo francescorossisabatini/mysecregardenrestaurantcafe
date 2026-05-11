@@ -480,10 +480,20 @@ function rowsToRecords(rows: string[][], sourceSheet: string): StaffMenuRecord[]
   }).filter((record) => record.title && record.fields.length >= 2);
 }
 
-const digestRows = async (rows: string[][], extraRows: string[][] = []) => {
-  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v1", rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
+const digestRows = async (rows: string[][], extraRows: string[][] = [], sourceKey = "") => {
+  const bytes = new TextEncoder().encode(JSON.stringify({ parser: "structured-kitchen-v2", sourceKey, rows: normalizeRows(rows), extraRows: normalizeRows(extraRows) }));
   const hash = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const snapshotPeriodFromRecords = (records: StaffMenuRecord[]) => {
+  const dates = records
+    .map((record) => record.fields.find((field) => field.label.toLowerCase() === "date")?.value)
+    .filter((value): value is string => Boolean(value));
+  const uniqueDates = [...new Set(dates)];
+  if (uniqueDates.length > 1) return `${uniqueDates[0]} to ${uniqueDates[uniqueDates.length - 1]}`;
+  if (uniqueDates.length === 1) return uniqueDates[0];
+  return records.find((record) => record.menuDay)?.menuDay ?? null;
 };
 
 const recordSearchText = (record: StaffMenuRecord) => clean([
@@ -522,7 +532,7 @@ serve(async (req) => {
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   let sheetId = Deno.env.get("GOOGLE_SHEET_ID") || Deno.env.get("VITE_GOOGLE_SHEETS_ID") || "";
 
-  if (!supabaseUrl || !serviceRoleKey || !sheetId) {
+  if (!supabaseUrl || !serviceRoleKey) {
     return new Response(JSON.stringify({ error: "Backend configuration missing" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 
@@ -535,6 +545,17 @@ serve(async (req) => {
 
   const { data: roles, error: roleError } = await admin.from("user_roles").select("role").eq("user_id", userData.user.id).in("role", ["admin", "staff"]);
   if (roleError || !roles?.length) return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+
+  const { data: menuConfig } = await admin
+    .from("menu_config")
+    .select("sheet_id, loaded_at")
+    .eq("singleton", true)
+    .maybeSingle();
+  if (menuConfig?.sheet_id) sheetId = menuConfig.sheet_id;
+
+  if (!sheetId) {
+    return new Response(JSON.stringify({ error: "No weekly menu sheet configured" }), { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  }
 
   const match = sheetId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
   if (match) sheetId = match[1];
@@ -549,7 +570,7 @@ serve(async (req) => {
     const menuRows = await fetchSheetRows(sheetId, "menudata");
     const records = rowsToStructuredKitchenRecords(inputRows, menuRows);
     if (records.length) {
-      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows) };
+      imported = { sheetName: "input data + menudata", rows: inputRows, records, sourceHash: await digestRows(inputRows, menuRows, sheetId) };
     }
   } catch (error) {
     importErrors.push(`input data + menudata: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -561,7 +582,7 @@ serve(async (req) => {
       const rows = await fetchSheetRows(sheetId, sheetName);
       const records = rowsToRecords(rows, sheetName);
       if (!records.length) throw new Error("No usable rows found");
-      imported = { sheetName, rows, records, sourceHash: await digestRows(rows) };
+      imported = { sheetName, rows, records, sourceHash: await digestRows(rows, [], sheetId) };
       break;
     } catch (error) {
       importErrors.push(`${sheetName}: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -581,7 +602,7 @@ serve(async (req) => {
     const { data: newSnapshot, error: snapshotError } = await admin.from("kuechenplan_snapshots").insert({
       source_hash: imported.sourceHash,
       sheet_name: imported.sheetName,
-      period: imported.records.find((record) => record.menuDay)?.menuDay ?? null,
+      period: snapshotPeriodFromRecords(imported.records),
       is_current: true,
     }).select("id").single();
     if (snapshotError) throw snapshotError;
