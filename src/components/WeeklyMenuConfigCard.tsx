@@ -8,7 +8,11 @@ import { CalendarClock, RefreshCw } from "lucide-react";
 import { useWeeklyMenuAvailable, lastSundayMidnightVienna } from "@/hooks/useWeeklyMenuAvailable";
 import { clearMenuCache } from "@/services/googleSheetsService";
 
-export const WeeklyMenuConfigCard = () => {
+type WeeklyMenuConfigCardProps = {
+  onMenuSynced?: () => Promise<void> | void;
+};
+
+export const WeeklyMenuConfigCard = ({ onMenuSynced }: WeeklyMenuConfigCardProps) => {
   const { toast } = useToast();
   const [sheetInput, setSheetInput] = useState("");
   const [loadedAt, setLoadedAt] = useState<string | null>(null);
@@ -58,6 +62,8 @@ export const WeeklyMenuConfigCard = () => {
     clearMenuCache();
     setSheetInput("");
     await refreshConfig();
+    await supabase.functions.invoke("get-staff-menu-details");
+    await onMenuSynced?.();
     toast({
       title: "Menu aggiornato",
       description: "Il menu della settimana è di nuovo visibile sul sito.",
