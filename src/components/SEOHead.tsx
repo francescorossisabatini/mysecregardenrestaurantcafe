@@ -6,6 +6,7 @@ interface SEOHeadProps {
   path?: string;
   image?: string;
   noindex?: boolean;
+  notranslate?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
