@@ -6,6 +6,7 @@ interface SEOHeadProps {
   path?: string;
   image?: string;
   noindex?: boolean;
+  notranslate?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -18,6 +19,7 @@ export const SEOHead = ({
   path = "/",
   image = DEFAULT_IMAGE,
   noindex = false,
+  notranslate = false,
   jsonLd,
 }: SEOHeadProps) => {
   const fullTitle = title
@@ -31,6 +33,7 @@ export const SEOHead = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {noindex && <meta name="robots" content="noindex,nofollow" />}
+      {notranslate && <meta name="google" content="notranslate" />}
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Open Graph */}

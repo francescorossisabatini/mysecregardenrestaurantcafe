@@ -731,8 +731,8 @@ const StaffKitchen = () => {
   if (!isCheckingAccess && !session) return <Navigate to="/staff/login" replace />;
   if (!isCheckingAccess && session && !isStaff) {
     return (
-      <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
-        <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex />
+      <div className="staff-app notranslate min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
+        <SEOHead title="Staff Kitchen" description="Restricted staff area." path="/staff" noindex notranslate />
         <main className="mx-auto max-w-xl rounded-md border border-border bg-card p-6 text-center shadow-soft">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="text-3xl font-bold tracking-normal text-foreground">Unauthorized access</h1>
@@ -747,8 +747,8 @@ const StaffKitchen = () => {
   }
 
   return (
-    <div className="staff-app min-h-screen bg-background font-work text-foreground">
-      <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex />
+    <div className="staff-app notranslate min-h-screen bg-background font-work text-foreground" translate="no" lang="en">
+      <SEOHead title="Staff Kitchen" description="Internal Küchenplan dashboard." path="/staff" noindex notranslate />
       <main className="mx-auto grid w-full max-w-[1600px] gap-5 px-3 py-3 md:px-6 md:py-5">
         <header className="sticky top-0 z-20 -mx-3 grid gap-3 border-b border-border bg-background/95 px-3 py-3 backdrop-blur md:-mx-6 md:grid-cols-[1fr_auto] md:items-center md:px-6">
           <div className="min-w-0">

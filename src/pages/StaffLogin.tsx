@@ -63,8 +63,8 @@ const StaffLogin = () => {
   if (!isChecking && session) return <Navigate to="/staff" replace />;
 
   return (
-    <div className="staff-app min-h-screen bg-background px-4 py-12 font-work text-foreground">
-      <SEOHead title="Staff Login" description="Restricted staff access for My Secret Garden." path="/staff/login" noindex />
+    <div className="staff-app notranslate min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
+      <SEOHead title="Staff Login" description="Restricted staff access for My Secret Garden." path="/staff/login" noindex notranslate />
       <main className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-md items-center">
         <section className="w-full rounded-md border border-border bg-card p-6 shadow-card md:p-8">
           <div className="mb-8">
