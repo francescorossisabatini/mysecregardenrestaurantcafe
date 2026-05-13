@@ -491,6 +491,7 @@ const SignalBadge = ({ signal, language }: { signal: StaffSignal; language: Dash
 );
 
 const StaffKitchen = () => {
+  useStaffPageGuard();
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
