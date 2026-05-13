@@ -10,6 +10,7 @@ import { WeeklyMenuConfigCard } from "@/components/WeeklyMenuConfigCard";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 
 type StaffMenuRecord = {
   id: string;
@@ -59,6 +60,7 @@ const recordMatches = (record: StaffMenuRecord, query: string) => [
 const recordSection = (record: StaffMenuRecord) => cleanDisplayText(record.menuDay || record.category || "Weekly prep");
 
 const StaffHub = () => {
+  useStaffPageGuard();
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);
   const [isStaff, setIsStaff] = useState(false);

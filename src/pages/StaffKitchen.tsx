@@ -10,6 +10,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 
 type StaffMenuRecord = {
   id: string;
@@ -490,6 +491,7 @@ const SignalBadge = ({ signal, language }: { signal: StaffSignal; language: Dash
 );
 
 const StaffKitchen = () => {
+  useStaffPageGuard();
   const [session, setSession] = useState<Session | null>(null);
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
   const [isStaff, setIsStaff] = useState(false);
