@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
+import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 
 const StaffLogin = () => {
+  useStaffPageGuard();
   const navigate = useNavigate();
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);

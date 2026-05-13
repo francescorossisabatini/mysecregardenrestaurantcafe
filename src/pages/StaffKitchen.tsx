@@ -10,6 +10,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 
 type StaffMenuRecord = {
   id: string;
