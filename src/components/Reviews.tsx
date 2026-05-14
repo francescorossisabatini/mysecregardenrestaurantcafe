@@ -25,7 +25,7 @@ export const Reviews = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="reviews" className="py-16 md:py-24 lg:py-28 bg-muted/20">
+    <section id="reviews" className="pt-16 md:pt-24 lg:pt-28 pb-4 md:pb-6 bg-muted/20">
       <div className="container mx-auto px-4 max-w-4xl lg:max-w-6xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-cormorant font-semibold text-foreground mb-4">
