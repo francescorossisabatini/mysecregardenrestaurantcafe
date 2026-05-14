@@ -9,6 +9,14 @@ interface Holiday {
 
 export const holidays: Holiday[] = [
   {
+    date: "05-14",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
+    },
+  },
+  {
     date: "12-24",
     name: { de: "Heiligabend", en: "Christmas Eve" },
     message: { 
