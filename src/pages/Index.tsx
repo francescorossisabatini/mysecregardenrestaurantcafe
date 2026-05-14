@@ -89,23 +89,17 @@ const Index = () => {
         <ShowcaseSections />
       </Suspense>
 
+      {/* VOCI: Social proof from partner platforms (rhythmic break) */}
+      <Suspense fallback={<SectionLoader />}>
+        <Voci />
+      </Suspense>
 
       {/* Menu preview with today's dishes */}
       <HomeMenuPreview />
-      
+
       {/* Reviews / Social Proof */}
       <Suspense fallback={<SectionLoader />}>
         <Reviews />
-      </Suspense>
-      
-      {/* Gallery */}
-      <Suspense fallback={<SectionLoader />}>
-        <GallerySection />
-      </Suspense>
-      
-      {/* VOCI: Social proof from partner platforms */}
-      <Suspense fallback={<SectionLoader />}>
-        <Voci />
       </Suspense>
 
       {/* FINAL CTA BLOCK: Brand bg, H2, address, Call + Directions */}
