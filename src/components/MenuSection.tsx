@@ -98,9 +98,18 @@ export const MenuSection = () => {
   const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
   const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
+  const [isQuickNavOpen, setIsQuickNavOpen] = useState(false);
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
+
+  // Close quick nav on escape
+  useEffect(() => {
+    if (!isQuickNavOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setIsQuickNavOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isQuickNavOpen]);
   
   // Memoize date calculations to avoid recalculating on every render
   // This prevents forced reflows from repeated Date operations
