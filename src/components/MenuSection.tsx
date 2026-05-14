@@ -204,7 +204,7 @@ export const MenuSection = () => {
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
         aria-label={language === "de" ? "Schnellnavigation öffnen" : "Open quick navigation"}
-        className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 h-12 w-12 items-center justify-center rounded-full border border-border/70 bg-nav-surface/95 text-primary shadow-elevated backdrop-blur-md transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 h-12 w-12 items-center justify-center rounded-full border border-border/70 bg-nav-surface/95 text-primary shadow-elevated backdrop-blur-md transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       >
         {isQuickNavOpen ? <X className="h-5 w-5" /> : <ListTree className="h-5 w-5" />}
       </button>
@@ -212,14 +212,14 @@ export const MenuSection = () => {
       {/* Backdrop */}
       <div
         onClick={() => setIsQuickNavOpen(false)}
-        className={`hidden lg:block fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`hidden md:block fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
         aria-hidden="true"
       />
 
       {/* Quick-nav floating panel (desktop) */}
       <aside
         id="menu-quick-nav-panel"
-        className={`hidden lg:block fixed left-20 top-1/2 -translate-y-1/2 z-40 w-64 transition-all duration-200 ease-out ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 -translate-x-3"}`}
+        className={`hidden md:block fixed left-20 top-1/2 -translate-y-1/2 z-40 w-64 transition-all duration-200 ease-out ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 -translate-x-3"}`}
         aria-hidden={!isQuickNavOpen}
       >
         <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-elevated backdrop-blur-md max-h-[80vh] overflow-y-auto" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
