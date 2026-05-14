@@ -79,8 +79,10 @@ function AppContent() {
   }, []);
 
   useEffect(() => {
+    if (!("matchMedia" in window)) return;
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window) || !("MutationObserver" in window)) return;
 
     const observed = new WeakSet<Element>();
     const revealObserver = new IntersectionObserver(
