@@ -204,7 +204,7 @@ export const MenuSection = () => {
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
         aria-label={language === "de" ? "Schnellnavigation öffnen" : "Open quick navigation"}
-        className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 h-12 w-12 items-center justify-center rounded-full border border-border/70 bg-nav-surface/95 text-primary shadow-elevated backdrop-blur-md transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        className="hidden md:flex fixed left-4 top-24 z-[60] h-12 w-12 items-center justify-center rounded-full border-2 border-primary bg-card text-primary shadow-lg transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       >
         {isQuickNavOpen ? <X className="h-5 w-5" /> : <ListTree className="h-5 w-5" />}
       </button>
