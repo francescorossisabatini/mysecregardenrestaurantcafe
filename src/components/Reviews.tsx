@@ -64,7 +64,7 @@ export const Reviews = () => {
         </div>
 
         {/* Subtle link to all reviews */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <a
             href="https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/data=!4m8!3m7!1s0x476d078f0451b459:0x76f7dc33e496ccb5!8m2!3d48.1975697!4d16.3540982!9m1!1b1!16s%2Fg%2F11c3q3yxrb?entry=ttu"
             target="_blank"
