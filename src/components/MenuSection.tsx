@@ -269,64 +269,8 @@ export const MenuSection = () => {
           </div>
         </nav>
       </aside>
-
-
-  return (
-    <section id="menu" className="py-16 md:py-24 bg-section-soft">
       <div className="container mx-auto px-4">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[15rem_minmax(0,42rem)] lg:items-start lg:justify-center">
-          <aside className="hidden lg:sticky lg:top-24 lg:block">
-            <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-card backdrop-blur-md" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
-              <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                {language === "de" ? "Direkt zum Menü" : "Jump to menu"}
-              </p>
-              <div className="grid gap-2" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
-                {[
-                  { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
-                  { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-                  ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeMenuTab === tab.id}
-                    onClick={() => scrollToMenuBlock(tab.id)}
-                    className={`rounded-full px-4 py-2.5 text-left font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                      activeMenuTab === tab.id
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "bg-card text-primary hover:bg-muted"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-5 border-t border-border/70 pt-4">
-                <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                  {language === "de" ? "Klassiker" : "Classics"}
-                </p>
-                <div className="grid max-h-[48vh] gap-1.5 overflow-y-auto pr-1">
-                  {fixedMenuAnchors.map((anchor) => (
-                    <button
-                      key={anchor.id}
-                      type="button"
-                      onClick={() => scrollToFixedAnchor(anchor.id)}
-                      aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
-                      className={`rounded-md px-3 py-2 text-left font-work text-xs font-medium leading-snug transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                        activeFixedAnchor === anchor.id
-                          ? "bg-primary text-primary-foreground"
-                          : "text-foreground hover:bg-muted hover:text-primary"
-                      }`}
-                    >
-                      {cleanDisplayText(anchor.label)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </aside>
+        <div className="mx-auto grid max-w-2xl gap-8 lg:justify-center">
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
           {/* Mobile: floating pill replaces the bulky sticky bars (rendered via portal-like fixed element) */}
