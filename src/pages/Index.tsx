@@ -11,7 +11,7 @@ import { SkipLink } from "@/components/SkipLink";
 const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
 const ShowcaseSections = lazy(() => import("@/components/ShowcaseSections").then(m => ({ default: m.ShowcaseSections })));
 const Reviews = lazy(() => import("@/components/Reviews").then(m => ({ default: m.Reviews })));
-const GallerySection = lazy(() => import("@/components/GallerySection").then(m => ({ default: m.GallerySection })));
+
 const CTAEndBlock = lazy(() => import("@/components/CTAEndBlock").then(m => ({ default: m.CTAEndBlock })));
 const Voci = lazy(() => import("@/components/Voci").then(m => ({ default: m.Voci })));
 const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
