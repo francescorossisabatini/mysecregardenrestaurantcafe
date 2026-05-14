@@ -10,8 +10,8 @@ import {
 } from "@/data/holidaysData";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Info } from "lucide-react";
-import { useState, useMemo, useRef } from "react";
+import { Info, ListTree, X } from "lucide-react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { WeeklyMenuPendingUpdate } from "@/components/WeeklyMenuPendingUpdate";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
@@ -98,9 +98,18 @@ export const MenuSection = () => {
   const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
   const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
+  const [isQuickNavOpen, setIsQuickNavOpen] = useState(false);
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
+
+  // Close quick nav on escape
+  useEffect(() => {
+    if (!isQuickNavOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setIsQuickNavOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isQuickNavOpen]);
   
   // Memoize date calculations to avoid recalculating on every render
   // This prevents forced reflows from repeated Date operations
@@ -160,6 +169,7 @@ export const MenuSection = () => {
     if (!target) return;
 
     setActiveMenuTab(tab);
+    setIsQuickNavOpen(false);
     const offset = 128;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
@@ -174,66 +184,93 @@ export const MenuSection = () => {
     if (!target) return;
     setActiveMenuTab("fixed");
     setActiveFixedAnchor(id);
+    setIsQuickNavOpen(false);
     const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
+  const quickNavTabs = [
+    { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
+    { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
+    ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
+  ];
+
   return (
     <section id="menu" className="py-16 md:py-24 bg-section-soft">
-      <div className="container mx-auto px-4">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[15rem_minmax(0,42rem)] lg:items-start lg:justify-center">
-          <aside className="hidden lg:sticky lg:top-24 lg:block">
-            <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-card backdrop-blur-md" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
-              <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                {language === "de" ? "Direkt zum Menü" : "Jump to menu"}
-              </p>
-              <div className="grid gap-2" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
-                {[
-                  { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
-                  { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-                  ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeMenuTab === tab.id}
-                    onClick={() => scrollToMenuBlock(tab.id)}
-                    className={`rounded-full px-4 py-2.5 text-left font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                      activeMenuTab === tab.id
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "bg-card text-primary hover:bg-muted"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
+      {/* Floating quick-nav trigger (desktop) */}
+      <button
+        type="button"
+        onClick={() => setIsQuickNavOpen((v) => !v)}
+        aria-expanded={isQuickNavOpen}
+        aria-controls="menu-quick-nav-panel"
+        aria-label={language === "de" ? "Schnellnavigation öffnen" : "Open quick navigation"}
+        className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 h-12 w-12 items-center justify-center rounded-full border border-border/70 bg-nav-surface/95 text-primary shadow-elevated backdrop-blur-md transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      >
+        {isQuickNavOpen ? <X className="h-5 w-5" /> : <ListTree className="h-5 w-5" />}
+      </button>
 
-              <div className="mt-5 border-t border-border/70 pt-4">
-                <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                  {language === "de" ? "Klassiker" : "Classics"}
-                </p>
-                <div className="grid max-h-[48vh] gap-1.5 overflow-y-auto pr-1">
-                  {fixedMenuAnchors.map((anchor) => (
-                    <button
-                      key={anchor.id}
-                      type="button"
-                      onClick={() => scrollToFixedAnchor(anchor.id)}
-                      aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
-                      className={`rounded-md px-3 py-2 text-left font-work text-xs font-medium leading-snug transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                        activeFixedAnchor === anchor.id
-                          ? "bg-primary text-primary-foreground"
-                          : "text-foreground hover:bg-muted hover:text-primary"
-                      }`}
-                    >
-                      {cleanDisplayText(anchor.label)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </aside>
+      {/* Backdrop */}
+      <div
+        onClick={() => setIsQuickNavOpen(false)}
+        className={`hidden lg:block fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        aria-hidden="true"
+      />
+
+      {/* Quick-nav floating panel (desktop) */}
+      <aside
+        id="menu-quick-nav-panel"
+        className={`hidden lg:block fixed left-20 top-1/2 -translate-y-1/2 z-40 w-64 transition-all duration-200 ease-out ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 -translate-x-3"}`}
+        aria-hidden={!isQuickNavOpen}
+      >
+        <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-elevated backdrop-blur-md max-h-[80vh] overflow-y-auto" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
+          <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
+            {language === "de" ? "Direkt zum Menü" : "Jump to menu"}
+          </p>
+          <div className="grid gap-2" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
+            {quickNavTabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={activeMenuTab === tab.id}
+                onClick={() => scrollToMenuBlock(tab.id)}
+                className={`rounded-full px-4 py-2.5 text-left font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                  activeMenuTab === tab.id
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-card text-primary hover:bg-muted"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-5 border-t border-border/70 pt-4">
+            <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
+              {language === "de" ? "Klassiker" : "Classics"}
+            </p>
+            <div className="grid max-h-[40vh] gap-1.5 overflow-y-auto pr-1">
+              {fixedMenuAnchors.map((anchor) => (
+                <button
+                  key={anchor.id}
+                  type="button"
+                  onClick={() => scrollToFixedAnchor(anchor.id)}
+                  aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
+                  className={`rounded-md px-3 py-2 text-left font-work text-xs font-medium leading-snug transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+                    activeFixedAnchor === anchor.id
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground hover:bg-muted hover:text-primary"
+                  }`}
+                >
+                  {cleanDisplayText(anchor.label)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </nav>
+      </aside>
+      <div className="container mx-auto px-4">
+        <div className="mx-auto grid max-w-2xl gap-8 lg:justify-center">
 
           <div className="min-w-0 max-w-2xl lg:max-w-none">
           {/* Mobile: floating pill replaces the bulky sticky bars (rendered via portal-like fixed element) */}
