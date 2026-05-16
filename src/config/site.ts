@@ -22,8 +22,8 @@ export const SITE = {
     en: "My Secret Garden is in the courtyard of Raimundhof at Mariahilferstraße 45, 1060 Vienna. From the street, walk through the archway and turn left. The garden opens up behind the entrance.",
   },
   counterServiceNote: {
-    de: "Bei uns bestellst du direkt am Tresen. Kein Kellner, keine Wartezeit. Du suchst dir deinen Platz aus, wir bringen dir das Essen.",
-    en: "Order at the counter. No waiter, no waiting. Pick your seat, we’ll bring your food to you.",
+    de: "Bei uns bestellst du direkt am Tresen. Du suchst dir deinen Platz aus, wir bringen dir das Essen.",
+    en: "Order at the counter. Pick your seat, we’ll bring your food to you.",
   },
 
   transportNote: {
