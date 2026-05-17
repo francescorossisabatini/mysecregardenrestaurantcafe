@@ -723,7 +723,7 @@ export const MenuSection = () => {
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
-                                    <span className="font-work text-sm font-semibold text-foreground">
+                                    <span className="font-work text-base font-bold md:text-sm md:font-semibold text-foreground">
                                       {item.name[language]}
                                     </span>
                                     {item.sizeNote && (
