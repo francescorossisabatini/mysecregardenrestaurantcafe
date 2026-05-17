@@ -325,7 +325,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -334,7 +334,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">6,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">6,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
@@ -355,7 +355,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -364,7 +364,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
@@ -385,7 +385,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -394,7 +394,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
