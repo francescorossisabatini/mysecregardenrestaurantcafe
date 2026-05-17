@@ -204,19 +204,19 @@ export const MenuSection = () => {
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
         aria-label={language === "de" ? "Menü filtern und navigieren" : "Filter and navigate menu"}
-        className="fixed z-[60] flex items-center gap-2 rounded-full border-2 border-primary bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 right-4 bottom-[calc(env(safe-area-inset-bottom)+88px)] h-12 px-4 md:left-4 md:right-auto md:top-24 md:bottom-auto"
+        className="fixed z-[60] flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 right-4 bottom-[calc(env(safe-area-inset-bottom)+88px)] h-14 w-14 md:left-4 md:right-auto md:top-24 md:bottom-auto md:h-12 md:w-auto md:px-4"
       >
         {isQuickNavOpen ? (
           <>
             <X className="h-5 w-5" aria-hidden="true" />
-            <span className="font-work text-xs font-semibold uppercase tracking-[0.1em]">
+            <span className="hidden md:inline font-work text-xs font-semibold uppercase tracking-[0.1em]">
               {language === "de" ? "Schließen" : "Close"}
             </span>
           </>
         ) : (
           <>
-            <ListFilter className="h-5 w-5" aria-hidden="true" />
-            <span className="font-work text-xs font-semibold uppercase tracking-[0.1em]">
+            <ListFilter className="h-6 w-6 md:h-5 md:w-5" aria-hidden="true" />
+            <span className="hidden md:inline font-work text-xs font-semibold uppercase tracking-[0.1em]">
               {language === "de" ? "Menü filtern" : "Filter menu"}
             </span>
           </>
