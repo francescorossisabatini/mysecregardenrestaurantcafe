@@ -203,10 +203,24 @@ export const MenuSection = () => {
         onClick={() => setIsQuickNavOpen((v) => !v)}
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
-        aria-label={language === "de" ? "Schnellnavigation öffnen" : "Open quick navigation"}
-        className="hidden md:flex fixed left-4 top-24 z-[60] h-12 w-12 items-center justify-center rounded-full border-2 border-primary bg-card text-primary shadow-lg transition-all hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        aria-label={language === "de" ? "Menü filtern und navigieren" : "Filter and navigate menu"}
+        className="hidden md:flex fixed left-4 top-24 z-[60] h-12 items-center gap-2 rounded-full border-2 border-primary bg-primary px-4 text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       >
-        {isQuickNavOpen ? <X className="h-5 w-5" /> : <ListTree className="h-5 w-5" />}
+        {isQuickNavOpen ? (
+          <>
+            <X className="h-5 w-5" aria-hidden="true" />
+            <span className="font-work text-xs font-semibold uppercase tracking-[0.1em]">
+              {language === "de" ? "Schließen" : "Close"}
+            </span>
+          </>
+        ) : (
+          <>
+            <ListFilter className="h-5 w-5" aria-hidden="true" />
+            <span className="font-work text-xs font-semibold uppercase tracking-[0.1em]">
+              {language === "de" ? "Menü filtern" : "Filter menu"}
+            </span>
+          </>
+        )}
       </button>
 
       {/* Backdrop */}
