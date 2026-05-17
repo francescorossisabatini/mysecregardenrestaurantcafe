@@ -325,7 +325,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -355,7 +355,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -385,7 +385,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-2xl font-bold md:font-semibold leading-snug text-foreground md:text-3xl">
+                          <h3 className="font-cormorant text-3xl font-bold leading-snug text-foreground md:text-3xl md:font-semibold">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
