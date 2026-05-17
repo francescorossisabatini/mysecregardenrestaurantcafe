@@ -10,7 +10,7 @@ import {
 } from "@/data/holidaysData";
 import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Info, ListTree, X } from "lucide-react";
+import { Info, ListFilter, ListTree, X } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { WeeklyMenuPendingUpdate } from "@/components/WeeklyMenuPendingUpdate";
