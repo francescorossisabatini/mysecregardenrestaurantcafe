@@ -612,28 +612,6 @@ export const MenuSection = () => {
               </p>
             </div>
 
-            <div className="relative mb-8 rounded-2xl border border-border/75 bg-nav-surface px-3 py-3 shadow-card md:sticky md:top-[84px] md:z-20 md:px-4 md:backdrop-blur-md">
-              <div className="flex items-center gap-2 md:justify-center" aria-label={language === "de" ? "Klassiker filtern" : "Filter classics"}>
-                <ListFilter className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                <div className="flex max-w-full gap-2 overflow-x-auto pb-1 md:flex-wrap md:justify-center md:overflow-visible md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                  {fixedMenuAnchors.map((anchor) => (
-                    <button
-                      key={anchor.id}
-                      type="button"
-                      onClick={() => scrollToFixedAnchor(anchor.id)}
-                      aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
-                      className={`shrink-0 rounded-full border px-3 py-2 text-xs font-work font-semibold transition-colors md:shrink focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                        activeFixedAnchor === anchor.id
-                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                          : "border-border/75 bg-card text-primary hover:border-primary/35 hover:bg-muted"
-                      }`}
-                    >
-                      {cleanDisplayText(anchor.label)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
             
             <div className="space-y-8">
               {klassikerMenu.categories.map((category) => (
