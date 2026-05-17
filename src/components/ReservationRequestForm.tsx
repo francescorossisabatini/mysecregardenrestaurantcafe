@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
+import interiorPhoto from "@/assets/photos/interior-main.jpg";
+import gardenPhoto from "@/assets/photos/garden-courtyard.jpg";
 
 type ReservationForm = {
   fullName: string;
