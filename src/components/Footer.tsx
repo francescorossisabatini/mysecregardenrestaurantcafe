@@ -17,12 +17,12 @@ export const Footer = () => {
           </p>
           
           {/* Tagline */}
-          <p className="font-caveat text-sm text-primary-foreground/90 italic">
+          <p className="font-caveat text-sm text-primary-foreground italic">
             "Cooking is prayer. Eating is gratitude."
           </p>
           
           {/* Address */}
-          <p className="text-sm text-primary-foreground/90 font-work">
+          <p className="text-sm text-primary-foreground font-work">
             {SITE.addressShort}
           </p>
           
@@ -65,7 +65,7 @@ export const Footer = () => {
           </div>
           
           {/* Copyright */}
-          <p className="text-xs text-primary-foreground/85">
+          <p className="text-xs text-primary-foreground">
             © {new Date().getFullYear()} {SITE.name}
           </p>
           
