@@ -31,7 +31,7 @@ export const Footer = () => {
             href={SITE.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+            className="inline-flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
             aria-label={`${SITE.instagramHandle} on Instagram (opens in new tab)`}
             title={`${SITE.instagramHandle} on Instagram`}
           >
@@ -43,21 +43,21 @@ export const Footer = () => {
           <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
             <Link 
               to="/contact" 
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Kontakt" : "Contact Us"}
             >
               {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
             <Link 
               to="/impressum" 
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Impressum" : "Legal Notice"}
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
             <Link 
               to="/privacy" 
-              className="text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Datenschutz" : "Privacy Policy"}
             >
               {language === "de" ? "Datenschutz" : "Privacy Policy"}
