@@ -65,14 +65,16 @@ export const Hero = () => {
       className="relative flex h-[92svh] min-h-[540px] items-center justify-center overflow-hidden md:h-[100dvh] md:min-h-[660px] lg:h-[90dvh] lg:min-h-[700px]"
       aria-label={language === "de" ? "Willkommen bei My Secret Garden" : "Welcome to My Secret Garden"}
     >
-      {/* Decorative background photo — text content already conveys meaning to AT */}
-      <div 
-        className="absolute inset-0 animate-hero-background"
-        style={{
-          backgroundImage: `url(${heroImage.src})`,
-          backgroundSize: "cover",
-          backgroundPosition: heroImage.position,
-        }}
+      {/* Decorative background photo — using <img> with fetchpriority for LCP optimization */}
+      <img
+        src={heroImage.src}
+        alt=""
+        width={1920}
+        height={1280}
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover animate-hero-background"
+        style={{ objectPosition: heroImage.position }}
         aria-hidden="true"
       />
 
