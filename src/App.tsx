@@ -132,8 +132,8 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<Suspense fallback={<PageLoader />}><AboutUs /></Suspense>} />
-        <Route path="/contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="/visit" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
+        <Route path="/contact" element={<Navigate to="/visit" replace />} />
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/gallery" element={<Suspense fallback={<PageLoader />}><GalleryPage /></Suspense>} />
         <Route path="/reservation-preview" element={<Suspense fallback={<PageLoader />}><ReservationPreview /></Suspense>} />
