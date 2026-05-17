@@ -233,7 +233,7 @@ export const MenuSection = () => {
       {/* Quick-nav floating panel (desktop) */}
       <aside
         id="menu-quick-nav-panel"
-        className={`hidden md:block fixed left-20 top-1/2 -translate-y-1/2 z-40 w-64 transition-all duration-200 ease-out ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 -translate-x-3"}`}
+        className={`fixed z-40 transition-all duration-200 ease-out right-4 left-4 bottom-[calc(env(safe-area-inset-bottom)+148px)] md:left-20 md:right-auto md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:w-64 ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 md:-translate-x-3"}`}
         aria-hidden={!isQuickNavOpen}
       >
         <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-elevated backdrop-blur-md max-h-[80vh] overflow-y-auto" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
