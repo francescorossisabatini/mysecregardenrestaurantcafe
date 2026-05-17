@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, MapPin, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
+import { Archive, CalendarDays, ChefHat, ChevronLeft, ChevronRight, ClipboardList, LogOut, Mail, MapPin, MessageCircle, Phone, RefreshCw, Search, ShieldCheck, StickyNote, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -981,10 +981,35 @@ const ReservationCard = ({
 
       <div className="mt-4">
         <h3 className="font-work text-xl font-extrabold tracking-normal text-foreground">{cleanDisplayText(reservation.full_name)}</h3>
-        <a href={`tel:${reservation.contact}`} className="mt-2 inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${reservation.full_name}`}>
-          <Phone className="h-4 w-4" aria-hidden="true" />
-          {cleanDisplayText(reservation.contact)}
-        </a>
+        {(() => {
+          const raw = cleanDisplayText(reservation.contact);
+          const isEmail = /\S+@\S+\.\S+/.test(raw);
+          const phoneDigits = raw.replace(/[^\d+]/g, "");
+          const waNumber = phoneDigits.replace(/^\+/, "");
+          return (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {isEmail ? (
+                <a href={`mailto:${raw}?subject=${encodeURIComponent("My Secret Garden — Reservierung")}`} className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`Email ${reservation.full_name}`}>
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  {raw}
+                </a>
+              ) : (
+                <>
+                  <a href={`tel:${phoneDigits}`} className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`${labels.call} ${reservation.full_name}`}>
+                    <Phone className="h-4 w-4" aria-hidden="true" />
+                    {raw}
+                  </a>
+                  {waNumber.length >= 8 ? (
+                    <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border bg-background px-3 text-sm font-bold text-primary hover:border-primary/40" aria-label={`WhatsApp ${reservation.full_name}`}>
+                      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                      WhatsApp
+                    </a>
+                  ) : null}
+                </>
+              )}
+            </div>
+          );
+        })()}
         {reservation.notes ? (
           <p className="mt-3 flex gap-2 text-sm leading-relaxed text-muted-high-contrast">
             <StickyNote className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
