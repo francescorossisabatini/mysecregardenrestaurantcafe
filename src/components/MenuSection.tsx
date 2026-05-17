@@ -204,7 +204,7 @@ export const MenuSection = () => {
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
         aria-label={language === "de" ? "Menü filtern und navigieren" : "Filter and navigate menu"}
-        className="hidden md:flex fixed left-4 top-24 z-[60] h-12 items-center gap-2 rounded-full border-2 border-primary bg-primary px-4 text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        className="fixed z-[60] flex items-center gap-2 rounded-full border-2 border-primary bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 right-4 bottom-[calc(env(safe-area-inset-bottom)+88px)] h-12 px-4 md:left-4 md:right-auto md:top-24 md:bottom-auto"
       >
         {isQuickNavOpen ? (
           <>
