@@ -334,7 +334,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">6,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">6,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
@@ -364,7 +364,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
@@ -394,7 +394,7 @@ export const MenuSection = () => {
                             </span>
                           </div>
                         </div>
-                        <p className="shrink-0 font-work text-sm font-semibold text-accent">15,90</p>
+                        <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
                       {dishCopy.description && (
                         <p className="mb-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
