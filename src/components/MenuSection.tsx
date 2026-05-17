@@ -688,7 +688,7 @@ export const MenuSection = () => {
                                 />
                               )}
                             </div>
-                            <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
+                            <span className={`font-bold text-base md:font-semibold md:text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
