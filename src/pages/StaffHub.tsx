@@ -144,7 +144,7 @@ const StaffHub = () => {
   if (!isChecking && session && !isStaff) {
     return (
       <div className="notranslate min-h-screen bg-section-soft px-4 py-12" translate="no" lang="en">
-        <SEOHead title="Staff Hub" description="Restricted staff area." path="/staff" noindex notranslate />
+        <SEOHead title="Staff Hub" description="Restricted internal staff hub for My Secret Garden Wien with kitchen tools and archive access." path="/staff" noindex notranslate />
         <main className="mx-auto max-w-xl rounded-lg border border-border/70 bg-card/90 p-6 text-center shadow-card">
           <ShieldCheck className="mx-auto mb-4 h-8 w-8 text-primary" aria-hidden="true" />
           <h1 className="font-cormorant text-3xl font-semibold text-foreground">Unauthorized access</h1>
@@ -157,7 +157,7 @@ const StaffHub = () => {
 
   return (
     <div className="notranslate min-h-screen bg-section-soft" translate="no" lang="en">
-      <SEOHead title="Staff Hub" description="Current Küchenplan, ingredients and archive search." path="/staff" noindex notranslate />
+      <SEOHead title="Staff Hub" description="Internal staff hub with current Küchenplan, ingredient lists and full archive search for My Secret Garden Wien." path="/staff" noindex notranslate />
       <main className="container mx-auto px-4 py-8 md:py-10">
         <header className="mb-8 flex flex-col gap-4 border-b border-border/70 pb-6 md:flex-row md:items-end md:justify-between">
           <div>
