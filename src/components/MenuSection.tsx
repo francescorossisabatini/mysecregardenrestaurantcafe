@@ -732,7 +732,7 @@ export const MenuSection = () => {
                                       </p>
                                     )}
                                   </div>
-                                  <span className="text-accent font-semibold text-sm font-work shrink-0">
+                                  <span className="text-accent font-bold text-base md:font-semibold md:text-sm font-work shrink-0">
                                     {item.price}
                                   </span>
                                 </div>
