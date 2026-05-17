@@ -17,7 +17,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
           className={`flex h-8 min-w-9 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
             language === "de"
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-primary/80 hover:text-primary"
+              : "text-primary hover:text-primary"
           }`}
           aria-pressed={language === "de"}
           aria-label="Deutsch"
@@ -29,7 +29,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
           className={`flex h-8 min-w-9 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
             language === "en"
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "text-primary/80 hover:text-primary"
+              : "text-primary hover:text-primary"
           }`}
           aria-pressed={language === "en"}
           aria-label="English"
@@ -48,7 +48,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
           language === "de"
             ? "bg-primary text-primary-foreground"
-            : "text-primary/80 hover:text-primary"
+            : "text-primary hover:text-primary"
         }`}
         aria-pressed={language === "de"}
         aria-label="Deutsch"
@@ -60,7 +60,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
           language === "en"
             ? "bg-primary text-primary-foreground"
-            : "text-primary/80 hover:text-primary"
+            : "text-primary hover:text-primary"
         }`}
         aria-pressed={language === "en"}
         aria-label="English"
