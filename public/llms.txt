@@ -1,0 +1,17 @@
+# My Secret Garden
+
+> Vegetarisches und veganes Café-Restaurant in Wien, versteckt im Innenhof des Raimundhofs (Mariahilferstraße 45, 1060 Wien). Bio, fair, regional und saisonal. Mo–Sa 11:00–19:00.
+
+## Pages
+
+- [Home](/): Hero, Öffnungszeiten, heutiges Menü, Lage und Anfahrt.
+- [Menü](/menu): Tagesmenü, Wochenmenü, Klassiker und Getränke.
+- [Visit](/visit): Öffnungszeiten, Anfahrt, Tischanfrage.
+- [About](/about): Geschichte, Philosophie und Team von My Secret Garden.
+- [Gallery](/gallery): Fotos vom Lokal, vom Garten und von den Speisen.
+- [Contact](/contact): Telefon, Adresse, Kontaktformular.
+
+## Optional
+
+- [Impressum](/impressum): Rechtliche Angaben nach österreichischem Recht.
+- [Privacy](/privacy): Datenschutz und Cookie-Policy (DSGVO).
