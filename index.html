@@ -2,7 +2,17 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    
+
+    <!-- Redirect Lovable preview/publish domain to canonical brand domain (SEO + UX) -->
+    <script>
+      (function () {
+        var h = location.hostname;
+        if (h === 'mysecregardenrestaurantcafe.lovable.app') {
+          location.replace('https://secretgardenrestaurant.at' + location.pathname + location.search + location.hash);
+        }
+      })();
+    </script>
+
     <!-- Preconnect FIRST - before any other resources for maximum effect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
