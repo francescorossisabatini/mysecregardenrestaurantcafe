@@ -643,7 +643,7 @@ export const MenuSection = () => {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className={`font-cormorant text-base font-bold md:font-semibold mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
+                              <h4 className={`font-cormorant text-xl font-bold md:text-base md:font-semibold mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
                                 {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-high-contrast italic">
