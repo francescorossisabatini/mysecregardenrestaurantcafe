@@ -226,7 +226,7 @@ export const MenuSection = () => {
       {/* Backdrop */}
       <div
         onClick={() => setIsQuickNavOpen(false)}
-        className={`hidden md:block fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
         aria-hidden="true"
       />
 
