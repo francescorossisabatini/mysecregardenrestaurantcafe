@@ -139,7 +139,6 @@ function AppContent() {
         <Route path="/reservation-preview" element={<Suspense fallback={<PageLoader />}><ReservationPreview /></Suspense>} />
         <Route path="/staff/login" element={<Suspense fallback={<PageLoader />}><StaffLogin /></Suspense>} />
         <Route path="/staff" element={<Suspense fallback={<PageLoader />}><StaffKitchen /></Suspense>} />
-        <Route path="/staff/kitchen" element={<Navigate to="/staff" replace />} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
         <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
