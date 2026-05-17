@@ -204,7 +204,7 @@ export const MenuSection = () => {
         aria-expanded={isQuickNavOpen}
         aria-controls="menu-quick-nav-panel"
         aria-label={language === "de" ? "Menü filtern und navigieren" : "Filter and navigate menu"}
-        className="hidden md:flex fixed left-4 top-24 z-[60] h-12 items-center gap-2 rounded-full border-2 border-primary bg-primary px-4 text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        className="fixed z-[60] flex items-center gap-2 rounded-full border-2 border-primary bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 right-4 bottom-[calc(env(safe-area-inset-bottom)+88px)] h-12 px-4 md:left-4 md:right-auto md:top-24 md:bottom-auto"
       >
         {isQuickNavOpen ? (
           <>
@@ -226,14 +226,14 @@ export const MenuSection = () => {
       {/* Backdrop */}
       <div
         onClick={() => setIsQuickNavOpen(false)}
-        className={`hidden md:block fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
         aria-hidden="true"
       />
 
       {/* Quick-nav floating panel (desktop) */}
       <aside
         id="menu-quick-nav-panel"
-        className={`hidden md:block fixed left-20 top-1/2 -translate-y-1/2 z-40 w-64 transition-all duration-200 ease-out ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 -translate-x-3"}`}
+        className={`fixed z-40 transition-all duration-200 ease-out right-4 left-4 bottom-[calc(env(safe-area-inset-bottom)+148px)] md:left-20 md:right-auto md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:w-64 ${isQuickNavOpen ? "opacity-100 translate-x-0" : "pointer-events-none opacity-0 md:-translate-x-3"}`}
         aria-hidden={!isQuickNavOpen}
       >
         <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-elevated backdrop-blur-md max-h-[80vh] overflow-y-auto" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
