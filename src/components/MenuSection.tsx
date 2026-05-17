@@ -643,7 +643,7 @@ export const MenuSection = () => {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className={`font-cormorant text-base font-bold md:font-semibold mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
+                              <h4 className={`font-cormorant text-xl font-bold md:text-base md:font-semibold mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
                                 {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-high-contrast italic">
@@ -688,7 +688,7 @@ export const MenuSection = () => {
                                 />
                               )}
                             </div>
-                            <span className={`font-semibold text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
+                            <span className={`font-bold text-base md:font-semibold md:text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
                               {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
                             </span>
                           </div>
@@ -723,7 +723,7 @@ export const MenuSection = () => {
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
-                                    <span className="font-work text-sm font-semibold text-foreground">
+                                    <span className="font-work text-base font-bold md:text-sm md:font-semibold text-foreground">
                                       {item.name[language]}
                                     </span>
                                     {item.sizeNote && (
@@ -732,7 +732,7 @@ export const MenuSection = () => {
                                       </p>
                                     )}
                                   </div>
-                                  <span className="text-accent font-semibold text-sm font-work shrink-0">
+                                  <span className="text-accent font-bold text-base md:font-semibold md:text-sm font-work shrink-0">
                                     {item.price}
                                   </span>
                                 </div>
