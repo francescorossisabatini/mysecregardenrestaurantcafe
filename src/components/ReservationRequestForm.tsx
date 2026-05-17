@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
+import interiorPhoto from "@/assets/photos/interior-main.jpg";
+import gardenPhoto from "@/assets/photos/garden-courtyard.jpg";
 
 type ReservationForm = {
   fullName: string;
@@ -207,18 +209,32 @@ export const ReservationRequestForm = ({ compact = false, headingLevel = "h1", o
       <Label className="grid gap-2 text-sm font-semibold text-foreground">
         {labels.area}
         <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label={labels.area}>
-          {(["inside", "outside"] as const).map((area) => (
-            <button
-              key={area}
-              type="button"
-              role="radio"
-              aria-checked={form.seatingArea === area}
-              onClick={() => updateField("seatingArea", area)}
-              className={`flex h-12 items-center justify-center rounded-md border px-4 text-sm font-semibold transition-colors ${form.seatingArea === area ? "border-primary bg-primary text-primary-foreground" : "border-input bg-background text-foreground hover:bg-muted"}`}
-            >
-              {area === "inside" ? labels.inside : labels.outside}
-            </button>
-          ))}
+          {(["inside", "outside"] as const).map((area) => {
+            const selected = form.seatingArea === area;
+            const image = area === "inside" ? interiorPhoto : gardenPhoto;
+            const label = area === "inside" ? labels.inside : labels.outside;
+            return (
+              <button
+                key={area}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => updateField("seatingArea", area)}
+                className={`group relative overflow-hidden rounded-md border text-left transition-all ${selected ? "border-primary ring-2 ring-primary/40" : "border-input hover:border-primary/50"}`}
+              >
+                <img
+                  src={image}
+                  alt={area === "inside" ? "Innenbereich My Secret Garden" : "Gastgarten My Secret Garden"}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+                <span className={`absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 text-sm font-semibold backdrop-blur-sm ${selected ? "bg-primary/90 text-primary-foreground" : "bg-background/85 text-foreground"}`}>
+                  {label}
+                  {selected ? <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> : null}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </Label>
 
