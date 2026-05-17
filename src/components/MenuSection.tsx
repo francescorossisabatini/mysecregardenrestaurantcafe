@@ -12,6 +12,7 @@ import { translatePeriod } from "@/lib/translatePeriod";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Info, ListFilter, ListTree, X } from "lucide-react";
 import { useState, useMemo, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { WeeklyMenuPendingUpdate } from "@/components/WeeklyMenuPendingUpdate";
 import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
