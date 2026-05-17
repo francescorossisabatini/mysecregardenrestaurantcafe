@@ -167,7 +167,7 @@ const StaffHub = () => {
           </div>
           <div className="flex flex-wrap gap-2">
             <Button variant="default" asChild>
-              <Link to="/staff/kitchen">Kitchen dashboard</Link>
+              <Link to="/staff">Kitchen dashboard</Link>
             </Button>
             <Button variant="outline" onClick={loadKuchenplan} disabled={isKuchenplanLoading}>{isKuchenplanLoading ? "Loading" : "Sync Küchenplan"}</Button>
             <Button variant="ghost" onClick={signOut}>
