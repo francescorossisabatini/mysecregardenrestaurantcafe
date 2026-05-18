@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Info, UtensilsCrossed } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
+import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
