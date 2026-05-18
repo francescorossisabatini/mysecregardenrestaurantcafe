@@ -133,6 +133,17 @@ export const HomeMenuPreview = () => {
                 );
               })}
             </div>
+          ) : showPending ? (
+            <div className="rounded-2xl border p-8 text-center surface-card">
+              <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
+                {language === "de" ? "Der Wochenplan wird gerade aktualisiert." : "The weekly menu is being updated."}
+              </p>
+              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+                {language === "de"
+                  ? "Schau am Montag wieder vorbei oder ruf uns an: +43 1 586 28 39."
+                  : "Check back on Monday or call us: +43 1 586 28 39."}
+              </p>
+            </div>
           ) : (
             <div className="rounded-2xl border p-8 text-center surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
