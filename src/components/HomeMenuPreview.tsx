@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Info, UtensilsCrossed } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
+import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -44,7 +45,8 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
 
 export const HomeMenuPreview = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, loadedAt, isLoading } = useWeeklyMenu();
+  const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
 
   const today = new Date();
   const currentHour = today.getHours();
@@ -63,11 +65,13 @@ export const HomeMenuPreview = () => {
   );
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
-  const dishes = todayMenu ? [
+  const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
     { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language], allergens: todayMenu.blueMeta?.allergens },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
+
+  const showPending = !weeklyMenuAvailable && !isLoading;
 
   return (
     <section id="menu" className="bg-section-soft py-16 md:py-24 lg:py-28">
@@ -128,6 +132,17 @@ export const HomeMenuPreview = () => {
                 </div>
                 );
               })}
+            </div>
+          ) : showPending ? (
+            <div className="rounded-2xl border p-8 text-center surface-card">
+              <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
+                {language === "de" ? "Der Wochenplan wird gerade aktualisiert." : "The weekly menu is being updated."}
+              </p>
+              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+                {language === "de"
+                  ? "Schau am Montag wieder vorbei oder ruf uns an: +43 1 586 28 39."
+                  : "Check back on Monday or call us: +43 1 586 28 39."}
+              </p>
             </div>
           ) : (
             <div className="rounded-2xl border p-8 text-center surface-card">
