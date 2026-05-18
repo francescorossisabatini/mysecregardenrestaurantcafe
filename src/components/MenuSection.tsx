@@ -75,7 +75,7 @@ const WeeklyDishRow = ({ kind, text, price, meta, language }: { kind: keyof type
     <div className="flex justify-between items-start gap-2">
       <div className="min-w-0 flex-1">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
-          <p className="font-cormorant text-lg font-bold md:font-semibold leading-snug text-foreground">
+          <p className="font-cormorant text-lg font-bold leading-snug text-foreground">
             {cleanDisplayText(dishCopy.name)}
           </p>
           <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${kind === "blue" ? "text-blue" : "text-accent"}`}>
@@ -331,7 +331,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl md:font-semibold">
+                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -361,7 +361,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl md:font-semibold">
+                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -391,7 +391,7 @@ export const MenuSection = () => {
                     <div className="rounded-2xl border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl md:font-semibold">
+                          <h3 className="font-cormorant text-4xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
                           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -471,7 +471,7 @@ export const MenuSection = () => {
 
                         return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                            <p className="font-cormorant text-2xl font-bold md:text-xl md:font-semibold leading-snug text-foreground">
+                            <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
                             <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
@@ -490,7 +490,7 @@ export const MenuSection = () => {
 
                         return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                            <p className="font-cormorant text-2xl font-bold md:text-xl md:font-semibold leading-snug text-foreground">
+                            <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
                             <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
@@ -509,7 +509,7 @@ export const MenuSection = () => {
 
                         return (
                           <div className="rounded-xl border border-border/60 bg-background p-3">
-                            <p className="font-cormorant text-2xl font-bold md:text-xl md:font-semibold leading-snug text-foreground">
+                            <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
                             <span className="mt-2 inline-flex rounded-full border border-blue/25 bg-blue/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
@@ -649,7 +649,7 @@ export const MenuSection = () => {
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className={`font-cormorant text-xl font-bold md:text-base md:font-semibold mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
+                              <h4 className={`font-cormorant text-xl font-bold md:text-base mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
                                 {cleanDisplayText(item.name[language])}
                                 {item.isUnavailable && (
                                   <span className="ml-2 text-xs font-work text-muted-high-contrast italic">
