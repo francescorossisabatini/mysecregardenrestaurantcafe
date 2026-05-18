@@ -45,7 +45,8 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
 
 export const HomeMenuPreview = () => {
   const { language } = useLanguage();
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, loadedAt, isLoading } = useWeeklyMenu();
+  const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
 
   const today = new Date();
   const currentHour = today.getHours();
