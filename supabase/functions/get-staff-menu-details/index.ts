@@ -641,9 +641,32 @@ serve(async (req) => {
   if (itemsError) throw itemsError;
 
   const snapshotById = new Map((snapshots ?? []).map((snapshot) => [snapshot.id, snapshot]));
-  const records = (items ?? []).map((item) => dbItemToRecord(item, snapshotById.get(item.snapshot_id)));
+  // Order items by snapshot recency (newest first) so dedup keeps the freshest copy of each dish.
+  const snapshotOrder = new Map((snapshots ?? []).map((snapshot, index) => [snapshot.id, index]));
+  const orderedItems = [...(items ?? [])].sort((a, b) => {
+    const aIdx = snapshotOrder.get(a.snapshot_id) ?? 999;
+    const bIdx = snapshotOrder.get(b.snapshot_id) ?? 999;
+    if (aIdx !== bIdx) return aIdx - bIdx;
+    return (a.row_index ?? 0) - (b.row_index ?? 0);
+  });
+  const records = orderedItems.map((item) => dbItemToRecord(item, snapshotById.get(item.snapshot_id)));
   const currentRecords = records.filter((record) => record.isCurrent);
-  const archiveRecords = records.filter((record) => !record.isCurrent);
+
+  // Dedup archive: keep only the newest occurrence of each dish (by normalized title).
+  // Also drop archive entries whose title is already in the current week, to avoid duplicates.
+  const normalizeTitle = (t: string) => t.toLowerCase().replace(/\s+/g, " ").trim();
+  const currentTitles = new Set(currentRecords.map((r) => normalizeTitle(r.title)));
+  const seenArchiveTitles = new Set<string>();
+  const archiveRecords = records
+    .filter((record) => !record.isCurrent)
+    .filter((record) => {
+      const key = normalizeTitle(record.title);
+      if (!key) return false;
+      if (currentTitles.has(key)) return false;
+      if (seenArchiveTitles.has(key)) return false;
+      seenArchiveTitles.add(key);
+      return true;
+    });
 
   return new Response(JSON.stringify({
     success: true,
