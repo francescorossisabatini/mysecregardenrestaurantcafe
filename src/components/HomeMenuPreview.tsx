@@ -65,11 +65,13 @@ export const HomeMenuPreview = () => {
   );
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
-  const dishes = todayMenu ? [
+  const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
     { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language], allergens: todayMenu.blueMeta?.allergens },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
+
+  const showPending = !weeklyMenuAvailable && !isLoading;
 
   return (
     <section id="menu" className="bg-section-soft py-16 md:py-24 lg:py-28">
