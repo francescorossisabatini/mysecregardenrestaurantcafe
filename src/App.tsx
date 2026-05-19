@@ -59,6 +59,15 @@ const RouteAnalytics = () => {
 
 function AppContent() {
   useHtmlLang();
+
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+}
+
+function AppRoutes() {
   const location = useLocation();
   const isStaffRoute = location.pathname.startsWith("/staff");
 
@@ -135,7 +144,7 @@ function AppContent() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <RouteAnalytics />
       <ScrollToTop />
       
@@ -158,7 +167,7 @@ function AppContent() {
       </Routes>
       {!isStaffRoute && <CookieConsent />}
       {!isStaffRoute && <InstallPrompt />}
-    </BrowserRouter>
+    </>
   );
 }
 
