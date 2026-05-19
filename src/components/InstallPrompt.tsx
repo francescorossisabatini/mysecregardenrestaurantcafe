@@ -33,9 +33,13 @@ export const InstallPrompt = () => {
 
     if (localStorage.getItem(DISMISS_KEY) === "1") return;
 
+    // Non mostrare finché il banner cookie non è stato gestito (evita sovrapposizione)
+    if (!localStorage.getItem("cookie_consent_v2")) return;
+
     const visits = parseInt(localStorage.getItem(VISIT_KEY) || "0", 10) + 1;
     localStorage.setItem(VISIT_KEY, String(visits));
 
+    // Mostra solo dalla seconda visita in poi (mai alla prima)
     if (visits < 2) return;
 
     const ua = window.navigator.userAgent;
