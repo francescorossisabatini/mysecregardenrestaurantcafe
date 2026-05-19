@@ -371,11 +371,28 @@ const archiveMatches = (record: StaffMenuRecord, query: string) => [
   ...record.notes,
 ].filter(Boolean).some((value) => cleanDisplayText(String(value)).toLowerCase().includes(query));
 
+const parseStaffDate = (value: string) => {
+  const cleaned = cleanDisplayText(value);
+  const isoMatch = cleaned.match(/^(\d{4})[-\s./](\d{1,2})[-\s./](\d{1,2})$/);
+  if (isoMatch) {
+    const [, year, month, day] = isoMatch;
+    return new Date(Number(year), Number(month) - 1, Number(day), 12);
+  }
+
+  const parsed = new Date(cleaned);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
+const formatStaffDate = (value: string, language: DashboardLanguage, options: Intl.DateTimeFormatOptions) => {
+  const date = parseStaffDate(value);
+  if (!date) return cleanDisplayText(value);
+  return new Intl.DateTimeFormat(language === "de" ? "de-AT" : "en-GB", options).format(date);
+};
+
 const weekRange = (records: StaffMenuRecord[], language: DashboardLanguage) => {
   const dates = records.map(recordDate).filter(Boolean).sort();
   if (dates.length < 2) return text[language].fallbackWeek;
-  const formatter = new Intl.DateTimeFormat(language === "de" ? "de-AT" : "en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  return `${formatter.format(new Date(dates[0]))} – ${formatter.format(new Date(dates[dates.length - 1]))}`;
+  return `${formatStaffDate(dates[0], language, { day: "2-digit", month: "long", year: "numeric" })} – ${formatStaffDate(dates[dates.length - 1], language, { day: "2-digit", month: "long", year: "numeric" })}`;
 };
 
 const reservationStatuses: ReservationStatusFilter[] = ["all", "new", "confirmed", "arrived", "cancelled", "no_show"];
@@ -413,7 +430,7 @@ const addDaysToIso = (value: string, offset: number) => {
   return date.toISOString().split("T")[0];
 };
 
-const formatReservationDate = (value: string, language: DashboardLanguage) => new Intl.DateTimeFormat(language === "de" ? "de-AT" : "en-GB", { weekday: "short", day: "2-digit", month: "long" }).format(new Date(`${value}T12:00:00`));
+const formatReservationDate = (value: string, language: DashboardLanguage) => formatStaffDate(value, language, { weekday: "short", day: "2-digit", month: "long" });
 
 const isPastReservationDate = (value: string) => value < todayIso();
 
