@@ -59,8 +59,12 @@ const RouteAnalytics = () => {
 
 function AppContent() {
   useHtmlLang();
+  const location = useLocation();
+  const isStaffRoute = location.pathname.startsWith("/staff");
 
   useEffect(() => {
+    if (isStaffRoute) return;
+
     const handleScroll = () => {
       const scrollPct = Math.round(
         (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
@@ -76,7 +80,7 @@ function AppContent() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isStaffRoute]);
 
   useEffect(() => {
     if (!("matchMedia" in window)) return;
@@ -152,8 +156,8 @@ function AppContent() {
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
-      <CookieConsent />
-      <InstallPrompt />
+      {!isStaffRoute && <CookieConsent />}
+      {!isStaffRoute && <InstallPrompt />}
     </BrowserRouter>
   );
 }
