@@ -83,6 +83,11 @@ function AppContent() {
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!("IntersectionObserver" in window) || !("MutationObserver" in window)) return;
+    // Skip entrance animations + DOM scanning on staff routes.
+    // The staff dashboard renders many dynamic <section> nodes after async fetches;
+    // applying opacity:0 reveal animation to them was leaving the page blank on iPad
+    // ("loads then disappears"). Staff pages also don't need scroll-reveal animations.
+    if (window.location.pathname.startsWith("/staff")) return;
 
     const observed = new WeakSet<Element>();
     const revealObserver = new IntersectionObserver(
@@ -98,6 +103,7 @@ function AppContent() {
     );
 
     const scanSections = () => {
+      if (window.location.pathname.startsWith("/staff")) return;
       const sections = Array.from(document.querySelectorAll("section"));
       sections.forEach((section, index) => {
         if (observed.has(section)) return;
