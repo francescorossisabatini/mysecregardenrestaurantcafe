@@ -266,6 +266,10 @@ export const klassikerMenu = {
           id: "cold-drinks",
           name: { de: "Kaltgetränke", en: "Cold Drinks" },
           items: [
+            { id: "strawberry-spritz", name: { de: "Strawberry Spritz", en: "Strawberry Spritz" }, sizeNote: "Erdbeer-Tonic & Soda · strawberry tonic & soda", price: "6,5", isNew: true },
+            { id: "iced-strawberry-matcha", name: { de: "Iced Strawberry Matcha Latte", en: "Iced Strawberry Matcha Latte" }, sizeNote: "0,3 l", price: "6,5", isNew: true },
+            { id: "iced-espresso-tonic", name: { de: "Iced Espresso Tonic", en: "Iced Espresso Tonic" }, sizeNote: "0,18 l", price: "5,5", isNew: true },
+            { id: "cold-brew", name: { de: "Cold Brew", en: "Cold Brew" }, sizeNote: "0,18 l", price: "4,9", isNew: true },
             { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,0 / 4,7" },
           ],
         },
