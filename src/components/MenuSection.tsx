@@ -732,6 +732,11 @@ export const MenuSection = () => {
                                     <span className="font-work text-base font-bold md:text-sm md:font-semibold text-foreground">
                                       {item.name[language]}
                                     </span>
+                                    {item.isNew && (
+                                      <span className="ml-2 inline-flex items-center rounded-full border border-accent/40 bg-accent/15 px-2 py-0.5 align-middle font-work text-[9px] font-bold uppercase tracking-[0.12em] text-accent">
+                                        {language === "de" ? "Neu" : "New"}
+                                      </span>
+                                    )}
                                     {item.sizeNote && (
                                       <p className="mt-1 text-xs font-work text-muted-high-contrast">
                                         {cleanDisplayText(item.sizeNote)}
