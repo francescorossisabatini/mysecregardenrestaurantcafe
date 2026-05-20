@@ -83,7 +83,7 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/55 to-foreground/85" aria-hidden="true" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
-      <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">
+      <div className="container relative z-10 mx-auto flex h-full flex-col justify-end px-4 pb-10 pt-20 pointer-events-none sm:px-6 md:justify-center md:pb-10 md:pt-24">
         <div className="mx-auto max-w-5xl space-y-3 text-center sm:space-y-4 md:space-y-5">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
