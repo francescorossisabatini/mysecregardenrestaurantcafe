@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
+import { CalendarDays, UtensilsCrossed, ChevronDown, Star, MapPin } from "lucide-react";
 
 import gardenHero from "@/assets/photos/garden-courtyard-hero.jpg";
 
