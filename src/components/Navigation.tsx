@@ -93,15 +93,11 @@ export const Navigation = () => {
             </div>
           </Link>
 
-          {/* Language */}
+          {/* Language - desktop only; mobile lives inside drawer */}
           <div className="hidden items-center justify-end gap-3 lg:flex">
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
-          <div className="flex items-center justify-end lg:hidden">
-            <div className={isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"}>
-              <LanguageSwitcher variant="mobile" tone={isHeroOverlay ? "overlay" : "default"} />
-            </div>
-          </div>
+          <div className="lg:hidden" aria-hidden="true" />
         </div>
       </nav>
 
@@ -163,6 +159,14 @@ export const Navigation = () => {
               );
             })}
           </nav>
+
+          {/* Language switcher inside drawer */}
+          <div className="border-t border-border/75 p-6 flex items-center justify-between gap-4">
+            <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
+              {language === "de" ? "Sprache" : "Language"}
+            </span>
+            <LanguageSwitcher variant="mobile" />
+          </div>
 
         </div>
       </div>
