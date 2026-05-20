@@ -55,14 +55,14 @@ export const Hero = () => {
   const status = getOpenStatus(SITE.openingHours, now);
   
   // Also check if closed due to no menu data, holiday, or Sunday
-  const { isClosed: isClosedToday, reason: closedReason } = useTodayClosed();
+  const { isClosed: isClosedToday } = useTodayClosed();
   
   // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
 
   return (
     <section
-      className="relative flex h-[92svh] min-h-[540px] items-center justify-center overflow-hidden md:h-[100dvh] md:min-h-[660px] lg:h-[90dvh] lg:min-h-[700px]"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden md:min-h-[660px] lg:min-h-[700px]"
       aria-label={language === "de" ? "Willkommen bei My Secret Garden" : "Welcome to My Secret Garden"}
     >
       {/* Decorative background photo — using <img> with fetchpriority for LCP optimization */}
@@ -82,8 +82,8 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-foreground/40" aria-hidden="true" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/55 to-foreground/85" aria-hidden="true" />
 
-      {/* Content - pt-20 ensures navbar doesn't cover title */}
-      <div className="container relative z-10 mx-auto flex h-full flex-col justify-end px-4 pb-10 pt-20 pointer-events-none sm:px-6 md:justify-center md:pb-10 md:pt-24">
+      {/* Content - bottom anchored on mobile so the primary CTA stays visible */}
+      <div className="container relative z-10 mx-auto flex min-h-[100svh] flex-col justify-end px-6 pb-12 pt-32 pointer-events-none sm:px-6 md:min-h-[660px] md:justify-center md:pb-10 md:pt-24 lg:min-h-[700px]">
         <div className="mx-auto max-w-5xl space-y-3 text-center sm:space-y-4 md:space-y-5">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
@@ -117,50 +117,26 @@ export const Hero = () => {
                 {language === "de" ? "Jetzt geöffnet" : "Open now"}
               </span>
             )}
-            {/* Case 2: Not open yet, but opens later today */}
+            {/* Case 2: Not open yet */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
               <span className="inline-flex items-center rounded-full border border-warning/45 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
                 <span className="w-2 h-2 rounded-full mr-2 bg-warning" />
-                {language === "de" ? `Öffnet um ${status.opensAt}` : `Opens at ${status.opensAt}`}
+                {language === "de" ? "Jetzt geschlossen" : "Closed now"}
               </span>
             )}
-            {/* Case 3: After closing time - show "closed now, opens tomorrow" */}
+            {/* Case 3: After closing time */}
             {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
-              <>
-                <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
-                  {language === "de" ? "Jetzt geschlossen" : "Closed now"}
-                </span>
-                {status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `morgen ab ${status.tomorrowOpensAt}` : `tomorrow at ${status.tomorrowOpensAt}`}
-                  </span>
-                )}
-                {status.tomorrowClosed && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? "morgen geschlossen" : "closed tomorrow"}
-                  </span>
-                )}
-              </>
+              <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
+                {language === "de" ? "Jetzt geschlossen" : "Closed now"}
+              </span>
             )}
             {/* Case 4: Closed today (Sunday, holiday, no menu) */}
             {!effectivelyOpen && isClosedToday && (
-              <>
-                <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
-                  {language === "de" ? "Heute geschlossen" : "Closed today"}
-                </span>
-                {closedReason === "no-menu" && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? "kein Menü heute" : "no menu today"}
-                  </span>
-                )}
-                {(closedReason === "sunday" || closedReason === "holiday") && status.tomorrowOpensAt && !status.tomorrowClosed && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `morgen ab ${status.tomorrowOpensAt}` : `tomorrow at ${status.tomorrowOpensAt}`}
-                  </span>
-                )}
-              </>
+              <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
+                {language === "de" ? "Heute geschlossen" : "Closed today"}
+              </span>
             )}
           </div>
 
@@ -175,7 +151,7 @@ export const Hero = () => {
             >
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
-                {language === "de" ? "Tagesmenü" : "Today's Menu"}
+                {language === "de" ? "Was gibt's heute?" : "What's on today?"}
               </Link>
             </Button>
             {/* Secondary: escape route per chi cerca il posto, non il menu */}
@@ -187,7 +163,7 @@ export const Hero = () => {
             >
               <Link to="/visit">
                 <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "So findest du uns" : "Find us"}
+                {language === "de" ? "Wie du uns findest" : "How to find us"}
               </Link>
             </Button>
           </div>
