@@ -75,6 +75,10 @@ export const fixedDishes = {
   },
   drinks: {
     de: [
+      { name: "Strawberry Spritz (Erdbeer-Tonic & Soda)", price: "6,50 €", size: "" },
+      { name: "Iced Strawberry Matcha Latte", price: "6,50 €", size: "0,3 l" },
+      { name: "Iced Espresso Tonic", price: "5,50 €", size: "0,18 l" },
+      { name: "Cold Brew", price: "4,90 €", size: "0,18 l" },
       { name: "Ingwer-Limonade (hausgemacht)", price: "3,00 / 4,70 €", size: "0,2 / 0,5 l" },
       { name: "Hausgemachter Eistee", price: "3,50 €", size: "0,3 l" },
       { name: "Apfelsaft naturtrüb", price: "3,40 / 5,30 €", size: "0,2 / 0,5 l" },
@@ -83,6 +87,10 @@ export const fixedDishes = {
       { name: "Mineralwasser", price: "2,40 €", size: "0,33 l" },
     ],
     en: [
+      { name: "Strawberry Spritz (strawberry tonic & soda)", price: "6,50 €", size: "" },
+      { name: "Iced Strawberry Matcha Latte", price: "6,50 €", size: "0,3 l" },
+      { name: "Iced Espresso Tonic", price: "5,50 €", size: "0,18 l" },
+      { name: "Cold Brew", price: "4,90 €", size: "0,18 l" },
       { name: "Ginger Lemonade (homemade)", price: "3,00 / 4,70 €", size: "0,2 / 0,5 l" },
       { name: "Homemade Iced Tea", price: "3,50 €", size: "0,3 l" },
       { name: "Cloudy Apple Juice", price: "3,40 / 5,30 €", size: "0,2 / 0,5 l" },
@@ -91,4 +99,5 @@ export const fixedDishes = {
       { name: "Mineral Water", price: "2,40 €", size: "0,33 l" },
     ],
   },
+
 };
