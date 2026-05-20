@@ -299,6 +299,31 @@ export const MenuSection = () => {
           {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
+            {/* To-go discount banner */}
+            <div
+              role="note"
+              aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
+              className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
+                  -20%
+                </span>
+                <div className="min-w-0">
+                  <p className="font-cormorant text-lg md:text-xl font-semibold leading-snug text-foreground">
+                    {language === "de"
+                      ? "Take-away Angebot: 18–19 Uhr"
+                      : "Take-away offer: 6–7 pm"}
+                  </p>
+                  <p className="mt-1 font-work text-xs md:text-sm leading-relaxed text-muted-high-contrast">
+                    {language === "de"
+                      ? "20% Rabatt auf die Tagesgerichte Grün & Blau zum Mitnehmen, täglich von 18:00 bis 19:00 Uhr."
+                      : "20% off the Green & Blue daily dishes for take-away, every day from 6:00 to 7:00 pm."}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
@@ -732,6 +757,11 @@ export const MenuSection = () => {
                                     <span className="font-work text-base font-bold md:text-sm md:font-semibold text-foreground">
                                       {item.name[language]}
                                     </span>
+                                    {item.isNew && (
+                                      <span className="ml-2 inline-flex items-center rounded-full border border-accent/40 bg-accent/15 px-2 py-0.5 align-middle font-work text-[9px] font-bold uppercase tracking-[0.12em] text-accent">
+                                        {language === "de" ? "Neu" : "New"}
+                                      </span>
+                                    )}
                                     {item.sizeNote && (
                                       <p className="mt-1 text-xs font-work text-muted-high-contrast">
                                         {cleanDisplayText(item.sizeNote)}
