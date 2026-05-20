@@ -55,7 +55,7 @@ export const Hero = () => {
   const status = getOpenStatus(SITE.openingHours, now);
   
   // Also check if closed due to no menu data, holiday, or Sunday
-  const { isClosed: isClosedToday, reason: closedReason } = useTodayClosed();
+  const { isClosed: isClosedToday } = useTodayClosed();
   
   // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
@@ -151,7 +151,7 @@ export const Hero = () => {
             >
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
-                {language === "de" ? "Tagesmenü" : "Today's Menu"}
+                {language === "de" ? "Was gibt's heute?" : "What's on today?"}
               </Link>
             </Button>
             {/* Secondary: escape route per chi cerca il posto, non il menu */}
@@ -163,7 +163,7 @@ export const Hero = () => {
             >
               <Link to="/visit">
                 <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "So findest du uns" : "Find us"}
+                {language === "de" ? "Wie du uns findest" : "How to find us"}
               </Link>
             </Button>
           </div>
