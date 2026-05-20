@@ -16,6 +16,7 @@ export interface KlassikerItem {
   isGlutenFree?: boolean;
   isBio?: boolean;
   isUnavailable?: boolean;
+  isNew?: boolean;
 }
 
 export interface DrinkSubcategory {
