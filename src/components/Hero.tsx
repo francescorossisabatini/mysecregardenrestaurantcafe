@@ -112,17 +112,10 @@ export const Hero = () => {
           }`}>
             {/* Case 1: Open now */}
             {effectivelyOpen && (
-              <>
-                <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
-                  {language === "de" ? "Jetzt geöffnet" : "Open now"}
-                </span>
-                {status.closesAt && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `schließt um ${status.closesAt}` : `closes at ${status.closesAt}`}
-                  </span>
-                )}
-              </>
+              <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
+                {language === "de" ? "Jetzt geöffnet" : "Open now"}
+              </span>
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
