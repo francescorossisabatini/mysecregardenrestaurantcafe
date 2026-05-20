@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CalendarDays, UtensilsCrossed, ChevronDown, Star } from "lucide-react";
+import { CalendarDays, UtensilsCrossed, ChevronDown, Star, MapPin } from "lucide-react";
 
 import gardenHero from "@/assets/photos/garden-courtyard-hero.jpg";
 
@@ -78,9 +78,9 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      {/* Overlay shaped for readability while keeping the room visible */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/66 via-foreground/30 to-foreground/72" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/36 via-transparent to-foreground/22" aria-hidden="true" />
+      {/* Overlay: base scurente uniforme + gradient concentrato sul copy per leggibilità garantita in ogni condizione */}
+      <div className="absolute inset-0 bg-foreground/40" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/55 to-foreground/85" aria-hidden="true" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">
@@ -112,17 +112,10 @@ export const Hero = () => {
           }`}>
             {/* Case 1: Open now */}
             {effectivelyOpen && (
-              <>
-                <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                  <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
-                  {language === "de" ? "Jetzt geöffnet" : "Open now"}
-                </span>
-                {status.closesAt && (
-                  <span className="text-xs sm:text-sm text-background/90 drop-shadow-md font-medium">
-                    {language === "de" ? `schließt um ${status.closesAt}` : `closes at ${status.closesAt}`}
-                  </span>
-                )}
-              </>
+              <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
+                <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
+                {language === "de" ? "Jetzt geöffnet" : "Open now"}
+              </span>
             )}
             {/* Case 2: Not open yet, but opens later today */}
             {!effectivelyOpen && !isClosedToday && status.opensAt && (
@@ -171,11 +164,10 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Menu (primary), Specials (secondary) */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
+          {/* CTA Buttons: Menu (primary), Find us (secondary ghost) */}
+          <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
             showButtons ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}>
-            {/* Primary: View Menu */}
             <Button
               size="lg"
               className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6 shadow-lg"
@@ -184,6 +176,18 @@ export const Hero = () => {
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
+              </Link>
+            </Button>
+            {/* Secondary: escape route per chi cerca il posto, non il menu */}
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full max-w-xs sm:w-auto border-background/50 bg-background/10 text-background hover:bg-background/20 hover:text-background backdrop-blur-sm font-work text-base px-6 sm:px-8 py-5 sm:py-6"
+              asChild
+            >
+              <Link to="/visit">
+                <MapPin className="w-4 h-4 mr-2" />
+                {language === "de" ? "So findest du uns" : "Find us"}
               </Link>
             </Button>
           </div>
