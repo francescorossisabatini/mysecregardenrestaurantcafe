@@ -250,7 +250,7 @@ export const klassikerMenu = {
           items: [
             { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,9" },
             { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,4" },
-            { id: "pumpkin-spiced-latte", name: { de: "Pumpkin Spiced Latte", en: "Pumpkin Spiced Latte" }, price: "5,9" },
+            
             { id: "glueh-kombucha", name: { de: "\"Glüh\" Kombucha", en: "\"Glüh\" Kombucha (hot)" }, price: "4,9" },
             { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,9" },
             { id: "espresso", name: { de: "Espresso", en: "Espresso" }, sizeNote: "1 Shot / 2 Shots", price: "2,9 / 3,9" },
