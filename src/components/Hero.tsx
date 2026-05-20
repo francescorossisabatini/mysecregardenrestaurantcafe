@@ -78,9 +78,9 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      {/* Overlay shaped for readability while keeping the room visible */}
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground/66 via-foreground/30 to-foreground/72" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-r from-foreground/36 via-transparent to-foreground/22" aria-hidden="true" />
+      {/* Overlay: base scurente uniforme + gradient concentrato sul copy per leggibilità garantita in ogni condizione */}
+      <div className="absolute inset-0 bg-foreground/40" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/55 to-foreground/85" aria-hidden="true" />
 
       {/* Content - pt-20 ensures navbar doesn't cover title */}
       <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4 pb-6 pt-20 pointer-events-none sm:px-6 md:pb-10 md:pt-24">
