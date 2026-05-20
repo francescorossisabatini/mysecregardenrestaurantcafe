@@ -164,11 +164,10 @@ export const Hero = () => {
             )}
           </div>
 
-          {/* CTA Buttons: Menu (primary), Specials (secondary) */}
-          <div className={`flex flex-wrap justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
+          {/* CTA Buttons: Menu (primary), Find us (secondary ghost) */}
+          <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
             showButtons ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}>
-            {/* Primary: View Menu */}
             <Button
               size="lg"
               className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6 shadow-lg"
@@ -177,6 +176,18 @@ export const Hero = () => {
               <Link to="/#menu">
                 <UtensilsCrossed className="w-4 h-4 mr-2" />
                 {language === "de" ? "Tagesmenü" : "Today's Menu"}
+              </Link>
+            </Button>
+            {/* Secondary: escape route per chi cerca il posto, non il menu */}
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full max-w-xs sm:w-auto border-background/50 bg-background/10 text-background hover:bg-background/20 hover:text-background backdrop-blur-sm font-work text-base px-6 sm:px-8 py-5 sm:py-6"
+              asChild
+            >
+              <Link to="/visit">
+                <MapPin className="w-4 h-4 mr-2" />
+                {language === "de" ? "So findest du uns" : "Find us"}
               </Link>
             </Button>
           </div>
