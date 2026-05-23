@@ -85,12 +85,12 @@ export const Hero = () => {
       <div className="container relative z-10 mx-auto flex min-h-[100svh] flex-col justify-end px-6 pb-12 pt-32 pointer-events-none sm:px-6 md:min-h-[660px] md:justify-center md:pb-10 md:pt-24 lg:min-h-[700px]">
         <div className="mx-auto max-w-5xl space-y-3 text-center sm:space-y-4 md:space-y-5">
           {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background drop-shadow-2xl leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)]">
             {SITE.name}
           </h1>
 
-          {/* Subtitle - visible immediately for LCP */}
-          <p className={`mx-auto max-w-2xl text-base font-lora leading-relaxed text-background drop-shadow-2xl transition-all duration-slow ease-out sm:text-lg md:text-xl ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+          {/* Subtitle on a soft chip so it stays legible without darkening the whole photo */}
+          <p className={`mx-auto inline-block max-w-2xl rounded-full bg-foreground/35 px-4 py-1.5 text-base font-lora leading-relaxed text-background backdrop-blur-sm transition-all duration-slow ease-out sm:text-lg md:text-xl [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
             {language === "de" ? "Das Restaurant, das du fast nicht findest." : "The restaurant you almost don't find."}
           </p>
 
