@@ -78,9 +78,8 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      {/* Overlay: base scurente uniforme + gradient concentrato sul copy per leggibilità garantita in ogni condizione */}
-      <div className="absolute inset-0 bg-foreground/40" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/55 to-foreground/85" aria-hidden="true" />
+      {/* No gradient — uniform light scrim only, so the photo hits. Contrast on copy is handled by text-shadow + a subtle chip on the subtitle */}
+      <div className="absolute inset-0 bg-foreground/25" aria-hidden="true" />
 
       {/* Content - bottom anchored on mobile so the primary CTA stays visible */}
       <div className="container relative z-10 mx-auto flex min-h-[100svh] flex-col justify-end px-6 pb-12 pt-32 pointer-events-none sm:px-6 md:min-h-[660px] md:justify-center md:pb-10 md:pt-24 lg:min-h-[700px]">
