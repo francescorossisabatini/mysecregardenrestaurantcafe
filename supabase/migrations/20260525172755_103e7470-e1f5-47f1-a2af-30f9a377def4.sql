@@ -1,0 +1,2 @@
+DROP POLICY IF EXISTS "Public can read menu config metadata" ON public.menu_config;
+CREATE POLICY "Staff can read menu config" ON public.menu_config FOR SELECT USING (public.is_staff_user(auth.uid()));
