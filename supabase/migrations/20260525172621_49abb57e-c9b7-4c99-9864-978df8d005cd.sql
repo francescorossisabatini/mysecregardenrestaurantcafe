@@ -1,0 +1,1 @@
+INSERT INTO public.menu_config (singleton, sheet_id, loaded_at) VALUES (true, '1x3l9G4IQFysCoy0JWrz_hZTW5MBDZ3Yk', now()) ON CONFLICT (singleton) DO UPDATE SET sheet_id = EXCLUDED.sheet_id, loaded_at = EXCLUDED.loaded_at;
