@@ -119,11 +119,8 @@ Deno.serve(async (req) => {
       })
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')
-    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    if (!supabaseUrl || !serviceRoleKey) throw new Error('Backend secrets missing')
+    const client = authClient
 
-    const client = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } })
 
     const { data: existing } = await client
       .from('ab_test_reports')
