@@ -66,7 +66,7 @@ export const DailyMenuHighlight = () => {
           <h2 className="text-5xl md:text-7xl font-bold text-primary mb-4">
             {language === "de" ? "Wochenmenü" : "Weekly Menu"}
           </h2>
-          <p className="text-lg md:text-xl text-muted-high-contrast">
+          <p className="text-xl md:text-2xl text-muted-high-contrast font-bold">
             {translatePeriod(menu.period, language)}
           </p>
         </div>
