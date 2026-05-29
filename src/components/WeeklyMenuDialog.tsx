@@ -40,7 +40,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
           <DialogTitle className="text-3xl md:text-4xl font-bold text-primary text-center">
             {language === 'de' ? 'Wochenkarte' : 'Weekly Menu'}
           </DialogTitle>
-          <p className="text-center text-sm text-muted-high-contrast font-lora pt-1">
+          <p className="text-center text-base text-muted-high-contrast font-bold font-lora pt-1">
             {translatePeriod(menu.period, language)}
           </p>
         </DialogHeader>
