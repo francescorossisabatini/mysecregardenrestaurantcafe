@@ -21,10 +21,14 @@ export const Footer = () => {
             "Cooking is prayer. Eating is gratitude."
           </p>
           
-          {/* Address */}
-          <p className="text-sm text-primary-foreground font-work">
+          {/* Address — clickable link to /visit */}
+          <Link
+            to="/visit"
+            className="block text-sm text-primary-foreground font-work hover:underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+            aria-label={language === "de" ? "So findest du uns" : "How to find us"}
+          >
             {SITE.addressShort}
-          </p>
+          </Link>
           
           {/* Instagram */}
           <a 
