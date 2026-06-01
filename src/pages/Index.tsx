@@ -49,21 +49,42 @@ const Index = () => {
   }, [handleScroll]);
 
   useEffect(() => {
-    if (location.hash === "#menu") {
-      // Use requestAnimationFrame to batch layout reads
-      requestAnimationFrame(() => {
-        const element = document.getElementById("menu");
-        if (element) {
-          const offset = -50;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        }
-      });
-    }
+    if (location.hash !== "#menu") return;
+
+    // Lazy-loaded sections above #menu mount asynchronously; their height
+    // changes the target's offset. Re-scroll until the position stabilizes
+    // (or after a max number of attempts).
+    let cancelled = false;
+    let lastTop = -1;
+    let stableCount = 0;
+    let attempts = 0;
+
+    const tick = () => {
+      if (cancelled) return;
+      const element = document.getElementById("menu");
+      if (!element) {
+        if (attempts++ < 40) setTimeout(tick, 50);
+        return;
+      }
+      const offset = 50;
+      const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+
+      if (Math.abs(top - lastTop) < 2) {
+        stableCount++;
+      } else {
+        stableCount = 0;
+        lastTop = top;
+      }
+      if (stableCount < 3 && attempts++ < 40) {
+        setTimeout(tick, 120);
+      }
+    };
+
+    requestAnimationFrame(tick);
+    return () => {
+      cancelled = true;
+    };
   }, [location]);
 
   return (
