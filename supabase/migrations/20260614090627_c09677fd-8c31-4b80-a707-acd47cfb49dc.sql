@@ -1,0 +1,1 @@
+UPDATE public.menu_config SET sheet_id = '1jm-jliwMYvG_U5kejhWNuS7cj0yW81_w', loaded_at = now(), updated_at = now() WHERE singleton = true;
