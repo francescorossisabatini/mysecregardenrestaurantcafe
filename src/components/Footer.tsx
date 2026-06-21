@@ -73,16 +73,6 @@ export const Footer = () => {
             © {new Date().getFullYear()} {SITE.name}
           </p>
 
-          {/* Staff access — discreet link */}
-          <p className="pt-2">
-            <a
-              href="/staff/login"
-              className="text-[10px] uppercase tracking-[0.12em] text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors font-work"
-              aria-label="Staff access"
-            >
-              {language === "de" ? "Mitarbeiter" : "Staff"}
-            </a>
-          </p>
           
         </div>
       </div>
