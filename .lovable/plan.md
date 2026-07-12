@@ -1,83 +1,113 @@
-# Piano — Direzione A "Herbarium editorial"
+## Obiettivo
 
-Manteniamo l'identità botanica My Secret Garden (navy/verde/cream, Caveat/Cormorant/Lora, foto reali, no zoom/parallax, fade-in lenti). Introduciamo un **signature editoriale**: eyebrow numerati + rule language sottile + scala tipografica più decisa. Solo presentazione, nessuna logica.
+Applicare i principi UX/UI già in uso (Direzione A "Herbarium editorial") a due punti deboli:
 
-## Signature moves (i 3 pilastri della direzione A)
+1. **Ordine sezioni Home** — oggi "Menu di oggi" appare dopo 4 sezioni: The Regular (memoria utenti) lo vuole in <20s.
+2. **Schede piatto** — 3 stili diversi tra `MenuSection` (classici), `DayMenuCard`, `DailyMenuCard`, `HomeMenuPreview`. Zero uso delle foto già in repo.
 
-1. **Eyebrow numerati** in ogni sezione home
-   `01 · Heute` · `02 · Der Ort` · `03 · Stimmen` · `04 · Besuch`
-   Stile: `font-work` uppercase, tracking-wider, text-verde-300, con un rule 24px verde a sinistra del numero.
+Nessuna modifica a copy approvato, route, Supabase, `tailwind.config.ts`, GA4. Nessuna nuova immagine (solo asset esistenti in `src/assets/`).
 
-2. **Rule language** sottile
-   Linee 1px `border-verde-300/40` come divisori orizzontali corti (max 64px), usate solo per: apertura sezione (sotto l'eyebrow) e chiusura CTA. Sostituiscono il `SectionDivider` gradient generico.
+---
 
-3. **Scala tipografica editoriale**
-   - H2 Cormorant: **36px mobile / 48px tablet / 56px desktop** (oggi 24px piatto)
-   - Subheading (attuale H2): diventa `text-section` con font-lora italic per contrast di voce
-   - H1 hero invariato (Caveat) ma con leading più stretto
+## 1. Nuovo ordine sezioni in `src/pages/Index.tsx`
 
-## Ristrutturazione Hero (mobile + desktop)
+Motivazione UX per profilo (GA4):
 
-**Prima:** H1 → subtitle chip → rating chip → open chip → 2 CTA full width impilati → scroll indicator.
-**Dopo:**
-- **Eyebrow trust sopra H1**: rating (5★ · 936 Bewertungen) + open/closed uniti in un'unica strip discreta, senza chip pesanti.
-- **H1** Caveat invariato.
-- **Subtitle** senza chip di sfondo, solo text-shadow morbido.
-- **1 CTA primaria** "Was gibt's heute?" + **link testuale sottile** "Wie du uns findest →" (non più bottone outline pesante).
-- **Scrim**: da `bg-foreground/25` piatto → gradient verticale `from-transparent via-foreground/10 to-foreground/50` per dare profondità e leggibilità in basso senza spegnere la foto.
-- **MobileStickyBar**: delay show fino a `scrollY > 80vh` per evitare tripla CTA nel primo viewport.
-
-## Ritmo delle superfici (No-Line Rule vero)
-
-Sostituzione dei `SectionDivider` gradient con vera alternanza:
+- **The Regular** (<20s): "cosa c'è oggi?" → il preview del menu di oggi va **subito dopo l'Hero**.
+- **The Seeker** (<90s): trust → decisione → percorso: Hero (trust) → Menu oggi (decisione) → ValueProp+Showcase (contesto) → Reviews → CTA.
 
 ```
-Hero          → foto
-ValueProp     → bg-cream-50 (elevated, +shadow-soft su cards)
-Showcase 1    → bg-cream-100 (page)
-Showcase 2    → bg-cream-100 (page, inversione layout)
-Voci          → bg-verde-100/25 (tint botanico)
-HomeMenuPrev  → bg-cream-50 (elevated)
-Reviews       → bg-cream-100
-CTAEnd        → bg-gradient-hero (navy, invariato)
+PRIMA                              DOPO
+1. Hero                            1. Hero
+2. ValueProposition                2. HomeMenuPreview   ← su
+3. ShowcaseSections                3. ValueProposition
+4. Voci                            4. ShowcaseSections
+5. HomeMenuPreview                 5. Voci
+6. Reviews                         6. Reviews
+7. CTAEndBlock                     7. CTAEndBlock
 ```
 
-Padding sezione portato a `py-20 md:py-28` per respirazione editoriale.
+**Rinumerazione eyebrow** (già in Direzione A): aggiorno il numero editoriale in ogni componente affinché la sequenza `01…07` resti coerente col nuovo ordine. Le label testuali restano invariate.
 
-## File toccati (solo presentazione)
+- Hero: nessun eyebrow numerato (resta trust strip)
+- HomeMenuPreview: `01 · Heute auf dem Tisch` / `01 · On the table today`
+- ValueProposition: `02 · Der Ort` / `02 · The Place`
+- ShowcaseSections: `03 · Speisekarte` + `04 · Besuch`
+- Voci: `05 · Stimmen` / `05 · Voices`
+- Reviews: `06 · Gäste sagen` / `06 · Guests say`
+- CTAEndBlock: `07 · Vorbeikommen` / `07 · Visit us`
 
-| File | Modifica |
+## 2. Schede menu — unificazione visiva
+
+### Sistema comune (nuovo helper `src/components/menu/DishRow.tsx`)
+
+Un solo pattern riutilizzabile:
+
+```
+┌───────────────────────────────────────────┐
+│ [thumb 72×72]  Kicker · verde/blu  Preis  │
+│                Nome piatto (Cormorant 20) │
+│                Descrizione (Lora 14)      │
+│                • vegan · ohne Gluten · bio│
+│                Details & allergens ▾      │
+└───────────────────────────────────────────┘
+```
+
+- Superficie unica: `surface-card` (rounded-2xl, border cream-200, shadow-card) — allineata a `HomeMenuPreview`
+- Thumbnail quadrata **opzionale**: 72×72 mobile, 96×96 desktop, `rounded-xl object-cover`, `loading="lazy"`; se assente → nessuno spazio riservato (grid a 1 colonna)
+- Prezzo: `font-work font-semibold text-accent` allineato in alto-destra su desktop, sotto il kicker su mobile
+- Dietary + Allergens già esistenti restano funzionali; solo restyling visivo
+- Kicker: `font-work text-[10px] uppercase tracking-[0.08em]` verde/blu/amber a seconda del tipo
+
+### Mappa foto ↔ categoria (solo asset già in repo, nessuna AI)
+
+| Categoria/dish key | File in `src/assets/` |
 |---|---|
-| `src/components/Hero.tsx` | Ristrutturazione gerarchia (eyebrow trust, 1 CTA + link), scrim gradient |
-| `src/index.css` | Aggiunta utility `.eyebrow-numbered`, `.rule-short`, scrim gradient var, mini scala H2 |
-| `src/components/SectionDivider.tsx` | Refactor: rimuove gradient, applica solo padding + optional rule short |
-| `src/components/ValueProposition.tsx` | Eyebrow `01`, H2 grande, surface cream-50, card shadow-soft |
-| `src/components/ShowcaseSections.tsx` | Eyebrow `02`, H2 grande, respirazione |
-| `src/components/HomeMenuPreview.tsx` | Eyebrow `03 · Heute`, surface cream-50 |
-| `src/components/Voci.tsx` | Eyebrow `04 · Stimmen`, tint verde-100/25 |
-| `src/components/Reviews.tsx` | Eyebrow numerato, H2 grande |
-| `src/components/CTAEndBlock.tsx` | Rule language + eyebrow su navy |
-| `src/components/DailyMenuCard.tsx` | Radius 12→16, shadow-card, rule interno verde |
-| `src/components/MobileStickyBar.tsx` | Delay show `scrollY > 0.8 * innerHeight` |
-| `src/components/Navigation.tsx` | Micro-polish contrast + focus (opzionale, chirurgico) |
+| Warm Dishes / Dal | `dal-rice-bowl.jpg` |
+| Warm Dishes / Curry | `curry-of-the-day.webp` |
+| Warm Dishes / Alpenpolenta | `alpenpolenta.jpg` |
+| Warm Dishes / Korean | `korean-bowl.jpg` |
+| Warm Dishes / Minnesota | `minnesota-bowl.webp` |
+| Salads (generic) | `food-bowl-real.jpg` |
+| Green Dish (weekly) | `food-detail-real.jpg` |
+| Blue Dish (weekly) | `piatto-bowl-blue.jpg` |
+| Soup (weekly) | *nessuna foto → solo testo* |
+| Cakes / Drinks | *nessuna foto → solo testo* |
 
-Nessuna modifica a: routing, copy DE/EN, form, Supabase, GA4, `tailwind.config.ts` (le utility nuove vivono in `index.css`), foto, componenti Menu/Weekly/Contact/Impressum/Privacy/Staff.
+Il match è per **id/slug del piatto in `klassikerData.ts`** — se non c'è slug matching → nessuna foto, la card resta text-only. Nessuna foto viene "inventata" o riusata a sproposito.
 
-## Guardrail
-- No em dash in nessuna copy nuova o modificata.
-- No zoom/parallax/bounce; solo fade-in slow.
-- `prefers-reduced-motion` rispettato.
-- WCAG AA: nessun uso di verde-300 come testo su cream; contrast controllato su eyebrow verde-300 su cream-50 (passa 4.5:1).
-- Nessuna nuova immagine.
-- Nessun cambio copy — solo eyebrow numerati (label neutri "01 · Heute" ecc.) da confermare in DE/EN.
+### Refactor componenti (solo presentational)
 
-## QA
-Verifica visiva a 375 / 768 / 1280 px su: Home (tutte le sezioni), Hero open + closed state.
+- `DailyMenuCard.tsx` — sostituito da wrapper attorno a `DishRow`
+- `DayMenuCard.tsx` — header giorno + `DishRow` per soup/green/blue; rimossa pill "Heute" ridondante (già segnalata da `isToday` con ring verde e border)
+- `HomeMenuPreview.tsx` — le 3 dish cards riscritte con `DishRow`; grid resta 3 col desktop / stack mobile
+- `MenuSection.tsx` — cards inline dei classici (righe ~330-550) sostituite con `DishRow`; nessun cambio a stato/tab/quick-nav/logica Supabase
+- Section headers "Warm Dishes / Salads / Cakes / Drinks": passano al pattern editoriale `eyebrow-num` + `h2-editorial` + `rule-short` (già esistenti in `index.css`)
 
-## Da confermare prima del build
-1. **Etichette eyebrow** vanno bene così?
-   `01 · Heute` · `02 · Der Ort` · `03 · Heute auf dem Tisch` · `04 · Stimmen` · `05 · Besuch`
-   (EN: `01 · Today` · `02 · The place` · `03 · On the table today` · `04 · Voices` · `05 · Visit`)
-2. Ok rimuovere il bottone outline secondario nell'hero e sostituirlo con link testuale "Wie du uns findest →"?
+## 3. Guardrail
 
-Rispondi **ok** (o correggi i due punti sopra) e passiamo in build.
+- Nessun cambio in `tailwind.config.ts`, `supabase/*`, `useWeeklyMenu`, `klassikerData`, routing
+- WCAG AA su tutti i nuovi elementi (contrasto testo/prezzo su surface-card verificato con token esistenti)
+- `alt` descrittivo su ogni `<img>` (nome piatto), `loading="lazy"`, `decoding="async"`
+- Nessun em dash. Nessuna nuova animazione oltre fade esistenti. Rispetto `prefers-reduced-motion`
+- Nessun cambio di copy: label kicker/dietary/allergens restano quelle già approvate
+- MobileStickyBar e `#menu` scroll behaviour restano intatti (l'anchor scroll continua a funzionare col nuovo ordine perché la sezione ha ancora `id="menu"`)
+
+## File toccati
+
+- `src/pages/Index.tsx` — riordino sezioni
+- `src/components/HomeMenuPreview.tsx` — eyebrow `01`, refactor dish → DishRow
+- `src/components/ValueProposition.tsx` — eyebrow `02`
+- `src/components/ShowcaseSections.tsx` — eyebrow `03` + `04`
+- `src/components/Voci.tsx` — eyebrow `05`
+- `src/components/Reviews.tsx` — eyebrow `06`
+- `src/components/CTAEndBlock.tsx` — eyebrow `07`
+- `src/components/menu/DishRow.tsx` — **nuovo** componente presentational condiviso
+- `src/components/menu/dishPhotoMap.ts` — **nuovo** mapping slug → asset URL (solo import statici da `src/assets/`)
+- `src/components/DailyMenuCard.tsx` — wrap `DishRow`
+- `src/components/DayMenuCard.tsx` — wrap `DishRow`
+- `src/components/MenuSection.tsx` — sostituisce solo il markup delle card classiche + section header (nessuna modifica a logica/hook)
+
+## Verifica post-build
+
+Playwright screenshot mobile+desktop di `/` (nuovo ordine) e `/menu` (nuove schede con thumbnail) → conferma visiva prima di chiudere.
