@@ -42,7 +42,7 @@ export const Navigation = () => {
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
             ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-gradient-to-b before:from-foreground/55 before:via-foreground/25 before:to-transparent before:content-['']"
-            : "border-b border-border/60 bg-background/97 py-1.5 backdrop-blur-2xl md:py-2"
+            : "border-b border-border/60 bg-background py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
         <div className={`relative mx-auto flex w-full max-w-[1240px] items-center gap-4 px-4 transition-all duration-500 sm:px-6 lg:gap-8 lg:px-8 ${isHeroOverlay ? "min-h-14 lg:min-h-16" : "min-h-12 md:min-h-14"}`}>
@@ -80,7 +80,7 @@ export const Navigation = () => {
           </Link>
 
           {/* Desktop Nav Links + Language (right) */}
-          <div className="hidden items-center gap-6 lg:flex xl:gap-8">
+          <div className="ml-auto hidden items-center gap-6 lg:flex xl:gap-8">
             <ul className="flex items-center gap-6 xl:gap-8">
               {navLinks.map((link) => {
                 const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
