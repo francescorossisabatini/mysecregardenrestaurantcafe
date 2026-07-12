@@ -6,7 +6,6 @@ import curryDay from "@/assets/curry-of-the-day.webp";
 import alpenpolenta from "@/assets/alpenpolenta.jpg";
 import koreanBowl from "@/assets/korean-bowl.jpg";
 import minnesotaBowl from "@/assets/minnesota-bowl.webp";
-import foodBowlReal from "@/assets/food-bowl-real.jpg";
 
 // dish id (from klassikerData / weekly kind) → asset url
 const map: Record<string, string> = {
@@ -25,6 +24,4 @@ export const getDishPhoto = (id?: string): string | undefined => {
 
 // Category-level decorative header photos (broad enough to be honest)
 export const categoryHeaderPhoto: Record<string, string> = {
-  warm: curryDay,
-  salate: foodBowlReal,
 };
