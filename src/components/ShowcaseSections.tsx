@@ -30,7 +30,7 @@ export const ShowcaseSections = () => {
             {/* Text */}
             <div className="space-y-6 lg:max-w-lg">
               <span className="eyebrow-num">
-                02 · {language === "de" ? "Heute am Tresen" : "At the counter today"}
+                03 · {language === "de" ? "Heute am Tresen" : "At the counter today"}
               </span>
               <h2 className="h2-editorial text-primary">
                 {language === "de" ? "Was heute gut passt" : "What works today"}
@@ -64,7 +64,7 @@ export const ShowcaseSections = () => {
             {/* Text - Left on desktop */}
             <div className="space-y-6 order-2 md:order-1 lg:max-w-lg">
               <span className="eyebrow-num">
-                03 · {language === "de" ? "Unser Garten" : "Our garden"}
+                04 · {language === "de" ? "Unser Garten" : "Our garden"}
               </span>
               <h2 className="h2-editorial text-primary">
                 {language === "de" ? "Der Hof hinter dem Bogen" : "The courtyard behind the arch"}

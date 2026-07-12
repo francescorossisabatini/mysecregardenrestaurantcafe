@@ -80,7 +80,7 @@ export const HomeMenuPreview = () => {
           <div className="mb-10 text-center space-y-4">
             <div className="flex justify-center">
               <span className="eyebrow-num">
-                04 · {language === "de" ? "Heute auf dem Tisch" : "On the table today"}
+                01 · {language === "de" ? "Heute auf dem Tisch" : "On the table today"}
               </span>
             </div>
             <h2 className="h2-editorial text-primary">

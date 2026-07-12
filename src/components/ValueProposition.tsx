@@ -12,7 +12,7 @@ export const ValueProposition = () => {
           {/* Eyebrow numbered — signature editorial */}
           <div className="flex justify-center">
             <span className="eyebrow-num">
-              01 · {language === "de" ? "Der Ort" : "The place"}
+              02 · {language === "de" ? "Der Ort" : "The place"}
             </span>
           </div>
 

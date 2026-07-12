@@ -96,38 +96,37 @@ const Index = () => {
       </div>
 
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
-      {/* HERO: Big image, H1, subtitle, 2 CTAs */}
+      {/* HERO */}
       <Hero />
-      
-      {/* VALUE PROP: Label, H2, paragraph, 3 cards, CTA */}
+
+      {/* 01 · Today's menu — answers "what's on today" in <20s (The Regular) */}
+      <HomeMenuPreview />
+
+      {/* 02 · Value proposition */}
       <Suspense fallback={<SectionLoader />}>
         <ValueProposition />
       </Suspense>
-      
-      {/* SHOWCASE 1: Menu/Specials - Image + Text */}
-      {/* SHOWCASE 2: Visit - Text + Image (reversed) */}
+
+      {/* 03 · Menu showcase + 04 · Visit showcase */}
       <Suspense fallback={<SectionLoader />}>
         <ShowcaseSections />
       </Suspense>
 
-      {/* VOCI: Social proof from partner platforms (rhythmic break) */}
+      {/* 05 · Voci — partner social proof */}
       <Suspense fallback={<SectionLoader />}>
         <Voci />
       </Suspense>
 
-      {/* Menu preview with today's dishes */}
-      <HomeMenuPreview />
-
-      {/* Reviews / Social Proof */}
+      {/* 06 · Reviews / Social Proof */}
       <Suspense fallback={<SectionLoader />}>
         <Reviews />
       </Suspense>
 
-      {/* FINAL CTA BLOCK: Brand bg, H2, address, Call + Directions */}
+      {/* 07 · Final CTA block */}
       <Suspense fallback={<SectionLoader />}>
         <CTAEndBlock show={["call", "directions", "menu"]} />
       </Suspense>
-      
+
       </main>
 
       <Suspense fallback={null}>
