@@ -20,6 +20,8 @@ import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { DishRow } from "@/components/menu/DishRow";
+import { categoryHeaderPhoto } from "@/components/menu/dishPhotoMap";
 
 // Parse dietary labels from dish description text
 const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
@@ -776,7 +778,8 @@ export const MenuSection = () => {
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
             <AllergenLegend />
           </div>
