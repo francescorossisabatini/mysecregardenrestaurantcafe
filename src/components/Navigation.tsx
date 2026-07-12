@@ -41,31 +41,18 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "bg-transparent py-2 md:py-3"
-            : "border-b border-border/70 bg-background/94 py-1.5 shadow-sm backdrop-blur-xl md:py-2"
+            ? "bg-transparent py-2 md:py-2.5"
+            : "border-b border-border/60 bg-background/97 py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
-        <div className={`relative mx-auto grid w-full max-w-[1240px] grid-cols-[auto_1fr_auto] items-center gap-3 px-4 transition-all duration-500 sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-4 lg:px-8 xl:gap-6 ${isHeroOverlay ? "min-h-16 rounded-full border border-border/65 bg-background/90 px-5 shadow-elevated backdrop-blur-xl md:min-h-14 md:px-6 lg:min-h-16 lg:rounded-full lg:border-border/40 lg:bg-background/85 lg:px-8 lg:shadow-elevated lg:backdrop-blur-xl" : "min-h-12 md:min-h-11"}`}>
-          {/* Desktop Navigation Links */}
-          <div className="hidden items-center gap-4 lg:flex xl:gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="whitespace-nowrap font-work text-xs font-semibold uppercase tracking-[0.06em] text-foreground transition-colors hover:text-primary focus-visible:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm xl:tracking-[0.08em]"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu */}
+        <div className={`relative mx-auto flex w-full max-w-[1240px] items-center gap-4 px-4 transition-all duration-500 sm:px-6 lg:gap-8 lg:px-8 ${isHeroOverlay ? "min-h-14 lg:min-h-16" : "min-h-12 md:min-h-14"}`}>
+          {/* Mobile Menu Trigger (left, mobile only) */}
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-border/75 bg-card/90 text-primary hover:bg-muted" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
-              aria-label={isMobileMenuOpen 
-                ? (language === "de" ? "Menü schließen" : "Close menu") 
+              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border/75 bg-card/90 text-primary shadow-sm transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              aria-label={isMobileMenuOpen
+                ? (language === "de" ? "Menü schließen" : "Close menu")
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
               aria-expanded={isMobileMenuOpen}
             >
@@ -73,33 +60,58 @@ export const Navigation = () => {
             </button>
           </div>
 
-          {/* Centered Logo */}
-          <Link 
-            to="/" 
-            className="group justify-self-center flex min-w-0 items-center gap-2 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary/50 md:gap-3"
+          {/* Logo + Wordmark (left on desktop, centered on mobile) */}
+          <Link
+            to="/"
+            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-sm py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
-            <Logo className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-11 w-11 md:h-12 md:w-12" : "h-9 w-9 md:h-10 md:w-10"}`} showTagline={false} aria-hidden="true" />
-            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-semibold uppercase tracking-[0.08em] sm:hidden ${isHeroOverlay ? "text-primary/85" : "text-primary/85"}`}>
+            <Logo
+              className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-10 w-10 lg:h-11 lg:w-11" : "h-9 w-9 lg:h-9 lg:w-9"}`}
+              showTagline={false}
+              aria-hidden="true"
+            />
+            <span className="block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] text-primary/85 sm:hidden">
               {activeNavLabel}
             </span>
-            <div className="hidden min-w-0 text-center leading-tight sm:block">
-              <span className={`block max-w-[10rem] truncate font-cormorant text-xl font-bold transition-colors md:max-w-none md:text-xl ${isHeroOverlay ? "text-foreground group-hover:text-primary" : "text-foreground group-hover:text-primary"}`}>
-                My Secret Garden
-              </span>
-              <p className={`hidden truncate font-work text-[11px] md:block md:text-xs ${isHeroOverlay ? "text-muted-high-contrast" : "text-muted-high-contrast"}`}>
-                Vegetarian Café Vienna
-              </p>
-            </div>
+            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none text-foreground transition-[font-size] duration-500 group-hover:text-primary sm:block ${isHeroOverlay ? "text-xl lg:text-[22px]" : "text-lg lg:text-xl"}`}>
+              My Secret Garden
+            </span>
           </Link>
 
-          {/* Language - desktop only; mobile lives inside drawer */}
-          <div className="hidden items-center justify-end gap-3 lg:flex">
+          {/* Desktop Nav Links + Language (right) */}
+          <div className="hidden items-center gap-6 lg:flex xl:gap-8">
+            <ul className="flex items-center gap-6 xl:gap-8">
+              {navLinks.map((link) => {
+                const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
+                return (
+                  <li key={link.to} className="relative">
+                    {isActive && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute -left-3 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent"
+                      />
+                    )}
+                    <Link
+                      to={link.to}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors hover:text-accent focus:outline-none focus-visible:text-accent focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${isActive ? "text-accent" : "text-foreground/85"}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <span aria-hidden="true" className="h-4 w-px bg-border/70" />
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
-          <div className="lg:hidden" aria-hidden="true" />
+
+          {/* Spacer to balance mobile menu button */}
+          <div className="w-11 lg:hidden" aria-hidden="true" />
         </div>
       </nav>
+
 
       {/* Mobile Menu Drawer */}
       <div
