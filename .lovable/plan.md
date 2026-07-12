@@ -1,101 +1,83 @@
-## Obiettivo
+# Piano — Direzione A "Herbarium editorial"
 
-Ogni domenica il menu della settimana scade automaticamente. Finché non carichi un nuovo Google Sheet ID dallo staff hub, il sito nasconde il menu settimanale ovunque e mostra un messaggio "wird aktualisiert". Quando carichi il nuovo ID, il menu torna visibile fino alla domenica successiva.
+Manteniamo l'identità botanica My Secret Garden (navy/verde/cream, Caveat/Cormorant/Lora, foto reali, no zoom/parallax, fade-in lenti). Introduciamo un **signature editoriale**: eyebrow numerati + rule language sottile + scala tipografica più decisa. Solo presentazione, nessuna logica.
 
-## Comportamento
+## Signature moves (i 3 pilastri della direzione A)
 
-- **Lun–Sab**: tutto come oggi, menu settimanale visibile (se l'ID è valido per la settimana corrente).
-- **Domenica 00:00**: il menu settimanale viene considerato "scaduto" automaticamente. Tab Woche nascosto, anteprime nascoste, menu page mostra messaggio.
-- **Tu carichi nuovo ID** (da /staff): l'ID viene marcato come valido fino alla domenica successiva 23:59. Il menu torna visibile da subito.
-- Se la domenica non carichi nulla, lunedì rimane comunque nascosto finché non carichi.
+1. **Eyebrow numerati** in ogni sezione home
+   `01 · Heute` · `02 · Der Ort` · `03 · Stimmen` · `04 · Besuch`
+   Stile: `font-work` uppercase, tracking-wider, text-verde-300, con un rule 24px verde a sinistra del numero.
 
-## Cosa cambia
+2. **Rule language** sottile
+   Linee 1px `border-verde-300/40` come divisori orizzontali corti (max 64px), usate solo per: apertura sezione (sotto l'eyebrow) e chiusura CTA. Sostituiscono il `SectionDivider` gradient generico.
 
-### 1. Database — nuova tabella `menu_config`
-Una sola riga di configurazione:
-- `sheet_id` (testo) — il Google Sheet ID corrente
-- `loaded_at` (timestamp) — quando è stato caricato
-- `loaded_by` (uuid) — quale staff
-- RLS: lettura via edge function (service role), scrittura solo a chi ha ruolo staff/admin
+3. **Scala tipografica editoriale**
+   - H2 Cormorant: **36px mobile / 48px tablet / 56px desktop** (oggi 24px piatto)
+   - Subheading (attuale H2): diventa `text-section` con font-lora italic per contrast di voce
+   - H1 hero invariato (Caveat) ma con leading più stretto
 
-### 2. Edge function `get-daily-menu`
-- Legge prima `sheet_id` da `menu_config`, fallback all'env var attuale `GOOGLE_SHEET_ID`
-- Restituisce nella response anche `loadedAt` (timestamp dell'ultimo caricamento)
+## Ristrutturazione Hero (mobile + desktop)
 
-### 3. Nuovo edge function `set-menu-sheet-id`
-- POST con `{ sheetId }`
-- Verifica auth + ruolo staff
-- Aggiorna riga unica in `menu_config`, salva `loaded_at = now()`, `loaded_by = auth.uid()`
-- Restituisce successo / errore di validazione (ID malformato)
+**Prima:** H1 → subtitle chip → rating chip → open chip → 2 CTA full width impilati → scroll indicator.
+**Dopo:**
+- **Eyebrow trust sopra H1**: rating (5★ · 936 Bewertungen) + open/closed uniti in un'unica strip discreta, senza chip pesanti.
+- **H1** Caveat invariato.
+- **Subtitle** senza chip di sfondo, solo text-shadow morbido.
+- **1 CTA primaria** "Was gibt's heute?" + **link testuale sottile** "Wie du uns findest →" (non più bottone outline pesante).
+- **Scrim**: da `bg-foreground/25` piatto → gradient verticale `from-transparent via-foreground/10 to-foreground/50` per dare profondità e leggibilità in basso senza spegnere la foto.
+- **MobileStickyBar**: delay show fino a `scrollY > 80vh` per evitare tripla CTA nel primo viewport.
 
-### 4. Frontend — hook `useWeeklyMenuAvailable()`
-Sostituisce la costante `SHOW_WEEKLY_MENU` (resta come override manuale di emergenza). Il hook restituisce `true` se:
-- `loadedAt` esiste, e
-- `loadedAt` è successivo all'ultima domenica 00:00 (timezone Europe/Vienna), e
-- oggi non è domenica O (è domenica e l'ID è stato caricato oggi)
+## Ritmo delle superfici (No-Line Rule vero)
 
-Logica equivalente: "il menu è valido finché non passa la prossima domenica 00:00".
+Sostituzione dei `SectionDivider` gradient con vera alternanza:
 
-Tutti i punti che oggi controllano `SHOW_WEEKLY_MENU` (MenuSection, MenuFloatingPill, WeeklySpecials, eventuali preview homepage) usano il nuovo hook.
-
-### 5. Nuovo componente `WeeklyMenuPendingUpdate`
-Sostituisce `WeeklyMenuUnavailable` quando la causa è "domenica + ID non aggiornato".
-
-Copy nuova:
-- **DE**: *Der Wochenplan wird gerade aktualisiert. Schau am Montag wieder vorbei oder ruf uns an: +43 1 586 28 39.*
-- **EN**: *The weekly menu is being updated. Check back on Monday or call us: +43 1 586 28 39.*
-
-Stile: stesso layout di `WeeklyMenuUnavailable`, tono accogliente, niente urgency, link telefono cliccabile.
-
-### 6. Staff hub — sezione "Aggiorna menu della settimana"
-Piccolo blocco in `/staff` (StaffHub):
-- Input testo per incollare URL completo del Google Sheet o solo l'ID
-- Bottone "Carica menu della settimana"
-- Mostra: ultimo caricamento (data + chi), stato (valido/scaduto), prossima scadenza (domenica successiva)
-- Estrae automaticamente l'ID se incolli URL completo (regex già presente nell'edge function attuale)
-- Toast di conferma + invalidazione cache locale del menu
-
-## Dettagli tecnici
-
-### Calcolo "ultima domenica" (Europe/Vienna)
-```ts
-function lastSundayMidnightVienna(now = new Date()): Date {
-  // Converti now in Vienna time, trova la domenica più recente alle 00:00,
-  // poi riporta a UTC. Usa Intl.DateTimeFormat con timeZone Europe/Vienna.
-}
-const isWeeklyMenuValid = loadedAt && loadedAt >= lastSundayMidnightVienna();
+```
+Hero          → foto
+ValueProp     → bg-cream-50 (elevated, +shadow-soft su cards)
+Showcase 1    → bg-cream-100 (page)
+Showcase 2    → bg-cream-100 (page, inversione layout)
+Voci          → bg-verde-100/25 (tint botanico)
+HomeMenuPrev  → bg-cream-50 (elevated)
+Reviews       → bg-cream-100
+CTAEnd        → bg-gradient-hero (navy, invariato)
 ```
 
-### Bypass per emergenza
-La costante `SHOW_WEEKLY_MENU` in `src/config/menuFlags.ts` resta come master switch: se `false`, il menu è nascosto comunque. L'hook controlla prima la costante, poi la logica auto.
+Padding sezione portato a `py-20 md:py-28` per respirazione editoriale.
 
-### Schema DB
-```text
-menu_config
-├── id           uuid   pk default gen_random_uuid()
-├── sheet_id     text   not null
-├── loaded_at    timestamptz not null default now()
-├── loaded_by    uuid   references auth.users(id)
-└── singleton    bool   unique default true   -- forza una sola riga
-```
+## File toccati (solo presentazione)
 
-### File toccati
-- `supabase/migrations/...` — nuova tabella + RLS
-- `supabase/functions/get-daily-menu/index.ts` — leggi da DB
-- `supabase/functions/set-menu-sheet-id/index.ts` — nuovo
-- `src/hooks/useWeeklyMenuAvailable.ts` — nuovo
-- `src/components/WeeklyMenuPendingUpdate.tsx` — nuovo
-- `src/components/MenuSection.tsx` — sostituisci flag con hook
-- `src/components/MenuFloatingPill.tsx` — idem
-- `src/pages/WeeklySpecials.tsx` — idem
-- `src/pages/StaffHub.tsx` — aggiungi blocco upload sheet ID
+| File | Modifica |
+|---|---|
+| `src/components/Hero.tsx` | Ristrutturazione gerarchia (eyebrow trust, 1 CTA + link), scrim gradient |
+| `src/index.css` | Aggiunta utility `.eyebrow-numbered`, `.rule-short`, scrim gradient var, mini scala H2 |
+| `src/components/SectionDivider.tsx` | Refactor: rimuove gradient, applica solo padding + optional rule short |
+| `src/components/ValueProposition.tsx` | Eyebrow `01`, H2 grande, surface cream-50, card shadow-soft |
+| `src/components/ShowcaseSections.tsx` | Eyebrow `02`, H2 grande, respirazione |
+| `src/components/HomeMenuPreview.tsx` | Eyebrow `03 · Heute`, surface cream-50 |
+| `src/components/Voci.tsx` | Eyebrow `04 · Stimmen`, tint verde-100/25 |
+| `src/components/Reviews.tsx` | Eyebrow numerato, H2 grande |
+| `src/components/CTAEndBlock.tsx` | Rule language + eyebrow su navy |
+| `src/components/DailyMenuCard.tsx` | Radius 12→16, shadow-card, rule interno verde |
+| `src/components/MobileStickyBar.tsx` | Delay show `scrollY > 0.8 * innerHeight` |
+| `src/components/Navigation.tsx` | Micro-polish contrast + focus (opzionale, chirurgico) |
 
-### Cosa NON cambia
-- Nessuna modifica al copy del resto del sito
-- Nessuna modifica al design system, ai token, alla nav
-- Nessuna modifica alla struttura del Google Sheet
-- L'env var `GOOGLE_SHEET_ID` resta come fallback iniziale (prima del primo upload)
+Nessuna modifica a: routing, copy DE/EN, form, Supabase, GA4, `tailwind.config.ts` (le utility nuove vivono in `index.css`), foto, componenti Menu/Weekly/Contact/Impressum/Privacy/Staff.
 
-## Domanda finale prima di implementare
+## Guardrail
+- No em dash in nessuna copy nuova o modificata.
+- No zoom/parallax/bounce; solo fade-in slow.
+- `prefers-reduced-motion` rispettato.
+- WCAG AA: nessun uso di verde-300 come testo su cream; contrast controllato su eyebrow verde-300 su cream-50 (passa 4.5:1).
+- Nessuna nuova immagine.
+- Nessun cambio copy — solo eyebrow numerati (label neutri "01 · Heute" ecc.) da confermare in DE/EN.
 
-Confermi le copy DE/EN sopra? Se preferisci wording diverso (es. tono più caldo, citare "lo chef sta scegliendo i piatti"), dimmi e lo cambio prima di scrivere codice.
+## QA
+Verifica visiva a 375 / 768 / 1280 px su: Home (tutte le sezioni), Hero open + closed state.
+
+## Da confermare prima del build
+1. **Etichette eyebrow** vanno bene così?
+   `01 · Heute` · `02 · Der Ort` · `03 · Heute auf dem Tisch` · `04 · Stimmen` · `05 · Besuch`
+   (EN: `01 · Today` · `02 · The place` · `03 · On the table today` · `04 · Voices` · `05 · Visit`)
+2. Ok rimuovere il bottone outline secondario nell'hero e sostituirlo con link testuale "Wie du uns findest →"?
+
+Rispondi **ok** (o correggi i due punti sopra) e passiamo in build.
