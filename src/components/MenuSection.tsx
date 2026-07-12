@@ -185,7 +185,11 @@ export const MenuSection = () => {
   }), [dayNames, dateInfo.nextDayIndex]);
 
   const scrollToMenuBlock = (tab: "today" | "fixed" | "week") => {
-    const target = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
+    const refTarget = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
+    const idTarget = document.getElementById(
+      tab === "today" ? "menu-today" : tab === "fixed" ? "menu-fixed" : "menu-week"
+    );
+    const target = refTarget ?? idTarget ?? document.getElementById("menu");
     if (!target) return;
     setActiveMenuTab(tab);
     const offset = 140;
@@ -193,7 +197,7 @@ export const MenuSection = () => {
   };
 
   const quickNavTabs = [
-    { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
+    ...(weeklyAvailable ? [{ id: "today" as const, label: language === "de" ? "Heute" : "Today" }] : []),
     ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Diese Woche" : "This Week" }] : []),
     { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always Here" },
   ];
@@ -201,6 +205,7 @@ export const MenuSection = () => {
   return (
     <section id="menu" className="py-16 md:py-24 bg-section-soft">
       {/* Sticky segmented tab bar — intuitive tab switcher, mobile + desktop parity */}
+      {quickNavTabs.length > 1 && (
       <div
         className="sticky top-[3.5rem] z-30 -mt-16 mb-10 border-b border-border/60 bg-background/95 backdrop-blur-md md:top-[4rem] md:-mt-24 md:mb-14"
         role="tablist"
@@ -230,6 +235,8 @@ export const MenuSection = () => {
           </div>
         </div>
       </div>
+      )}
+
 
       <div className="container mx-auto px-4">
         <div className="mx-auto grid max-w-2xl gap-8 lg:justify-center">
