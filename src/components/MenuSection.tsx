@@ -100,6 +100,7 @@ export const MenuSection = () => {
   const { menu, isLoading, loadedAt } = useWeeklyMenu();
   const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
+  const [fixedCategoryFilter, setFixedCategoryFilter] = useState<string>("all");
 
 
   const todayRef = useRef<HTMLDivElement>(null);
