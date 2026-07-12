@@ -197,9 +197,9 @@ export const MenuSection = () => {
   };
 
   const quickNavTabs = [
-    ...(weeklyAvailable ? [{ id: "today" as const, label: language === "de" ? "Heute" : "Today" }] : []),
-    ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Diese Woche" : "This Week" }] : []),
-    { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always Here" },
+    ...(weeklyAvailable ? [{ id: "today" as const, label: language === "de" ? "Heute" : "Today", disabled: isLoading }] : []),
+    ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Diese Woche" : "This Week", disabled: false }] : []),
+    { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always Here", disabled: false },
   ];
 
   return (
@@ -215,20 +215,30 @@ export const MenuSection = () => {
           <div className="flex items-stretch gap-1 overflow-x-auto lg:justify-center">
             {quickNavTabs.map((tab) => {
               const isActive = activeMenuTab === tab.id;
+              const isDisabled = tab.disabled;
               return (
                 <button
                   key={tab.id}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  onClick={() => scrollToMenuBlock(tab.id)}
+                  aria-disabled={isDisabled || undefined}
+                  disabled={isDisabled}
+                  onClick={() => !isDisabled && scrollToMenuBlock(tab.id)}
                   className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
-                    isActive
-                      ? "text-accent after:absolute after:inset-x-4 after:bottom-0 after:h-[2px] after:bg-accent md:after:inset-x-6"
-                      : "text-muted-high-contrast hover:text-foreground"
+                    isDisabled
+                      ? "text-muted-foreground/50 cursor-not-allowed"
+                      : isActive
+                        ? "text-accent after:absolute after:inset-x-4 after:bottom-0 after:h-[2px] after:bg-accent md:after:inset-x-6"
+                        : "text-muted-high-contrast hover:text-foreground"
                   }`}
                 >
                   {tab.label}
+                  {isDisabled && (
+                    <span className="sr-only">
+                      {language === "de" ? " (wird geladen)" : " (loading)"}
+                    </span>
+                  )}
                 </button>
               );
             })}
