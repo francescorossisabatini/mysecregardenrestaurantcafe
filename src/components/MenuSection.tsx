@@ -100,8 +100,8 @@ export const MenuSection = () => {
   const { menu, isLoading, loadedAt } = useWeeklyMenu();
   const weeklyAvailable = useWeeklyMenuAvailable(loadedAt);
   const [activeMenuTab, setActiveMenuTab] = useState<"today" | "fixed" | "week">("today");
-  const [activeFixedAnchor, setActiveFixedAnchor] = useState(klassikerMenu.categories[0]?.id ?? "");
-  const [isQuickNavOpen, setIsQuickNavOpen] = useState(false);
+
+
   const todayRef = useRef<HTMLDivElement>(null);
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
