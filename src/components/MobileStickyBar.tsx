@@ -35,7 +35,10 @@ export const MobileStickyBar = () => {
   const handleScroll = useCallback(() => {
     if (rafRef.current) return;
     rafRef.current = requestAnimationFrame(() => {
-      setIsScrolled(window.scrollY > 200);
+      // Wait until the user is past most of the hero before showing the sticky bar,
+      // so hero CTAs aren't in competition with it on first view.
+      const threshold = Math.max(320, window.innerHeight * 0.8);
+      setIsScrolled(window.scrollY > threshold);
       rafRef.current = null;
     });
   }, []);

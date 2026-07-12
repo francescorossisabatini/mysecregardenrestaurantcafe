@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CalendarDays, UtensilsCrossed, ChevronDown, Star, MapPin } from "lucide-react";
+import { UtensilsCrossed, ChevronDown, Star, ArrowRight } from "lucide-react";
 
 import gardenHero from "@/assets/photos/garden-courtyard-hero.jpg";
 
@@ -22,14 +22,12 @@ function useMinuteNow() {
 }
 
 export const Hero = () => {
-  // Remove showTitle state - H1 renders immediately for better LCP
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const { language } = useLanguage();
 
   useEffect(() => {
-    // Title now uses CSS animation, no JS delay needed
     const timer2 = setTimeout(() => setShowSubtitle(true), 400);
     const timer3 = setTimeout(() => setShowButtons(true), 800);
 
@@ -39,7 +37,6 @@ export const Hero = () => {
     };
   }, []);
 
-  // Hide scroll indicator on scroll
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -50,22 +47,23 @@ export const Hero = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Open/Closed chip in Vienna timezone
   const now = useMinuteNow();
   const status = getOpenStatus(SITE.openingHours, now);
-  
-  // Also check if closed due to no menu data, holiday, or Sunday
   const { isClosed: isClosedToday } = useTodayClosed();
-  
-  // Force closed if no menu data, holiday, or Sunday
   const effectivelyOpen = status.isOpen && !isClosedToday;
+
+  const openLabel = effectivelyOpen
+    ? language === "de" ? "Jetzt geöffnet" : "Open now"
+    : isClosedToday
+      ? language === "de" ? "Heute geschlossen" : "Closed today"
+      : language === "de" ? "Jetzt geschlossen" : "Closed now";
 
   return (
     <section
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden md:min-h-[660px] lg:min-h-[700px]"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden md:min-h-[680px] lg:min-h-[720px]"
       aria-label={language === "de" ? "Willkommen bei My Secret Garden" : "Welcome to My Secret Garden"}
     >
-      {/* Decorative background photo — using <img> with fetchpriority for LCP optimization */}
+      {/* Hero photo */}
       <img
         src={heroImage.src}
         alt=""
@@ -78,74 +76,54 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
-      {/* No gradient — uniform light scrim only, so the photo hits. Contrast on copy is handled by text-shadow + a subtle chip on the subtitle */}
-      <div className="absolute inset-0 bg-foreground/25" aria-hidden="true" />
+      {/* Gradient scrim — soft on top, deeper at bottom for legibility */}
+      <div className="absolute inset-0 bg-hero-scrim" aria-hidden="true" />
 
-      {/* Content - bottom anchored on mobile so the primary CTA stays visible */}
-      <div className="container relative z-10 mx-auto flex min-h-[100svh] flex-col justify-end px-6 pb-12 pt-32 pointer-events-none sm:px-6 md:min-h-[660px] md:justify-center md:pb-10 md:pt-24 lg:min-h-[700px]">
-        <div className="mx-auto max-w-5xl space-y-3 text-center sm:space-y-4 md:space-y-5">
-          {/* Restaurant name - renders immediately for LCP, uses CSS animation */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background leading-[0.95] sm:leading-[0.9] mb-1 sm:mb-4 animate-fade-in-hero [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)]">
-            {SITE.name}
-          </h1>
+      {/* Content */}
+      <div className="container relative z-10 mx-auto flex min-h-[100svh] flex-col justify-end px-6 pb-14 pt-32 pointer-events-none sm:px-6 md:min-h-[680px] md:justify-center md:pb-12 md:pt-24 lg:min-h-[720px]">
+        <div className="mx-auto max-w-5xl space-y-5 text-center sm:space-y-6">
 
-          {/* Subtitle on a soft chip so it stays legible without darkening the whole photo */}
-          <p className={`mx-auto inline-block max-w-2xl rounded-full bg-foreground/35 px-4 py-1.5 text-base font-lora leading-relaxed text-background backdrop-blur-sm transition-all duration-slow ease-out sm:text-lg md:text-xl [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
-            {language === "de" ? "Das Restaurant, das du fast nicht findest." : "The restaurant you almost don't find."}
-          </p>
-
-          <div className={`flex items-center justify-center gap-2 drop-shadow-lg transition-opacity duration-base ease-out ${showButtons ? "opacity-100" : "opacity-0"}`}>
-            <span className="inline-flex items-center gap-1 rounded-full border border-primary-foreground/25 bg-primary/95 px-3.5 py-1.5 text-xs font-work font-semibold text-primary-foreground shadow-elevated sm:text-sm">
+          {/* Trust eyebrow — rating + open state consolidated ABOVE H1 */}
+          <div className={`flex flex-wrap items-center justify-center gap-x-4 gap-y-2 transition-opacity duration-slow ease-out ${showSubtitle ? "opacity-100" : "opacity-0"}`}>
+            <span className="inline-flex items-center gap-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.18em] text-background/95 [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
               <span className="inline-flex items-center gap-0.5" aria-label={language === "de" ? "5 Sterne" : "5 stars"}>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={index} className="h-3.5 w-3.5 fill-current text-brand-star" aria-hidden="true" />
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-current text-brand-star" aria-hidden="true" />
                 ))}
               </span>
-              <span className="ml-1">{SITE.rating} · {SITE.reviewCount} {language === "de" ? "Bewertungen" : "reviews"}</span>
+              <span>{SITE.rating} · {SITE.reviewCount}</span>
+            </span>
+            <span className="hidden sm:inline-block h-3 w-px bg-background/40" aria-hidden="true" />
+            <span className="inline-flex items-center gap-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.18em] text-background/95 [text-shadow:0_1px_4px_rgba(0,0,0,0.6)]">
+              <span
+                className={`inline-block h-1.5 w-1.5 rounded-full ${
+                  effectivelyOpen
+                    ? "bg-accent animate-status-pulse"
+                    : "bg-destructive"
+                }`}
+                aria-hidden="true"
+              />
+              {openLabel}
             </span>
           </div>
 
-          {/* Open/Closed chip - soft style */}
-          <div className={`flex justify-center items-center gap-2 flex-wrap transition-opacity duration-base ease-out ${
-            showSubtitle ? "opacity-100" : "opacity-0"
-          }`}>
-            {/* Case 1: Open now */}
-            {effectivelyOpen && (
-              <span className="inline-flex items-center rounded-full border border-accent/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                <span className="w-2 h-2 rounded-full mr-2 bg-accent animate-status-pulse" />
-                {language === "de" ? "Jetzt geöffnet" : "Open now"}
-              </span>
-            )}
-            {/* Case 2: Not open yet */}
-            {!effectivelyOpen && !isClosedToday && status.opensAt && (
-              <span className="inline-flex items-center rounded-full border border-warning/45 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                <span className="w-2 h-2 rounded-full mr-2 bg-warning" />
-                {language === "de" ? "Jetzt geschlossen" : "Closed now"}
-              </span>
-            )}
-            {/* Case 3: After closing time */}
-            {!effectivelyOpen && !isClosedToday && status.isAfterClosing && (
-              <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
-                {language === "de" ? "Jetzt geschlossen" : "Closed now"}
-              </span>
-            )}
-            {/* Case 4: Closed today (Sunday, holiday, no menu) */}
-            {!effectivelyOpen && isClosedToday && (
-              <span className="inline-flex items-center rounded-full border border-destructive/35 bg-background/95 px-3.5 py-1.5 text-xs font-work font-semibold text-foreground shadow-elevated sm:px-4 sm:text-sm">
-                <span className="w-2 h-2 rounded-full mr-2 bg-destructive" />
-                {language === "de" ? "Heute geschlossen" : "Closed today"}
-              </span>
-            )}
-          </div>
+          {/* H1 — Caveat, unchanged voice, tighter leading */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background leading-[0.92] animate-fade-in-hero [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)]">
+            {SITE.name}
+          </h1>
 
-          {/* CTA Buttons: Menu (primary), Find us (secondary ghost) */}
-          <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 pt-5 sm:pt-8 transition-all duration-300 ease-out pointer-events-auto ${
+          {/* Subtitle — no chip, only text-shadow for legibility */}
+          <p className={`mx-auto max-w-xl font-lora text-lg italic leading-relaxed text-background transition-all duration-slow ease-out sm:text-xl md:text-2xl [text-shadow:0_1px_10px_rgba(0,0,0,0.7),0_1px_3px_rgba(0,0,0,0.6)] ${showSubtitle ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}>
+            {language === "de" ? "Das Restaurant, das du fast nicht findest." : "The restaurant you almost don't find."}
+          </p>
+
+          {/* Single primary CTA + text link secondary */}
+          <div className={`flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row sm:gap-6 sm:pt-6 transition-all duration-300 ease-out pointer-events-auto ${
             showButtons ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}>
             <Button
               size="lg"
-              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base sm:text-base px-6 sm:px-8 lg:px-10 py-5 sm:py-6 shadow-lg"
+              className="w-full max-w-xs sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-work text-base px-8 sm:px-10 py-6 shadow-elevated"
               asChild
             >
               <Link to="/#menu">
@@ -153,32 +131,27 @@ export const Hero = () => {
                 {language === "de" ? "Was gibt's heute?" : "What's on today?"}
               </Link>
             </Button>
-            {/* Secondary: escape route per chi cerca il posto, non il menu */}
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full max-w-xs sm:w-auto border-background/50 bg-background/10 text-background hover:bg-background/20 hover:text-background backdrop-blur-sm font-work text-base px-6 sm:px-8 py-5 sm:py-6"
-              asChild
-            >
-              <Link to="/visit">
-                <MapPin className="w-4 h-4 mr-2" />
-                {language === "de" ? "Wie du uns findest" : "How to find us"}
-              </Link>
-            </Button>
-          </div>
 
+            <Link
+              to="/visit"
+              className="group inline-flex items-center gap-1.5 font-work text-sm font-medium uppercase tracking-[0.14em] text-background/95 [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] transition-all hover:gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-background/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm"
+            >
+              {language === "de" ? "Wie du uns findest" : "How to find us"}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div 
+      <div
         className={`hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-500 ${
           showScrollIndicator && showButtons ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1 text-background/80">
-          <span className="text-xs font-work tracking-wide uppercase">
+          <span className="text-xs font-work tracking-[0.2em] uppercase">
             {language === "de" ? "Weiter" : "More below"}
           </span>
           <ChevronDown className="w-5 h-5" />

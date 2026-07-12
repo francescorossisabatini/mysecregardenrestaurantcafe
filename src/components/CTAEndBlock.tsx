@@ -23,13 +23,21 @@ export const CTAEndBlock = ({
   const defaultTitle = language === "de" ? "Besuche uns" : "Visit Us";
 
   return (
-    <section className={`py-16 md:py-20 lg:py-28 bg-section-accent ${className}`}>
-      <div className="container mx-auto px-4">
-        <div className="max-w-md lg:max-w-3xl mx-auto text-center rounded-2xl border border-border/70 bg-card/55 p-6 shadow-card md:p-8 lg:p-10">
-          <h2 className="text-3xl md:text-4xl text-primary mb-4">
+    <section className={`py-20 md:py-24 lg:py-32 bg-gradient-hero ${className}`}>
+      <div className="container mx-auto px-5">
+        <div className="max-w-md lg:max-w-3xl mx-auto text-center space-y-5">
+          <div className="flex justify-center">
+            <span className="eyebrow-num on-dark">
+              07 · {language === "de" ? "Besuch" : "Visit"}
+            </span>
+          </div>
+          <h2 className="h2-editorial text-primary-foreground">
             {title || defaultTitle}
           </h2>
-          <p className="text-sm text-muted-high-contrast font-work mb-8">
+          <div className="flex justify-center">
+            <span className="block h-px w-16 bg-primary-foreground/40" aria-hidden="true" />
+          </div>
+          <p className="text-sm text-primary-foreground/85 font-work pb-4">
             {SITE.addressShort}
           </p>
           <div className="flex flex-col gap-3 lg:grid lg:grid-cols-3">
@@ -37,7 +45,7 @@ export const CTAEndBlock = ({
             {show.includes("call") && (
               <Button
                 size="lg"
-                className="w-full justify-center gap-2 py-6 text-base font-work bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full justify-center gap-2 py-6 text-base font-work bg-accent hover:bg-accent/90 text-accent-foreground shadow-elevated"
                 onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
               >
                 <Phone className="w-5 h-5" />
@@ -48,7 +56,7 @@ export const CTAEndBlock = ({
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full justify-center gap-2 py-6 text-base font-work"
+                className="w-full justify-center gap-2 py-6 text-base font-work border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 asChild
               >
                 <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
@@ -57,12 +65,11 @@ export const CTAEndBlock = ({
                 </a>
               </Button>
             )}
-            {/* Secondary CTAs - Weekly & Menu */}
             {show.includes("weekly") && (
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full justify-center gap-2 py-6 text-base font-work"
+                className="w-full justify-center gap-2 py-6 text-base font-work border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 asChild
               >
                 <Link to="/menu">
@@ -75,7 +82,7 @@ export const CTAEndBlock = ({
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full justify-center gap-2 py-6 text-base font-work"
+                className="w-full justify-center gap-2 py-6 text-base font-work border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 asChild
               >
                 <Link to="/menu">
