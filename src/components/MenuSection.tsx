@@ -106,13 +106,30 @@ export const MenuSection = () => {
   const fixedRef = useRef<HTMLDivElement>(null);
   const weekRef = useRef<HTMLDivElement>(null);
 
-  // Close quick nav on escape
+  // Scroll-spy: update active tab based on which block is in view
   useEffect(() => {
-    if (!isQuickNavOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setIsQuickNavOpen(false); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isQuickNavOpen]);
+    const items = [
+      { id: "today" as const, el: todayRef.current },
+      { id: "week" as const, el: weekRef.current },
+      { id: "fixed" as const, el: fixedRef.current },
+    ].filter((s) => s.el) as { id: "today" | "week" | "fixed"; el: HTMLDivElement }[];
+    if (!items.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          const match = items.find((i) => i.el === visible.target);
+          if (match) setActiveMenuTab(match.id);
+        }
+      },
+      { rootMargin: "-160px 0px -55% 0px", threshold: [0, 0.2, 0.5] }
+    );
+    items.forEach((i) => io.observe(i.el));
+    return () => io.disconnect();
+  }, [weeklyAvailable]);
+
   
   // Memoize date calculations to avoid recalculating on every render
   // This prevents forced reflows from repeated Date operations
