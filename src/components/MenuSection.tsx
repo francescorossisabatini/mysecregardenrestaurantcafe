@@ -187,127 +187,50 @@ export const MenuSection = () => {
   const scrollToMenuBlock = (tab: "today" | "fixed" | "week") => {
     const target = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
     if (!target) return;
-
     setActiveMenuTab(tab);
-    setIsQuickNavOpen(false);
-    const offset = 128;
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
-  };
-
-  const fixedMenuAnchors = klassikerMenu.categories.flatMap((category) => [
-    { id: category.id, label: category.name[language] },
-    ...(category.subcategories?.map((subcategory) => ({ id: subcategory.id, label: subcategory.name[language] })) ?? []),
-  ]);
-
-  const scrollToFixedAnchor = (id: string) => {
-    const target = document.getElementById(`menu-${id}`);
-    if (!target) return;
-    setActiveMenuTab("fixed");
-    setActiveFixedAnchor(id);
-    setIsQuickNavOpen(false);
-    const offset = window.matchMedia("(min-width: 768px)").matches ? 148 : 194;
+    const offset = 140;
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
   };
 
   const quickNavTabs = [
     { id: "today" as const, label: language === "de" ? "Heute" : "Today" },
-    { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always" },
-    ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Woche" : "Week" }] : []),
+    ...(weeklyAvailable ? [{ id: "week" as const, label: language === "de" ? "Diese Woche" : "This Week" }] : []),
+    { id: "fixed" as const, label: language === "de" ? "Immer da" : "Always Here" },
   ];
 
   return (
     <section id="menu" className="py-16 md:py-24 bg-section-soft">
-      {/* Floating quick-nav UI portaled to body to escape any ancestor transform (which would break position:fixed) */}
-      {typeof document !== "undefined" && createPortal(
-        <>
-          <button
-            type="button"
-            onClick={() => setIsQuickNavOpen((v) => !v)}
-            aria-expanded={isQuickNavOpen}
-            aria-controls="menu-quick-nav-panel"
-            aria-label={language === "de" ? "Menü filtern und navigieren" : "Filter and navigate menu"}
-            className="fixed z-[60] flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary text-primary-foreground shadow-lg transition-all hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 right-4 bottom-[calc(env(safe-area-inset-bottom)+88px)] h-14 w-14 md:left-4 md:right-auto md:top-24 md:bottom-auto md:h-12 md:w-auto md:px-4"
-          >
-            {isQuickNavOpen ? (
-              <>
-                <X className="h-5 w-5" aria-hidden="true" />
-                <span className="hidden md:inline font-work text-xs font-semibold uppercase tracking-[0.1em]">
-                  {language === "de" ? "Schließen" : "Close"}
-                </span>
-              </>
-            ) : (
-              <>
-                <ListFilter className="h-6 w-6 md:h-5 md:w-5" aria-hidden="true" />
-                <span className="hidden md:inline font-work text-xs font-semibold uppercase tracking-[0.1em]">
-                  {language === "de" ? "Menü filtern" : "Filter menu"}
-                </span>
-              </>
-            )}
-          </button>
+      {/* Sticky segmented tab bar — intuitive tab switcher, mobile + desktop parity */}
+      <div
+        className="sticky top-[3.5rem] z-30 -mt-16 mb-10 border-b border-border/60 bg-background/95 backdrop-blur-md md:top-[4rem] md:-mt-24 md:mb-14"
+        role="tablist"
+        aria-label={language === "de" ? "Menübereiche" : "Menu sections"}
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex items-stretch gap-1 overflow-x-auto lg:justify-center">
+            {quickNavTabs.map((tab) => {
+              const isActive = activeMenuTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => scrollToMenuBlock(tab.id)}
+                  className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
+                    isActive
+                      ? "text-accent after:absolute after:inset-x-4 after:bottom-0 after:h-[2px] after:bg-accent md:after:inset-x-6"
+                      : "text-muted-high-contrast hover:text-foreground"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
-          {/* Backdrop */}
-          <div
-            onClick={() => setIsQuickNavOpen(false)}
-            className={`fixed inset-0 z-30 bg-foreground/20 transition-opacity ${isQuickNavOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
-            aria-hidden="true"
-          />
-
-          {/* Quick-nav floating panel */}
-          <aside
-            id="menu-quick-nav-panel"
-            className={`fixed z-40 transition-all duration-200 ease-out right-4 left-4 bottom-[calc(env(safe-area-inset-bottom)+148px)] md:left-4 md:right-auto md:bottom-auto md:top-[9.5rem] md:w-64 ${isQuickNavOpen ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 md:-translate-y-2"}`}
-            aria-hidden={!isQuickNavOpen}
-          >
-            <nav className="rounded-lg border border-border/80 bg-nav-surface p-4 shadow-elevated backdrop-blur-md max-h-[80vh] overflow-y-auto" aria-label={language === "de" ? "Schnelle Menünavigation" : "Quick menu navigation"}>
-              <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                {language === "de" ? "Direkt zum Menü" : "Jump to menu"}
-              </p>
-              <div className="grid gap-2" role="tablist" aria-label={language === "de" ? "Menübereiche" : "Menu sections"}>
-                {quickNavTabs.map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeMenuTab === tab.id}
-                    onClick={() => scrollToMenuBlock(tab.id)}
-                    className={`rounded-full px-4 py-2.5 text-left font-work text-xs font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                      activeMenuTab === tab.id
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "bg-card text-primary hover:bg-muted"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-5 border-t border-border/70 pt-4">
-                <p className="mb-3 font-work text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-high-contrast">
-                  {language === "de" ? "Klassiker" : "Classics"}
-                </p>
-                <div className="grid max-h-[40vh] gap-1.5 overflow-y-auto pr-1">
-                  {fixedMenuAnchors.map((anchor) => (
-                    <button
-                      key={anchor.id}
-                      type="button"
-                      onClick={() => scrollToFixedAnchor(anchor.id)}
-                      aria-current={activeFixedAnchor === anchor.id ? "true" : undefined}
-                      className={`rounded-md px-3 py-2 text-left font-work text-xs font-medium leading-snug transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                        activeFixedAnchor === anchor.id
-                          ? "bg-primary text-primary-foreground"
-                          : "text-foreground hover:bg-muted hover:text-primary"
-                      }`}
-                    >
-                      {cleanDisplayText(anchor.label)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </aside>
-        </>,
-        document.body
-      )}
       <div className="container mx-auto px-4">
         <div className="mx-auto grid max-w-2xl gap-8 lg:justify-center">
 
