@@ -657,76 +657,61 @@ export const MenuSection = () => {
             </div>
 
             
-            <div className="space-y-8">
-              {klassikerMenu.categories.map((category) => (
+            <div className="space-y-10">
+              {klassikerMenu.categories.map((category) => {
+                const headerPhoto = categoryHeaderPhoto[category.id];
+                return (
                 <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
-                  <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground mb-4 border-b border-border/50 pb-3">
-                    {cleanDisplayText(category.name[language])}
-                  </h3>
-                  
+                  <div className="mb-5 flex items-end gap-4 border-b border-border/50 pb-3">
+                    {headerPhoto && (
+                      <img
+                        src={headerPhoto}
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        decoding="async"
+                        className="h-12 w-12 shrink-0 rounded-xl object-cover md:h-14 md:w-14"
+                      />
+                    )}
+                    <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground">
+                      {cleanDisplayText(category.name[language])}
+                    </h3>
+                  </div>
+
                   {/* Regular items (non-drinks categories) */}
                   {category.items && (
                     <div className="space-y-3">
                       {category.items.map((item) => (
-                        <div 
-                          key={item.id} 
-                          className={`rounded-2xl border border-border/75 bg-card p-4 shadow-card ${item.isUnavailable ? 'border-dashed' : ''}`}
+                        <DishRow
+                          key={item.id}
+                          name={cleanDisplayText(item.name[language])}
+                          description={item.description ? cleanDisplayText(item.description[language]) : undefined}
+                          price={item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
+                          photoId={item.id}
+                          isUnavailable={item.isUnavailable}
+                          language={language}
+                          dietary={{
+                            vegan: !item.isUnavailable && item.isVegan,
+                            glutenFree: !item.isUnavailable && item.isGlutenFree,
+                            bio: !item.isUnavailable && item.isBio,
+                          }}
                         >
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="flex-1">
-                              <h4 className={`font-cormorant text-xl font-bold md:text-base mb-1 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
-                                {cleanDisplayText(item.name[language])}
-                                {item.isUnavailable && (
-                                  <span className="ml-2 text-xs font-work text-muted-high-contrast italic">
-                                    ({language === "de" ? "derzeit nicht verfügbar" : "currently unavailable"})
-                                  </span>
-                                )}
-                              </h4>
-                              {item.description && (
-                                <p className={`font-work text-sm leading-relaxed ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-muted-high-contrast'}`}>
-                                  {cleanDisplayText(item.description[language])}
-                                </p>
-                              )}
-                              {/* Dietary labels - WCAG AAA compliant with explicit colors */}
-                              {(item.isVegan || item.isGlutenFree || item.isBio) && !item.isUnavailable && (
-                                <div className="flex items-center gap-2 mt-2">
-                                  {item.isVegan && (
-                                    <span className="text-xs font-work font-semibold text-state-vegan">
-                                      vegan
-                                    </span>
-                                  )}
-                                  {item.isGlutenFree && (
-                                    <span className="text-xs font-work font-semibold text-state-glutenFree">
-                                      {language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients"}
-                                    </span>
-                                  )}
-                                  {item.isBio && (
-                                    <span className="text-xs font-work font-semibold text-state-bio">
-                                      bio
-                                    </span>
-                                  )}
-                                </div>
-                              )}
-                              {!item.isUnavailable && (
-                                <MenuDishDetails
-                                  details={{
-                                    descriptionShort: item.descriptionShort,
-                                    ingredientsMain: item.ingredientsMain,
-                                    allergens: item.allergens,
-                                    gfDisclaimer: item.gfDisclaimer,
-                                    ingredientProducers: item.ingredientProducers,
-                                  }}
-                                />
-                              )}
-                            </div>
-                            <span className={`font-bold text-base md:font-semibold md:text-sm font-work shrink-0 ${item.isUnavailable ? 'text-muted-high-contrast' : 'text-foreground'}`}>
-                              {item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
-                            </span>
-                          </div>
-                        </div>
+                          {!item.isUnavailable && (
+                            <MenuDishDetails
+                              details={{
+                                descriptionShort: item.descriptionShort,
+                                ingredientsMain: item.ingredientsMain,
+                                allergens: item.allergens,
+                                gfDisclaimer: item.gfDisclaimer,
+                                ingredientProducers: item.ingredientProducers,
+                              }}
+                            />
+                          )}
+                        </DishRow>
                       ))}
                     </div>
                   )}
+                  
                   
                   {/* Drinks - curated selection with expand option */}
                   {category.subcategories && (
