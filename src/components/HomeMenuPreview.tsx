@@ -74,17 +74,25 @@ export const HomeMenuPreview = () => {
   const showPending = !weeklyMenuAvailable && !isLoading;
 
   return (
-    <section id="menu" className="bg-section-soft py-16 md:py-24 lg:py-28">
-      <div className="container mx-auto px-4">
+    <section id="menu" className="bg-card py-20 md:py-28 lg:py-32">
+      <div className="container mx-auto px-5">
         <div className="mx-auto max-w-2xl lg:max-w-5xl">
-          <div className="mb-8 text-center">
-            <h2 className="font-cormorant text-3xl font-semibold text-foreground md:text-4xl">
+          <div className="mb-10 text-center space-y-4">
+            <div className="flex justify-center">
+              <span className="eyebrow-num">
+                04 · {language === "de" ? "Heute auf dem Tisch" : "On the table today"}
+              </span>
+            </div>
+            <h2 className="h2-editorial text-primary">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
+            <div className="flex justify-center pt-1">
+              <span className="rule-short" aria-hidden="true" />
+            </div>
             <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
               {language === "de"
                 ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
-                : "A quick look at today’s menu. Classics, drinks and details are on the menu page."}
+                : "A quick look at today's menu. Classics, drinks and details are on the menu page."}
             </p>
           </div>
 

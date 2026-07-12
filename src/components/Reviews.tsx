@@ -25,18 +25,26 @@ export const Reviews = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="reviews" className="pt-16 md:pt-24 lg:pt-28 pb-4 md:pb-6 bg-muted/20">
-      <div className="container mx-auto px-4 max-w-4xl lg:max-w-6xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-cormorant font-semibold text-foreground mb-4">
+    <section id="reviews" className="pt-20 md:pt-28 lg:pt-32 pb-8 md:pb-12 bg-background">
+      <div className="container mx-auto px-5 max-w-4xl lg:max-w-6xl">
+        <div className="text-center mb-12 space-y-4">
+          <div className="flex justify-center">
+            <span className="eyebrow-num">
+              06 · {language === "de" ? "Gäste erzählen" : "Guests speak"}
+            </span>
+          </div>
+          <h2 className="h2-editorial text-primary">
             {language === "de" ? "Stimmen aus dem Garten" : "Voices from the Garden"}
           </h2>
-          <div className="flex justify-center gap-1 text-brand-star">
+          <div className="flex justify-center pt-1">
+            <span className="rule-short" aria-hidden="true" />
+          </div>
+          <div className="flex justify-center gap-1 text-brand-star pt-2">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-5 h-5 fill-current" />
             ))}
           </div>
-          <p className="mt-3 text-sm text-muted-high-contrast font-work">
+          <p className="text-sm text-muted-high-contrast font-work">
             {SITE.rating}★ · {SITE.reviewCount} {language === "de" ? "Bewertungen auf Google" : "reviews on Google"}
           </p>
         </div>

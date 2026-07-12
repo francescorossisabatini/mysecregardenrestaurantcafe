@@ -47,22 +47,23 @@ const items: VoceItem[] = [
 
 export const Voci = () => {
   const { language } = useLanguage();
-  const eyebrow = language === "de" ? "WAS ANDERE SAGEN" : "WHAT OTHERS SAY";
+  const eyebrowLabel = language === "de" ? "Stimmen" : "Voices";
   const heading = language === "de" ? "Worte, die uns freuen." : "Words that mean something to us.";
 
   // Duplicate for seamless marquee loop
   const looped = [...items, ...items];
 
   return (
-    <section aria-labelledby="voci-heading" className="bg-background-page py-16 md:py-24">
+    <section aria-labelledby="voci-heading" className="bg-verde-tint py-20 md:py-28">
       <div className="container mx-auto px-5">
-        <div className="max-w-2xl mb-10 md:mb-14">
-          <p className="text-text-muted uppercase tracking-widest text-xs font-sans mb-3">
-            {eyebrow}
-          </p>
-          <h2 id="voci-heading" className="text-text-primary font-serif text-3xl md:text-4xl">
+        <div className="max-w-2xl mb-10 md:mb-14 space-y-4">
+          <span className="eyebrow-num">
+            05 · {eyebrowLabel}
+          </span>
+          <h2 id="voci-heading" className="h2-editorial text-primary">
             {heading}
           </h2>
+          <span className="rule-short" aria-hidden="true" />
         </div>
       </div>
 

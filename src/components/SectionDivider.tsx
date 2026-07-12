@@ -1,31 +1,19 @@
-import { BotanicalDecoration } from "./BotanicalDecoration";
-
 interface SectionDividerProps {
   variant?: "default" | "accent" | "subtle";
   showDecoration?: boolean;
 }
 
-export const SectionDivider = ({ 
-  variant = "default", 
-  showDecoration = true 
-}: SectionDividerProps) => {
-  const gradientClasses = {
-    default: "from-background via-cream to-background",
-    accent: "from-background via-accent/5 to-background",
-    subtle: "from-transparent via-border/20 to-transparent"
-  };
-
+/**
+ * Editorial section divider — "No-Line Rule".
+ * Provides vertical breathing between sections without a hard rule.
+ * Surface changes on the sections themselves carry the visual rhythm.
+ */
+export const SectionDivider = ({ showDecoration = true }: SectionDividerProps) => {
   return (
-    <div className="relative w-full py-16 md:py-20">
-      {/* Minimal gradient divider */}
-      <div className={`absolute inset-0 bg-gradient-to-r ${gradientClasses[variant]} opacity-50`} aria-hidden="true" />
-      
-      {/* Simple line */}
+    <div className="relative w-full py-10 md:py-14" aria-hidden="true">
       {showDecoration && (
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="flex items-center justify-center">
-            <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-40" />
-          </div>
+        <div className="flex justify-center">
+          <span className="rule-short opacity-70" />
         </div>
       )}
     </div>
