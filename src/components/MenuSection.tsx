@@ -616,9 +616,42 @@ export const MenuSection = () => {
               </p>
             </div>
 
-            
+            {/* Category filter — only inside the fixed section */}
+            <div
+              role="tablist"
+              aria-label={language === "de" ? "Kategorien filtern" : "Filter categories"}
+              className="mb-8 -mx-4 px-4 md:mx-0 md:px-0"
+            >
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 md:flex-wrap md:justify-center md:overflow-visible">
+                {[
+                  { id: "all", label: language === "de" ? "Alle" : "All" },
+                  ...klassikerMenu.categories.map((c) => ({ id: c.id, label: cleanDisplayText(c.name[language]) })),
+                ].map((chip) => {
+                  const isActive = fixedCategoryFilter === chip.id;
+                  return (
+                    <button
+                      key={chip.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setFixedCategoryFilter(chip.id)}
+                      className={`shrink-0 rounded-full border px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
+                        isActive
+                          ? "border-accent bg-accent text-accent-foreground"
+                          : "border-border/70 bg-background text-muted-high-contrast hover:text-foreground"
+                      }`}
+                    >
+                      {chip.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-10">
-              {klassikerMenu.categories.map((category) => {
+              {klassikerMenu.categories
+                .filter((category) => fixedCategoryFilter === "all" || category.id === fixedCategoryFilter)
+                .map((category) => {
                 const headerPhoto = categoryHeaderPhoto[category.id];
                 return (
                 <div key={category.id} id={`menu-${category.id}`} className="scroll-mt-52 md:scroll-mt-40">
