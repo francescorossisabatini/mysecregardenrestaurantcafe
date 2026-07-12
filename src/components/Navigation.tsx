@@ -41,7 +41,7 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "bg-transparent py-2 md:py-2.5"
+            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-gradient-to-b before:from-foreground/55 before:via-foreground/25 before:to-transparent before:content-['']"
             : "border-b border-border/60 bg-background/97 py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
@@ -50,7 +50,7 @@ export const Navigation = () => {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border/75 bg-card/90 text-primary shadow-sm transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
               aria-label={isMobileMenuOpen
                 ? (language === "de" ? "Menü schließen" : "Close menu")
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -71,10 +71,10 @@ export const Navigation = () => {
               showTagline={false}
               aria-hidden="true"
             />
-            <span className="block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] text-primary/85 sm:hidden">
+            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] sm:hidden ${isHeroOverlay ? "text-background" : "text-primary/85"}`}>
               {activeNavLabel}
             </span>
-            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none text-foreground transition-[font-size] duration-500 group-hover:text-primary sm:block ${isHeroOverlay ? "text-xl lg:text-[22px]" : "text-lg lg:text-xl"}`}>
+            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none transition-[font-size,color] duration-500 sm:block ${isHeroOverlay ? "text-background text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90 lg:text-[22px]" : "text-foreground text-lg group-hover:text-primary lg:text-xl"}`}>
               My Secret Garden
             </span>
           </Link>
@@ -84,18 +84,25 @@ export const Navigation = () => {
             <ul className="flex items-center gap-6 xl:gap-8">
               {navLinks.map((link) => {
                 const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
+                const baseColor = isHeroOverlay
+                  ? isActive
+                    ? "text-background"
+                    : "text-background/85 hover:text-background"
+                  : isActive
+                    ? "text-accent"
+                    : "text-foreground/85 hover:text-accent";
                 return (
                   <li key={link.to} className="relative">
                     {isActive && (
                       <span
                         aria-hidden="true"
-                        className="absolute -left-3 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent"
+                        className={`absolute -left-3 top-1/2 h-3 w-[2px] -translate-y-1/2 ${isHeroOverlay ? "bg-background" : "bg-accent"}`}
                       />
                     )}
                     <Link
                       to={link.to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors hover:text-accent focus:outline-none focus-visible:text-accent focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${isActive ? "text-accent" : "text-foreground/85"}`}
+                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
@@ -103,7 +110,7 @@ export const Navigation = () => {
                 );
               })}
             </ul>
-            <span aria-hidden="true" className="h-4 w-px bg-border/70" />
+            <span aria-hidden="true" className={`h-4 w-px ${isHeroOverlay ? "bg-background/40" : "bg-border/70"}`} />
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
           </div>
 
@@ -111,6 +118,7 @@ export const Navigation = () => {
           <div className="w-11 lg:hidden" aria-hidden="true" />
         </div>
       </nav>
+
 
 
       {/* Mobile Menu Drawer */}
