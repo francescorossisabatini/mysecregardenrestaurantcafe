@@ -4,6 +4,7 @@ import { MapPin, Phone, Clock, Mail, DoorOpen, HandPlatter } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DetailedFlower, ContinuousVine } from "@/components/FloralDecorations";
 import { SITE } from "@/config/site";
+import { MapConsentGate } from "@/components/MapConsentGate";
 
 export const Contact = () => {
   const { t, language } = useLanguage();
@@ -81,15 +82,10 @@ export const Contact = () => {
           {/* Map - Full Width */}
           <div className="mb-16">
             <div className="aspect-[16/9] md:aspect-[21/9] w-full rounded-lg overflow-hidden shadow-xl">
-              <iframe
+              <MapConsentGate
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: '350px' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
                 title="Secret Garden Restaurant Location"
+                style={{ minHeight: '350px' }}
               />
             </div>
           </div>

@@ -13,7 +13,8 @@ declare global {
   }
 }
 
-const CONSENT_KEY = "cookie_consent_v2";
+const CONSENT_KEY = "cookie_consent_v3";
+const LEGACY_CONSENT_KEYS = ["cookie_consent_v2", "cookie_consent"];
 export const CONSENT_EVENT = "cookie-consent-updated";
 
 export type ConsentCategories = {
@@ -27,7 +28,7 @@ export type ConsentRecord = {
   analytics: boolean;
   behavioral: boolean;
   decidedAt: string;
-  version: 2;
+  version: 3;
 };
 
 const ALL_DENIED: ConsentCategories = { necessary: true, analytics: false, behavioral: false };
@@ -39,7 +40,7 @@ export const getConsent = (): ConsentRecord | null => {
     const raw = localStorage.getItem(CONSENT_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as ConsentRecord;
-    if (!parsed || parsed.version !== 2) return null;
+    if (!parsed || parsed.version !== 3) return null;
     return parsed;
   } catch {
     return null;
@@ -49,6 +50,7 @@ export const getConsent = (): ConsentRecord | null => {
 export const resetCookieConsent = () => {
   if (typeof window === "undefined") return;
   localStorage.removeItem(CONSENT_KEY);
+  LEGACY_CONSENT_KEYS.forEach((key) => localStorage.removeItem(key));
   window.dispatchEvent(new Event(CONSENT_EVENT));
 };
 
@@ -56,9 +58,10 @@ const persistConsent = (categories: ConsentCategories) => {
   const record: ConsentRecord = {
     ...categories,
     decidedAt: new Date().toISOString(),
-    version: 2,
+    version: 3,
   };
   localStorage.setItem(CONSENT_KEY, JSON.stringify(record));
+  LEGACY_CONSENT_KEYS.forEach((key) => localStorage.removeItem(key));
   window.dispatchEvent(new Event(CONSENT_EVENT));
 
   // Update Google Consent Mode v2 signals.
