@@ -59,8 +59,10 @@ const Impressum = () => {
             <li><a href="#editorial-line" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Blattlinie" : "Editorial Line"}</a></li>
             <li><a href="#legal-info" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Rechtliche Hinweise" : "Legal Information"}</a></li>
             <li><a href="#odr" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Online-Streitbeilegung" : "Online Dispute Resolution"}</a></li>
+            <li><a href="#disclaimer" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Haftungsausschluss" : "Disclaimer"}</a></li>
           </ol>
         </nav>
+
 
         <article className="space-y-10 text-foreground leading-relaxed">
           
@@ -131,13 +133,45 @@ const Impressum = () => {
             <h2 id="legal-info-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
               {isGerman ? "4. Rechtliche Hinweise" : "4. Legal Information"}
             </h2>
-            <p>
-              {isGerman 
+            <p className="mb-4">
+              {isGerman
                 ? "Informationspflicht laut §5 E-Commerce Gesetz (ECG), §14 Unternehmensgesetzbuch (UGB) bzw. §63 Gewerbeordnung (GewO) und Offenlegungspflicht laut §25 Mediengesetz (MedienG)."
                 : "Information obligation according to §5 E-Commerce Act (ECG), §14 Austrian Commercial Code (UGB) and §63 Trade Regulation Act (GewO), and disclosure obligation according to §25 Media Act (MedienG)."
               }
             </p>
+
+            <div className="space-y-3 text-sm">
+              <p>
+                <span className="font-medium">{isGerman ? "Berufsbezeichnung" : "Professional title"}:</span>{" "}
+                {isGerman ? "Gastgewerbe (verliehen in Österreich)" : "Hospitality trade (granted in Austria)"}
+              </p>
+              <p>
+                <span className="font-medium">{isGerman ? "Gewerberechtliche Vorschriften" : "Applicable trade regulations"}:</span>{" "}
+                {isGerman ? "Gewerbeordnung (GewO), abrufbar unter " : "Austrian Trade Regulation Act (GewO), available at "}
+                <a
+                  href="https://www.ris.bka.gv.at/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+                >
+                  www.ris.bka.gv.at
+                </a>
+              </p>
+              <p>
+                <span className="font-medium">{isGerman ? "Aufsichtsbehörde / Gewerbebehörde" : "Supervisory authority"}:</span>{" "}
+                {isGerman
+                  ? "Magistratisches Bezirksamt für den 6. Bezirk, Wien"
+                  : "Magistrate District Office for the 6th District, Vienna"}
+              </p>
+              <p>
+                <span className="font-medium">{isGerman ? "Kammer" : "Chamber"}:</span>{" "}
+                {isGerman
+                  ? "Wirtschaftskammer Wien, Fachgruppe Gastronomie"
+                  : "Vienna Chamber of Commerce, Gastronomy Division"}
+              </p>
+            </div>
           </section>
+
 
           {/* Online Dispute Resolution */}
           <section id="odr" aria-labelledby="odr-title" className="scroll-mt-24">
@@ -173,14 +207,34 @@ const Impressum = () => {
             </p>
           </section>
 
+          {/* Disclaimer */}
+          <section id="disclaimer" aria-labelledby="disclaimer-title" className="scroll-mt-24">
+            <h2 id="disclaimer-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "6. Haftungsausschluss" : "6. Disclaimer"}
+            </h2>
+            <div className="space-y-3 text-sm">
+              <p>
+                {isGerman
+                  ? "Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen."
+                  : "The content of this website has been created with the greatest possible care. However, we cannot guarantee the accuracy, completeness or timeliness of the content."}
+              </p>
+              <p>
+                {isGerman
+                  ? "Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich."
+                  : "Our website contains links to external third-party websites over whose content we have no control. The respective provider or operator is always responsible for the content of the linked pages."}
+              </p>
+            </div>
+          </section>
+
         </article>
         
         <footer className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-high-contrast">
-            <time dateTime="2025-12">
-              {isGerman ? "Stand: Dezember 2025" : "Last updated: December 2025"}
+            <time dateTime="2026-07">
+              {isGerman ? "Stand: Juli 2026" : "Last updated: July 2026"}
             </time>
           </p>
+
         </footer>
       </main>
       
