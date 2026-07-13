@@ -253,26 +253,96 @@ const Privacy = () => {
                   <li>{isGerman ? "IP-Adresse" : "IP address"}</li>
                 </ul>
                 <p className="mt-2 text-sm text-muted-high-contrast">
-                  {isGerman 
-                    ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse)"
-                    : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest)"
+                  {isGerman
+                    ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an sicherem Betrieb). Speicherdauer: max. 30 Tage, danach automatische Löschung oder Anonymisierung."
+                    : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest in secure operation). Storage duration: max. 30 days, then automatically deleted or anonymized."
                   }
                 </p>
               </div>
 
               <div>
                 <h3 className="text-base font-semibold text-foreground mb-2">
-                  {isGerman ? "Kontaktaufnahme" : "Contact"}
+                  {isGerman ? "Kontaktaufnahme & Reservierungsanfragen" : "Contact & Reservation Requests"}
                 </h3>
-                <p>
-                  {isGerman 
-                    ? "Bei Kontakt per Telefon oder E-Mail speichern wir Ihre Anfrage zur Bearbeitung. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter."
-                    : "When contacting us by telephone or email, we store your inquiry for processing. We do not share this data without your consent."
-                  }
+                <p className="mb-2">
+                  {isGerman
+                    ? "Wenn du uns per Telefon, E-Mail oder über das Anfrage-Formular kontaktierst, verarbeiten wir folgende Daten zur Bearbeitung deiner Anfrage:"
+                    : "When you contact us by phone, email or via the request form, we process the following data to handle your inquiry:"}
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li>{isGerman ? "Name" : "Name"}</li>
+                  <li>{isGerman ? "Telefonnummer" : "Phone number"}</li>
+                  <li>{isGerman ? "E-Mail-Adresse (optional)" : "Email address (optional)"}</li>
+                  <li>{isGerman ? "Nachricht / gewünschtes Datum" : "Message / requested date"}</li>
+                </ul>
+                <p className="mt-2 text-sm text-muted-high-contrast">
+                  {isGerman
+                    ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Anbahnung und Erfüllung einer Anfrage). Empfänger: nur intern (Team Purusha GmbH). Speicherdauer: bis zu 12 Monate nach Bearbeitung, danach Löschung, sofern keine gesetzlichen Aufbewahrungspflichten bestehen."
+                    : "Legal basis: Art. 6 para. 1 lit. b GDPR (initiation and fulfilment of a request). Recipients: internal only (Purusha GmbH team). Storage duration: up to 12 months after processing, then deleted unless legal retention obligations apply."}
                 </p>
               </div>
             </div>
           </section>
+
+          {/* Section 4 - Hosting & Processors */}
+          <section id="hosting" aria-labelledby="hosting-title" className="scroll-mt-24">
+            <h2 id="hosting-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "4. Hosting & Auftragsverarbeiter" : "4. Hosting & Processors"}
+            </h2>
+            <p className="mb-3">
+              {isGerman
+                ? "Diese Website wird auf der Lovable-Plattform (Lovable Labs Inc., USA) betrieben. Datenbank, Speicherplatz und serverseitige Funktionen (u. a. Speisekarten, Anfrage-Formular, Mitarbeiter-Login) laufen über Supabase (Supabase Inc., USA), betrieben in EU-Rechenzentren."
+                : "This website is hosted on the Lovable platform (Lovable Labs Inc., USA). Database, storage and server-side functions (menus, request form, staff login) run on Supabase (Supabase Inc., USA), operated from EU data centres."}
+            </p>
+            <p className="text-sm text-muted-high-contrast">
+              {isGerman
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem stabilen Betrieb der Website). Mit den Anbietern bestehen Auftragsverarbeitungsverträge nach Art. 28 DSGVO."
+                : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest in stable operation). Data processing agreements under Art. 28 GDPR are in place with the providers."}
+            </p>
+          </section>
+
+          {/* Section 5 - Google Fonts */}
+          <section id="google-fonts" aria-labelledby="google-fonts-title" className="scroll-mt-24">
+            <h2 id="google-fonts-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "5. Google Fonts" : "5. Google Fonts"}
+            </h2>
+            <p className="mb-3">
+              {isGerman
+                ? "Zur einheitlichen Darstellung von Schriftarten binden wir Google Fonts (Anbieter: Google Ireland Limited, Dublin) ein. Beim Laden einer Seite wird deine IP-Adresse an Google übermittelt."
+                : "We use Google Fonts (provider: Google Ireland Limited, Dublin) for consistent typography. When a page loads, your IP address is transmitted to Google."}
+            </p>
+            <p className="text-sm text-muted-high-contrast">
+              {isGerman
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer einheitlichen Darstellung)."
+                : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest in consistent presentation)."}
+            </p>
+          </section>
+
+          {/* Section 6 - Google Maps */}
+          <section id="google-maps" aria-labelledby="google-maps-title" className="scroll-mt-24">
+            <h2 id="google-maps-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "6. Google Maps" : "6. Google Maps"}
+            </h2>
+            <p className="mb-3">
+              {isGerman
+                ? "Auf unserer Kontaktseite binden wir Google Maps (Anbieter: Google Ireland Limited, Dublin) ein, damit du unseren Standort leicht findest. Beim Laden der Karte wird deine IP-Adresse an Google übermittelt; eine Übertragung in die USA ist möglich."
+                : "On our contact page we embed Google Maps (provider: Google Ireland Limited, Dublin) so you can find our location easily. When the map loads, your IP address is transmitted to Google; transfer to the USA is possible."}
+            </p>
+            <p className="text-sm text-muted-high-contrast">
+              {isGerman
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer einfachen Wegbeschreibung). Mehr Infos: "
+                : "Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest in easy directions). More info: "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+              >
+                policies.google.com/privacy
+              </a>
+            </p>
+          </section>
+
 
           {/* Section 4 - Google Maps */}
           <section id="google-maps" aria-labelledby="google-maps-title" className="scroll-mt-24">
