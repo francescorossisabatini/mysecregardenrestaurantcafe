@@ -344,65 +344,121 @@ const Privacy = () => {
           </section>
 
 
-          {/* Section 4 - Google Maps */}
-          <section id="google-maps" aria-labelledby="google-maps-title" className="scroll-mt-24">
-            <h2 id="google-maps-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "4. Google Maps" : "4. Google Maps"}
-            </h2>
-            <p className="mb-3">
-              {isGerman 
-                ? "Auf unserer Kontaktseite nutzen wir Google Maps (Anbieter: Google Ireland Limited, Dublin). Beim Laden der Karte wird Ihre IP-Adresse an Google übermittelt."
-                : "On our contact page, we use Google Maps (provider: Google Ireland Limited, Dublin). When loading the map, your IP address is transmitted to Google."
-              }
-            </p>
-            <p className="text-sm text-muted-high-contrast">
-              {isGerman 
-                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Mehr Infos: "
-                : "Legal basis: Art. 6 para. 1 lit. f GDPR. More info: "
-              }
-              <a 
-                href="https://policies.google.com/privacy" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
-              >
-                policies.google.com/privacy
-              </a>
-            </p>
-          </section>
-
-          {/* Section 5 - Analytics Tools */}
+          {/* Section 7 - Analytics Tools */}
           <section id="analytics" aria-labelledby="analytics-title" className="scroll-mt-24">
             <h2 id="analytics-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "5. Analyse Tools" : "5. Analytics Tools"}
+              {isGerman ? "7. Analyse Tools" : "7. Analytics Tools"}
             </h2>
             <p className="mb-3">
-              {isGerman 
-                ? "Wir nutzen Google Analytics sowie Contentsquare/Hotjar zur Analyse der Website Nutzung und des Nutzerverhaltens. Diese Dienste werden erst nach Ihrer Einwilligung über das Cookie Banner geladen."
-                : "We use Google Analytics and Contentsquare/Hotjar to analyze website usage and user behavior. These services are loaded only after your consent via the cookie banner."
-              }
+              {isGerman
+                ? "Wir nutzen Google Analytics und Contentsquare, um zu verstehen, wie die Website genutzt wird und sie zu verbessern. Diese Dienste werden erst nach deiner ausdrücklichen Einwilligung über das Cookie-Banner geladen."
+                : "We use Google Analytics and Contentsquare to understand how the site is used and to improve it. These services only load after your explicit consent via the cookie banner."}
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
-              <li>{isGerman ? "Google Analytics, Anbieter: Google Ireland Limited, Dublin" : "Google Analytics, provider: Google Ireland Limited, Dublin"}</li>
-              <li>{isGerman ? "Contentsquare/Hotjar, Anbieter: Contentsquare SAS und verbundene Unternehmen" : "Contentsquare/Hotjar, provider: Contentsquare SAS and affiliated companies"}</li>
+              <li>{isGerman ? "Google Analytics 4, Anbieter: Google Ireland Limited, Dublin" : "Google Analytics 4, provider: Google Ireland Limited, Dublin"}</li>
+              <li>{isGerman ? "Contentsquare, Anbieter: Contentsquare SAS, Frankreich" : "Contentsquare, provider: Contentsquare SAS, France"}</li>
             </ul>
             <p className="text-sm text-muted-high-contrast">
-              {isGerman 
-                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Sie können die Einwilligung jederzeit widerrufen. Dabei können technische Daten wie IP Adresse, Geräteinformationen, Seitenaufrufe, Klicks und Interaktionen verarbeitet werden."
-                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Technical data such as IP address, device information, page views, clicks and interactions may be processed."
-              }
+              {isGerman
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Du kannst die Einwilligung jederzeit widerrufen. Verarbeitet werden können: anonymisierte IP-Adresse, Geräteinformationen, Seitenaufrufe, Klicks, Scroll- und Interaktionsmuster."
+                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Data that may be processed: anonymized IP address, device information, page views, clicks, scroll and interaction patterns."}
             </p>
             <Button type="button" variant="outline" size="sm" className="mt-4 font-work" onClick={resetCookieConsent}>
               {isGerman ? "Cookie Entscheidung ändern" : "Change cookie choice"}
             </Button>
           </section>
 
-          {/* Section 6 - Social Media */}
-          <section id="social-media" aria-labelledby="social-media-title" className="scroll-mt-24">
-            <h2 id="social-media-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "6. Social Media" : "6. Social Media"}
+          {/* Section 8 - A/B Testing */}
+          <section id="ab-testing" aria-labelledby="ab-testing-title" className="scroll-mt-24">
+            <h2 id="ab-testing-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "8. A/B-Testing" : "8. A/B Testing"}
             </h2>
             <p className="mb-3">
+              {isGerman
+                ? "Um die Startseite auf mobilen Geräten zu verbessern, zeigen wir gelegentlich unterschiedliche Varianten des Hero-Bereichs an. Die dir zugewiesene Variante wird in einem lokalen Speicher-Eintrag (Local Storage) deines Browsers festgehalten, damit du bei weiteren Besuchen dieselbe Version siehst."
+                : "To improve the mobile home page, we occasionally show different variants of the hero section. The variant assigned to you is stored in a local storage entry in your browser so you see the same version on later visits."}
+            </p>
+            <p className="text-sm text-muted-high-contrast">
+              {isGerman
+                ? "Es werden keine personenbezogenen Daten erhoben. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer guten Nutzererfahrung)."
+                : "No personal data is collected. Legal basis: Art. 6 para. 1 lit. f GDPR (legitimate interest in a good user experience)."}
+            </p>
+          </section>
+
+          {/* Section 9 - Storage table */}
+          <section id="storage" aria-labelledby="storage-title" className="scroll-mt-24">
+            <h2 id="storage-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "9. Cookies & Local Storage" : "9. Cookies & Local Storage"}
+            </h2>
+            <p className="mb-4">
+              {isGerman
+                ? "Diese Website nutzt keine klassischen Marketing-Cookies. Für den Betrieb speichern wir kleine technische Einträge im Local Storage deines Browsers:"
+                : "This website does not use classic marketing cookies. For operational purposes we store small technical entries in your browser's local storage:"}
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border border-border rounded-md">
+                <thead className="bg-muted/40 text-left">
+                  <tr>
+                    <th className="px-3 py-2 font-semibold">{isGerman ? "Eintrag" : "Entry"}</th>
+                    <th className="px-3 py-2 font-semibold">{isGerman ? "Zweck" : "Purpose"}</th>
+                    <th className="px-3 py-2 font-semibold">{isGerman ? "Dauer" : "Duration"}</th>
+                    <th className="px-3 py-2 font-semibold">{isGerman ? "Kategorie" : "Category"}</th>
+                  </tr>
+                </thead>
+                <tbody className="align-top">
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">cookie_consent_v2</td>
+                    <td className="px-3 py-2">{isGerman ? "Speichert deine Cookie-Einstellungen" : "Stores your cookie preferences"}</td>
+                    <td className="px-3 py-2">{isGerman ? "12 Monate" : "12 months"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Notwendig" : "Necessary"}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">msg_visit_count</td>
+                    <td className="px-3 py-2">{isGerman ? "Zählt Besuche, um den App-Installations-Hinweis nicht sofort zu zeigen" : "Counts visits so the install hint is not shown immediately"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Dauerhaft (bis du ihn löschst)" : "Persistent (until you delete it)"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Notwendig" : "Necessary"}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">msg_install_dismissed</td>
+                    <td className="px-3 py-2">{isGerman ? "Merkt sich, dass du den Installations-Hinweis geschlossen hast" : "Remembers that you closed the install hint"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Dauerhaft" : "Persistent"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Notwendig" : "Necessary"}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">secretgarden.hero_ab_assignment_v1</td>
+                    <td className="px-3 py-2">{isGerman ? "Speichert die dir zugewiesene Test-Variante der Startseite" : "Stores the home-page test variant assigned to you"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Dauer des laufenden Tests" : "Duration of the running test"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Notwendig" : "Necessary"}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">_ga, _ga_*</td>
+                    <td className="px-3 py-2">{isGerman ? "Google Analytics — anonyme Nutzungsstatistiken" : "Google Analytics — anonymous usage statistics"}</td>
+                    <td className="px-3 py-2">{isGerman ? "bis zu 24 Monate" : "up to 24 months"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Statistik (Einwilligung)" : "Analytics (consent)"}</td>
+                  </tr>
+                  <tr className="border-t border-border">
+                    <td className="px-3 py-2 font-mono text-xs">_cs_*</td>
+                    <td className="px-3 py-2">{isGerman ? "Contentsquare — anonyme Klick- und Scroll-Analysen" : "Contentsquare — anonymous click and scroll analytics"}</td>
+                    <td className="px-3 py-2">{isGerman ? "bis zu 13 Monate" : "up to 13 months"}</td>
+                    <td className="px-3 py-2">{isGerman ? "Verhaltensanalyse (Einwilligung)" : "Behavioral (consent)"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-sm text-muted-high-contrast">
+              {isGerman
+                ? "Du kannst diese Einträge jederzeit in den Einstellungen deines Browsers löschen. Optionale Kategorien lassen sich zusätzlich über den Button oben widerrufen."
+                : "You can delete these entries at any time in your browser settings. Optional categories can also be revoked via the button above."}
+            </p>
+          </section>
+
+          {/* Section 10 - Social Media */}
+          <section id="social-media" aria-labelledby="social-media-title" className="scroll-mt-24">
+            <h2 id="social-media-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
+              {isGerman ? "10. Social Media" : "10. Social Media"}
+            </h2>
+            <p className="mb-3">
+
               {isGerman 
                 ? "Wir sind auf folgenden Plattformen präsent:"
                 : "We are present on the following platforms:"
