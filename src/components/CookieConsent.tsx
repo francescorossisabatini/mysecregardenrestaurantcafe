@@ -74,21 +74,22 @@ const copy = {
   de: {
     title: "Datenschutz Einstellungen",
     intro: "Notwendige Funktionen sind immer aktiv. Optionale Dienste laden wir nur, wenn du zustimmst. Du kannst deine Auswahl jederzeit ändern.",
-    legal: "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 165 Abs. 3 TKG 2021. Verantwortlich gemäß DSGVO ist My Secret Garden, Wien (Österreich). Details und Widerruf jederzeit möglich:",
+    legal: "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 165 Abs. 3 TKG 2021. Verantwortlich gemäß DSGVO ist Purusha GmbH, Wien (Österreich). Details und Widerruf jederzeit möglich:",
     rejectAll: "Alle ablehnen",
     acceptAll: "Alle akzeptieren",
     customize: "Anpassen",
     save: "Auswahl speichern",
     necessary: "Notwendig",
-    necessaryDesc: "Grundfunktionen wie Sprache und Sicherheit. Diese Cookies sind immer aktiv.",
+    necessaryDesc: "Grundfunktionen wie Sprache, Sicherheit und Cookie-Einstellungen. Diese Cookies sind immer aktiv.",
     analytics: "Statistik",
     analyticsDesc: "Google Analytics misst anonym, wie die Seite genutzt wird, damit wir sie verbessern können.",
     behavioral: "Verhaltensanalyse",
-    behavioralDesc: "Contentsquare/Hotjar zeigen anonymisierte Klick und Scroll Muster, um die UX zu verbessern.",
+    behavioralDesc: "Contentsquare zeigt anonymisierte Klick- und Scroll-Muster, um die UX zu verbessern.",
     on: "An",
     off: "Aus",
     always: "Immer aktiv",
     privacy: "Datenschutz",
+    imprint: "Impressum",
     closeLabel: "Banner schließen, ohne Auswahl zu speichern",
     showDetails: "Details anzeigen",
     hideDetails: "Details ausblenden",
@@ -96,26 +97,28 @@ const copy = {
   en: {
     title: "Privacy settings",
     intro: "Necessary functions are always active. Optional services only load if you consent. You can change your choice at any time.",
-    legal: "Legal basis: Art. 6(1)(a) GDPR (consent) and § 165(3) TKG 2021 (Austria). Data controller under GDPR is My Secret Garden, Vienna (Austria). Details and withdrawal available anytime:",
+    legal: "Legal basis: Art. 6(1)(a) GDPR (consent) and § 165(3) TKG 2021 (Austria). Data controller under GDPR is Purusha GmbH, Vienna (Austria). Details and withdrawal available anytime:",
     rejectAll: "Reject all",
     acceptAll: "Accept all",
     customize: "Customize",
     save: "Save choices",
     necessary: "Necessary",
-    necessaryDesc: "Core features like language and security. These cookies are always active.",
+    necessaryDesc: "Core features like language, security and cookie preferences. These cookies are always active.",
     analytics: "Analytics",
     analyticsDesc: "Google Analytics measures anonymously how the site is used so we can improve it.",
     behavioral: "Behavioral analytics",
-    behavioralDesc: "Contentsquare/Hotjar show anonymized click and scroll patterns to improve UX.",
+    behavioralDesc: "Contentsquare shows anonymized click and scroll patterns to improve UX.",
     on: "On",
     off: "Off",
     always: "Always on",
     privacy: "Privacy",
+    imprint: "Imprint",
     closeLabel: "Close banner without saving a choice",
     showDetails: "Show details",
     hideDetails: "Hide details",
   },
 } as const;
+
 
 type ConsentRowProps = {
   title: string;
@@ -326,8 +329,13 @@ export const CookieConsent = () => {
                 <a href="/privacy" className="underline underline-offset-2 hover:text-foreground">
                   {labels.privacy}
                 </a>
+                {" · "}
+                <a href="/impressum" className="underline underline-offset-2 hover:text-foreground">
+                  {labels.imprint}
+                </a>
                 .
               </p>
+
             </div>
             <button
               type="button"
