@@ -545,7 +545,7 @@ const Privacy = () => {
         
         <footer className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-high-contrast">
-            <time dateTime="2025-12">
+            <time dateTime="2026-07">
               {isGerman ? "Stand: Juli 2026" : "Last updated: July 2026"}
             </time>
           </p>
