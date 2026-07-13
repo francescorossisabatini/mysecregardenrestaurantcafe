@@ -503,7 +503,7 @@ const Privacy = () => {
           {/* Section 7 - Social Networks Detail */}
           <section id="social-networks" aria-labelledby="social-networks-title" className="scroll-mt-24">
             <h2 id="social-networks-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "7. Soziale Netzwerke im Detail" : "7. Social Networks in Detail"}
+              {isGerman ? "11. Soziale Netzwerke im Detail" : "11. Social Networks in Detail"}
             </h2>
             
             <div className="space-y-4">
@@ -531,7 +531,7 @@ const Privacy = () => {
           {/* Section 8 - Changes */}
           <section id="changes" aria-labelledby="changes-title" className="scroll-mt-24">
             <h2 id="changes-title" className="text-xl font-semibold text-foreground mb-4 pb-2 border-b border-border">
-              {isGerman ? "8. Änderungen" : "8. Changes"}
+              {isGerman ? "12. Änderungen" : "12. Changes"}
             </h2>
             <p>
               {isGerman 
@@ -546,7 +546,7 @@ const Privacy = () => {
         <footer className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted-high-contrast">
             <time dateTime="2025-12">
-              {isGerman ? "Stand: Dezember 2025" : "Last updated: December 2025"}
+              {isGerman ? "Stand: Juli 2026" : "Last updated: July 2026"}
             </time>
           </p>
           <p className="text-sm text-muted-high-contrast mt-2">
