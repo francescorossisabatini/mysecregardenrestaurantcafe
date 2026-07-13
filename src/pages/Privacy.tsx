@@ -15,12 +15,17 @@ const Privacy = () => {
     { id: "overview", de: "Datenschutz im Überblick", en: "Privacy at a Glance" },
     { id: "general", de: "Allgemeine Hinweise", en: "General Information" },
     { id: "data-collection", de: "Datenerfassung", en: "Data Collection" },
+    { id: "hosting", de: "Hosting & Auftragsverarbeiter", en: "Hosting & Processors" },
+    { id: "google-fonts", de: "Google Fonts", en: "Google Fonts" },
     { id: "google-maps", de: "Google Maps", en: "Google Maps" },
     { id: "analytics", de: "Analyse Tools", en: "Analytics Tools" },
+    { id: "ab-testing", de: "A/B-Testing", en: "A/B Testing" },
+    { id: "storage", de: "Cookies & Local Storage", en: "Cookies & Local Storage" },
     { id: "social-media", de: "Social Media", en: "Social Media" },
     { id: "social-networks", de: "Soziale Netzwerke", en: "Social Networks" },
     { id: "changes", de: "Änderungen", en: "Changes" },
   ];
+
 
   return (
     <div className="min-h-screen bg-background">
