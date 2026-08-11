@@ -1,0 +1,1 @@
+UPDATE public.menu_config SET loaded_at = now() WHERE singleton = true;
