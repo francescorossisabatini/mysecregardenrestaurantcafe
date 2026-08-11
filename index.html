@@ -157,7 +157,12 @@
     <script>
       function readConsent() {
         try {
-          var raw = localStorage.getItem('cookie_consent_v2');
+          var raw = localStorage.getItem('cookie_consent_v3');
+          if (!raw) {
+            // Fallback for legacy consent keys so users who consented before the v3 bump
+            // still get analytics loaded without seeing the banner again.
+            raw = localStorage.getItem('cookie_consent_v2') || localStorage.getItem('cookie_consent');
+          }
           if (!raw) return null;
           return JSON.parse(raw);
         } catch (e) { return null; }
