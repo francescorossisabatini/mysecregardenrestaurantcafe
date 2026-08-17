@@ -88,21 +88,11 @@ export const Voci = () => {
         </ul>
       </div>
 
-      {/* Desktop: infinite marquee */}
-      <div
-        className="hidden md:block relative overflow-hidden group"
-        style={{
-          maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
-        }}
-      >
-        <div className="flex w-max voci-marquee">
-          {looped.map((item, idx) => (
-            <div
-              key={`${item.name}-${idx}`}
-              className="flex items-center gap-6 px-8 shrink-0"
-            >
+      {/* Desktop: static editorial grid */}
+      <div className="hidden md:block container mx-auto px-5">
+        <ul className="grid grid-cols-2 gap-x-12 gap-y-10 border-t border-border-default pt-10">
+          {items.map((item) => (
+            <li key={item.name} className="flex items-start gap-6">
               <img
                 src={item.logo}
                 alt={`${item.name} logo`}
@@ -110,32 +100,14 @@ export const Voci = () => {
                 className="h-10 w-auto object-contain shrink-0"
                 style={{ maxWidth: 120 }}
               />
-              <p className="text-text-secondary italic text-sm whitespace-nowrap">
+              <p className="text-text-secondary italic text-base leading-relaxed">
                 {item.quote[language]}
               </p>
-              <span
-                aria-hidden="true"
-                className="ml-8 h-8 w-px bg-border-default"
-              />
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
-      <style>{`
-        @keyframes voci-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .voci-marquee {
-          animation: voci-scroll 40s linear infinite;
-        }
-        .group:hover .voci-marquee {
-          animation-play-state: paused;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .voci-marquee { animation: none; }
-        }
       `}</style>
     </section>
   );
