@@ -73,6 +73,8 @@ const StaffLogin = () => {
 
   if (!isChecking && session) return <Navigate to={nextPath ?? "/staff"} replace />;
 
+  const isOAuthFlow = nextPath?.startsWith("/.lovable/oauth/consent") ?? false;
+
   return (
     <div className="staff-app notranslate min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
       <SEOHead title="Staff Login" description="Restricted staff sign-in area for My Secret Garden Wien internal kitchen tools and operations." path="/staff/login" noindex notranslate />
@@ -82,11 +84,16 @@ const StaffLogin = () => {
             <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary">
               <LockKeyhole className="h-5 w-5" aria-hidden="true" />
             </div>
-            <h1 className="font-work text-3xl font-extrabold tracking-normal text-foreground">Staff Hub</h1>
+            <h1 className="font-work text-3xl font-extrabold tracking-normal text-foreground">
+              {isOAuthFlow ? "Sign in to Secret Garden" : "Staff Hub"}
+            </h1>
             <p className="mt-2 text-sm leading-relaxed text-muted-high-contrast">
-              Restricted access for the team.
+              {isOAuthFlow
+                ? "Use your Secret Garden account to authorise the app that requested access."
+                : "Restricted access for the team."}
             </p>
           </div>
+
 
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <label className="grid gap-2 text-sm font-bold text-foreground">
