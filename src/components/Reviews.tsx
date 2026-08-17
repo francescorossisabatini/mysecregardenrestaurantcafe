@@ -77,7 +77,7 @@ export const Reviews = () => {
             href="https://www.google.com/maps/place/My+Secret+Garden/@48.1975697,16.3515233,17z/data=!4m8!3m7!1s0x476d078f0451b459:0x76f7dc33e496ccb5!8m2!3d48.1975697!4d16.3540982!9m1!1b1!16s%2Fg%2F11c3q3yxrb?entry=ttu"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-high-contrast hover:text-foreground transition-colors font-work"
+            className="inline-flex min-h-[44px] items-center gap-1.5 px-3 text-sm text-muted-high-contrast hover:text-foreground transition-colors font-work"
           >
             {language === "de" ? "Alle Bewertungen auf Google" : "All reviews on Google"}
             <ExternalLink className="w-3.5 h-3.5" />

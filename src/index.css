@@ -371,8 +371,10 @@ Background: Warm cream #F5F0E8
   }
 
   /* Herbarium editorial — signature utilities */
+  /* WCAG AA: verde-300 su cream dava 4.37:1 a 11px. verde-400 porta il rapporto oltre 4.5:1. */
   .eyebrow-num {
-    @apply inline-flex items-center gap-3 font-work text-[11px] font-semibold uppercase tracking-[0.22em] text-accent;
+    @apply inline-flex items-center gap-3 font-work text-[11px] font-semibold uppercase tracking-[0.22em];
+    color: hsl(var(--verde-400));
   }
   .eyebrow-num::before {
     content: "";

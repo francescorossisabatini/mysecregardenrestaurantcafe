@@ -134,7 +134,7 @@ export const Hero = () => {
 
             <Link
               to="/visit"
-              className="group inline-flex items-center gap-1.5 font-work text-sm font-medium uppercase tracking-[0.14em] text-background/95 [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] transition-all hover:gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-background/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm"
+              className="group inline-flex min-h-[44px] items-center gap-1.5 px-3 font-work text-sm font-medium uppercase tracking-[0.14em] text-background/95 [text-shadow:0_1px_6px_rgba(0,0,0,0.6)] transition-all hover:gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-background/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm"
             >
               {language === "de" ? "Wie du uns findest" : "How to find us"}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

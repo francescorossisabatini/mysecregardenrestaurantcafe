@@ -17,14 +17,14 @@ export const Footer = () => {
           </p>
           
           {/* Tagline */}
-          <p className="font-caveat text-sm text-primary-foreground italic">
+          <p className="font-caveat text-base text-primary-foreground italic">
             "Cooking is prayer. Eating is gratitude."
           </p>
           
           {/* Address — clickable link to /visit */}
           <Link
             to="/visit"
-            className="block text-sm text-primary-foreground font-work hover:underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+            className="inline-flex min-h-[44px] items-center justify-center px-3 text-sm text-primary-foreground font-work hover:underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
             aria-label={language === "de" ? "So findest du uns" : "How to find us"}
           >
             {SITE.addressShort}
@@ -35,7 +35,7 @@ export const Footer = () => {
             href={SITE.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+            className="inline-flex min-h-[44px] items-center justify-center gap-2 px-3 text-sm text-primary-foreground hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
             aria-label={`${SITE.instagramHandle} on Instagram (opens in new tab)`}
             title={`${SITE.instagramHandle} on Instagram`}
           >
@@ -43,25 +43,26 @@ export const Footer = () => {
             {SITE.instagramHandle}
           </a>
           
+          
           {/* Required Legal Links - MUST be on every page */}
           <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
             <Link 
               to="/contact" 
-              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="inline-flex min-h-[44px] items-center px-2 text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Kontakt" : "Contact Us"}
             >
               {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
             <Link 
               to="/impressum" 
-              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="inline-flex min-h-[44px] items-center px-2 text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Impressum" : "Legal Notice"}
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
             <Link 
               to="/privacy" 
-              className="text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
+              className="inline-flex min-h-[44px] items-center px-2 text-primary-foreground hover:text-primary-foreground transition-colors duration-200 underline-offset-2 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Datenschutz" : "Privacy Policy"}
             >
               {language === "de" ? "Datenschutz" : "Privacy Policy"}
