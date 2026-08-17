@@ -552,18 +552,162 @@ var get_visit_info_default = defineTool4({
   }
 });
 
+// src/lib/mcp/tools/list-reservations.ts
+import { defineTool as defineTool5 } from "npm:@lovable.dev/mcp-js@0.26.2";
+import { z as z5 } from "npm:zod@^3.25.76";
+
+// src/lib/mcp/supabase.ts
+import { createClient } from "npm:@supabase/supabase-js@^2.87.1";
+function runtimeEnv2(name) {
+  const runtime = globalThis;
+  return runtime.Deno?.env?.get?.(name) ?? runtime.process?.env?.[name];
+}
+function configuredEnv2(names) {
+  for (const name of names) {
+    const value = runtimeEnv2(name)?.trim();
+    if (value) return value;
+  }
+  return void 0;
+}
+function supabaseProjectUrl2() {
+  const url = configuredEnv2(["SUPABASE_URL", "VITE_SUPABASE_URL"]);
+  if (!url) throw new Error("SUPABASE_URL (or VITE_SUPABASE_URL) is required");
+  return url;
+}
+function supabasePublishableKey() {
+  const direct = configuredEnv2(["SUPABASE_PUBLISHABLE_KEY", "VITE_SUPABASE_PUBLISHABLE_KEY"]);
+  if (direct) return direct;
+  const keyset = runtimeEnv2("SUPABASE_PUBLISHABLE_KEYS");
+  if (keyset) {
+    try {
+      const parsed = JSON.parse(keyset);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        const keys = parsed;
+        const key = [keys.default, ...Object.values(keys)].find((v) => typeof v === "string" && v.trim().startsWith("sb_publishable_"))?.trim();
+        if (key) return key;
+      }
+    } catch {
+    }
+  }
+  const legacy = configuredEnv2(["SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY"]);
+  if (legacy) return legacy;
+  throw new Error("No Supabase publishable key is configured");
+}
+function supabaseForUser(ctx) {
+  const token = ctx.getToken();
+  if (!token) throw new Error("supabaseForUser requires a verified OAuth token");
+  return createClient(supabaseProjectUrl2(), supabasePublishableKey(), {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { persistSession: false, autoRefreshToken: false }
+  });
+}
+
+// src/lib/mcp/tools/list-reservations.ts
+var list_reservations_default = defineTool5({
+  name: "list_reservations",
+  title: "List reservation requests",
+  description: "List table reservation requests (Anfragen) for My Secret Garden. Staff access only. Filter by status or date range.",
+  inputSchema: {
+    status: z5.enum(["new", "confirmed", "declined", "cancelled", "all"]).default("new").describe("Filter by status. Use 'all' for every request."),
+    from_date: z5.string().optional().describe("Only requests on or after this date (YYYY-MM-DD)."),
+    to_date: z5.string().optional().describe("Only requests on or before this date (YYYY-MM-DD)."),
+    limit: z5.number().int().min(1).max(100).default(25).describe("Maximum number of requests to return.")
+  },
+  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+  handler: async ({ status, from_date, to_date, limit }, ctx) => {
+    if (!ctx.isAuthenticated()) {
+      return { content: [{ type: "text", text: "Not authenticated." }], isError: true };
+    }
+    const supabase = supabaseForUser(ctx);
+    let query = supabase.from("reservation_requests").select(
+      "id, full_name, contact, reservation_date, reservation_time, party_size, seating_area, notes, staff_notes, status, language, created_at"
+    ).order("reservation_date", { ascending: true }).order("reservation_time", { ascending: true }).limit(limit ?? 25);
+    if (status && status !== "all") query = query.eq("status", status);
+    if (from_date) query = query.gte("reservation_date", from_date);
+    if (to_date) query = query.lte("reservation_date", to_date);
+    const { data, error } = await query;
+    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (!data?.length) {
+      return { content: [{ type: "text", text: "No reservation requests match these filters." }] };
+    }
+    const text = data.map(
+      (r) => `${r.reservation_date} ${String(r.reservation_time).slice(0, 5)} - ${r.full_name} (${r.party_size} pax, ${r.seating_area})
+  contact: ${r.contact}
+  status: ${r.status}${r.notes ? `
+  guest note: ${r.notes}` : ""}${r.staff_notes ? `
+  staff note: ${r.staff_notes}` : ""}
+  id: ${r.id}`
+    ).join("\n\n");
+    return { content: [{ type: "text", text }], structuredContent: { reservations: data } };
+  }
+});
+
+// src/lib/mcp/tools/update-reservation.ts
+import { defineTool as defineTool6 } from "npm:@lovable.dev/mcp-js@0.26.2";
+import { z as z6 } from "npm:zod@^3.25.76";
+var update_reservation_default = defineTool6({
+  name: "update_reservation",
+  title: "Update a reservation request",
+  description: "Confirm, decline or cancel a reservation request (Anfrage) and optionally add an internal staff note. Staff access only.",
+  inputSchema: {
+    id: z6.string().uuid().describe("The reservation request id, as returned by list_reservations."),
+    status: z6.enum(["new", "confirmed", "declined", "cancelled"]).optional().describe("New status for the request."),
+    staff_notes: z6.string().max(1e3).optional().describe("Internal note visible only to staff.")
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+  handler: async ({ id, status, staff_notes }, ctx) => {
+    if (!ctx.isAuthenticated()) {
+      return { content: [{ type: "text", text: "Not authenticated." }], isError: true };
+    }
+    if (!status && staff_notes === void 0) {
+      return {
+        content: [{ type: "text", text: "Nothing to update: provide status and/or staff_notes." }],
+        isError: true
+      };
+    }
+    const patch = {};
+    if (status) patch.status = status;
+    if (staff_notes !== void 0) patch.staff_notes = staff_notes;
+    const supabase = supabaseForUser(ctx);
+    const { data, error } = await supabase.from("reservation_requests").update(patch).eq("id", id).select("id, full_name, reservation_date, reservation_time, party_size, status, staff_notes").maybeSingle();
+    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (!data) {
+      return {
+        content: [{ type: "text", text: "No reservation was updated. Check the id and your staff permissions." }],
+        isError: true
+      };
+    }
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Updated: ${data.reservation_date} ${String(data.reservation_time).slice(0, 5)} - ${data.full_name} (${data.party_size} pax) is now "${data.status}".${data.staff_notes ? ` Staff note: ${data.staff_notes}` : ""}`
+        }
+      ],
+      structuredContent: { reservation: data }
+    };
+  }
+});
+
 // src/lib/mcp/index.ts
 var projectRef = "cqgcriywwsdvwqefbnhx";
 var mcp_default = defineMcp({
   name: "secret-garden-vegan",
   title: "Secret Garden Vegan",
   version: "0.1.0",
-  instructions: "Public tools for My Secret Garden, a vegetarian and vegan cafe restaurant in Vienna (Mariahilferstra\xDFe 45, Im Raimundhof). Use get_todays_menu for today's dishes, get_weekly_menu for the whole week, get_classics_menu for the permanent dishes, cakes and drinks, and get_visit_info for address, opening hours and directions.",
+  instructions: "Tools for My Secret Garden, a vegetarian and vegan cafe restaurant in Vienna (Mariahilferstra\xDFe 45, Im Raimundhof). Use get_todays_menu for today's dishes, get_weekly_menu for the whole week, get_classics_menu for the permanent dishes, cakes and drinks, and get_visit_info for address, opening hours and directions. Staff members can additionally use list_reservations and update_reservation to review and answer table requests (Anfragen).",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"
   }),
-  tools: [get_todays_menu_default, get_weekly_menu_default, get_classics_menu_default, get_visit_info_default]
+  tools: [
+    get_todays_menu_default,
+    get_weekly_menu_default,
+    get_classics_menu_default,
+    get_visit_info_default,
+    list_reservations_default,
+    update_reservation_default
+  ]
 });
 
 // lovable-mcp-supabase-entry.ts
