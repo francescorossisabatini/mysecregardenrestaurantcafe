@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    mcpPlugin(),
     legacy({
       targets: ["defaults", "ios >= 12", "safari >= 12"],
       modernPolyfills: true,
