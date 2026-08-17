@@ -175,8 +175,37 @@ export const HomeMenuPreview = () => {
               <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
                 {language === "de" ? "Schau gern in die komplette Speisekarte für Klassiker und Getränke." : "You can still browse the full menu for classics and drinks."}
               </p>
+
+              {nextDishes.length > 0 && (
+                <div className="mt-6 border-t border-border/40 pt-5 text-left">
+                  <p className="mb-4 text-center font-work text-xs uppercase tracking-wider text-muted-high-contrast">
+                    {language === "de" ? `Vorschau auf ${nextDayName}` : `Preview of ${nextDayName}`}
+                  </p>
+                  <div className="grid gap-3 lg:grid-cols-3">
+                    {nextDishes.map((dish) => {
+                      const dishCopy = splitDishText(dish.text, language, dish.key);
+                      return (
+                        <div key={dish.key} className="rounded-xl border border-border/60 bg-background p-3">
+                          <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                            {cleanDisplayText(dishCopy.name)}
+                          </p>
+                          <span className={`mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${dish.key === "blue" ? "text-blue" : "text-accent"}`}>
+                            {dish.label}
+                          </span>
+                          {dishCopy.description && (
+                            <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                              {cleanDisplayText(dishCopy.description)}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
+
 
           <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
