@@ -107,8 +107,6 @@ export const Voci = () => {
           ))}
         </ul>
       </div>
-
-      `}</style>
     </section>
   );
 };
