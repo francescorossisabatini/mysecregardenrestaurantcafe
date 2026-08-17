@@ -57,6 +57,9 @@ export const HomeMenuPreview = () => {
   };
   const todayName = dayNames[language][dayIndex];
   const todayMenu = menu.days.find((day) => day.day[language] === todayName);
+  const nextDayIndex = (dayIndex + 1) % 7;
+  const nextDayName = dayNames[language][nextDayIndex];
+  const nextDayMenu = menu.days.find((day) => day.day[language] === nextDayName);
   const todayHoliday = getTodayHoliday();
   const hasMenuData = !!todayMenu && (
     isValidMenuText(todayMenu.soup?.[language]) ||
@@ -64,6 +67,7 @@ export const HomeMenuPreview = () => {
     isValidMenuText(todayMenu.blue?.[language])
   );
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
+
 
   const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
