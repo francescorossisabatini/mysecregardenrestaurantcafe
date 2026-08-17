@@ -3,6 +3,8 @@ import getTodaysMenu from "./tools/get-todays-menu";
 import getWeeklyMenu from "./tools/get-weekly-menu";
 import getClassicsMenu from "./tools/get-classics-menu";
 import getVisitInfo from "./tools/get-visit-info";
+import listReservations from "./tools/list-reservations";
+import updateReservation from "./tools/update-reservation";
 
 // Direct Supabase host is required as OAuth issuer (never the proxy URL).
 const projectRef = import.meta.env.VITE_SUPABASE_PROJECT_ID ?? "project-ref-unset";
