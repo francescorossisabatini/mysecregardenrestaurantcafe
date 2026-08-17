@@ -50,8 +50,6 @@ export const Voci = () => {
   const eyebrowLabel = language === "de" ? "Stimmen" : "Voices";
   const heading = language === "de" ? "Worte, die uns freuen." : "Words that mean something to us.";
 
-  // Duplicate for seamless marquee loop
-  const looped = [...items, ...items];
 
   return (
     <section aria-labelledby="voci-heading" className="bg-verde-tint py-20 md:py-28">
