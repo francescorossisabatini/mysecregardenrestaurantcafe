@@ -75,7 +75,14 @@ export const HomeMenuPreview = () => {
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language], allergens: todayMenu.blueMeta?.allergens },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
+  const nextDishes = nextDayMenu && weeklyMenuAvailable ? [
+    { key: "soup", label: language === "de" ? "Suppe" : "Soup", text: nextDayMenu.soup[language] },
+    { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", text: nextDayMenu.green[language] },
+    { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", text: nextDayMenu.blue[language] },
+  ].filter((dish) => isValidMenuText(dish.text)) : [];
+
   const showPending = !weeklyMenuAvailable && !isLoading;
+
 
   return (
     <section id="menu" className="bg-card py-20 md:py-28 lg:py-32">
