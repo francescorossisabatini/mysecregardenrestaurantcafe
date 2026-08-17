@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
 
     <!-- Redirect Lovable preview/publish domain to canonical brand domain (SEO + UX) -->
+    <!-- OAuth consent + staff routes must stay on the Lovable origin (auth allow-list). -->
     <script>
       (function () {
         var h = location.hostname;
-        if (h === 'mysecregardenrestaurantcafe.lovable.app') {
-          location.replace('https://secretgardenrestaurant.at' + location.pathname + location.search + location.hash);
+        var p = location.pathname;
+        var keepOnLovable = p.indexOf('/.lovable/') === 0 || p.indexOf('/staff') === 0;
+        if (h === 'mysecregardenrestaurantcafe.lovable.app' && !keepOnLovable) {
+          location.replace('https://secretgardenrestaurant.at' + p + location.search + location.hash);
         }
       })();
     </script>
+
 
     <!-- Preconnect FIRST - before any other resources for maximum effect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
