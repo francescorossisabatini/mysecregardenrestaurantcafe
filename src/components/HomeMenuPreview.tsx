@@ -57,6 +57,9 @@ export const HomeMenuPreview = () => {
   };
   const todayName = dayNames[language][dayIndex];
   const todayMenu = menu.days.find((day) => day.day[language] === todayName);
+  const nextDayIndex = (dayIndex + 1) % 7;
+  const nextDayName = dayNames[language][nextDayIndex];
+  const nextDayMenu = menu.days.find((day) => day.day[language] === nextDayName);
   const todayHoliday = getTodayHoliday();
   const hasMenuData = !!todayMenu && (
     isValidMenuText(todayMenu.soup?.[language]) ||
@@ -65,13 +68,21 @@ export const HomeMenuPreview = () => {
   );
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
+
   const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
     { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", price: "15,90", text: todayMenu.blue[language], allergens: todayMenu.blueMeta?.allergens },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
+  const nextDishes = nextDayMenu && weeklyMenuAvailable ? [
+    { key: "soup", label: language === "de" ? "Suppe" : "Soup", text: nextDayMenu.soup[language] },
+    { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", text: nextDayMenu.green[language] },
+    { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", text: nextDayMenu.blue[language] },
+  ].filter((dish) => isValidMenuText(dish.text)) : [];
+
   const showPending = !weeklyMenuAvailable && !isLoading;
+
 
   return (
     <section id="menu" className="bg-card py-20 md:py-28 lg:py-32">
@@ -164,8 +175,37 @@ export const HomeMenuPreview = () => {
               <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
                 {language === "de" ? "Schau gern in die komplette Speisekarte für Klassiker und Getränke." : "You can still browse the full menu for classics and drinks."}
               </p>
+
+              {nextDishes.length > 0 && (
+                <div className="mt-6 border-t border-border/40 pt-5 text-left">
+                  <p className="mb-4 text-center font-work text-xs uppercase tracking-wider text-muted-high-contrast">
+                    {language === "de" ? `Vorschau auf ${nextDayName}` : `Preview of ${nextDayName}`}
+                  </p>
+                  <div className="grid gap-3 lg:grid-cols-3">
+                    {nextDishes.map((dish) => {
+                      const dishCopy = splitDishText(dish.text, language, dish.key);
+                      return (
+                        <div key={dish.key} className="rounded-xl border border-border/60 bg-background p-3">
+                          <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
+                            {cleanDisplayText(dishCopy.name)}
+                          </p>
+                          <span className={`mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${dish.key === "blue" ? "text-blue" : "text-accent"}`}>
+                            {dish.label}
+                          </span>
+                          {dishCopy.description && (
+                            <p className="mt-2 line-clamp-2 font-work text-sm leading-relaxed text-muted-high-contrast">
+                              {cleanDisplayText(dishCopy.description)}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
+
 
           <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
