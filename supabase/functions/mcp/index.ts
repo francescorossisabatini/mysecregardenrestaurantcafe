@@ -3,7 +3,7 @@
 // supabase function: mcp
 // Bundled from src/lib/mcp/index.ts by @lovable.dev/mcp-js.
 // src/lib/mcp/index.ts
-import { defineMcp } from "npm:@lovable.dev/mcp-js@0.26.2";
+import { auth, defineMcp } from "npm:@lovable.dev/mcp-js@0.26.2";
 
 // src/lib/mcp/tools/get-todays-menu.ts
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.26.2";
@@ -553,11 +553,16 @@ var get_visit_info_default = defineTool4({
 });
 
 // src/lib/mcp/index.ts
+var projectRef = "cqgcriywwsdvwqefbnhx";
 var mcp_default = defineMcp({
   name: "secret-garden-vegan",
   title: "Secret Garden Vegan",
   version: "0.1.0",
   instructions: "Public tools for My Secret Garden, a vegetarian and vegan cafe restaurant in Vienna (Mariahilferstra\xDFe 45, Im Raimundhof). Use get_todays_menu for today's dishes, get_weekly_menu for the whole week, get_classics_menu for the permanent dishes, cakes and drinks, and get_visit_info for address, opening hours and directions.",
+  auth: auth.oauth.issuer({
+    issuer: `https://${projectRef}.supabase.co/auth/v1`,
+    acceptedAudiences: "authenticated"
+  }),
   tools: [get_todays_menu_default, get_weekly_menu_default, get_classics_menu_default, get_visit_info_default]
 });
 

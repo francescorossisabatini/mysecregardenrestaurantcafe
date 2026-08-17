@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { LockKeyhole, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
@@ -10,6 +10,10 @@ import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 const StaffLogin = () => {
   useStaffPageGuard();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Preserve an OAuth consent URL so approving a client returns there, not to /staff.
+  const rawNext = searchParams.get("next") ?? "";
+  const nextPath = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : null;
   const [session, setSession] = useState<Session | null>(null);
   const [isChecking, setIsChecking] = useState(true);
   const [username, setUsername] = useState("");
@@ -59,10 +63,15 @@ const StaffLogin = () => {
       return;
     }
 
+    if (nextPath) {
+      window.location.href = nextPath;
+      return;
+    }
+
     navigate("/staff", { replace: true });
   };
 
-  if (!isChecking && session) return <Navigate to="/staff" replace />;
+  if (!isChecking && session) return <Navigate to={nextPath ?? "/staff"} replace />;
 
   return (
     <div className="staff-app notranslate min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
