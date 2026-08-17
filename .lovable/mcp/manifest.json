@@ -127,6 +127,93 @@
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
         "outputSchema": null
+      },
+      {
+        "name": "list_reservations",
+        "title": "List reservation requests",
+        "description": "List table reservation requests (Anfragen) for My Secret Garden. Staff access only. Filter by status or date range.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "new",
+                "confirmed",
+                "declined",
+                "cancelled",
+                "all"
+              ],
+              "default": "new",
+              "description": "Filter by status. Use 'all' for every request."
+            },
+            "from_date": {
+              "type": "string",
+              "description": "Only requests on or after this date (YYYY-MM-DD)."
+            },
+            "to_date": {
+              "type": "string",
+              "description": "Only requests on or before this date (YYYY-MM-DD)."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "description": "Maximum number of requests to return."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_reservation",
+        "title": "Update a reservation request",
+        "description": "Confirm, decline or cancel a reservation request (Anfrage) and optionally add an internal staff note. Staff access only.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The reservation request id, as returned by list_reservations."
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "new",
+                "confirmed",
+                "declined",
+                "cancelled"
+              ],
+              "description": "New status for the request."
+            },
+            "staff_notes": {
+              "type": "string",
+              "maxLength": 1000,
+              "description": "Internal note visible only to staff."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
       }
     ]
   }
