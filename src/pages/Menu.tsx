@@ -22,6 +22,11 @@ const Menu = () => {
       <SkipLink />
       <Navigation />
       <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-none">
+        <div className="container mx-auto px-6 pb-6 pt-8">
+          <h1 className="font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
+            {language === "de" ? "Unsere Speisekarte" : "Our Menu"}
+          </h1>
+        </div>
         <MenuSection />
       </main>
       <CTAEndBlock show={["call", "directions"]} />

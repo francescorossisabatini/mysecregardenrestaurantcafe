@@ -107,9 +107,12 @@ export const Hero = () => {
             </span>
           </div>
 
-          {/* H1 — Caveat, unchanged voice, tighter leading */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-caveat font-bold text-background leading-[0.92] animate-fade-in-hero [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)]">
-            {SITE.name}
+          {/* H1 — Caveat brand name + descriptor in the same heading for SEO */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-background leading-[0.92] animate-fade-in-hero [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)]">
+            <span className="block font-caveat">{SITE.name}</span>
+            <span className="block mt-1 sm:mt-2 font-work text-xs sm:text-sm md:text-base lg:text-lg font-semibold uppercase tracking-[0.18em] text-background/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
+              {language === "de" ? "Vegetarisches & Veganes Restaurant" : "Vegetarian & Vegan Restaurant"}
+            </span>
           </h1>
 
           {/* Subtitle — no chip, only text-shadow for legibility */}
