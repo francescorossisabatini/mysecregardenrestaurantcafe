@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.2",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "secret-garden-vegan",
+      "version": "0.1.0",
+      "title": "Secret Garden Vegan"
+    },
+    "tools": [
+      {
+        "name": "get_todays_menu",
+        "title": "Today's menu",
+        "description": "Get today's daily dishes (soup, green and blue dish) at My Secret Garden in Vienna. Sunday is closed.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "default": "de",
+              "description": "Language of the dish names: German (de) or English (en)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_weekly_menu",
+        "title": "Weekly menu",
+        "description": "Get the current weekly changing menu (soup, green and blue dish per day) of My Secret Garden in Vienna.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "default": "de",
+              "description": "Language of the dish names: German (de) or English (en)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_classics_menu",
+        "title": "Classics, cakes and drinks",
+        "description": "Get the permanent menu of My Secret Garden: warm dishes, salads, cakes and drinks that are available almost every day.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "default": "de",
+              "description": "Language of the menu: German (de) or English (en)."
+            },
+            "category": {
+              "type": "string",
+              "description": "Optional category filter, e.g. 'salate', 'kuchen', 'getraenke', 'warm'. Omit for the full menu."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_visit_info",
+        "title": "Visit info",
+        "description": "Get address, opening hours, current open/closed status, phone number and directions for My Secret Garden, a vegetarian and vegan restaurant in Vienna.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "language": {
+              "type": "string",
+              "enum": [
+                "de",
+                "en"
+              ],
+              "default": "de",
+              "description": "Language of the notes: German (de) or English (en)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
