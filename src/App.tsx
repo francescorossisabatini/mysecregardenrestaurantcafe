@@ -26,6 +26,7 @@ const ReservationPreview = lazy(() => import("./pages/ReservationPreview"));
 const StaffLogin = lazy(() => import("./pages/StaffLogin"));
 const StaffKitchen = lazy(() => import("./pages/StaffKitchen"));
 const GalleryPage = lazy(() => import("./pages/Gallery"));
+const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
 
 // Minimal loading fallback
 const PageLoader = () => (
@@ -162,6 +163,7 @@ function AppRoutes() {
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
         <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
         <Route path="/speisekarte" element={<Navigate to="/menu" replace />} />
+        <Route path="/.lovable/oauth/consent" element={<Suspense fallback={<PageLoader />}><OAuthConsent /></Suspense>} />
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
