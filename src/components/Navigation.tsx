@@ -154,7 +154,7 @@ export const Navigation = () => {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
             >
               <X className="w-5 h-5" />
