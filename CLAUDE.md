@@ -88,14 +88,17 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 
 | Route | Scopo | Status |
 |---|---|---|
-| `/` | Homepage — trust, desire, friction removal | ✅ Confermata |
-| `/menu` | Menu hub — 3 tab: Today / This Week / Always Here | ✅ Confermata |
-| `/visit` | Orari, directions, form Anfrage | ✅ Confermata |
-| `/order` | Ordine torte — form + telefono | ✅ Confermata |
-| `/cakes` | Route editoriale torte (nuova) | ✅ Confermata |
-| `/about` | About page (solo placeholder — da completare) | ✅ Confermata |
-| `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Confermata |
-| `/privacy` | Cookie policy — GDPR | ✅ Confermata |
+| `/` | Homepage — trust, desire, friction removal | ✅ Attiva |
+| `/menu` | Menu hub — Heute / Diese Woche / Immer da | ✅ Attiva |
+| `/visit` | Orari, directions, form Anfrage | ✅ Attiva |
+| `/about` | About page — manifesto e narrativa | ✅ Attiva |
+| `/gallery` | Galleria foto reali | ✅ Attiva |
+| `/link` | Link hub (bio social) | ✅ Attiva |
+| `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Attiva |
+| `/privacy` | Cookie policy — GDPR | ✅ Attiva |
+| `/staff`, `/staff/login` | Area staff — noindex, esclusa da robots.txt | ✅ Attiva |
+| `/reservation-preview` | Preview interna Anfrage | ✅ Attiva |
+
 
 **Redirect:** `/wochenkarte` → `/menu` (permanente, confermato)
 
