@@ -100,12 +100,12 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | `/reservation-preview` | Preview interna Anfrage | ✅ Attiva |
 
 
-**Redirect:** `/wochenkarte` → `/menu` (permanente, confermato)
+**Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
 
 **Navigazione:**
 - Bottom nav mobile (sempre visibile, fixed): Home · Menü · Visit · Call pill
-- `/order` **non** è in bottom nav — si accede dal tab "Always Here" del menu
 - Top bar: logo + language switch DE/EN
+
 
 ---
 
