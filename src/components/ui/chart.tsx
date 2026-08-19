@@ -93,6 +93,7 @@ const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   Omit<React.ComponentProps<typeof RechartsPrimitive.Tooltip>, "payload" | "label" | "ref"> &
     Omit<React.ComponentProps<"div">, "color" | "content"> & {
+      color?: string;
       // Recharts 3 non espone piu payload/label nei tipi pubblici di Tooltip: ridichiarati qui
       payload?: any[];
       label?: any;
