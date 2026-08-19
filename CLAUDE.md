@@ -389,23 +389,12 @@ Float hero: 3000ms ease-in-out, infinite
 
 ---
 
-## Bug prioritari da correggere (da audit del codice)
+## Debito tecnico noto
 
-| # | File | Riga approx. | Problema | Fix corretto |
-|---|---|---|---|---|
-| 1 | `src/components/MenuSection.tsx` | ~320 | `color: '#166534'` hardcoded | `text-dietary-vegan` |
-| 2 | `src/components/MenuSection.tsx` | ~321 | `color: '#92400e'` hardcoded | `text-dietary-glutenFree` |
-| 3 | `src/components/MenuSection.tsx` | ~322 | `color: '#065f46'` hardcoded | `text-dietary-bio` |
-| 4 | `src/components/About.tsx` | ~60 | `Playfair Display` non in config | sostituire con `font-cormorant` |
-| 5 | `src/components/About.tsx` | ~65 | `Dancing Script` non in config | sostituire con `font-caveat` |
-| 6 | `src/components/Hero.tsx` | ~110 | `bg-amber-500` / `bg-green-600` | `bg-feedback-warning` / `bg-feedback-success` |
-| 7 | `src/components/Reviews.tsx` | ~80 | `text-yellow-400` per stelle | token `color.brand.star` o `text-feedback-warning` |
-| 8 | `src/components/Footer.tsx` | ~40 | `pb-24` hardcoded | token `spacing.mobileNavBuffer` |
+La vecchia lista bug (hex hardcoded in `MenuSection.tsx`, font Playfair/Dancing Script in `About.tsx`) non trova più riscontro nel codice: verificato il 19 agosto 2026.
 
-**Token dichiarati ma mai usati (da pulire con cautela):**
-`--daily`, `--dailyAlt`, `--klassiker`, `--badgeWood`, `shadow-soft`, `shadow-elevated`, `shadow-card`,
-`bg-gradient-green`, `bg-gradient-subtle`, `animate-slide-up`, `animate-float`, `text-accent-light`,
-tutti i `--sidebar-*` (nessun sidebar component esiste nell'app)
+Il debito residuo e i token semantici mancanti sono documentati nella sezione **"Gap noti"** di `DESIGN_SYSTEM.md`.
+
 
 ---
 
