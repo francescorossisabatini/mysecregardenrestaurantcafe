@@ -1,7 +1,12 @@
 # Design Tokens Map — My Secret Garden
+
+> ⚠️ **ARCHIVIATO.** Sostituito da [`DESIGN_SYSTEM.md`](../DESIGN_SYSTEM.md) alla root, che è la fonte di verità attuale.
+> Questo file resta come traccia storica del mapping Figma → codice.
+
 **Fonte di verità: codice (index.css + tailwind.config.ts)**
 **Figma file: "My Secret Garden — UX Case Study"**
 **Ultimo aggiornamento: 2026-05-04**
+
 
 ---
 
