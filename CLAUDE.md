@@ -1,6 +1,8 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
-> Ultimo aggiornamento: maggio 2026
+> Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
+> Ultimo aggiornamento: 19 agosto 2026 (riallineato al codice)
+
 
 ---
 
