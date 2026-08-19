@@ -212,7 +212,7 @@ scroll_depth_homepage    — 25% / 50% / 75% / 100%
 click_menu_tab           — Today / This Week / Always Here
 click_open_closed_badge  — segnale di intent visita
 form_reservation_submit  — Anfrage inviata
-form_reservation_submit  — Anfrage inviata
+
 ```
 
 ---
