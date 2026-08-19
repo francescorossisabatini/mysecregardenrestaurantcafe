@@ -1,6 +1,8 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
-> Ultimo aggiornamento: maggio 2026
+> Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
+> Ultimo aggiornamento: 19 agosto 2026 (riallineato al codice)
+
 
 ---
 
@@ -88,262 +90,41 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 
 | Route | Scopo | Status |
 |---|---|---|
-| `/` | Homepage — trust, desire, friction removal | ✅ Confermata |
-| `/menu` | Menu hub — 3 tab: Today / This Week / Always Here | ✅ Confermata |
-| `/visit` | Orari, directions, form Anfrage | ✅ Confermata |
-| `/order` | Ordine torte — form + telefono | ✅ Confermata |
-| `/cakes` | Route editoriale torte (nuova) | ✅ Confermata |
-| `/about` | About page (solo placeholder — da completare) | ✅ Confermata |
-| `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Confermata |
-| `/privacy` | Cookie policy — GDPR | ✅ Confermata |
+| `/` | Homepage — trust, desire, friction removal | ✅ Attiva |
+| `/menu` | Menu hub — Heute / Diese Woche / Immer da | ✅ Attiva |
+| `/visit` | Orari, directions, form Anfrage | ✅ Attiva |
+| `/about` | About page — manifesto e narrativa | ✅ Attiva |
+| `/gallery` | Galleria foto reali | ✅ Attiva |
+| `/link` | Link hub (bio social) | ✅ Attiva |
+| `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Attiva |
+| `/privacy` | Cookie policy — GDPR | ✅ Attiva |
+| `/staff`, `/staff/login` | Area staff — noindex, esclusa da robots.txt | ✅ Attiva |
+| `/reservation-preview` | Preview interna Anfrage | ✅ Attiva |
 
-**Redirect:** `/wochenkarte` → `/menu` (permanente, confermato)
+
+**Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
 
 **Navigazione:**
 - Bottom nav mobile (sempre visibile, fixed): Home · Menü · Visit · Call pill
-- `/order` **non** è in bottom nav — si accede dal tab "Always Here" del menu
 - Top bar: logo + language switch DE/EN
 
----
-
-## Token System — REGOLA FONDAMENTALE
-
-Il design system usa un **sistema a due livelli: primitive → semantic**.
-
-```
-primitive → raw values (palette, scale) — es. color/navy/900 = #264195
-semantic  → alias con intento d'uso → puntano al primitive — es. color/text/price → green/900
-```
-
-### ✅ CORRETTO — usa sempre token semantici nei componenti
-```tsx
-className="text-text-primary bg-background-card border-border-default"
-```
-
-### ❌ VIETATO — mai hardcode hex o token primitivi nei componenti
-```tsx
-style={{ color: '#3a5018' }}           // hardcoded hex — VIETATO
-className="text-green-900 bg-navy-700" // token primitivi — VIETATO
-className="text-yellow-400"            // Tailwind default — VIETATO per brand
-```
 
 ---
 
-## Palette Primitiva (solo per costruire il layer semantico)
+## Design System — vedi DESIGN_SYSTEM.md
 
-### Navy
-| Token Tailwind | Hex | Uso |
-|---|---|---|
-| `navy-900` | `#264195` | Strutturale: hero, footer, call pill, lang switch |
-| `navy-700` | `#2b4baf` | Gradient hero end, hover navy |
-| `navy-500` | `#4769c8` | Focus rings, link su superfici medie |
-| `navy-300` | `#92a9e6` | Accenti chiari, dark mode |
+> **Token, palette, tipografia, componenti, motion e accessibilità vivono in [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).**
+> Quel file è la fonte di verità ed è verificato contro il codice. Le specifiche che stavano qui erano divergenti (prescrivevano classi Tailwind inesistenti) e sono state rimosse per evitare conflitti.
 
-### Green (verde bosco)
-| Token Tailwind | Hex | Uso |
-|---|---|---|
-| `green-900` | `#3a5018` | Brand primario: link, prezzi, CTA |
-| `green-700` | `#4a6622` | Hover azioni verdi |
-| `green-500` | `#5a7a2e` | Bordo bottom nav, badge vegan, accenti |
-| `green-300` | `#8fb86a` | Accenti chiari — ⚠️ mai come testo su sfondo chiaro (fallisce WCAG AA) |
-| `green-200` | `#c2d9a8` | Superficie badge, background tenue |
+Promemoria dei soli vincoli di alto livello:
 
-### Cream
-| Token Tailwind | Hex | Uso |
-|---|---|---|
-| `cream-100` | `#F5F0E8` | Page canvas — superficie base |
-| `cream-200` | `#F7F2EB` | Card surface |
-| `cream-300` | `#EDE8DE` | Testo su sfondi scuri |
+- **Mai hex hardcoded, mai token primitivi, mai colori Tailwind di default nei componenti.** Solo token semantici.
+- **Palette:** dosaggio 60% cream / 30% navy / 10% verde (solo CTA, nav attivo, rating, accenti).
+- **Font:** `font-caveat` (solo h1 hero e logo), `font-cormorant` (headings), `font-lora` (body), `font-work` (UI). Max 2 typeface per viewport, Caveat max 1 occorrenza.
+- **Motion:** solo fade lente e slide sottili. Mai zoom, mai parallax, mai animazioni infinite. `prefers-reduced-motion` sempre rispettato.
+- **Accessibilità:** WCAG 2.1 AA, touch target 44×44px, focus ring visibile, `aria-label` su ogni icona.
+- **Mai `#000000`** e mai verde chiaro come testo su sfondo chiaro.
 
-### Neutral
-| Token Tailwind | Hex | Uso |
-|---|---|---|
-| `neutral-900` | `#1A1A1A` | Testo primario — mai `#000000` |
-| `neutral-600` | `#4D4D4D` | Testo secondario |
-| `neutral-400` | `#8C8C8C` | Muted, placeholder |
-| `neutral-200` | `#E0D9CC` | Bordi, dividers |
-| `neutral-0` | `#FFFFFF` | Superfici elevate, modali |
-
-### Feedback
-| Token | Hex |
-|---|---|
-| feedback-success / open | `#3a5018` |
-| feedback-warning | `#f59e0b` |
-| feedback-error / closed | `#d61717` |
-
-### Dietary badges
-| Token | Hex |
-|---|---|
-| `dietary-vegan` | `#3a5018` |
-| `dietary-glutenFree` | `#92400e` |
-| `dietary-bio` | `#056138` |
-
----
-
-## Token Semantici — Mappa completa (usa questi nei componenti)
-
-```javascript
-// Backgrounds
-bg-background-page     → #f5f0e8  (page canvas)
-bg-background-card     → #f7f2eb  (content containers)
-bg-background-elevated → #ffffff  (cards con shadow, modali)
-bg-background-hero     → #2b4baf  (hero section)
-bg-background-footer   → #2b4baf  (footer)
-bg-background-dark     → #141c50  (dark mode)
-
-// Text
-text-text-primary   → #1a1a1a  (body default)
-text-text-secondary → #4d4d4d  (supporting)
-text-text-muted     → #8c8c8c  (placeholder, disabled)
-text-text-inverse   → #ffffff  (su scuri)
-text-text-onDark    → #ede8de  (body su hero/footer)
-text-text-link      → #3a5018  (link su chiaro)
-text-text-price     → #3a5018  (prezzi)
-
-// Actions
-bg-action-primary        → #3a5018  (CTA verde — max 1 per view)
-bg-action-primaryHover   → #4a6622
-bg-action-secondary      → #264195  (secondo bottone navy)
-bg-action-secondaryHover → #2b4baf
-bg-action-call           → #264195  (call pill — sempre navy)
-bg-action-callHover      → #2b4baf
-
-// Borders
-border-border-default → #e0d9cc
-border-border-input   → #e0d9cc
-border-border-focus   → #4769c8  (focus ring)
-border-border-nav     → #e0d9cc
-
-// Feedback
-text-feedback-success → #3a5018
-text-feedback-warning → #f59e0b
-text-feedback-error   → #d61717
-bg-feedback-open      → #3a5018  (badge aperto)
-bg-feedback-closed    → #d61717  (badge chiuso)
-
-// Dietary
-text-dietary-vegan      → #3a5018  (badge text + icon)
-text-dietary-glutenFree → #92400e
-text-dietary-bio        → #056138
-// Surfaces: applica il colore al 15% opacity nel componente
-```
-
-**Dosage:** 60% cream / 30% navy / 10% green (solo CTA, nav attivo, rating, piccoli accenti)
-
----
-
-## Tipografia
-
-| Ruolo | Font | Size | Weight | Uso |
-|---|---|---|---|---|
-| `font-caveat` | Caveat | 48px | 700 | H1 hero + logo nav — **mai altrove** |
-| `font-cormorant` | Cormorant Garamond | 24px | 400 | H2, H3, H4 — section headings |
-| `font-lora` | Lora | 16px | 400 | Body copy, reviews, about |
-| `font-work-sans` | Work Sans | 14px | 400 | Nav, buttons, badges, prezzi, label |
-
-**Regola ferro:** max 2 typeface per viewport. Caveat max 1 occorrenza per viewport.
-
-### Font NON dichiarati in tailwind.config — da non usare
-- `Playfair Display` — ❌ non in config (trovato in About.tsx ~60 — va sostituito con `font-cormorant`)
-- `Dancing Script` — ❌ non in config (trovato in About.tsx ~65 — va sostituito con `font-caveat`)
-
----
-
-## Componenti — Specifiche visual
-
-### Buttons
-```
-Primary:   bg-action-primary text-text-inverse rounded-lg px-6 py-3 font-work-sans font-semibold
-Secondary: bg-action-secondary text-text-inverse rounded-lg px-6 py-3
-Ghost:     border border-action-ghost text-action-ghost rounded-lg px-6 py-3
-Call pill: bg-action-call text-text-inverse rounded-[13px] w-[80px] h-[48px]
-           shadow: 0 4px 14px -2px rgba(38,64,148,0.22)
-
-Stati: hover → tono più scuro | active → scale(0.98) | disabled → 40% opacity | loading → spinner bianco
-```
-
-**Copy rule:** il label del bottone nomina il RISULTATO, non l'azione.
-- ✅ "Was gibt's heute?" / "Den Weg finden" / "Anfrage senden"
-- ❌ Mai "Klick hier" · "Mehr erfahren" · "Absenden"
-
-### Dietary Badges
-```
-Shape: pill (rounded-full)
-Padding: py-0.5 px-2
-Font: font-work-sans text-sm lowercase (sempre lowercase — mai VEGAN)
-Background: colore dietary al 15% opacity
-Text: colore dietary al 100%
-```
-
-### Open/Closed Badge
-```
-Background: solido — open: bg-feedback-open | closed: bg-feedback-closed
-Text: text-text-inverse font-work-sans font-bold text-[11px]
-Dot: w-1.5 h-1.5 rounded-full
-Shape: pill
-aria-live="polite"
-```
-
-### Menu Cards
-```
-bg-background-elevated rounded-lg border border-border-default p-4 shadow-card
-
-Type badge (ZUPPA / VERDE / BLU): font-work-sans font-bold text-[9px] uppercase tracking-wider
-  ZUPPA: amber · VERDE: bg-action-primary · BLU: bg-action-secondary · text: text-inverse
-
-Dish name: font-work-sans font-medium text-[13px] text-text-primary
-Price: font-work-sans font-bold text-[13px] text-text-price
-Dietary badges: sotto dish name, gap-2
-```
-
-### Navigation — Top Bar
-```
-Height: h-[60px] · Padding: px-5
-Hero (scrollY=0): transparent, logo/text white, lang pill white
-Scrolled (scrollY>150px): bg-cream-100/97 backdrop-blur-[16px] border-b border-border-nav/50
-Transizione: 250ms ease (background only)
-```
-
-### Navigation — Bottom Nav Mobile
-```
-Height: h-[72px] · Padding: pt-2 px-4 pb-[16px]
-Background: bg-cream-100 backdrop-blur-[20px]
-Border-top: border-t-[1.5px] border-green-500
-3 voci (Home · Menü · Visit):
-  Inattivo: text-text-muted font-work-sans text-[10px] icon 20px
-  Attivo: text-green-900 font-work-sans font-semibold + indicatore linea 1.5px verde 24px in cima
-Call pill: w-[80px] h-[48px] bg-action-call text-text-inverse rounded-[13px]
-Safe area: padding-bottom env(safe-area-inset-bottom)
-```
-
----
-
-## Animazioni
-
-```css
-Default: 300ms ease-in-out
-Fade in: opacity 0 → 1, 300ms
-Slide up: translateY(8px) → 0, 300ms
-Float hero: 3000ms ease-in-out, infinite
-```
-
-- Solo soft fades e subtle slides — niente bounce/elastic
-- Nessuna animazione su testo — solo container e immagini
-- **Sempre** rispettare `prefers-reduced-motion`
-- Nessun parallax su mobile
-
----
-
-## Accessibilità — WCAG 2.1 Level AA obbligatorio
-
-- Contrasto minimo 4.5:1 testo normale, 3:1 testo grande
-- Touch target minimo **44×44px** su tutti gli elementi interattivi mobile
-- Focus ring visibile su tutti gli interattivi: `border-border-focus` (#4769c8)
-- Tutti gli icon senza label visibile: `aria-label` obbligatorio
-- Dietary badges: `aria-label="vegan"`, `aria-label="gluten-free"`, `aria-label="bio"`
-- Prezzi: `aria-label="€ 8,50"` — non solo il numero
-- Route transitions: il focus si sposta in cima al nuovo contenuto
-- `lang="de"` su html quando DE è attivo, `lang="en"` quando EN
 
 ---
 
@@ -389,23 +170,12 @@ Float hero: 3000ms ease-in-out, infinite
 
 ---
 
-## Bug prioritari da correggere (da audit del codice)
+## Debito tecnico noto
 
-| # | File | Riga approx. | Problema | Fix corretto |
-|---|---|---|---|---|
-| 1 | `src/components/MenuSection.tsx` | ~320 | `color: '#166534'` hardcoded | `text-dietary-vegan` |
-| 2 | `src/components/MenuSection.tsx` | ~321 | `color: '#92400e'` hardcoded | `text-dietary-glutenFree` |
-| 3 | `src/components/MenuSection.tsx` | ~322 | `color: '#065f46'` hardcoded | `text-dietary-bio` |
-| 4 | `src/components/About.tsx` | ~60 | `Playfair Display` non in config | sostituire con `font-cormorant` |
-| 5 | `src/components/About.tsx` | ~65 | `Dancing Script` non in config | sostituire con `font-caveat` |
-| 6 | `src/components/Hero.tsx` | ~110 | `bg-amber-500` / `bg-green-600` | `bg-feedback-warning` / `bg-feedback-success` |
-| 7 | `src/components/Reviews.tsx` | ~80 | `text-yellow-400` per stelle | token `color.brand.star` o `text-feedback-warning` |
-| 8 | `src/components/Footer.tsx` | ~40 | `pb-24` hardcoded | token `spacing.mobileNavBuffer` |
+La vecchia lista bug (hex hardcoded in `MenuSection.tsx`, font Playfair/Dancing Script in `About.tsx`) non trova più riscontro nel codice: verificato il 19 agosto 2026.
 
-**Token dichiarati ma mai usati (da pulire con cautela):**
-`--daily`, `--dailyAlt`, `--klassiker`, `--badgeWood`, `shadow-soft`, `shadow-elevated`, `shadow-card`,
-`bg-gradient-green`, `bg-gradient-subtle`, `animate-slide-up`, `animate-float`, `text-accent-light`,
-tutti i `--sidebar-*` (nessun sidebar component esiste nell'app)
+Il debito residuo e i token semantici mancanti sono documentati nella sezione **"Gap noti"** di `DESIGN_SYSTEM.md`.
+
 
 ---
 
@@ -442,7 +212,7 @@ scroll_depth_homepage    — 25% / 50% / 75% / 100%
 click_menu_tab           — Today / This Week / Always Here
 click_open_closed_badge  — segnale di intent visita
 form_reservation_submit  — Anfrage inviata
-cake_call_click          — click telefono da /order
+
 ```
 
 ---
@@ -481,11 +251,12 @@ cake_call_click          — click telefono da /order
 - Ogni immagine informativa ha un `alt` descrittivo
 
 ### Don't ❌
-- Mai `#000000` — sempre `#1a1a1a` (`text-text-primary`)
+- Mai `#000000` — il nero del brand è `--navy-500`
 - Mai border-radius < 8px su elementi interattivi
 - Mai center-align su testo body lungo
 - Mai più di un'animazione contemporaneamente
-- Mai `green/300` (`#8fb86a`) come testo su sfondo chiaro — fallisce WCAG AA
+- Mai `--verde-200` (`#7FA060`) come testo su sfondo chiaro — fallisce WCAG AA
+
 - Mai Caveat più di una volta per viewport
 - Mai dichiarare la spiritualità — si sente, non si spiega; max un riferimento per pagina
 - Mai urgency language — niente "Jetzt!", "Sofort!", "Letzte Chance"
