@@ -1,5 +1,8 @@
 # Piano — Design System Documentation per My Secret Garden
 
+## Blocco immediato: build rotto da recharts 3.x
+Dopo l'aggiornamento di `recharts` a `3.10.1`, `src/components/ui/chart.tsx` ha errori TypeScript sulle proprietà `payload` e `label` del tooltip. Questo blocca qualsiasi verifica futura. La prima azione del piano è correggere i tipi in `chart.tsx` compatibilmente con l'API di recharts 3, oppure isolare/aggiornare il componente shadcn originale. La build (`bun run build`) deve tornare verde prima di procedere con la documentazione.
+
 ## Obiettivo
 Costruire una documentazione centralizzata e aggiornata del design system nel progetto, che funga da fonte di verità per te (designer) e per gli sviluppatori futuri, e allinei codice e Figma.
 
