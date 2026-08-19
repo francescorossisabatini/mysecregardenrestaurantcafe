@@ -249,11 +249,12 @@ cake_call_click          — click telefono da /order
 - Ogni immagine informativa ha un `alt` descrittivo
 
 ### Don't ❌
-- Mai `#000000` — sempre `#1a1a1a` (`text-text-primary`)
+- Mai `#000000` — il nero del brand è `--navy-500`
 - Mai border-radius < 8px su elementi interattivi
 - Mai center-align su testo body lungo
 - Mai più di un'animazione contemporaneamente
-- Mai `green/300` (`#8fb86a`) come testo su sfondo chiaro — fallisce WCAG AA
+- Mai `--verde-200` (`#7FA060`) come testo su sfondo chiaro — fallisce WCAG AA
+
 - Mai Caveat più di una volta per viewport
 - Mai dichiarare la spiritualità — si sente, non si spiega; max un riferimento per pagina
 - Mai urgency language — niente "Jetzt!", "Sofort!", "Letzte Chance"
