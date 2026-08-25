@@ -72,7 +72,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | Backend / DB | Supabase (`daily_menu` table — aggiornata ogni mattina dallo staff) |
 | Deploy | Lovable → GitHub (push su `main` va in produzione via Lovable) |
 | Design source | Figma `ROhPox2dPuVizyYXiLAbKN` |
-| Analytics | GA4 + Hotjar (Microsoft Clarity NON è installato) |
+| Analytics | GA4 (nessun altro tool di analytics installato) |
 | Lingua default | DE (73% traffico austriaco) — EN parità su tutti i route |
 
 **Vincoli di piattaforma:**

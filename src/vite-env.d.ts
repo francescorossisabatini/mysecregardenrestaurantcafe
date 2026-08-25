@@ -5,9 +5,6 @@ interface Window {
   requestIdleCallback?: (callback: () => void) => number;
   cancelIdleCallback?: (id: number) => void;
   gtag?: (...args: unknown[]) => void;
-  loadContentsquare?: () => void;
-  _contentsquareLoaded?: boolean;
-  _uxa?: unknown[];
   _tracked50?: boolean;
   _tracked90?: boolean;
 }
