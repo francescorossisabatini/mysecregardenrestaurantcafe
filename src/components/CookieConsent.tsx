@@ -9,7 +9,6 @@ declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
     loadAnalytics?: () => void;
-    loadContentsquare?: () => void;
   }
 }
 
@@ -20,19 +19,17 @@ export const CONSENT_EVENT = "cookie-consent-updated";
 export type ConsentCategories = {
   necessary: true;
   analytics: boolean;
-  behavioral: boolean;
 };
 
 export type ConsentRecord = {
   necessary: true;
   analytics: boolean;
-  behavioral: boolean;
   decidedAt: string;
   version: 3;
 };
 
-const ALL_DENIED: ConsentCategories = { necessary: true, analytics: false, behavioral: false };
-const ALL_GRANTED: ConsentCategories = { necessary: true, analytics: true, behavioral: true };
+const ALL_DENIED: ConsentCategories = { necessary: true, analytics: false };
+const ALL_GRANTED: ConsentCategories = { necessary: true, analytics: true };
 
 export const getConsent = (): ConsentRecord | null => {
   if (typeof window === "undefined") return null;
@@ -70,7 +67,6 @@ const persistConsent = (categories: ConsentCategories) => {
   });
 
   if (categories.analytics) window.loadAnalytics?.();
-  if (categories.behavioral) window.loadContentsquare?.();
 };
 
 const copy = {
@@ -86,8 +82,6 @@ const copy = {
     necessaryDesc: "Grundfunktionen wie Sprache, Sicherheit und Cookie-Einstellungen. Diese Cookies sind immer aktiv.",
     analytics: "Statistik",
     analyticsDesc: "Google Analytics misst anonym, wie die Seite genutzt wird, damit wir sie verbessern können.",
-    behavioral: "Verhaltensanalyse",
-    behavioralDesc: "Contentsquare zeigt anonymisierte Klick- und Scroll-Muster, um die UX zu verbessern.",
     on: "An",
     off: "Aus",
     always: "Immer aktiv",
@@ -109,8 +103,6 @@ const copy = {
     necessaryDesc: "Core features like language, security and cookie preferences. These cookies are always active.",
     analytics: "Analytics",
     analyticsDesc: "Google Analytics measures anonymously how the site is used so we can improve it.",
-    behavioral: "Behavioral analytics",
-    behavioralDesc: "Contentsquare shows anonymized click and scroll patterns to improve UX.",
     on: "On",
     off: "Off",
     always: "Always on",
@@ -369,17 +361,6 @@ export const CookieConsent = () => {
                   description={labels.analyticsDesc}
                   checked={draft.analytics}
                   onChange={(value) => setDraft((current) => ({ ...current, analytics: value }))}
-                  onLabel={labels.on}
-                  offLabel={labels.off}
-                  alwaysLabel={labels.always}
-                />
-              </div>
-              <div className="border-t border-border/60 pt-3">
-                <ConsentRow
-                  title={labels.behavioral}
-                  description={labels.behavioralDesc}
-                  checked={draft.behavioral}
-                  onChange={(value) => setDraft((current) => ({ ...current, behavioral: value }))}
                   onLabel={labels.on}
                   offLabel={labels.off}
                   alwaysLabel={labels.always}

@@ -51,7 +51,6 @@ const RouteAnalytics = () => {
       page_title: document.title,
     });
 
-    window._uxa?.push(["trackPageview", pagePath]);
   }, [location.pathname, location.search]);
 
   return null;

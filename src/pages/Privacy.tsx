@@ -351,17 +351,16 @@ const Privacy = () => {
             </h2>
             <p className="mb-3">
               {isGerman
-                ? "Wir nutzen Google Analytics und Contentsquare, um zu verstehen, wie die Website genutzt wird und sie zu verbessern. Diese Dienste werden erst nach deiner ausdrücklichen Einwilligung über das Cookie-Banner geladen."
-                : "We use Google Analytics and Contentsquare to understand how the site is used and to improve it. These services only load after your explicit consent via the cookie banner."}
+                ? "Wir nutzen Google Analytics, um zu verstehen, wie die Website genutzt wird und sie zu verbessern. Dieser Dienst wird erst nach deiner ausdrücklichen Einwilligung über das Cookie-Banner geladen."
+                : "We use Google Analytics to understand how the site is used and to improve it. This service only loads after your explicit consent via the cookie banner."}
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
               <li>{isGerman ? "Google Analytics 4, Anbieter: Google Ireland Limited, Dublin" : "Google Analytics 4, provider: Google Ireland Limited, Dublin"}</li>
-              <li>{isGerman ? "Contentsquare, Anbieter: Contentsquare SAS, Frankreich" : "Contentsquare, provider: Contentsquare SAS, France"}</li>
             </ul>
             <p className="text-sm text-muted-high-contrast">
               {isGerman
-                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Du kannst die Einwilligung jederzeit widerrufen. Verarbeitet werden können: anonymisierte IP-Adresse, Geräteinformationen, Seitenaufrufe, Klicks, Scroll- und Interaktionsmuster."
-                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Data that may be processed: anonymized IP address, device information, page views, clicks, scroll and interaction patterns."}
+                ? "Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Du kannst die Einwilligung jederzeit widerrufen. Verarbeitet werden können: anonymisierte IP-Adresse, Geräteinformationen und Seitenaufrufe."
+                : "Legal basis: Art. 6 para. 1 lit. a GDPR (consent). You can revoke consent at any time. Data that may be processed: anonymized IP address, device information and page views."}
             </p>
             <Button type="button" variant="outline" size="sm" className="mt-4 font-work" onClick={resetCookieConsent}>
               {isGerman ? "Cookie Entscheidung ändern" : "Change cookie choice"}
@@ -435,12 +434,6 @@ const Privacy = () => {
                     <td className="px-3 py-2">{isGerman ? "Google Analytics — anonyme Nutzungsstatistiken" : "Google Analytics — anonymous usage statistics"}</td>
                     <td className="px-3 py-2">{isGerman ? "bis zu 24 Monate" : "up to 24 months"}</td>
                     <td className="px-3 py-2">{isGerman ? "Statistik (Einwilligung)" : "Analytics (consent)"}</td>
-                  </tr>
-                  <tr className="border-t border-border">
-                    <td className="px-3 py-2 font-mono text-xs">_cs_*</td>
-                    <td className="px-3 py-2">{isGerman ? "Contentsquare — anonyme Klick- und Scroll-Analysen" : "Contentsquare — anonymous click and scroll analytics"}</td>
-                    <td className="px-3 py-2">{isGerman ? "bis zu 13 Monate" : "up to 13 months"}</td>
-                    <td className="px-3 py-2">{isGerman ? "Verhaltensanalyse (Einwilligung)" : "Behavioral (consent)"}</td>
                   </tr>
                 </tbody>
               </table>
