@@ -436,12 +436,6 @@ const Privacy = () => {
                     <td className="px-3 py-2">{isGerman ? "bis zu 24 Monate" : "up to 24 months"}</td>
                     <td className="px-3 py-2">{isGerman ? "Statistik (Einwilligung)" : "Analytics (consent)"}</td>
                   </tr>
-                  <tr className="border-t border-border">
-                    <td className="px-3 py-2 font-mono text-xs">_cs_*</td>
-                    <td className="px-3 py-2">{isGerman ? "Contentsquare — anonyme Klick- und Scroll-Analysen" : "Contentsquare — anonymous click and scroll analytics"}</td>
-                    <td className="px-3 py-2">{isGerman ? "bis zu 13 Monate" : "up to 13 months"}</td>
-                    <td className="px-3 py-2">{isGerman ? "Verhaltensanalyse (Einwilligung)" : "Behavioral (consent)"}</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
