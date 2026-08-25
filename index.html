@@ -191,27 +191,12 @@
       }
       window.loadAnalytics = loadAnalytics;
 
-      function loadContentsquare() {
-        var consent = readConsent();
-        if (!consent || consent.behavioral !== true) return;
-        if (window._contentsquareLoaded) return;
-        window._contentsquareLoaded = true;
-
-        var script = document.createElement('script');
-        script.src = 'https://t.contentsquare.net/uxa/ec6d26c7759d7.js';
-        script.async = true;
-        document.head.appendChild(script);
-      }
-      window.loadContentsquare = loadContentsquare;
-
       var initialConsent = readConsent();
       if (initialConsent) {
         if ('requestIdleCallback' in window) {
           requestIdleCallback(loadAnalytics, { timeout: 4000 });
-          requestIdleCallback(loadContentsquare, { timeout: 4500 });
         } else {
           setTimeout(loadAnalytics, 3000);
-          setTimeout(loadContentsquare, 3500);
         }
       }
     </script>
