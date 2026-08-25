@@ -67,7 +67,6 @@ const persistConsent = (categories: ConsentCategories) => {
   });
 
   if (categories.analytics) window.loadAnalytics?.();
-  if (categories.behavioral) window.loadContentsquare?.();
 };
 
 const copy = {
@@ -83,8 +82,6 @@ const copy = {
     necessaryDesc: "Grundfunktionen wie Sprache, Sicherheit und Cookie-Einstellungen. Diese Cookies sind immer aktiv.",
     analytics: "Statistik",
     analyticsDesc: "Google Analytics misst anonym, wie die Seite genutzt wird, damit wir sie verbessern können.",
-    behavioral: "Verhaltensanalyse",
-    behavioralDesc: "Contentsquare zeigt anonymisierte Klick- und Scroll-Muster, um die UX zu verbessern.",
     on: "An",
     off: "Aus",
     always: "Immer aktiv",
@@ -106,8 +103,6 @@ const copy = {
     necessaryDesc: "Core features like language, security and cookie preferences. These cookies are always active.",
     analytics: "Analytics",
     analyticsDesc: "Google Analytics measures anonymously how the site is used so we can improve it.",
-    behavioral: "Behavioral analytics",
-    behavioralDesc: "Contentsquare shows anonymized click and scroll patterns to improve UX.",
     on: "On",
     off: "Off",
     always: "Always on",
