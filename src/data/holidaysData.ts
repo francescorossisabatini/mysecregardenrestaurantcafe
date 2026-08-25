@@ -17,6 +17,15 @@ export const holidays: Holiday[] = [
     },
   },
   {
+    date: "08-27",
+    name: { de: "Sri Chinmoys Geburtstag", en: "Sri Chinmoy's Birthday" },
+    message: {
+      de: "Heute bleibt die Küche kalt: Wir feiern den Geburtstag von Sri Chinmoy. Ab morgen sind wir wieder für dich da.",
+      en: "The kitchen stays quiet today: we are celebrating Sri Chinmoy's birthday. We are back for you tomorrow.",
+    },
+  },
+
+  {
     date: "12-24",
     name: { de: "Heiligabend", en: "Christmas Eve" },
     message: { 
