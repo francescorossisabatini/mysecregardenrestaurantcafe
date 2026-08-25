@@ -374,17 +374,6 @@ export const CookieConsent = () => {
                   alwaysLabel={labels.always}
                 />
               </div>
-              <div className="border-t border-border/60 pt-3">
-                <ConsentRow
-                  title={labels.behavioral}
-                  description={labels.behavioralDesc}
-                  checked={draft.behavioral}
-                  onChange={(value) => setDraft((current) => ({ ...current, behavioral: value }))}
-                  onLabel={labels.on}
-                  offLabel={labels.off}
-                  alwaysLabel={labels.always}
-                />
-              </div>
             </div>
           ) : null}
 
