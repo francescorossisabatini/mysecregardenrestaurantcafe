@@ -9,7 +9,6 @@ declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
     loadAnalytics?: () => void;
-    loadContentsquare?: () => void;
   }
 }
 
@@ -20,19 +19,17 @@ export const CONSENT_EVENT = "cookie-consent-updated";
 export type ConsentCategories = {
   necessary: true;
   analytics: boolean;
-  behavioral: boolean;
 };
 
 export type ConsentRecord = {
   necessary: true;
   analytics: boolean;
-  behavioral: boolean;
   decidedAt: string;
   version: 3;
 };
 
-const ALL_DENIED: ConsentCategories = { necessary: true, analytics: false, behavioral: false };
-const ALL_GRANTED: ConsentCategories = { necessary: true, analytics: true, behavioral: true };
+const ALL_DENIED: ConsentCategories = { necessary: true, analytics: false };
+const ALL_GRANTED: ConsentCategories = { necessary: true, analytics: true };
 
 export const getConsent = (): ConsentRecord | null => {
   if (typeof window === "undefined") return null;
