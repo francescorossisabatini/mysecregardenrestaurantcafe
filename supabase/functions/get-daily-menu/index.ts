@@ -397,12 +397,21 @@ serve(async (req) => {
     
     let response = await fetch(gvizUrl, { headers: fetchHeaders });
     let useCSV = false;
-    
+
+    // Google's gviz endpoint returns transient 5xx errors; retry twice before
+    // falling back to the CSV export, which parses a different sheet layout.
+    for (let attempt = 0; attempt < 2 && !response.ok && response.status >= 500; attempt++) {
+      console.warn(`gviz failed (${response.status}), retrying (${attempt + 1})...`);
+      await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+      response = await fetch(gvizUrl, { headers: fetchHeaders });
+    }
+
     if (!response.ok) {
       console.warn(`gviz failed (${response.status}), trying CSV export...`);
       response = await fetch(csvUrl, { headers: fetchHeaders });
       useCSV = true;
     }
+
     
     if (!response.ok) {
       console.error(`Failed to fetch sheet: ${response.status}`);
