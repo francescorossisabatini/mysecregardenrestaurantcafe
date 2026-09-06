@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense, useEffect } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,23 +10,25 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import { CookieConsent } from "@/components/CookieConsent";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 
 // Critical: Load Index immediately for fast FCP
 import Index from "./pages/Index";
 
 // Lazy load non-critical pages to reduce initial bundle
-const NotFound = lazy(() => import("./pages/NotFound"));
-const Privacy = lazy(() => import("./pages/Privacy"));
-const Impressum = lazy(() => import("./pages/Impressum"));
-const AboutUs = lazy(() => import("./pages/AboutUs"));
-const ContactPage = lazy(() => import("./pages/Contact"));
-const LinkPage = lazy(() => import("./pages/Link"));
-const MenuPage = lazy(() => import("./pages/Menu"));
-const ReservationPreview = lazy(() => import("./pages/ReservationPreview"));
-const StaffLogin = lazy(() => import("./pages/StaffLogin"));
-const StaffKitchen = lazy(() => import("./pages/StaffKitchen"));
-const GalleryPage = lazy(() => import("./pages/Gallery"));
-const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
+const Privacy = lazyWithRetry(() => import("./pages/Privacy"));
+const Impressum = lazyWithRetry(() => import("./pages/Impressum"));
+const AboutUs = lazyWithRetry(() => import("./pages/AboutUs"));
+const ContactPage = lazyWithRetry(() => import("./pages/Contact"));
+const LinkPage = lazyWithRetry(() => import("./pages/Link"));
+const MenuPage = lazyWithRetry(() => import("./pages/Menu"));
+const ReservationPreview = lazyWithRetry(() => import("./pages/ReservationPreview"));
+const StaffLogin = lazyWithRetry(() => import("./pages/StaffLogin"));
+const StaffKitchen = lazyWithRetry(() => import("./pages/StaffKitchen"));
+const GalleryPage = lazyWithRetry(() => import("./pages/Gallery"));
+const OAuthConsent = lazyWithRetry(() => import("./pages/OAuthConsent"));
+
 
 // Minimal loading fallback
 const PageLoader = () => (
