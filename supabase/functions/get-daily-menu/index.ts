@@ -121,13 +121,17 @@ interface WeeklyMenuResponse {
 let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
+// Keep the public menu available during temporary database outages.
+// The database value remains authoritative whenever it can be reached.
+const FALLBACK_SHEET_ID = "1CUC6ZGkRN-WoRINW86Q0VguVE1T1PJrC";
+
 // Fetch the active sheet id + loaded_at from menu_config.
 // On first deploy (no DB row) we self-bootstrap from the GOOGLE_SHEET_ID env var
 // and persist it so the Sunday-rollover clock starts from now.
 async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
   const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || '';
+  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || FALLBACK_SHEET_ID;
 
   if (!supabaseUrl || !serviceKey) {
     return { sheetId: envSheetId, loadedAt: null };
@@ -141,7 +145,7 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
   try {
     const res = await fetch(
       `${supabaseUrl}/rest/v1/menu_config?select=sheet_id,loaded_at&singleton=eq.true&limit=1`,
-      { headers: baseHeaders }
+      { headers: baseHeaders, signal: AbortSignal.timeout(3000) }
     );
     if (res.ok) {
       const rows = await res.json();
