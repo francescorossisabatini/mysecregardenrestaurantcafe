@@ -154,9 +154,11 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
       }
     } else {
       console.warn('menu_config fetch failed:', res.status);
+      return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
     }
   } catch (e) {
     console.warn('menu_config fetch error:', e);
+    return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
   }
 
   // Self-bootstrap from env var
@@ -175,6 +177,7 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
           sheet_id: envSheetId,
           loaded_at: nowIso,
         }),
+        signal: AbortSignal.timeout(3000),
       });
       console.log('menu_config bootstrapped from env');
     } catch (e) {
