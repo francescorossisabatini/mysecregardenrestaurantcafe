@@ -319,7 +319,7 @@ serve(async (req) => {
   const corsHeaders = {
     "Access-Control-Allow-Origin": origin ?? "*",
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   };
 
   // Handle CORS preflight
