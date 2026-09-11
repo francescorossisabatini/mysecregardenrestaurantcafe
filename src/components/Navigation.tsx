@@ -41,7 +41,7 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-gradient-to-b before:from-foreground/55 before:via-foreground/25 before:to-transparent before:content-['']"
+            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/55 before:via-foreground/25 before:to-transparent before:content-['']"
             : "border-b border-border/60 bg-background py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
@@ -50,7 +50,7 @@ export const Navigation = () => {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
+              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-xs transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
               aria-label={isMobileMenuOpen
                 ? (language === "de" ? "Menü schließen" : "Close menu")
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -63,7 +63,7 @@ export const Navigation = () => {
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
           <Link
             to="/"
-            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-sm py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
+            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-sm py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
@@ -102,7 +102,7 @@ export const Navigation = () => {
                     <Link
                       to={link.to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
+                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
@@ -146,7 +146,7 @@ export const Navigation = () => {
             <Link 
               to="/" 
               onClick={() => setIsMobileMenuOpen(false)} 
-              className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary/50 rounded-lg"
+              className="flex items-center gap-3 focus:outline-hidden focus:ring-2 focus:ring-primary/50 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
             >
               <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
@@ -154,7 +154,7 @@ export const Navigation = () => {
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50"
               aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
             >
               <X className="w-5 h-5" />

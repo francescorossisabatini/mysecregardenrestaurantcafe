@@ -98,9 +98,9 @@ export const MenuFloatingPill = ({ activeTab, onSelect, showWeekly = true }: Pro
               role="tab"
               aria-selected={active}
               onClick={() => onSelect(tab.id)}
-              className={`rounded-full px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
+              className={`rounded-full px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
                 active
-                  ? "bg-primary text-primary-foreground shadow-sm"
+                  ? "bg-primary text-primary-foreground shadow-xs"
                   : "text-primary/75 hover:text-primary"
               }`}
             >

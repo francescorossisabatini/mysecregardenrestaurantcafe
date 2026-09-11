@@ -226,7 +226,7 @@ export const MenuSection = () => {
                   aria-disabled={isDisabled || undefined}
                   disabled={isDisabled}
                   onClick={() => !isDisabled && scrollToMenuBlock(tab.id)}
-                  className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
+                  className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
                     isDisabled
                       ? "text-muted-foreground/50 cursor-not-allowed"
                       : isActive
@@ -635,7 +635,7 @@ export const MenuSection = () => {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setFixedCategoryFilter(chip.id)}
-                      className={`shrink-0 rounded-full border px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
+                      className={`shrink-0 rounded-full border px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
                         isActive
                           ? "border-accent bg-accent text-accent-foreground"
                           : "border-border/70 bg-background text-muted-high-contrast hover:text-foreground"

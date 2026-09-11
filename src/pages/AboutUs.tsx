@@ -231,7 +231,7 @@ const AboutUs = () => {
       />
       <SkipLink />
       <Navigation />
-      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-hidden">
         <section className="relative overflow-hidden border-b border-border/70 bg-section-soft py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.08fr_0.92fr] md:items-end md:gap-14">

@@ -337,7 +337,7 @@ export const CookieConsent = () => {
               onClick={() => setShowDetails((value) => !value)}
               aria-expanded={showDetails}
               aria-controls="cookie-consent-details"
-              className="flex h-8 shrink-0 items-center gap-1 rounded-md border border-border bg-background px-2 text-xs font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex h-8 shrink-0 items-center gap-1 rounded-md border border-border bg-background px-2 text-xs font-semibold text-foreground transition-colors hover:bg-muted focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary"
             >
               {showDetails ? labels.hideDetails : labels.showDetails}
               {showDetails ? <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" /> : <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />}

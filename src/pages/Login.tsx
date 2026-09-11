@@ -5,13 +5,11 @@ import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
-import { useStaffPageGuard } from "@/hooks/useStaffPageGuard";
 
-const StaffLogin = () => {
-  useStaffPageGuard();
+const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  // Preserve an OAuth consent URL so approving a client returns there, not to /staff.
+  // Preserve an OAuth consent URL so approving a client returns there, not to the homepage.
   const rawNext = searchParams.get("next") ?? "";
   const nextPath = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : null;
   const [session, setSession] = useState<Session | null>(null);
@@ -68,16 +66,16 @@ const StaffLogin = () => {
       return;
     }
 
-    navigate("/staff", { replace: true });
+    navigate("/", { replace: true });
   };
 
-  if (!isChecking && session) return <Navigate to={nextPath ?? "/staff"} replace />;
+  if (!isChecking && session) return <Navigate to={nextPath ?? "/"} replace />;
 
   const isOAuthFlow = nextPath?.startsWith("/.lovable/oauth/consent") ?? false;
 
   return (
-    <div className="staff-app notranslate min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
-      <SEOHead title="Staff Login" description="Restricted staff sign-in area for My Secret Garden Wien internal kitchen tools and operations." path="/staff/login" noindex notranslate />
+    <div className="min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
+      <SEOHead title="Login" description="Sign-in for My Secret Garden internal tools." path="/login" noindex notranslate />
       <main className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-md items-center">
         <section className="w-full rounded-md border border-border bg-card p-6 shadow-card md:p-8">
           <div className="mb-8">
@@ -85,7 +83,7 @@ const StaffLogin = () => {
               <LockKeyhole className="h-5 w-5" aria-hidden="true" />
             </div>
             <h1 className="font-work text-3xl font-extrabold tracking-normal text-foreground">
-              {isOAuthFlow ? "Sign in to Secret Garden" : "Staff Hub"}
+              {isOAuthFlow ? "Sign in to Secret Garden" : "My Secret Garden"}
             </h1>
             <p className="mt-2 text-sm leading-relaxed text-muted-high-contrast">
               {isOAuthFlow
@@ -106,7 +104,7 @@ const StaffLogin = () => {
                   onChange={(event) => setUsername(event.target.value)}
                   required
                   autoComplete="username"
-                  className="h-11 w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                  className="h-11 w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-hidden focus:ring-2 focus:ring-primary/30"
                 />
               </div>
             </label>
@@ -118,7 +116,7 @@ const StaffLogin = () => {
                 onChange={(event) => setPassword(event.target.value)}
                 required
                 autoComplete="current-password"
-                className="h-11 rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                className="h-11 rounded-md border border-input bg-background px-3 py-2 text-foreground outline-hidden focus:ring-2 focus:ring-primary/30"
               />
             </label>
             <Button type="submit" disabled={isSubmitting} className="mt-2 w-full rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
@@ -132,4 +130,4 @@ const StaffLogin = () => {
   );
 };
 
-export default StaffLogin;
+export default Login;

@@ -95,7 +95,7 @@ const Index = () => {
         <Navigation />
       </div>
 
-      <main id="main-content" tabIndex={-1} className="focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="focus:outline-hidden">
       {/* HERO */}
       <Hero />
 

@@ -54,12 +54,12 @@ const Impressum = () => {
             {isGerman ? "Inhaltsverzeichnis" : "Contents"}
           </h2>
           <ol className="list-decimal list-inside space-y-1 text-sm">
-            <li><a href="#media-owner" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Medieninhaber" : "Media Owner"}</a></li>
-            <li><a href="#editorial" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Redaktionelle Verantwortung" : "Editorial Responsibility"}</a></li>
-            <li><a href="#editorial-line" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Blattlinie" : "Editorial Line"}</a></li>
-            <li><a href="#legal-info" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Rechtliche Hinweise" : "Legal Information"}</a></li>
-            <li><a href="#odr" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Online-Streitbeilegung" : "Online Dispute Resolution"}</a></li>
-            <li><a href="#disclaimer" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Haftungsausschluss" : "Disclaimer"}</a></li>
+            <li><a href="#media-owner" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Medieninhaber" : "Media Owner"}</a></li>
+            <li><a href="#editorial" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Redaktionelle Verantwortung" : "Editorial Responsibility"}</a></li>
+            <li><a href="#editorial-line" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Blattlinie" : "Editorial Line"}</a></li>
+            <li><a href="#legal-info" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Rechtliche Hinweise" : "Legal Information"}</a></li>
+            <li><a href="#odr" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Online-Streitbeilegung" : "Online Dispute Resolution"}</a></li>
+            <li><a href="#disclaimer" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">{isGerman ? "Haftungsausschluss" : "Disclaimer"}</a></li>
           </ol>
         </nav>
 
@@ -78,13 +78,13 @@ const Impressum = () => {
               <p>1060 {isGerman ? "Wien" : "Vienna"}, {isGerman ? "Österreich" : "Austria"}</p>
               <p className="pt-2">
                 <span className="font-medium">{isGerman ? "Telefon" : "Phone"}:</span>{" "}
-                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                   {SITE.phoneDisplay}
                 </a>
               </p>
               <p>
                 <span className="font-medium">E-Mail:</span>{" "}
-                <a href="mailto:reichel@purusha.at" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                <a href="mailto:reichel@purusha.at" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                   reichel@purusha.at
                 </a>
               </p>
@@ -108,7 +108,7 @@ const Impressum = () => {
               <p>1060 {isGerman ? "Wien" : "Vienna"}, {isGerman ? "Österreich" : "Austria"}</p>
               <p>
                 <span className="font-medium">{isGerman ? "Telefon" : "Phone"}:</span>{" "}
-                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
+                <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded">
                   {SITE.phoneDisplay}
                 </a>
               </p>
@@ -152,7 +152,7 @@ const Impressum = () => {
                   href="https://www.ris.bka.gv.at/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+                  className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded"
                 >
                   www.ris.bka.gv.at
                 </a>
@@ -189,7 +189,7 @@ const Impressum = () => {
                 href="https://ec.europa.eu/consumers/odr/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded inline-flex items-center gap-1"
+                className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded inline-flex items-center gap-1"
                 aria-label={isGerman ? "EU Online-Streitbeilegungsplattform (öffnet in neuem Tab)" : "EU Online Dispute Resolution platform (opens in new tab)"}
               >
                 ec.europa.eu/consumers/odr

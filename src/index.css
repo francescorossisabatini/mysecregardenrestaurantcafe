@@ -1,6 +1,387 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@utility duration-instant { transition-duration: var(--motion-duration-instant); }
+@utility duration-fast { transition-duration: var(--motion-duration-fast); }
+@utility duration-base { transition-duration: var(--motion-duration-base); }
+@utility duration-slow { transition-duration: var(--motion-duration-slow); }
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@theme inline {
+  --text-ui: 0.875rem;
+  --text-ui--line-height: 1.5;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+  --text-section: 1.313rem;
+  --text-section--line-height: 1.3;
+  --text-hero: 3rem;
+  --text-hero--line-height: 1.1;
+  --text-hero--letter-spacing: 0;
+
+  --font-caveat: Caveat, Brush Script MT, cursive;
+  --font-lora: Lora, Georgia, Times New Roman, serif;
+  --font-cormorant: Cormorant Garamond, Garamond, Georgia, serif;
+  --font-work:
+    Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, system-ui,
+    sans-serif;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-warning: hsl(var(--semantic-warning));
+  --color-success: hsl(var(--semantic-success));
+
+  --color-brand-star: hsl(var(--semantic-warning));
+
+  --color-state-vegan: var(--color-vegan);
+  --color-state-glutenFree: var(--color-gluten-free);
+  --color-state-bio: var(--color-bio);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-light: hsl(var(--accent-light));
+
+  --color-blue: hsl(var(--blue));
+  --color-blue-foreground: hsl(var(--blue-foreground));
+
+  --color-cream: hsl(var(--cream));
+  --color-daily: hsl(var(--daily-card));
+  --color-dailyAlt: hsl(var(--daily-card-alt));
+  --color-klassiker: hsl(var(--klassiker-card));
+  --color-badgeWood: hsl(var(--badge-wood));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --radius-lg: var(--radius-base);
+  --radius-md: var(--radius-base);
+  --radius-sm: var(--radius-base);
+  --radius-full: 9999px;
+  --radius: var(--radius-base);
+
+  --animate-accordion-down: accordion-down 250ms cubic-bezier(0, 0, 0.2, 1);
+  --animate-accordion-up: accordion-up 250ms cubic-bezier(0.4, 0, 1, 1);
+  --animate-fade-in: fade-in 250ms cubic-bezier(0, 0, 0.2, 1) forwards;
+  --animate-fade-in-hero: fade-in-hero 400ms cubic-bezier(0, 0, 0.2, 1) 200ms
+    forwards;
+  --animate-hero-background: hero-background 400ms cubic-bezier(0, 0, 0.2, 1)
+    forwards;
+  --animate-status-pulse: status-pulse 2400ms cubic-bezier(0.4, 0, 0.2, 1)
+    infinite;
+  --animate-skeleton-shimmer: skeleton-shimmer 1200ms linear infinite;
+  --animate-slide-up: slide-up 300ms cubic-bezier(0, 0, 0.2, 1);
+  --animate-float: float 3s ease-in-out infinite;
+
+  --background-image-gradient-hero: var(--gradient-hero);
+  --background-image-gradient-subtle: var(--gradient-subtle);
+  --background-image-gradient-green: var(--gradient-green);
+
+  --shadow-soft: var(--msg-shadow-soft);
+  --shadow-elevated: var(--msg-shadow-elevated);
+  --shadow-card: var(--msg-shadow-card);
+
+  --ease-smooth: var(--transition-smooth);
+
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
+    }
+    to {
+      height: 0;
+      opacity: 0;
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in-hero {
+    0% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes hero-background {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes status-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  @keyframes slide-up {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.16;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* Improved contrast for muted/micro-copy text */
+
+@utility bg-nav-surface {
+  background: hsl(var(--card) / 0.96);
+}
+
+@utility bg-section-soft {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--muted) / 0.42) 100%
+  );
+}
+
+@utility bg-section-accent {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--accent-light) / 0.24) 0%,
+    hsl(var(--background)) 100%
+  );
+}
+
+@utility surface-card {
+  background: hsl(var(--card) / 0.96);
+  border-color: hsl(var(--border) / 0.9);
+  box-shadow: var(--msg-shadow-card);
+}
+
+@utility border-soft {
+  border-color: hsl(var(--border) / 0.75);
+}
+
+@utility shadow-design-card {
+  box-shadow: var(--msg-shadow-card);
+}
+
+@utility shadow-design-elevated {
+  box-shadow: var(--msg-shadow-elevated);
+}
+
+@utility text-action {
+  color: hsl(var(--accent));
+}
+
+@utility bg-action {
+  background: hsl(var(--accent));
+}
+
+@utility text-on-action {
+  color: hsl(var(--accent-foreground));
+}
+
+@utility text-muted-high-contrast {
+  /* Higher contrast variant for small text and micro-copy */
+  color: hsl(var(--navy-400));
+
+  .dark & {
+    color: hsl(45 15% 78%);
+  }
+}
+
+@utility text-overlay-protect {
+  /* Text overlay protection for text on images */
+  text-shadow: 0 1px 3px hsl(0 0% 0% / 0.3);
+
+  .dark & {
+    text-shadow: 0 1px 4px hsl(0 0% 0% / 0.5);
+  }
+}
+
+@utility bg-overlay-light {
+  /* Light overlay for text readability on images */
+  background: linear-gradient(
+    to bottom,
+    hsl(0 0% 100% / 0.85),
+    hsl(0 0% 100% / 0.7)
+  );
+}
+
+@utility bg-overlay-dark {
+  /* Dark overlay for text readability on images */
+  background: linear-gradient(
+    to bottom,
+    hsl(0 0% 0% / 0.5),
+    hsl(0 0% 0% / 0.4)
+  );
+}
+
+@utility animate-page-enter {
+  animation: fade-in var(--motion-duration-base) var(--motion-ease-out) both;
+}
+
+@utility animate-status-pulse {
+  animation: status-pulse 2400ms var(--motion-ease-in-out) infinite;
+}
+
+@utility skeleton-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--card)) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1200ms linear infinite;
+}
+
+@utility eyebrow-num {
+  /* Herbarium editorial — signature utilities */
+  /* WCAG AA: verde-300 su cream dava 4.37:1 a 11px. verde-400 porta il rapporto oltre 4.5:1. */
+  @apply inline-flex items-center gap-3 font-work text-[11px] font-semibold uppercase tracking-[0.22em];
+  color: hsl(var(--verde-400));
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: hsl(var(--accent) / 0.55);
+  }
+  &.on-dark {
+    color: hsl(var(--accent-light));
+  }
+  &.on-dark::before {
+    background: hsl(var(--accent-light) / 0.6);
+  }
+}
+
+@utility rule-short {
+  display: block;
+  height: 1px;
+  width: 4rem;
+  background: hsl(var(--accent) / 0.45);
+}
+
+@utility h2-editorial {
+  @apply font-cormorant leading-[1.05];
+  font-size: clamp(2.25rem, 4.2vw + 1rem, 3.75rem);
+}
+
+@utility bg-hero-scrim {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--foreground) / 0.05) 0%,
+    hsl(var(--foreground) / 0.18) 55%,
+    hsl(var(--foreground) / 0.55) 100%
+  );
+}
+
+@utility bg-verde-tint {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--verde-100) / 0.22) 0%,
+    hsl(var(--cream-100)) 100%
+  );
+}
 
 /* Botanical brand identity for My Secret Garden - refined with Design System v2.0
 All colors MUST be HSL format.
@@ -106,15 +487,15 @@ Background: Warm cream #F5F0E8
     /* Focus ring - visible and accessible */
     --focus-ring: var(--navy-300);
 
-    --radius: 1rem;
+    --radius-base: 1rem;
     
     /* Custom design tokens - botanical theme */
     --gradient-green: linear-gradient(135deg, hsl(var(--verde-300)) 0%, hsl(var(--verde-200)) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(var(--navy-500)) 0%, hsl(var(--navy-300)) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(var(--cream-50)) 0%, hsl(var(--cream-100)) 58%, hsl(var(--cream-200)) 100%);
-    --shadow-soft: 0 6px 22px -14px hsl(var(--navy-500) / 0.26);
-    --shadow-elevated: 0 16px 44px -22px hsl(var(--navy-500) / 0.38);
-    --shadow-card: 0 8px 24px -18px hsl(var(--navy-500) / 0.3);
+    --msg-shadow-soft: 0 6px 22px -14px hsl(var(--navy-500) / 0.26);
+    --msg-shadow-elevated: 0 16px 44px -22px hsl(var(--navy-500) / 0.38);
+    --msg-shadow-card: 0 8px 24px -18px hsl(var(--navy-500) / 0.3);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Motion tokens – MSG Motion Spec */
@@ -190,9 +571,9 @@ Background: Warm cream #F5F0E8
     --gradient-green: linear-gradient(135deg, hsl(92 50% 58%) 0%, hsl(85 45% 65%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(226 40% 18%) 0%, hsl(226 35% 28%) 100%);
     --gradient-subtle: linear-gradient(180deg, hsl(226 35% 10%) 0%, hsl(226 30% 16%) 100%);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
-    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
-    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.25);
+    --msg-shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+    --msg-shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.6);
+    --msg-shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.25);
     
     --sidebar-background: 220 35% 8%;
     --sidebar-foreground: 210 25% 95%;
@@ -204,35 +585,6 @@ Background: Warm cream #F5F0E8
     --sidebar-ring: 220 65% 60%;
   }
 
-  .staff-app {
-    --background: 214 32% 96%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 217 91% 35%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 214 32% 91%;
-    --muted-foreground: 215 16% 38%;
-    --accent: 160 84% 30%;
-    --accent-foreground: 0 0% 100%;
-    --blue: 217 91% 35%;
-    --blue-foreground: 0 0% 100%;
-    --destructive: 0 72% 42%;
-    --destructive-foreground: 0 0% 100%;
-    --semantic-warning: 38 92% 44%;
-    --semantic-success: 160 84% 30%;
-    --border: 214 25% 82%;
-    --input: 214 25% 82%;
-    --ring: 217 91% 35%;
-    --radius: 0.5rem;
-    --shadow-card: 0 1px 2px hsl(222 47% 11% / 0.08), 0 8px 24px hsl(222 47% 11% / 0.06);
-    --shadow-soft: 0 1px 2px hsl(222 47% 11% / 0.08);
-    --shadow-elevated: 0 12px 32px hsl(222 47% 11% / 0.14);
-  }
 }
 
 @layer base {
@@ -281,133 +633,6 @@ Background: Warm cream #F5F0E8
   
   a:not([class*="btn"]):not([class*="Button"]):hover {
     text-decoration: underline;
-  }
-}
-
-/* Improved contrast for muted/micro-copy text */
-@layer utilities {
-  .bg-nav-surface {
-    background: hsl(var(--card) / 0.96);
-  }
-
-  .bg-section-soft {
-    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.42) 100%);
-  }
-
-  .bg-section-accent {
-    background: linear-gradient(180deg, hsl(var(--accent-light) / 0.24) 0%, hsl(var(--background)) 100%);
-  }
-
-  .surface-card {
-    background: hsl(var(--card) / 0.96);
-    border-color: hsl(var(--border) / 0.9);
-    box-shadow: var(--shadow-card);
-  }
-
-  .border-soft {
-    border-color: hsl(var(--border) / 0.75);
-  }
-
-  .shadow-design-card {
-    box-shadow: var(--shadow-card);
-  }
-
-  .shadow-design-elevated {
-    box-shadow: var(--shadow-elevated);
-  }
-
-  .text-action {
-    color: hsl(var(--accent));
-  }
-
-  .bg-action {
-    background: hsl(var(--accent));
-  }
-
-  .text-on-action {
-    color: hsl(var(--accent-foreground));
-  }
-
-  /* Higher contrast variant for small text and micro-copy */
-  .text-muted-high-contrast {
-    color: hsl(var(--navy-400));
-  }
-  
-  .dark .text-muted-high-contrast {
-    color: hsl(45 15% 78%);
-  }
-  
-  /* Text overlay protection for text on images */
-  .text-overlay-protect {
-    text-shadow: 0 1px 3px hsl(0 0% 0% / 0.3);
-  }
-  
-  .dark .text-overlay-protect {
-    text-shadow: 0 1px 4px hsl(0 0% 0% / 0.5);
-  }
-  
-  /* Light overlay for text readability on images */
-  .bg-overlay-light {
-    background: linear-gradient(to bottom, hsl(0 0% 100% / 0.85), hsl(0 0% 100% / 0.7));
-  }
-  
-  /* Dark overlay for text readability on images */
-  .bg-overlay-dark {
-    background: linear-gradient(to bottom, hsl(0 0% 0% / 0.5), hsl(0 0% 0% / 0.4));
-  }
-
-  .animate-page-enter {
-    animation: fade-in var(--motion-duration-base) var(--motion-ease-out) both;
-  }
-
-  .animate-status-pulse {
-    animation: status-pulse 2400ms var(--motion-ease-in-out) infinite;
-  }
-
-  .skeleton-shimmer {
-    background-image: linear-gradient(90deg, hsl(var(--muted)) 0%, hsl(var(--card)) 50%, hsl(var(--muted)) 100%);
-    background-size: 200% 100%;
-    animation: skeleton-shimmer 1200ms linear infinite;
-  }
-
-  /* Herbarium editorial — signature utilities */
-  /* WCAG AA: verde-300 su cream dava 4.37:1 a 11px. verde-400 porta il rapporto oltre 4.5:1. */
-  .eyebrow-num {
-    @apply inline-flex items-center gap-3 font-work text-[11px] font-semibold uppercase tracking-[0.22em];
-    color: hsl(var(--verde-400));
-  }
-  .eyebrow-num::before {
-    content: "";
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    background: hsl(var(--accent) / 0.55);
-  }
-  .eyebrow-num.on-dark {
-    color: hsl(var(--accent-light));
-  }
-  .eyebrow-num.on-dark::before {
-    background: hsl(var(--accent-light) / 0.6);
-  }
-
-  .rule-short {
-    display: block;
-    height: 1px;
-    width: 4rem;
-    background: hsl(var(--accent) / 0.45);
-  }
-
-  .h2-editorial {
-    @apply font-cormorant leading-[1.05];
-    font-size: clamp(2.25rem, 4.2vw + 1rem, 3.75rem);
-  }
-
-  .bg-hero-scrim {
-    background: linear-gradient(180deg, hsl(var(--foreground) / 0.05) 0%, hsl(var(--foreground) / 0.18) 55%, hsl(var(--foreground) / 0.55) 100%);
-  }
-
-  .bg-verde-tint {
-    background: linear-gradient(180deg, hsl(var(--verde-100) / 0.22) 0%, hsl(var(--cream-100)) 100%);
   }
 }
 

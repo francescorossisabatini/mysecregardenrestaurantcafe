@@ -98,7 +98,7 @@ const Privacy = () => {
               <li key={item.id}>
                 <a 
                   href={`#${item.id}`} 
-                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                  className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
                 >
                   {isGerman ? item.de : item.en}
                 </a>
@@ -168,10 +168,10 @@ const Privacy = () => {
                   <p>{isGerman ? "Geschäftsführer" : "Managing Director"}: Ashru Andreas Reichel</p>
                   <p>Mariahilferstr. 45/6/48, 1060 {isGerman ? "Wien" : "Vienna"}</p>
                   <p className="mt-2">
-                    Tel.: <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">{SITE.phoneDisplay}</a>
+                    Tel.: <a href={`tel:${SITE.phoneTel}`} className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded">{SITE.phoneDisplay}</a>
                   </p>
                   <p>
-                    E-Mail: <a href="mailto:reichel@purusha.at" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">reichel@purusha.at</a>
+                    E-Mail: <a href="mailto:reichel@purusha.at" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded">reichel@purusha.at</a>
                   </p>
                 </address>
               </div>
@@ -203,7 +203,7 @@ const Privacy = () => {
                     href="https://www.dsb.gv.at/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
+                    className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
                   >
                     www.dsb.gv.at
                     <span className="sr-only"> ({isGerman ? "öffnet in neuem Tab" : "opens in new tab"})</span>
@@ -336,7 +336,7 @@ const Privacy = () => {
                 href="https://policies.google.com/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded"
+                className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded"
               >
                 policies.google.com/privacy
               </a>
@@ -463,7 +463,7 @@ const Privacy = () => {
                   href="https://www.instagram.com/mysecretgardencafewien/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
+                  className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
                 >
                   Instagram
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -476,7 +476,7 @@ const Privacy = () => {
                   href="https://www.facebook.com/secretgardencafewien/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
+                  className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded inline-flex items-center gap-1"
                 >
                   Facebook
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -509,11 +509,11 @@ const Privacy = () => {
                   }
                 </p>
                 <p className="text-sm mt-1">
-                  <a href="https://www.facebook.com/about/privacy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">
+                  <a href="https://www.facebook.com/about/privacy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded">
                     {isGerman ? "Datenschutzerklärung Facebook" : "Facebook Privacy Policy"}
                   </a>
                   {" | "}
-                  <a href="https://privacycenter.instagram.com/policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded">
+                  <a href="https://privacycenter.instagram.com/policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary rounded">
                     {isGerman ? "Datenschutzerklärung Instagram" : "Instagram Privacy Policy"}
                   </a>
                 </p>
