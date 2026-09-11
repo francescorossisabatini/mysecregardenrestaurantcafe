@@ -63,7 +63,7 @@ export const WeeklyMenuModal = ({ isOpen, onClose, menu }: WeeklyMenuModalProps)
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-background/80 hover:bg-background transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-background/80 hover:bg-background transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50"
           aria-label={language === "de" ? "Wochenmenü schließen" : "Close weekly menu"}
           title={language === "de" ? "Schließen" : "Close"}
         >

@@ -228,7 +228,7 @@ export const ReservationRequestForm = ({ compact = false, headingLevel = "h1", o
                   loading="lazy"
                   className="aspect-[4/3] w-full object-cover"
                 />
-                <span className={`absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 text-sm font-semibold backdrop-blur-sm ${selected ? "bg-primary/90 text-primary-foreground" : "bg-background/85 text-foreground"}`}>
+                <span className={`absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 text-sm font-semibold backdrop-blur-xs ${selected ? "bg-primary/90 text-primary-foreground" : "bg-background/85 text-foreground"}`}>
                   {label}
                   {selected ? <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> : null}
                 </span>

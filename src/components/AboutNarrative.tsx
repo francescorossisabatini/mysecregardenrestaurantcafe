@@ -76,7 +76,7 @@ export const AboutNarrative = () => {
             </div>
             
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-accent/20 to-accent/10 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform"></div>
               <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-accent/20">
                 <img 
                   src="https://www.secretgardenrestaurant.at/wp-content/uploads/2020/02/vegetarisches-restaurant-wien.jpg"
@@ -88,7 +88,7 @@ export const AboutNarrative = () => {
           </div>
 
           {/* Quote Section */}
-          <Card className="relative p-12 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 border-primary/20 shadow-elevated overflow-hidden">
+          <Card className="relative p-12 bg-linear-to-br from-primary/10 via-accent/5 to-primary/10 border-primary/20 shadow-elevated overflow-hidden">
             <div className="absolute top-4 right-4 w-24 h-24 text-primary/10">
               <DetailedFlower className="w-full h-full" />
             </div>
@@ -105,7 +105,7 @@ export const AboutNarrative = () => {
           {/* Story Section 2 - Image Left */}
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative group order-2 md:order-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/10 rounded-2xl transform -rotate-3 group-hover:-rotate-6 transition-transform"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-primary/15 to-primary/10 rounded-2xl transform -rotate-3 group-hover:-rotate-6 transition-transform"></div>
               <Card className="relative overflow-hidden rounded-2xl shadow-elevated border-2 border-primary/20">
                 <img 
                   src="https://www.secretgardenrestaurant.at/wp-content/uploads/2020/09/Gastgarten.jpg"

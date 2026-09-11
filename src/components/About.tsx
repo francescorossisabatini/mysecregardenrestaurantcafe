@@ -45,7 +45,7 @@ export const About = () => {
 
           {/* Main Content */}
           <div className="prose prose-lg max-w-none space-y-8 font-lato">
-            <Card className="p-8 bg-card/80 backdrop-blur-sm border-primary/20 shadow-soft">
+            <Card className="p-8 bg-card/80 backdrop-blur-xs border-primary/20 shadow-soft">
               <p className="text-lg leading-relaxed text-foreground/90">
                 {t("about.p1")}
               </p>
@@ -65,7 +65,7 @@ export const About = () => {
               </Card>
             </div>
 
-            <Card className="p-8 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 shadow-elevated">
+            <Card className="p-8 bg-linear-to-br from-primary/5 to-accent/5 border-primary/20 shadow-elevated">
               <p className="text-xl font-playfair text-center leading-relaxed text-foreground">
                 {t("about.p4")}
               </p>
@@ -74,19 +74,19 @@ export const About = () => {
 
           {/* Feature Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-sm group">
+            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-xs group">
               <Leaf className="w-12 h-12 mx-auto mb-3 text-primary group-hover:scale-110 transition-transform" />
               <h3 className="font-playfair font-semibold text-lg text-foreground capitalize">{t("about.bio")}</h3>
             </Card>
-            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-sm group">
+            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-xs group">
               <Heart className="w-12 h-12 mx-auto mb-3 text-accent group-hover:scale-110 transition-transform" />
               <h3 className="font-playfair font-semibold text-lg text-foreground capitalize">{t("about.fair")}</h3>
             </Card>
-            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-sm group">
+            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-xs group">
               <Sprout className="w-12 h-12 mx-auto mb-3 text-primary group-hover:scale-110 transition-transform" />
               <h3 className="font-playfair font-semibold text-lg text-foreground capitalize">{t("about.regional")}</h3>
             </Card>
-            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-sm group">
+            <Card className="p-6 text-center hover:shadow-elevated hover:scale-105 transition-all bg-card/80 backdrop-blur-xs group">
               <Coffee className="w-12 h-12 mx-auto mb-3 text-accent group-hover:scale-110 transition-transform" />
               <h3 className="font-playfair font-semibold text-lg text-foreground capitalize">{t("about.seasonal")}</h3>
             </Card>

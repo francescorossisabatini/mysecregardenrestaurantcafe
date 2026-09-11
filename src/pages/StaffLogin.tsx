@@ -106,7 +106,7 @@ const StaffLogin = () => {
                   onChange={(event) => setUsername(event.target.value)}
                   required
                   autoComplete="username"
-                  className="h-11 w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                  className="h-11 w-full rounded-md border border-input bg-background py-2 pl-10 pr-3 text-foreground outline-hidden focus:ring-2 focus:ring-primary/30"
                 />
               </div>
             </label>
@@ -118,7 +118,7 @@ const StaffLogin = () => {
                 onChange={(event) => setPassword(event.target.value)}
                 required
                 autoComplete="current-password"
-                className="h-11 rounded-md border border-input bg-background px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-primary/30"
+                className="h-11 rounded-md border border-input bg-background px-3 py-2 text-foreground outline-hidden focus:ring-2 focus:ring-primary/30"
               />
             </label>
             <Button type="submit" disabled={isSubmitting} className="mt-2 w-full rounded-md bg-primary text-primary-foreground hover:bg-primary/90">

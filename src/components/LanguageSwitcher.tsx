@@ -11,12 +11,12 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
 
   if (variant === "mobile") {
     return (
-      <div className={`inline-flex h-11 shrink-0 items-center rounded-full border p-0.5 shadow-sm backdrop-blur-md ${isOverlay ? "border-border/75 bg-card/90" : "border-border/75 bg-card/90"}`} role="group" aria-label="Language selection">
+      <div className={`inline-flex h-11 shrink-0 items-center rounded-full border p-0.5 shadow-xs backdrop-blur-md ${isOverlay ? "border-border/75 bg-card/90" : "border-border/75 bg-card/90"}`} role="group" aria-label="Language selection">
         <button
           onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
           className={`flex h-10 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
             language === "de"
-              ? "bg-primary text-primary-foreground shadow-sm"
+              ? "bg-primary text-primary-foreground shadow-xs"
               : "text-primary hover:text-primary"
           }`}
           aria-pressed={language === "de"}
@@ -28,7 +28,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
           onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
           className={`flex h-10 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-200 whitespace-nowrap ${
             language === "en"
-              ? "bg-primary text-primary-foreground shadow-sm"
+              ? "bg-primary text-primary-foreground shadow-xs"
               : "text-primary hover:text-primary"
           }`}
           aria-pressed={language === "en"}

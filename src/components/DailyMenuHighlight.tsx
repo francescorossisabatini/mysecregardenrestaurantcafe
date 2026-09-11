@@ -205,7 +205,7 @@ export const DailyMenuHighlight = () => {
                   aria-selected={current === index}
                   aria-label={language === "de" ? day.day.de : day.day.en}
                   className={`
-                    w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50
+                    w-2 h-2 rounded-full transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-primary/50
                     ${current === index 
                       ? 'w-8 bg-primary' 
                       : 'bg-muted-foreground/60 hover:bg-muted-foreground/80'

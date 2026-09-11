@@ -100,10 +100,10 @@ const StorySlide = ({ slide, language, index }: StorySlideProps) => {
       {/* Gradient Overlay - varies based on alignment */}
       <div className={`absolute inset-0 ${
         slide.align === "left" 
-          ? "bg-gradient-to-r from-black/70 via-black/40 to-transparent"
+          ? "bg-linear-to-r from-black/70 via-black/40 to-transparent"
           : slide.align === "right"
-          ? "bg-gradient-to-l from-black/70 via-black/40 to-transparent"
-          : "bg-gradient-to-t from-black/70 via-black/50 to-black/30"
+          ? "bg-linear-to-l from-black/70 via-black/40 to-transparent"
+          : "bg-linear-to-t from-black/70 via-black/50 to-black/30"
       }`} />
 
       {/* Content */}
@@ -164,7 +164,7 @@ const StorySlide = ({ slide, language, index }: StorySlideProps) => {
               <span className="text-sm font-lora text-background/70 uppercase tracking-widest">
                 {language === "de" ? "Scrollen" : "Scroll"}
               </span>
-              <div className="w-px h-12 bg-gradient-to-b from-background/50 to-transparent animate-pulse" />
+              <div className="w-px h-12 bg-linear-to-b from-background/50 to-transparent animate-pulse" />
             </div>
           )}
         </div>

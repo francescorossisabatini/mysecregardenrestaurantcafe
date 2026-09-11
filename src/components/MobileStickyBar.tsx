@@ -86,7 +86,7 @@ export const MobileStickyBar = () => {
     "text-base font-medium font-work " +
     "active:scale-95 transition-transform duration-200 " +
     "touch-manipulation " +
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2";
+    "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2";
 
   return (
     <div
@@ -124,7 +124,7 @@ export const MobileStickyBar = () => {
             active:scale-95
             transition-transform duration-200
             touch-manipulation
-            focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2"
+            focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2"
           aria-label={callAriaLabel}
         >
           <Phone className="w-[18px] h-[18px] flex-shrink-0" strokeWidth={2.2} aria-hidden="true" />

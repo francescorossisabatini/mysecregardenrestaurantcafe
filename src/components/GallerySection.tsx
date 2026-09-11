@@ -49,8 +49,8 @@ const GalleryReveal = ({
   return (
     <div
       ref={ref}
-      className={`transform-gpu transition-all duration-1000 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-0 ${
-        isVisible ? "translate-y-0 opacity-100 blur-0" : "translate-y-10 opacity-0 blur-sm"
+      className={`transform-gpu transition-all duration-1000 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:blur-none ${
+        isVisible ? "translate-y-0 opacity-100 blur-none" : "translate-y-10 opacity-0 blur-xs"
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -67,7 +67,7 @@ const ImageFrame = ({ src, alt, ratio = "aspect-[4/5]" }: { src: string; alt: st
       className="h-full w-full object-cover transition-[filter] duration-700 ease-out group-hover:saturate-110"
       loading="lazy"
     />
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/18 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-foreground/18 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
   </div>
 );
 

@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import legacy from "@vitejs/plugin-legacy";
 import path from "path";
+import tailwindcss from "@tailwindcss/vite";
 import { componentTagger } from "lovable-tagger";
 import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/supabase/vite";
 
@@ -19,6 +20,7 @@ export default defineConfig(({ mode }) => ({
     cssTarget: ["safari12"],
   },
   plugins: [
+    tailwindcss(),
     react(),
     mcpPlugin(),
     legacy({

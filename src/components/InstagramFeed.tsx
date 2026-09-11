@@ -71,7 +71,7 @@ export const InstagramFeed = () => {
                 {[1, 2, 3, 4, 5, 6].map((i) => (
                   <div 
                     key={i} 
-                    className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg animate-pulse shadow-sm"
+                    className="aspect-square bg-linear-to-br from-primary/10 to-accent/10 rounded-lg animate-pulse shadow-xs"
                   />
                 ))}
               </div>

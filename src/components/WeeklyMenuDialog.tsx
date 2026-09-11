@@ -60,7 +60,7 @@ export const WeeklyMenuDialog = ({ open, onOpenChange }: WeeklyMenuDialogProps) 
           {menu.days.map((dayMenu, idx) => (
             <Card
               key={idx}
-              className="bg-background/60 backdrop-blur-sm border-2 border-border/50 p-4 md:p-6 hover:shadow-lg transition-all"
+              className="bg-background/60 backdrop-blur-xs border-2 border-border/50 p-4 md:p-6 hover:shadow-lg transition-all"
             >
               {/* Day header - Gestalt: Continuity */}
               <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-primary/30">

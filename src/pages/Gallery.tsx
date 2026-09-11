@@ -149,7 +149,7 @@ const Gallery = () => {
       />
       <SkipLink />
       <Navigation />
-      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="pt-20 focus:outline-hidden">
         {/* Hero */}
         <section className="relative overflow-hidden border-b border-border/70 bg-section-soft py-16 md:py-24">
           <div className="container mx-auto max-w-5xl px-4 text-center">
