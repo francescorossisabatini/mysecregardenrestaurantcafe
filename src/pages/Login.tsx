@@ -75,7 +75,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-background px-4 py-12 font-work text-foreground" translate="no" lang="en">
-      <SEOHead title="Login" description="Sign-in for My Secret Garden internal tools." path="/staff/login" noindex notranslate />
+      <SEOHead title="Login" description="Sign-in for My Secret Garden internal tools." path="/login" noindex notranslate />
       <main className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-md items-center">
         <section className="w-full rounded-md border border-border bg-card p-6 shadow-card md:p-8">
           <div className="mb-8">
