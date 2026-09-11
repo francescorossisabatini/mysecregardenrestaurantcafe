@@ -23,9 +23,7 @@ const AboutUs = lazyWithRetry(() => import("./pages/AboutUs"));
 const ContactPage = lazyWithRetry(() => import("./pages/Contact"));
 const LinkPage = lazyWithRetry(() => import("./pages/Link"));
 const MenuPage = lazyWithRetry(() => import("./pages/Menu"));
-const ReservationPreview = lazyWithRetry(() => import("./pages/ReservationPreview"));
-const StaffLogin = lazyWithRetry(() => import("./pages/StaffLogin"));
-const StaffKitchen = lazyWithRetry(() => import("./pages/StaffKitchen"));
+const Login = lazyWithRetry(() => import("./pages/Login"));
 const GalleryPage = lazyWithRetry(() => import("./pages/Gallery"));
 const OAuthConsent = lazyWithRetry(() => import("./pages/OAuthConsent"));
 
@@ -71,11 +69,8 @@ function AppContent() {
 
 function AppRoutes() {
   const location = useLocation();
-  const isStaffRoute = location.pathname.startsWith("/staff");
 
   useEffect(() => {
-    if (isStaffRoute) return;
-
     const handleScroll = () => {
       const scrollPct = Math.round(
         (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
@@ -91,19 +86,13 @@ function AppRoutes() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isStaffRoute]);
+  }, []);
 
   useEffect(() => {
     if (!("matchMedia" in window)) return;
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!("IntersectionObserver" in window) || !("MutationObserver" in window)) return;
-    // Skip entrance animations + DOM scanning on staff routes.
-    // The staff dashboard renders many dynamic <section> nodes after async fetches;
-    // applying opacity:0 reveal animation to them was leaving the page blank on iPad
-    // ("loads then disappears"). Staff pages also don't need scroll-reveal animations.
-    if (window.location.pathname.startsWith("/staff")) return;
-
     const observed = new WeakSet<Element>();
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -118,7 +107,6 @@ function AppRoutes() {
     );
 
     const scanSections = () => {
-      if (window.location.pathname.startsWith("/staff")) return;
       const sections = Array.from(document.querySelectorAll("section"));
       sections.forEach((section, index) => {
         if (observed.has(section)) return;
@@ -157,9 +145,7 @@ function AppRoutes() {
         <Route path="/contact" element={<Navigate to="/visit" replace />} />
         <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
         <Route path="/gallery" element={<Suspense fallback={<PageLoader />}><GalleryPage /></Suspense>} />
-        <Route path="/reservation-preview" element={<Suspense fallback={<PageLoader />}><ReservationPreview /></Suspense>} />
-        <Route path="/staff/login" element={<Suspense fallback={<PageLoader />}><StaffLogin /></Suspense>} />
-        <Route path="/staff" element={<Suspense fallback={<PageLoader />}><StaffKitchen /></Suspense>} />
+        <Route path="/login" element={<Suspense fallback={<PageLoader />}><Login /></Suspense>} />
         <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
         <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
         <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
@@ -168,8 +154,8 @@ function AppRoutes() {
         <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Routes>
-      {!isStaffRoute && <CookieConsent />}
-      {!isStaffRoute && <InstallPrompt />}
+      <CookieConsent />
+      <InstallPrompt />
     </>
   );
 }

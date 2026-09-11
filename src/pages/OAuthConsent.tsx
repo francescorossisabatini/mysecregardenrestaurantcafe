@@ -37,7 +37,7 @@ const OAuthConsent = () => {
       const { data: sess } = await supabase.auth.getSession();
       if (!sess.session) {
         const next = window.location.pathname + window.location.search;
-        window.location.href = "/staff/login?next=" + encodeURIComponent(next);
+        window.location.href = "/login?next=" + encodeURIComponent(next);
         return;
       }
       if (active) setEmail(sess.session.user.email ?? null);
