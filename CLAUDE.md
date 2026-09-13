@@ -184,6 +184,10 @@ non quello dopo le correzioni.
 - Step 01 DE: *Geh durch den Bogen* — "Mariahilferstraße 45 — der Durchgang ist absichtlich versteckt."
 - Step 02 DE: *Durch den Innenhof* — "Im Raimundhof — ein stiller Wiener Hof."
 - Step 03 DE: *Setz dich. Bleib.* — "Keine Eile. Dieser Ort ist gemacht zum Verweilen."
+- Step 01 EN: *Walk through the arch* — "Mariahilferstraße 45. The passage is hidden on purpose."
+- Step 02 EN: *Across the courtyard* — "Into the Raimundhof, a quiet Viennese courtyard."
+- Step 03 EN: *Sit down. Stay.* — "No rush. This place is made for staying a while."
+  (EN approvato in chat il 13 settembre 2026)
 
 **FORM PRENOTAZIONE**
 - Label: *Tisch anfragen* (mai "Reservieren")

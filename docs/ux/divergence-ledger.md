@@ -342,9 +342,10 @@ riutilizzabili:
 Anche la citazione *"Kochen ein Gebet und Essen Dankbarkeit ist."* è uscita dal
 corpo: era duplicata nel footer, che la porta già in Caveat.
 
-### 4 · EN dei tre passi — da approvare
-Il DE dei tre passi viene verbatim da `CLAUDE.md` § "IL POSTO (3 step)".
-L'EN è una proposta, scritta per pari ritmo e non come traduzione letterale:
+### 4 · EN dei tre passi — ✅ approvato il 13 settembre 2026
+Il DE viene verbatim da `CLAUDE.md` § "IL POSTO (3 step)". L'EN è stato
+approvato in chat da Francesco ed è ora riportato in `CLAUDE.md` accanto al DE.
+Scritto per pari ritmo, non come traduzione letterale:
 
 | | DE (approvato) | EN (proposta) |
 |---|---|---|
@@ -360,7 +361,7 @@ L'EN è una proposta, scritta per pari ritmo e non come traduzione letterale:
 ## Prossime decisioni, da registrare qui
 
 - [x] Struttura homepage: A / B / C — **A, scelta da Francesco**
-- [ ] EN dei tre passi: approvare o riscrivere (tabella qui sopra)
+- [x] EN dei tre passi — **approvato da Francesco il 13 settembre 2026**
 - [ ] `ReservationRequestForm`: passare da *Reservierung* ad *Anfrage*
 - [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
 - [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca

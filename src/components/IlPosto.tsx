@@ -12,8 +12,8 @@ import gardenCourtyard from "@/assets/photos/garden-courtyard.jpg";
  * che l'ospite compie davvero per arrivare al tavolo. Copy DE approvato in
  * CLAUDE.md § "IL POSTO (3 step)".
  *
- * ⚠ Le stringhe EN dei tre passi sono una proposta, non ancora approvate da
- *   Francesco. Il DE è quello di CLAUDE.md, verbatim.
+ * DE e EN sono entrambi copy approvato: il DE è verbatim da CLAUDE.md,
+ * l'EN è stato approvato in chat il 13 settembre 2026 e riportato lì.
  */
 const steps = [
   {
