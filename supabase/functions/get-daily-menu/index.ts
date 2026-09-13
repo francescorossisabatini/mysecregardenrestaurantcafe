@@ -121,76 +121,49 @@ interface WeeklyMenuResponse {
 let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null = null;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
-// Keep the public menu available during temporary database outages.
-// The database value remains authoritative whenever it can be reached.
-// When we fall back we return loadedAt: null rather than the current time.
-// loadedAt is what useWeeklyMenuAvailable checks against last Sunday to decide
-// whether the weekly menu is still current, so stamping it "now" would make an
-// outdated sheet pass that check precisely when the guard is needed.
-const FALLBACK_SHEET_ID = "1CUC6ZGkRN-WoRINW86Q0VguVE1T1PJrC";
-
-// Fetch the active sheet id + loaded_at from menu_config.
-// On first deploy (no DB row) we self-bootstrap from the GOOGLE_SHEET_ID env var
-// and persist it so the Sunday-rollover clock starts from now.
+// The sheet id is pinned in the GOOGLE_SHEET_ID secret. It is deliberately not
+// stored in, or read from, the database: no SQL statement — ours, a staff
+// account's, or a tool's — can repoint the public menu at a different sheet.
+// menu_config is consulted for one thing only, loaded_at, the timestamp that
+// marks this week's menu as confirmed by a human.
 async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
+  const sheetId = (Deno.env.get('GOOGLE_SHEET_ID') || '').trim();
   const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || FALLBACK_SHEET_ID;
 
-  if (!supabaseUrl || !serviceKey) {
-    return { sheetId: envSheetId, loadedAt: null };
+  if (!sheetId) {
+    console.error('GOOGLE_SHEET_ID is not set - there is no sheet to read');
   }
 
-  const baseHeaders = {
-    apikey: serviceKey,
-    Authorization: `Bearer ${serviceKey}`,
-  };
+  if (!supabaseUrl || !serviceKey) {
+    console.warn('Supabase credentials missing - cannot read loaded_at');
+    return { sheetId, loadedAt: null };
+  }
 
   try {
     const res = await fetch(
-      `${supabaseUrl}/rest/v1/menu_config?select=sheet_id,loaded_at&singleton=eq.true&limit=1`,
-      { headers: baseHeaders, signal: AbortSignal.timeout(3000) }
+      `${supabaseUrl}/rest/v1/menu_config?select=loaded_at&singleton=eq.true&limit=1`,
+      {
+        headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+        signal: AbortSignal.timeout(3000),
+      }
     );
     if (res.ok) {
       const rows = await res.json();
-      if (Array.isArray(rows) && rows.length > 0 && rows[0].sheet_id) {
-        return { sheetId: String(rows[0].sheet_id), loadedAt: rows[0].loaded_at ?? null };
+      if (Array.isArray(rows) && rows.length > 0) {
+        return { sheetId, loadedAt: rows[0].loaded_at ?? null };
       }
-    } else {
-      console.warn('menu_config fetch failed:', res.status);
-      return { sheetId: FALLBACK_SHEET_ID, loadedAt: null };
+      console.warn('menu_config has no singleton row - the weekly menu stays hidden until loaded_at is stamped');
+      return { sheetId, loadedAt: null };
     }
+    console.warn('menu_config fetch failed:', res.status);
   } catch (e) {
     console.warn('menu_config fetch error:', e);
-    return { sheetId: FALLBACK_SHEET_ID, loadedAt: null };
   }
 
-  // Self-bootstrap from env var
-  if (envSheetId) {
-    const nowIso = new Date().toISOString();
-    try {
-      await fetch(`${supabaseUrl}/rest/v1/menu_config`, {
-        method: 'POST',
-        headers: {
-          ...baseHeaders,
-          'Content-Type': 'application/json',
-          Prefer: 'resolution=merge-duplicates',
-        },
-        body: JSON.stringify({
-          singleton: true,
-          sheet_id: envSheetId,
-          loaded_at: nowIso,
-        }),
-        signal: AbortSignal.timeout(3000),
-      });
-      console.log('menu_config bootstrapped from env');
-    } catch (e) {
-      console.warn('menu_config bootstrap failed:', e);
-    }
-    return { sheetId: envSheetId, loadedAt: nowIso };
-  }
-
-  return { sheetId: '', loadedAt: null };
+  // A database we could not reach is not evidence that the menu is current, so
+  // loadedAt stays null and useWeeklyMenuAvailable keeps the weekly menu hidden.
+  return { sheetId, loadedAt: null };
 }
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
@@ -369,7 +342,7 @@ serve(async (req) => {
     console.log('Using sheet ID:', sheetId, 'loadedAt:', loadedAt);
 
     if (!sheetId) {
-      console.error('No sheet ID configured (menu_config empty and GOOGLE_SHEET_ID unset)');
+      console.error('No sheet ID configured - the GOOGLE_SHEET_ID secret is unset or empty');
       return new Response(
         JSON.stringify({
           success: false,
