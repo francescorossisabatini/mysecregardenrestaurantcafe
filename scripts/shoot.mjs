@@ -1,0 +1,127 @@
+// shoot.mjs — screenshot di ogni route e stato, alle larghezze reali.
+// Il file più utile di tutto il setup: senza questo, Claude "vede" il sito
+// leggendo il codice, che è come giudicare un layout leggendo il CSS.
+//
+//   npm i -D playwright        (una volta sola — non è ancora in package.json)
+//   npm run dev                (in un altro terminale)
+//   node scripts/shoot.mjs
+//   node scripts/shoot.mjs --base http://localhost:8080 --only /menu
+//
+// Output in output/shots/<slug>--<width>.png (cartella gitignorata).
+
+import { chromium } from 'playwright';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+
+const arg = (name, fallback) => {
+  const i = process.argv.indexOf(`--${name}`);
+  return i > -1 ? process.argv[i + 1] : fallback;
+};
+
+const BASE = arg('base', 'http://localhost:8080');
+const ONLY = arg('only', null);
+const OUT = 'output/shots';
+
+// Larghezze: 390 = iPhone corrente, 74% del traffico è mobile.
+// 1280 = il desktop più comune in GA4. Due larghezze, non cinque.
+const WIDTHS = [
+  { w: 390, h: 844, label: 'mobile', mobile: true },
+  { w: 1280, h: 900, label: 'desktop', mobile: false },
+];
+
+const ROUTES = [
+  { path: '/', slug: 'home' },
+  { path: '/menu', slug: 'menu' },
+  { path: '/visit', slug: 'visit' },
+  { path: '/about', slug: 'about' },
+  { path: '/gallery', slug: 'gallery' },
+  { path: '/link', slug: 'link' },
+];
+
+// Stati che non si vedono navigando: vanno forzati.
+const STATES = [
+  {
+    slug: 'home--menu-vuoto',
+    path: '/',
+    setup: async (page) => {
+      // Il caso reale del lunedì mattina prima che lo staff aggiorni il foglio.
+      await page.route('**/*docs.google.com/**', (r) => r.abort());
+      await page.route('**/*supabase*/**', (r) => r.abort());
+    },
+  },
+  {
+    slug: 'home--lingua-en',
+    path: '/',
+    setup: async (page) => {
+      await page.addInitScript(() => localStorage.setItem('language', 'en'));
+    },
+  },
+];
+
+const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 12);
+
+async function shoot(browser, { path, slug, setup }, size) {
+  const context = await browser.newContext({
+    viewport: { width: size.w, height: size.h },
+    deviceScaleFactor: 2,
+    isMobile: size.mobile,
+    hasTouch: size.mobile,
+    reducedMotion: 'reduce', // le animazioni di ingresso falsano lo scatto
+    locale: 'de-AT',
+  });
+  const page = await context.newPage();
+  if (setup) await setup(page);
+
+  const errors = [];
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  page.on('pageerror', (e) => errors.push(String(e)));
+
+  await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
+  await page.waitForTimeout(600); // lazy sections
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForTimeout(400);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(300);
+
+  const file = `${OUT}/${slug}--${size.label}.png`;
+  const buf = await page.screenshot({ fullPage: true });
+  await writeFile(file, buf);
+  await context.close();
+  return { file, hash: hashOf(buf), errors };
+}
+
+const main = async () => {
+  await mkdir(OUT, { recursive: true });
+  const browser = await chromium.launch();
+  const targets = [...ROUTES, ...STATES].filter((t) => !ONLY || t.path === ONLY || t.slug === ONLY);
+  const results = [];
+
+  for (const t of targets) {
+    for (const size of WIDTHS) {
+      try {
+        const r = await shoot(browser, t, size);
+        results.push({ slug: `${t.slug}--${size.label}`, ...r });
+        console.log(`  ${r.file}  ${r.hash}${r.errors.length ? `  ⚠ ${r.errors.length} errori console` : ''}`);
+      } catch (e) {
+        console.log(`  ✗ ${t.slug} ${size.label}: ${e.message}`);
+      }
+    }
+  }
+  await browser.close();
+
+  // Il controllo byte-per-byte: due stati che devono differire e non differiscono
+  // significa che uno dei due non ha renderizzato. Errore silenzioso, altrimenti
+  // invisibile.
+  const byHash = new Map();
+  for (const r of results) {
+    const seen = byHash.get(r.hash);
+    if (seen) console.log(`\n✗ IDENTICI: ${seen} e ${r.slug} — uno dei due non ha renderizzato`);
+    else byHash.set(r.hash, r.slug);
+  }
+
+  await writeFile(`${OUT}/manifest.json`, JSON.stringify(results, null, 2));
+  console.log(`\n${results.length} scatti in ${OUT}/`);
+};
+
+main();

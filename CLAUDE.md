@@ -128,6 +128,34 @@ Promemoria dei soli vincoli di alto livello:
 
 ---
 
+## Processo di design — skill `house-style`
+
+> Il processo completo sta in `.claude/skills/house-style/SKILL.md`.
+> Qui solo le regole dure, perché questo file si carica a ogni sessione.
+
+**Prima di generare UI**
+Leggi `direction-lock.md` e `voice-spec.md` nella skill. Se il lock ha
+segnaposto `[__]`, fermati: la fase di direzione non è chiusa.
+Scrivi il divergence ledger **prima** del codice: per ogni decisione,
+nomina il default e cosa fai invece. In `docs/ux/divergence-ledger.md`.
+
+**Fallimenti duri**
+- Più di 2 blocchi `eyebrow + h2 + filetto` per pagina
+- Una sola densità verticale in tutta la pagina
+- Più di 2 valori di radius distinti nei file toccati
+- Bordo e ombra sulla stessa superficie
+- Più di una azione primaria per viewport
+- Due sezioni che rispondono alla stessa domanda
+- Qualsiasi divieto di `voice-spec.md`
+- Dire "fatto" avendo solo letto il codice
+
+**Prima di dire fatto**
+`node scripts/shoot.mjs` → `./scripts/check-tells.sh` → agente `tell-critic`
+(cieco, non ha visto la conversazione). Il suo voto è il numero del giro,
+non quello dopo le correzioni.
+
+---
+
 ## Copy — Lingua e Tono
 
 - **Lingua default:** DE (73% traffico austriaco)
