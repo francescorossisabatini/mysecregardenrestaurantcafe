@@ -29,6 +29,15 @@ export const Footer = () => {
           >
             {SITE.addressShort}
           </Link>
+
+          {/* Gli orari uscivano con ShowcaseSections, che è stata fusa in IlPosto.
+              Il footer è il posto giusto: uno solo, su ogni pagina.
+              Stringhe invariate. */}
+          <p className="font-work text-sm leading-relaxed text-primary-foreground/90">
+            {language === "de" ? "Montag bis Samstag: 11:00 bis 19:00" : "Monday to Saturday: 11:00 to 19:00"}
+            <br />
+            {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
+          </p>
           
           {/* Instagram */}
           <a 

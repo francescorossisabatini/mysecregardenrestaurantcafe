@@ -29,7 +29,7 @@ const Menu = () => {
         </div>
         <MenuSection />
       </main>
-      <CTAEndBlock show={["call", "directions"]} />
+      <CTAEndBlock show={["directions"]} />
       <Footer />
       <MobileStickyBar />
     </div>

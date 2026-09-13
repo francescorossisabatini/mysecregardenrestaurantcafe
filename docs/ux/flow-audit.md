@@ -72,14 +72,19 @@ tre contesti diversi senza che il flusso li distingua.
 Il profilo Dietary (vegano / senza glutine / bio, 1–3 minuti) deve capire se
 il posto va bene per lui. Oggi:
 
-- i badge dietary vivono **solo** dentro le card dei piatti del giorno
-- se il menu del giorno non c'è ancora, sparisce anche l'informazione dietary
-- la precisazione onesta — *"molti piatti senza ingredienti con glutine, ma non
-  una cucina certificata senza glutine"* — è dentro il corpo di
-  `ValueProposition`, in corsivo, al quarto paragrafo
+- i badge vegano / bio vivono **solo** dentro le card dei piatti del giorno.
+  Se il menu di oggi non c'è ancora, spariscono con le card.
+- la nota sul glutine c'è, ed è permanente: `HomeMenuPreview` la mostra sempre,
+  anche a menu assente. **Correzione rispetto alla prima stesura di questo
+  audit, che la dava per mancante.** Sta però in fondo alla sezione, dopo le
+  card, nel punto di minor attenzione.
+- la stessa precisazione era ripetuta una seconda volta dentro il corpo di
+  `ValueProposition`, in corsivo, al quarto paragrafo. Due formulazioni diverse
+  della stessa cosa in due punti della stessa pagina.
 
-È l'informazione più decisiva del sito per un intero profilo, e sta in una
-postilla.
+Quindi il problema non è che l'informazione manchi: è che è duplicata, e che la
+parte che dipende dal menu del giorno sparisce proprio nei momenti in cui il
+menu non c'è.
 
 ---
 

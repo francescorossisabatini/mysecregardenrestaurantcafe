@@ -11,6 +11,7 @@
 
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
@@ -46,15 +47,18 @@ const STATES = [
     path: '/',
     setup: async (page) => {
       // Il caso reale del lunedì mattina prima che lo staff aggiorni il foglio.
-      await page.route('**/*docs.google.com/**', (r) => r.abort());
-      await page.route('**/*supabase*/**', (r) => r.abort());
+      // Solo le chiamate API, non i moduli JS: un pattern troppo largo
+      // ('**/*supabase*/**') blocca anche il bundle e la pagina resta bianca.
+      await page.route('**/docs.google.com/**', (r) => r.abort());
+      await page.route('**/functions/v1/**', (r) => r.abort());
+      await page.route('**/rest/v1/**', (r) => r.abort());
     },
   },
   {
     slug: 'home--lingua-en',
     path: '/',
     setup: async (page) => {
-      await page.addInitScript(() => localStorage.setItem('language', 'en'));
+      await page.addInitScript(() => localStorage.setItem('preferred_language', 'en'));
     },
   },
 ];
@@ -70,6 +74,17 @@ async function shoot(browser, { path, slug, setup }, size) {
     reducedMotion: 'reduce', // le animazioni di ingresso falsano lo scatto
     locale: 'de-AT',
   });
+  // Il banner cookie coprirebbe metà pagina in ogni scatto: si dà per deciso.
+  // Per fotografare il banner stesso, togli questa riga o aggiungi uno stato.
+  await context.addInitScript(() => {
+    try {
+      localStorage.setItem('cookie_consent_v3', JSON.stringify({
+        necessary: true, analytics: false, maps: false,
+        decidedAt: new Date().toISOString(), version: 3,
+      }));
+    } catch { /* private mode */ }
+  });
+
   const page = await context.newPage();
   if (setup) await setup(page);
 
@@ -93,7 +108,12 @@ async function shoot(browser, { path, slug, setup }, size) {
 
 const main = async () => {
   await mkdir(OUT, { recursive: true });
-  const browser = await chromium.launch();
+  // Alcuni ambienti hanno un Chromium già installato a una versione diversa da
+  // quella che si aspetta il pacchetto playwright. CHROMIUM_PATH, o --chromium,
+  // evitano di riscaricare un browser.
+  const exe = process.env.CHROMIUM_PATH || arg('chromium', null)
+    || (existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : null);
+  const browser = await chromium.launch(exe ? { executablePath: exe } : {});
   const targets = [...ROUTES, ...STATES].filter((t) => !ONLY || t.path === ONLY || t.slug === ONLY);
   const results = [];
 

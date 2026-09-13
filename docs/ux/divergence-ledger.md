@@ -15,7 +15,8 @@
 
 | Data | Ambito | Stato |
 |---|---|---|
-| 13 set 2026 | Homepage — struttura | **in attesa della scelta di Francesco fra A / B / C** |
+| 13 set 2026 | Homepage — struttura | **Opzione A scelta da Francesco — implementata** |
+| 13 set 2026 | Propagazione `/menu` e `/visit` | implementata |
 
 ---
 
@@ -154,7 +155,12 @@ continua · *(3)* dove vive la riprova sociale.
 
 ---
 
-## Raccomandazione
+## Esito
+
+**Scelta: A**, con i tre passi della soglia di B assorbiti in *Il posto*.
+Ambito: home + `/menu` + `/visit`. Implementata il 13 settembre 2026.
+
+## Raccomandazione (al momento della scelta)
 
 **A**, con i tre passi della soglia di B assorbiti nella sezione *Il posto*.
 
@@ -171,10 +177,126 @@ Oggi costa troppo per quello che rende.
 
 ---
 
+---
+
+## Decisioni prese durante l'implementazione
+
+### Hero → fascia d'ingresso
+- **Default:** tenere l'hero a `100svh` e limitarsi a spostare il menu più in alto.
+- **Invece:** `min-h-[max(35svh,340px)]`, mobile e desktop. Niente CTA, niente
+  link secondario, niente indicatore di scroll, niente animazioni scaglionate
+  a 400 e 800ms. Restano tre fatti: chi siamo, se siamo aperti, quanto valiamo.
+- **Perché:** la CTA dell'hero puntava a `/#menu`, cioè serviva a saltare l'hero.
+  Tolto il motivo per saltarlo, non serve più il bottone per saltarlo.
+- **Costo:** la fotografia del cortile non è più la prima impressione piena.
+- **Nota sul valore:** il lock dice 35svh. A 390px, 35svh sono 295px, e sotto i
+  340 la foto smette di leggersi come un luogo e diventa una texture. Il
+  pavimento in pixel è alzato a 340; la quota resta 35svh.
+
+### Niente pulse infinito sul dot di stato
+- **Default:** lasciarlo, è piccolo.
+- **Invece:** rimosso. `DESIGN_SYSTEM.md` §7 vieta le animazioni infinite, e
+  l'hero ne aveva cinque in contemporanea contro la regola "mai più di una".
+- **Costo:** il badge attira un po' meno l'occhio. `aria-live` resta.
+
+### Le cinque stelle sopra ogni recensione
+- **Default:** tenerle, sono social proof.
+- **Invece:** tolte. Erano quindici icone che dicevano tutte la stessa cosa.
+  La valutazione compare una volta, con accanto il numero di recensioni.
+- **Perché:** una stella su una recensione a 5 stelle non porta informazione.
+  936 recensioni sì.
+
+### `h2-editorial` con `text-wrap: balance`
+- **Default:** lasciar andare a capo il titolo dove capita.
+- **Invece:** `text-wrap: balance` nell'utility, in `src/index.css`.
+- **Perché:** ogni `h2` su due righe lasciava una parola orfana sulla seconda —
+  "Heute aus der / Küche", "Der Hof hinter dem / Bogen", "Stimmen aus dem /
+  Garten". Tre volte lo stesso difetto nella stessa pagina.
+
+### Il CSS critico in `index.html` — bug di contrasto 1:1
+- **Trovato guardando lo screenshot di `/visit`**, non leggendo il codice.
+- Il blocco `<style>` inline in `index.html` non sta dentro un `@layer`, quindi
+  **batte ogni utility di Tailwind, su ogni route**. Conteneva una regola `h1`
+  scritta per il vecchio hero a schermo pieno: `color: #FAF7F3`,
+  `text-shadow`, `text-align: center`, `font-size: clamp(3rem, 8vw, 6rem)`.
+- Conseguenza: su `/visit`, `/menu`, `/about` e `/gallery` il titolo di pagina
+  era **crema su crema, rapporto di contrasto 1:1**, leggibile solo grazie
+  all'ombra. Nessuna classe nei componenti poteva correggerlo.
+- Conseguenza secondaria: anche l'h1 della home prendeva la dimensione da lì,
+  non dalle sue classi.
+- **Fatto:** dalla regola `h1` restano solo `margin` e `line-height`. Colore e
+  scala li decidono i componenti. `color: #1a1a1a` sul body sostituito con
+  `#111E45` (`--navy-500`), il nero del brand. `animate-fade-in-hero` riportata
+  da 1s a 400ms e resa sensibile a `prefers-reduced-motion`.
+
+---
+
+## Deroghe registrate
+
+| Controllo | Dove | Perché resta |
+|---|---|---|
+| `TYPE scala` 12 dimensioni | file toccati | Il conteggio è su più schermate insieme, non su una. Da rivedere schermata per schermata, non con una passata globale. |
+| `U2 bordo + ombra` | `AboutUs.tsx`, `Gallery.tsx`, `Login.tsx`, `OAuthConsent.tsx` | Fuori dall'ambito di questa sessione (home, `/menu`, `/visit`). Da normalizzare quando si tocca quella route. |
+
+---
+
+## Segnalazioni — non toccate, servono una decisione
+
+### 1 · `ReservationRequestForm` usa il lessico vietato
+`src/components/ReservationRequestForm.tsx` contiene:
+- `submit: "Jetzt reservieren"` — etichetta del bottone
+- `"Die Reservierung konnte nicht gesendet werden..."` — messaggio d'errore
+- `"Maximal 10 Personen pro Reservierung..."` — regola
+
+`CLAUDE.md` è esplicito su entrambi i punti: la prenotazione si chiama
+**Anfrage**, mai *Reservierung*; e non si usa mai linguaggio di urgenza, con
+*"Jetzt reservieren!"* citato come esempio. Il copy approvato per quel form è
+già scritto in `CLAUDE.md`: label *Tisch anfragen*, CTA *Anfrage senden*.
+
+**Non toccato**: è copy, e il copy lo approva Francesco. Trovato da
+`check-tells.sh`, non da una lettura.
+
+### 2 · `tailwind.config.ts` non esiste
+`CLAUDE.md` e `DESIGN_SYSTEM.md` lo indicano entrambi come "fonte della verità"
+e "arbitro finale". Il progetto è su Tailwind v4 e i token stanno in
+`src/index.css` come variabili `--font-*`, `--color-*`. Le due righe di
+documentazione puntano a un file che non c'è.
+
+### 3 · Copy rimasto orfano dalla fusione
+Due paragrafi approvati, oggi non più in pagina. Restano in git, e sono
+riutilizzabili:
+- *"Wir kochen jeden Tag frisch. Morgens kommen Gemüse, Kräuter und Getreide in
+  die Küche, mittags stehen die ersten Teller am Tresen."* (da `ValueProposition`)
+- *"Jeden Tag kochen wir zwei Hauptgerichte und eine Suppe. Manchmal entscheidet
+  die Saison, manchmal ein gutes Gemüse, das morgens in der Küche steht."*
+  (da `ShowcaseSections`/1 — sarebbe un buon sottotitolo per la sezione menu,
+  al posto di quello attuale)
+
+Anche la citazione *"Kochen ein Gebet und Essen Dankbarkeit ist."* è uscita dal
+corpo: era duplicata nel footer, che la porta già in Caveat.
+
+### 4 · EN dei tre passi — da approvare
+Il DE dei tre passi viene verbatim da `CLAUDE.md` § "IL POSTO (3 step)".
+L'EN è una proposta, scritta per pari ritmo e non come traduzione letterale:
+
+| | DE (approvato) | EN (proposta) |
+|---|---|---|
+| 01 | Geh durch den Bogen | Walk through the arch |
+| | Mariahilferstraße 45 — der Durchgang ist absichtlich versteckt. | Mariahilferstraße 45. The passage is hidden on purpose. |
+| 02 | Durch den Innenhof | Across the courtyard |
+| | Im Raimundhof — ein stiller Wiener Hof. | Into the Raimundhof, a quiet Viennese courtyard. |
+| 03 | Setz dich. Bleib. | Sit down. Stay. |
+| | Keine Eile. Dieser Ort ist gemacht zum Verweilen. | No rush. This place is made for staying a while. |
+
+---
+
 ## Prossime decisioni, da registrare qui
 
-- [ ] Struttura homepage: A / B / C — **Francesco**
-- [ ] Copy nuovo o spostato: nessuna riga entra senza approvazione in chat
-- [ ] Dove vive l'informazione dietary quando il menu del giorno manca
-- [ ] Se `CTAEndBlock` sparisce dalla home, resta sulle altre route?
-- [ ] Normalizzazione radius: progressiva o in un passaggio unico
+- [x] Struttura homepage: A / B / C — **A, scelta da Francesco**
+- [ ] EN dei tre passi: approvare o riscrivere (tabella qui sopra)
+- [ ] `ReservationRequestForm`: passare da *Reservierung* ad *Anfrage*
+- [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
+- [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca
+- [ ] Allineare `CLAUDE.md` e `DESIGN_SYSTEM.md`: `tailwind.config.ts` non esiste
+- [ ] Normalizzare radius e bordo+ombra su `/about` e `/gallery`
+- [ ] Aggiungere Playwright a `package.json` (oggi va installato a mano)

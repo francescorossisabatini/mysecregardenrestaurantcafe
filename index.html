@@ -48,33 +48,39 @@
     
     <!-- Critical inline styles for instant FCP/LCP - hero section -->
     <style>
-      /* Instant background + system fonts while loading */
+      /*
+        ATTENZIONE — questo blocco non sta dentro un @layer, quindi batte ogni
+        utility di Tailwind, ovunque nel sito. Qui dentro va solo ciò che deve
+        valere su tutte le route prima che il CSS dell'app arrivi.
+
+        Prima conteneva una regola h1 scritta per il vecchio hero a schermo
+        pieno: color #FAF7F3, text-shadow, font-size clamp(3rem, 8vw, 6rem).
+        Valeva per OGNI h1 del sito, quindi su /visit, /menu, /about e /gallery
+        il titolo era crema su crema — rapporto di contrasto 1:1 — e nessuna
+        classe nei componenti riusciva a correggerlo.
+      */
       html { background-color: #FAF7F3; }
-      body { 
-        margin: 0; 
+      body {
+        margin: 0;
         font-family: Georgia, 'Times New Roman', serif;
         background-color: #FAF7F3;
-        color: #1a1a1a;
+        /* --navy-500, il nero del brand. Mai neutri fuori palette. */
+        color: #111E45;
       }
-      /* Critical hero styles for LCP */
+      /* Critical layout styles for LCP */
       .min-h-screen { min-height: 100vh; }
       section { position: relative; }
-      h1 { 
-        font-family: 'Brush Script MT', cursive;
-        font-size: clamp(3rem, 8vw, 6rem);
-        font-weight: 700;
-        color: #FAF7F3;
-        text-align: center;
-        margin: 0;
-        line-height: 0.9;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      }
-      /* Hero fade-in animation */
+      /* Solo ciò che è vero per ogni h1: il colore e la scala li decidono i componenti. */
+      h1 { margin: 0; line-height: 0.95; }
+      /* Hero fade-in animation — stessa durata di --motion-duration-slow. */
       @keyframes fade-in-hero {
         0% { opacity: 0; transform: translateY(10px); }
         100% { opacity: 1; transform: translateY(0); }
       }
-      .animate-fade-in-hero { animation: fade-in-hero 1s ease-out forwards; }
+      .animate-fade-in-hero { animation: fade-in-hero 400ms ease-out forwards; }
+      @media (prefers-reduced-motion: reduce) {
+        .animate-fade-in-hero { animation: none; }
+      }
     </style>
     
     <!-- Google Fonts - Load asynchronously to prevent render blocking -->

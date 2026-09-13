@@ -8,11 +8,7 @@ import { HomeMenuPreview } from "@/components/HomeMenuPreview";
 import { SkipLink } from "@/components/SkipLink";
 
 // Lazy load below-the-fold components to reduce initial JS bundle
-const ValueProposition = lazy(() => import("@/components/ValueProposition").then(m => ({ default: m.ValueProposition })));
-const ShowcaseSections = lazy(() => import("@/components/ShowcaseSections").then(m => ({ default: m.ShowcaseSections })));
-const Reviews = lazy(() => import("@/components/Reviews").then(m => ({ default: m.Reviews })));
-
-const CTAEndBlock = lazy(() => import("@/components/CTAEndBlock").then(m => ({ default: m.CTAEndBlock })));
+const IlPosto = lazy(() => import("@/components/IlPosto").then(m => ({ default: m.IlPosto })));
 const Voci = lazy(() => import("@/components/Voci").then(m => ({ default: m.Voci })));
 const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
 
@@ -95,38 +91,28 @@ const Index = () => {
         <Navigation />
       </div>
 
+      {/*
+        Struttura "Il bancone" — docs/ux/divergence-ledger.md, opzione A.
+        Sette sezioni diventano quattro, una per lavoro:
+          fascia:   chi siamo, se siamo aperti, quanto valiamo
+          menu:     la risposta operativa, sopra la piega su mobile
+          il posto: come ci si arriva e com'è (era spezzato in 02 e 04)
+          voci:     stampa e ospiti insieme (erano 05 e 06)
+        CTAEndBlock non c'è più: chiamare e trovarci sono permanenti in
+        MobileStickyBar, e gli orari stanno nel footer.
+      */}
       <main id="main-content" tabIndex={-1} className="focus:outline-hidden">
-      {/* HERO */}
-      <Hero />
+        <Hero />
 
-      {/* 01 · Today's menu — answers "what's on today" in <20s (The Regular) */}
-      <HomeMenuPreview />
+        <HomeMenuPreview />
 
-      {/* 02 · Value proposition */}
-      <Suspense fallback={<SectionLoader />}>
-        <ValueProposition />
-      </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <IlPosto />
+        </Suspense>
 
-      {/* 03 · Menu showcase + 04 · Visit showcase */}
-      <Suspense fallback={<SectionLoader />}>
-        <ShowcaseSections />
-      </Suspense>
-
-      {/* 05 · Voci — partner social proof */}
-      <Suspense fallback={<SectionLoader />}>
-        <Voci />
-      </Suspense>
-
-      {/* 06 · Reviews / Social Proof */}
-      <Suspense fallback={<SectionLoader />}>
-        <Reviews />
-      </Suspense>
-
-      {/* 07 · Final CTA block */}
-      <Suspense fallback={<SectionLoader />}>
-        <CTAEndBlock show={["call", "directions", "menu"]} />
-      </Suspense>
-
+        <Suspense fallback={<SectionLoader />}>
+          <Voci />
+        </Suspense>
       </main>
 
       <Suspense fallback={null}>

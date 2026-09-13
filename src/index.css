@@ -364,6 +364,9 @@
 @utility h2-editorial {
   @apply font-cormorant leading-[1.05];
   font-size: clamp(2.25rem, 4.2vw + 1rem, 3.75rem);
+  /* Senza questo ogni titolo su due righe lascia una parola orfana sulla
+     seconda: "Heute aus der / Küche". Balance distribuisce le righe. */
+  text-wrap: balance;
 }
 
 @utility bg-hero-scrim {

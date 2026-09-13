@@ -25,15 +25,35 @@ if [ "${1:-}" = "--all" ]; then
 elif [ $# -gt 0 ]; then
   FILES=("$@")
 else
-  BASE=$(git merge-base HEAD origin/main 2>/dev/null || git rev-parse HEAD~1 2>/dev/null || echo HEAD)
-  mapfile -t FILES < <(git diff --name-only "$BASE" -- 'src/**/*.tsx' 2>/dev/null | grep -v 'src/components/ui/' || true)
+  # I file che hai appena toccato: prima il lavoro non committato, poi l'ultimo
+  # commit. Non il diff contro main: su un branch lungo diventa tutto il repo,
+  # e un controllo che segnala tutto non fa cambiare niente.
+  mapfile -t FILES < <(git diff --name-only HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -v 'src/components/ui/' || true)
+  if [ ${#FILES[@]} -eq 0 ]; then
+    mapfile -t FILES < <(git diff --name-only HEAD~1 HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -v 'src/components/ui/' || true)
+  fi
 fi
 
-if [ ${#FILES[@]} -eq 0 ]; then
+# I file cancellati restano nel diff ma non si possono leggere.
+EXISTING=()
+for f in "${FILES[@]:-}"; do [ -f "$f" ] && EXISTING+=("$f"); done
+FILES=("${EXISTING[@]:-}")
+
+if [ ${#FILES[@]} -eq 0 ] || [ -z "${FILES[0]:-}" ]; then
   echo "${DIM}Nessun file .tsx da controllare.${OFF}"; exit 0
 fi
 
 printf '%sControllo %d file%s\n\n' "$DIM" "${#FILES[@]}" "$OFF"
+
+# I commenti nel codice non sono copy visibile né stile: si filtrano dai conteggi.
+NOCOMMENT='^[^:]*:[0-9]+:[[:space:]]*(//|[{]?/[*]|[*])'
+# conta le occorrenze di un pattern ignorando le righe di commento
+count_nc() {
+  grep -rHnE "$1" "${FILES[@]}" 2>/dev/null \
+    | grep -vE "$NOCOMMENT" \
+    | grep -oE "$1" \
+    | wc -l | tr -d ' '
+}
 
 # --- S3 · ritmo verticale unico --------------------------------------------
 RHYTHM=$(grep -rhoE 'py-[0-9]+ md:py-[0-9]+( lg:py-[0-9]+)?' "${FILES[@]}" 2>/dev/null | sort | uniq -c | sort -rn)
@@ -75,11 +95,11 @@ else
 fi
 
 # --- U4 · frecce in coda ai link -------------------------------------------
-ARROWS=$(grep -rhoE 'ArrowRight|→' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
+ARROWS=$(count_nc 'ArrowRight|→')
 [ "$ARROWS" -gt 1 ] && hit "U4 freccia" "${ARROWS} frecce — una per pagina, sul link che porta fuori" || ok "U4 freccia (${ARROWS})"
 
 # --- C1 · interpunti --------------------------------------------------------
-DOTS=$(grep -rho '·' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
+DOTS=$(count_nc '·')
 [ "$DOTS" -gt 2 ] && hit "C1 interpunto" "${DOTS}× — massimo 2 per viewport" || ok "C1 interpunto (${DOTS})"
 
 # --- copy · divieti duri da voice-spec -------------------------------------
@@ -87,7 +107,7 @@ DOTS=$(grep -rho '·' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
 BANNED_W='\b(Reservieren|Reservierung|Sofort|Learn more|Get Started|Get started|einzigartig|authentisch|Erlebnis|seamless|elevate|curated)\b'
 # sottostringhe (prefissi tedeschi composti)
 BANNED_S='Jetzt reservieren|Letzte Plätze|Mehr erfahren|Klick hier|kulinarische|Wohlfühl|culinary journey|hidden oasis'
-BAD=$( { grep -rnoE "$BANNED_W" "${FILES[@]}" 2>/dev/null; grep -rnoE "$BANNED_S" "${FILES[@]}" 2>/dev/null; } | sort -u || true)
+BAD=$( { grep -rHnE "$BANNED_W" "${FILES[@]}" 2>/dev/null; grep -rHnE "$BANNED_S" "${FILES[@]}" 2>/dev/null; } | grep -vE "$NOCOMMENT" | cut -c1-140 | sort -u || true)
 if [ -n "$BAD" ]; then
   hit "VOICE lessico vietato" "voice-spec § Divieti duri"
   echo "$BAD" | cut -c1-140 | sed 's/^/      /'
@@ -96,11 +116,11 @@ else
 fi
 
 # --- em dash come connettore ------------------------------------------------
-EMDASH=$(grep -rho '—' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
+EMDASH=$(count_nc '—')
 [ "$EMDASH" -gt 3 ] && warn "VOICE em dash" "${EMDASH}× — controlla che non sia il connettore principale"
 
 # --- token: hex e colori Tailwind di default --------------------------------
-HEX=$(grep -rnoE '#[0-9a-fA-F]{6}\b' "${FILES[@]}" 2>/dev/null || true)
+HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b' "${FILES[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
 [ -n "$HEX" ] && { hit "TOKEN hex hardcoded" "solo token semantici nei componenti"; echo "$HEX" | sed 's/^/      /'; } || ok "TOKEN hex hardcoded"
 
 TWCOLORS=$(grep -rnoE '\b(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]{2,3}\b' "${FILES[@]}" 2>/dev/null || true)
