@@ -122,19 +122,24 @@ let cachedMenu: { data: WeeklyMenu; timestamp: number; sheetId: string } | null 
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
 // Keep the public menu available during temporary database outages.
-// The database value remains authoritative whenever it can be reached.
-const FALLBACK_SHEET_ID = "1CUC6ZGkRN-WoRINW86Q0VguVE1T1PJrC";
+// The GOOGLE_SHEET_ID secret is authoritative; the database is only a legacy fallback.
+const FALLBACK_SHEET_ID = "1ADidZMiVlJmN-bN2N-T8eiw6pzL-5QvN";
 
-// Fetch the active sheet id + loaded_at from menu_config.
-// On first deploy (no DB row) we self-bootstrap from the GOOGLE_SHEET_ID env var
-// and persist it so the Sunday-rollover clock starts from now.
+// Resolve the active sheet id + loaded_at.
+// The sheet ID is fixed and stored in the GOOGLE_SHEET_ID secret: the staff updates
+// the file contents each week, so when the secret is set we always report the menu
+// as freshly loaded (loadedAt = now). menu_config remains only a legacy fallback.
 async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: string | null }> {
+  const envSheetId = (Deno.env.get('GOOGLE_SHEET_ID') || '').trim();
+  if (envSheetId) {
+    return { sheetId: envSheetId, loadedAt: new Date().toISOString() };
+  }
+
   const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-  const envSheetId = Deno.env.get('GOOGLE_SHEET_ID') || FALLBACK_SHEET_ID;
 
   if (!supabaseUrl || !serviceKey) {
-    return { sheetId: envSheetId, loadedAt: null };
+    return { sheetId: FALLBACK_SHEET_ID, loadedAt: null };
   }
 
   const baseHeaders = {
@@ -154,39 +159,12 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
       }
     } else {
       console.warn('menu_config fetch failed:', res.status);
-      return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
     }
   } catch (e) {
     console.warn('menu_config fetch error:', e);
-    return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
   }
 
-  // Self-bootstrap from env var
-  if (envSheetId) {
-    const nowIso = new Date().toISOString();
-    try {
-      await fetch(`${supabaseUrl}/rest/v1/menu_config`, {
-        method: 'POST',
-        headers: {
-          ...baseHeaders,
-          'Content-Type': 'application/json',
-          Prefer: 'resolution=merge-duplicates',
-        },
-        body: JSON.stringify({
-          singleton: true,
-          sheet_id: envSheetId,
-          loaded_at: nowIso,
-        }),
-        signal: AbortSignal.timeout(3000),
-      });
-      console.log('menu_config bootstrapped from env');
-    } catch (e) {
-      console.warn('menu_config bootstrap failed:', e);
-    }
-    return { sheetId: envSheetId, loadedAt: nowIso };
-  }
-
-  return { sheetId: '', loadedAt: null };
+  return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
 }
 
 // Sanitize string content - remove potential HTML/script tags and enforce length limits
