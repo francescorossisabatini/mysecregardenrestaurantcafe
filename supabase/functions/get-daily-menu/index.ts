@@ -123,6 +123,10 @@ const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
 // Keep the public menu available during temporary database outages.
 // The database value remains authoritative whenever it can be reached.
+// When we fall back we return loadedAt: null rather than the current time.
+// loadedAt is what useWeeklyMenuAvailable checks against last Sunday to decide
+// whether the weekly menu is still current, so stamping it "now" would make an
+// outdated sheet pass that check precisely when the guard is needed.
 const FALLBACK_SHEET_ID = "1CUC6ZGkRN-WoRINW86Q0VguVE1T1PJrC";
 
 // Fetch the active sheet id + loaded_at from menu_config.
@@ -154,11 +158,11 @@ async function getActiveMenuConfig(): Promise<{ sheetId: string; loadedAt: strin
       }
     } else {
       console.warn('menu_config fetch failed:', res.status);
-      return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
+      return { sheetId: FALLBACK_SHEET_ID, loadedAt: null };
     }
   } catch (e) {
     console.warn('menu_config fetch error:', e);
-    return { sheetId: FALLBACK_SHEET_ID, loadedAt: new Date().toISOString() };
+    return { sheetId: FALLBACK_SHEET_ID, loadedAt: null };
   }
 
   // Self-bootstrap from env var
