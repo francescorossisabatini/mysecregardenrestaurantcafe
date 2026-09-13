@@ -76,7 +76,7 @@ export const Voci = () => {
   const { language } = useLanguage();
 
   return (
-    <section id="reviews" aria-labelledby="voci-heading" className="bg-verde-tint py-20 md:py-28">
+    <section id="reviews" aria-labelledby="voci-heading" className="bg-verde-tint py-16 md:py-20">
       <div className="container mx-auto max-w-6xl px-5">
 
         <div className="max-w-[62ch] space-y-4">

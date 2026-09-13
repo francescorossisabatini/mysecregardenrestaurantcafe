@@ -69,7 +69,10 @@ fi
 EYEBROW=$(grep -rho 'eyebrow-num' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
 RULE=$(grep -rho 'rule-short' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
 if [ "$EYEBROW" -gt 2 ]; then
-  hit "S2 template di sezione" "eyebrow-num ${EYEBROW}× — massimo 2 per pagina"
+  # Il limite è per pagina, ma lo script vede file, non pagine. Elenca dove
+  # stanno, così chi legge decide se sono davvero sulla stessa schermata.
+  hit "S2 template di sezione" "eyebrow-num ${EYEBROW}× nei file controllati — il limite è 2 per PAGINA, quindi guarda dove stanno"
+  grep -rHc 'eyebrow-num' "${FILES[@]}" 2>/dev/null | grep -v ':0$' | sed 's/^/      /'
 else
   ok "S2 template di sezione (eyebrow-num ${EYEBROW}×)"
 fi

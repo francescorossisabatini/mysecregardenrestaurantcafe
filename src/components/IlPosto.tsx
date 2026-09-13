@@ -46,7 +46,7 @@ export const IlPosto = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="bg-background py-20 md:py-28" aria-labelledby="il-posto-heading">
+    <section className="bg-background py-28 md:py-36" aria-labelledby="il-posto-heading">
       <div className="container mx-auto px-5">
         {/* Asimmetrico: il testo tiene la sua misura, l'immagine esce più stretta
             e più alta. Non due metà uguali (antipatterns.md § S7). */}

@@ -206,6 +206,18 @@ Oggi costa troppo per quello che rende.
 - **Perché:** una stella su una recensione a 5 stelle non porta informazione.
   936 recensioni sì.
 
+### Quattro densità, non tre
+- **Default:** dare a *Il posto* e *Voci* lo stesso `py-20 md:py-28`, che è
+  quello che era successo alla prima passata.
+- **Invece:** `py-28 md:py-36` per *Il posto*, `py-16 md:py-20` per *Voci*.
+  La pagina diventa: fascia stretta, menu stretto, *Il posto* ampio, *Voci*
+  compatta, footer.
+- **Perché:** *Il posto* è il respiro della pagina — il lock ne ammette uno solo
+  per pagina, e questo è quello. *Voci* chiude, quindi sta fra il menu e la
+  narrativa. Due sezioni di fila con lo stesso peso erano di nuovo una sola
+  velocità di scorrimento, il difetto da cui era partito tutto l'audit.
+- **Trovato da:** lo Stop hook, non da una rilettura.
+
 ### `h2-editorial` con `text-wrap: balance`
 - **Default:** lasciar andare a capo il titolo dove capita.
 - **Invece:** `text-wrap: balance` nell'utility, in `src/index.css`.
@@ -235,6 +247,7 @@ Oggi costa troppo per quello che rende.
 
 | Controllo | Dove | Perché resta |
 |---|---|---|
+| `S2 template di sezione` 3× | `IlPosto`, `Voci`, `CTAEndBlock` | Il limite è **per pagina**, lo script conta **per file**. La home ne ha due (`IlPosto`, `Voci`); il terzo è in `CTAEndBlock`, che dalla home è uscito e vive su `/menu`, `/about`, `/gallery`. Per pagina si è conformi. Lo script ora elenca i file quando scatta, così la deroga si valuta in un colpo d'occhio invece di doverla cercare. |
 | `TYPE scala` 12 dimensioni | file toccati | Il conteggio è su più schermate insieme, non su una. Da rivedere schermata per schermata, non con una passata globale. |
 | `U2 bordo + ombra` | `AboutUs.tsx`, `Gallery.tsx`, `Login.tsx`, `OAuthConsent.tsx` | Fuori dall'ambito di questa sessione (home, `/menu`, `/visit`). Da normalizzare quando si tocca quella route. |
 
