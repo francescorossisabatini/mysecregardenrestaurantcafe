@@ -41,8 +41,80 @@ const ROUTES = [
   { path: '/link', slug: 'link' },
 ];
 
+
+// Fixture del menu del giorno.
+// La edge function Supabase non è raggiungibile da questo ambiente, quindi
+// senza questa il menu ha SEMPRE lo stato "non ancora aggiornato" e le card
+// piatto — cioè, secondo il direction lock, la cosa che porta la pagina —
+// non sono mai state viste da nessuno.
+// L'orologio viene fissato a un mercoledì alle 12:30: di domenica il
+// componente mostra comunque il messaggio di chiusura.
+const MENU_FIXTURE_DAY = { de: 'Mittwoch', en: 'Wednesday' };
+const MENU_FIXTURE_TIME = new Date('2026-09-16T12:30:00+02:00');
+const MENU_FIXTURE = {
+  success: true,
+  loadedAt: '2026-09-16T08:40:00+02:00',
+  data: {
+    period: '14.–19. September 2026',
+    days: [
+      {
+        day: MENU_FIXTURE_DAY,
+        soup: {
+          de: 'Kürbiscremesuppe. Mit gerösteten Kernen und einem Löffel Sauerrahm.',
+          en: 'Pumpkin cream soup. With roasted seeds and a spoon of sour cream.',
+        },
+        soupMeta: { allergens: ['G', 'A'] },
+        green: {
+          de: 'Alpenpolenta mit Bergkäse und Schwammerln. Langsam gerührt, Bergkäse aus Vorarlberg, Schwammerl aus dem Waldviertel, dazu ein kleiner Salat vom Markt.',
+          en: 'Alpine polenta with mountain cheese and mushrooms. Slowly stirred, cheese from Vorarlberg, mushrooms from the Waldviertel, with a small market salad.',
+        },
+        greenMeta: { allergens: ['G'] },
+        blue: {
+          de: 'Korean Bowl, vegan. Reis, eingelegtes Gemüse, Sesam, Gochujang.',
+          en: 'Korean bowl, vegan. Rice, pickled vegetables, sesame, gochujang.',
+        },
+        blueMeta: { allergens: ['F', 'N'] },
+      },
+      {
+        day: { de: 'Donnerstag', en: 'Thursday' },
+        soup: { de: 'Linsensuppe. Mit Zitrone und Kreuzkümmel.', en: 'Lentil soup. With lemon and cumin.' },
+        green: { de: 'Gemüsestrudel. Mit Salat.', en: 'Vegetable strudel. With salad.' },
+        blue: { de: 'Dal mit Reis, vegan. Mit Koriander.', en: 'Dal with rice, vegan. With coriander.' },
+      },
+    ],
+  },
+};
+
+const routeMenuFixture = async (page) => {
+  const fulfil = (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*' },
+      body: JSON.stringify(MENU_FIXTURE),
+    });
+  await page.route('**/functions/v1/**', fulfil);
+  await page.route('**/rest/v1/**', fulfil);
+};
+
 // Stati che non si vedono navigando: vanno forzati.
 const STATES = [
+  {
+    slug: 'home--menu-pieno',
+    path: '/',
+    setup: async (page) => {
+      await page.clock.setFixedTime(MENU_FIXTURE_TIME);
+      await routeMenuFixture(page);
+    },
+  },
+  {
+    slug: 'menu--pieno',
+    path: '/menu',
+    setup: async (page) => {
+      await page.clock.setFixedTime(MENU_FIXTURE_TIME);
+      await routeMenuFixture(page);
+    },
+  },
   {
     slug: 'home--menu-vuoto',
     path: '/',

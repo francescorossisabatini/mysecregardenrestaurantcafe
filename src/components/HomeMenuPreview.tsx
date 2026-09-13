@@ -37,7 +37,7 @@ const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en"
   if (visibleLabels.length === 0) return null;
 
   return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
+    <p className="mt-2 font-work text-[11px] font-semibold lowercase tracking-[0.06em] text-muted-high-contrast">
       {joinDisplayText(visibleLabels)}
     </p>
   );
@@ -92,7 +92,7 @@ export const HomeMenuPreview = () => {
 
 
   return (
-    <section id="menu" className="bg-card py-10 md:py-14">
+    <section id="menu" className="bg-card py-10 pb-[calc(6rem+env(safe-area-inset-bottom))] md:py-14 md:pb-14">
       <div className="container mx-auto px-5">
         <div className="mx-auto max-w-2xl lg:max-w-5xl">
           {/* Il giorno della settimana è un dato, non un ornamento: fa il lavoro
@@ -143,7 +143,7 @@ export const HomeMenuPreview = () => {
                         {dish.label}
                       </span>
                     </div>
-                    <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
+                    <p className="shrink-0 font-work text-sm font-semibold text-accent" aria-label={`${dish.price.replace(",", " Euro ")}`}>{dish.price}</p>
                   </div>
                   <div>
                     {dishCopy.description && (

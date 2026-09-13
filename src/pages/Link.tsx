@@ -32,7 +32,7 @@ const LinkPage = () => {
           {links.map((link) => {
             const Icon = link.icon;
             const content = (
-              <span className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-primary text-primary-foreground rounded-xl text-lg font-medium font-work shadow-xs hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 touch-manipulation">
+              <span className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-primary text-primary-foreground rounded-lg text-lg font-medium font-work shadow-xs hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 touch-manipulation">
                 <Icon className="w-5 h-5" />
                 {link.label[language]}
               </span>
@@ -40,12 +40,12 @@ const LinkPage = () => {
 
             if (link.isExternal || link.isTel) {
               return (
-                <a key={link.href} href={link.href} target={link.isExternal ? "_blank" : undefined} rel={link.isExternal ? "noopener noreferrer" : undefined} className="block">
+                <a key={`${link.href}-${link.label.de}`} href={link.href} target={link.isExternal ? "_blank" : undefined} rel={link.isExternal ? "noopener noreferrer" : undefined} className="block">
                   {content}
                 </a>
               );
             }
-            return <Link key={link.href} to={link.href} className="block">{content}</Link>;
+            return <Link key={`${link.href}-${link.label.de}`} to={link.href} className="block">{content}</Link>;
           })}
         </div>
 

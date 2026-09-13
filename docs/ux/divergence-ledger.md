@@ -218,6 +218,20 @@ Oggi costa troppo per quello che rende.
   velocità di scorrimento, il difetto da cui era partito tutto l'audit.
 - **Trovato da:** lo Stop hook, non da una rilettura.
 
+### Scrim dell'hero — il testo non passava WCAG
+- **Trovato da:** il critico cieco l'ha sospettato, `scripts/check-contrast.mjs`
+  l'ha misurato. Il metodo: si nasconde il testo, si fotografa lo sfondo che
+  c'era sotto, e si calcola il contrasto contro **ogni** pixel del riquadro,
+  tenendo il peggiore. La media mentirebbe.
+- **Prima:** marchio 1.41:1 su mobile e 1.28:1 su desktop (serve 3:1), tagline
+  2.03:1 e 1.94:1 (serve 4.5:1). Il `text-shadow` non conta come contrasto.
+- **Dopo:** 4.46 / 3.53 sul marchio, tutto il resto sopra 6.8:1.
+- **Costo:** lo scrim pesa di più sulla metà bassa della banda. La fotografia si
+  legge ancora — verificato guardando lo scatto — ma la fascia è più scura di
+  prima. L'alternativa, se non piace, è uno scrim contenuto dietro il solo
+  blocco di testo invece che su tutta la banda: si torna a una foto più chiara,
+  ma ricompare il "chip" che l'hero originale aveva deliberatamente tolto.
+
 ### `h2-editorial` con `text-wrap: balance`
 - **Default:** lasciar andare a capo il titolo dove capita.
 - **Invece:** `text-wrap: balance` nell'utility, in `src/index.css`.
@@ -301,6 +315,8 @@ del repo. Scatti prima/dopo in `output/lab/`.
 
 | Controllo | Dove | Perché resta |
 |---|---|---|
+| `TOKEN colore Tailwind di default` 7× | `src/utils/menuIcons.tsx` | **Il file non è importato da nessuna parte.** Verificato con grep su tutto `src/`: `getDietaryIcons` non ha consumatori. È codice morto, quindi quei colori non rendono niente. Da cancellare in una pulizia, non da ridipingere. |
+| `U2 bordo + ombra` su overlay | `InstallPrompt`, `MenuFloatingPill`, `SkipLink`, `CookieConsent` | Sono elementi che stanno **sopra** il contenuto, non sulla superficie cream. Lì l'ombra fa il lavoro che il bordo non può fare: staccare dal piano sottostante. Deroga motivata, non svista. |
 | `S2 template di sezione` 3× | `IlPosto`, `Voci`, `CTAEndBlock` | Il limite è **per pagina**, lo script conta **per file**. La home ne ha due (`IlPosto`, `Voci`); il terzo è in `CTAEndBlock`, che dalla home è uscito e vive su `/menu`, `/about`, `/gallery`. Per pagina si è conformi. Lo script ora elenca i file quando scatta, così la deroga si valuta in un colpo d'occhio invece di doverla cercare. |
 | `TYPE scala` 12 dimensioni | file toccati | Il conteggio è su più schermate insieme, non su una. Da rivedere schermata per schermata, non con una passata globale. |
 | `U2 bordo + ombra` | `AboutUs.tsx`, `Gallery.tsx`, `Login.tsx`, `OAuthConsent.tsx` | Fuori dall'ambito di questa sessione (home, `/menu`, `/visit`). Da normalizzare quando si tocca quella route. |

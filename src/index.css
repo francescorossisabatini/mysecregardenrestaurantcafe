@@ -250,9 +250,13 @@
 }
 
 @utility surface-card {
+  /* Superficie card su cream: il bordo separa, l'ombra no.
+     Questa utility portava anche box-shadow, quindi ogni `border surface-card`
+     era bordo E ombra sulla stessa superficie — il fallimento duro di
+     antipatterns.md § U2, invisibile al grep perché nascosto qui dentro.
+     Chi vuole elevazione usa .shadow-design-card, esplicitamente. */
   background: hsl(var(--card) / 0.96);
   border-color: hsl(var(--border) / 0.9);
-  box-shadow: var(--msg-shadow-card);
 }
 
 @utility border-soft {
@@ -370,11 +374,18 @@
 }
 
 @utility bg-hero-scrim {
+  /* Lo scrim non è decorazione: è quello che rende leggibile il testo sopra la
+     fotografia. Misurato con scripts/check-contrast.mjs, la versione precedente
+     (0.05 → 0.18 → 0.55) dava 1.41:1 sul marchio e 2.03:1 sulla tagline, contro
+     i 3:1 e 4.5:1 richiesti. Il text-shadow non conta come contrasto.
+     Il testo sta in basso, quindi il gradiente pesa lì e lascia respirare la
+     parte alta della foto. I valori sono tarati sulla misura, non a occhio. */
   background: linear-gradient(
     180deg,
-    hsl(var(--foreground) / 0.05) 0%,
-    hsl(var(--foreground) / 0.18) 55%,
-    hsl(var(--foreground) / 0.55) 100%
+    hsl(var(--foreground) / 0.12) 0%,
+    hsl(var(--foreground) / 0.46) 32%,
+    hsl(var(--foreground) / 0.72) 62%,
+    hsl(var(--foreground) / 0.86) 100%
   );
 }
 

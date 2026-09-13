@@ -54,8 +54,11 @@ export const Hero = () => {
         alt=""
         width={1920}
         height={1280}
-        fetchPriority="high"
         decoding="async"
+        /* React 18 non riconosce fetchPriority e lo scarta con un warning in
+           console: l'hint sull'immagine LCP non veniva mai applicato. Si mette
+           a mano finché il progetto non passa a React 19. */
+        ref={(el) => el?.setAttribute("fetchpriority", "high")}
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: heroImage.position }}
         aria-hidden="true"

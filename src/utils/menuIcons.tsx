@@ -17,7 +17,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   // Vegan
   if (text.includes('vegan') || text.includes('vegano')) {
     iconMap.set('vegan', {
-      icon: <Leaf className="w-4 h-4 text-green-600" />,
+      icon: <Leaf className="w-4 h-4 text-dietary-vegan" />,
       label: 'Vegan'
     });
   }
@@ -26,7 +26,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   if ((text.includes('vegetarian') || text.includes('vegetariano') || text.includes('vegetarisch')) && 
       !text.includes('vegan') && !text.includes('vegano')) {
     iconMap.set('vegetarian', {
-      icon: <Leaf className="w-4 h-4 text-green-500" />,
+      icon: <Leaf className="w-4 h-4 text-dietary-vegan" />,
       label: 'Vegetarian'
     });
   }
@@ -35,7 +35,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   if (text.includes('gluten-free') || text.includes('gluten free') || 
       text.includes('senza glutine') || text.includes('glutenfrei')) {
     iconMap.set('gluten-free', {
-      icon: <Wheat className="w-4 h-4 text-amber-600 line-through" />,
+      icon: <Wheat className="w-4 h-4 text-dietary-glutenFree line-through" />,
       label: 'Gluten-free'
     });
   }
@@ -52,7 +52,7 @@ export function getDietaryIcons(notes?: { de: string; en: string }): DietaryIcon
   // Low carb
   if (text.includes('low carb') || text.includes('low-carb') || text.includes('lowcarb')) {
     iconMap.set('low-carb', {
-      icon: <Salad className="w-4 h-4 text-green-600" />,
+      icon: <Salad className="w-4 h-4 text-dietary-vegan" />,
       label: 'Low Carb'
     });
   }

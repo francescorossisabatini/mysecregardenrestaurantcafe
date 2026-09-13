@@ -97,6 +97,32 @@ else
   ok "U2 bordo + ombra"
 fi
 
+# --- U2b · ombra nascosta dentro una @utility -------------------------------
+# Il grep sopra vede solo le classi scritte nel className. Un'utility che porta
+# box-shadow al suo interno passa inosservata: è successo con .surface-card,
+# che combinava border-color e box-shadow e rendeva ogni `border surface-card`
+# un bordo+ombra invisibile al controllo.
+CSS="src/index.css"
+if [ -f "$CSS" ]; then
+  SHADOW_UTILS=$(awk '
+    /^@utility /{ name=$2; body="" ; inblock=1 }
+    inblock { body = body $0 }
+    /^}/ { if (inblock && body ~ /box-shadow[ \t]*:/) print name; inblock=0 }
+  ' "$CSS" | tr -d '{' | grep -v '^shadow' || true)
+  HIDDEN=""
+  for u in $SHADOW_UTILS; do
+    FOUND=$(grep -rHnE "className=\"[^\"]*\bborder\b[^\"]*\b${u}\b|className=\"[^\"]*\b${u}\b[^\"]*\bborder\b" "${FILES[@]}" 2>/dev/null | grep -v 'border-0' || true)
+    [ -n "$FOUND" ] && HIDDEN="${HIDDEN}
+${FOUND}"
+  done
+  if [ -n "${HIDDEN// /}" ]; then
+    hit "U2b ombra dentro un'utility" "queste utility portano box-shadow e sono usate insieme a border: ${SHADOW_UTILS//$'\n'/ }"
+    printf '%s\n' "$HIDDEN" | grep . | cut -c1-140 | sed 's/^/      /'
+  else
+    ok "U2b ombra dentro un'utility"
+  fi
+fi
+
 # --- U4 · frecce in coda ai link -------------------------------------------
 ARROWS=$(count_nc 'ArrowRight|→')
 [ "$ARROWS" -gt 1 ] && hit "U4 freccia" "${ARROWS} frecce — una per pagina, sul link che porta fuori" || ok "U4 freccia (${ARROWS})"
