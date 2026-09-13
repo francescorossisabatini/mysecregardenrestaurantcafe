@@ -6,6 +6,14 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>Banco — CS01</title>
     <!--
+      Gli stessi font dell'app. Senza questa riga il banco renderizzava con i
+      fallback di sistema, e confrontare due varianti tipografiche su Georgia
+      al posto di Cormorant non confronta niente.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Lora:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&display=swap">
+    <!--
       Entry solo per lo sviluppo.
       Vite in dev serve qualsiasi .html alla radice; `vite build` costruisce
       solo index.html, perché vite.config.ts non dichiara altri input.

@@ -62,7 +62,7 @@ const Preview = ({ expId, variant, width }: { expId: string; variant: "before" |
   return (
     <iframe
       title={`${expId} ${variant} ${width}px`}
-      src={`/lab.html?exp=${expId}&variant=${variant}`}
+      src={`?exp=${expId}&variant=${variant}`}
       style={{ width, height }}
       className="block max-w-full border border-neutral-300 bg-white"
     />

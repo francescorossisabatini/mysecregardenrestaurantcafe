@@ -25,3 +25,6 @@ dist-ssr
 
 # screenshot del tell-check
 output/
+
+# build statica del banco
+dist-lab/
