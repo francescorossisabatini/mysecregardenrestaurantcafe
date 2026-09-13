@@ -54,10 +54,40 @@ Non si passa allo stadio dopo prima di aver chiuso quello prima.
    griglia è un'informazione utile adesso, non dopo.
 4. **Superfici.** Tipografia, colore, spaziatura, movimento, in quest'ordine.
 
+## Il banco — provare prima di promuovere
+
+`lab.html` alla radice è un'entry di Vite **solo per lo sviluppo**: `vite build`
+costruisce solo `index.html`, quindi il banco non finisce mai in produzione.
+
+```bash
+npx vite --host 127.0.0.1 --port 8080     # poi apri /lab.html
+node scripts/shoot-lab.mjs                # fotografa ogni coppia prima/dopo
+```
+
+Ogni esperimento in `src/lab/experiments/` mette a confronto **com'è oggi** e
+**come sarebbe** con una funzione CSS che Tailwind espone, e parte da un difetto
+che esiste davvero nel repo, con file e riga. Un banco pieno di demo generiche
+non serve a decidere niente.
+
+Due regole che l'hanno reso onesto:
+
+- **Ogni anteprima sta in un iframe** alla larghezza dichiarata. Dare una
+  larghezza a un `div` non simula un viewport: le varianti con breakpoint `lg:`
+  continuerebbero ad applicarsi come sul monitor grande. La prima versione del
+  banco lo faceva e mostrava tre colonne dentro una finestra da 390px.
+- **I font sono quelli veri.** `node scripts/fetch-fonts.mjs` li scarica una
+  volta in `output/fonts/`, e sia `shoot.mjs` che `shoot-lab.mjs` li servono al
+  browser. Senza, ogni scatto esce con i fallback di sistema e la tipografia non
+  è mai stata giudicata da nessuno.
+
+Un esperimento entra in produzione solo con la coppia di scatti a supporto, e la
+decisione va nel ledger come tutte le altre.
+
 ## Prima di dire "fatto"
 
 ```bash
-npm run dev                      # in un altro terminale
+node scripts/fetch-fonts.mjs     # una volta sola: i font veri in locale
+npx vite --host 127.0.0.1 --port 8080   # in un altro terminale
 node scripts/shoot.mjs           # screenshot di ogni route e stato
 ./scripts/check-tells.sh         # controllo meccanico sui file toccati
 ```

@@ -243,6 +243,60 @@ Oggi costa troppo per quello che rende.
 
 ---
 
+## Decisioni prese al banco (`lab.html`)
+
+Cinque funzioni CSS che Tailwind espone, ognuna provata contro un difetto reale
+del repo. Scatti prima/dopo in `output/lab/`.
+
+### Promosse in produzione
+
+**Subgrid sulle card dei piatti** — `grid-rows-subgrid` + `row-span-4`
+- **Default:** pareggiare le altezze con `lg:min-h-[18rem]` e spingere gli
+  allergeni in fondo con `mt-auto`, come era.
+- **Invece:** il contenitore dichiara quattro righe, le card le ereditano.
+- **Perché:** `18rem` era un numero inventato — con un nome corto restava un
+  buco, con uno lungo la card sfondava. E l'etichetta della zuppa non stava
+  sulla stessa linea dell'etichetta del piatto accanto. Negli scatti
+  `output/lab/subgrid--1100--*.png` la differenza è netta.
+- **Costo:** le quattro righe devono restare figli diretti della card, quindi
+  il wrapper intermedio è sparito.
+
+**`:has()` sul numero di colonne** — `has-[>*:only-child]`, `has-[>:nth-child(2):last-child]`
+- **Default:** `lg:grid-cols-3` fisse, oppure un ternario su `dishes.length`.
+- **Invece:** la griglia conta i propri figli in CSS.
+- **Perché:** nei giorni in cui la cucina manda solo la zuppa restavano due
+  colonne vuote e la card galleggiava a sinistra. È un difetto che si vede solo
+  con dati reali, e i dati reali qui non sono raggiungibili: il banco è l'unico
+  posto in cui è stato possibile vederlo.
+- **Costo:** la regola vive nel foglio di stile. Chi cerca il perché nel JSX
+  non lo trova — per questo c'è un commento sopra `dishes`.
+
+**`text-pretty` sui paragrafi di corpo**
+- **Default:** lasciare andare a capo come capita, o usare `balance` ovunque.
+- **Invece:** `balance` resta sui titoli (`h2-editorial`), `pretty` va sul corpo.
+- **Perché:** `balance` pareggia tutte le righe e su testi lunghi costa;
+  `pretty` guarda solo le ultime e toglie la parola orfana in chiusura.
+
+### Restano al banco — proposte, non fatte
+
+**Container queries** — `@container` + varianti `@md:`
+- `HomeMenuPreview.tsx` contiene **due** card di piatto quasi identiche: una per
+  oggi, una semplificata per l'anteprima di domani. Esistono perché la card usa
+  i breakpoint del viewport e non regge in una colonna stretta. Con
+  `@container` ne basterebbe una.
+- Non fatto qui: è un refactor che tocca anche `MenuSection.tsx`, e va valutato
+  come giro a sé.
+
+**`@starting-style`** — varianti `starting:` e `motion-reduce:`
+- Sostituisce il pattern `useState` + `setTimeout` per le entrate di sezione,
+  quello che il vecchio `Hero.tsx` usava con due timer e due cleanup. In più
+  `motion-reduce:` spegne tutto in una parola, invece di dover ricordare di
+  controllare il media query nel JS.
+- Non fatto qui: oggi nessuna sezione ha un'entrata scaglionata, quindi non
+  c'è niente da sostituire. Serve alla prossima che ne avrà bisogno.
+
+---
+
 ## Deroghe registrate
 
 | Controllo | Dove | Perché resta |

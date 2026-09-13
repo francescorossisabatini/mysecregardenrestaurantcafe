@@ -59,7 +59,7 @@ export const IlPosto = () => {
               {language === "de" ? "Der Hof hinter dem Bogen" : "The courtyard behind the arch"}
             </h2>
 
-            <p className="font-lora text-lg leading-relaxed text-foreground/85">
+            <p className="text-pretty font-lora text-lg leading-relaxed text-foreground/85">
               {language === "de"
                 ? "Du gehst durch den Bogen an der Mariahilferstraße. Ein paar Schritte später wird es leiser, und der Raimundhof öffnet sich."
                 : "You walk through the arch on Mariahilferstraße. A few steps later it gets quieter, and Raimundhof opens up."}
@@ -70,7 +70,7 @@ export const IlPosto = () => {
               {steps.map((step) => (
                 <li key={step.n} className="relative">
                   <span
-                    className="absolute -left-[25px] top-1 bg-background px-[3px] font-work text-[11px] font-semibold tracking-[0.12em] text-accent"
+                    className="absolute -left-[25px] top-1 bg-background px-[3px] font-work text-[11px] font-semibold tracking-[0.12em] text-verde-400"
                     aria-hidden="true"
                   >
                     {step.n}
@@ -78,14 +78,14 @@ export const IlPosto = () => {
                   <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
                     {step.title[language]}
                   </h3>
-                  <p className="mt-1 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                  <p className="mt-1 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
                     {step.body[language]}
                   </p>
                 </li>
               ))}
             </ol>
 
-            <p className="font-lora text-lg leading-relaxed text-foreground/85">
+            <p className="text-pretty font-lora text-lg leading-relaxed text-foreground/85">
               {language === "de"
                 ? "Pflanzen, Holztische, Teller vom Tresen. Kein großes Theater, eher ein guter Platz für eine Pause."
                 : "Plants, wooden tables, plates from the counter. No big show, just a good place to pause."}

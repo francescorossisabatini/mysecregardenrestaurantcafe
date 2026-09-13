@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Banco — CS01</title>
+    <!--
+      Entry solo per lo sviluppo.
+      Vite in dev serve qualsiasi .html alla radice; `vite build` costruisce
+      solo index.html, perché vite.config.ts non dichiara altri input.
+      Quindi questo file non finisce mai in produzione.
+      Si apre con: npx vite --host 127.0.0.1 --port 8080  →  /lab.html
+    -->
+  </head>
+  <body>
+    <div id="lab-root"></div>
+    <script type="module" src="/src/lab/main.tsx"></script>
+  </body>
+</html>

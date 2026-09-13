@@ -21,16 +21,16 @@ ok()   { printf '%s✓ %s%s\n' "$GRN" "$1" "$OFF"; }
 
 # --- quali file -------------------------------------------------------------
 if [ "${1:-}" = "--all" ]; then
-  mapfile -t FILES < <(find src -name '*.tsx' -not -path 'src/components/ui/*')
+  mapfile -t FILES < <(find src -name '*.tsx' -not -path 'src/components/ui/*' -not -path 'src/lab/*')
 elif [ $# -gt 0 ]; then
   FILES=("$@")
 else
   # I file che hai appena toccato: prima il lavoro non committato, poi l'ultimo
   # commit. Non il diff contro main: su un branch lungo diventa tutto il repo,
   # e un controllo che segnala tutto non fa cambiare niente.
-  mapfile -t FILES < <(git diff --name-only HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -v 'src/components/ui/' || true)
+  mapfile -t FILES < <(git diff --name-only HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -vE 'src/components/ui/|src/lab/' || true)
   if [ ${#FILES[@]} -eq 0 ]; then
-    mapfile -t FILES < <(git diff --name-only HEAD~1 HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -v 'src/components/ui/' || true)
+    mapfile -t FILES < <(git diff --name-only HEAD~1 HEAD -- 'src/**/*.tsx' 2>/dev/null | grep -vE 'src/components/ui/|src/lab/' || true)
   fi
 fi
 

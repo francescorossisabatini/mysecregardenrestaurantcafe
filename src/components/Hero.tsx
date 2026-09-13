@@ -65,7 +65,7 @@ export const Hero = () => {
       {/* Una sola animazione nella fascia: il blocco entra una volta. */}
       <div className="container relative z-10 mx-auto px-6 pb-8 pt-24 md:pb-10 md:pt-28">
         <div className="mx-auto max-w-3xl animate-fade-in-hero text-center">
-          <h1 className="text-4xl font-bold leading-[0.95] text-background [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)] sm:text-5xl md:text-6xl">
+          <h1 className="text-5xl font-bold leading-[0.95] text-background [text-shadow:0_2px_18px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.7)] sm:text-6xl md:text-7xl">
             <span className="block font-caveat">{SITE.name}</span>
             <span className="mt-1.5 block font-work text-xs font-semibold uppercase tracking-[0.18em] text-background/90 sm:text-sm md:text-base [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]">
               {language === "de" ? "Vegetarisches & Veganes Restaurant" : "Vegetarian & Vegan Restaurant"}

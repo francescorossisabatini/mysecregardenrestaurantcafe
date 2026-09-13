@@ -11,7 +11,8 @@
 
 import { chromium } from 'playwright';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { extname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
@@ -85,6 +86,26 @@ async function shoot(browser, { path, slug, setup }, size) {
     } catch { /* private mode */ }
   });
 
+  // I font di Google non sono raggiungibili dal browser in questo ambiente, e
+  // senza di loro ogni scatto mostra i fallback di sistema: giudicare la
+  // tipografia su Brush Script MT al posto di Caveat non è giudicare.
+  // Li serviamo dalla copia locale scaricata da scripts/fetch-fonts.mjs.
+  if (existsSync('output/fonts/fonts.css')) {
+    await context.route('**/fonts.googleapis.com/**', (r) =>
+      r.fulfill({ contentType: 'text/css', body: readFileSync('output/fonts/fonts.css', 'utf8') })
+    );
+    await context.route('**/__fonts/*', (r) => {
+      const name = r.request().url().split('/__fonts/')[1];
+      const path = `output/fonts/${name}`;
+      if (!existsSync(path)) return r.abort();
+      const type = extname(path) === '.woff2' ? 'font/woff2' : 'font/woff';
+      return r.fulfill({ contentType: type, body: readFileSync(path) });
+    });
+  } else {
+    console.log('  ⚠ output/fonts/ assente — gli scatti useranno i font di fallback.');
+    console.log('    Esegui prima: node scripts/fetch-fonts.mjs');
+  }
+
   const page = await context.newPage();
   if (setup) await setup(page);
 
@@ -99,11 +120,18 @@ async function shoot(browser, { path, slug, setup }, size) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(300);
 
+  const fontsOk = await page.evaluate(async () => {
+    await document.fonts.ready;
+    // Non cercare una famiglia precisa: ogni route usa font diversi.
+    // Se nessun webfont è stato caricato, lo scatto non vale per la tipografia.
+    return [...document.fonts].some((f) => f.status === 'loaded');
+  }).catch(() => false);
+
   const file = `${OUT}/${slug}--${size.label}.png`;
   const buf = await page.screenshot({ fullPage: true });
   await writeFile(file, buf);
   await context.close();
-  return { file, hash: hashOf(buf), errors };
+  return { file, hash: hashOf(buf), errors, fontsOk };
 }
 
 const main = async () => {
@@ -122,7 +150,7 @@ const main = async () => {
       try {
         const r = await shoot(browser, t, size);
         results.push({ slug: `${t.slug}--${size.label}`, ...r });
-        console.log(`  ${r.file}  ${r.hash}${r.errors.length ? `  ⚠ ${r.errors.length} errori console` : ''}`);
+        console.log(`  ${r.file}  ${r.hash}${r.fontsOk ? '' : '  ⚠ FONT NON CARICATI'}${r.errors.length ? `  ⚠ ${r.errors.length} errori console` : ''}`);
       } catch (e) {
         console.log(`  ✗ ${t.slug} ${size.label}: ${e.message}`);
       }

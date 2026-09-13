@@ -69,6 +69,13 @@ export const HomeMenuPreview = () => {
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
 
+  // Griglia dei piatti — due decisioni che vivono nel CSS, non qui:
+  //  · le colonne le conta :has(), perché nei giorni in cui arriva solo la
+  //    zuppa la griglia fissa a tre lasciava due colonne vuote;
+  //  · le righe sono dichiarate sul contenitore e le card le ereditano con
+  //    grid-rows-subgrid, così nome, descrizione, dietary e allergeni si
+  //    allineano fra una card e l'altra senza min-h inventati.
+  // Entrambe provate in lab.html, esperimenti "subgrid" e "has".
   const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
     { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
@@ -97,7 +104,7 @@ export const HomeMenuPreview = () => {
             <h2 className="h2-editorial mt-1.5 text-primary">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
-            <p className="mt-3 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+            <p className="mt-3 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
               {language === "de"
                 ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
                 : "A quick look at today's menu. Classics, drinks and details are on the menu page."}
@@ -115,36 +122,38 @@ export const HomeMenuPreview = () => {
               ))}
             </div>
           ) : !isClosed && dishes.length > 0 ? (
-            <div className="grid gap-4 lg:grid-cols-3 lg:items-stretch">
+            <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr_auto_auto] lg:has-[>*:only-child]:max-w-md lg:has-[>*:only-child]:grid-cols-1 lg:has-[>:nth-child(2):last-child]:grid-cols-2">
               {dishes.map((dish) => {
                 const dishCopy = splitDishText(dish.text, language, dish.key);
 
                 return (
-                <div key={dish.key} className="rounded-lg border p-4 surface-card md:p-5 lg:flex lg:min-h-[18rem] lg:flex-col">
-                  <div className="mb-3 flex items-start justify-between gap-4">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
-                          {cleanDisplayText(dishCopy.name)}
-                        </h3>
-                        <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
-                          dish.key === "blue"
-                            ? "text-blue"
-                            : "text-accent"
-                        }`}>
-                          {dish.label}
-                        </span>
-                      </div>
-                      {dishCopy.description && (
-                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
-                          {cleanDisplayText(dishCopy.description)}
-                        </p>
-                      )}
+                <div key={dish.key} className="rounded-lg border p-4 surface-card md:p-5 lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:gap-0">
+                  {/* Quattro righe, una per fascia. Devono restare figli diretti
+                      della card, altrimenti subgrid non le vede. */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
+                      <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
+                        {cleanDisplayText(dishCopy.name)}
+                      </h3>
+                      <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
+                        dish.key === "blue"
+                          ? "text-blue"
+                          : "text-accent"
+                      }`}>
+                        {dish.label}
+                      </span>
                     </div>
                     <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
                   </div>
-                  <DietaryBadges text={dish.text} language={language} />
-                  <div className="lg:mt-auto"><AllergenCodes codes={dish.allergens} /></div>
+                  <div>
+                    {dishCopy.description && (
+                      <p className="mt-2 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                        {cleanDisplayText(dishCopy.description)}
+                      </p>
+                    )}
+                  </div>
+                  <div><DietaryBadges text={dish.text} language={language} /></div>
+                  <div className="mt-3"><AllergenCodes codes={dish.allergens} /></div>
                 </div>
                 );
               })}
