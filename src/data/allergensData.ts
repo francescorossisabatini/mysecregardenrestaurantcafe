@@ -8,7 +8,9 @@ export interface AllergenInfo {
 
 export interface DishDetails {
   descriptionShort?: string;
+  descriptionShortLocalized?: Record<LanguageCode, string>;
   ingredientsMain?: string[];
+  ingredientsMainLocalized?: Record<LanguageCode, string[]>;
   allergens?: string[];
   gfDisclaimer?: boolean;
   ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;

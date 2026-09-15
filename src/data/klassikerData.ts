@@ -6,7 +6,9 @@ export interface KlassikerItem {
   name: { de: string; en: string };
   description?: { de: string; en: string };
   descriptionShort?: string;
+  descriptionShortLocalized?: { de: string; en: string };
   ingredientsMain?: string[];
+  ingredientsMainLocalized?: { de: string[]; en: string[] };
   allergens?: string[];
   gfDisclaimer?: boolean;
   ingredientProducers?: Record<string, { brand?: string; origin?: string; certification?: string; url?: string }>;
@@ -29,6 +31,7 @@ export interface DrinkSubcategory {
 export interface KlassikerCategory {
   id: string;
   name: { de: string; en: string };
+  note?: { de: string; en: string };
   items?: KlassikerItem[];
   subcategories?: DrinkSubcategory[];
 }
@@ -125,75 +128,121 @@ export const klassikerMenu = {
     {
       id: "suesses",
       name: { de: "Süßes", en: "Sweets" },
+      note: {
+        de: "Zum Süßen verwenden wir Bio-Rohrohrzucker, Ahornsirup oder Agavendicksaft.",
+        en: "For sweeteners, we use organic raw cane sugar, maple syrup or agave syrup."
+      },
       items: [
         {
           id: "vegan-cheesecake",
-          name: { de: "Veganer Cheesecake", en: "Vegan Cheesecake" },
+          name: { de: "Raw „Cheesecake“", en: "Raw “Cheesecake”" },
           description: {
-            de: "Cremiger veganer Käsekuchen",
-            en: "Creamy vegan cheesecake"
+            de: "Eine dicke Creme aus Cashewkernen und Kokosbutter auf einem Boden aus Mandeln und Datteln, gesüßt mit Agavendicksaft.",
+            en: "A thick cream of cashew nuts and coconut butter on a base of almonds and dates, sweetened with agave syrup."
           },
-          price: "4,90",
+          price: "4,9",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "cremig, vegan, süß",
-          ingredientsMain: ["vegane Creme", "Kuchenboden"],
+          descriptionShortLocalized: { de: "cremig, roh, vegan", en: "creamy, raw, vegan" },
+          ingredientsMainLocalized: {
+            de: ["Cashewkerne", "Kokosbutter", "Mandeln", "Datteln", "Agavendicksaft"],
+            en: ["cashew nuts", "coconut butter", "almonds", "dates", "agave syrup"]
+          },
           allergens: ["H"],
           gfDisclaimer: true,
         },
         {
           id: "karamellschnitte",
-          name: { de: "Karamellschnitte", en: "Caramel Slice" },
+          name: { de: "Raw Schoko-Karamell-Schnitte", en: "Raw Chocolate-Caramel Slice" },
           description: {
-            de: "Hausgemachte Karamellschnitte",
-            en: "Homemade caramel slice"
+            de: "Süß und salzig mit Ahornsirup, Kokosöl, Kakao, Tahina, Datteln und Mandeln.",
+            en: "A sweet and salty variation with maple syrup, coconut oil, cocoa, tahini, dates and almonds."
           },
-          price: "4,90",
+          price: "4,9",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "süß, Karamell, hausgemacht",
-          ingredientsMain: ["Karamell", "Kuchenboden"],
+          descriptionShortLocalized: { de: "süß, salzig, roh", en: "sweet, salty, raw" },
+          ingredientsMainLocalized: {
+            de: ["Ahornsirup", "Kokosöl", "Kakao", "Tahina", "Datteln", "Mandeln"],
+            en: ["maple syrup", "coconut oil", "cocoa", "tahini", "dates", "almonds"]
+          },
+          allergens: ["H", "N"],
           gfDisclaimer: true,
         },
         {
           id: "walnuss-brownie",
-          name: { de: "Walnuss-Brownie", en: "Walnut Brownie" },
+          name: { de: "Brownie", en: "Brownie" },
           description: {
-            de: "Saftiger Schokoladen-Brownie mit Walnüssen",
-            en: "Moist chocolate brownie with walnuts"
+            de: "Die vegane und glutenfreie Variante des Klassikers mit Walnüssen und Schokostückchen.",
+            en: "A vegan and gluten-free version of the classic, with walnuts and chocolate chunks."
           },
           price: "4,7",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "schokoladig, Walnuss",
-          ingredientsMain: ["Schokolade", "Walnüsse"],
-          allergens: ["H"],
+          descriptionShortLocalized: { de: "schokoladig, saftig, nussig", en: "chocolatey, moist, nutty" },
+          ingredientsMainLocalized: {
+            de: ["Walnüsse", "Schokostückchen"],
+            en: ["walnuts", "chocolate chunks"]
+          },
+          allergens: ["F", "H"],
           gfDisclaimer: true,
         },
         {
           id: "schoko-mousse-torte",
           name: { de: "Schoko Mousse Torte", en: "Chocolate Mousse Cake" },
           description: {
-            de: "Luftige Schokoladenmousse-Torte",
-            en: "Light chocolate mousse cake"
+            de: "Französische Schokoladentorte ohne glutenhaltige Zutaten.",
+            en: "French chocolate cake made without gluten-containing ingredients."
           },
           price: "4,7",
-          descriptionShort: "cremig, Schokolade",
-          ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
-          allergens: ["A", "C", "G"],
+          isGlutenFree: true,
+          descriptionShortLocalized: { de: "französisch, schokoladig", en: "French-style, chocolatey" },
+          ingredientsMainLocalized: { de: ["Schokolade"], en: ["chocolate"] },
+          allergens: ["C", "F", "G"],
+          gfDisclaimer: true,
+        },
+        {
+          id: "mohn-nuss-kuchen",
+          name: { de: "Mohn-Nuss-Kuchen", en: "Poppyseed-Nut Cake" },
+          description: {
+            de: "Saftiger gluten- und laktosefreier Mohnkuchen mit Haselnüssen und Preiselbeermarmelade.",
+            en: "Moist gluten- and lactose-free poppyseed cake with hazelnuts and cranberry jam."
+          },
+          price: "4,5",
+          isGlutenFree: true,
+          descriptionShortLocalized: { de: "saftig, nussig, fruchtig", en: "moist, nutty, fruity" },
+          ingredientsMainLocalized: {
+            de: ["Mohn", "Haselnüsse", "Preiselbeermarmelade"],
+            en: ["poppyseeds", "hazelnuts", "cranberry jam"]
+          },
+          allergens: ["C", "H"],
+          gfDisclaimer: true,
         },
         {
           id: "karotten-gewuerztorte",
-          name: { de: "Karotten-Gewürztorte", en: "Carrot Spice Cake" },
+          name: { de: "Gewürzkuchen", en: "Spice Cake" },
           description: {
-            de: "Würzige Karottentorte mit Frischkäse-Topping",
-            en: "Spiced carrot cake with cream cheese topping"
+            de: "Dinkelmehl mit Rosinen, Walnüssen, Feigen, Bananen, Karotten und Lebkuchengewürz.",
+            en: "Spelt flour with raisins, walnuts, figs, bananas, carrots and gingerbread spice."
           },
           price: "4,5",
           isVegan: true,
-          descriptionShort: "würzig, Karotte, cremig",
-          ingredientsMain: ["Karotten", "Gewürze", "veganes Topping"],
+          descriptionShortLocalized: { de: "würzig, fruchtig, nussig", en: "spiced, fruity, nutty" },
+          ingredientsMainLocalized: {
+            de: ["Dinkelmehl", "Rosinen", "Walnüsse", "Feigen", "Bananen", "Karotten", "Lebkuchengewürz"],
+            en: ["spelt flour", "raisins", "walnuts", "figs", "bananas", "carrots", "gingerbread spice"]
+          },
           allergens: ["A", "H"],
+        },
+        {
+          id: "schlagobers",
+          name: { de: "Schlagobers dazu", en: "Whipped Cream Added" },
+          description: {
+            de: "Auch vegan erhältlich.",
+            en: "Also available vegan."
+          },
+          price: "1,3",
+          allergens: ["G"],
         },
       ],
     },
@@ -205,34 +254,34 @@ export const klassikerMenu = {
           id: "ingwer-limo",
           name: { de: "Ingwer-Limo", en: "Ginger Lemonade" },
           description: {
-            de: "Erfrischende hausgemachte Ingwerlimonade",
-            en: "Refreshing homemade ginger lemonade"
+            de: "Hausgemacht mit Bio-Zitronen.",
+            en: "Homemade with organic lemons."
           },
-          price: "3,00 / 4,70",
+          sizeNote: "0,2 l / 0,5 l",
+          price: "3,0 / 4,7",
           isVegan: true,
-          descriptionShort: "frisch, Ingwer, spritzig",
-          ingredientsMain: ["Ingwer", "Zitrone"],
+          descriptionShortLocalized: { de: "hausgemacht, Bio-Zitrone", en: "homemade, organic lemon" },
         },
         {
-          id: "eistee",
-          name: { de: "Hausgemachter Eistee", en: "Homemade Iced Tea" },
+          id: "peach-iced-spice-tea",
+          name: { de: "Homemade Peach-Iced Spice Tee", en: "Homemade Peach-Iced Spice Tea" },
           description: {
-            de: "Frisch gebrühter Eistee mit natürlichen Zutaten",
-            en: "Freshly brewed iced tea with natural ingredients"
+            de: "Unsere exklusive Hausmischung.",
+            en: "Our exclusive house blend."
           },
-          price: "4,2",
+          sizeNote: "0,3 l",
+          price: "4,9",
           isVegan: true,
-          isUnavailable: true,
-          descriptionShort: "frisch, Tee, hausgemacht",
-          ingredientsMain: ["Tee", "natürliche Zutaten"],
+          descriptionShortLocalized: { de: "Unsere exklusive Hausmischung", en: "Our exclusive house blend" },
         },
         {
           id: "mango-lassi",
           name: { de: "Mango-Lassi", en: "Mango Lassi" },
           description: {
-            de: "Cremiger Joghurt-Drink mit frischer Mango",
-            en: "Creamy yogurt drink with fresh mango"
+            de: "Indisches Joghurtgetränk mit Mangopüree.",
+            en: "Indian yoghurt drink with mango pulp."
           },
+          sizeNote: "0,3 l",
           price: "4,9",
           descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
@@ -266,11 +315,26 @@ export const klassikerMenu = {
           id: "cold-drinks",
           name: { de: "Kaltgetränke", en: "Cold Drinks" },
           items: [
-            { id: "strawberry-spritz", name: { de: "Strawberry Spritz", en: "Strawberry Spritz" }, sizeNote: "Erdbeer-Tonic & Soda · strawberry tonic & soda", price: "6,5", isNew: true },
-            { id: "iced-strawberry-matcha", name: { de: "Iced Strawberry Matcha Latte", en: "Iced Strawberry Matcha Latte" }, sizeNote: "0,3 l", price: "6,5", isNew: true },
-            { id: "iced-espresso-tonic", name: { de: "Iced Espresso Tonic", en: "Iced Espresso Tonic" }, sizeNote: "0,18 l", price: "5,5", isNew: true },
-            { id: "cold-brew", name: { de: "Cold Brew", en: "Cold Brew" }, sizeNote: "0,18 l", price: "4,9", isNew: true },
-            { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,0 / 4,7" },
+            {
+              id: "kombucha",
+              name: { de: "Kombucha", en: "Kombucha" },
+              sizeNote: "0,15 l / 0,3 l",
+              price: "3,0 / 4,7",
+              descriptionShortLocalized: {
+                de: "Hausgemachtes Fermentgetränk aus Schwarztee mit lebenden Mikroorganismen",
+                en: "Homemade fermentation drink made from black tea with living microorganisms"
+              }
+            },
+            {
+              id: "strawberry-spritz",
+              name: { de: "Strawberry Spritz", en: "Strawberry Spritz" },
+              sizeNote: "0,3 l",
+              price: "5,5",
+              descriptionShortLocalized: {
+                de: "Alkoholfrei, mit Erdbeere und Chinin",
+                en: "Alcohol-free, with strawberry and quinine"
+              }
+            },
           ],
         },
         {
@@ -278,6 +342,7 @@ export const klassikerMenu = {
           name: { de: "Säfte vom österreichischen Bauernhof", en: "Juices from the Austrian Farm" },
           sizeNote: "0,2 l / 0,5 l",
           items: [
+            { id: "apple-juice-unfiltered", name: { de: "Naturtrüber Apfelsaft", en: "Apple Juice Unfiltered" }, price: "3,4 / 5,3" },
             { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,9 / 4,5" },
             { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,0 / 4,7" },
             { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,7 / 4,2" },
@@ -301,6 +366,7 @@ export const klassikerMenu = {
             { id: "goesser-beer", name: { de: "Gösser Alkoholfrei", en: "Gösser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,5" },
             { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,7 / 5,7" },
             { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,5" },
+            { id: "soda-water", name: { de: "Sodawasser", en: "Soda Water" }, sizeNote: "0,2 l / 0,5 l", price: "2,1 / 3,3" },
             { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,7 / 3,9" },
             { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,7" },
           ],

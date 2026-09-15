@@ -693,7 +693,9 @@ export const MenuSection = () => {
                             <MenuDishDetails
                               details={{
                                 descriptionShort: item.descriptionShort,
+                                descriptionShortLocalized: item.descriptionShortLocalized,
                                 ingredientsMain: item.ingredientsMain,
+                                ingredientsMainLocalized: item.ingredientsMainLocalized,
                                 allergens: item.allergens,
                                 gfDisclaimer: item.gfDisclaimer,
                                 ingredientProducers: item.ingredientProducers,
@@ -703,6 +705,11 @@ export const MenuSection = () => {
                         </DishRow>
                       ))}
                     </div>
+                  )}
+                  {category.note && (
+                    <p className="mt-5 font-work text-sm italic leading-relaxed text-muted-high-contrast">
+                      {cleanDisplayText(category.note[language])}
+                    </p>
                   )}
                   
                   
@@ -754,7 +761,9 @@ export const MenuSection = () => {
                                   <MenuDishDetails
                                     details={{
                                       descriptionShort: item.descriptionShort,
+                                      descriptionShortLocalized: item.descriptionShortLocalized,
                                       ingredientsMain: item.ingredientsMain,
+                                      ingredientsMainLocalized: item.ingredientsMainLocalized,
                                       allergens: item.allergens,
                                       gfDisclaimer: item.gfDisclaimer,
                                     }}
