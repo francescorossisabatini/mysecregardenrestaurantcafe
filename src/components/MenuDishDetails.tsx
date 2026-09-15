@@ -25,14 +25,16 @@ export const AllergenCodes = ({ codes }: { codes?: string[] }) => {
 
 export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsProps) => {
   const { language } = useLanguage();
-  const hasDetails = !!details.descriptionShort || !!details.ingredientsMain?.length || !!details.allergens?.length || !!details.ingredientProducers;
+  const descriptionShort = details.descriptionShortLocalized?.[language] ?? details.descriptionShort;
+  const ingredientsMain = details.ingredientsMainLocalized?.[language] ?? details.ingredientsMain;
+  const hasDetails = !!descriptionShort || !!ingredientsMain?.length || !!details.allergens?.length || !!details.ingredientProducers;
 
   if (!hasDetails) return null;
 
   return (
     <div className="mt-3">
-      {details.descriptionShort && (
-        <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{cleanDisplayText(details.descriptionShort)}</p>
+      {descriptionShort && (
+        <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{cleanDisplayText(descriptionShort)}</p>
       )}
       <AllergenCodes codes={details.allergens} />
 
@@ -43,12 +45,12 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
         </CollapsibleTrigger>
         <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
           <div className={`${compact ? "mt-2" : "mt-3"} space-y-3 rounded-xl border border-border/60 bg-background/70 p-3`}>
-            {!!details.ingredientsMain?.length && (
+            {!!ingredientsMain?.length && (
               <div>
                 <p className="mb-1 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
                   {language === "de" ? "Zutaten" : "Ingredients"}
                 </p>
-                <p className="font-work text-sm leading-relaxed text-foreground/90">{joinDisplayText(details.ingredientsMain, ", ")}</p>
+                <p className="font-work text-sm leading-relaxed text-foreground/90">{joinDisplayText(ingredientsMain, ", ")}</p>
               </div>
             )}
 
