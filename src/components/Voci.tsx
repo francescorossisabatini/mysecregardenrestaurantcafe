@@ -96,7 +96,7 @@ export const Voci = () => {
               ))}
             </span>
             <span>
-              {SITE.rating} {language === "de" ? "von" : "from"} {SITE.reviewCount}{" "}
+              {language === "de" ? SITE.rating.replace(".", ",") : SITE.rating} {language === "de" ? "von" : "from"} {SITE.reviewCount}{" "}
               {language === "de" ? "Bewertungen auf Google" : "reviews on Google"}
             </span>
           </p>

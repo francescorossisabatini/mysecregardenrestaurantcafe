@@ -325,6 +325,7 @@ visibili, smettono solo di far fallire il controllo.
 
 ```deroghe
 src/pages/AboutUs.tsx: S3, U1, U2, C1, VOICE   # giro dedicato, vedi Prossime decisioni #12
+src/contexts/LanguageContext.tsx: VOICE        # righe 48/160, copy di /about ("einzigartig", "Learn more about Sri Chinmoy"): stesso giro dedicato di AboutUs.tsx sopra, non toccato in questa sessione
 src/pages/Gallery.tsx: S3, U1, U2, C1          # stesso giro
 src/pages/Login.tsx: U1, U2                    # area di servizio, fuori dal redesign
 src/pages/OAuthConsent.tsx: U1, U2             # area di servizio, fuori dal redesign

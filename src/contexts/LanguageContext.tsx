@@ -114,7 +114,7 @@ const translations = {
     "contact.social": "Social Media",
     "contact.social.desc": "Tagesgerichte und kleine Momente aus dem Hof",
     "contact.garden": "Eingang zum Secret Garden im Raimundhof",
-    "contact.call": "Jetzt Anrufen",
+    "contact.call": "Anrufen",
   },
   en: {
     // Hero

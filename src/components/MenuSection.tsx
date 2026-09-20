@@ -19,19 +19,10 @@ import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
-import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { cleanDisplayText } from "@/lib/displayText";
 import { DishRow } from "@/components/menu/DishRow";
 import { categoryHeaderPhoto } from "@/components/menu/dishPhotoMap";
-
-// Parse dietary labels from dish description text
-const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
-  const lowerText = text.toLowerCase();
-  return {
-    isVegan: lowerText.includes("vegan"),
-    isGlutenFree: lowerText.includes("glutenfrei") || lowerText.includes("gluten-free") || lowerText.includes("gluten free"),
-    isBio: lowerText.includes("bio"),
-  };
-};
+import { DietaryBadges } from "@/components/menu/DietaryBadges";
 
 // Treat spreadsheet error placeholders as empty (e.g. "#VALUE" / "#VALUE!")
 const isValidMenuText = (text?: string) => {
@@ -39,25 +30,6 @@ const isValidMenuText = (text?: string) => {
   if (!t) return false;
   if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
   return true;
-};
-
-// Render dietary badges dynamically - WCAG AAA compliant colors (7:1+ on cream)
-// Using explicit dark colors that GUARANTEE 4.5:1+ contrast on #FAF7F3
-const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
-  const labels = parseDietaryLabels(text);
-  const visibleLabels = [
-    labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
-    labels.isBio ? "bio" : null,
-  ].filter(Boolean);
-
-  if (visibleLabels.length === 0) return null;
-  
-  return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
-      {joinDisplayText(visibleLabels)}
-    </p>
-  );
 };
 
 const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
@@ -226,7 +198,7 @@ export const MenuSection = () => {
                   aria-disabled={isDisabled || undefined}
                   disabled={isDisabled}
                   onClick={() => !isDisabled && scrollToMenuBlock(tab.id)}
-                  className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
+                  className={`relative flex min-h-[44px] shrink-0 items-center px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
                     isDisabled
                       ? "text-muted-foreground/50 cursor-not-allowed"
                       : isActive
@@ -679,7 +651,7 @@ export const MenuSection = () => {
                           key={item.id}
                           name={cleanDisplayText(item.name[language])}
                           description={item.description ? cleanDisplayText(item.description[language]) : undefined}
-                          price={item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
+                          price={item.price}
                           photoId={item.id}
                           isUnavailable={item.isUnavailable}
                           language={language}

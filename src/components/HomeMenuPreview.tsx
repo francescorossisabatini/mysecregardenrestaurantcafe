@@ -8,39 +8,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
 import { splitDishText } from "@/lib/splitDishText";
-import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { cleanDisplayText } from "@/lib/displayText";
+import { DietaryBadges } from "@/components/menu/DietaryBadges";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
   if (!t) return false;
   if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
   return true;
-};
-
-const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
-  const lowerText = text.toLowerCase();
-  return {
-    isVegan: lowerText.includes("vegan"),
-    isGlutenFree: lowerText.includes("glutenfrei") || lowerText.includes("gluten-free") || lowerText.includes("gluten free"),
-    isBio: lowerText.includes("bio"),
-  };
-};
-
-const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
-  const labels = parseDietaryLabels(text);
-  const visibleLabels = [
-    labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
-    labels.isBio ? "bio" : null,
-  ].filter(Boolean);
-
-  if (visibleLabels.length === 0) return null;
-
-  return (
-    <p className="mt-2 font-work text-[11px] font-semibold lowercase tracking-[0.06em] text-muted-high-contrast">
-      {joinDisplayText(visibleLabels)}
-    </p>
-  );
 };
 
 export const HomeMenuPreview = () => {

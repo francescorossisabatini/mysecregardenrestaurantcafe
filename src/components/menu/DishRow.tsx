@@ -117,7 +117,14 @@ export const DishRow = ({
                 className={`shrink-0 font-work text-sm font-semibold md:text-base ${
                   isUnavailable ? "text-muted-high-contrast" : "text-accent"
                 }`}
-                aria-label={`€ ${price}`}
+                aria-label={
+                  price.includes("/")
+                    ? price
+                        .split("/")
+                        .map((p) => `${p.trim()} Euro`)
+                        .join(", ")
+                    : `${price} Euro`
+                }
               >
                 {price}
               </p>
@@ -125,7 +132,7 @@ export const DishRow = ({
           </div>
 
           {dietaryLabels.length > 0 && (
-            <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
+            <p className="mt-2 font-work text-[11px] font-semibold lowercase tracking-[0.06em] text-muted-high-contrast">
               {dietaryLabels.join(" · ")}
             </p>
           )}

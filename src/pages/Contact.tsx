@@ -94,7 +94,7 @@ const ContactPage = () => {
                   className="inline-flex min-h-[44px] items-center gap-1.5 font-work text-sm font-medium text-foreground underline underline-offset-4 transition-colors hover:text-primary"
                 >
                   <MapPin className="h-4 w-4" aria-hidden="true" />
-                  {language === "de" ? "Route anzeigen" : "Get directions"}
+                  {language === "de" ? "Durch den Bogen, Mariahilferstraße 45" : "Get directions"}
                 </a>
               </div>
             </header>

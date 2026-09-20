@@ -47,7 +47,7 @@ export const CTAEndBlock = ({
                 className="w-full justify-center py-6 text-base font-work bg-accent hover:bg-accent/90 text-accent-foreground sm:w-auto sm:px-10"
                 onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
               >
-                {language === "de" ? "Jetzt anrufen" : "Call Now"}
+                {language === "de" ? "Anrufen" : "Call Now"}
               </Button>
             )}
             {show.includes("directions") && (
@@ -58,7 +58,7 @@ export const CTAEndBlock = ({
                 asChild
               >
                 <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                  {language === "de" ? "Route anzeigen" : "Get Directions"}
+                  {language === "de" ? "Durch den Bogen, Mariahilferstraße 45" : "Get Directions"}
                 </a>
               </Button>
             )}

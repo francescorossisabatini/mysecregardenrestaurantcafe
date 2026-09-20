@@ -87,7 +87,7 @@ export const Hero = () => {
                   <Star key={i} className="h-3 w-3 fill-current text-brand-star" aria-hidden="true" />
                 ))}
               </span>
-              <span>{SITE.rating} · {SITE.reviewCount}</span>
+              <span>{language === "de" ? SITE.rating.replace(".", ",") : SITE.rating} · {SITE.reviewCount}</span>
             </span>
             <span className="hidden h-3 w-px bg-background/40 sm:inline-block" aria-hidden="true" />
             <span className="inline-flex items-center gap-1.5" aria-live="polite">

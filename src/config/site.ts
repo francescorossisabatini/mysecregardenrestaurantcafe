@@ -4,7 +4,7 @@ export const SITE = {
   name: "My Secret Garden",
 
   // ✅ UNICO NUMERO "vero" (testo visibile)
-  phoneDisplay: "01 586 28 39",
+  phoneDisplay: "+43 1 586 28 39",
 
   // ✅ UNICO NUMERO per tel: (stesso numero, senza spazi, con prefisso Austria)
   phoneTel: "+4315862839",

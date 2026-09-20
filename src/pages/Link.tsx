@@ -9,8 +9,8 @@ const LinkPage = () => {
   const { language } = useLanguage();
 
   const links = [
-    { href: `tel:${SITE.phoneTel}`, label: { de: "Jetzt anrufen", en: "Call Now" }, icon: Phone, isTel: true },
-    { href: SITE.mapsUrl, label: { de: "Route anzeigen", en: "Get Directions" }, icon: MapPin, isExternal: true },
+    { href: `tel:${SITE.phoneTel}`, label: { de: SITE.phoneDisplay, en: "Call Now" }, icon: Phone, isTel: true },
+    { href: SITE.mapsUrl, label: { de: "Durch den Bogen, Mariahilferstraße 45", en: "Get Directions" }, icon: MapPin, isExternal: true },
     { href: "/menu", label: { de: "Wochenmenü", en: "Weekly Specials" }, icon: CalendarDays },
     { href: "/menu", label: { de: "Speisekarte", en: "View Menu" }, icon: UtensilsCrossed },
   ];

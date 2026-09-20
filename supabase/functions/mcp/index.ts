@@ -189,7 +189,7 @@ var klassikerMenu = {
             de: "Frischer Blattsalat mit saisonalem Gem\xFCse und hausgemachtem Dressing",
             en: "Fresh leaf salad with seasonal vegetables and homemade dressing"
           },
-          price: "6,5 / 10,9",
+          price: "6,50 / 10,90",
           isVegan: true,
           isGlutenFree: true,
           descriptionShort: "frisch, saisonales Gem\xFCse",
@@ -203,7 +203,7 @@ var klassikerMenu = {
             de: "Bunter Salat mit frischer Avocado und hausgemachtem Dressing",
             en: "Colorful salad with fresh avocado and homemade dressing"
           },
-          price: "17,5",
+          price: "17,50",
           isVegan: true,
           isGlutenFree: true,
           descriptionShort: "frisch, Avocado, saisonal",
@@ -217,7 +217,7 @@ var klassikerMenu = {
             de: "Bunter Salat mit warmem Ziegenk\xE4se und hausgemachtem Dressing",
             en: "Colorful salad with warm goat cheese and homemade dressing"
           },
-          price: "17,5",
+          price: "17,50",
           isGlutenFree: true,
           descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenk\xE4se", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
@@ -231,7 +231,7 @@ var klassikerMenu = {
             de: "Bunter Salat mit mariniertem Bio-Tofu und hausgemachtem Dressing",
             en: "Colorful salad with marinated organic tofu and homemade dressing"
           },
-          price: "17,5",
+          price: "17,50",
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
@@ -283,7 +283,7 @@ var klassikerMenu = {
             de: "Saftiger Schokoladen-Brownie mit Waln\xFCssen",
             en: "Moist chocolate brownie with walnuts"
           },
-          price: "4,7",
+          price: "4,70",
           isVegan: true,
           isGlutenFree: true,
           descriptionShort: "schokoladig, Walnuss",
@@ -298,7 +298,7 @@ var klassikerMenu = {
             de: "Luftige Schokoladenmousse-Torte",
             en: "Light chocolate mousse cake"
           },
-          price: "4,7",
+          price: "4,70",
           descriptionShort: "cremig, Schokolade",
           ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
           allergens: ["A", "C", "G"]
@@ -310,7 +310,7 @@ var klassikerMenu = {
             de: "W\xFCrzige Karottentorte mit Frischk\xE4se-Topping",
             en: "Spiced carrot cake with cream cheese topping"
           },
-          price: "4,5",
+          price: "4,50",
           isVegan: true,
           descriptionShort: "w\xFCrzig, Karotte, cremig",
           ingredientsMain: ["Karotten", "Gew\xFCrze", "veganes Topping"],
@@ -341,7 +341,7 @@ var klassikerMenu = {
             de: "Frisch gebr\xFChter Eistee mit nat\xFCrlichen Zutaten",
             en: "Freshly brewed iced tea with natural ingredients"
           },
-          price: "4,2",
+          price: "4,20",
           isVegan: true,
           isUnavailable: true,
           descriptionShort: "frisch, Tee, hausgemacht",
@@ -354,7 +354,7 @@ var klassikerMenu = {
             de: "Cremiger Joghurt-Drink mit frischer Mango",
             en: "Creamy yogurt drink with fresh mango"
           },
-          price: "4,9",
+          price: "4,90",
           descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
           allergens: ["G"]
@@ -369,28 +369,28 @@ var klassikerMenu = {
           id: "hot-drinks",
           name: { de: "Hei\xDFgetr\xE4nke", en: "Hot Drinks" },
           items: [
-            { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,9" },
-            { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,4" },
-            { id: "glueh-kombucha", name: { de: '"Gl\xFCh" Kombucha', en: '"Gl\xFCh" Kombucha (hot)' }, price: "4,9" },
-            { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,9" },
-            { id: "espresso", name: { de: "Espresso", en: "Espresso" }, sizeNote: "1 Shot / 2 Shots", price: "2,9 / 3,9" },
-            { id: "verlaengerter", name: { de: "Verl\xE4ngerter / Americano", en: "Verl\xE4ngerter / Americano" }, sizeNote: "kurz / lang \xB7 short / long", price: "3,5 / 4,5" },
-            { id: "cappuccino", name: { de: "Cappuccino / Melange", en: "Cappuccino / Melange" }, sizeNote: "1 Shot / 2 Shots", price: "4,3 / 5,7" },
-            { id: "flat-white", name: { de: "Flat White", en: "Flat White" }, price: "5,2" },
-            { id: "latte-macchiato", name: { de: "Latte Macchiato", en: "Latte Macchiato" }, price: "5,2" },
-            { id: "chaga-kaffee", name: { de: "Chaga Kaffee", en: "Chaga Kaffee" }, price: "5,5" },
-            { id: "blue-magic-tea", name: { de: "Blue Magic Tea", en: "Blue Magic Tea" }, price: "3,9" }
+            { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,90" },
+            { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,40" },
+            { id: "glueh-kombucha", name: { de: '"Gl\xFCh" Kombucha', en: '"Gl\xFCh" Kombucha (hot)' }, price: "4,90" },
+            { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,90" },
+            { id: "espresso", name: { de: "Espresso", en: "Espresso" }, sizeNote: "1 Shot / 2 Shots", price: "2,90 / 3,90" },
+            { id: "verlaengerter", name: { de: "Verl\xE4ngerter / Americano", en: "Verl\xE4ngerter / Americano" }, sizeNote: "kurz / lang \xB7 short / long", price: "3,50 / 4,50" },
+            { id: "cappuccino", name: { de: "Cappuccino / Melange", en: "Cappuccino / Melange" }, sizeNote: "1 Shot / 2 Shots", price: "4,30 / 5,70" },
+            { id: "flat-white", name: { de: "Flat White", en: "Flat White" }, price: "5,20" },
+            { id: "latte-macchiato", name: { de: "Latte Macchiato", en: "Latte Macchiato" }, price: "5,20" },
+            { id: "chaga-kaffee", name: { de: "Chaga Kaffee", en: "Chaga Kaffee" }, price: "5,50" },
+            { id: "blue-magic-tea", name: { de: "Blue Magic Tea", en: "Blue Magic Tea" }, price: "3,90" }
           ]
         },
         {
           id: "cold-drinks",
           name: { de: "Kaltgetr\xE4nke", en: "Cold Drinks" },
           items: [
-            { id: "strawberry-spritz", name: { de: "Strawberry Spritz", en: "Strawberry Spritz" }, sizeNote: "Erdbeer-Tonic & Soda \xB7 strawberry tonic & soda", price: "6,5", isNew: true },
-            { id: "iced-strawberry-matcha", name: { de: "Iced Strawberry Matcha Latte", en: "Iced Strawberry Matcha Latte" }, sizeNote: "0,3 l", price: "6,5", isNew: true },
-            { id: "iced-espresso-tonic", name: { de: "Iced Espresso Tonic", en: "Iced Espresso Tonic" }, sizeNote: "0,18 l", price: "5,5", isNew: true },
-            { id: "cold-brew", name: { de: "Cold Brew", en: "Cold Brew" }, sizeNote: "0,18 l", price: "4,9", isNew: true },
-            { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,0 / 4,7" }
+            { id: "strawberry-spritz", name: { de: "Strawberry Spritz", en: "Strawberry Spritz" }, sizeNote: "Erdbeer-Tonic & Soda \xB7 strawberry tonic & soda", price: "6,50", isNew: true },
+            { id: "iced-strawberry-matcha", name: { de: "Iced Strawberry Matcha Latte", en: "Iced Strawberry Matcha Latte" }, sizeNote: "0,3 l", price: "6,50", isNew: true },
+            { id: "iced-espresso-tonic", name: { de: "Iced Espresso Tonic", en: "Iced Espresso Tonic" }, sizeNote: "0,18 l", price: "5,50", isNew: true },
+            { id: "cold-brew", name: { de: "Cold Brew", en: "Cold Brew" }, sizeNote: "0,18 l", price: "4,90", isNew: true },
+            { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,00 / 4,70" }
           ]
         },
         {
@@ -398,9 +398,9 @@ var klassikerMenu = {
           name: { de: "S\xE4fte vom \xF6sterreichischen Bauernhof", en: "Juices from the Austrian Farm" },
           sizeNote: "0,2 l / 0,5 l",
           items: [
-            { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,9 / 4,5" },
-            { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,0 / 4,7" },
-            { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,7 / 4,2" }
+            { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,90 / 4,50" },
+            { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,00 / 4,70" },
+            { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,70 / 4,20" }
           ]
         },
         {
@@ -408,21 +408,21 @@ var klassikerMenu = {
           name: { de: "Bio-Limonaden", en: "Organic Sodas" },
           sizeNote: "0,33 l",
           items: [
-            { id: "cola", name: { de: "Cola", en: "Cola" }, price: "3,9" },
-            { id: "pomegranate", name: { de: "Granatapfel", en: "Pomegranate" }, price: "3,9" },
-            { id: "orange-acerola", name: { de: "Orange-Acerola", en: "Orange-Acerola" }, price: "3,9" },
-            { id: "green-tea-soda", name: { de: "Gr\xFCner Tee", en: "Green Tea" }, price: "3,9" }
+            { id: "cola", name: { de: "Cola", en: "Cola" }, price: "3,90" },
+            { id: "pomegranate", name: { de: "Granatapfel", en: "Pomegranate" }, price: "3,90" },
+            { id: "orange-acerola", name: { de: "Orange-Acerola", en: "Orange-Acerola" }, price: "3,90" },
+            { id: "green-tea-soda", name: { de: "Gr\xFCner Tee", en: "Green Tea" }, price: "3,90" }
           ]
         },
         {
           id: "more-cold-drinks",
           name: { de: "Weitere Kaltgetr\xE4nke", en: "More Cold Drinks" },
           items: [
-            { id: "goesser-beer", name: { de: "G\xF6sser Alkoholfrei", en: "G\xF6sser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,5" },
-            { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,7 / 5,7" },
-            { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,5" },
-            { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,7 / 3,9" },
-            { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,7" }
+            { id: "goesser-beer", name: { de: "G\xF6sser Alkoholfrei", en: "G\xF6sser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,50" },
+            { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,70 / 5,70" },
+            { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,50" },
+            { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,70 / 3,90" },
+            { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,70" }
           ]
         }
       ]
