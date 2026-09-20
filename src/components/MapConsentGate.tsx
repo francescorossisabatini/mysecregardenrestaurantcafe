@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 
 const MAPS_CONSENT_KEY = "msg_maps_consent_v1";
@@ -20,6 +21,7 @@ type Props = {
  */
 export const MapConsentGate = ({ src, title, className, style }: Props) => {
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
@@ -89,12 +91,18 @@ export const MapConsentGate = ({ src, title, className, style }: Props) => {
         <Button variant="secondary" onClick={handleAccept} className="min-h-[44px]">
           {copy.accept}
         </Button>
-        <Button variant="outline" className="min-h-[44px]" asChild>
-          <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-            {copy.external}
-            <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-          </a>
-        </Button>
+        {/* Su mobile MobileStickyBar offre già "Route" in modo permanente —
+            ripeterlo qui sarebbe la stessa azione due volte nello stesso
+            viewport. Su desktop non c'è barra fissa, quindi resta l'unico
+            modo per ottenere le indicazioni. */}
+        {!isMobile && (
+          <Button variant="outline" className="min-h-[44px]" asChild>
+            <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
+              {copy.external}
+              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+            </a>
+          </Button>
+        )}
       </div>
       <a href="/privacy" className="inline-flex min-h-[44px] items-center font-work text-xs text-muted-high-contrast underline underline-offset-2 hover:text-foreground">
         {copy.more}
