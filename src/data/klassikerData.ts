@@ -5,7 +5,6 @@ export interface KlassikerItem {
   id: string;
   name: { de: string; en: string };
   description?: { de: string; en: string };
-  descriptionShort?: string;
   ingredientsMain?: string[];
   allergens?: string[];
   gfDisclaimer?: boolean;
@@ -51,7 +50,6 @@ export const klassikerMenu = {
           price: "9,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "cremig, Linsen, würzig",
           ingredientsMain: ["Rote Linsen", "Tomaten", "Zwiebeln", "indische Gewürze", "Basmatireis"],
           gfDisclaimer: true,
         },
@@ -71,7 +69,6 @@ export const klassikerMenu = {
           price: "6,50 / 10,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "frisch, saisonales Gemüse",
           ingredientsMain: ["Blattsalat", "saisonales Gemüse", "hausgemachtes Dressing"],
           gfDisclaimer: true,
         },
@@ -85,7 +82,6 @@ export const klassikerMenu = {
           price: "17,50",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "frisch, Avocado, saisonal",
           ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gemüse", "hausgemachtes Dressing"],
           gfDisclaimer: true,
         },
@@ -98,7 +94,6 @@ export const klassikerMenu = {
           },
           price: "17,50",
           isGlutenFree: true,
-          descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenkäse", "saisonales Gemüse", "hausgemachtes Dressing"],
           allergens: ["G"],
           gfDisclaimer: true,
@@ -114,7 +109,6 @@ export const klassikerMenu = {
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
-          descriptionShort: "frisch, Bio-Tofu, saisonal",
           ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gemüse", "hausgemachtes Dressing"],
           allergens: ["F"],
           gfDisclaimer: true,
@@ -136,7 +130,6 @@ export const klassikerMenu = {
           price: "4,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "cremig, vegan, süß",
           ingredientsMain: ["vegane Creme", "Kuchenboden"],
           allergens: ["H"],
           gfDisclaimer: true,
@@ -151,7 +144,6 @@ export const klassikerMenu = {
           price: "4,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "süß, Karamell, hausgemacht",
           ingredientsMain: ["Karamell", "Kuchenboden"],
           gfDisclaimer: true,
         },
@@ -165,7 +157,6 @@ export const klassikerMenu = {
           price: "4,70",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "schokoladig, Walnuss",
           ingredientsMain: ["Schokolade", "Walnüsse"],
           allergens: ["H"],
           gfDisclaimer: true,
@@ -178,7 +169,6 @@ export const klassikerMenu = {
             en: "Light chocolate mousse cake"
           },
           price: "4,70",
-          descriptionShort: "cremig, Schokolade",
           ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
           allergens: ["A", "C", "G"],
         },
@@ -191,7 +181,6 @@ export const klassikerMenu = {
           },
           price: "4,50",
           isVegan: true,
-          descriptionShort: "würzig, Karotte, cremig",
           ingredientsMain: ["Karotten", "Gewürze", "veganes Topping"],
           allergens: ["A", "H"],
         },
@@ -210,7 +199,6 @@ export const klassikerMenu = {
           },
           price: "3,00 / 4,70",
           isVegan: true,
-          descriptionShort: "frisch, Ingwer, spritzig",
           ingredientsMain: ["Ingwer", "Zitrone"],
         },
         {
@@ -223,7 +211,6 @@ export const klassikerMenu = {
           price: "4,20",
           isVegan: true,
           isUnavailable: true,
-          descriptionShort: "frisch, Tee, hausgemacht",
           ingredientsMain: ["Tee", "natürliche Zutaten"],
         },
         {
@@ -234,7 +221,6 @@ export const klassikerMenu = {
             en: "Creamy yogurt drink with fresh mango"
           },
           price: "4,90",
-          descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
           allergens: ["G"],
         },

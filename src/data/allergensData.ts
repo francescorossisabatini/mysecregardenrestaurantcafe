@@ -7,7 +7,6 @@ export interface AllergenInfo {
 }
 
 export interface DishDetails {
-  descriptionShort?: string;
   ingredientsMain?: string[];
   allergens?: string[];
   gfDisclaimer?: boolean;

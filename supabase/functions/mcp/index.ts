@@ -172,7 +172,6 @@ var klassikerMenu = {
           price: "9,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "cremig, Linsen, w\xFCrzig",
           ingredientsMain: ["Rote Linsen", "Tomaten", "Zwiebeln", "indische Gew\xFCrze", "Basmatireis"],
           gfDisclaimer: true
         }
@@ -192,7 +191,6 @@ var klassikerMenu = {
           price: "6,50 / 10,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "frisch, saisonales Gem\xFCse",
           ingredientsMain: ["Blattsalat", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           gfDisclaimer: true
         },
@@ -206,7 +204,6 @@ var klassikerMenu = {
           price: "17,50",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "frisch, Avocado, saisonal",
           ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           gfDisclaimer: true
         },
@@ -219,7 +216,6 @@ var klassikerMenu = {
           },
           price: "17,50",
           isGlutenFree: true,
-          descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenk\xE4se", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           allergens: ["G"],
           gfDisclaimer: true
@@ -235,7 +231,6 @@ var klassikerMenu = {
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
-          descriptionShort: "frisch, Bio-Tofu, saisonal",
           ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           allergens: ["F"],
           gfDisclaimer: true,
@@ -257,7 +252,6 @@ var klassikerMenu = {
           price: "4,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "cremig, vegan, s\xFC\xDF",
           ingredientsMain: ["vegane Creme", "Kuchenboden"],
           allergens: ["H"],
           gfDisclaimer: true
@@ -272,7 +266,6 @@ var klassikerMenu = {
           price: "4,90",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "s\xFC\xDF, Karamell, hausgemacht",
           ingredientsMain: ["Karamell", "Kuchenboden"],
           gfDisclaimer: true
         },
@@ -286,7 +279,6 @@ var klassikerMenu = {
           price: "4,70",
           isVegan: true,
           isGlutenFree: true,
-          descriptionShort: "schokoladig, Walnuss",
           ingredientsMain: ["Schokolade", "Waln\xFCsse"],
           allergens: ["H"],
           gfDisclaimer: true
@@ -299,7 +291,6 @@ var klassikerMenu = {
             en: "Light chocolate mousse cake"
           },
           price: "4,70",
-          descriptionShort: "cremig, Schokolade",
           ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
           allergens: ["A", "C", "G"]
         },
@@ -312,7 +303,6 @@ var klassikerMenu = {
           },
           price: "4,50",
           isVegan: true,
-          descriptionShort: "w\xFCrzig, Karotte, cremig",
           ingredientsMain: ["Karotten", "Gew\xFCrze", "veganes Topping"],
           allergens: ["A", "H"]
         }
@@ -331,7 +321,6 @@ var klassikerMenu = {
           },
           price: "3,00 / 4,70",
           isVegan: true,
-          descriptionShort: "frisch, Ingwer, spritzig",
           ingredientsMain: ["Ingwer", "Zitrone"]
         },
         {
@@ -344,7 +333,6 @@ var klassikerMenu = {
           price: "4,20",
           isVegan: true,
           isUnavailable: true,
-          descriptionShort: "frisch, Tee, hausgemacht",
           ingredientsMain: ["Tee", "nat\xFCrliche Zutaten"]
         },
         {
@@ -355,7 +343,6 @@ var klassikerMenu = {
             en: "Creamy yogurt drink with fresh mango"
           },
           price: "4,90",
-          descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
           allergens: ["G"]
         }

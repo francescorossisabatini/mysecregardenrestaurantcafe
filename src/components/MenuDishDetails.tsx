@@ -35,15 +35,12 @@ export const AllergenCodes = ({ codes }: { codes?: string[] }) => {
 
 export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsProps) => {
   const { language } = useLanguage();
-  const hasDetails = !!details.descriptionShort || !!details.ingredientsMain?.length || !!details.allergens?.length || !!details.ingredientProducers;
+  const hasDetails = !!details.ingredientsMain?.length || !!details.allergens?.length || !!details.ingredientProducers;
 
   if (!hasDetails) return null;
 
   return (
     <div className="mt-3">
-      {details.descriptionShort && (
-        <p className="font-work text-xs leading-relaxed text-muted-high-contrast">{cleanDisplayText(details.descriptionShort)}</p>
-      )}
       <AllergenCodes codes={details.allergens} />
 
       <Collapsible>

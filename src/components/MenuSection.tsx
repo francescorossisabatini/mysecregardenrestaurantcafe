@@ -686,7 +686,6 @@ export const MenuSection = () => {
                           {!item.isUnavailable && (
                             <MenuDishDetails
                               details={{
-                                descriptionShort: item.descriptionShort,
                                 ingredientsMain: item.ingredientsMain,
                                 allergens: item.allergens,
                                 gfDisclaimer: item.gfDisclaimer,
@@ -744,10 +743,9 @@ export const MenuSection = () => {
                                     {item.price}
                                   </span>
                                 </div>
-                                {(item.descriptionShort || item.ingredientsMain || item.allergens) && (
+                                {(item.ingredientsMain || item.allergens) && (
                                   <MenuDishDetails
                                     details={{
-                                      descriptionShort: item.descriptionShort,
                                       ingredientsMain: item.ingredientsMain,
                                       allergens: item.allergens,
                                       gfDisclaimer: item.gfDisclaimer,
