@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Navigation } from "./Navigation";
 
 const meta: Meta<typeof Navigation> = {
-  title: "Design System/Sezioni/Navigation",
+  title: "Sections/Navigation",
   component: Navigation,
   parameters: {
     layout: "fullscreen",

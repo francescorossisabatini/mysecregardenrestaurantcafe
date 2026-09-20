@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DishRow } from "./DishRow";
 
 const meta: Meta<typeof DishRow> = {
-  title: "Design System/DishRow",
+  title: "Components/Card",
   component: DishRow,
   parameters: { layout: "padded" },
   tags: ["autodocs"],

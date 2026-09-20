@@ -340,7 +340,7 @@ src/components/Voci.tsx: C1                    # autore · data: due per viewpor
 src/components/menu/DishRow.tsx: C1            # separatore fra etichette dietary, uno per riga
 src/components/MenuDishDetails.tsx: C1         # separatore nella nota allergeni
 src/components/CTAEndBlock.tsx: S2             # il limite è per pagina: la home ne ha 2, /menu 1. Verificato sugli scatti
-src/stories/Tokens.stories.tsx: TOKEN          # pagina Storybook che documenta la palette: i valori hex sono l'etichetta di riferimento della swatch, non stile di un componente prodotto. Non entra nella build del sito.
+src/stories/tokens/Colors.stories.tsx: TOKEN   # pagina Storybook che documenta la palette: i valori hex sono l'etichetta di riferimento della swatch, non stile di un componente prodotto. Non entra nella build del sito.
 .storybook/preview.tsx: TOKEN                  # config del background-switcher di Storybook, richiede hex letterali nell'API dello strumento. Non entra nella build del sito.
 ```
 

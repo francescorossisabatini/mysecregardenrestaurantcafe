@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "./button";
 
 const meta: Meta = {
-  title: "Design System/Dialog",
+  title: "Components/Dialog",
   parameters: { layout: "centered" },
 };
 

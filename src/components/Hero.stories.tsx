@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Hero } from "./Hero";
 
 const meta: Meta<typeof Hero> = {
-  title: "Design System/Sezioni/Hero",
+  title: "Sections/Hero",
   component: Hero,
   parameters: {
     layout: "fullscreen",

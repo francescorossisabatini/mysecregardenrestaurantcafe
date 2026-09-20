@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Button } from "./button";
 
 const meta: Meta = {
-  title: "Design System/Sheet",
+  title: "Components/Sheet",
   parameters: { layout: "centered" },
 };
 
