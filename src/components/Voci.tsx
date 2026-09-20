@@ -11,8 +11,13 @@ import supermind from "@/assets/partners/supermind.png";
  * sezioni consecutive per lo stesso lavoro (antipatterns.md § S6).
  *
  * Le cinque stelle sopra ogni recensione sono sparite: erano quindici icone che
- * dicevano tutte la stessa cosa. La valutazione sta una volta sola, con il numero
- * di recensioni accanto — che è il dato che convince davvero.
+ * dicevano tutte la stessa cosa. Dentro questa sezione la valutazione compare
+ * una volta sola, con accanto il numero di recensioni — che è il dato che
+ * convince davvero.
+ *
+ * Nota: sulla pagina la riga stelle + 4,7/936+ compare comunque due volte,
+ * qui e nella fascia hero. È una duplicazione nota, registrata nel ledger:
+ * serve una decisione, non è una svista.
  */
 
 const GOOGLE_REVIEWS_URL =
@@ -114,16 +119,18 @@ export const Voci = () => {
           ))}
         </div>
 
-        {/* Stampa e partner — la stessa sezione, un registro diverso */}
+        {/* Stampa e partner — la stessa sezione, un registro diverso.
+            La cella del logo ha larghezza fissa: i quattro loghi hanno
+            proporzioni diverse, quindi con w-auto ogni citazione attaccava a
+            una x diversa — quattro bordi sinistri nella stessa griglia. */}
         <ul className="mt-14 grid gap-x-12 gap-y-8 border-t border-border-default pt-10 md:grid-cols-2">
           {press.map((item) => (
-            <li key={item.name} className="flex items-start gap-5">
+            <li key={item.name} className="grid grid-cols-[72px_1fr] items-center gap-5 md:grid-cols-[96px_1fr]">
               <img
                 src={item.logo}
                 alt={`${item.name} logo`}
                 loading="lazy"
-                className="h-8 w-auto shrink-0 object-contain md:h-10"
-                style={{ maxWidth: 110 }}
+                className="mx-auto max-h-8 w-auto max-w-full object-contain md:max-h-10"
               />
               <p className="font-lora text-sm italic leading-relaxed text-text-secondary md:text-base">
                 {item.quote[language]}

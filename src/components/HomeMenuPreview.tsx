@@ -223,7 +223,9 @@ export const HomeMenuPreview = () => {
           </div>
 
           <div className="mt-8">
-            <Button size="lg" asChild>
+            {/* Secondario, non verde pieno: la barra fissa porta già l'unica
+                azione primaria del viewport (CLAUDE.md, una CTA per viewport). */}
+            <Button size="lg" variant="outline" className="font-work" asChild>
               <Link to="/menu">{language === "de" ? "Zur Speisekarte" : "Go to menu"}</Link>
             </Button>
           </div>

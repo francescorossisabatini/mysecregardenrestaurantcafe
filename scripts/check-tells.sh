@@ -135,7 +135,9 @@ DOTS=$(count_nc '·')
 # parole intere (evita falsi positivi tipo shadow-elevated)
 BANNED_W='\b(Reservieren|Reservierung|Sofort|Learn more|Get Started|Get started|einzigartig|authentisch|Erlebnis|seamless|elevate|curated)\b'
 # sottostringhe (prefissi tedeschi composti)
-BANNED_S='Jetzt reservieren|Letzte Plätze|Mehr erfahren|Klick hier|kulinarische|Wohlfühl|culinary journey|hidden oasis'
+# "Jetzt" si elenca per verbo: "Jetzt geöffnet" e "Jetzt geschlossen" sono lo
+# stato di apertura, non urgenza, e un divieto secco su "Jetzt" li falserebbe.
+BANNED_S='Jetzt reservieren|Jetzt anrufen|Jetzt Anrufen|Jetzt buchen|Jetzt bestellen|Jetzt entdecken|Jetzt sichern|Letzte Plätze|Mehr erfahren|Klick hier|Weiterlesen|Route anzeigen|kulinarische|Wohlfühl|culinary journey|hidden oasis'
 BAD=$( { grep -rHnE "$BANNED_W" "${FILES[@]}" 2>/dev/null; grep -rHnE "$BANNED_S" "${FILES[@]}" 2>/dev/null; } | grep -vE "$NOCOMMENT" | cut -c1-140 | sort -u || true)
 if [ -n "$BAD" ]; then
   hit "VOICE lessico vietato" "voice-spec § Divieti duri"

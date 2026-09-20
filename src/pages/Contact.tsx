@@ -82,7 +82,7 @@ const ContactPage = () => {
                   : "Everything you need for your visit: address, opening hours, travel options and on-site support."}
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
+                <Button size="lg" className="px-8 py-6 font-work" asChild>
                   <a href={`tel:${SITE.phoneTel}`}>
                     {language === "de" ? "Anrufen" : "Call"}
                   </a>

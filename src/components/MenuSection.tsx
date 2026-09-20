@@ -635,7 +635,7 @@ export const MenuSection = () => {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setFixedCategoryFilter(chip.id)}
-                      className={`shrink-0 rounded-full border px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
+                      className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-4 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
                         isActive
                           ? "border-accent bg-accent text-accent-foreground"
                           : "border-border/70 bg-background text-muted-high-contrast hover:text-foreground"
@@ -710,7 +710,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
+                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-lg border border-border/75 bg-card p-4 md:scroll-mt-40 md:p-5">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">

@@ -101,7 +101,7 @@ const ExternalTextLink = ({ href, children, className = "" }: { href: string; ch
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className={`inline-flex items-center gap-2 text-primary transition-colors hover:text-primary/80 ${className}`}
+    className={`inline-flex min-h-[44px] items-center gap-2 text-primary transition-colors hover:text-primary/80 ${className}`}
   >
     {children}
     <ExternalLink className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -260,7 +260,7 @@ const AboutUs = () => {
                     <a
                       key={item.href}
                       href={item.href}
-                      className="rounded-full border border-primary/20 bg-card px-4 py-2 font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:border-primary/45 hover:bg-muted"
+                      className="inline-flex min-h-[44px] items-center rounded-full border border-primary/20 bg-card px-4 font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary transition-colors hover:border-primary/45 hover:bg-muted"
                     >
                       {item.label}
                     </a>
@@ -458,14 +458,14 @@ const AboutUs = () => {
                 </div>
                 <button
                   onClick={prevPoem}
-                  className="absolute left-0 top-1/2 flex h-10 w-10 -translate-x-3 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:-translate-x-12"
+                  className="absolute left-0 top-1/2 flex h-11 w-11 -translate-x-3 -translate-y-1/2 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast transition-colors hover:text-primary md:-translate-x-12"
                   aria-label={language === "de" ? "Vorheriges Gedicht" : "Previous poem"}
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
                 <button
                   onClick={nextPoem}
-                  className="absolute right-0 top-1/2 flex h-10 w-10 -translate-y-1/2 translate-x-3 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast shadow-card transition-colors hover:text-primary md:translate-x-12"
+                  className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 translate-x-3 items-center justify-center rounded-full border border-border/75 bg-card text-muted-high-contrast transition-colors hover:text-primary md:translate-x-12"
                   aria-label={language === "de" ? "Nächstes Gedicht" : "Next poem"}
                 >
                   <ChevronRight className="h-5 w-5" />

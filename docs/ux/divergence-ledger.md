@@ -205,6 +205,10 @@ Oggi costa troppo per quello che rende.
   La valutazione compare una volta, con accanto il numero di recensioni.
 - **Perché:** una stella su una recensione a 5 stelle non porta informazione.
   936 recensioni sì.
+- **Precisazione:** "una volta sola" vale **dentro la sezione**. Sulla pagina la
+  riga stelle + 4,7/936+ compare due volte, qui e nella fascia hero. La prima
+  stesura di questa voce diceva "compare una volta" senza specificare, ed era
+  imprecisa. Duplicazione nota, da decidere: vedi le decisioni aperte in fondo.
 
 ### Quattro densità, non tre
 - **Default:** dare a *Il posto* e *Voci* lo stesso `py-20 md:py-28`, che è
@@ -325,6 +329,34 @@ del repo. Scatti prima/dopo in `output/lab/`.
 
 ## Segnalazioni — non toccate, servono una decisione
 
+### 0 · Copy vietato renderizzato — la lista completa, misurata
+
+Il gate cercava solo `Jetzt reservieren`. Esteso ai verbi d'azione e a
+`Route anzeigen`, che è l'esempio MALE della tabella delle coppie con il BENE
+già scritto accanto. Ora `check-tells.sh` li trova tutti. **Nessuno è stato
+toccato: è copy, e il copy lo approva Francesco.**
+
+| File | Stringa | Dove si vede |
+|---|---|---|
+| `CTAEndBlock.tsx:50` | `Jetzt anrufen` | `/menu`, `/about`, `/gallery` |
+| `CTAEndBlock.tsx:61` | `Route anzeigen` | `/menu`, `/about`, `/gallery` |
+| `Contact.tsx:97` | `Route anzeigen` | `/visit` |
+| `LanguageContext.tsx:117` | `Jetzt Anrufen` | `/link` |
+| `AboutUs.tsx:166` | `Weiterlesen` | `/about` |
+| `LanguageContext.tsx:48` | `einzigartig` | `/about` |
+| `LanguageContext.tsx:160` | `Learn more about Sri Chinmoy` | `/about` |
+| `ReservationRequestForm.tsx:45,48,50` | `Jetzt reservieren`, `Reservierung` ×2 | **non renderizza**: `Contact.tsx:31` ha `showReservationRequest = false` |
+
+Proposte, da approvare o riscrivere:
+- `Jetzt anrufen` / `Jetzt Anrufen` → **`Anrufen: +43 1 586 28 39`**
+- `Route anzeigen` → **`Durch den Bogen, Mariahilferstraße 45`** (è il BENE già in `voice-spec.md`)
+- `Weiterlesen` → un titolo che nomini cosa si legge
+- `ReservationRequestForm` → il copy approvato sta in `CLAUDE.md` § FORM PRENOTAZIONE
+
+Nota: `Jetzt geöffnet` e `Jetzt geschlossen` **non** sono in lista e non lo
+saranno: sono lo stato di apertura, cioè un fatto, non urgenza. Il gate
+distingue per verbo.
+
 ### 1 · `ReservationRequestForm` usa il lessico vietato
 `src/components/ReservationRequestForm.tsx` contiene:
 - `submit: "Jetzt reservieren"` — etichetta del bottone
@@ -378,6 +410,11 @@ Scritto per pari ritmo, non come traduzione letterale:
 
 - [x] Struttura homepage: A / B / C — **A, scelta da Francesco**
 - [x] EN dei tre passi — **approvato da Francesco il 13 settembre 2026**
+- [ ] **Copy vietato renderizzato su quattro route** — vedi § Segnalazioni#0, tabella completa
+- [ ] La riga stelle + 4,7/936+ compare due volte sulla home (fascia + Voci): tenere entrambe o ridurre la seconda a solo testo
+- [ ] La griglia a 3 colonne del menu: il lock la vieta sulla homepage senza condizioni. Deroga motivata o due colonne
+- [ ] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto
+- [ ] `/menu`: due formati di prezzo sulla stessa pagina (`6,90` e `9,9`)
 - [ ] `ReservationRequestForm`: passare da *Reservierung* ad *Anfrage*
 - [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
 - [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca

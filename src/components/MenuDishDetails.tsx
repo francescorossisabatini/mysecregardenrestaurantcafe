@@ -37,7 +37,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
       <AllergenCodes codes={details.allergens} />
 
       <Collapsible>
-        <CollapsibleTrigger className="group mt-3 inline-flex items-center gap-1.5 font-work text-xs font-semibold text-primary transition-colors hover:text-primary/80">
+        <CollapsibleTrigger className="group mt-1 inline-flex min-h-[44px] items-center gap-1.5 font-work text-xs font-semibold text-primary transition-colors hover:text-primary/80">
           {language === "de" ? "Details & Allergene" : "Details & allergens"}
           <ChevronDown className="h-3.5 w-3.5 transition-transform group-data-[state=open]:rotate-180" aria-hidden="true" />
         </CollapsibleTrigger>
@@ -92,7 +92,7 @@ export const AllergenLegend = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="mt-12 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5" aria-labelledby="allergen-legend-title">
+    <section className="mt-12 rounded-lg border border-border/75 bg-card p-4 md:p-5" aria-labelledby="allergen-legend-title">
       <h3 id="allergen-legend-title" className="font-cormorant text-xl font-semibold text-foreground">
         {language === "de" ? "Allergene" : "Allergens"}
       </h3>

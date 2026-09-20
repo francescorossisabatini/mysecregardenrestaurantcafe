@@ -25,8 +25,12 @@
 ## Divieti duri
 
 **Urgenza, in qualunque forma**
-`Jetzt reservieren!` · `Sofort` · `Letzte Plätze` · `Nur heute` · `Verpass nicht` ·
+`Jetzt reservieren` · `Jetzt anrufen` · `Jetzt buchen` · `Jetzt bestellen` ·
+`Jetzt entdecken` · `Sofort` · `Letzte Plätze` · `Nur heute` · `Verpass nicht` ·
 `Sichere dir` · qualsiasi punto esclamativo su una CTA.
+
+> `Jetzt geöffnet` e `Jetzt geschlossen` **non** sono urgenza: sono lo stato di
+> apertura, cioè un fatto. Il divieto è su `Jetzt` + verbo d'azione.
 
 **La parola vincolante**
 `Reservierung` · `Reservieren` · `Buchen` · `Book a table`.
