@@ -231,31 +231,6 @@ export const MenuSection = () => {
           {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
-            {/* To-go discount banner */}
-            <div
-              role="note"
-              aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
-              className="mb-6 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
-            >
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
-                  -20%
-                </span>
-                <div className="min-w-0">
-                  <p className="font-cormorant text-lg md:text-xl font-semibold leading-snug text-foreground">
-                    {language === "de"
-                      ? "Take-away Angebot: 18–19 Uhr"
-                      : "Take-away offer: 6–7 pm"}
-                  </p>
-                  <p className="mt-1 font-work text-xs md:text-sm leading-relaxed text-muted-high-contrast">
-                    {language === "de"
-                      ? "20% Rabatt auf die Tagesgerichte Grün & Blau zum Mitnehmen, täglich von 18:00 bis 19:00 Uhr."
-                      : "20% off the Green & Blue daily dishes for take-away, every day from 6:00 to 7:00 pm."}
-                  </p>
-                </div>
-              </div>
-            </div>
-
             <div className="text-center mb-8">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
@@ -377,6 +352,32 @@ export const MenuSection = () => {
                     ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Unsere Küche ist klein und nicht für Zöliakie geeignet. Bei Allergien bitte kurz fragen."
                     : "Marked options are made without gluten containing ingredients. Our kitchen is small and not suitable for coeliac disease. If you have allergies, please ask us first."}
                 </p>
+              </div>
+
+              {/* To-go discount banner — sotto i piatti di oggi: la risposta
+                  operativa (cosa c'è oggi) precede la promozione. */}
+              <div
+                role="note"
+                aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
+                className="mt-6 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
+                    -20%
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-cormorant text-lg md:text-xl font-semibold leading-snug text-foreground">
+                      {language === "de"
+                        ? "Take-away Angebot: 18–19 Uhr"
+                        : "Take-away offer: 6–7 pm"}
+                    </p>
+                    <p className="mt-1 font-work text-xs md:text-sm leading-relaxed text-muted-high-contrast">
+                      {language === "de"
+                        ? "20% Rabatt auf die Tagesgerichte Grün & Blau zum Mitnehmen, täglich von 18:00 bis 19:00 Uhr."
+                        : "20% off the Green & Blue daily dishes for take-away, every day from 6:00 to 7:00 pm."}
+                    </p>
+                  </div>
+                </div>
               </div>
               </>
             ) : (
@@ -569,7 +570,7 @@ export const MenuSection = () => {
           <div className="text-center py-10 md:py-14">
             <p className="font-cormorant text-lg md:text-xl text-muted-high-contrast italic leading-relaxed whitespace-pre-line">
               {language === "de" 
-                ? "Manches kochen wir nur heute.\nEin paar Dinge bleiben, weil ihr sie immer wieder bestellt." 
+                ? "Manches kochen wir nur heute.\nEin paar Dinge bleiben, weil du sie immer wieder bestellst."
                 : "Some dishes are only here today.\nA few stay because people keep asking for them."}
             </p>
           </div>

@@ -68,35 +68,18 @@ const ContactPage = () => {
       <main id="main-content" tabIndex={-1} className="pt-24 pb-16 focus:outline-hidden">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
-            {/* Header allineato a sinistra come il resto del corpo, e una sola
-                azione primaria. Il telefono è il canale primario (CLAUDE.md);
-                le indicazioni restano a un tocco, come link, e sono comunque
-                permanenti nella barra fissa. */}
+            {/* Header allineato a sinistra come il resto del corpo. Niente
+                bottoni chiama/indicazioni qui: MobileStickyBar li offre già
+                come azione permanente, ripeterli sarebbe ridondanza (S5). */}
             <header className="mb-10 max-w-[62ch] md:mb-14">
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
                 {language === "de" ? "Besuch uns" : "Visit us"}
               </h1>
-              <p className="font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
+              <p className="mt-3 font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
                 {language === "de"
                   ? "Alles Wichtige für deinen Besuch: Adresse, Öffnungszeiten, Anreise und Unterstützung vor Ort."
                   : "Everything you need for your visit: address, opening hours, travel options and on-site support."}
               </p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <Button size="lg" className="px-8 py-6 font-work" asChild>
-                  <a href={`tel:${SITE.phoneTel}`}>
-                    {language === "de" ? "Anrufen" : "Call"}
-                  </a>
-                </Button>
-                <a
-                  href={SITE.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] items-center gap-1.5 font-work text-sm font-medium text-foreground underline underline-offset-4 transition-colors hover:text-primary"
-                >
-                  <MapPin className="h-4 w-4" aria-hidden="true" />
-                  {language === "de" ? "Durch den Bogen, Mariahilferstraße 45" : "Get directions"}
-                </a>
-              </div>
             </header>
 
             <section className="mb-14 overflow-hidden rounded-lg border border-border/70 bg-card/70">

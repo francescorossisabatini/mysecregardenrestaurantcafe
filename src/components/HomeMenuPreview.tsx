@@ -7,8 +7,9 @@ import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
+import { getAllergenByCode } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
-import { cleanDisplayText } from "@/lib/displayText";
+import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 import { DietaryBadges } from "@/components/menu/DietaryBadges";
 
 const isValidMenuText = (text?: string) => {
@@ -63,7 +64,10 @@ export const HomeMenuPreview = () => {
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", text: nextDayMenu.blue[language] },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
-  const showPending = !weeklyMenuAvailable && !isLoading;
+  // La domenica (o un festivo) il foglio Google non viene aggiornato perché
+  // siamo chiusi — senza questa esclusione "non aggiornato" e "chiuso"
+  // sembravano la stessa cosa, e la domenica mostrava il messaggio sbagliato.
+  const showPending = !weeklyMenuAvailable && !isLoading && dayIndex !== 0 && !todayHoliday;
 
 
   return (
@@ -133,7 +137,25 @@ export const HomeMenuPreview = () => {
                 );
               })}
             </div>
-          ) : showPending ? (
+          ) : null}
+
+          {!isClosed && dishes.length > 0 && (() => {
+            const codes = Array.from(new Set(dishes.flatMap((dish) => dish.allergens ?? [])));
+            if (codes.length === 0) return null;
+            return (
+              <p className="mt-3 font-work text-xs leading-relaxed text-muted-high-contrast">
+                {joinDisplayText(
+                  codes.map((code) => {
+                    const allergen = getAllergenByCode(code);
+                    return allergen ? `${code} ${cleanDisplayText(allergen.label[language])}` : code;
+                  }),
+                  " · ",
+                )}
+              </p>
+            );
+          })()}
+
+          {isLoading ? null : !isClosed && dishes.length > 0 ? null : showPending ? (
             <div className="rounded-lg border p-8 surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
                 {language === "de" ? "Der Wochenplan wird gerade aktualisiert." : "The weekly menu is being updated."}
@@ -188,14 +210,16 @@ export const HomeMenuPreview = () => {
           )}
 
 
-          <div className="mt-4 flex items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-            <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
-              {language === "de"
-                ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
-                : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
-            </p>
-          </div>
+          {!isClosed && dishes.length > 0 && (
+            <div className="mt-4 flex items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
+              <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+              <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
+                {language === "de"
+                  ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
+                  : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
+              </p>
+            </div>
+          )}
 
           <div className="mt-8">
             {/* Secondario, non verde pieno: la barra fissa porta già l'unica

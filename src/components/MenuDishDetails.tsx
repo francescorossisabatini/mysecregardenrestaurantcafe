@@ -10,15 +10,25 @@ interface MenuDishDetailsProps {
 }
 
 export const AllergenCodes = ({ codes }: { codes?: string[] }) => {
+  const { language } = useLanguage();
   if (!codes?.length) return null;
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-1.5" aria-label="Allergen codes">
-      {codes.map((code) => (
-        <span key={code} className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground">
-          {code}
-        </span>
-      ))}
+    <div className="mt-2 flex flex-wrap items-center gap-1.5" aria-label={language === "de" ? "Allergene" : "Allergens"}>
+      {codes.map((code) => {
+        const allergen = getAllergenByCode(code);
+        const label = allergen ? cleanDisplayText(allergen.label[language]) : code;
+        return (
+          <span
+            key={code}
+            title={label}
+            aria-label={label}
+            className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground"
+          >
+            {code}
+          </span>
+        );
+      })}
     </div>
   );
 };

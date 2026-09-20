@@ -53,7 +53,7 @@ export const DishRow = ({
     dietary?.vegan ? "vegan" : null,
     dietary?.glutenFree
       ? language === "de"
-        ? "ohne Gluten Zutaten"
+        ? "ohne glutenhaltige Zutaten"
         : "no gluten ingredients"
       : null,
     dietary?.bio ? "bio" : null,

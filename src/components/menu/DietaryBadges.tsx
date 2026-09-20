@@ -14,7 +14,7 @@ export const DietaryBadges = ({ text, language }: { text: string; language: "de"
   const labels = parseDietaryLabels(text);
   const visibleLabels = [
     labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
+    labels.isGlutenFree ? (language === "de" ? "ohne glutenhaltige Zutaten" : "no gluten ingredients") : null,
     labels.isBio ? "bio" : null,
   ].filter(Boolean);
 
