@@ -9,7 +9,9 @@ export const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFr
   };
 };
 
-// DESIGN_SYSTEM.md §6 Dietary badge: font-work text-sm lowercase (mai VEGAN).
+// DESIGN_SYSTEM.md §6 Dietary badge: niente CSS lowercase — "Zutaten" va
+// sempre maiuscolo in tedesco, la minuscola sulle altre parole viene già
+// dalla stringa sorgente ("vegan", "bio").
 export const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
   const labels = parseDietaryLabels(text);
   const visibleLabels = [
