@@ -91,7 +91,7 @@ export const HomeMenuPreview = () => {
           </div>
 
           {isLoading ? (
-            <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:space-y-0">
+            <div className="max-w-[62ch] space-y-4">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="rounded-lg border border-border/75 bg-card p-4 md:p-5">
                   <Skeleton className="mb-3 h-5 w-24" />
@@ -101,14 +101,14 @@ export const HomeMenuPreview = () => {
               ))}
             </div>
           ) : !isClosed && dishes.length > 0 ? (
-            <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr_auto_auto] lg:has-[>*:only-child]:max-w-md lg:has-[>*:only-child]:grid-cols-1 lg:has-[>:nth-child(2):last-child]:grid-cols-2">
+            <div className="max-w-[62ch] space-y-4">
+              {/* Lista verticale anche su desktop: direction-lock.md §Griglia
+                  vieta la griglia a 3 colonne di card sulla homepage. */}
               {dishes.map((dish) => {
                 const dishCopy = splitDishText(dish.text, language, dish.key);
 
                 return (
-                <div key={dish.key} className="rounded-lg border p-4 surface-card md:p-5 lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:gap-0">
-                  {/* Quattro righe, una per fascia. Devono restare figli diretti
-                      della card, altrimenti subgrid non le vede. */}
+                <div key={dish.key} className="rounded-lg border p-4 surface-card md:p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex min-w-0 flex-wrap items-center gap-2">
                       <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
@@ -124,14 +124,12 @@ export const HomeMenuPreview = () => {
                     </div>
                     <p className="shrink-0 font-work text-sm font-semibold text-accent" aria-label={`${dish.price.replace(",", " Euro ")}`}>{dish.price}</p>
                   </div>
-                  <div>
-                    {dishCopy.description && (
-                      <p className="mt-2 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
-                        {cleanDisplayText(dishCopy.description)}
-                      </p>
-                    )}
-                  </div>
-                  <div><DietaryBadges text={dish.text} language={language} /></div>
+                  {dishCopy.description && (
+                    <p className="mt-2 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                      {cleanDisplayText(dishCopy.description)}
+                    </p>
+                  )}
+                  <DietaryBadges text={dish.text} language={language} />
                   <div className="mt-3"><AllergenCodes codes={dish.allergens} /></div>
                 </div>
                 );
@@ -184,7 +182,7 @@ export const HomeMenuPreview = () => {
                   <p className="mb-4 font-work text-xs uppercase tracking-wider text-muted-high-contrast">
                     {language === "de" ? `Vorschau auf ${nextDayName}` : `Preview of ${nextDayName}`}
                   </p>
-                  <div className="grid gap-3 lg:grid-cols-3">
+                  <div className="max-w-[62ch] space-y-3">
                     {nextDishes.map((dish) => {
                       const dishCopy = splitDishText(dish.text, language, dish.key);
                       return (

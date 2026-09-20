@@ -75,7 +75,7 @@ export const MapConsentGate = ({ src, title, className, style }: Props) => {
 
   return (
     <div
-      className={`flex h-full min-h-[320px] w-full flex-col items-center justify-center gap-4 bg-muted/40 p-6 text-center ${className ?? ""}`}
+      className={`flex min-h-[320px] w-full flex-col items-center justify-center gap-4 bg-muted/40 p-6 text-center ${className ?? ""}`}
       style={style}
       role="region"
       aria-label={copy.title}
@@ -83,7 +83,7 @@ export const MapConsentGate = ({ src, title, className, style }: Props) => {
       <MapPin className="h-8 w-8 text-primary" aria-hidden="true" />
       <div className="max-w-md space-y-2">
         <p className="font-cormorant text-xl font-semibold text-foreground">{copy.title}</p>
-        <p className="font-work text-sm leading-relaxed text-muted-high-contrast">{copy.body}</p>
+        <p className="text-left font-work text-sm leading-relaxed text-muted-high-contrast">{copy.body}</p>
       </div>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Button variant="secondary" onClick={handleAccept} className="min-h-[44px]">

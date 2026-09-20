@@ -231,13 +231,13 @@ export const MenuSection = () => {
           {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
-            <div className="text-center mb-8">
+            <div className="mb-8 max-w-sm">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-high-contrast text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
-                {language === "de" 
-                  ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
+              <p className="text-muted-high-contrast text-sm md:text-base font-work leading-relaxed">
+                {language === "de"
+                  ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach."
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
               </p>
             </div>
@@ -381,11 +381,11 @@ export const MenuSection = () => {
               </div>
               </>
             ) : (
-              <div className="space-y-6 rounded-lg border p-8 text-center surface-card">
+              <div className="space-y-6 rounded-lg border p-8 surface-card">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
-                    {dateInfo.todayHoliday 
+                    {dateInfo.todayHoliday
                       ? dateInfo.todayHoliday.name[language]
                       : dateInfo.isAfterClosing
                         ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
@@ -393,25 +393,25 @@ export const MenuSection = () => {
                           ? (language === "de" ? "Heute geschlossen" : "Closed Today")
                           : (language === "de" ? "Sonntag. Heute bleibt es still" : "Sunday. A quiet day here")}
                   </p>
-                  <p className="text-muted-high-contrast font-work text-sm max-w-md mx-auto">
-                    {dateInfo.todayHoliday 
+                  <p className="text-muted-high-contrast font-work text-sm max-w-md">
+                    {dateInfo.todayHoliday
                       ? dateInfo.todayHoliday.message[language]
                       : dateInfo.isAfterClosing
-                        ? (language === "de" 
-                            ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist." 
+                        ? (language === "de"
+                            ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist."
                             : "The pots are done for today. Below you can see what is planned for tomorrow.")
                         : isNoMenuDay
-                          ? (language === "de" 
-                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei." 
+                          ? (language === "de"
+                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei."
                               : "The kitchen is closed today. Feel free to check back later.")
-                          : (language === "de" 
-                              ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee." 
+                          : (language === "de"
+                              ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee."
                               : "Sunday is our pause. Tomorrow it will smell of rice, spices and fresh coffee again.")}
                   </p>
                   {(dateInfo.todayHoliday || isNoMenuDay) && !dateInfo.isAfterClosing && (
                     <p className="text-muted-high-contrast font-work text-xs mt-2">
-                      {language === "de" 
-                        ? "Heute haben wir geschlossen." 
+                      {language === "de"
+                        ? "Heute haben wir geschlossen."
                         : "We are closed today."}
                     </p>
                   )}
@@ -490,7 +490,7 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
-            <p className="text-xs text-muted-high-contrast font-work font-medium tracking-wide mb-6 text-center uppercase">
+            <p className="text-xs text-muted-high-contrast font-work font-medium tracking-wide mb-6 uppercase">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
@@ -506,7 +506,7 @@ export const MenuSection = () => {
                     </div>
                   ) : (
                     <>
-                      <p className="text-xs text-muted-high-contrast text-center font-work mb-4">
+                      <p className="text-xs text-muted-high-contrast font-work mb-4">
                         {translatePeriod(menu.period, language)}
                       </p>
                       {menu.days.map((day, index) => {
@@ -577,11 +577,11 @@ export const MenuSection = () => {
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
           <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
-            <div className="text-center mb-8">
+            <div className="mb-8 max-w-sm">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-high-contrast text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-high-contrast text-sm md:text-base font-work leading-relaxed">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
               <p className="text-muted-high-contrast text-xs font-work font-medium mt-2 uppercase tracking-wide">

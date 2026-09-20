@@ -31,7 +31,7 @@ export const Navigation = () => {
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
     { to: "/gallery", label: language === "de" ? "Galerie" : "Gallery" },
-    { to: "/about", label: "Our Story" },
+    { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
     { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
   const activeNavLabel = navLinks.find((link) => link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to))?.label ?? "";
