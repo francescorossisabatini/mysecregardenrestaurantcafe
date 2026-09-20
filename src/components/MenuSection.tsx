@@ -283,11 +283,9 @@ export const MenuSection = () => {
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
-                              {language === "de" ? "Suppe" : "Soup"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            {language === "de" ? "Suppe" : "Soup"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">6,90</p>
                       </div>
@@ -313,11 +311,9 @@ export const MenuSection = () => {
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
-                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
@@ -343,11 +339,9 @@ export const MenuSection = () => {
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-blue/25 bg-blue/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
-                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
@@ -449,7 +443,7 @@ export const MenuSection = () => {
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
                               {language === "de" ? "Suppe" : "Soup"}
                             </span>
                             {dishCopy.description && (
@@ -468,7 +462,7 @@ export const MenuSection = () => {
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
                               {language === "de" ? "Grünes Gericht" : "Green Dish"}
                             </span>
                             {dishCopy.description && (
@@ -487,7 +481,7 @@ export const MenuSection = () => {
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-blue/25 bg-blue/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
                               {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                             </span>
                             {dishCopy.description && (
