@@ -482,4 +482,17 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca
 - [ ] Allineare `CLAUDE.md` e `DESIGN_SYSTEM.md`: `tailwind.config.ts` non esiste
 - [ ] Normalizzare radius e bordo+ombra su `/about` e `/gallery`
-- [ ] Scrim dell'hero desktop: il critico cieco ha segnalato un possibile pannello invece di un gradiente pulito — investigato, non riprodotto con certezza, non toccato per non rischiare il contrasto già misurato
+- [ ] Scrim dell'hero desktop, ipotesi "pannello": non riprodotta nel primo giro, non toccata
+- [x] **Secondo giro di critica: 57/100** (da 47/100). Contrasto della nav sull'hero fuori soglia (3,4-4,0:1 misurato a pixel, serve 4,5:1) — corretto: `before:from-foreground/72 before:via-foreground/40` in `Navigation.tsx` (era `/55` e `/25`), riverificato a pixel dopo il fix (minimo 4,99:1). `scripts/check-contrast.mjs` non copre la nav (misura solo dentro `<h1>`'s closest `<section>`, la nav è un `<nav>` fratello) — gap noto, non chiuso
+- [x] Installato `pngjs`, mancava per far girare `check-contrast.mjs`
+- [x] Legenda allergeni (introdotta in questa sessione): 3 interpunti in un viewport, sopra il limite di 2 — separatore cambiato da `·` a `,`
+- [x] `DishRow.tsx`/`DietaryBadges.tsx`: la classe CSS `lowercase` minuscolizzava anche "Zutaten" (sostantivo tedesco, va sempre maiuscolo) — rimossa, le stringhe sorgente erano già corrette
+- [x] Logo Supermind invisibile su cream (inchiostro quasi bianco, 240/240/240 misurato) — chip di sfondo `bg-primary` solo su quel logo. `tripadvisor.png` non aveva trasparenza (sfondo bianco opaco, unico dei 4) — rimossa via script
+- [x] Footer centrato su ogni pagina — ora solo nome+tagline restano centrati, indirizzo/orari/link a sinistra
+- [ ] `/visit` desktop: 597px di colonna vuota sotto il placeholder mappa (l'item 18 del primo giro ha spostato il vuoto, non chiuso)
+- [ ] `/menu`: "Heute aus der Küche" e il primo giorno di "Unser Wochenmenü" sono lo stesso contenuto (Mittwoch ripetuto)
+- [ ] `/visit` mobile: due azioni primarie piene nello stesso viewport ("Karte laden" + "Anrufen" della barra fissa)
+- [ ] `klassikerData.ts`: 9 `descriptionShort` sono un terzetto automatico, vietato da voice-spec
+- [ ] Stato chiuso (home e /menu): non dice quando si riapre — voice-spec ha già la coppia pronta ("Heute geschlossen. Morgen ab 11:00 wieder da.")
+- [ ] Categoria del piatto: due componenti diversi per lo stesso dato (pill su /menu, testo inline su home)
+- [ ] `/visit`: card annidate a tre livelli (Barrierefreiheit dentro Zugang dentro la sezione)

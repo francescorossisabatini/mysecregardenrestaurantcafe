@@ -147,7 +147,7 @@ export const HomeMenuPreview = () => {
                     const allergen = getAllergenByCode(code);
                     return allergen ? `${code} ${cleanDisplayText(allergen.label[language])}` : code;
                   }),
-                  " · ",
+                  ", ",
                 )}
               </p>
             );

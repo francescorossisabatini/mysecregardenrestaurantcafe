@@ -21,7 +21,7 @@ export const DietaryBadges = ({ text, language }: { text: string; language: "de"
   if (visibleLabels.length === 0) return null;
 
   return (
-    <p className="mt-2 font-work text-[11px] font-semibold lowercase tracking-[0.06em] text-muted-high-contrast">
+    <p className="mt-2 font-work text-[11px] font-semibold tracking-[0.06em] text-muted-high-contrast">
       {joinDisplayText(visibleLabels)}
     </p>
   );

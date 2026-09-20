@@ -70,6 +70,9 @@ const press = [
   {
     name: "Supermind",
     logo: supermind,
+    // Il logo è quasi bianco (240,240,240): invisibile su cream senza un
+    // fondo scuro dietro, a differenza degli altri tre — verificato a pixel.
+    darkChip: true,
     quote: {
       de: "Spezialitätenkaffee, der den Unterschied macht.",
       en: "Specialty coffee that makes the difference.",
@@ -126,12 +129,14 @@ export const Voci = () => {
         <ul className="mt-14 grid gap-x-12 gap-y-8 border-t border-border-default pt-10 md:grid-cols-2">
           {press.map((item) => (
             <li key={item.name} className="grid grid-cols-[72px_1fr] items-center gap-5 md:grid-cols-[96px_1fr]">
-              <img
-                src={item.logo}
-                alt={`${item.name} logo`}
-                loading="lazy"
-                className="mx-auto max-h-8 w-auto max-w-full object-contain md:max-h-10"
-              />
+              <span className={item.darkChip ? "mx-auto rounded-lg bg-primary p-2" : ""}>
+                <img
+                  src={item.logo}
+                  alt={`${item.name} logo`}
+                  loading="lazy"
+                  className="mx-auto max-h-8 w-auto max-w-full object-contain md:max-h-10"
+                />
+              </span>
               <p className="font-lora text-sm italic leading-relaxed text-text-secondary md:text-base">
                 {item.quote[language]}
               </p>

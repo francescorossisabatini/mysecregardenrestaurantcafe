@@ -132,7 +132,7 @@ export const DishRow = ({
           </div>
 
           {dietaryLabels.length > 0 && (
-            <p className="mt-2 font-work text-[11px] font-semibold lowercase tracking-[0.06em] text-muted-high-contrast">
+            <p className="mt-2 font-work text-[11px] font-semibold tracking-[0.06em] text-muted-high-contrast">
               {dietaryLabels.join(" · ")}
             </p>
           )}

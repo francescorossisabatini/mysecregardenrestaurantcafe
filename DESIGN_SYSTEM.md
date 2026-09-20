@@ -224,9 +224,11 @@ Stati: hover → tono più scuro · active → `scale(0.98)` · disabled → 40%
 ### Dietary badge
 
 ```
-Pill (rounded-full) · py-0.5 px-2 · font-work text-sm lowercase (mai VEGAN)
-Background: colore dietary al 15% opacity · Text: colore dietary pieno
-aria-label obbligatorio: "vegan" | "gluten-free" | "bio"
+font-work text-[11px] font-semibold · mai VEGAN in maiuscolo — la sorgente del
+testo è già minuscola ("vegan", "bio"), niente CSS `lowercase`: sulle frasi
+tedesche più lunghe ("ohne glutenhaltige Zutaten") forzerebbe minuscolo anche
+sul sostantivo, che in tedesco va sempre maiuscolo (bug corretto 20/09/2026,
+src/components/menu/DietaryBadges.tsx e DishRow.tsx)
 ```
 
 ### Open / Closed badge
