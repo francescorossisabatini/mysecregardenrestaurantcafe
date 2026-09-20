@@ -1,7 +1,7 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
 > Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
-> Ultimo aggiornamento: 19 agosto 2026 (riallineato al codice)
+> Ultimo aggiornamento: 20 settembre 2026 (riallineato al codice)
 
 
 ---
@@ -92,14 +92,13 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 |---|---|---|
 | `/` | Homepage — trust, desire, friction removal | ✅ Attiva |
 | `/menu` | Menu hub — Heute / Diese Woche / Immer da | ✅ Attiva |
-| `/visit` | Orari, directions, form Anfrage | ✅ Attiva |
+| `/visit` | Orari, directions | ✅ Attiva |
 | `/about` | About page — manifesto e narrativa | ✅ Attiva |
 | `/gallery` | Galleria foto reali | ✅ Attiva |
 | `/link` | Link hub (bio social) | ✅ Attiva |
 | `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Attiva |
 | `/privacy` | Cookie policy — GDPR | ✅ Attiva |
-| `/staff`, `/staff/login` | Area staff — noindex, esclusa da robots.txt | ✅ Attiva |
-| `/reservation-preview` | Preview interna Anfrage | ✅ Attiva |
+| `/login` | Area staff (login Supabase) — il percorso reale è `/login`, non `/staff/login`. `robots.txt` oggi non la esclude (`Allow: /` per tutti gli agent): da correggere se deve restare fuori indice | ✅ Attiva |
 
 
 **Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`

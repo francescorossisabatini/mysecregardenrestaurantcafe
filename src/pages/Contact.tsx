@@ -6,7 +6,6 @@ import { Navigation } from "@/components/Navigation";
 import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
-import { ReservationRequestForm } from "@/components/ReservationRequestForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
@@ -28,8 +27,6 @@ const ContactPage = () => {
       { label: "Address", value: "Windmühlgasse 22 to 24" },
       { label: "Benefit", value: "1 hour included with a 27 euro spend" },
     ];
-  const showReservationRequest = false;
-
   const visitJsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
@@ -193,8 +190,6 @@ const ContactPage = () => {
                 </Button>
               </div>
             </section>
-
-            {showReservationRequest && <ReservationRequestForm headingLevel="h2" />}
           </div>
         </div>
       </main>

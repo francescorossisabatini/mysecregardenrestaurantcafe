@@ -333,7 +333,6 @@ src/components/MenuFloatingPill.tsx: U2        # overlay
 src/components/CookieConsent.tsx: U2, U1, C1    # overlay; separatori funzionali nel testo legale
 src/components/InstallPrompt.tsx: U1, U2       # overlay sopra il contenuto: l'ombra stacca dal piano, il bordo no
 src/components/SkipLink.tsx: U1, U2            # overlay
-src/components/ReservationRequestForm.tsx: U1  # form non renderizzato, vedi Segnalazioni#0
 src/pages/Impressum.tsx: U1, C1, VOICE         # pagina legale: il testo è dettato dalla legge austriaca
 src/pages/Privacy.tsx: U1, C1                  # pagina legale
 src/components/Hero.tsx: C1                    # "4,7 · 936+": un interpunto, verificato sullo scatto
@@ -404,7 +403,7 @@ Corretto in sessione, verificato a schermo:
 - `Contact.tsx:97` `Route anzeigen` → `Durch den Bogen, Mariahilferstraße 45`
 - `Link.tsx:12,13` `Jetzt anrufen`/`Route anzeigen` → numero reale / stesso testo di sopra
 - `LanguageContext.tsx:117` `Jetzt Anrufen` → `Anrufen` (chiave morta, nessun componente la usa)
-- `ReservationRequestForm.tsx:45,48,50` → vedi §1 sotto, chiuso
+- `ReservationRequestForm.tsx` → cancellato, vedi §1 sotto
 
 **Restano aperti, deliberatamente — stesso giro dedicato di `/about`:**
 | File | Stringa |
@@ -417,14 +416,19 @@ Nota: `Jetzt geöffnet` e `Jetzt geschlossen` **non** sono in lista e non lo
 saranno: sono lo stato di apertura, cioè un fatto, non urgenza. Il gate
 distingue per verbo.
 
-### 1 · `ReservationRequestForm` usa il lessico vietato — chiuso il 20 settembre 2026
+### 1 · `ReservationRequestForm` — cancellato il 20 settembre 2026, non solo derogato
 
-Corrette le 3 righe segnalate: `submit`, `error`, `rule` (Reservierung → Anfrage).
-Titolo, subline e messaggio di successo del form **non toccati** — il form
-resta non renderizzato (`Contact.tsx:31` ha `showReservationRequest = false`).
-Un riallineamento completo al copy di CLAUDE.md § FORM PRENOTAZIONE (label
-*Tisch anfragen*, CTA *Anfrage senden*) resta da fare quando il form torna
-visibile — non c'è urgenza a rifinire copy che nessuno vede.
+Prima correzione (righe `submit`/`error`/`rule`, Reservierung → Anfrage) aveva
+lasciato in piedi codice morto: il form non era renderizzato da nessuna route
+(`Contact.tsx:31` aveva `showReservationRequest = false`) ma restava nel repo
+come se fosse un'opzione reale, con dentro anche il lato EN intero mai
+corretto (`Book a table`, `Book now`). Decisione di Francesco: quella non è
+una funzionalità del sito oggi, quindi non deve comparire nemmeno come
+codice spento. Cancellato `src/components/ReservationRequestForm.tsx` e il
+suo uso in `Contact.tsx`. La tabella IA di CLAUDE.md non elenca più
+"form Anfrage" fra le funzioni di `/visit`. Il copy approvato §FORM
+PRENOTAZIONE resta in CLAUDE.md come riferimento per un'eventuale
+reintroduzione, ma non descrive più nulla di attivo.
 
 ### 2 · `tailwind.config.ts` non esiste
 `CLAUDE.md` e `DESIGN_SYSTEM.md` lo indicano entrambi come "fonte della verità"
@@ -468,7 +472,7 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [x] Tagline hero sostituita, hero senza CTA, bottom nav a 2 bottoni — **approvati da Francesco il 20 settembre 2026**, CLAUDE.md e DESIGN_SYSTEM.md riallineati al codice
 - [x] Copy vietato renderizzato — chiuso tranne le 3 righe di `/about` (giro dedicato), vedi § Segnalazioni#0
 - [x] La griglia a 3 colonne del menu — convertita in lista verticale su `HomeMenuPreview.tsx`, nessuna deroga necessaria
-- [x] `ReservationRequestForm`: `Reservierung` → `Anfrage` sulle 3 righe visibili nel codice (titolo/subline/successo restano, form non renderizzato)
+- [x] `ReservationRequestForm`: cancellato — non è una funzionalità attiva, non doveva restare come opzione spenta. Tabella IA di CLAUDE.md corretta di conseguenza (anche `/staff`, `/staff/login`, `/reservation-preview`: dichiarate attive ma inesistenti nel router — il vero percorso staff è `/login`)
 - [x] Aggiungere Playwright a `package.json` — fatto per gli screenshot di `scripts/shoot.mjs`
 - [ ] La riga stelle + 4,7/936+ compare due volte sulla home (fascia + Voci): tenere entrambe o ridurre la seconda a solo testo
 - [ ] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto
