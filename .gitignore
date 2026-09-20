@@ -28,3 +28,6 @@ output/
 
 # build statica del banco
 dist-lab/
+
+*storybook.log
+storybook-static
