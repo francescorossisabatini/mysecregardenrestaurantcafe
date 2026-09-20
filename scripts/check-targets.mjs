@@ -1,4 +1,5 @@
-// check-targets.mjs — misura ogni elemento interattivo su ogni route.
+// check-targets.mjs — misura ogni elemento interattivo su ogni route, e conta
+// le dimensioni tipografiche effettivamente renderizzate in una schermata.
 //
 // Il target di 44×44px sta scritto in DESIGN_SYSTEM.md §8, ma finora nessuno
 // l'aveva misurato: si controllava leggendo le classi, che è il modo in cui
@@ -43,10 +44,29 @@ const main = async () => {
     });
 
     console.log(`\n── ${label} ${w}×${h} — soglia ${MINFOR}px ──`);
+    const typeCounts = [];
     for (const route of ROUTES) {
       const page = await ctx.newPage();
       await page.goto(BASE + route, { waitUntil: 'networkidle', timeout: 30_000 }).catch(() => {});
       await page.waitForTimeout(500);
+
+      // Il lock ammette 5 dimensioni tipografiche PER SCHERMATA. Finora si
+      // contavano le classi su tutto il repo, che è un altro numero: qui si
+      // contano i px renderizzati dal testo visibile nel primo viewport.
+      const sizes = await page.evaluate(() => {
+        const seen = new Map();
+        const vh = window.innerHeight;
+        document.querySelectorAll('body *').forEach((el) => {
+          if (el.children.length > 0) return;                 // solo foglie di testo
+          if (!(el.textContent || '').trim()) return;
+          const r = el.getBoundingClientRect();
+          if (r.height === 0 || r.top > vh || r.bottom < 0) return;
+          const px = Math.round(parseFloat(getComputedStyle(el).fontSize));
+          seen.set(px, (seen.get(px) || 0) + 1);
+        });
+        return [...seen.entries()].sort((a, b) => b[0] - a[0]);
+      });
+      typeCounts.push({ route, sizes });
       const threshold = mobile ? MIN : 24; // DESIGN_SYSTEM §8 è per il touch; su desktop vale WCAG 2.2 AA
       const small = await page.evaluate((min) => {
         const out = [];
@@ -90,6 +110,13 @@ const main = async () => {
       for (const [k, n] of [...seen.entries()].slice(0, 8)) {
         console.log(`      ${k}${n > 1 ? `  ×${n}` : ''}`);
       }
+    }
+    console.log(`\n  scala tipografica nel primo viewport (il lock ne ammette 5):`);
+    for (const t of typeCounts) {
+      const n = t.sizes.length;
+      const mark = n > 5 ? '✗' : '✓';
+      if (n > 5) failures++;
+      console.log(`    ${mark} ${t.route} — ${n} dimensioni: ${t.sizes.map(([px, c]) => `${px}px×${c}`).join('  ')}`);
     }
     await ctx.close();
   }

@@ -263,7 +263,7 @@ export const MenuSection = () => {
             <div
               role="note"
               aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
-              className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
+              className="mb-6 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
             >
               <div className="flex items-start gap-3">
                 <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
@@ -298,7 +298,7 @@ export const MenuSection = () => {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-daily/50 rounded-xl p-5 animate-pulse">
+                  <div key={i} className="bg-daily/50 rounded-lg p-5 animate-pulse">
                     <Skeleton className="h-5 w-24 mb-3" />
                     <Skeleton className="h-4 w-full mb-2" />
                     <Skeleton className="h-4 w-3/4" />
@@ -313,7 +313,7 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.soup[language], language, "soup");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
@@ -343,7 +343,7 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.green[language], language, "green");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
@@ -373,7 +373,7 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.blue[language], language, "blue");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
@@ -398,7 +398,7 @@ export const MenuSection = () => {
                   );
                 })()}
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
+              <div className="mt-4 flex items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-high-contrast font-work leading-relaxed">
                   {language === "de"
@@ -408,7 +408,7 @@ export const MenuSection = () => {
               </div>
               </>
             ) : (
-              <div className="space-y-6 rounded-2xl border p-8 text-center surface-card">
+              <div className="space-y-6 rounded-lg border p-8 text-center surface-card">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
@@ -455,7 +455,7 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.soup[language], language, "soup");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
@@ -474,7 +474,7 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.green[language], language, "green");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
@@ -493,7 +493,7 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.blue[language], language, "blue");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
@@ -523,7 +523,7 @@ export const MenuSection = () => {
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
+          <div className="my-2 rounded-lg border px-4 py-5 surface-card md:px-5">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
@@ -663,7 +663,7 @@ export const MenuSection = () => {
                         aria-hidden="true"
                         loading="lazy"
                         decoding="async"
-                        className="h-12 w-12 shrink-0 rounded-xl object-cover md:h-14 md:w-14"
+                        className="h-12 w-12 shrink-0 rounded-lg object-cover md:h-14 md:w-14"
                       />
                     )}
                     <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground">
@@ -728,7 +728,7 @@ export const MenuSection = () => {
                             {subcategory.items.map((item: KlassikerItem) => (
                               <div 
                                 key={item.id} 
-                                className="rounded-xl border border-border/50 bg-background/60 p-3"
+                                className="rounded-lg border border-border/50 bg-background/60 p-3"
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">

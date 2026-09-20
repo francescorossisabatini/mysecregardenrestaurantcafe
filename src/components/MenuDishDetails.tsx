@@ -42,7 +42,7 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
           <ChevronDown className="h-3.5 w-3.5 transition-transform group-data-[state=open]:rotate-180" aria-hidden="true" />
         </CollapsibleTrigger>
         <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-          <div className={`${compact ? "mt-2" : "mt-3"} space-y-3 rounded-xl border border-border/60 bg-background/70 p-3`}>
+          <div className={`${compact ? "mt-2" : "mt-3"} space-y-3 rounded-lg border border-border/60 bg-background/70 p-3`}>
             {!!details.ingredientsMain?.length && (
               <div>
                 <p className="mb-1 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
@@ -103,7 +103,7 @@ export const AllergenLegend = () => {
       </p>
       <div className="mt-4 grid gap-2 sm:grid-cols-2">
         {ALLERGENS.map((allergen) => (
-          <div key={allergen.code} className="flex items-start gap-2 rounded-xl bg-background/70 p-2">
+          <div key={allergen.code} className="flex items-start gap-2 rounded-lg bg-background/70 p-2">
             <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground">
               {allergen.code}
             </span>

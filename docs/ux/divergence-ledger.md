@@ -317,15 +317,79 @@ del repo. Scatti prima/dopo in `output/lab/`.
 
 ## Deroghe registrate
 
+`scripts/check-tells.sh` legge il blocco qui sotto. Una riga vale come deroga
+solo se sta qui, quindi zittire un controllo costa esattamente quanto scrivere
+perché — che è il punto. Formato: `percorso: CHECK, CHECK  # motivo`.
+Il gate continua a elencarle a ogni giro sotto "deroghe registrate": restano
+visibili, smettono solo di far fallire il controllo.
+
+```deroghe
+src/pages/AboutUs.tsx: S3, U1, U2, C1, VOICE   # giro dedicato, vedi Prossime decisioni #12
+src/pages/Gallery.tsx: S3, U1, U2, C1          # stesso giro
+src/pages/Login.tsx: U1, U2                    # area di servizio, fuori dal redesign
+src/pages/OAuthConsent.tsx: U1, U2             # area di servizio, fuori dal redesign
+src/components/MenuFloatingPill.tsx: U2        # overlay
+src/components/CookieConsent.tsx: U2, U1, C1    # overlay; separatori funzionali nel testo legale
+src/components/InstallPrompt.tsx: U1, U2       # overlay sopra il contenuto: l'ombra stacca dal piano, il bordo no
+src/components/SkipLink.tsx: U1, U2            # overlay
+src/components/ReservationRequestForm.tsx: U1  # form non renderizzato, vedi Segnalazioni#0
+src/pages/Impressum.tsx: U1, C1, VOICE         # pagina legale: il testo è dettato dalla legge austriaca
+src/pages/Privacy.tsx: U1, C1                  # pagina legale
+src/components/Hero.tsx: C1                    # "4,7 · 936+": un interpunto, verificato sullo scatto
+src/components/Voci.tsx: C1                    # autore · data: due per viewport, verificato sullo scatto
+src/components/menu/DishRow.tsx: C1            # separatore fra etichette dietary, uno per riga
+src/components/MenuDishDetails.tsx: C1         # separatore nella nota allergeni
+src/components/CTAEndBlock.tsx: S2             # il limite è per pagina: la home ne ha 2, /menu 1. Verificato sugli scatti
+```
+
+### Perché `/about` e `/gallery` sono derogate e non corrette
+
+Le ho toccate in questa sessione **solo** per l'accessibilità: diciassette
+controlli sotto i 44px misurati, nessun contenuto e nessun copy. `CLAUDE.md`
+recinta la route `/about`, e normalizzare dodici superfici, sei valori di
+radius e il ritmo verticale è lavoro di design su una pagina che nessuno ha
+ancora rivisto con il lock davanti. Non è una pulizia: è la stessa decisione
+strutturale già presa sulla home, applicata dove non è stata applicata.
+
+Va fatta prima del merge o subito dopo — quelle pagine vanno in produzione con
+lo stesso push, e `/about` è la destinazione dell'unico link secondario della
+home — ma va fatta guardando, non infilata in coda a un altro giro.
+
+## Deroghe motivate nel testo
+
 | Controllo | Dove | Perché resta |
 |---|---|---|
 | ~~`TOKEN colore Tailwind di default` 7×~~ | ~~`src/utils/menuIcons.tsx`~~ | **Risolto: il file è stato cancellato.** Era codice morto — zero riferimenti in tutto il repo, né import statici né dinamici né stringhe. Ridipingerlo con i token avrebbe lasciato 111 righe che non renderizzano niente, e la deroga avrebbe fatto scattare il gate a ogni giro. Una deroga che suona per sempre è rumore, e il rumore toglie credibilità al controllo. Git conserva il file. |
 | `U2 bordo + ombra` su overlay | `InstallPrompt`, `MenuFloatingPill`, `SkipLink`, `CookieConsent` | Sono elementi che stanno **sopra** il contenuto, non sulla superficie cream. Lì l'ombra fa il lavoro che il bordo non può fare: staccare dal piano sottostante. Deroga motivata, non svista. |
 | `S2 template di sezione` 3× | `IlPosto`, `Voci`, `CTAEndBlock` | Il limite è **per pagina**, lo script conta **per file**. La home ne ha due (`IlPosto`, `Voci`); il terzo è in `CTAEndBlock`, che dalla home è uscito e vive su `/menu`, `/about`, `/gallery`. Per pagina si è conformi. Lo script ora elenca i file quando scatta, così la deroga si valuta in un colpo d'occhio invece di doverla cercare. |
-| `TYPE scala` 12 dimensioni | file toccati | Il conteggio è su più schermate insieme, non su una. Da rivedere schermata per schermata, non con una passata globale. |
+| ~~`TYPE scala`~~ | — | **Sostituita da una misura.** La vecchia deroga diceva "da rivedere schermata per schermata": era una promessa, non una ragione. Ora `scripts/check-targets.mjs` conta i px renderizzati dal testo visibile nel primo viewport. Il numero vero è sotto. |
 | `U2 bordo + ombra` | `AboutUs.tsx`, `Gallery.tsx`, `Login.tsx`, `OAuthConsent.tsx` | Fuori dall'ambito di questa sessione (home, `/menu`, `/visit`). Da normalizzare quando si tocca quella route. |
 
 ---
+
+## La scala tipografica, misurata
+
+Il lock ammette **5 dimensioni per schermata**. Finora si contavano le classi
+su tutto il repo, che è un altro numero e non voleva dire niente. Misurato sul
+primo viewport a 390px, contando i px effettivi del testo visibile:
+
+| Route | Dimensioni | Distribuzione |
+|---|---|---|
+| `/` | **9** | 48 · 36 · 24 · 18 · 16 · 14 · 12 · 11 · 10 |
+| `/menu` | **8** | 36 · 30 · 18 · 16 · 14 · 12 · 11 · 10 |
+| `/visit` | **9** | 36 · 30 · 20 · 18 · 16 · 14 · 12 · 11 · 10 |
+| `/about` | **8** | 48 · 24 · 18 · 16 · 14 · 12 · 11 · 10 |
+| `/gallery` | **9** | 48 · 36 · 20 · 18 · 16 · 14 · 12 · 11 · 10 |
+| `/link` | **5** | 30 · 18 · 16 · 14 · 12 |
+
+Il problema non sta nei titoli: sta in basso. **10, 11, 12, 14 e 16px sono già
+cinque dimensioni** prima ancora di contare un titolo, e le differenze fra 10 e
+11 e fra 11 e 12 non portano gerarchia — portano rumore.
+
+Consolidare è lavoro di design che tocca ogni schermata, e cambia il lock.
+Proposta, da decidere: micro-etichette **11px**, corpo piccolo **14px**, corpo
+**16–18px**, più due taglie di titolo. Cinque, come dice il lock.
+`/link` dimostra che si può.
 
 ## Segnalazioni — non toccate, servono una decisione
 
@@ -415,6 +479,7 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [ ] La griglia a 3 colonne del menu: il lock la vieta sulla homepage senza condizioni. Deroga motivata o due colonne
 - [ ] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto
 - [ ] `/menu`: due formati di prezzo sulla stessa pagina (`6,90` e `9,9`)
+- [ ] Consolidare la scala tipografica: 9 dimensioni sulla home contro le 5 del lock (tabella qui sopra)
 - [ ] `ReservationRequestForm`: passare da *Reservierung* ad *Anfrage*
 - [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
 - [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca

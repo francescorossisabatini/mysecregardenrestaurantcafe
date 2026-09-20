@@ -46,7 +46,7 @@ export const DishRow = ({
   const src = photoUrl ?? getDishPhoto(photoId);
   const containerClass =
     as === "card"
-      ? `rounded-2xl border p-4 surface-card md:p-5 ${isUnavailable ? "border-dashed" : ""}`
+      ? `rounded-lg border p-4 surface-card md:p-5 ${isUnavailable ? "border-dashed" : ""}`
       : "";
 
   const dietaryLabels = [
@@ -68,7 +68,7 @@ export const DishRow = ({
             alt={name}
             loading="lazy"
             decoding="async"
-            className="h-16 w-16 shrink-0 rounded-xl object-cover md:h-24 md:w-24"
+            className="h-16 w-16 shrink-0 rounded-lg object-cover md:h-24 md:w-24"
           />
         )}
         <div className="min-w-0 flex-1">

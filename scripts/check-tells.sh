@@ -45,18 +45,78 @@ fi
 
 printf '%sControllo %d file%s\n\n' "$DIM" "${#FILES[@]}" "$OFF"
 
+# --- deroghe registrate ---------------------------------------------------
+# Una deroga vale solo se sta nel blocco ```deroghe di
+# docs/ux/divergence-ledger.md. Zittire un controllo costa quanto scrivere
+# perché, e la motivazione resta in un documento che si rilegge.
+LEDGER="docs/ux/divergence-ledger.md"
+declare -A DEROGA_CHECKS=()
+declare -A DEROGA_WHY=()
+if [ -f "$LEDGER" ]; then
+  while IFS= read -r line; do
+    file="${line%%:*}"
+    rest="${line#*:}"
+    why="${rest#*#}"; [ "$why" = "$rest" ] && why=""
+    checks="${rest%%#*}"
+    # Due righe per lo stesso file farebbero sparire in silenzio la prima:
+    # meglio dirlo, perché una deroga persa è una deroga che non protegge più.
+    if [ -n "${DEROGA_CHECKS[$file]:-}" ]; then
+      printf '%s! blocco deroghe: %s compare due volte, unisci le righe%s\n' "$YEL" "$file" "$OFF" >&2
+    fi
+    DEROGA_CHECKS["$file"]=" $(printf '%s' "$checks" | tr ',' ' ' | tr -s ' ') "
+    DEROGA_WHY["$file"]="$(printf '%s' "$why" | sed 's/^ *//')"
+  done < <(awk '/^```deroghe/{inb=1;next} /^```/{inb=0} inb && /:/' "$LEDGER")
+fi
+
+# File da controllare per un dato codice, escludendo quelli derogati per quello.
+files_for() {
+  local check="$1" f n=0
+  for f in "${FILES[@]}"; do
+    case "${DEROGA_CHECKS[$f]:-}" in *" $check "*) continue ;; esac
+    printf '%s\n' "$f"; n=$((n+1))
+  done
+  # Se la deroga ha svuotato la lista, /dev/null tiene i grep validi senza
+  # dover trattare il caso vuoto in ognuno dei controlli.
+  [ "$n" -eq 0 ] && printf '/dev/null\n'
+  return 0
+}
+
+DEROGHE_APPLICATE=()
+note_deroga() {
+  local check="$1" f
+  for f in "${FILES[@]}"; do
+    case "${DEROGA_CHECKS[$f]:-}" in
+      *" $check "*) DEROGHE_APPLICATE+=("$check  $f  ${DEROGA_WHY[$f]:-}") ;;
+    esac
+  done
+}
+
 # I commenti nel codice non sono copy visibile né stile: si filtrano dai conteggi.
 NOCOMMENT='^[^:]*:[0-9]+:[[:space:]]*(//|[{]?/[*]|[*])'
 # conta le occorrenze di un pattern ignorando le righe di commento
 count_nc() {
-  grep -rHnE "$1" "${FILES[@]}" 2>/dev/null \
+  local pat="$1"; shift
+  grep -rHnE "$pat" "$@" 2>/dev/null \
     | grep -vE "$NOCOMMENT" \
-    | grep -oE "$1" \
+    | grep -oE "$pat" \
     | wc -l | tr -d ' '
 }
 
+# Un array di file per controllo, al netto delle deroghe registrate.
+mapfile -t F_S3    < <(files_for S3)
+mapfile -t F_S2    < <(files_for S2)
+mapfile -t F_S4    < <(files_for S4)
+mapfile -t F_U1    < <(files_for U1)
+mapfile -t F_U2    < <(files_for U2)
+mapfile -t F_U4    < <(files_for U4)
+mapfile -t F_C1    < <(files_for C1)
+mapfile -t F_VOICE < <(files_for VOICE)
+mapfile -t F_TOKEN < <(files_for TOKEN)
+mapfile -t F_TYPE  < <(files_for TYPE)
+for c in S3 S2 S4 U1 U2 U4 C1 VOICE TOKEN TYPE; do note_deroga "$c"; done
+
 # --- S3 · ritmo verticale unico --------------------------------------------
-RHYTHM=$(grep -rhoE 'py-[0-9]+ md:py-[0-9]+( lg:py-[0-9]+)?' "${FILES[@]}" 2>/dev/null | sort | uniq -c | sort -rn)
+RHYTHM=$(grep -rhoE 'py-[0-9]+ md:py-[0-9]+( lg:py-[0-9]+)?' "${F_S3[@]}" 2>/dev/null | sort | uniq -c | sort -rn)
 DOMINANT=$(echo "$RHYTHM" | head -1 | awk '{print $1}')
 if [ -n "${DOMINANT:-}" ] && [ "$DOMINANT" -ge 3 ]; then
   hit "S3 ritmo verticale" "lo stesso padding di sezione ripetuto ${DOMINANT}× — servono almeno 3 densità (direction-lock § Densità)"
@@ -66,20 +126,20 @@ else
 fi
 
 # --- S2 · template di sezione ripetuto -------------------------------------
-EYEBROW=$(grep -rho 'eyebrow-num' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
-RULE=$(grep -rho 'rule-short' "${FILES[@]}" 2>/dev/null | wc -l | tr -d ' ')
+EYEBROW=$(grep -rho 'eyebrow-num' "${F_S2[@]}" 2>/dev/null | wc -l | tr -d ' ')
+RULE=$(grep -rho 'rule-short' "${F_S4[@]}" 2>/dev/null | wc -l | tr -d ' ')
 if [ "$EYEBROW" -gt 2 ]; then
   # Il limite è per pagina, ma lo script vede file, non pagine. Elenca dove
   # stanno, così chi legge decide se sono davvero sulla stessa schermata.
   hit "S2 template di sezione" "eyebrow-num ${EYEBROW}× nei file controllati — il limite è 2 per PAGINA, quindi guarda dove stanno"
-  grep -rHc 'eyebrow-num' "${FILES[@]}" 2>/dev/null | grep -v ':0$' | sed 's/^/      /'
+  grep -rHc 'eyebrow-num' "${F_S2[@]}" 2>/dev/null | grep -v ':0$' | sed 's/^/      /'
 else
   ok "S2 template di sezione (eyebrow-num ${EYEBROW}×)"
 fi
 [ "$RULE" -gt 2 ] && hit "S4 filetti decorativi" "rule-short ${RULE}× — un filetto esiste solo se separa qualcosa"
 
 # --- U1 · valori di radius --------------------------------------------------
-RADII=$(grep -rhoE 'rounded-(none|sm|md|lg|xl|2xl|3xl|full|\[[^]]+\])' "${FILES[@]}" 2>/dev/null | sort -u)
+RADII=$(grep -rhoE 'rounded-(none|sm|md|lg|xl|2xl|3xl|full|\[[^]]+\])' "${F_U1[@]}" 2>/dev/null | sort -u)
 NRADII=$(echo "$RADII" | grep -c . )
 if [ "$NRADII" -gt 2 ]; then
   hit "U1 radius" "${NRADII} valori distinti — il lock ne ammette 2 (rounded-lg, rounded-full)"
@@ -89,7 +149,7 @@ else
 fi
 
 # --- U2 · bordo + ombra sulla stessa superficie -----------------------------
-BS=$(grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${FILES[@]}" 2>/dev/null | grep -v 'border-0' || true)
+BS=$(grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${F_U2[@]}" 2>/dev/null | grep -v 'border-0' || true)
 if [ -n "$BS" ]; then
   hit "U2 bordo + ombra" "stessa superficie con entrambi — su cream vince il bordo"
   echo "$BS" | cut -c1-140 | sed 's/^/      /'
@@ -111,7 +171,7 @@ if [ -f "$CSS" ]; then
   ' "$CSS" | tr -d '{' | grep -v '^shadow' || true)
   HIDDEN=""
   for u in $SHADOW_UTILS; do
-    FOUND=$(grep -rHnE "className=\"[^\"]*\bborder\b[^\"]*\b${u}\b|className=\"[^\"]*\b${u}\b[^\"]*\bborder\b" "${FILES[@]}" 2>/dev/null | grep -v 'border-0' || true)
+    FOUND=$(grep -rHnE "className=\"[^\"]*\bborder\b[^\"]*\b${u}\b|className=\"[^\"]*\b${u}\b[^\"]*\bborder\b" "${F_U2[@]}" 2>/dev/null | grep -v 'border-0' || true)
     [ -n "$FOUND" ] && HIDDEN="${HIDDEN}
 ${FOUND}"
   done
@@ -124,12 +184,17 @@ ${FOUND}"
 fi
 
 # --- U4 · frecce in coda ai link -------------------------------------------
-ARROWS=$(count_nc 'ArrowRight|→')
+ARROWS=$(count_nc 'ArrowRight|→' "${F_U4[@]}")
 [ "$ARROWS" -gt 1 ] && hit "U4 freccia" "${ARROWS} frecce — una per pagina, sul link che porta fuori" || ok "U4 freccia (${ARROWS})"
 
 # --- C1 · interpunti --------------------------------------------------------
-DOTS=$(count_nc '·')
-[ "$DOTS" -gt 2 ] && hit "C1 interpunto" "${DOTS}× — massimo 2 per viewport" || ok "C1 interpunto (${DOTS})"
+DOTS=$(count_nc '·' "${F_C1[@]}")
+if [ "$DOTS" -gt 2 ]; then
+  hit "C1 interpunto" "${DOTS}× nei file controllati — il limite è 2 per VIEWPORT, quindi guarda dove stanno"
+  grep -rHn '·' "${F_C1[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-110 | sed 's/^/      /'
+else
+  ok "C1 interpunto (${DOTS})"
+fi
 
 # --- copy · divieti duri da voice-spec -------------------------------------
 # parole intere (evita falsi positivi tipo shadow-elevated)
@@ -138,7 +203,7 @@ BANNED_W='\b(Reservieren|Reservierung|Sofort|Learn more|Get Started|Get started|
 # "Jetzt" si elenca per verbo: "Jetzt geöffnet" e "Jetzt geschlossen" sono lo
 # stato di apertura, non urgenza, e un divieto secco su "Jetzt" li falserebbe.
 BANNED_S='Jetzt reservieren|Jetzt anrufen|Jetzt Anrufen|Jetzt buchen|Jetzt bestellen|Jetzt entdecken|Jetzt sichern|Letzte Plätze|Mehr erfahren|Klick hier|Weiterlesen|Route anzeigen|kulinarische|Wohlfühl|culinary journey|hidden oasis'
-BAD=$( { grep -rHnE "$BANNED_W" "${FILES[@]}" 2>/dev/null; grep -rHnE "$BANNED_S" "${FILES[@]}" 2>/dev/null; } | grep -vE "$NOCOMMENT" | cut -c1-140 | sort -u || true)
+BAD=$( { grep -rHnE "$BANNED_W" "${F_VOICE[@]}" 2>/dev/null; grep -rHnE "$BANNED_S" "${F_VOICE[@]}" 2>/dev/null; } | grep -vE "$NOCOMMENT" | cut -c1-140 | sort -u || true)
 if [ -n "$BAD" ]; then
   hit "VOICE lessico vietato" "voice-spec § Divieti duri"
   echo "$BAD" | cut -c1-140 | sed 's/^/      /'
@@ -147,24 +212,29 @@ else
 fi
 
 # --- em dash come connettore ------------------------------------------------
-EMDASH=$(count_nc '—')
+EMDASH=$(count_nc '—' "${F_VOICE[@]}")
 [ "$EMDASH" -gt 3 ] && warn "VOICE em dash" "${EMDASH}× — controlla che non sia il connettore principale"
 
 # --- token: hex e colori Tailwind di default --------------------------------
-HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b' "${FILES[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
+HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
 [ -n "$HEX" ] && { hit "TOKEN hex hardcoded" "solo token semantici nei componenti"; echo "$HEX" | sed 's/^/      /'; } || ok "TOKEN hex hardcoded"
 
-TWCOLORS=$(grep -rnoE '\b(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]{2,3}\b' "${FILES[@]}" 2>/dev/null || true)
+TWCOLORS=$(grep -rnoE '\b(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]{2,3}\b' "${F_TOKEN[@]}" 2>/dev/null || true)
 [ -n "$TWCOLORS" ] && { hit "TOKEN colore Tailwind di default" "usa i token semantici"; echo "$TWCOLORS" | sed 's/^/      /'; } || ok "TOKEN colore Tailwind"
 
 # --- a11y: nero puro e verde-200 su chiaro ----------------------------------
-grep -rniE '#000000|#000\b|text-black' "${FILES[@]}" 2>/dev/null | grep -q . && hit "A11Y nero puro" "il nero del brand è --navy-500"
+grep -rniE '#000000|#000\b|text-black' "${F_TOKEN[@]}" 2>/dev/null | grep -q . && hit "A11Y nero puro" "il nero del brand è --navy-500"
 
 # --- dimensioni tipografiche distinte ---------------------------------------
-SIZES=$(grep -rhoE 'text-(xs|sm|base|lg|xl|[2-9]xl|\[[0-9.]+(px|rem)\])' "${FILES[@]}" 2>/dev/null | sort -u | grep -c .)
+SIZES=$(grep -rhoE 'text-(xs|sm|base|lg|xl|[2-9]xl|\[[0-9.]+(px|rem)\])' "${F_TYPE[@]}" 2>/dev/null | sort -u | grep -c .)
 [ "$SIZES" -gt 5 ] && warn "TYPE scala" "${SIZES} dimensioni distinte nei file toccati — il lock ne ammette 5 per schermata"
 
 echo
+if [ ${#DEROGHE_APPLICATE[@]} -gt 0 ]; then
+  printf '%sDeroghe registrate applicate (docs/ux/divergence-ledger.md):%s\n' "$DIM" "$OFF"
+  printf '%s\n' "${DEROGHE_APPLICATE[@]}" | sort -u | sed 's/^/  /'
+  echo
+fi
 if [ "$HITS" -gt 0 ]; then
   printf '%s%d controlli scattati.%s Correggi, oppure registra la deroga in docs/ux/divergence-ledger.md.\n' "$RED" "$HITS" "$OFF"
   exit 1

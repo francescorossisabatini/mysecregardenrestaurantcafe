@@ -63,7 +63,7 @@ export const Navigation = () => {
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
           <Link
             to="/"
-            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-sm py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
+            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
@@ -102,7 +102,7 @@ export const Navigation = () => {
                     <Link
                       to={link.to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
+                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
