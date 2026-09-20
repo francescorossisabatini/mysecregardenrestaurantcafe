@@ -396,47 +396,35 @@ Proposta, da decidere: micro-etichette **11px**, corpo piccolo **14px**, corpo
 
 ## Segnalazioni — non toccate, servono una decisione
 
-### 0 · Copy vietato renderizzato — la lista completa, misurata
+### 0 · Copy vietato renderizzato — chiuso il 20 settembre 2026, tranne /about
 
-Il gate cercava solo `Jetzt reservieren`. Esteso ai verbi d'azione e a
-`Route anzeigen`, che è l'esempio MALE della tabella delle coppie con il BENE
-già scritto accanto. Ora `check-tells.sh` li trova tutti. **Nessuno è stato
-toccato: è copy, e il copy lo approva Francesco.**
+Corretto in sessione, verificato a schermo:
+- `CTAEndBlock.tsx:50` `Jetzt anrufen` → `Anrufen`
+- `CTAEndBlock.tsx:61` `Route anzeigen` → `Durch den Bogen, Mariahilferstraße 45`
+- `Contact.tsx:97` `Route anzeigen` → `Durch den Bogen, Mariahilferstraße 45`
+- `Link.tsx:12,13` `Jetzt anrufen`/`Route anzeigen` → numero reale / stesso testo di sopra
+- `LanguageContext.tsx:117` `Jetzt Anrufen` → `Anrufen` (chiave morta, nessun componente la usa)
+- `ReservationRequestForm.tsx:45,48,50` → vedi §1 sotto, chiuso
 
-| File | Stringa | Dove si vede |
-|---|---|---|
-| `CTAEndBlock.tsx:50` | `Jetzt anrufen` | `/menu`, `/about`, `/gallery` |
-| `CTAEndBlock.tsx:61` | `Route anzeigen` | `/menu`, `/about`, `/gallery` |
-| `Contact.tsx:97` | `Route anzeigen` | `/visit` |
-| `LanguageContext.tsx:117` | `Jetzt Anrufen` | `/link` |
-| `AboutUs.tsx:166` | `Weiterlesen` | `/about` |
-| `LanguageContext.tsx:48` | `einzigartig` | `/about` |
-| `LanguageContext.tsx:160` | `Learn more about Sri Chinmoy` | `/about` |
-| `ReservationRequestForm.tsx:45,48,50` | `Jetzt reservieren`, `Reservierung` ×2 | **non renderizza**: `Contact.tsx:31` ha `showReservationRequest = false` |
-
-Proposte, da approvare o riscrivere:
-- `Jetzt anrufen` / `Jetzt Anrufen` → **`Anrufen: +43 1 586 28 39`**
-- `Route anzeigen` → **`Durch den Bogen, Mariahilferstraße 45`** (è il BENE già in `voice-spec.md`)
-- `Weiterlesen` → un titolo che nomini cosa si legge
-- `ReservationRequestForm` → il copy approvato sta in `CLAUDE.md` § FORM PRENOTAZIONE
+**Restano aperti, deliberatamente — stesso giro dedicato di `/about`:**
+| File | Stringa |
+|---|---|
+| `AboutUs.tsx:166` | `Weiterlesen` |
+| `LanguageContext.tsx:48` | `einzigartig` |
+| `LanguageContext.tsx:160` | `Learn more about Sri Chinmoy` |
 
 Nota: `Jetzt geöffnet` e `Jetzt geschlossen` **non** sono in lista e non lo
 saranno: sono lo stato di apertura, cioè un fatto, non urgenza. Il gate
 distingue per verbo.
 
-### 1 · `ReservationRequestForm` usa il lessico vietato
-`src/components/ReservationRequestForm.tsx` contiene:
-- `submit: "Jetzt reservieren"` — etichetta del bottone
-- `"Die Reservierung konnte nicht gesendet werden..."` — messaggio d'errore
-- `"Maximal 10 Personen pro Reservierung..."` — regola
+### 1 · `ReservationRequestForm` usa il lessico vietato — chiuso il 20 settembre 2026
 
-`CLAUDE.md` è esplicito su entrambi i punti: la prenotazione si chiama
-**Anfrage**, mai *Reservierung*; e non si usa mai linguaggio di urgenza, con
-*"Jetzt reservieren!"* citato come esempio. Il copy approvato per quel form è
-già scritto in `CLAUDE.md`: label *Tisch anfragen*, CTA *Anfrage senden*.
-
-**Non toccato**: è copy, e il copy lo approva Francesco. Trovato da
-`check-tells.sh`, non da una lettura.
+Corrette le 3 righe segnalate: `submit`, `error`, `rule` (Reservierung → Anfrage).
+Titolo, subline e messaggio di successo del form **non toccati** — il form
+resta non renderizzato (`Contact.tsx:31` ha `showReservationRequest = false`).
+Un riallineamento completo al copy di CLAUDE.md § FORM PRENOTAZIONE (label
+*Tisch anfragen*, CTA *Anfrage senden*) resta da fare quando il form torna
+visibile — non c'è urgenza a rifinire copy che nessuno vede.
 
 ### 2 · `tailwind.config.ts` non esiste
 `CLAUDE.md` e `DESIGN_SYSTEM.md` lo indicano entrambi come "fonte della verità"
@@ -477,15 +465,17 @@ Scritto per pari ritmo, non come traduzione letterale:
 
 - [x] Struttura homepage: A / B / C — **A, scelta da Francesco**
 - [x] EN dei tre passi — **approvato da Francesco il 13 settembre 2026**
-- [ ] **Copy vietato renderizzato su quattro route** — vedi § Segnalazioni#0, tabella completa
+- [x] Tagline hero sostituita, hero senza CTA, bottom nav a 2 bottoni — **approvati da Francesco il 20 settembre 2026**, CLAUDE.md e DESIGN_SYSTEM.md riallineati al codice
+- [x] Copy vietato renderizzato — chiuso tranne le 3 righe di `/about` (giro dedicato), vedi § Segnalazioni#0
+- [x] La griglia a 3 colonne del menu — convertita in lista verticale su `HomeMenuPreview.tsx`, nessuna deroga necessaria
+- [x] `ReservationRequestForm`: `Reservierung` → `Anfrage` sulle 3 righe visibili nel codice (titolo/subline/successo restano, form non renderizzato)
+- [x] Aggiungere Playwright a `package.json` — fatto per gli screenshot di `scripts/shoot.mjs`
 - [ ] La riga stelle + 4,7/936+ compare due volte sulla home (fascia + Voci): tenere entrambe o ridurre la seconda a solo testo
-- [ ] La griglia a 3 colonne del menu: il lock la vieta sulla homepage senza condizioni. Deroga motivata o due colonne
 - [ ] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto
-- [ ] `/menu`: due formati di prezzo sulla stessa pagina (`6,90` e `9,9`)
+- [ ] `/menu`: due formati di prezzo sulla stessa pagina (`6,90` scritto a mano nel JSX, resto dei prezzi ora normalizzato a 2 decimali in `klassikerData.ts`)
 - [ ] Consolidare la scala tipografica: 9 dimensioni sulla home contro le 5 del lock (tabella qui sopra)
-- [ ] `ReservationRequestForm`: passare da *Reservierung* ad *Anfrage*
 - [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
 - [ ] Dove vivono i badge vegano e bio quando il menu del giorno manca
 - [ ] Allineare `CLAUDE.md` e `DESIGN_SYSTEM.md`: `tailwind.config.ts` non esiste
 - [ ] Normalizzare radius e bordo+ombra su `/about` e `/gallery`
-- [ ] Aggiungere Playwright a `package.json` (oggi va installato a mano)
+- [ ] Scrim dell'hero desktop: il critico cieco ha segnalato un possibile pannello invece di un gradiente pulito — investigato, non riprodotto con certezza, non toccato per non rischiare il contrasto già misurato

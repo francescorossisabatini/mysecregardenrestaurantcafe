@@ -105,8 +105,9 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 **Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
 
 **Navigazione:**
-- Bottom nav mobile (sempre visibile, fixed): Home · Menü · Visit · Call pill
-- Top bar: logo + language switch DE/EN
+- Top bar mobile: hamburger (apre drawer con tutti i link) + logo + language switch DE/EN
+- MobileStickyBar (fixed, appare dopo ~300px di scroll, nascosta sopra il footer): 2 bottoni — Anrufen (verde) + Besuchen/Route (outline). Non 3 tab + call pill come descritto in una versione precedente di questo file: decisione confermata in chat il 20 settembre 2026, coerente con "una sola CTA primaria" — chiamare e trovarci sono le due azioni che contano.
+- Drawer hamburger: tutti i link di navigazione (Home, Speisekarte, Galerie, Unsere Geschichte, Besuche uns) + language switch
 
 
 ---
@@ -169,10 +170,10 @@ non quello dopo le correzioni.
 ### Copy approvato per sezioni chiave
 
 **HERO**
-- DE tagline: *Vegetarisch. Vegan. Versteckt im Herzen Wiens.*
-- EN tagline: *Vegetarian. Vegan. Hidden in the heart of Vienna.*
-- DE CTA: *Was gibt's heute?*
-- EN CTA: *What's on today?*
+- DE tagline: *Das Restaurant, das du fast nicht findest.*
+- EN tagline: *The restaurant you almost don't find.*
+  (sostituisce *Vegetarisch. Vegan. Versteckt im Herzen Wiens.* — approvato in chat il 20 settembre 2026: l'originale è un terzetto di aggettivi, vietato altrove da voice-spec.md; la nuova ha soggetto e idea, e vegetarisch/vegan è già detto dall'occhiello sopra)
+- Nessuna CTA nell'hero (approvato in chat il 20 settembre 2026): il menu del giorno sta subito sotto la piega e fa da CTA. Un bottone "Was gibt's heute?" sarebbe ridondante con la risposta già a schermo, e viola "una sola CTA primaria per pagina" se sommato alle azioni della MobileStickyBar.
 - DE link: *Wie du uns findest →*
 - EN link: *How to find us →*
 

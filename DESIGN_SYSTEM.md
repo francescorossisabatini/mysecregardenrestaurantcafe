@@ -37,7 +37,7 @@ Definiti in `src/index.css` come coppie HSL senza `hsl()`, consumati con `hsl(va
 |---|---|---|---|---|
 | `color/navy/300` | `--navy-100` | `224 42% 63%` | `#7A90C8` | Accenti chiari, dark mode |
 | `color/navy/500` | `--navy-200` | `218 39% 47%` | `#4A6EA8` | Link su superfici medie, badge BLU |
-| `color/navy/900` | `--navy-300` | `227 59% 37%` | `#264195` | Brand strutturale: hero, footer, call pill, focus ring |
+| `color/navy/900` | `--navy-300` | `227 59% 37%` | `#264195` | Brand strutturale: hero, footer, focus ring |
 | `color/navy/700` | `--navy-400` | `226 61% 26%` | `#1A2E6B` | Hover navy |
 | `color/dark/base` | `--navy-500` | `225 60% 17%` | `#111E45` | Testo primario, gradient hero start |
 
@@ -49,7 +49,7 @@ Definiti in `src/index.css` come coppie HSL senza `hsl()`, consumati con `hsl(va
 |---|---|---|---|---|
 | `color/green/200` | `--verde-100` | `77 25% 70%` | `#B8C4A0` | Superficie badge vegan, accento tenue |
 | `color/green/300` | `--verde-200` | `91 26% 50%` | `#7FA060` | Accenti chiari — **mai come testo su sfondo chiaro** |
-| `color/green/500` | `--verde-300` | `84 45% 33%` | `#5A7A2E` | Brand accent: CTA primaria, bordo bottom nav |
+| `color/green/500` | `--verde-300` | `84 45% 33%` | `#5A7A2E` | Brand accent: CTA primaria, bottone Anrufen |
 | `color/green/700` | `--verde-400` | `86 44% 22%` | `#3B5220` | Hover CTA verde, testo verde su chiaro |
 | `color/green/900` | `--verde-500` | `86 44% 15%` | `#273816` | Verde più scuro, testo alto contrasto |
 
@@ -122,7 +122,7 @@ Definiti in `src/index.css` come coppie HSL senza `hsl()`, consumati con `hsl(va
 | Secondaria hover | `--btn-secondary-hover` | `--navy-400` |
 | Disabled | `--btn-disabled-bg` | `--muted-200` |
 | Ghost | `transparent` + `border-border` | — |
-| Call pill | `--navy-300` (sempre navy) | — |
+| Anrufen (MobileStickyBar) | `--btn-primary-bg` (verde, non navy) | — |
 
 ### Bordi e focus
 
@@ -212,7 +212,7 @@ Mai radius < 8px su elementi interattivi.
 Primary:   bg [--btn-primary-bg] · text bianco · rounded-lg · px-6 py-3 · font-work font-semibold
 Secondary: bg [--btn-secondary-bg] · text bianco · rounded-lg · px-6 py-3
 Ghost:     transparent · border-border · text-foreground · rounded-lg · px-6 py-3
-Call pill: bg navy-300 · text bianco · rounded-[13px] · w-[80px] h-[48px]
+MobileStickyBar (Anrufen + Besuchen): bg-accent / outline · text bianco / primary · rounded-full · flex-1 · min-h-[48px]
 ```
 
 Stati: hover → tono più scuro · active → `scale(0.98)` · disabled → 40% opacity · loading → spinner bianco.
@@ -256,14 +256,21 @@ Scrollata (scrollY > 150px): .bg-nav-surface + backdrop-blur + border-b tenue
 Transizione 250ms ease, solo background
 ```
 
-### Bottom nav mobile
+### MobileStickyBar (non è una tab bar — vedi nota sotto)
+
+Sostituisce la vecchia spec "3 voci + call pill": il codice reale (verificato
+`src/components/MobileStickyBar.tsx`, deciso in chat il 20 settembre 2026) è
+2 bottoni, non una bottom nav. La navigazione fra route vive nel drawer
+hamburger (top bar), non qui — questa barra è solo azioni rapide.
 
 ```
-h-[72px] · pt-2 px-4 pb-[16px] + env(safe-area-inset-bottom)
-bg cream-100 + backdrop-blur · border-top 1.5px verde-300
-3 voci (Home · Menü · Visit) + call pill
-Inattivo: text-muted-foreground · font-work text-[10px] · icona 20px
-Attivo: verde-400 · font-work font-semibold + indicatore linea 1.5px verde 24px in cima
+fixed inset-x-0 bottom-0 · appare dopo scrollY > 300px, si nasconde sopra il footer
+bg-nav-surface · border-top 1px border · shadow verso l'alto (0 -4px 16px)
+pt-3 px-[max(0.75rem,safe-area)] pb-[calc(0.75rem+safe-area)]
+2 bottoni affiancati, gap-2.5, ciascuno flex-1:
+  Anrufen — bg-accent (verde) pieno, rounded-full, min-h-[48px], icona Phone 18px
+  Besuchen / Route — outline (bordo), stesso rounded-full e min-h-[48px], icona MapPin
+Su /visit il secondo bottone punta a Google Maps esterno invece che a /visit stessa
 ```
 
 ### Eyebrow numerato
