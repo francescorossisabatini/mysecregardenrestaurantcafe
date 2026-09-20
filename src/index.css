@@ -58,6 +58,9 @@
 
   --color-brand-star: hsl(var(--semantic-warning));
 
+  /* Tono ambra per i kicker di sezione (SUPPE). Testo, non superficie. */
+  --color-kicker-amber: hsl(var(--amber-300));
+
   --color-state-vegan: var(--color-vegan);
   --color-state-glutenFree: var(--color-gluten-free);
   --color-state-bio: var(--color-bio);
@@ -432,6 +435,11 @@ Background: Warm cream #F5F0E8
     --verde-500: 86 44% 15%; /* #273816 */
     --amber-100: 41 82% 78%; /* #F5D89A */
     --amber-200: 39 81% 52%; /* #E8A020 */
+    /* --amber-200 come testo su cream dà 1.94:1: va bene per una superficie di
+       badge o per le stelle, non per un'etichetta da leggere. Questo è lo
+       stesso tono portato a una luminosità che passa: 5.02:1 su --cream-100 e
+       5.37:1 su --card. Misurato, non scelto a occhio. */
+    --amber-300: 39 81% 30%; /* #8A5F0F */
     --muted-100: 248 23% 92%; /* #E8E6F0 */
     --muted-200: 240 20% 82%; /* #C8C8D8 */
 

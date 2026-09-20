@@ -24,7 +24,7 @@ interface DishRowProps {
 const toneClass: Record<KickerTone, string> = {
   accent: "text-accent",
   blue: "text-blue",
-  amber: "text-amber-700",
+  amber: "text-kicker-amber",
   muted: "text-muted-high-contrast",
 };
 

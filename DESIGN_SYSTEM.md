@@ -67,7 +67,8 @@ Definiti in `src/index.css` come coppie HSL senza `hsl()`, consumati con `hsl(va
 | Figma | CSS variable | HSL | Hex | Uso |
 |---|---|---|---|---|
 | — | `--amber-100` | `41 82% 78%` | `#F5D89A` | Superficie badge zuppa |
-| `color/feedback/amber` | `--amber-200` | `39 81% 52%` | `#E8A020` | Warning, badge ZUPPA, stelle rating |
+| `color/feedback/amber` | `--amber-200` | `39 81% 52%` | `#E8A020` | Warning, badge ZUPPA, stelle rating — **mai come testo su chiaro: 1.94:1** |
+| — | `--amber-300` | `39 81% 30%` | `#8A5F0F` | Ambra come **testo** su cream: 5.02:1 su `--cream-100`, 5.37:1 su `--card`. Esposto come `text-kicker-amber` |
 | `color/neutral/600` | `--muted-100` | `248 23% 92%` | `#E8E6F0` | Superficie muted |
 | `color/neutral/900` | `--muted-200` | `240 20% 82%` | `#C8C8D8` | Bordo muted, bottone disabled |
 

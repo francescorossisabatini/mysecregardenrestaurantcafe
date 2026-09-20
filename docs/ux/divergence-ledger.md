@@ -315,7 +315,7 @@ del repo. Scatti prima/dopo in `output/lab/`.
 
 | Controllo | Dove | Perché resta |
 |---|---|---|
-| `TOKEN colore Tailwind di default` 7× | `src/utils/menuIcons.tsx` | **Il file non è importato da nessuna parte.** Verificato con grep su tutto `src/`: `getDietaryIcons` non ha consumatori. È codice morto, quindi quei colori non rendono niente. Da cancellare in una pulizia, non da ridipingere. |
+| ~~`TOKEN colore Tailwind di default` 7×~~ | ~~`src/utils/menuIcons.tsx`~~ | **Risolto: il file è stato cancellato.** Era codice morto — zero riferimenti in tutto il repo, né import statici né dinamici né stringhe. Ridipingerlo con i token avrebbe lasciato 111 righe che non renderizzano niente, e la deroga avrebbe fatto scattare il gate a ogni giro. Una deroga che suona per sempre è rumore, e il rumore toglie credibilità al controllo. Git conserva il file. |
 | `U2 bordo + ombra` su overlay | `InstallPrompt`, `MenuFloatingPill`, `SkipLink`, `CookieConsent` | Sono elementi che stanno **sopra** il contenuto, non sulla superficie cream. Lì l'ombra fa il lavoro che il bordo non può fare: staccare dal piano sottostante. Deroga motivata, non svista. |
 | `S2 template di sezione` 3× | `IlPosto`, `Voci`, `CTAEndBlock` | Il limite è **per pagina**, lo script conta **per file**. La home ne ha due (`IlPosto`, `Voci`); il terzo è in `CTAEndBlock`, che dalla home è uscito e vive su `/menu`, `/about`, `/gallery`. Per pagina si è conformi. Lo script ora elenca i file quando scatta, così la deroga si valuta in un colpo d'occhio invece di doverla cercare. |
 | `TYPE scala` 12 dimensioni | file toccati | Il conteggio è su più schermate insieme, non su una. Da rivedere schermata per schermata, non con una passata globale. |
