@@ -157,6 +157,15 @@ export const MenuSection = () => {
     en: dayNames.en[dateInfo.nextDayIndex]
   }), [dayNames, dateInfo.nextDayIndex]);
 
+  // Wir haben nur sonntags geschlossen (plus Feiertage): wenn "morgen" ein
+  // Sonntag ist, ist der nächste Öffnungstag in Wahrheit Montag.
+  const reopensTomorrow = dateInfo.nextDayIndex !== 0;
+  const reopenDayIndex = reopensTomorrow ? dateInfo.nextDayIndex : 1;
+  const reopenDayName = useMemo(() => ({
+    de: dayNames.de[reopenDayIndex],
+    en: dayNames.en[reopenDayIndex]
+  }), [dayNames, reopenDayIndex]);
+
   const scrollToMenuBlock = (tab: "today" | "fixed" | "week") => {
     const refTarget = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
     const idTarget = document.getElementById(
@@ -408,11 +417,11 @@ export const MenuSection = () => {
                               ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee."
                               : "Sunday is our pause. Tomorrow it will smell of rice, spices and fresh coffee again.")}
                   </p>
-                  {(dateInfo.todayHoliday || isNoMenuDay) && !dateInfo.isAfterClosing && (
+                  {!dateInfo.todayHoliday && (
                     <p className="text-muted-high-contrast font-work text-xs mt-2">
                       {language === "de"
-                        ? "Heute haben wir geschlossen."
-                        : "We are closed today."}
+                        ? reopensTomorrow ? "Morgen ab 11:00 wieder da." : `Am ${reopenDayName.de} ab 11:00 wieder da.`
+                        : reopensTomorrow ? "Back tomorrow from 11:00." : `Back ${reopenDayName.en} from 11:00.`}
                     </p>
                   )}
                 </div>
@@ -535,10 +544,12 @@ export const MenuSection = () => {
                                     ? dayHoliday.name[language]
                                     : isDaySunday
                                       ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
-                                      : (language === "de" ? "Heute geschlossen" : "Closed")}
+                                      : (language === "de" ? "Noch keine Angabe" : "Not listed yet")}
                                 </p>
                                 <p className="text-muted-high-contrast text-xs font-work mt-1">
-                                  {language === "de" ? "Geschlossen" : "Closed"}
+                                  {dayHoliday || isDaySunday
+                                    ? (language === "de" ? "Geschlossen" : "Closed")
+                                    : (language === "de" ? "Menü folgt" : "Menu coming soon")}
                                 </p>
                               </div>
                             ) : (

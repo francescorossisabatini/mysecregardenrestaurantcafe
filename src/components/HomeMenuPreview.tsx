@@ -37,6 +37,11 @@ export const HomeMenuPreview = () => {
   const nextDayName = dayNames[language][nextDayIndex];
   const nextDayMenu = menu.days.find((day) => day.day[language] === nextDayName);
   const todayHoliday = getTodayHoliday();
+  // Wir haben nur sonntags geschlossen (plus Feiertage): wenn "morgen"
+  // ein Sonntag ist, ist der nächste Öffnungstag in Wahrheit Montag.
+  const reopenDayIndex = nextDayIndex === 0 ? 1 : nextDayIndex;
+  const reopensTomorrow = reopenDayIndex === nextDayIndex;
+  const reopenDayName = dayNames[language][reopenDayIndex];
   const hasMenuData = !!todayMenu && (
     isValidMenuText(todayMenu.soup?.[language]) ||
     isValidMenuText(todayMenu.green?.[language]) ||
@@ -174,6 +179,13 @@ export const HomeMenuPreview = () => {
                     : language === "de" ? "Heute geschlossen" : "Closed today"}
               </p>
               <p className="mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+                {!todayHoliday && (
+                  <>
+                    {language === "de"
+                      ? reopensTomorrow ? "Morgen ab 11:00 wieder da. " : `Am ${reopenDayName} ab 11:00 wieder da. `
+                      : reopensTomorrow ? "Back tomorrow from 11:00. " : `Back ${reopenDayName} from 11:00. `}
+                  </>
+                )}
                 {language === "de" ? "Schau gern in die komplette Speisekarte für Klassiker und Getränke." : "You can still browse the full menu for classics and drinks."}
               </p>
 
