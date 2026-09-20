@@ -475,7 +475,7 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [x] `ReservationRequestForm`: cancellato — non è una funzionalità attiva, non doveva restare come opzione spenta. Tabella IA di CLAUDE.md corretta di conseguenza (anche `/staff`, `/staff/login`, `/reservation-preview`: dichiarate attive ma inesistenti nel router — il vero percorso staff è `/login`)
 - [x] Aggiungere Playwright a `package.json` — fatto per gli screenshot di `scripts/shoot.mjs`
 - [ ] La riga stelle + 4,7/936+ compare due volte sulla home (fascia + Voci): tenere entrambe o ridurre la seconda a solo testo
-- [ ] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto
+- [x] `/menu`: le tab `HEUTE / DIESE WOCHE / IMMER DA` spariscono nello stato vuoto — lasciavano un vuoto verticale perché il `py-16 md:py-24` della sezione compensava l'altezza della barra tab, assente in questo stato; ora `py-10 md:py-14` quando non ci sono tab. `WeeklyMenuPendingUpdate.tsx` non è più `text-center`: un `max-w-md` provato per restringere la card ha invece attivato il `lg:justify-center` del grid genitore (track che si adatta al max-content e si centra) — rimosso, la card ora riempie la colonna come le altre. Nuovo stato `menu--vuoto` in `shoot.mjs` per riverificarlo
 - [ ] `/menu`: due formati di prezzo sulla stessa pagina (`6,90` scritto a mano nel JSX, resto dei prezzi ora normalizzato a 2 decimali in `klassikerData.ts`)
 - [ ] Consolidare la scala tipografica: 9 dimensioni sulla home contro le 5 del lock (tabella qui sopra)
 - [ ] Sottotitolo della sezione menu: tenere quello attuale o usare il paragrafo orfano
@@ -489,10 +489,11 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [x] `DishRow.tsx`/`DietaryBadges.tsx`: la classe CSS `lowercase` minuscolizzava anche "Zutaten" (sostantivo tedesco, va sempre maiuscolo) — rimossa, le stringhe sorgente erano già corrette
 - [x] Logo Supermind invisibile su cream (inchiostro quasi bianco, 240/240/240 misurato) — chip di sfondo `bg-primary` solo su quel logo. `tripadvisor.png` non aveva trasparenza (sfondo bianco opaco, unico dei 4) — rimossa via script
 - [x] Footer centrato su ogni pagina — ora solo nome+tagline restano centrati, indirizzo/orari/link a sinistra
-- [ ] `/menu`: "Heute aus der Küche" e il primo giorno di "Unser Wochenmenü" sono lo stesso contenuto (Mittwoch ripetuto)
+- [x] `/menu`: "Heute aus der Küche" e il primo giorno di "Unser Wochenmenü" sono lo stesso contenuto (Mittwoch ripetuto) — il giorno corrente ora è filtrato dalla lista settimanale, indice originale conservato per `getDateForMenuDay()` (filtro dopo aver abbinato day+index, non prima)
 - [x] `/visit` mobile: "Route in Google Maps öffnen" duplicava "Route" della MobileStickyBar allo stesso scroll (~340px) — verificato sulla build di produzione, non solo in dev (React StrictMode falsava l'indagine). Nascosto su mobile via useIsMobile, resta su desktop dove non c'è barra fissa. "Karte laden" non toccato, azione diversa
 - [x] `/visit` desktop: 597px di colonna vuota sotto il placeholder mappa — causa isolata dentro MapConsentGate.tsx (mancava h-full), non nella grid esterna. Contact.tsx: wrapper ad altezza fissa lg:h-[520px] invece di min-height; MapConsentGate.tsx: h-full ripristinato, sicuro ora che il genitore non si allunga più a oltranza
 - [ ] `klassikerData.ts`: 9 `descriptionShort` sono un terzetto automatico, vietato da voice-spec
-- [ ] Stato chiuso (home e /menu): non dice quando si riapre — voice-spec ha già la coppia pronta ("Heute geschlossen. Morgen ab 11:00 wieder da.")
+- [x] Stato chiuso (home e /menu): non dice quando si riapre — voice-spec ha già la coppia pronta ("Heute geschlossen. Morgen ab 11:00 wieder da."). Aggiunto un calcolo del giorno di riapertura che salta la domenica (se "domani" è domenica, si riapre lunedì). In `MenuSection.tsx` corretta anche l'etichetta del giorno della settimana senza dati: diceva "Heute geschlossen" per un giorno che non è oggi e di cui semplicemente non sappiamo ancora il menù — ora "Noch keine Angabe"/"Not listed yet"
+- [x] Aggiunto `npm run dev:all` (richiesta di Francesco): avvia `vite` e `storybook dev` insieme via `concurrently`, entrambi con il proprio HMR
 - [ ] Categoria del piatto: due componenti diversi per lo stesso dato (pill su /menu, testo inline su home)
 - [ ] `/visit`: card annidate a tre livelli (Barrierefreiheit dentro Zugang dentro la sezione)

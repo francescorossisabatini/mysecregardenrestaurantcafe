@@ -185,7 +185,15 @@ export const MenuSection = () => {
   ];
 
   return (
-    <section id="menu" className="py-16 md:py-24 bg-section-soft">
+    <section
+      id="menu"
+      className={`bg-section-soft ${
+        // Der obere Innenabstand ist groß, weil die -mt-16/-mt-24 der Sticky-Tabs
+        // ihn optisch ausgleichen. Ohne Tabs (Sonntag, Feiertag, stale sheet)
+        // blieb sonst eine Lücke, wo die Tabs wären.
+        quickNavTabs.length > 1 ? "py-16 md:py-24" : "py-10 md:py-14"
+      }`}
+    >
       {/* Sticky segmented tab bar — intuitive tab switcher, mobile + desktop parity */}
       {quickNavTabs.length > 1 && (
       <div
@@ -518,7 +526,15 @@ export const MenuSection = () => {
                       <p className="text-xs text-muted-high-contrast font-work mb-4">
                         {translatePeriod(menu.period, language)}
                       </p>
-                      {menu.days.map((day, index) => {
+                      {/* Heute steht schon oben in "Heute aus der Küche" —
+                          hier noch einmal wäre dieselbe Antwort auf dieselbe
+                          Frage (S2). Der Index bleibt der ursprüngliche, weil
+                          getDateForMenuDay() ihn als Offset in der Woche
+                          braucht. */}
+                      {menu.days
+                        .map((day, index) => ({ day, index }))
+                        .filter(({ day }) => day.day[language] !== todayName)
+                        .map(({ day, index }) => {
                         const dayDate = getDateForMenuDay(menu.period, index);
                         const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
                         const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);

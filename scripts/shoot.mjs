@@ -134,6 +134,19 @@ const STATES = [
       await page.addInitScript(() => localStorage.setItem('preferred_language', 'en'));
     },
   },
+  {
+    slug: 'menu--vuoto',
+    path: '/menu',
+    setup: async (page) => {
+      // Stessa cosa di 'home--menu-vuoto', ma sulla pagina /menu: qui la
+      // sezione ha anche i tab (Heute/Diese Woche/Immer da), che spariscono
+      // insieme al menu settimanale — è lo stato che ha lasciato il vuoto
+      // verticale corretto nel giro 2 della critica.
+      await page.route('**/docs.google.com/**', (r) => r.abort());
+      await page.route('**/functions/v1/**', (r) => r.abort());
+      await page.route('**/rest/v1/**', (r) => r.abort());
+    },
+  },
 ];
 
 const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 12);

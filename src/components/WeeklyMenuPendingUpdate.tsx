@@ -7,7 +7,7 @@ export const WeeklyMenuPendingUpdate = () => {
   const { language } = useLanguage();
 
   return (
-    <div className="my-6 rounded-lg border border-border bg-card p-6 md:p-8 text-center space-y-4">
+    <div className="my-6 rounded-lg border border-border bg-card p-6 md:p-8 space-y-4">
       <p className="font-cormorant text-lg md:text-xl italic text-foreground/80">
         {language === "de"
           ? "Der Wochenplan wird gerade aktualisiert."
