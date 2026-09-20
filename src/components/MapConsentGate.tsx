@@ -75,7 +75,7 @@ export const MapConsentGate = ({ src, title, className, style }: Props) => {
 
   return (
     <div
-      className={`flex min-h-[320px] w-full flex-col items-center justify-center gap-4 bg-muted/40 p-6 text-center ${className ?? ""}`}
+      className={`flex h-full min-h-[320px] w-full flex-col items-center justify-center gap-4 bg-muted/40 p-6 text-center ${className ?? ""}`}
       style={style}
       role="region"
       aria-label={copy.title}
