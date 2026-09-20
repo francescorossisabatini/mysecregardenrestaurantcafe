@@ -118,7 +118,9 @@ const ContactPage = () => {
                       <li>{language === "de" ? "Rückseite: besser, wenn du den Lift nutzen möchtest." : "Back side: better if you want to use the lift."}</li>
                       <li>{language === "de" ? "Im Hof: halte dich zum grünen Gartenbereich." : "Inside: head toward the green garden area."}</li>
                     </ul>
-                    <div className="mt-4 rounded-lg border border-border/60 bg-card/70 p-4">
+                    {/* Kein verschachteltes Kärtchen mehr hier: eine Trennlinie
+                        statt einer zweiten Box in der Box (No-Line Rule). */}
+                    <div className="mt-4 border-t border-border/40 pt-4">
                       <div className="mb-2 flex items-center gap-2">
                         <Accessibility className="h-4 w-4 text-primary" aria-hidden="true" />
                         <h4 className="font-work text-sm font-semibold text-foreground">
