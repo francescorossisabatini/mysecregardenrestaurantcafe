@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react-vite'
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { LanguageProvider } from '../src/contexts/LanguageContext'
+import { MobileMenuProvider } from '../src/contexts/MobileMenuContext'
 import '../src/index.css'
 
 const preview: Preview = {
@@ -33,7 +34,9 @@ const preview: Preview = {
     (Story) => (
       <MemoryRouter>
         <LanguageProvider>
-          <Story />
+          <MobileMenuProvider>
+            <Story />
+          </MobileMenuProvider>
         </LanguageProvider>
       </MemoryRouter>
     ),
