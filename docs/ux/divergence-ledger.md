@@ -489,9 +489,9 @@ Scritto per pari ritmo, non come traduzione letterale:
 - [x] `DishRow.tsx`/`DietaryBadges.tsx`: la classe CSS `lowercase` minuscolizzava anche "Zutaten" (sostantivo tedesco, va sempre maiuscolo) — rimossa, le stringhe sorgente erano già corrette
 - [x] Logo Supermind invisibile su cream (inchiostro quasi bianco, 240/240/240 misurato) — chip di sfondo `bg-primary` solo su quel logo. `tripadvisor.png` non aveva trasparenza (sfondo bianco opaco, unico dei 4) — rimossa via script
 - [x] Footer centrato su ogni pagina — ora solo nome+tagline restano centrati, indirizzo/orari/link a sinistra
-- [ ] `/visit` desktop: 597px di colonna vuota sotto il placeholder mappa (l'item 18 del primo giro ha spostato il vuoto, non chiuso)
 - [ ] `/menu`: "Heute aus der Küche" e il primo giorno di "Unser Wochenmenü" sono lo stesso contenuto (Mittwoch ripetuto)
-- [ ] `/visit` mobile: due azioni primarie piene nello stesso viewport ("Karte laden" + "Anrufen" della barra fissa)
+- [x] `/visit` mobile: "Route in Google Maps öffnen" duplicava "Route" della MobileStickyBar allo stesso scroll (~340px) — verificato sulla build di produzione, non solo in dev (React StrictMode falsava l'indagine). Nascosto su mobile via useIsMobile, resta su desktop dove non c'è barra fissa. "Karte laden" non toccato, azione diversa
+- [x] `/visit` desktop: 597px di colonna vuota sotto il placeholder mappa — causa isolata dentro MapConsentGate.tsx (mancava h-full), non nella grid esterna. Contact.tsx: wrapper ad altezza fissa lg:h-[520px] invece di min-height; MapConsentGate.tsx: h-full ripristinato, sicuro ora che il genitore non si allunga più a oltranza
 - [ ] `klassikerData.ts`: 9 `descriptionShort` sono un terzetto automatico, vietato da voice-spec
 - [ ] Stato chiuso (home e /menu): non dice quando si riapre — voice-spec ha già la coppia pronta ("Heute geschlossen. Morgen ab 11:00 wieder da.")
 - [ ] Categoria del piatto: due componenti diversi per lo stesso dato (pill su /menu, testo inline su home)
