@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { getDishPhoto } from "./dishPhotoMap";
+import { formatPrice } from "@/lib/displayText";
 
 type KickerTone = "accent" | "blue" | "amber" | "muted";
 
@@ -44,6 +45,9 @@ export const DishRow = ({
   as = "card",
 }: DishRowProps) => {
   const src = photoUrl ?? getDishPhoto(photoId);
+  // Normalizzato qui una volta sola, così testo visibile e aria-label dicono
+  // la stessa cifra.
+  const displayPrice = price ? formatPrice(price) : price;
   const containerClass =
     as === "card"
       ? `rounded-lg border p-4 surface-card md:p-5 ${isUnavailable ? "border-dashed" : ""}`
@@ -118,15 +122,15 @@ export const DishRow = ({
                   isUnavailable ? "text-muted-high-contrast" : "text-accent"
                 }`}
                 aria-label={
-                  price.includes("/")
-                    ? price
+                  displayPrice.includes("/")
+                    ? displayPrice
                         .split("/")
                         .map((p) => `${p.trim()} Euro`)
                         .join(", ")
-                    : `${price} Euro`
+                    : `${displayPrice} Euro`
                 }
               >
-                {price}
+                {displayPrice}
               </p>
             )}
           </div>

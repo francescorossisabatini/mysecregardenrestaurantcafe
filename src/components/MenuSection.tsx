@@ -19,7 +19,7 @@ import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
-import { cleanDisplayText } from "@/lib/displayText";
+import { cleanDisplayText, formatPrice } from "@/lib/displayText";
 import { DishRow } from "@/components/menu/DishRow";
 import { categoryHeaderPhoto } from "@/components/menu/dishPhotoMap";
 import { DietaryBadges } from "@/components/menu/DietaryBadges";
@@ -686,8 +686,14 @@ export const MenuSection = () => {
                           {!item.isUnavailable && (
                             <MenuDishDetails
                               details={{
-                                descriptionShort: item.descriptionShort,
-                                descriptionShortLocalized: item.descriptionShortLocalized,
+                                // La riga corta compare solo se sopra non c'è già una
+                                // descrizione completa: sui 14 piatti che hanno entrambe
+                                // ripeteva la stessa informazione due volte. Kombucha e
+                                // Strawberry Spritz hanno solo questa, e lì resta.
+                                ...(item.description ? {} : {
+                                  descriptionShort: item.descriptionShort,
+                                  descriptionShortLocalized: item.descriptionShortLocalized,
+                                }),
                                 ingredientsMain: item.ingredientsMain,
                                 ingredientsMainLocalized: item.ingredientsMainLocalized,
                                 allergens: item.allergens,
@@ -748,7 +754,7 @@ export const MenuSection = () => {
                                     )}
                                   </div>
                                   <span className="text-accent font-bold text-base md:font-semibold md:text-sm font-work shrink-0">
-                                    {item.price}
+                                    {formatPrice(item.price)}
                                   </span>
                                 </div>
                                 {/* I campi localizzati vanno controllati insieme a quelli
@@ -760,8 +766,10 @@ export const MenuSection = () => {
                                   item.allergens) && (
                                   <MenuDishDetails
                                     details={{
-                                      descriptionShort: item.descriptionShort,
-                                      descriptionShortLocalized: item.descriptionShortLocalized,
+                                      ...(item.description ? {} : {
+                                        descriptionShort: item.descriptionShort,
+                                        descriptionShortLocalized: item.descriptionShortLocalized,
+                                      }),
                                       ingredientsMain: item.ingredientsMain,
                                       ingredientsMainLocalized: item.ingredientsMainLocalized,
                                       allergens: item.allergens,
