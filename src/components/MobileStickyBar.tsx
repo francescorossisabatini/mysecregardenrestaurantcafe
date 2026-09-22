@@ -119,6 +119,7 @@ export const MobileStickyBar = () => {
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
+          data-call-tracked="self"
           onClick={() => trackHeroAbEvent('click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 inline-flex items-center justify-center gap-2
             bg-accent text-accent-foreground

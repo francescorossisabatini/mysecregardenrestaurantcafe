@@ -42,12 +42,18 @@ export const CTAEndBlock = ({
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
             {/* Primary CTAs - Call & Directions */}
             {show.includes("call") && (
+              /* Link vero, non un Button con window.location.href: così il
+                 sistema operativo lo tratta come numero (menu contestuale,
+                 pressione lunga) e il tracciamento delegato dei `tel:` lo
+                 intercetta come tutti gli altri. */
               <Button
                 size="lg"
                 className="w-full justify-center py-6 text-base font-work bg-accent hover:bg-accent/90 text-accent-foreground sm:w-auto sm:px-10"
-                onClick={() => (window.location.href = `tel:${SITE.phoneTel}`)}
+                asChild
               >
-                {language === "de" ? "Anrufen" : "Call Now"}
+                <a href={`tel:${SITE.phoneTel}`} data-call-source="cta-end-block">
+                  {language === "de" ? "Anrufen" : "Call Now"}
+                </a>
               </Button>
             )}
             {show.includes("directions") && (
