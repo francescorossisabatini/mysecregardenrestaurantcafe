@@ -146,7 +146,7 @@ export const HomeMenuPreview = () => {
             const codes = Array.from(new Set(dishes.flatMap((dish) => dish.allergens ?? [])));
             if (codes.length === 0) return null;
             return (
-              <p className="mt-3 font-work text-xs leading-relaxed text-muted-high-contrast">
+              <p className="mt-3 max-w-[62ch] font-work text-xs leading-relaxed text-muted-high-contrast">
                 {joinDisplayText(
                   codes.map((code) => {
                     const allergen = getAllergenByCode(code);
@@ -221,7 +221,7 @@ export const HomeMenuPreview = () => {
 
 
           {!isClosed && dishes.length > 0 && (
-            <div className="mt-4 flex items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
+            <div className="mt-4 flex max-w-[62ch] items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
               <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
                 {language === "de"
