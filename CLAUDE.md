@@ -42,7 +42,7 @@ Il mio obiettivo professionale è crescere come junior UX Designer → UX Resear
 - Ispirato alla filosofia di **Sri Chinmoy** — dimensione spirituale incorporata nello spazio
 - **Counter service only** — nessun servizio al tavolo, probabilmente nessuna prenotazione (da confermare)
 - Orari: **lunedì–sabato, 11:00–19:00** · domenica e festivi: chiuso
-- Telefono: **+43 1 586 28 39** · `tel:+431586289`
+- Telefono: **+43 1 586 28 39** · `tel:+4315862839`
 - Rating: **4.7★ su 936+ recensioni** (Google, HappyCow, Falstaff, TripAdvisor, Wien wie es isst)
 - Partner confermati: Supermind Kaffee (supermind.at), Falstaff 2025, Wien wie es isst 2025, HappyCow, TripAdvisor, foodsharing.at
 
@@ -76,7 +76,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | Lingua default | DE (73% traffico austriaco) — EN parità su tutti i route |
 
 **Vincoli di piattaforma:**
-- Mobile-first — 74% traffico mobile (GA4 confermato)
+- Mobile-first — 82% delle sessioni da mobile (GA4, 24 giu–21 set 2026; il vecchio dato era 74%)
 - Sessione media: 58 secondi — gli utenti decidono in fretta
 - SPA React — nessun reload tra route; il browser back deve funzionare su tutti i route
 - Nessun carousel — rimosso (click rate ~1%, costo performance non giustificato)
@@ -235,17 +235,43 @@ src/index.css                    — CSS custom properties / variabili
 
 ---
 
-## Analytics — GA4 Events da tracciare
+## Analytics — GA4 (verificato sulla proprietà il 22 settembre 2026)
 
-```
-click_get_directions     — KPI primario
-click_call_now           — KPI primario
-scroll_depth_homepage    — 25% / 50% / 75% / 100%
-click_menu_tab           — Today / This Week / Always Here
-click_open_closed_badge  — segnale di intent visita
-form_reservation_submit  — Anfrage inviata
+La lista precedente elencava nomi di eventi che non esistono nel codice
+(`click_get_directions`, `click_call_now`, `form_reservation_submit`…).
+Questi sono quelli reali. Proprietà Purusha GmbH (519259054), stream
+`website-secretgarden`, ID misura G-NMVX2R7493.
 
+**Eventi chiave (6)**
 ```
+maps_click       — KPI indicazioni. Regola GA4 sui clic in uscita verso
+                   google.com/maps: prende ogni link a Maps del sito, su
+                   ogni dispositivo. Sostituisce click_directions come KPI.
+click_call       — KPI telefono. Dal 22/09/2026 sparato da ogni link tel:
+                   del sito (src/lib/trackTelClicks.ts), prima solo dalla
+                   barra mobile: su desktop era zero strutturale.
+click_directions — solo il bottone Route della MobileStickyBar. Tenuto per
+                   continuità storica, NON usarlo come KPI.
+generate_lead    — ATTENZIONE: sono le visualizzazioni di /contact, cioè i
+                   clic sul link "Kontakt" del footer. Non sono contatti.
+                   Da decidere con Carlo prima di toglierlo.
+scroll_depth     — profondità di scorrimento
+purchase         — predefinito Google, non rimovibile, sempre vuoto
+```
+
+**Tolti come eventi chiave il 22/09/2026** (nessun dato, scope archiviato):
+`cakes_order_cta_click`, `cakes_page_view`, `qualify_lead`,
+`close_convert_lead`, `form_start` (l'unico modulo rimasto è il login staff).
+
+**Regola rotta, da non usare:** `anrufen_click` si appoggia ai clic in uscita,
+che non scattano sui `tel:`. In 90 giorni: zero eventi.
+
+**Conservazione dati eventi:** 14 mesi dal 22/09/2026 (era 2 mesi, non
+retroattivo: i dati precedenti a luglio 2026 non sono recuperabili).
+
+**Attribuzione scheda Google:** il link "Sito web" della scheda porta
+`utm_source=google-business&utm_medium=referral` dal 22/09/2026. Prima era
+`http://` senza parametri, e con ogni probabilità finiva in `(direct)`.
 
 ---
 
