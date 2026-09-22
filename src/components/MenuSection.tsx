@@ -686,7 +686,10 @@ export const MenuSection = () => {
                           {!item.isUnavailable && (
                             <MenuDishDetails
                               details={{
+                                descriptionShort: item.descriptionShort,
+                                descriptionShortLocalized: item.descriptionShortLocalized,
                                 ingredientsMain: item.ingredientsMain,
+                                ingredientsMainLocalized: item.ingredientsMainLocalized,
                                 allergens: item.allergens,
                                 gfDisclaimer: item.gfDisclaimer,
                                 ingredientProducers: item.ingredientProducers,
@@ -696,6 +699,11 @@ export const MenuSection = () => {
                         </DishRow>
                       ))}
                     </div>
+                  )}
+                  {category.note && (
+                    <p className="mt-5 font-work text-sm italic leading-relaxed text-muted-high-contrast">
+                      {cleanDisplayText(category.note[language])}
+                    </p>
                   )}
                   
                   
@@ -743,10 +751,19 @@ export const MenuSection = () => {
                                     {item.price}
                                   </span>
                                 </div>
-                                {(item.ingredientsMain || item.allergens) && (
+                                {/* I campi localizzati vanno controllati insieme a quelli
+                                    legacy: Kombucha e Strawberry Spritz hanno solo
+                                    descriptionShortLocalized, e senza questo controllo la
+                                    loro descrizione non verrebbe mai renderizzata. */}
+                                {(item.descriptionShort || item.descriptionShortLocalized ||
+                                  item.ingredientsMain || item.ingredientsMainLocalized ||
+                                  item.allergens) && (
                                   <MenuDishDetails
                                     details={{
+                                      descriptionShort: item.descriptionShort,
+                                      descriptionShortLocalized: item.descriptionShortLocalized,
                                       ingredientsMain: item.ingredientsMain,
+                                      ingredientsMainLocalized: item.ingredientsMainLocalized,
                                       allergens: item.allergens,
                                       gfDisclaimer: item.gfDisclaimer,
                                     }}

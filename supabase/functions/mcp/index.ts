@@ -172,6 +172,7 @@ var klassikerMenu = {
           price: "9,90",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "cremig, Linsen, w\xFCrzig",
           ingredientsMain: ["Rote Linsen", "Tomaten", "Zwiebeln", "indische Gew\xFCrze", "Basmatireis"],
           gfDisclaimer: true
         }
@@ -188,9 +189,10 @@ var klassikerMenu = {
             de: "Frischer Blattsalat mit saisonalem Gem\xFCse und hausgemachtem Dressing",
             en: "Fresh leaf salad with seasonal vegetables and homemade dressing"
           },
-          price: "6,50 / 10,90",
+          price: "6,5 / 10,9",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, saisonales Gem\xFCse",
           ingredientsMain: ["Blattsalat", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           gfDisclaimer: true
         },
@@ -201,9 +203,10 @@ var klassikerMenu = {
             de: "Bunter Salat mit frischer Avocado und hausgemachtem Dressing",
             en: "Colorful salad with fresh avocado and homemade dressing"
           },
-          price: "17,50",
+          price: "17,5",
           isVegan: true,
           isGlutenFree: true,
+          descriptionShort: "frisch, Avocado, saisonal",
           ingredientsMain: ["Blattsalat", "Avocado", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           gfDisclaimer: true
         },
@@ -214,8 +217,9 @@ var klassikerMenu = {
             de: "Bunter Salat mit warmem Ziegenk\xE4se und hausgemachtem Dressing",
             en: "Colorful salad with warm goat cheese and homemade dressing"
           },
-          price: "17,50",
+          price: "17,5",
           isGlutenFree: true,
+          descriptionShort: "frisch, warm, cremig",
           ingredientsMain: ["Blattsalat", "Ziegenk\xE4se", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           allergens: ["G"],
           gfDisclaimer: true
@@ -227,10 +231,11 @@ var klassikerMenu = {
             de: "Bunter Salat mit mariniertem Bio-Tofu und hausgemachtem Dressing",
             en: "Colorful salad with marinated organic tofu and homemade dressing"
           },
-          price: "17,50",
+          price: "17,5",
           isVegan: true,
           isGlutenFree: true,
           isBio: true,
+          descriptionShort: "frisch, Bio-Tofu, saisonal",
           ingredientsMain: ["Blattsalat", "Bio-Tofu", "saisonales Gem\xFCse", "hausgemachtes Dressing"],
           allergens: ["F"],
           gfDisclaimer: true,
@@ -241,70 +246,121 @@ var klassikerMenu = {
     {
       id: "suesses",
       name: { de: "S\xFC\xDFes", en: "Sweets" },
+      note: {
+        de: "Zum S\xFC\xDFen verwenden wir Bio-Rohrohrzucker, Ahornsirup oder Agavendicksaft.",
+        en: "For sweeteners, we use organic raw cane sugar, maple syrup or agave syrup."
+      },
       items: [
         {
           id: "vegan-cheesecake",
-          name: { de: "Veganer Cheesecake", en: "Vegan Cheesecake" },
+          name: { de: "Raw \u201ECheesecake\u201C", en: "Raw \u201CCheesecake\u201D" },
           description: {
-            de: "Cremiger veganer K\xE4sekuchen",
-            en: "Creamy vegan cheesecake"
+            de: "Eine dicke Creme aus Cashewkernen und Kokosbutter auf einem Boden aus Mandeln und Datteln, ges\xFC\xDFt mit Agavendicksaft.",
+            en: "A thick cream of cashew nuts and coconut butter on a base of almonds and dates, sweetened with agave syrup."
           },
-          price: "4,90",
+          price: "4,9",
           isVegan: true,
           isGlutenFree: true,
-          ingredientsMain: ["vegane Creme", "Kuchenboden"],
+          descriptionShortLocalized: { de: "cremig, roh, vegan", en: "creamy, raw, vegan" },
+          ingredientsMainLocalized: {
+            de: ["Cashewkerne", "Kokosbutter", "Mandeln", "Datteln", "Agavendicksaft"],
+            en: ["cashew nuts", "coconut butter", "almonds", "dates", "agave syrup"]
+          },
           allergens: ["H"],
           gfDisclaimer: true
         },
         {
           id: "karamellschnitte",
-          name: { de: "Karamellschnitte", en: "Caramel Slice" },
+          name: { de: "Raw Schoko-Karamell-Schnitte", en: "Raw Chocolate-Caramel Slice" },
           description: {
-            de: "Hausgemachte Karamellschnitte",
-            en: "Homemade caramel slice"
+            de: "S\xFC\xDF und salzig mit Ahornsirup, Kokos\xF6l, Kakao, Tahina, Datteln und Mandeln.",
+            en: "A sweet and salty variation with maple syrup, coconut oil, cocoa, tahini, dates and almonds."
           },
-          price: "4,90",
+          price: "4,9",
           isVegan: true,
           isGlutenFree: true,
-          ingredientsMain: ["Karamell", "Kuchenboden"],
+          descriptionShortLocalized: { de: "s\xFC\xDF, salzig, roh", en: "sweet, salty, raw" },
+          ingredientsMainLocalized: {
+            de: ["Ahornsirup", "Kokos\xF6l", "Kakao", "Tahina", "Datteln", "Mandeln"],
+            en: ["maple syrup", "coconut oil", "cocoa", "tahini", "dates", "almonds"]
+          },
+          allergens: ["H", "N"],
           gfDisclaimer: true
         },
         {
           id: "walnuss-brownie",
-          name: { de: "Walnuss-Brownie", en: "Walnut Brownie" },
+          name: { de: "Brownie", en: "Brownie" },
           description: {
-            de: "Saftiger Schokoladen-Brownie mit Waln\xFCssen",
-            en: "Moist chocolate brownie with walnuts"
+            de: "Die vegane und glutenfreie Variante des Klassikers mit Waln\xFCssen und Schokost\xFCckchen.",
+            en: "A vegan and gluten-free version of the classic, with walnuts and chocolate chunks."
           },
-          price: "4,70",
+          price: "4,7",
           isVegan: true,
           isGlutenFree: true,
-          ingredientsMain: ["Schokolade", "Waln\xFCsse"],
-          allergens: ["H"],
+          descriptionShortLocalized: { de: "schokoladig, saftig, nussig", en: "chocolatey, moist, nutty" },
+          ingredientsMainLocalized: {
+            de: ["Waln\xFCsse", "Schokost\xFCckchen"],
+            en: ["walnuts", "chocolate chunks"]
+          },
+          allergens: ["F", "H"],
           gfDisclaimer: true
         },
         {
           id: "schoko-mousse-torte",
           name: { de: "Schoko Mousse Torte", en: "Chocolate Mousse Cake" },
           description: {
-            de: "Luftige Schokoladenmousse-Torte",
-            en: "Light chocolate mousse cake"
+            de: "Franz\xF6sische Schokoladentorte ohne glutenhaltige Zutaten.",
+            en: "French chocolate cake made without gluten-containing ingredients."
           },
-          price: "4,70",
-          ingredientsMain: ["Schokolade", "Mousse", "Kuchenboden"],
-          allergens: ["A", "C", "G"]
+          price: "4,7",
+          isGlutenFree: true,
+          descriptionShortLocalized: { de: "franz\xF6sisch, schokoladig", en: "French-style, chocolatey" },
+          ingredientsMainLocalized: { de: ["Schokolade"], en: ["chocolate"] },
+          allergens: ["C", "F", "G"],
+          gfDisclaimer: true
+        },
+        {
+          id: "mohn-nuss-kuchen",
+          name: { de: "Mohn-Nuss-Kuchen", en: "Poppyseed-Nut Cake" },
+          description: {
+            de: "Saftiger gluten- und laktosefreier Mohnkuchen mit Haseln\xFCssen und Preiselbeermarmelade.",
+            en: "Moist gluten- and lactose-free poppyseed cake with hazelnuts and cranberry jam."
+          },
+          price: "4,5",
+          isGlutenFree: true,
+          descriptionShortLocalized: { de: "saftig, nussig, fruchtig", en: "moist, nutty, fruity" },
+          ingredientsMainLocalized: {
+            de: ["Mohn", "Haseln\xFCsse", "Preiselbeermarmelade"],
+            en: ["poppyseeds", "hazelnuts", "cranberry jam"]
+          },
+          allergens: ["C", "H"],
+          gfDisclaimer: true
         },
         {
           id: "karotten-gewuerztorte",
-          name: { de: "Karotten-Gew\xFCrztorte", en: "Carrot Spice Cake" },
+          name: { de: "Gew\xFCrzkuchen", en: "Spice Cake" },
           description: {
-            de: "W\xFCrzige Karottentorte mit Frischk\xE4se-Topping",
-            en: "Spiced carrot cake with cream cheese topping"
+            de: "Dinkelmehl mit Rosinen, Waln\xFCssen, Feigen, Bananen, Karotten und Lebkuchengew\xFCrz.",
+            en: "Spelt flour with raisins, walnuts, figs, bananas, carrots and gingerbread spice."
           },
-          price: "4,50",
+          price: "4,5",
           isVegan: true,
-          ingredientsMain: ["Karotten", "Gew\xFCrze", "veganes Topping"],
+          descriptionShortLocalized: { de: "w\xFCrzig, fruchtig, nussig", en: "spiced, fruity, nutty" },
+          ingredientsMainLocalized: {
+            de: ["Dinkelmehl", "Rosinen", "Waln\xFCsse", "Feigen", "Bananen", "Karotten", "Lebkuchengew\xFCrz"],
+            en: ["spelt flour", "raisins", "walnuts", "figs", "bananas", "carrots", "gingerbread spice"]
+          },
           allergens: ["A", "H"]
+        },
+        {
+          id: "schlagobers",
+          name: { de: "Schlagobers dazu", en: "Whipped Cream Added" },
+          description: {
+            de: "Auch vegan erh\xE4ltlich.",
+            en: "Also available vegan."
+          },
+          price: "1,3",
+          allergens: ["G"]
         }
       ]
     },
@@ -316,33 +372,36 @@ var klassikerMenu = {
           id: "ingwer-limo",
           name: { de: "Ingwer-Limo", en: "Ginger Lemonade" },
           description: {
-            de: "Erfrischende hausgemachte Ingwerlimonade",
-            en: "Refreshing homemade ginger lemonade"
+            de: "Hausgemacht mit Bio-Zitronen.",
+            en: "Homemade with organic lemons."
           },
-          price: "3,00 / 4,70",
+          sizeNote: "0,2 l / 0,5 l",
+          price: "3,0 / 4,7",
           isVegan: true,
-          ingredientsMain: ["Ingwer", "Zitrone"]
+          descriptionShortLocalized: { de: "hausgemacht, Bio-Zitrone", en: "homemade, organic lemon" }
         },
         {
-          id: "eistee",
-          name: { de: "Hausgemachter Eistee", en: "Homemade Iced Tea" },
+          id: "peach-iced-spice-tea",
+          name: { de: "Homemade Peach-Iced Spice Tee", en: "Homemade Peach-Iced Spice Tea" },
           description: {
-            de: "Frisch gebr\xFChter Eistee mit nat\xFCrlichen Zutaten",
-            en: "Freshly brewed iced tea with natural ingredients"
+            de: "Unsere exklusive Hausmischung.",
+            en: "Our exclusive house blend."
           },
-          price: "4,20",
+          sizeNote: "0,3 l",
+          price: "4,9",
           isVegan: true,
-          isUnavailable: true,
-          ingredientsMain: ["Tee", "nat\xFCrliche Zutaten"]
+          descriptionShortLocalized: { de: "Unsere exklusive Hausmischung", en: "Our exclusive house blend" }
         },
         {
           id: "mango-lassi",
           name: { de: "Mango-Lassi", en: "Mango Lassi" },
           description: {
-            de: "Cremiger Joghurt-Drink mit frischer Mango",
-            en: "Creamy yogurt drink with fresh mango"
+            de: "Indisches Joghurtgetr\xE4nk mit Mangop\xFCree.",
+            en: "Indian yoghurt drink with mango pulp."
           },
-          price: "4,90",
+          sizeNote: "0,3 l",
+          price: "4,9",
+          descriptionShort: "cremig, Mango",
           ingredientsMain: ["Joghurt", "Mango"],
           allergens: ["G"]
         }
@@ -356,28 +415,43 @@ var klassikerMenu = {
           id: "hot-drinks",
           name: { de: "Hei\xDFgetr\xE4nke", en: "Hot Drinks" },
           items: [
-            { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,90" },
-            { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,40" },
-            { id: "glueh-kombucha", name: { de: '"Gl\xFCh" Kombucha', en: '"Gl\xFCh" Kombucha (hot)' }, price: "4,90" },
-            { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,90" },
-            { id: "espresso", name: { de: "Espresso", en: "Espresso" }, sizeNote: "1 Shot / 2 Shots", price: "2,90 / 3,90" },
-            { id: "verlaengerter", name: { de: "Verl\xE4ngerter / Americano", en: "Verl\xE4ngerter / Americano" }, sizeNote: "kurz / lang \xB7 short / long", price: "3,50 / 4,50" },
-            { id: "cappuccino", name: { de: "Cappuccino / Melange", en: "Cappuccino / Melange" }, sizeNote: "1 Shot / 2 Shots", price: "4,30 / 5,70" },
-            { id: "flat-white", name: { de: "Flat White", en: "Flat White" }, price: "5,20" },
-            { id: "latte-macchiato", name: { de: "Latte Macchiato", en: "Latte Macchiato" }, price: "5,20" },
-            { id: "chaga-kaffee", name: { de: "Chaga Kaffee", en: "Chaga Kaffee" }, price: "5,50" },
-            { id: "blue-magic-tea", name: { de: "Blue Magic Tea", en: "Blue Magic Tea" }, price: "3,90" }
+            { id: "indian-chai-latte", name: { de: "Indian Chai Latte", en: "Indian Chai Latte" }, price: "4,9" },
+            { id: "matcha-latte", name: { de: "Matcha Latte", en: "Matcha Latte" }, price: "5,4" },
+            { id: "glueh-kombucha", name: { de: '"Gl\xFCh" Kombucha', en: '"Gl\xFCh" Kombucha (hot)' }, price: "4,9" },
+            { id: "kurkuma-latte", name: { de: "Kurkuma Latte", en: "Kurkuma Latte" }, price: "4,9" },
+            { id: "espresso", name: { de: "Espresso", en: "Espresso" }, sizeNote: "1 Shot / 2 Shots", price: "2,9 / 3,9" },
+            { id: "verlaengerter", name: { de: "Verl\xE4ngerter / Americano", en: "Verl\xE4ngerter / Americano" }, sizeNote: "kurz / lang \xB7 short / long", price: "3,5 / 4,5" },
+            { id: "cappuccino", name: { de: "Cappuccino / Melange", en: "Cappuccino / Melange" }, sizeNote: "1 Shot / 2 Shots", price: "4,3 / 5,7" },
+            { id: "flat-white", name: { de: "Flat White", en: "Flat White" }, price: "5,2" },
+            { id: "latte-macchiato", name: { de: "Latte Macchiato", en: "Latte Macchiato" }, price: "5,2" },
+            { id: "chaga-kaffee", name: { de: "Chaga Kaffee", en: "Chaga Kaffee" }, price: "5,5" },
+            { id: "blue-magic-tea", name: { de: "Blue Magic Tea", en: "Blue Magic Tea" }, price: "3,9" }
           ]
         },
         {
           id: "cold-drinks",
           name: { de: "Kaltgetr\xE4nke", en: "Cold Drinks" },
           items: [
-            { id: "strawberry-spritz", name: { de: "Strawberry Spritz", en: "Strawberry Spritz" }, sizeNote: "Erdbeer-Tonic & Soda \xB7 strawberry tonic & soda", price: "6,50", isNew: true },
-            { id: "iced-strawberry-matcha", name: { de: "Iced Strawberry Matcha Latte", en: "Iced Strawberry Matcha Latte" }, sizeNote: "0,3 l", price: "6,50", isNew: true },
-            { id: "iced-espresso-tonic", name: { de: "Iced Espresso Tonic", en: "Iced Espresso Tonic" }, sizeNote: "0,18 l", price: "5,50", isNew: true },
-            { id: "cold-brew", name: { de: "Cold Brew", en: "Cold Brew" }, sizeNote: "0,18 l", price: "4,90", isNew: true },
-            { id: "ginger-limo", name: { de: "Ingwer-Limo", en: "Ginger Limo" }, sizeNote: "0,2 l / 0,5 l", price: "3,00 / 4,70" }
+            {
+              id: "kombucha",
+              name: { de: "Kombucha", en: "Kombucha" },
+              sizeNote: "0,15 l / 0,3 l",
+              price: "3,0 / 4,7",
+              descriptionShortLocalized: {
+                de: "Hausgemachtes Fermentgetr\xE4nk aus Schwarztee mit lebenden Mikroorganismen",
+                en: "Homemade fermentation drink made from black tea with living microorganisms"
+              }
+            },
+            {
+              id: "strawberry-spritz",
+              name: { de: "Strawberry Spritz", en: "Strawberry Spritz" },
+              sizeNote: "0,3 l",
+              price: "5,5",
+              descriptionShortLocalized: {
+                de: "Alkoholfrei, mit Erdbeere und Chinin",
+                en: "Alcohol-free, with strawberry and quinine"
+              }
+            }
           ]
         },
         {
@@ -385,9 +459,10 @@ var klassikerMenu = {
           name: { de: "S\xE4fte vom \xF6sterreichischen Bauernhof", en: "Juices from the Austrian Farm" },
           sizeNote: "0,2 l / 0,5 l",
           items: [
-            { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,90 / 4,50" },
-            { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,00 / 4,70" },
-            { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,70 / 4,20" }
+            { id: "apple-juice-unfiltered", name: { de: "Naturtr\xFCber Apfelsaft", en: "Apple Juice Unfiltered" }, price: "3,4 / 5,3" },
+            { id: "apple-juice", name: { de: "Apfelsaft gespritzt", en: "Apple Juice with Water or Soda" }, price: "2,9 / 4,5" },
+            { id: "peach-juice", name: { de: "Pfirsichsaft gespritzt", en: "Peach Juice with Water or Soda" }, price: "3,0 / 4,7" },
+            { id: "elderflower", name: { de: "Holundersirup gespritzt", en: "Elderflower Syrup with Water or Soda" }, price: "2,7 / 4,2" }
           ]
         },
         {
@@ -395,21 +470,22 @@ var klassikerMenu = {
           name: { de: "Bio-Limonaden", en: "Organic Sodas" },
           sizeNote: "0,33 l",
           items: [
-            { id: "cola", name: { de: "Cola", en: "Cola" }, price: "3,90" },
-            { id: "pomegranate", name: { de: "Granatapfel", en: "Pomegranate" }, price: "3,90" },
-            { id: "orange-acerola", name: { de: "Orange-Acerola", en: "Orange-Acerola" }, price: "3,90" },
-            { id: "green-tea-soda", name: { de: "Gr\xFCner Tee", en: "Green Tea" }, price: "3,90" }
+            { id: "cola", name: { de: "Cola", en: "Cola" }, price: "3,9" },
+            { id: "pomegranate", name: { de: "Granatapfel", en: "Pomegranate" }, price: "3,9" },
+            { id: "orange-acerola", name: { de: "Orange-Acerola", en: "Orange-Acerola" }, price: "3,9" },
+            { id: "green-tea-soda", name: { de: "Gr\xFCner Tee", en: "Green Tea" }, price: "3,9" }
           ]
         },
         {
           id: "more-cold-drinks",
           name: { de: "Weitere Kaltgetr\xE4nke", en: "More Cold Drinks" },
           items: [
-            { id: "goesser-beer", name: { de: "G\xF6sser Alkoholfrei", en: "G\xF6sser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,50" },
-            { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,70 / 5,70" },
-            { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,50" },
-            { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,70 / 3,90" },
-            { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,70" }
+            { id: "goesser-beer", name: { de: "G\xF6sser Alkoholfrei", en: "G\xF6sser Non-Alcoholic Beer" }, sizeNote: "0,5 l", price: "4,5" },
+            { id: "coconut-water", name: { de: "Bio Kokoswasser", en: "Organic Coconut Water" }, sizeNote: "0,2 l / 0,5 l", price: "3,7 / 5,7" },
+            { id: "mineral-water", name: { de: "Mineralwasser still oder prickelnd", en: "Mineral Water Still or Sparkling" }, sizeNote: "0,33 l", price: "2,5" },
+            { id: "soda-water", name: { de: "Sodawasser", en: "Soda Water" }, sizeNote: "0,2 l / 0,5 l", price: "2,1 / 3,3" },
+            { id: "lemon-soda", name: { de: "Zitronenlimonade", en: "Lemon Soda" }, sizeNote: "0,2 l / 0,5 l", price: "2,7 / 3,9" },
+            { id: "glass-water", name: { de: "Wasser aus Glasflaschen", en: "Water from our Glass-Bottles" }, price: "0,7" }
           ]
         }
       ]
@@ -539,150 +615,13 @@ var get_visit_info_default = defineTool4({
   }
 });
 
-// src/lib/mcp/tools/list-reservations.ts
-import { defineTool as defineTool5 } from "npm:@lovable.dev/mcp-js@0.26.3";
-import { z as z5 } from "npm:zod@^3.25.76";
-
-// src/lib/mcp/supabase.ts
-import { createClient } from "npm:@supabase/supabase-js@^2.87.1";
-function runtimeEnv2(name) {
-  const runtime = globalThis;
-  return runtime.Deno?.env?.get?.(name) ?? runtime.process?.env?.[name];
-}
-function configuredEnv2(names) {
-  for (const name of names) {
-    const value = runtimeEnv2(name)?.trim();
-    if (value) return value;
-  }
-  return void 0;
-}
-function supabaseProjectUrl2() {
-  const url = configuredEnv2(["SUPABASE_URL", "VITE_SUPABASE_URL"]);
-  if (!url) throw new Error("SUPABASE_URL (or VITE_SUPABASE_URL) is required");
-  return url;
-}
-function supabasePublishableKey() {
-  const direct = configuredEnv2(["SUPABASE_PUBLISHABLE_KEY", "VITE_SUPABASE_PUBLISHABLE_KEY"]);
-  if (direct) return direct;
-  const keyset = runtimeEnv2("SUPABASE_PUBLISHABLE_KEYS");
-  if (keyset) {
-    try {
-      const parsed = JSON.parse(keyset);
-      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-        const keys = parsed;
-        const key = [keys.default, ...Object.values(keys)].find((v) => typeof v === "string" && v.trim().startsWith("sb_publishable_"))?.trim();
-        if (key) return key;
-      }
-    } catch {
-    }
-  }
-  const legacy = configuredEnv2(["SUPABASE_ANON_KEY", "VITE_SUPABASE_ANON_KEY"]);
-  if (legacy) return legacy;
-  throw new Error("No Supabase publishable key is configured");
-}
-function supabaseForUser(ctx) {
-  const token = ctx.getToken();
-  if (!token) throw new Error("supabaseForUser requires a verified OAuth token");
-  return createClient(supabaseProjectUrl2(), supabasePublishableKey(), {
-    global: { headers: { Authorization: `Bearer ${token}` } },
-    auth: { persistSession: false, autoRefreshToken: false }
-  });
-}
-
-// src/lib/mcp/tools/list-reservations.ts
-var list_reservations_default = defineTool5({
-  name: "list_reservations",
-  title: "List reservation requests",
-  description: "List table reservation requests (Anfragen) for My Secret Garden. Staff access only. Filter by status or date range.",
-  inputSchema: {
-    status: z5.enum(["new", "confirmed", "declined", "cancelled", "all"]).default("new").describe("Filter by status. Use 'all' for every request."),
-    from_date: z5.string().optional().describe("Only requests on or after this date (YYYY-MM-DD)."),
-    to_date: z5.string().optional().describe("Only requests on or before this date (YYYY-MM-DD)."),
-    limit: z5.number().int().min(1).max(100).default(25).describe("Maximum number of requests to return.")
-  },
-  annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: async ({ status, from_date, to_date, limit }, ctx) => {
-    if (!ctx.isAuthenticated()) {
-      return { content: [{ type: "text", text: "Not authenticated." }], isError: true };
-    }
-    const supabase = supabaseForUser(ctx);
-    let query = supabase.from("reservation_requests").select(
-      "id, full_name, contact, reservation_date, reservation_time, party_size, seating_area, notes, staff_notes, status, language, created_at"
-    ).order("reservation_date", { ascending: true }).order("reservation_time", { ascending: true }).limit(limit ?? 25);
-    if (status && status !== "all") query = query.eq("status", status);
-    if (from_date) query = query.gte("reservation_date", from_date);
-    if (to_date) query = query.lte("reservation_date", to_date);
-    const { data, error } = await query;
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
-    if (!data?.length) {
-      return { content: [{ type: "text", text: "No reservation requests match these filters." }] };
-    }
-    const text = data.map(
-      (r) => `${r.reservation_date} ${String(r.reservation_time).slice(0, 5)} - ${r.full_name} (${r.party_size} pax, ${r.seating_area})
-  contact: ${r.contact}
-  status: ${r.status}${r.notes ? `
-  guest note: ${r.notes}` : ""}${r.staff_notes ? `
-  staff note: ${r.staff_notes}` : ""}
-  id: ${r.id}`
-    ).join("\n\n");
-    return { content: [{ type: "text", text }], structuredContent: { reservations: data } };
-  }
-});
-
-// src/lib/mcp/tools/update-reservation.ts
-import { defineTool as defineTool6 } from "npm:@lovable.dev/mcp-js@0.26.3";
-import { z as z6 } from "npm:zod@^3.25.76";
-var update_reservation_default = defineTool6({
-  name: "update_reservation",
-  title: "Update a reservation request",
-  description: "Confirm, decline or cancel a reservation request (Anfrage) and optionally add an internal staff note. Staff access only.",
-  inputSchema: {
-    id: z6.string().uuid().describe("The reservation request id, as returned by list_reservations."),
-    status: z6.enum(["new", "confirmed", "declined", "cancelled"]).optional().describe("New status for the request."),
-    staff_notes: z6.string().max(1e3).optional().describe("Internal note visible only to staff.")
-  },
-  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
-  handler: async ({ id, status, staff_notes }, ctx) => {
-    if (!ctx.isAuthenticated()) {
-      return { content: [{ type: "text", text: "Not authenticated." }], isError: true };
-    }
-    if (!status && staff_notes === void 0) {
-      return {
-        content: [{ type: "text", text: "Nothing to update: provide status and/or staff_notes." }],
-        isError: true
-      };
-    }
-    const patch = {};
-    if (status) patch.status = status;
-    if (staff_notes !== void 0) patch.staff_notes = staff_notes;
-    const supabase = supabaseForUser(ctx);
-    const { data, error } = await supabase.from("reservation_requests").update(patch).eq("id", id).select("id, full_name, reservation_date, reservation_time, party_size, status, staff_notes").maybeSingle();
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
-    if (!data) {
-      return {
-        content: [{ type: "text", text: "No reservation was updated. Check the id and your staff permissions." }],
-        isError: true
-      };
-    }
-    return {
-      content: [
-        {
-          type: "text",
-          text: `Updated: ${data.reservation_date} ${String(data.reservation_time).slice(0, 5)} - ${data.full_name} (${data.party_size} pax) is now "${data.status}".${data.staff_notes ? ` Staff note: ${data.staff_notes}` : ""}`
-        }
-      ],
-      structuredContent: { reservation: data }
-    };
-  }
-});
-
 // src/lib/mcp/index.ts
 var projectRef = "cqgcriywwsdvwqefbnhx";
 var mcp_default = defineMcp({
   name: "secret-garden-vegan",
   title: "Secret Garden Vegan",
   version: "0.1.0",
-  instructions: "Tools for My Secret Garden, a vegetarian and vegan cafe restaurant in Vienna (Mariahilferstra\xDFe 45, Im Raimundhof). Use get_todays_menu for today's dishes, get_weekly_menu for the whole week, get_classics_menu for the permanent dishes, cakes and drinks, and get_visit_info for address, opening hours and directions. Staff members can additionally use list_reservations and update_reservation to review and answer table requests (Anfragen).",
+  instructions: "Tools for My Secret Garden, a vegetarian and vegan cafe restaurant in Vienna (Mariahilferstra\xDFe 45, Im Raimundhof). Use get_todays_menu for today's dishes, get_weekly_menu for the whole week, get_classics_menu for the permanent dishes, cakes and drinks, and get_visit_info for address, opening hours and directions.",
   auth: auth.oauth.issuer({
     issuer: `https://${projectRef}.supabase.co/auth/v1`,
     acceptedAudiences: "authenticated"
@@ -691,9 +630,7 @@ var mcp_default = defineMcp({
     get_todays_menu_default,
     get_weekly_menu_default,
     get_classics_menu_default,
-    get_visit_info_default,
-    list_reservations_default,
-    update_reservation_default
+    get_visit_info_default
   ]
 });
 
