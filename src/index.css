@@ -58,6 +58,9 @@
 
   --color-brand-star: hsl(var(--semantic-warning));
 
+  /* Tono ambra per i kicker di sezione (SUPPE). Testo, non superficie. */
+  --color-kicker-amber: hsl(var(--amber-300));
+
   --color-state-vegan: var(--color-vegan);
   --color-state-glutenFree: var(--color-gluten-free);
   --color-state-bio: var(--color-bio);
@@ -250,9 +253,13 @@
 }
 
 @utility surface-card {
+  /* Superficie card su cream: il bordo separa, l'ombra no.
+     Questa utility portava anche box-shadow, quindi ogni `border surface-card`
+     era bordo E ombra sulla stessa superficie — il fallimento duro di
+     antipatterns.md § U2, invisibile al grep perché nascosto qui dentro.
+     Chi vuole elevazione usa .shadow-design-card, esplicitamente. */
   background: hsl(var(--card) / 0.96);
   border-color: hsl(var(--border) / 0.9);
-  box-shadow: var(--msg-shadow-card);
 }
 
 @utility border-soft {
@@ -364,14 +371,24 @@
 @utility h2-editorial {
   @apply font-cormorant leading-[1.05];
   font-size: clamp(2.25rem, 4.2vw + 1rem, 3.75rem);
+  /* Senza questo ogni titolo su due righe lascia una parola orfana sulla
+     seconda: "Heute aus der / Küche". Balance distribuisce le righe. */
+  text-wrap: balance;
 }
 
 @utility bg-hero-scrim {
+  /* Lo scrim non è decorazione: è quello che rende leggibile il testo sopra la
+     fotografia. Misurato con scripts/check-contrast.mjs, la versione precedente
+     (0.05 → 0.18 → 0.55) dava 1.41:1 sul marchio e 2.03:1 sulla tagline, contro
+     i 3:1 e 4.5:1 richiesti. Il text-shadow non conta come contrasto.
+     Il testo sta in basso, quindi il gradiente pesa lì e lascia respirare la
+     parte alta della foto. I valori sono tarati sulla misura, non a occhio. */
   background: linear-gradient(
     180deg,
-    hsl(var(--foreground) / 0.05) 0%,
-    hsl(var(--foreground) / 0.18) 55%,
-    hsl(var(--foreground) / 0.55) 100%
+    hsl(var(--foreground) / 0.12) 0%,
+    hsl(var(--foreground) / 0.46) 32%,
+    hsl(var(--foreground) / 0.72) 62%,
+    hsl(var(--foreground) / 0.86) 100%
   );
 }
 
@@ -418,6 +435,11 @@ Background: Warm cream #F5F0E8
     --verde-500: 86 44% 15%; /* #273816 */
     --amber-100: 41 82% 78%; /* #F5D89A */
     --amber-200: 39 81% 52%; /* #E8A020 */
+    /* --amber-200 come testo su cream dà 1.94:1: va bene per una superficie di
+       badge o per le stelle, non per un'etichetta da leggere. Questo è lo
+       stesso tono portato a una luminosità che passa: 5.02:1 su --cream-100 e
+       5.37:1 su --card. Misurato, non scelto a occhio. */
+    --amber-300: 39 81% 30%; /* #8A5F0F */
     --muted-100: 248 23% 92%; /* #E8E6F0 */
     --muted-200: 240 20% 82%; /* #C8C8D8 */
 

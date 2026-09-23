@@ -35,9 +35,13 @@ export const MobileStickyBar = () => {
   const handleScroll = useCallback(() => {
     if (rafRef.current) return;
     rafRef.current = requestAnimationFrame(() => {
-      // Wait until the user is past most of the hero before showing the sticky bar,
-      // so hero CTAs aren't in competition with it on first view.
-      const threshold = Math.max(320, window.innerHeight * 0.8);
+      // Compare appena si è passata la fascia d'ingresso (min-h 340px su mobile,
+      // 380 su desktop — vedi Hero.tsx). Prima la soglia era
+      // Math.max(320, innerHeight * 0.8) = 675px su 390×844, cioè la barra non
+      // esisteva nel primo viewport mobile: né chiamare né trovarci, sul 74% del
+      // traffico. La ragione originale era non competere con le CTA dell'hero,
+      // che non ci sono più.
+      const threshold = 300;
       setIsScrolled(window.scrollY > threshold);
       rafRef.current = null;
     });
@@ -115,6 +119,7 @@ export const MobileStickyBar = () => {
         {/* Call Button - Primary */}
         <a
           href={`tel:${SITE.phoneTel}`}
+          data-call-tracked="self"
           onClick={() => trackHeroAbEvent('click_call', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
           className="flex-1 inline-flex items-center justify-center gap-2
             bg-accent text-accent-foreground

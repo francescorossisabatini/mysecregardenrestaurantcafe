@@ -10,15 +10,27 @@ interface MenuDishDetailsProps {
 }
 
 export const AllergenCodes = ({ codes }: { codes?: string[] }) => {
+  const { language } = useLanguage();
   if (!codes?.length) return null;
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-1.5" aria-label="Allergen codes">
-      {codes.map((code) => (
-        <span key={code} className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground">
-          {code}
-        </span>
-      ))}
+    <div className="mt-2 flex flex-wrap items-center gap-1.5" aria-label={language === "de" ? "Allergene" : "Allergens"}>
+      {codes.map((code) => {
+        // Senza nome accessibile uno screen reader legge solo "G", "A": su un
+        // dato che riguarda le allergie il codice da solo non basta.
+        const allergen = getAllergenByCode(code);
+        const label = allergen ? cleanDisplayText(allergen.label[language]) : code;
+        return (
+          <span
+            key={code}
+            title={label}
+            aria-label={label}
+            className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground"
+          >
+            {code}
+          </span>
+        );
+      })}
     </div>
   );
 };
@@ -39,12 +51,12 @@ export const MenuDishDetails = ({ details, compact = false }: MenuDishDetailsPro
       <AllergenCodes codes={details.allergens} />
 
       <Collapsible>
-        <CollapsibleTrigger className="group mt-3 inline-flex items-center gap-1.5 font-work text-xs font-semibold text-primary transition-colors hover:text-primary/80">
+        <CollapsibleTrigger className="group mt-1 inline-flex min-h-[44px] items-center gap-1.5 font-work text-xs font-semibold text-primary transition-colors hover:text-primary/80">
           {language === "de" ? "Details & Allergene" : "Details & allergens"}
           <ChevronDown className="h-3.5 w-3.5 transition-transform group-data-[state=open]:rotate-180" aria-hidden="true" />
         </CollapsibleTrigger>
         <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-          <div className={`${compact ? "mt-2" : "mt-3"} space-y-3 rounded-xl border border-border/60 bg-background/70 p-3`}>
+          <div className={`${compact ? "mt-2" : "mt-3"} space-y-3 rounded-lg border border-border/60 bg-background/70 p-3`}>
             {!!ingredientsMain?.length && (
               <div>
                 <p className="mb-1 font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
@@ -94,7 +106,7 @@ export const AllergenLegend = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="mt-12 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5" aria-labelledby="allergen-legend-title">
+    <section className="mt-12 rounded-lg border border-border/75 bg-card p-4 md:p-5" aria-labelledby="allergen-legend-title">
       <h3 id="allergen-legend-title" className="font-cormorant text-xl font-semibold text-foreground">
         {language === "de" ? "Allergene" : "Allergens"}
       </h3>
@@ -105,7 +117,7 @@ export const AllergenLegend = () => {
       </p>
       <div className="mt-4 grid gap-2 sm:grid-cols-2">
         {ALLERGENS.map((allergen) => (
-          <div key={allergen.code} className="flex items-start gap-2 rounded-xl bg-background/70 p-2">
+          <div key={allergen.code} className="flex items-start gap-2 rounded-lg bg-background/70 p-2">
             <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full border border-border bg-muted px-2 font-work text-[11px] font-semibold text-foreground">
               {allergen.code}
             </span>

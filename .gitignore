@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# screenshot del tell-check
+output/
+
+# build statica del banco
+dist-lab/
+
+*storybook.log
+storybook-static

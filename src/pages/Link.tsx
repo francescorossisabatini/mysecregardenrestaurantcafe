@@ -9,8 +9,8 @@ const LinkPage = () => {
   const { language } = useLanguage();
 
   const links = [
-    { href: `tel:${SITE.phoneTel}`, label: { de: "Jetzt anrufen", en: "Call Now" }, icon: Phone, isTel: true },
-    { href: SITE.mapsUrl, label: { de: "Route anzeigen", en: "Get Directions" }, icon: MapPin, isExternal: true },
+    { href: `tel:${SITE.phoneTel}`, label: { de: SITE.phoneDisplay, en: "Call Now" }, icon: Phone, isTel: true, primary: true },
+    { href: SITE.mapsUrl, label: { de: "Durch den Bogen, Mariahilferstraße 45", en: "Get Directions" }, icon: MapPin, isExternal: true },
     { href: "/menu", label: { de: "Wochenmenü", en: "Weekly Specials" }, icon: CalendarDays },
     { href: "/menu", label: { de: "Speisekarte", en: "View Menu" }, icon: UtensilsCrossed },
   ];
@@ -32,7 +32,13 @@ const LinkPage = () => {
           {links.map((link) => {
             const Icon = link.icon;
             const content = (
-              <span className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-primary text-primary-foreground rounded-xl text-lg font-medium font-work shadow-xs hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 touch-manipulation">
+              <span
+                className={`flex items-center justify-center gap-3 w-full py-4 px-6 rounded-lg text-lg font-medium font-work active:scale-[0.98] transition-all duration-200 touch-manipulation ${
+                  link.primary
+                    ? "bg-accent text-accent-foreground shadow-xs hover:bg-accent/90"
+                    : "border border-primary/35 bg-card/70 text-primary hover:bg-muted"
+                }`}
+              >
                 <Icon className="w-5 h-5" />
                 {link.label[language]}
               </span>
@@ -40,21 +46,13 @@ const LinkPage = () => {
 
             if (link.isExternal || link.isTel) {
               return (
-                <a key={link.href} href={link.href} target={link.isExternal ? "_blank" : undefined} rel={link.isExternal ? "noopener noreferrer" : undefined} className="block">
+                <a key={`${link.href}-${link.label.de}`} href={link.href} target={link.isExternal ? "_blank" : undefined} rel={link.isExternal ? "noopener noreferrer" : undefined} className="block">
                   {content}
                 </a>
               );
             }
-            return <Link key={link.href} to={link.href} className="block">{content}</Link>;
+            return <Link key={`${link.href}-${link.label.de}`} to={link.href} className="block">{content}</Link>;
           })}
-        </div>
-
-        {/* Info */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-muted-high-contrast font-work">{SITE.addressShort}</p>
-          <p className="text-xs text-muted-high-contrast font-work mt-1">
-            {language === "de" ? "Mo bis Sa 11:00 bis 19:00" : "Mon to Sat 11:00 to 19:00"}
-          </p>
         </div>
       </div>
       

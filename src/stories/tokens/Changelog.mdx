@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Tokens/Changelog" />
+
+# Changelog
+
+Registro delle decisioni sul design system, più recenti in cima. Le motivazioni
+complete restano in [`docs/ux/divergence-ledger.md`](https://github.com/francescorossisabatini/mysecregardenrestaurantcafe/blob/claude/adoring-newton-sm1p4c/docs/ux/divergence-ledger.md)
+nel repo — qui solo cosa è cambiato e quando, per chi consulta Storybook senza aprire il codice.
+
+---
+
+### 20 settembre 2026 — Riorganizzazione in Tokens / Components / Sections
+
+Storybook aveva tutto sotto un'unica categoria piatta "Design System".
+Riorganizzato in tre sezioni comprensibili: **Tokens** (colori, tipografia,
+spacing, radius, shadow, questo changelog), **Components** (Button, Input,
+Textarea, Select, Switch, Toggle, Dialog, Sheet, Card, Category Badge),
+**Sections** (Hero, Navigation, Footer — le sezioni intere del sito).
+
+### 20 settembre 2026 — Storybook espanso a tutto il design system
+
+Prima c'erano solo Button e una pagina token unica. Aggiunti: 7 componenti UI
+base, i token di spacing/radius/shadow (separati dal colore), la card piatto
+(`DishRow`) con le sue varianti reali (badge dietary, "Neu", non disponibile),
+e le sezioni intere Hero/Navigation/Footer — renderizzate con i componenti
+veri, non versioni finte.
+
+### 20 settembre 2026 — Storybook installato
+
+Prima non esisteva un catalogo visivo dei componenti: per vederli bisognava
+aprire il sito intero. Installato Storybook (`@storybook/react-vite`), con
+solo `addon-a11y` e `addon-docs` — tolti `addon-vitest`/`chromatic`/`mcp`
+dallo scaffold di default perché tiravano dentro `vitest` latest, in
+conflitto con Vite 5.4 già in uso dal sito.

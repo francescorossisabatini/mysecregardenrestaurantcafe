@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronRight, Info, UtensilsCrossed } from "lucide-react";
+import { Info } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
@@ -7,40 +7,16 @@ import { getTodayHoliday } from "@/data/holidaysData";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AllergenCodes } from "@/components/MenuDishDetails";
+import { getAllergenByCode } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { DietaryBadges } from "@/components/menu/DietaryBadges";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
   if (!t) return false;
   if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
   return true;
-};
-
-const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
-  const lowerText = text.toLowerCase();
-  return {
-    isVegan: lowerText.includes("vegan"),
-    isGlutenFree: lowerText.includes("glutenfrei") || lowerText.includes("gluten-free") || lowerText.includes("gluten free"),
-    isBio: lowerText.includes("bio"),
-  };
-};
-
-const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
-  const labels = parseDietaryLabels(text);
-  const visibleLabels = [
-    labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
-    labels.isBio ? "bio" : null,
-  ].filter(Boolean);
-
-  if (visibleLabels.length === 0) return null;
-
-  return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
-      {joinDisplayText(visibleLabels)}
-    </p>
-  );
 };
 
 export const HomeMenuPreview = () => {
@@ -61,6 +37,11 @@ export const HomeMenuPreview = () => {
   const nextDayName = dayNames[language][nextDayIndex];
   const nextDayMenu = menu.days.find((day) => day.day[language] === nextDayName);
   const todayHoliday = getTodayHoliday();
+  // Wir haben nur sonntags geschlossen (plus Feiertage): wenn "morgen"
+  // ein Sonntag ist, ist der nächste Öffnungstag in Wahrheit Montag.
+  const reopenDayIndex = nextDayIndex === 0 ? 1 : nextDayIndex;
+  const reopensTomorrow = reopenDayIndex === nextDayIndex;
+  const reopenDayName = dayNames[language][reopenDayIndex];
   const hasMenuData = !!todayMenu && (
     isValidMenuText(todayMenu.soup?.[language]) ||
     isValidMenuText(todayMenu.green?.[language]) ||
@@ -69,6 +50,13 @@ export const HomeMenuPreview = () => {
   const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
 
 
+  // Griglia dei piatti — due decisioni che vivono nel CSS, non qui:
+  //  · le colonne le conta :has(), perché nei giorni in cui arriva solo la
+  //    zuppa la griglia fissa a tre lasciava due colonne vuote;
+  //  · le righe sono dichiarate sul contenitore e le card le ereditano con
+  //    grid-rows-subgrid, così nome, descrizione, dietary e allergeni si
+  //    allineano fra una card e l'altra senza min-h inventati.
+  // Entrambe provate in lab.html, esperimenti "subgrid" e "has".
   const dishes = todayMenu && weeklyMenuAvailable ? [
     { key: "soup", label: language === "de" ? "Suppe" : "Soup", price: "6,90", text: todayMenu.soup[language], allergens: todayMenu.soupMeta?.allergens },
     { key: "green", label: language === "de" ? "Grünes Gericht" : "Green Dish", price: "15,90", text: todayMenu.green[language], allergens: todayMenu.greenMeta?.allergens },
@@ -81,26 +69,26 @@ export const HomeMenuPreview = () => {
     { key: "blue", label: language === "de" ? "Blaues Gericht" : "Blue Dish", text: nextDayMenu.blue[language] },
   ].filter((dish) => isValidMenuText(dish.text)) : [];
 
-  const showPending = !weeklyMenuAvailable && !isLoading;
+  // La domenica (o un festivo) il foglio Google non viene aggiornato perché
+  // siamo chiusi — senza questa esclusione "non aggiornato" e "chiuso"
+  // sembravano la stessa cosa, e la domenica mostrava il messaggio sbagliato.
+  const showPending = !weeklyMenuAvailable && !isLoading && dayIndex !== 0 && !todayHoliday;
 
 
   return (
-    <section id="menu" className="bg-card py-20 md:py-28 lg:py-32">
+    <section id="menu" className="bg-card py-10 pb-[calc(6rem+env(safe-area-inset-bottom))] md:py-14 md:pb-14">
       <div className="container mx-auto px-5">
         <div className="mx-auto max-w-2xl lg:max-w-5xl">
-          <div className="mb-10 text-center space-y-4">
-            <div className="flex justify-center">
-              <span className="eyebrow-num">
-                01 · {language === "de" ? "Heute auf dem Tisch" : "On the table today"}
-              </span>
-            </div>
-            <h2 className="h2-editorial text-primary">
+          {/* Il giorno della settimana è un dato, non un ornamento: fa il lavoro
+              che sulle altre sezioni faceva l'eyebrow numerata. */}
+          <div className="mb-6 max-w-[62ch]">
+            <p className="font-work text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-high-contrast">
+              {todayName}
+            </p>
+            <h2 className="h2-editorial mt-1.5 text-primary">
               {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
             </h2>
-            <div className="flex justify-center pt-1">
-              <span className="rule-short" aria-hidden="true" />
-            </div>
-            <p className="mx-auto mt-3 max-w-sm lg:max-w-xl font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+            <p className="mt-3 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
               {language === "de"
                 ? "Ein kurzer Blick auf das Tagesmenü. Für Klassiker, Getränke und Details geht es weiter zur Speisekarte."
                 : "A quick look at today's menu. Classics, drinks and details are on the menu page."}
@@ -108,9 +96,9 @@ export const HomeMenuPreview = () => {
           </div>
 
           {isLoading ? (
-            <div className="space-y-4 lg:grid lg:grid-cols-3 lg:gap-4 lg:space-y-0">
+            <div className="max-w-[62ch] space-y-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="rounded-2xl border border-border/75 bg-card p-4 shadow-card md:p-5">
+                <div key={i} className="rounded-lg border border-border/75 bg-card p-4 md:p-5">
                   <Skeleton className="mb-3 h-5 w-24" />
                   <Skeleton className="mb-2 h-4 w-full" />
                   <Skeleton className="h-4 w-3/4" />
@@ -118,53 +106,71 @@ export const HomeMenuPreview = () => {
               ))}
             </div>
           ) : !isClosed && dishes.length > 0 ? (
-            <div className="grid gap-4 lg:grid-cols-3 lg:items-stretch">
+            <div className="max-w-[62ch] space-y-4">
+              {/* Lista verticale anche su desktop: direction-lock.md §Griglia
+                  vieta la griglia a 3 colonne di card sulla homepage. */}
               {dishes.map((dish) => {
                 const dishCopy = splitDishText(dish.text, language, dish.key);
 
                 return (
-                <div key={dish.key} className="rounded-2xl border p-4 surface-card md:p-5 lg:flex lg:min-h-[18rem] lg:flex-col">
-                  <div className="mb-3 flex items-start justify-between gap-4">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
-                          {cleanDisplayText(dishCopy.name)}
-                        </h3>
-                        <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
-                          dish.key === "blue"
-                            ? "text-blue"
-                            : "text-accent"
-                        }`}>
-                          {dish.label}
-                        </span>
-                      </div>
-                      {dishCopy.description && (
-                        <p className="mt-2 font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
-                          {cleanDisplayText(dishCopy.description)}
-                        </p>
-                      )}
+                <div key={dish.key} className="rounded-lg border p-4 surface-card md:p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
+                      <h3 className="font-cormorant text-xl font-semibold leading-snug text-foreground md:text-2xl">
+                        {cleanDisplayText(dishCopy.name)}
+                      </h3>
+                      <span className={`font-work text-[10px] font-semibold uppercase tracking-[0.08em] ${
+                        dish.key === "blue"
+                          ? "text-blue"
+                          : "text-accent"
+                      }`}>
+                        {dish.label}
+                      </span>
                     </div>
-                    <p className="shrink-0 font-work text-sm font-semibold text-accent">{dish.price}</p>
+                    <p className="shrink-0 font-work text-sm font-semibold text-accent" aria-label={`${dish.price.replace(",", " Euro ")}`}>{dish.price}</p>
                   </div>
+                  {dishCopy.description && (
+                    <p className="mt-2 text-pretty font-work text-sm leading-relaxed text-muted-high-contrast md:text-base">
+                      {cleanDisplayText(dishCopy.description)}
+                    </p>
+                  )}
                   <DietaryBadges text={dish.text} language={language} />
-                  <div className="lg:mt-auto"><AllergenCodes codes={dish.allergens} /></div>
+                  <div className="mt-3"><AllergenCodes codes={dish.allergens} /></div>
                 </div>
                 );
               })}
             </div>
-          ) : showPending ? (
-            <div className="rounded-2xl border p-8 text-center surface-card">
+          ) : null}
+
+          {!isClosed && dishes.length > 0 && (() => {
+            const codes = Array.from(new Set(dishes.flatMap((dish) => dish.allergens ?? [])));
+            if (codes.length === 0) return null;
+            return (
+              <p className="mt-3 max-w-[62ch] font-work text-xs leading-relaxed text-muted-high-contrast">
+                {joinDisplayText(
+                  codes.map((code) => {
+                    const allergen = getAllergenByCode(code);
+                    return allergen ? `${code} ${cleanDisplayText(allergen.label[language])}` : code;
+                  }),
+                  ", ",
+                )}
+              </p>
+            );
+          })()}
+
+          {isLoading ? null : !isClosed && dishes.length > 0 ? null : showPending ? (
+            <div className="rounded-lg border p-8 surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
                 {language === "de" ? "Der Wochenplan wird gerade aktualisiert." : "The weekly menu is being updated."}
               </p>
-              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+              <p className="mt-3 max-w-md font-work text-sm text-muted-high-contrast">
                 {language === "de"
                   ? "Schau am Montag wieder vorbei oder ruf uns an: +43 1 586 28 39."
                   : "Check back on Monday or call us: +43 1 586 28 39."}
               </p>
             </div>
           ) : (
-            <div className="rounded-2xl border p-8 text-center surface-card">
+            <div className="rounded-lg border p-8 surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
                 {todayHoliday
                   ? todayHoliday.name[language]
@@ -172,20 +178,27 @@ export const HomeMenuPreview = () => {
                     ? language === "de" ? "Für heute geschlossen" : "Closed for today"
                     : language === "de" ? "Heute geschlossen" : "Closed today"}
               </p>
-              <p className="mx-auto mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+              <p className="mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+                {!todayHoliday && (
+                  <>
+                    {language === "de"
+                      ? reopensTomorrow ? "Morgen ab 11:00 wieder da. " : `Am ${reopenDayName} ab 11:00 wieder da. `
+                      : reopensTomorrow ? "Back tomorrow from 11:00. " : `Back ${reopenDayName} from 11:00. `}
+                  </>
+                )}
                 {language === "de" ? "Schau gern in die komplette Speisekarte für Klassiker und Getränke." : "You can still browse the full menu for classics and drinks."}
               </p>
 
               {nextDishes.length > 0 && (
                 <div className="mt-6 border-t border-border/40 pt-5 text-left">
-                  <p className="mb-4 text-center font-work text-xs uppercase tracking-wider text-muted-high-contrast">
+                  <p className="mb-4 font-work text-xs uppercase tracking-wider text-muted-high-contrast">
                     {language === "de" ? `Vorschau auf ${nextDayName}` : `Preview of ${nextDayName}`}
                   </p>
-                  <div className="grid gap-3 lg:grid-cols-3">
+                  <div className="max-w-[62ch] space-y-3">
                     {nextDishes.map((dish) => {
                       const dishCopy = splitDishText(dish.text, language, dish.key);
                       return (
-                        <div key={dish.key} className="rounded-xl border border-border/60 bg-background p-3">
+                        <div key={dish.key} className="rounded-lg border border-border/60 bg-background p-3">
                           <p className="font-cormorant text-xl font-semibold leading-snug text-foreground">
                             {cleanDisplayText(dishCopy.name)}
                           </p>
@@ -207,22 +220,22 @@ export const HomeMenuPreview = () => {
           )}
 
 
-          <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-            <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
-              {language === "de"
-                ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
-                : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
-            </p>
-          </div>
+          {!isClosed && dishes.length > 0 && (
+            <div className="mt-4 flex max-w-[62ch] items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
+              <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+              <p className="font-work text-xs leading-relaxed text-muted-high-contrast sm:text-sm">
+                {language === "de"
+                  ? "Markierte Optionen werden ohne glutenhaltige Zutaten gekocht. Bei Allergien bitte kurz bei uns nachfragen."
+                  : "Marked options are made without gluten containing ingredients. If you have allergies, please ask us first."}
+              </p>
+            </div>
+          )}
 
-          <div className="mt-8 flex justify-center">
-            <Button size="lg" asChild>
-              <Link to="/menu">
-                <UtensilsCrossed className="h-4 w-4" />
-                {language === "de" ? "Zur Speisekarte" : "Go to menu"}
-                <ChevronRight className="h-4 w-4" />
-              </Link>
+          <div className="mt-8">
+            {/* Secondario, non verde pieno: la barra fissa porta già l'unica
+                azione primaria del viewport (CLAUDE.md, una CTA per viewport). */}
+            <Button size="lg" variant="outline" className="font-work" asChild>
+              <Link to="/menu">{language === "de" ? "Zur Speisekarte" : "Go to menu"}</Link>
             </Button>
           </div>
         </div>

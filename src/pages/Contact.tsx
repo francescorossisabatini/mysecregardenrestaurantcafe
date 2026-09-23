@@ -6,7 +6,6 @@ import { Navigation } from "@/components/Navigation";
 import { SkipLink } from "@/components/SkipLink";
 import { Footer } from "@/components/Footer";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
-import { ReservationRequestForm } from "@/components/ReservationRequestForm";
 import { useLanguage } from "@/contexts/LanguageContext";
 import entranceGarden from "@/assets/entrance-garden.webp";
 import { SITE } from "@/config/site";
@@ -28,8 +27,6 @@ const ContactPage = () => {
       { label: "Address", value: "Windmühlgasse 22 to 24" },
       { label: "Benefit", value: "1 hour included with a 27 euro spend" },
     ];
-  const showReservationRequest = false;
-
   const visitJsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
@@ -68,34 +65,23 @@ const ContactPage = () => {
       <main id="main-content" tabIndex={-1} className="pt-24 pb-16 focus:outline-hidden">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
-            <header className="mb-10 text-center md:mb-14">
+            {/* Header allineato a sinistra come il resto del corpo. Niente
+                bottoni chiama/indicazioni qui: MobileStickyBar li offre già
+                come azione permanente, ripeterli sarebbe ridondanza (S5). */}
+            <header className="mb-10 max-w-[62ch] md:mb-14">
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
                 {language === "de" ? "Besuch uns" : "Visit us"}
               </h1>
-              <p className="mx-auto max-w-2xl font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
+              <p className="mt-3 font-work text-base leading-relaxed text-muted-high-contrast md:text-lg">
                 {language === "de"
                   ? "Alles Wichtige für deinen Besuch: Adresse, Öffnungszeiten, Anreise und Unterstützung vor Ort."
                   : "Everything you need for your visit: address, opening hours, travel options and on-site support."}
               </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <Button size="lg" className="bg-primary px-8 py-6 font-work text-primary-foreground hover:bg-primary/90" asChild>
-                  <a href={`tel:${SITE.phoneTel}`}>
-                    <Phone className="mr-2 h-4 w-4" />
-                    {language === "de" ? "Anrufen" : "Call"}
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" className="px-8 py-6 font-work" asChild>
-                  <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
-                    <MapPin className="mr-2 h-4 w-4" />
-                    {language === "de" ? "Route anzeigen" : "Get directions"}
-                  </a>
-                </Button>
-              </div>
             </header>
 
-            <section className="mb-14 overflow-hidden rounded-lg border border-border/70 bg-card/70 shadow-card">
-              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
-                <div className="min-h-[320px] lg:min-h-[520px]">
+            <section className="mb-14 overflow-hidden rounded-lg border border-border/70 bg-card/70">
+              <div className="grid gap-0 lg:grid-cols-[1fr_1fr] lg:items-start">
+                <div className="min-h-[320px] lg:h-[520px]">
                   <MapConsentGate
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2659.366188!2d16.353526!3d48.1994275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d078f0451b459%3A0x76f7dc33e496ccb5!2sSecret%20Garden%20Caf%C3%A9%20Restaurant!5e0!3m2!1sde!2sat!4v1234567890"
                     title="Secret Garden Restaurant Location"
@@ -132,7 +118,9 @@ const ContactPage = () => {
                       <li>{language === "de" ? "Rückseite: besser, wenn du den Lift nutzen möchtest." : "Back side: better if you want to use the lift."}</li>
                       <li>{language === "de" ? "Im Hof: halte dich zum grünen Gartenbereich." : "Inside: head toward the green garden area."}</li>
                     </ul>
-                    <div className="mt-4 rounded-md border border-border/60 bg-card/70 p-4">
+                    {/* Kein verschachteltes Kärtchen mehr hier: eine Trennlinie
+                        statt einer zweiten Box in der Box (No-Line Rule). */}
+                    <div className="mt-4 border-t border-border/40 pt-4">
                       <div className="mb-2 flex items-center gap-2">
                         <Accessibility className="h-4 w-4 text-primary" aria-hidden="true" />
                         <h4 className="font-work text-sm font-semibold text-foreground">
@@ -152,7 +140,7 @@ const ContactPage = () => {
             </section>
 
             <section className="mb-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6">
                 <Clock className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffnungszeiten" : "Opening hours"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
@@ -160,21 +148,21 @@ const ContactPage = () => {
                   {language === "de" ? "Sonn- und Feiertage geschlossen." : "Closed on Sundays and public holidays."}
                 </p>
               </div>
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6">
                 <MapPin className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "Öffentlich" : "Public transport"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
                   {SITE.transportNote[language]}
                 </p>
               </div>
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card">
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6">
                 <HandPlatter className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
                 <h2 className="mb-3 font-cormorant text-2xl font-semibold text-foreground">{language === "de" ? "So funktioniert es" : "How it works"}</h2>
                 <p className="font-work leading-relaxed text-muted-high-contrast">
                       {SITE.counterServiceNote[language]} {language === "de" ? "Schnell, wenn du es eilig hast. Ruhig, wenn du bleiben möchtest." : "Quick if you’re in a hurry. Quiet if you want to stay a while."}
                 </p>
               </div>
-              <div className="rounded-lg border border-border/70 bg-card/70 p-6 shadow-card md:col-span-2 xl:col-span-1">
+              <div className="rounded-lg border border-border/70 bg-card/70 p-6 md:col-span-2 xl:col-span-1">
                 <div className="mb-4 flex items-start justify-between gap-3">
                   <div>
                     <Car className="mb-4 h-6 w-6 text-primary" aria-hidden="true" />
@@ -189,7 +177,7 @@ const ContactPage = () => {
                 </p>
                 <dl className="mt-5 grid gap-3">
                   {parkingDetails.map((detail) => (
-                    <div key={detail.label} className="rounded-md border border-border/60 bg-background/60 p-3">
+                    <div key={detail.label} className="rounded-lg border border-border/60 bg-background/60 p-3">
                       <dt className="font-work text-xs font-semibold uppercase tracking-[0.08em] text-primary">{detail.label}</dt>
                       <dd className="mt-1 font-work text-sm leading-relaxed text-foreground">{detail.value}</dd>
                     </div>
@@ -204,8 +192,6 @@ const ContactPage = () => {
                 </Button>
               </div>
             </section>
-
-            {showReservationRequest && <ReservationRequestForm headingLevel="h2" />}
           </div>
         </div>
       </main>

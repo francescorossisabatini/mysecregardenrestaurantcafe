@@ -19,19 +19,10 @@ import { AllergenLegend, MenuDishDetails } from "@/components/MenuDishDetails";
 import { MenuFloatingPill } from "@/components/MenuFloatingPill";
 import type { DishDetails } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
-import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
+import { cleanDisplayText, formatPrice } from "@/lib/displayText";
 import { DishRow } from "@/components/menu/DishRow";
 import { categoryHeaderPhoto } from "@/components/menu/dishPhotoMap";
-
-// Parse dietary labels from dish description text
-const parseDietaryLabels = (text: string): { isVegan: boolean; isGlutenFree: boolean; isBio: boolean } => {
-  const lowerText = text.toLowerCase();
-  return {
-    isVegan: lowerText.includes("vegan"),
-    isGlutenFree: lowerText.includes("glutenfrei") || lowerText.includes("gluten-free") || lowerText.includes("gluten free"),
-    isBio: lowerText.includes("bio"),
-  };
-};
+import { DietaryBadges } from "@/components/menu/DietaryBadges";
 
 // Treat spreadsheet error placeholders as empty (e.g. "#VALUE" / "#VALUE!")
 const isValidMenuText = (text?: string) => {
@@ -39,25 +30,6 @@ const isValidMenuText = (text?: string) => {
   if (!t) return false;
   if (/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t)) return false;
   return true;
-};
-
-// Render dietary badges dynamically - WCAG AAA compliant colors (7:1+ on cream)
-// Using explicit dark colors that GUARANTEE 4.5:1+ contrast on #FAF7F3
-const DietaryBadges = ({ text, language }: { text: string; language: "de" | "en" }) => {
-  const labels = parseDietaryLabels(text);
-  const visibleLabels = [
-    labels.isVegan ? "vegan" : null,
-    labels.isGlutenFree ? (language === "de" ? "ohne Gluten Zutaten" : "no gluten ingredients") : null,
-    labels.isBio ? "bio" : null,
-  ].filter(Boolean);
-
-  if (visibleLabels.length === 0) return null;
-  
-  return (
-    <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
-      {joinDisplayText(visibleLabels)}
-    </p>
-  );
 };
 
 const WeeklyDishDetails = ({ text, meta }: { text: string; meta?: DishDetails }) => (
@@ -185,6 +157,15 @@ export const MenuSection = () => {
     en: dayNames.en[dateInfo.nextDayIndex]
   }), [dayNames, dateInfo.nextDayIndex]);
 
+  // Wir haben nur sonntags geschlossen (plus Feiertage): wenn "morgen" ein
+  // Sonntag ist, ist der nächste Öffnungstag in Wahrheit Montag.
+  const reopensTomorrow = dateInfo.nextDayIndex !== 0;
+  const reopenDayIndex = reopensTomorrow ? dateInfo.nextDayIndex : 1;
+  const reopenDayName = useMemo(() => ({
+    de: dayNames.de[reopenDayIndex],
+    en: dayNames.en[reopenDayIndex]
+  }), [dayNames, reopenDayIndex]);
+
   const scrollToMenuBlock = (tab: "today" | "fixed" | "week") => {
     const refTarget = tab === "today" ? todayRef.current : tab === "fixed" ? fixedRef.current : weekRef.current;
     const idTarget = document.getElementById(
@@ -204,7 +185,15 @@ export const MenuSection = () => {
   ];
 
   return (
-    <section id="menu" className="py-16 md:py-24 bg-section-soft">
+    <section
+      id="menu"
+      className={`bg-section-soft ${
+        // Der obere Innenabstand ist groß, weil die -mt-16/-mt-24 der Sticky-Tabs
+        // ihn optisch ausgleichen. Ohne Tabs (Sonntag, Feiertag, stale sheet)
+        // blieb sonst eine Lücke, wo die Tabs wären.
+        quickNavTabs.length > 1 ? "py-16 md:py-24" : "py-10 md:py-14"
+      }`}
+    >
       {/* Sticky segmented tab bar — intuitive tab switcher, mobile + desktop parity */}
       {quickNavTabs.length > 1 && (
       <div
@@ -226,7 +215,7 @@ export const MenuSection = () => {
                   aria-disabled={isDisabled || undefined}
                   disabled={isDisabled}
                   onClick={() => !isDisabled && scrollToMenuBlock(tab.id)}
-                  className={`relative shrink-0 px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
+                  className={`relative flex min-h-[44px] shrink-0 items-center px-4 py-3 font-work text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 md:px-6 md:text-[12px] ${
                     isDisabled
                       ? "text-muted-foreground/50 cursor-not-allowed"
                       : isActive
@@ -259,38 +248,13 @@ export const MenuSection = () => {
           {weeklyAvailable ? (
           <>
           <div ref={todayRef} id="menu-today" className="scroll-mt-32 mb-14 md:mb-16">
-            {/* To-go discount banner */}
-            <div
-              role="note"
-              aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
-              className="mb-6 rounded-2xl border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
-            >
-              <div className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
-                  -20%
-                </span>
-                <div className="min-w-0">
-                  <p className="font-cormorant text-lg md:text-xl font-semibold leading-snug text-foreground">
-                    {language === "de"
-                      ? "Take-away Angebot: 18–19 Uhr"
-                      : "Take-away offer: 6–7 pm"}
-                  </p>
-                  <p className="mt-1 font-work text-xs md:text-sm leading-relaxed text-muted-high-contrast">
-                    {language === "de"
-                      ? "20% Rabatt auf die Tagesgerichte Grün & Blau zum Mitnehmen, täglich von 18:00 bis 19:00 Uhr."
-                      : "20% off the Green & Blue daily dishes for take-away, every day from 6:00 to 7:00 pm."}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mb-8">
+            <div className="mb-8 max-w-sm">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-2">
                 {language === "de" ? "Heute aus der Küche" : "From the kitchen today"}
               </h2>
-              <p className="text-muted-high-contrast text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
-                {language === "de" 
-                  ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach." 
+              <p className="text-muted-high-contrast text-sm md:text-base font-work leading-relaxed">
+                {language === "de"
+                  ? "Mittags warm, ohne viel Umweg. Wenn du wegen Allergien unsicher bist, frag bitte kurz bei uns nach."
                   : "Warm lunch, no fuss. If allergies are a concern, please ask us before ordering."}
               </p>
             </div>
@@ -298,7 +262,7 @@ export const MenuSection = () => {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-daily/50 rounded-xl p-5 animate-pulse">
+                  <div key={i} className="bg-daily/50 rounded-lg p-5 animate-pulse">
                     <Skeleton className="h-5 w-24 mb-3" />
                     <Skeleton className="h-4 w-full mb-2" />
                     <Skeleton className="h-4 w-3/4" />
@@ -313,17 +277,15 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.soup[language], language, "soup");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
-                              {language === "de" ? "Suppe" : "Soup"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            {language === "de" ? "Suppe" : "Soup"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">6,90</p>
                       </div>
@@ -343,17 +305,15 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.green[language], language, "green");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-accent/25 bg-accent/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
-                              {language === "de" ? "Grünes Gericht" : "Green Dish"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            {language === "de" ? "Grünes Gericht" : "Green Dish"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
@@ -373,17 +333,15 @@ export const MenuSection = () => {
                   const dishCopy = splitDishText(todayMenu.blue[language], language, "blue");
 
                   return (
-                    <div className="rounded-2xl border p-4 surface-card md:p-5">
+                    <div className="rounded-lg border p-4 surface-card md:p-5">
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <h3 className="font-cormorant text-2xl font-bold leading-tight text-foreground md:text-3xl">
                             {cleanDisplayText(dishCopy.name)}
                           </h3>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <span className="rounded-full border border-blue/25 bg-blue/10 px-2.5 py-1 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
-                              {language === "de" ? "Blaues Gericht" : "Blue Dish"}
-                            </span>
-                          </div>
+                          <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                            {language === "de" ? "Blaues Gericht" : "Blue Dish"}
+                          </span>
                         </div>
                         <p className="shrink-0 font-work text-base font-bold text-accent md:text-sm md:font-semibold">15,90</p>
                       </div>
@@ -398,7 +356,7 @@ export const MenuSection = () => {
                   );
                 })()}
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-2xl border px-4 py-3 text-left surface-card">
+              <div className="mt-4 flex items-start gap-2 rounded-lg border px-4 py-3 text-left surface-card">
                 <Info className="w-4 h-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
                 <p className="text-xs sm:text-sm text-muted-high-contrast font-work leading-relaxed">
                   {language === "de"
@@ -406,13 +364,39 @@ export const MenuSection = () => {
                     : "Marked options are made without gluten containing ingredients. Our kitchen is small and not suitable for coeliac disease. If you have allergies, please ask us first."}
                 </p>
               </div>
+
+              {/* To-go discount banner — sotto i piatti di oggi: la risposta
+                  operativa (cosa c'è oggi) precede la promozione. */}
+              <div
+                role="note"
+                aria-label={language === "de" ? "Take-away Angebot" : "Take-away offer"}
+                className="mt-6 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 md:px-5 md:py-4"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 inline-flex shrink-0 items-center rounded-full bg-primary px-2.5 py-1 font-work text-[10px] font-bold uppercase tracking-[0.1em] text-primary-foreground">
+                    -20%
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-cormorant text-lg md:text-xl font-semibold leading-snug text-foreground">
+                      {language === "de"
+                        ? "Take-away Angebot: 18–19 Uhr"
+                        : "Take-away offer: 6–7 pm"}
+                    </p>
+                    <p className="mt-1 font-work text-xs md:text-sm leading-relaxed text-muted-high-contrast">
+                      {language === "de"
+                        ? "20% Rabatt auf die Tagesgerichte Grün & Blau zum Mitnehmen, täglich von 18:00 bis 19:00 Uhr."
+                        : "20% off the Green & Blue daily dishes for take-away, every day from 6:00 to 7:00 pm."}
+                    </p>
+                  </div>
+                </div>
+              </div>
               </>
             ) : (
-              <div className="space-y-6 rounded-2xl border p-8 text-center surface-card">
+              <div className="space-y-6 rounded-lg border p-8 surface-card">
                 {/* Holiday, Sunday, after closing, or no-menu rest message */}
                 <div className="space-y-3">
                   <p className="font-cormorant text-2xl md:text-3xl text-foreground/80 italic">
-                    {dateInfo.todayHoliday 
+                    {dateInfo.todayHoliday
                       ? dateInfo.todayHoliday.name[language]
                       : dateInfo.isAfterClosing
                         ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
@@ -420,26 +404,26 @@ export const MenuSection = () => {
                           ? (language === "de" ? "Heute geschlossen" : "Closed Today")
                           : (language === "de" ? "Sonntag. Heute bleibt es still" : "Sunday. A quiet day here")}
                   </p>
-                  <p className="text-muted-high-contrast font-work text-sm max-w-md mx-auto">
-                    {dateInfo.todayHoliday 
+                  <p className="text-muted-high-contrast font-work text-sm max-w-md">
+                    {dateInfo.todayHoliday
                       ? dateInfo.todayHoliday.message[language]
                       : dateInfo.isAfterClosing
-                        ? (language === "de" 
-                            ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist." 
+                        ? (language === "de"
+                            ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist."
                             : "The pots are done for today. Below you can see what is planned for tomorrow.")
                         : isNoMenuDay
-                          ? (language === "de" 
-                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei." 
+                          ? (language === "de"
+                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei."
                               : "The kitchen is closed today. Feel free to check back later.")
-                          : (language === "de" 
-                              ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee." 
+                          : (language === "de"
+                              ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee."
                               : "Sunday is our pause. Tomorrow it will smell of rice, spices and fresh coffee again.")}
                   </p>
-                  {(dateInfo.todayHoliday || isNoMenuDay) && !dateInfo.isAfterClosing && (
+                  {!dateInfo.todayHoliday && (
                     <p className="text-muted-high-contrast font-work text-xs mt-2">
-                      {language === "de" 
-                        ? "Heute haben wir geschlossen." 
-                        : "We are closed today."}
+                      {language === "de"
+                        ? reopensTomorrow ? "Morgen ab 11:00 wieder da." : `Am ${reopenDayName.de} ab 11:00 wieder da.`
+                        : reopensTomorrow ? "Back tomorrow from 11:00." : `Back ${reopenDayName.en} from 11:00.`}
                     </p>
                   )}
                 </div>
@@ -455,11 +439,11 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.soup[language], language, "soup");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
                               {language === "de" ? "Suppe" : "Soup"}
                             </span>
                             {dishCopy.description && (
@@ -474,11 +458,11 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.green[language], language, "green");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-accent/25 bg-accent/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-accent">
                               {language === "de" ? "Grünes Gericht" : "Green Dish"}
                             </span>
                             {dishCopy.description && (
@@ -493,11 +477,11 @@ export const MenuSection = () => {
                         const dishCopy = splitDishText(nextDayMenu.blue[language], language, "blue");
 
                         return (
-                          <div className="rounded-xl border border-border/60 bg-background p-3">
+                          <div className="rounded-lg border border-border/60 bg-background p-3">
                             <p className="font-cormorant text-2xl font-bold md:text-xl leading-snug text-foreground">
                               {cleanDisplayText(dishCopy.name)}
                             </p>
-                            <span className="mt-2 inline-flex rounded-full border border-blue/25 bg-blue/10 px-2 py-0.5 font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
+                            <span className="mt-2 inline-flex font-work text-[10px] font-semibold uppercase tracking-[0.08em] text-blue">
                               {language === "de" ? "Blaues Gericht" : "Blue Dish"}
                             </span>
                             {dishCopy.description && (
@@ -517,13 +501,13 @@ export const MenuSection = () => {
           
           {/* Weekly Menu Anchor Label */}
           <div ref={weekRef} id="wochenmenu" className="scroll-mt-32 pt-4 md:pt-8">
-            <p className="text-xs text-muted-high-contrast font-work font-medium tracking-wide mb-6 text-center uppercase">
+            <p className="text-xs text-muted-high-contrast font-work font-medium tracking-wide mb-6 uppercase">
               {language === "de" ? "Unser Wochenmenü" : "This week"}
             </p>
           </div>
           
           {/* Weekly Menu */}
-          <div className="my-2 rounded-2xl border px-4 py-5 surface-card md:px-5">
+          <div className="my-2 rounded-lg border px-4 py-5 surface-card md:px-5">
                 <div className="space-y-6">
                   {isLoading ? (
                     <div className="space-y-3">
@@ -533,10 +517,18 @@ export const MenuSection = () => {
                     </div>
                   ) : (
                     <>
-                      <p className="text-xs text-muted-high-contrast text-center font-work mb-4">
+                      <p className="text-xs text-muted-high-contrast font-work mb-4">
                         {translatePeriod(menu.period, language)}
                       </p>
-                      {menu.days.map((day, index) => {
+                      {/* Heute steht schon oben in "Heute aus der Küche" —
+                          hier noch einmal wäre dieselbe Antwort auf dieselbe
+                          Frage (S2). Der Index bleibt der ursprüngliche, weil
+                          getDateForMenuDay() ihn als Offset in der Woche
+                          braucht. */}
+                      {menu.days
+                        .map((day, index) => ({ day, index }))
+                        .filter(({ day }) => day.day[language] !== todayName)
+                        .map(({ day, index }) => {
                         const dayDate = getDateForMenuDay(menu.period, index);
                         const dayHoliday = dayDate ? getHolidayForDate(dayDate) : getHolidayForDayName(day.day.de);
                         const isDaySunday = dayDate ? dayDate.getDay() === 0 : isSundayByName(day.day.de);
@@ -562,10 +554,12 @@ export const MenuSection = () => {
                                     ? dayHoliday.name[language]
                                     : isDaySunday
                                       ? (language === "de" ? "Tag der Ruhe" : "Day of Rest")
-                                      : (language === "de" ? "Heute geschlossen" : "Closed")}
+                                      : (language === "de" ? "Noch keine Angabe" : "Not listed yet")}
                                 </p>
                                 <p className="text-muted-high-contrast text-xs font-work mt-1">
-                                  {language === "de" ? "Geschlossen" : "Closed"}
+                                  {dayHoliday || isDaySunday
+                                    ? (language === "de" ? "Geschlossen" : "Closed")
+                                    : (language === "de" ? "Menü folgt" : "Menu coming soon")}
                                 </p>
                               </div>
                             ) : (
@@ -597,18 +591,18 @@ export const MenuSection = () => {
           <div className="text-center py-10 md:py-14">
             <p className="font-cormorant text-lg md:text-xl text-muted-high-contrast italic leading-relaxed whitespace-pre-line">
               {language === "de" 
-                ? "Manches kochen wir nur heute.\nEin paar Dinge bleiben, weil ihr sie immer wieder bestellt." 
+                ? "Manches kochen wir nur heute.\nEin paar Dinge bleiben, weil du sie immer wieder bestellst."
                 : "Some dishes are only here today.\nA few stay because people keep asking for them."}
             </p>
           </div>
           
           {/* BLOCK 3: Fixed Menu (Klassiker) */}
           <div ref={fixedRef} id="menu-fixed" className="scroll-mt-32">
-            <div className="text-center mb-8">
+            <div className="mb-8 max-w-sm">
               <h2 className="font-cormorant text-3xl md:text-4xl font-semibold text-foreground mb-3">
                 {cleanDisplayText(klassikerMenu.title[language])}
               </h2>
-              <p className="text-muted-high-contrast text-sm md:text-base font-work max-w-sm mx-auto leading-relaxed">
+              <p className="text-muted-high-contrast text-sm md:text-base font-work leading-relaxed">
                 {cleanDisplayText(klassikerMenu.subtitle[language])}
               </p>
               <p className="text-muted-high-contrast text-xs font-work font-medium mt-2 uppercase tracking-wide">
@@ -635,7 +629,7 @@ export const MenuSection = () => {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setFixedCategoryFilter(chip.id)}
-                      className={`shrink-0 rounded-full border px-3.5 py-1.5 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
+                      className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-4 font-work text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 ${
                         isActive
                           ? "border-accent bg-accent text-accent-foreground"
                           : "border-border/70 bg-background text-muted-high-contrast hover:text-foreground"
@@ -663,7 +657,7 @@ export const MenuSection = () => {
                         aria-hidden="true"
                         loading="lazy"
                         decoding="async"
-                        className="h-12 w-12 shrink-0 rounded-xl object-cover md:h-14 md:w-14"
+                        className="h-12 w-12 shrink-0 rounded-lg object-cover md:h-14 md:w-14"
                       />
                     )}
                     <h3 className="font-cormorant text-2xl md:text-3xl font-semibold text-foreground">
@@ -679,7 +673,7 @@ export const MenuSection = () => {
                           key={item.id}
                           name={cleanDisplayText(item.name[language])}
                           description={item.description ? cleanDisplayText(item.description[language]) : undefined}
-                          price={item.price.replace(/,(\d)0$/g, ',$1').replace(/,(\d)0\s/g, ',$1 ')}
+                          price={item.price}
                           photoId={item.id}
                           isUnavailable={item.isUnavailable}
                           language={language}
@@ -692,8 +686,14 @@ export const MenuSection = () => {
                           {!item.isUnavailable && (
                             <MenuDishDetails
                               details={{
-                                descriptionShort: item.descriptionShort,
-                                descriptionShortLocalized: item.descriptionShortLocalized,
+                                // La riga corta compare solo se sopra non c'è già una
+                                // descrizione completa: sui 14 piatti che hanno entrambe
+                                // ripeteva la stessa informazione due volte. Kombucha e
+                                // Strawberry Spritz hanno solo questa, e lì resta.
+                                ...(item.description ? {} : {
+                                  descriptionShort: item.descriptionShort,
+                                  descriptionShortLocalized: item.descriptionShortLocalized,
+                                }),
                                 ingredientsMain: item.ingredientsMain,
                                 ingredientsMainLocalized: item.ingredientsMainLocalized,
                                 allergens: item.allergens,
@@ -717,7 +717,7 @@ export const MenuSection = () => {
                   {category.subcategories && (
                     <div className="space-y-6">
                       {category.subcategories.map((subcategory) => (
-                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-2xl border border-border/75 bg-card p-4 shadow-card md:scroll-mt-40 md:p-5">
+                        <div key={subcategory.id} id={`menu-${subcategory.id}`} className="scroll-mt-52 rounded-lg border border-border/75 bg-card p-4 md:scroll-mt-40 md:p-5">
                           <div className="mb-4 flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                             <div>
                               <h4 className="font-cormorant text-xl md:text-2xl font-semibold text-foreground">
@@ -735,7 +735,7 @@ export const MenuSection = () => {
                             {subcategory.items.map((item: KlassikerItem) => (
                               <div 
                                 key={item.id} 
-                                className="rounded-xl border border-border/50 bg-background/60 p-3"
+                                className="rounded-lg border border-border/50 bg-background/60 p-3"
                               >
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="flex-1">
@@ -754,14 +754,22 @@ export const MenuSection = () => {
                                     )}
                                   </div>
                                   <span className="text-accent font-bold text-base md:font-semibold md:text-sm font-work shrink-0">
-                                    {item.price}
+                                    {formatPrice(item.price)}
                                   </span>
                                 </div>
-                                {(item.descriptionShort || item.ingredientsMain || item.allergens) && (
+                                {/* I campi localizzati vanno controllati insieme a quelli
+                                    legacy: Kombucha e Strawberry Spritz hanno solo
+                                    descriptionShortLocalized, e senza questo controllo la
+                                    loro descrizione non verrebbe mai renderizzata. */}
+                                {(item.descriptionShort || item.descriptionShortLocalized ||
+                                  item.ingredientsMain || item.ingredientsMainLocalized ||
+                                  item.allergens) && (
                                   <MenuDishDetails
                                     details={{
-                                      descriptionShort: item.descriptionShort,
-                                      descriptionShortLocalized: item.descriptionShortLocalized,
+                                      ...(item.description ? {} : {
+                                        descriptionShort: item.descriptionShort,
+                                        descriptionShortLocalized: item.descriptionShortLocalized,
+                                      }),
                                       ingredientsMain: item.ingredientsMain,
                                       ingredientsMainLocalized: item.ingredientsMainLocalized,
                                       allergens: item.allergens,

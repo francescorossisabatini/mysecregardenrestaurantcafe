@@ -11,6 +11,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { lazyWithRetry } from "@/lib/lazyWithRetry";
+import { attachTelClickTracking } from "@/lib/trackTelClicks";
 
 // Critical: Load Index immediately for fast FCP
 import Index from "./pages/Index";
@@ -87,6 +88,8 @@ function AppRoutes() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => attachTelClickTracking(), []);
 
   useEffect(() => {
     if (!("matchMedia" in window)) return;

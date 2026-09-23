@@ -1,7 +1,7 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
 > Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
-> Ultimo aggiornamento: 19 agosto 2026 (riallineato al codice)
+> Ultimo aggiornamento: 20 settembre 2026 (riallineato al codice)
 
 
 ---
@@ -42,7 +42,7 @@ Il mio obiettivo professionale è crescere come junior UX Designer → UX Resear
 - Ispirato alla filosofia di **Sri Chinmoy** — dimensione spirituale incorporata nello spazio
 - **Counter service only** — nessun servizio al tavolo, probabilmente nessuna prenotazione (da confermare)
 - Orari: **lunedì–sabato, 11:00–19:00** · domenica e festivi: chiuso
-- Telefono: **+43 1 586 28 39** · `tel:+431586289`
+- Telefono: **+43 1 586 28 39** · `tel:+4315862839`
 - Rating: **4.7★ su 936+ recensioni** (Google, HappyCow, Falstaff, TripAdvisor, Wien wie es isst)
 - Partner confermati: Supermind Kaffee (supermind.at), Falstaff 2025, Wien wie es isst 2025, HappyCow, TripAdvisor, foodsharing.at
 
@@ -76,7 +76,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | Lingua default | DE (73% traffico austriaco) — EN parità su tutti i route |
 
 **Vincoli di piattaforma:**
-- Mobile-first — 74% traffico mobile (GA4 confermato)
+- Mobile-first — 82% delle sessioni da mobile (GA4, 24 giu–21 set 2026; il vecchio dato era 74%)
 - Sessione media: 58 secondi — gli utenti decidono in fretta
 - SPA React — nessun reload tra route; il browser back deve funzionare su tutti i route
 - Nessun carousel — rimosso (click rate ~1%, costo performance non giustificato)
@@ -92,21 +92,21 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 |---|---|---|
 | `/` | Homepage — trust, desire, friction removal | ✅ Attiva |
 | `/menu` | Menu hub — Heute / Diese Woche / Immer da | ✅ Attiva |
-| `/visit` | Orari, directions, form Anfrage | ✅ Attiva |
+| `/visit` | Orari, directions | ✅ Attiva |
 | `/about` | About page — manifesto e narrativa | ✅ Attiva |
 | `/gallery` | Galleria foto reali | ✅ Attiva |
 | `/link` | Link hub (bio social) | ✅ Attiva |
 | `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Attiva |
 | `/privacy` | Cookie policy — GDPR | ✅ Attiva |
-| `/staff`, `/staff/login` | Area staff — noindex, esclusa da robots.txt | ✅ Attiva |
-| `/reservation-preview` | Preview interna Anfrage | ✅ Attiva |
+| `/login` | Area staff (login Supabase) — il percorso reale è `/login`, non `/staff/login`. `robots.txt` oggi non la esclude (`Allow: /` per tutti gli agent): da correggere se deve restare fuori indice | ✅ Attiva |
 
 
 **Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
 
 **Navigazione:**
-- Bottom nav mobile (sempre visibile, fixed): Home · Menü · Visit · Call pill
-- Top bar: logo + language switch DE/EN
+- Top bar mobile: hamburger (apre drawer con tutti i link) + logo + language switch DE/EN
+- MobileStickyBar (fixed, appare dopo ~300px di scroll, nascosta sopra il footer): 2 bottoni — Anrufen (verde) + Besuchen/Route (outline). Non 3 tab + call pill come descritto in una versione precedente di questo file: decisione confermata in chat il 20 settembre 2026, coerente con "una sola CTA primaria" — chiamare e trovarci sono le due azioni che contano.
+- Drawer hamburger: tutti i link di navigazione (Home, Speisekarte, Galerie, Unsere Geschichte, Besuche uns) + language switch
 
 
 ---
@@ -128,6 +128,34 @@ Promemoria dei soli vincoli di alto livello:
 
 ---
 
+## Processo di design — skill `house-style`
+
+> Il processo completo sta in `.claude/skills/house-style/SKILL.md`.
+> Qui solo le regole dure, perché questo file si carica a ogni sessione.
+
+**Prima di generare UI**
+Leggi `direction-lock.md` e `voice-spec.md` nella skill. Se il lock ha
+segnaposto `[__]`, fermati: la fase di direzione non è chiusa.
+Scrivi il divergence ledger **prima** del codice: per ogni decisione,
+nomina il default e cosa fai invece. In `docs/ux/divergence-ledger.md`.
+
+**Fallimenti duri**
+- Più di 2 blocchi `eyebrow + h2 + filetto` per pagina
+- Una sola densità verticale in tutta la pagina
+- Più di 2 valori di radius distinti nei file toccati
+- Bordo e ombra sulla stessa superficie
+- Più di una azione primaria per viewport
+- Due sezioni che rispondono alla stessa domanda
+- Qualsiasi divieto di `voice-spec.md`
+- Dire "fatto" avendo solo letto il codice
+
+**Prima di dire fatto**
+`node scripts/shoot.mjs` → `./scripts/check-tells.sh` → agente `tell-critic`
+(cieco, non ha visto la conversazione). Il suo voto è il numero del giro,
+non quello dopo le correzioni.
+
+---
+
 ## Copy — Lingua e Tono
 
 - **Lingua default:** DE (73% traffico austriaco)
@@ -141,10 +169,10 @@ Promemoria dei soli vincoli di alto livello:
 ### Copy approvato per sezioni chiave
 
 **HERO**
-- DE tagline: *Vegetarisch. Vegan. Versteckt im Herzen Wiens.*
-- EN tagline: *Vegetarian. Vegan. Hidden in the heart of Vienna.*
-- DE CTA: *Was gibt's heute?*
-- EN CTA: *What's on today?*
+- DE tagline: *Das Restaurant, das du fast nicht findest.*
+- EN tagline: *The restaurant you almost don't find.*
+  (sostituisce *Vegetarisch. Vegan. Versteckt im Herzen Wiens.* — approvato in chat il 20 settembre 2026: l'originale è un terzetto di aggettivi, vietato altrove da voice-spec.md; la nuova ha soggetto e idea, e vegetarisch/vegan è già detto dall'occhiello sopra)
+- Nessuna CTA nell'hero (approvato in chat il 20 settembre 2026): il menu del giorno sta subito sotto la piega e fa da CTA. Un bottone "Was gibt's heute?" sarebbe ridondante con la risposta già a schermo, e viola "una sola CTA primaria per pagina" se sommato alle azioni della MobileStickyBar.
 - DE link: *Wie du uns findest →*
 - EN link: *How to find us →*
 
@@ -156,6 +184,10 @@ Promemoria dei soli vincoli di alto livello:
 - Step 01 DE: *Geh durch den Bogen* — "Mariahilferstraße 45 — der Durchgang ist absichtlich versteckt."
 - Step 02 DE: *Durch den Innenhof* — "Im Raimundhof — ein stiller Wiener Hof."
 - Step 03 DE: *Setz dich. Bleib.* — "Keine Eile. Dieser Ort ist gemacht zum Verweilen."
+- Step 01 EN: *Walk through the arch* — "Mariahilferstraße 45. The passage is hidden on purpose."
+- Step 02 EN: *Across the courtyard* — "Into the Raimundhof, a quiet Viennese courtyard."
+- Step 03 EN: *Sit down. Stay.* — "No rush. This place is made for staying a while."
+  (EN approvato in chat il 13 settembre 2026)
 
 **FORM PRENOTAZIONE**
 - Label: *Tisch anfragen* (mai "Reservieren")
@@ -203,17 +235,54 @@ src/index.css                    — CSS custom properties / variabili
 
 ---
 
-## Analytics — GA4 Events da tracciare
+## Analytics — GA4 (verificato sulla proprietà il 22 settembre 2026)
 
-```
-click_get_directions     — KPI primario
-click_call_now           — KPI primario
-scroll_depth_homepage    — 25% / 50% / 75% / 100%
-click_menu_tab           — Today / This Week / Always Here
-click_open_closed_badge  — segnale di intent visita
-form_reservation_submit  — Anfrage inviata
+La lista precedente elencava nomi di eventi che non esistono nel codice
+(`click_get_directions`, `click_call_now`, `form_reservation_submit`…).
+Questi sono quelli reali. Proprietà Purusha GmbH (519259054), stream
+`website-secretgarden`, ID misura G-NMVX2R7493.
 
+**Eventi chiave (6)**
 ```
+maps_click       — KPI indicazioni. Regola GA4 sui clic in uscita verso
+                   google.com/maps: prende ogni link a Maps del sito, su
+                   ogni dispositivo. Sostituisce click_directions come KPI.
+click_call       — KPI telefono. Dal 22/09/2026 sparato da ogni link tel:
+                   del sito (src/lib/trackTelClicks.ts), prima solo dalla
+                   barra mobile: su desktop era zero strutturale.
+click_directions — solo il bottone Route della MobileStickyBar. Tenuto per
+                   continuità storica, NON usarlo come KPI.
+generate_lead    — ATTENZIONE: sono le visualizzazioni di /contact, cioè i
+                   clic sul link "Kontakt" del footer. Non sono contatti.
+                   Da decidere con Carlo prima di toglierlo.
+scroll_depth     — profondità di scorrimento
+purchase         — predefinito Google, non rimovibile, sempre vuoto
+```
+
+**Tolti come eventi chiave il 22/09/2026** (nessun dato, scope archiviato):
+`cakes_order_cta_click`, `cakes_page_view`, `qualify_lead`,
+`close_convert_lead`, `form_start` (l'unico modulo rimasto è il login staff).
+
+**Regola rotta, da non usare:** `anrufen_click` si appoggia ai clic in uscita,
+che non scattano sui `tel:`. In 90 giorni: zero eventi.
+
+**Conservazione dati eventi:** 14 mesi dal 22/09/2026 (era 2 mesi, non
+retroattivo: i dati precedenti a luglio 2026 non sono recuperabili).
+
+**Attribuzione scheda Google:** il link "Sito web" della scheda porta
+`utm_source=google-business&utm_medium=referral` dal 22/09/2026. Prima era
+`http://` senza parametri, e con ogni probabilità finiva in `(direct)`.
+
+**Attribuzione Instagram:** il link in bio porta a
+`.../menu?utm_source=instagram&utm_medium=social&utm_campaign=bio-link` dal
+23/09/2026. Prima era un link nudo a `/menu` (mai a `/link`, che infatti
+non ha mai ricevuto una sessione — il motivo era proprio questo). L'in-app
+browser di Instagram spesso non passa il referrer: senza UTM, questi click
+rischiavano lo stesso `(direct)` della scheda Google.
+
+**Punti di ingresso non modificabili da qui:** TripAdvisor, HappyCow,
+foodsharing.at, Falstaff, Wien wie es isst, Supermind Kaffee — verificati
+il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
 
 ---
 

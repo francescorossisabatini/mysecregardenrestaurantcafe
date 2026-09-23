@@ -31,7 +31,7 @@ export const Navigation = () => {
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
     { to: "/gallery", label: language === "de" ? "Galerie" : "Gallery" },
-    { to: "/about", label: "Our Story" },
+    { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
     { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
   const activeNavLabel = navLinks.find((link) => link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to))?.label ?? "";
@@ -41,7 +41,7 @@ export const Navigation = () => {
       <nav
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isHeroOverlay
-            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/55 before:via-foreground/25 before:to-transparent before:content-['']"
+            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:content-['']"
             : "border-b border-border/60 bg-background py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
@@ -63,7 +63,7 @@ export const Navigation = () => {
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
           <Link
             to="/"
-            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-sm py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
+            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
@@ -102,7 +102,7 @@ export const Navigation = () => {
                     <Link
                       to={link.to}
                       aria-current={isActive ? "page" : undefined}
-                      className={`whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-sm ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
+                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>

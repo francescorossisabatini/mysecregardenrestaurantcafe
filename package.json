@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:all": "concurrently -n sito,storybook -c blue,magenta \"npm:dev\" \"npm:storybook\"",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@lovable.dev/mcp-js": "^0.26.2",
@@ -41,15 +44,23 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@storybook/addon-a11y": "^10.6.0",
+    "@storybook/addon-docs": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
     "@types/node": "^22.16.5",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react-swc": "^3.11.0",
+    "concurrently": "^10.0.5",
     "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-storybook": "^10.6.0",
     "globals": "^15.15.0",
     "lovable-tagger": "^1.1.11",
+    "playwright": "^1.56.1",
+    "pngjs": "^7.0.0",
+    "storybook": "^10.6.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",

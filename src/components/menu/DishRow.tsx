@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { getDishPhoto } from "./dishPhotoMap";
+import { formatPrice } from "@/lib/displayText";
 
 type KickerTone = "accent" | "blue" | "amber" | "muted";
 
@@ -24,7 +25,7 @@ interface DishRowProps {
 const toneClass: Record<KickerTone, string> = {
   accent: "text-accent",
   blue: "text-blue",
-  amber: "text-amber-700",
+  amber: "text-kicker-amber",
   muted: "text-muted-high-contrast",
 };
 
@@ -44,16 +45,19 @@ export const DishRow = ({
   as = "card",
 }: DishRowProps) => {
   const src = photoUrl ?? getDishPhoto(photoId);
+  // Normalizzato qui una volta sola, così testo visibile e aria-label dicono
+  // la stessa cifra.
+  const displayPrice = price ? formatPrice(price) : price;
   const containerClass =
     as === "card"
-      ? `rounded-2xl border p-4 surface-card md:p-5 ${isUnavailable ? "border-dashed" : ""}`
+      ? `rounded-lg border p-4 surface-card md:p-5 ${isUnavailable ? "border-dashed" : ""}`
       : "";
 
   const dietaryLabels = [
     dietary?.vegan ? "vegan" : null,
     dietary?.glutenFree
       ? language === "de"
-        ? "ohne Gluten Zutaten"
+        ? "ohne glutenhaltige Zutaten"
         : "no gluten ingredients"
       : null,
     dietary?.bio ? "bio" : null,
@@ -68,7 +72,7 @@ export const DishRow = ({
             alt={name}
             loading="lazy"
             decoding="async"
-            className="h-16 w-16 shrink-0 rounded-xl object-cover md:h-24 md:w-24"
+            className="h-16 w-16 shrink-0 rounded-lg object-cover md:h-24 md:w-24"
           />
         )}
         <div className="min-w-0 flex-1">
@@ -117,15 +121,22 @@ export const DishRow = ({
                 className={`shrink-0 font-work text-sm font-semibold md:text-base ${
                   isUnavailable ? "text-muted-high-contrast" : "text-accent"
                 }`}
-                aria-label={`€ ${price}`}
+                aria-label={
+                  displayPrice.includes("/")
+                    ? displayPrice
+                        .split("/")
+                        .map((p) => `${p.trim()} Euro`)
+                        .join(", ")
+                    : `${displayPrice} Euro`
+                }
               >
-                {price}
+                {displayPrice}
               </p>
             )}
           </div>
 
           {dietaryLabels.length > 0 && (
-            <p className="mt-2 font-work text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-high-contrast">
+            <p className="mt-2 font-work text-[11px] font-semibold tracking-[0.06em] text-muted-high-contrast">
               {dietaryLabels.join(" · ")}
             </p>
           )}
