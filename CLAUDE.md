@@ -273,6 +273,17 @@ retroattivo: i dati precedenti a luglio 2026 non sono recuperabili).
 `utm_source=google-business&utm_medium=referral` dal 22/09/2026. Prima era
 `http://` senza parametri, e con ogni probabilità finiva in `(direct)`.
 
+**Attribuzione Instagram:** il link in bio porta a
+`.../menu?utm_source=instagram&utm_medium=social&utm_campaign=bio-link` dal
+23/09/2026. Prima era un link nudo a `/menu` (mai a `/link`, che infatti
+non ha mai ricevuto una sessione — il motivo era proprio questo). L'in-app
+browser di Instagram spesso non passa il referrer: senza UTM, questi click
+rischiavano lo stesso `(direct)` della scheda Google.
+
+**Punti di ingresso non modificabili da qui:** TripAdvisor, HappyCow,
+foodsharing.at, Falstaff, Wien wie es isst, Supermind Kaffee — verificati
+il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
+
 ---
 
 ## Utenti — profili da GA4 (ricerca primaria in CS02)
