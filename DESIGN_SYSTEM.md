@@ -208,6 +208,29 @@ Mai radius < 8px su elementi interattivi.
 
 ## 6. Componenti
 
+> **Prima di aggiungere una differenza a un componente, classificarla —**
+> decide come si implementa, non se. Fonte: documentazione Figma su varianti
+> e proprietà, più le convenzioni di Carbon/Atlassian/Primer/Spectrum/GOV.UK
+> ed EightShapes (Curtis) — Livello A/B, vedi Notion "Conoscenza di mestiere".
+
+| Tipo | Chi la sceglie | Esempio nel repo | Dove vive |
+|---|---|---|---|
+| **Stato** | Il sistema o l'interazione, non chi usa il componente | hover, focus, active, disabled, loading (Bottoni, sotto) | Tassonomia fissa, dichiarata una volta per componente — non se ne inventa una nuova per singola istanza |
+| **Variante** | Chi piazza il componente, come scelta d'identità | Primary / Secondary / Ghost (Bottoni) | Nome proprio, non un booleano generico |
+| **Proprietà** | Chi piazza il componente, come dettaglio di passaggio | dimensione, presenza di un'icona | Prop tipizzata, non una nuova variante |
+| **Componente nuovo** | — | — | Solo se la struttura (non solo la superficie) è diversa, serve a più di un punto del sito, e non duplica un componente esistente (vedi §10 Governance, regola 3) |
+
+**Regola pratica (Curtis, EightShapes):** configurabile il comune, componibile
+il raro. Una differenza che si ripete in più punti allo stesso modo diventa
+una prop o una variante dichiarata. Una differenza che compare una sola volta
+resta inline nel punto dove serve — non si allarga l'API di un componente
+condiviso per un caso isolato.
+
+**Disabled è una scelta da motivare, non un default.** Prima di disabilitare
+un elemento interattivo, verificare che serva davvero (es. un bottone di invio
+durante il submit) — non applicarlo per abitudine dove basterebbe una
+validazione o un messaggio.
+
 ### Bottoni
 
 ```
