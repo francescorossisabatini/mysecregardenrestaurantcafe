@@ -386,11 +386,45 @@ Token dichiarati ma poco o mai usati, da valutare in una pulizia futura: `--dail
 
 ---
 
-## 10. Rapporto con gli altri documenti
+## 10. Governance
+
+> Fonte: pratiche di Carbon, Atlassian, GOV.UK Design System, Shopify Polaris
+> (Livello B — buona pratica di studio, non un dato misurato). Scalate qui a
+> dimensione di un progetto con un solo designer: niente board di revisione,
+> niente processo di proposta formale. Tre regole, non un processo.
+
+**1. Niente rimozione senza deprecazione dichiarata.**
+Un token o un pattern che smette di reggere non si cancella nello stesso giro
+in cui lo si nota. Prima si sposta in **§9 Gap noti** (o in una sezione
+equivalente) con la data e il motivo, poi si rimuove in una sessione
+successiva quando è certo che nessun componente lo usa più. Esempio già in
+questo file: `--daily-card-alt`, `--badge-wood` e gli altri token morti in §9
+sono lì da verificare, non ancora cancellati.
+
+**2. Il registro dei cambiamenti sono le note datate qui dentro + il git log
++ il divergence ledger — non un changelog separato.**
+Ogni cambiamento non ovvio si annota inline nella sezione che tocca, nella
+forma `Dal GG/MM/AAAA: <cosa>, <perché>` (vedi §7 Motion). Le decisioni di
+design con un default esplicito da cui ci si scosta vanno nel
+`docs/ux/divergence-ledger.md`, non qui. Un `CHANGELOG.md` separato
+duplicherebbe entrambi e andrebbe disallineato in fretta.
+
+**3. Componente nuovo solo con evidenza di riuso reale.**
+Prima di introdurre un componente o una variante, cercare nel codice se il
+pattern esiste già altrove (`grep` sul nome, non a memoria). Una sola
+occorrenza non giustifica un componente condiviso — resta inline finché non
+compare una seconda volta con la stessa forma. Quando un componente entra in
+**§6**, deve avere: dove si usa, i suoi stati, e — se non ovvio dal
+codice — perché non è una variante di uno che già esiste.
+
+---
+
+## 11. Rapporto con gli altri documenti
 
 | File | Ruolo |
 |---|---|
 | `DESIGN_SYSTEM.md` | Questo file. Token, tipografia, componenti, motion, a11y |
 | `CLAUDE.md` | Contesto progetto, brand, copy approvato, cosa non toccare |
 | `_archived/design-tokens-map.md` | Archivio storico del mapping Figma. Non aggiornato |
+| `docs/ux/divergence-ledger.md` | Registro delle decisioni che si scostano da un default — vedi §10 Governance |
 | `src/index.css` | Codice: arbitro finale in caso di conflitto (Tailwind v4, niente `tailwind.config.ts`) |
