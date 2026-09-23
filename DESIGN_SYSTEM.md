@@ -1,7 +1,7 @@
 # Design System — My Secret Garden
 
 > **Fonte di verità unica per token, tipografia, componenti, motion e accessibilità.**
-> Arbitro finale: il codice (`src/index.css` + `tailwind.config.ts`).
+> Arbitro finale: il codice (`src/index.css` — Tailwind v4, token via `@theme`).
 > Combina: `_archived/design-tokens-map.md` (mapping Figma), `CLAUDE.md` (principi e copy), codice reale.
 > Verificato contro il codice: 20 settembre 2026
 > Figma file: `ROhPox2dPuVizyYXiLAbKN` — "My Secret Garden — UX Case Study"
@@ -169,7 +169,7 @@ BLAUES GERICHT) è testo semplice colorato, non una pill con sfondo — vedi
 | Body | `font-lora` | Lora | Paragrafi, recensioni, narrativa |
 | UI | `font-work` | Work Sans | Nav, bottoni, badge, prezzi, label |
 
-> La classe UI è **`font-work`**, non `font-work-sans`. Quest'ultima non esiste in `tailwind.config.ts`.
+> La classe UI è **`font-work`**, non `font-work-sans`. Quest'ultima non esiste nel tema Tailwind (`src/index.css`).
 
 **Regole ferree**
 - Max 2 typeface per viewport
@@ -378,4 +378,4 @@ Token dichiarati ma poco o mai usati, da valutare in una pulizia futura: `--dail
 | `DESIGN_SYSTEM.md` | Questo file. Token, tipografia, componenti, motion, a11y |
 | `CLAUDE.md` | Contesto progetto, brand, copy approvato, cosa non toccare |
 | `_archived/design-tokens-map.md` | Archivio storico del mapping Figma. Non aggiornato |
-| `src/index.css` + `tailwind.config.ts` | Codice: arbitro finale in caso di conflitto |
+| `src/index.css` | Codice: arbitro finale in caso di conflitto (Tailwind v4, niente `tailwind.config.ts`) |

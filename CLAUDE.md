@@ -220,8 +220,7 @@ src/components/About.tsx         — typography bug, font non dichiarati
 src/components/Reviews.tsx       — star rating
 src/components/Footer.tsx        — mobile padding, orari
 src/components/Navigation.tsx    — top bar + bottom nav
-tailwind.config.ts               — definizione token (fonte della verità)
-src/index.css                    — CSS custom properties / variabili
+src/index.css                    — token via @theme (Tailwind v4), fonte della verità
 ```
 
 ---
@@ -303,7 +302,7 @@ il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
 - **Struttura route** — nessuna nuova route
 - **Copy / testo UI** — nessuna modifica al wording approvato
 - **Logica di business** — Supabase queries, form submission, routing
-- **tailwind.config.ts** — modifiche solo su istruzione, con mapping documentato
+- **`src/index.css` (token `@theme`)** — modifiche solo su istruzione, con mapping documentato
 - **Route `/about`** — solo placeholder, in attesa di brief contenuti
 - **Foto** — placeholder fino al photoshoot (aprile–maggio 2026)
 - **CS02 scope** — WhatsApp channel, `/eventi` route: fuori scope CS01
