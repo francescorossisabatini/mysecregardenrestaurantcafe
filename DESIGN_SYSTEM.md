@@ -329,6 +329,14 @@ genitore a `min-h` che si allunga in base al contenuto più alto della riga,
 | slow | `--motion-duration-slow` | 400ms |
 | narrative | `--motion-duration-narrative` | 900ms |
 
+Ogni riga ha una classe Tailwind diretta (`duration-instant/fast/base/slow/narrative`,
+`src/index.css`). Dal 23/09/2026: `duration-narrative` mancava, sette componenti
+usavano valori numerici grezzi (`duration-200/300/500/1000`) fuori dalla scala —
+corretto, verificato con `check-tells.sh`. Regola pratica: stati (hover, focus,
+press) → `base`; comparsa/scomparsa di un elemento o cambio ambientale legato
+allo scroll → `slow`; reveal di contenuto lungo (es. foto in galleria) →
+`narrative`.
+
 **Vincoli non negoziabili**
 - Solo fade lente e slide sottili (`translateY(8px) → 0`)
 - **Mai zoom. Mai parallax.** Nessuna animazione infinita o marquee
@@ -338,10 +346,17 @@ genitore a `min-h` che si allunga in base al contenuto più alto della riga,
 
 ---
 
-## 8. Accessibilità — WCAG 2.1 AA (EN 301 549)
+## 8. Accessibilità — WCAG 2.2 AA (EN 301 549)
 
-- Contrasto minimo 4.5:1 testo normale, 3:1 testo grande
-- Touch target minimo **44×44px** su ogni elemento interattivo mobile
+> Aggiornato da "2.1" a "2.2" il 23/09/2026: 2.2 è la Recommendation W3C
+> corrente (12/12/2024) e la usa anche l'AccessibleEU sull'EN 301 549 V4.1.1.
+> Non cambia nessun valore qui sotto, solo il riferimento normativo.
+
+- Contrasto minimo 4.5:1 testo normale, 3:1 testo grande e componenti — senza arrotondare
+- Touch target minimo **44×44px** su ogni elemento interattivo mobile.
+  Nota: il minimo richiesto da WCAG 2.2 AA (criterio 2.5.8) è 24×24px; 44×44
+  è il livello AAA (2.5.5). Il progetto sceglie lo standard più alto, non il
+  minimo — non è un errore da abbassare
 - Focus ring visibile ovunque: `outline: 2px solid hsl(var(--focus-ring))`
 - `aria-label` obbligatorio su ogni icona senza label visibile
 - Prezzi con `aria-label` completo, non solo il numero

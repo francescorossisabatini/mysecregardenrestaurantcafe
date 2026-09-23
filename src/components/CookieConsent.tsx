@@ -291,7 +291,7 @@ export const CookieConsent = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-300 ${
+      className={`fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-slow ${
         isClosing ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
       }`}
       style={{ paddingBottom: mobileBottomOffset }}

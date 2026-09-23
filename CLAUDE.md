@@ -122,7 +122,7 @@ Promemoria dei soli vincoli di alto livello:
 - **Palette:** dosaggio 60% cream / 30% navy / 10% verde (solo CTA, nav attivo, rating, accenti).
 - **Font:** `font-caveat` (solo h1 hero e logo), `font-cormorant` (headings), `font-lora` (body), `font-work` (UI). Max 2 typeface per viewport, Caveat max 1 occorrenza.
 - **Motion:** solo fade lente e slide sottili. Mai zoom, mai parallax, mai animazioni infinite. `prefers-reduced-motion` sempre rispettato.
-- **Accessibilità:** WCAG 2.1 AA, touch target 44×44px, focus ring visibile, `aria-label` su ogni icona.
+- **Accessibilità:** WCAG 2.2 AA, touch target 44×44px (sopra il minimo AA di 24×24, livello AAA), focus ring visibile, `aria-label` su ogni icona.
 - **Mai `#000000`** e mai verde chiaro come testo su sfondo chiaro.
 
 

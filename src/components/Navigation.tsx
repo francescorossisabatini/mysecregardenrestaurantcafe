@@ -39,13 +39,13 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-slow ease-in-out ${
           isHeroOverlay
             ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:content-['']"
             : "border-b border-border/60 bg-background py-1.5 backdrop-blur-2xl md:py-2"
         }`}
       >
-        <div className={`relative mx-auto flex w-full max-w-[1240px] items-center gap-4 px-4 transition-all duration-500 sm:px-6 lg:gap-8 lg:px-8 ${isHeroOverlay ? "min-h-14 lg:min-h-16" : "min-h-12 md:min-h-14"}`}>
+        <div className={`relative mx-auto flex w-full max-w-[1240px] items-center gap-4 px-4 transition-all duration-slow sm:px-6 lg:gap-8 lg:px-8 ${isHeroOverlay ? "min-h-14 lg:min-h-16" : "min-h-12 md:min-h-14"}`}>
           {/* Mobile Menu Trigger (left, mobile only) */}
           <div className="flex items-center lg:hidden">
             <button
@@ -67,14 +67,14 @@ export const Navigation = () => {
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
-              className={`flex-shrink-0 transition-[height,width] duration-500 ${isHeroOverlay ? "h-10 w-10 lg:h-11 lg:w-11" : "h-9 w-9 lg:h-9 lg:w-9"}`}
+              className={`flex-shrink-0 transition-[height,width] duration-slow ${isHeroOverlay ? "h-10 w-10 lg:h-11 lg:w-11" : "h-9 w-9 lg:h-9 lg:w-9"}`}
               showTagline={false}
               aria-hidden="true"
             />
             <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] sm:hidden ${isHeroOverlay ? "text-background" : "text-primary/85"}`}>
               {activeNavLabel}
             </span>
-            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none transition-[font-size,color] duration-500 sm:block ${isHeroOverlay ? "text-background text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90 lg:text-[22px]" : "text-foreground text-lg group-hover:text-primary lg:text-xl"}`}>
+            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none transition-[font-size,color] duration-slow sm:block ${isHeroOverlay ? "text-background text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90 lg:text-[22px]" : "text-foreground text-lg group-hover:text-primary lg:text-xl"}`}>
               My Secret Garden
             </span>
           </Link>
@@ -137,7 +137,7 @@ export const Navigation = () => {
 
         {/* Drawer */}
         <div
-          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-300 ease-out flex flex-col border-r border-border/75 ${
+          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-slow ease-out flex flex-col border-r border-border/75 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

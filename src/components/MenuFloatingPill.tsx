@@ -78,7 +78,7 @@ export const MenuFloatingPill = ({ activeTab, onSelect, showWeekly = true }: Pro
     <div
       role="navigation"
       aria-label={language === "de" ? "Menü-Schnellnavigation" : "Menu quick navigation"}
-      className={`md:hidden fixed left-1/2 -translate-x-1/2 z-40 transition-all duration-300 ease-out motion-reduce:transition-none ${
+      className={`md:hidden fixed left-1/2 -translate-x-1/2 z-40 transition-all duration-slow ease-out motion-reduce:transition-none ${
         shouldShow ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
       }`}
       style={{

@@ -8,6 +8,7 @@
 @utility duration-fast { transition-duration: var(--motion-duration-fast); }
 @utility duration-base { transition-duration: var(--motion-duration-base); }
 @utility duration-slow { transition-duration: var(--motion-duration-slow); }
+@utility duration-narrative { transition-duration: var(--motion-duration-narrative); }
 
 @utility container {
   margin-inline: auto;
