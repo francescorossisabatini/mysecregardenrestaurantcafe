@@ -285,6 +285,28 @@ il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
 
 ---
 
+## Search Console
+
+Proprietà `https://secretgardenrestaurant.at` verificata (metodo Tag HTML,
+`content="RTeG4PGD92mUX6IIXZLDhoaurmtPrB_sTTMZt0D2bcI"` in `index.html`,
+**non rimuovere**) e sitemap inviata il 24/09/2026.
+
+**Scoperta lo stesso giorno:** la proprietà esisteva già, verificata dal
+17 maggio 2026 con due metodi non riconducibili a questa sessione né a
+Francesco (due meta tag già presenti in `index.html`, `URmj8zBf…` e
+`y30mc6ri…`). Probabilmente chi ha lavorato al sito prima del redesign
+CS01. Francesco non aveva accesso *sul proprio account* — ora sì, con un
+terzo metodo di verifica in aggiunta, non in sostituzione. Da valutare se
+vale la pena capire di chi sono gli altri due account con accesso.
+
+Il tentativo con il metodo File HTML (`public/google115b494482dbec53.html`)
+ha dato 404 ripetuto nonostante il file fosse corretto su `main` e nel
+build — probabile cache negativa lato CDN su un path mai richiesto prima.
+Il file resta nel repo (innocuo) ma non serve più: la verifica è passata
+col metodo Tag HTML.
+
+---
+
 ## Utenti — profili da GA4 (ricerca primaria in CS02)
 
 | Profilo | Chi è | Goal | Time budget |
