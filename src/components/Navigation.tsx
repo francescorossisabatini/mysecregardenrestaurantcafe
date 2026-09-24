@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { SITE } from "@/config/site";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
@@ -112,6 +113,24 @@ export const Navigation = () => {
             </ul>
             <span aria-hidden="true" className={`h-4 w-px ${isHeroOverlay ? "bg-background/40" : "bg-border/70"}`} />
             <LanguageSwitcher variant="navbar" tone={isHeroOverlay ? "overlay" : "default"} />
+            {/* MobileStickyBar copre solo mobile (return null su desktop) —
+                senza questo link nessun visitatore desktop trovava un
+                numero da nessuna parte: CTAEndBlock rimosso dalla home e
+                dall'header di /visit contando (erroneamente) sulla barra
+                fissa come unica fonte. Bug segnalato da Lovable il
+                24/09/2026, corretto qui invece che pagina per pagina. */}
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              data-call-source="nav-desktop"
+              className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 font-work text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${
+                isHeroOverlay
+                  ? "bg-background/20 text-background backdrop-blur-md hover:bg-background/30"
+                  : "bg-accent text-accent-foreground hover:bg-accent/90"
+              }`}
+            >
+              <Phone className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden="true" />
+              {language === "de" ? "Anrufen" : "Call"}
+            </a>
           </div>
 
           {/* Spacer to balance mobile menu button */}

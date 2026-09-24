@@ -1,16 +1,27 @@
+# /login è l'area staff (login Supabase), non contenuto per i visitatori —
+# esclusa dall'indice il 24/09/2026. Ogni bot legge solo il SUO blocco più
+# specifico, non "User-agent: *" in aggiunta: il Disallow va ripetuto in
+# ognuno, altrimenti Googlebot/Bingbot/Twitterbot/facebookexternalhit
+# la indicizzerebbero comunque.
+
 User-agent: Googlebot
 Allow: /
+Disallow: /login
 
 User-agent: Bingbot
 Allow: /
+Disallow: /login
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /login
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /login
 
 User-agent: *
 Allow: /
+Disallow: /login
 
 Sitemap: https://secretgardenrestaurant.at/sitemap.xml

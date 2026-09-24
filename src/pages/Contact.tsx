@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin, Phone } from "lucide-react";
+import { Accessibility, Car, Clock, DoorOpen, ExternalLink, HandPlatter, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
@@ -67,7 +67,12 @@ const ContactPage = () => {
           <div className="mx-auto max-w-5xl">
             {/* Header allineato a sinistra come il resto del corpo. Niente
                 bottoni chiama/indicazioni qui: MobileStickyBar li offre già
-                come azione permanente, ripeterli sarebbe ridondanza (S5). */}
+                come azione permanente su mobile, e "Anrufen" vive nella
+                Navigation su desktop (Navigation.tsx) — non duplicarli qui
+                sarebbe ridondanza (S5). Prima del 24/09/2026 il desktop non
+                aveva nessuna delle due: bug segnalato da Lovable, corretto
+                aggiungendo il link in Navigation invece che qui pagina per
+                pagina. */}
             <header className="mb-10 max-w-[62ch] md:mb-14">
               <h1 className="mb-4 font-cormorant text-4xl font-semibold text-foreground md:text-5xl">
                 {language === "de" ? "Besuch uns" : "Visit us"}

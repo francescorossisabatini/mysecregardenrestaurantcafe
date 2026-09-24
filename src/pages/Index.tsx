@@ -99,7 +99,11 @@ const Index = () => {
           il posto: come ci si arriva e com'è (era spezzato in 02 e 04)
           voci:     stampa e ospiti insieme (erano 05 e 06)
         CTAEndBlock non c'è più: chiamare e trovarci sono permanenti in
-        MobileStickyBar, e gli orari stanno nel footer.
+        MobileStickyBar su mobile e nel link "Anrufen" della Navigation su
+        desktop (Navigation.tsx) — non in MobileStickyBar da sola, che
+        ritorna null su desktop. Prima del 24/09/2026 il desktop non aveva
+        nessuna delle due: bug segnalato da Lovable, corretto in Navigation.
+        Gli orari stanno nel footer.
       */}
       <main id="main-content" tabIndex={-1} className="focus:outline-hidden">
         <Hero />

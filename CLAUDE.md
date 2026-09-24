@@ -98,7 +98,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | `/link` | Link hub (bio social) | ✅ Attiva |
 | `/impressum` | Legal — obbligatorio per legge austriaca | ✅ Attiva |
 | `/privacy` | Cookie policy — GDPR | ✅ Attiva |
-| `/login` | Area staff (login Supabase) — il percorso reale è `/login`, non `/staff/login`. `robots.txt` oggi non la esclude (`Allow: /` per tutti gli agent): da correggere se deve restare fuori indice | ✅ Attiva |
+| `/login` | Area staff (login Supabase) — il percorso reale è `/login`, non `/staff/login`. `robots.txt` la esclude (`Disallow: /login`) dal 24/09/2026, ripetuto in ogni blocco `User-agent` | ✅ Attiva |
 
 
 **Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
