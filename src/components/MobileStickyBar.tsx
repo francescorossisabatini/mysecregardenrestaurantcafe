@@ -88,7 +88,7 @@ export const MobileStickyBar = () => {
     "bg-card text-primary border border-primary/30 " +
     "rounded-full py-3 px-4 min-h-[48px] " +
     "text-base font-medium font-work " +
-    "active:scale-95 transition-transform duration-200 " +
+    "active:scale-95 transition-transform duration-base " +
     "touch-manipulation " +
     "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2";
 
@@ -102,7 +102,7 @@ export const MobileStickyBar = () => {
         border-t border-border
         shadow-[0_-4px_16px_-4px_rgba(0,0,0,0.10)]
         pt-3
-        transition-transform duration-300 ease-out motion-reduce:transition-none
+        transition-transform duration-slow ease-out motion-reduce:transition-none
         ${shouldShow
           ? "translate-y-0"
           : "translate-y-full pointer-events-none"
@@ -127,7 +127,7 @@ export const MobileStickyBar = () => {
             text-base font-semibold font-work
             shadow-soft
             active:scale-95
-            transition-transform duration-200
+            transition-transform duration-base
             touch-manipulation
             focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2"
           aria-label={callAriaLabel}

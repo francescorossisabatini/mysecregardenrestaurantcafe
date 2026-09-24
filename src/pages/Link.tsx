@@ -33,7 +33,7 @@ const LinkPage = () => {
             const Icon = link.icon;
             const content = (
               <span
-                className={`flex items-center justify-center gap-3 w-full py-4 px-6 rounded-lg text-lg font-medium font-work active:scale-[0.98] transition-all duration-200 touch-manipulation ${
+                className={`flex items-center justify-center gap-3 w-full py-4 px-6 rounded-lg text-lg font-medium font-work active:scale-[0.98] transition-all duration-base touch-manipulation ${
                   link.primary
                     ? "bg-accent text-accent-foreground shadow-xs hover:bg-accent/90"
                     : "border border-primary/35 bg-card/70 text-primary hover:bg-muted"

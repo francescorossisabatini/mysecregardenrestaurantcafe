@@ -122,7 +122,7 @@ Promemoria dei soli vincoli di alto livello:
 - **Palette:** dosaggio 60% cream / 30% navy / 10% verde (solo CTA, nav attivo, rating, accenti).
 - **Font:** `font-caveat` (solo h1 hero e logo), `font-cormorant` (headings), `font-lora` (body), `font-work` (UI). Max 2 typeface per viewport, Caveat max 1 occorrenza.
 - **Motion:** solo fade lente e slide sottili. Mai zoom, mai parallax, mai animazioni infinite. `prefers-reduced-motion` sempre rispettato.
-- **Accessibilità:** WCAG 2.1 AA, touch target 44×44px, focus ring visibile, `aria-label` su ogni icona.
+- **Accessibilità:** WCAG 2.2 AA, touch target 44×44px (sopra il minimo AA di 24×24, livello AAA), focus ring visibile, `aria-label` su ogni icona.
 - **Mai `#000000`** e mai verde chiaro come testo su sfondo chiaro.
 
 
@@ -220,8 +220,7 @@ src/components/About.tsx         — typography bug, font non dichiarati
 src/components/Reviews.tsx       — star rating
 src/components/Footer.tsx        — mobile padding, orari
 src/components/Navigation.tsx    — top bar + bottom nav
-tailwind.config.ts               — definizione token (fonte della verità)
-src/index.css                    — CSS custom properties / variabili
+src/index.css                    — token via @theme (Tailwind v4), fonte della verità
 ```
 
 ---
@@ -303,7 +302,7 @@ il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
 - **Struttura route** — nessuna nuova route
 - **Copy / testo UI** — nessuna modifica al wording approvato
 - **Logica di business** — Supabase queries, form submission, routing
-- **tailwind.config.ts** — modifiche solo su istruzione, con mapping documentato
+- **`src/index.css` (token `@theme`)** — modifiche solo su istruzione, con mapping documentato
 - **Route `/about`** — solo placeholder, in attesa di brief contenuti
 - **Foto** — placeholder fino al photoshoot (aprile–maggio 2026)
 - **CS02 scope** — WhatsApp channel, `/eventi` route: fuori scope CS01

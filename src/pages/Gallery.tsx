@@ -62,7 +62,7 @@ const Reveal = ({ children, delay = 0, className = "" }: { children: ReactNode; 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-1000 ease-out ${visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"} ${className}`}
+      className={`transition-all duration-narrative ease-out ${visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
