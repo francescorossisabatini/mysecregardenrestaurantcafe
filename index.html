@@ -101,7 +101,7 @@
     <meta property="og:title" content="My Secret Garden - Vegetarisches & Veganes Restaurant Wien" />
     <meta property="og:description" content="Vegetarisches & veganes Restaurant in Wien. Geschmack, der entzückt. Bio, fair, regional & saisonal." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://secretgardenrestaurant.at/" />
+    <!-- og:url NON va qui: vedi il commento sul canonical più sotto. -->
     <meta property="og:image" content="https://secretgardenrestaurant.at/assets/food-detail-real-D-Th9dqL.jpg" />
     <meta property="og:locale" content="de_AT" />
     <meta property="og:site_name" content="My Secret Garden" />
@@ -111,8 +111,17 @@
     <meta name="twitter:site" content="@secretgardenwien" />
     <meta name="twitter:image" content="https://secretgardenrestaurant.at/assets/food-detail-real-D-Th9dqL.jpg" />
     
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://secretgardenrestaurant.at/" />
+    <!-- Canonical e og:url: NON metterli in questo file.
+         index.html è lo stesso guscio per ogni route della SPA: un canonical
+         qui dichiarava "sono la home" anche su /menu, /visit, /about.
+         SEOHead.tsx (react-helmet-async) aggiunge quello giusto per ogni
+         pagina, ma non rimuove un tag statico che non ha creato lui: su
+         /menu c'erano due canonical, e Google ha preso quello della home.
+         Verificato con Search Console (Controllo URL, test live) il
+         26/09/2026: /menu "Rilevata, ma attualmente non indicizzata",
+         canonical rilevato = https://secretgardenrestaurant.at/.
+         Senza tag statico, chi non esegue JS (crawler AI, anteprime social)
+         usa l'URL richiesto come canonical implicito — che è quello giusto. -->
 
     <!-- Schema.org Restaurant JSON-LD -->
     <script type="application/ld+json">
