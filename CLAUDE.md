@@ -1,6 +1,7 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
 > Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
+> Cosa è aperto e chi lo fa: [`docs/stato-aperto.md`](./docs/stato-aperto.md) · il perché delle decisioni: [`docs/ragionamenti.md`](./docs/ragionamenti.md).
 > Ultimo aggiornamento: 20 settembre 2026 (riallineato al codice)
 
 
