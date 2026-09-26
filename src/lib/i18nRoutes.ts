@@ -138,6 +138,11 @@ export const applyStoredLanguageChoice = () => {
  */
 export const deviceLanguageIsNotGerman = (): boolean => {
   if (typeof navigator === "undefined") return false;
-  const primary = (navigator.languages?.[0] || navigator.language || "").toLowerCase();
-  return primary !== "" && !primary.startsWith("de");
+  const list = (navigator.languages?.length ? navigator.languages : [navigator.language || ""])
+    .map((l) => l.toLowerCase())
+    .filter(Boolean);
+  // Basta il tedesco in QUALUNQUE posizione: un viennese col telefono in
+  // inglese ha spesso ["en-AT", "de-AT"], legge il tedesco e non deve
+  // portarsi dietro "EN" su ogni pagina (critico cieco, 26/09/2026).
+  return list.length > 0 && !list.some((l) => l.startsWith("de"));
 };

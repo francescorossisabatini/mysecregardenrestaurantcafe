@@ -62,7 +62,7 @@ export const Navigation = () => {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border shadow-xs transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
+              className={`inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
               aria-label={isMobileMenuOpen
                 ? (language === "de" ? "Menü schließen" : "Close menu")
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -149,10 +149,18 @@ export const Navigation = () => {
           {showEnglishHint ? (
             <button
               type="button"
-              onClick={() => setLanguage("en")}
+              onClick={() => {
+                // Stesso evento del LanguageSwitcher, etichetta propria: così
+                // si misura quante persone passano all'inglese da qui.
+                window.gtag?.("event", "language_switch", { event_category: "engagement", event_label: "hint_to_en" });
+                setLanguage("en");
+                // Il pulsante sparisce dopo la scelta: senza questo il focus
+                // finirebbe su <body> e uno screen reader perderebbe il punto.
+                requestAnimationFrame(() => document.getElementById("main-content")?.focus());
+              }}
               lang="en"
               aria-label="English"
-              className={`inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border shadow-xs font-work text-[11px] font-semibold tracking-[0.08em] transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 lg:hidden ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
+              className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border/75 bg-card/90 font-work text-[11px] font-semibold tracking-[0.08em] text-primary transition-colors duration-base hover:bg-muted focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 lg:hidden"
             >
               EN
             </button>
