@@ -129,9 +129,28 @@ const STATES = [
   },
   {
     slug: 'home--lingua-en',
+    // Dal 26/09/2026 la lingua la decide solo l'URL (src/lib/i18nRoutes.ts):
+    // la vecchia chiave 'preferred_language' non fa più niente, e lo scatto
+    // usciva identico a quello tedesco.
+    path: '/en',
+    setup: async () => {},
+  },
+  {
+    // Livello 3 del rilevamento lingua: dispositivo non tedesco, nessuna
+    // scelta salvata → pulsante "EN" nella top bar mobile. Con de-AT non
+    // compare, quindi senza questo stato non verrebbe mai fotografato.
+    slug: 'home--dispositivo-it',
     path: '/',
+    locale: 'it-IT',
+    setup: async () => {},
+  },
+  {
+    slug: 'menu--dispositivo-it',
+    path: '/menu',
+    locale: 'it-IT',
     setup: async (page) => {
-      await page.addInitScript(() => localStorage.setItem('preferred_language', 'en'));
+      await page.clock.setFixedTime(MENU_FIXTURE_TIME);
+      await routeMenuFixture(page);
     },
   },
   {
@@ -151,14 +170,14 @@ const STATES = [
 
 const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 12);
 
-async function shoot(browser, { path, slug, setup }, size) {
+async function shoot(browser, { path, slug, setup, locale = 'de-AT' }, size) {
   const context = await browser.newContext({
     viewport: { width: size.w, height: size.h },
     deviceScaleFactor: 2,
     isMobile: size.mobile,
     hasTouch: size.mobile,
     reducedMotion: 'reduce', // le animazioni di ingresso falsano lo scatto
-    locale: 'de-AT',
+    locale,
   });
   // Il banner cookie coprirebbe metà pagina in ogni scatto: si dà per deciso.
   // Per fotografare il banner stesso, togli questa riga o aggiungi uno stato.
