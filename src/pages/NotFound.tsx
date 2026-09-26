@@ -40,8 +40,9 @@ const NotFound = () => {
 
       <main
         id="main-content"
+        tabIndex={-1}
         role="main"
-        className="flex flex-1 items-center justify-center px-5 py-24"
+        className="flex flex-1 items-center justify-center px-5 py-24 focus:outline-hidden"
       >
         <div className="mx-auto max-w-md space-y-5 text-center">
           <span className="eyebrow-num">404</span>

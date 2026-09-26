@@ -40,7 +40,7 @@ export const Navigation = () => {
 
   // Chiusura dall'utente (X, backdrop, Escape): il focus torna all'hamburger.
   // Il cambio di route invece chiude senza toccare il focus, che lì va in
-  // cima al nuovo contenuto (DESIGN_SYSTEM §8).
+  // cima al nuovo contenuto (useFocusMainOnRouteChange, DESIGN_SYSTEM §8).
   const closeMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
     requestAnimationFrame(() => menuButtonRef.current?.focus());
@@ -54,12 +54,27 @@ export const Navigation = () => {
     if (navRef.current) navRef.current.inert = isMobileMenuOpen;
     if (!isMobileMenuOpen) return;
 
+    // Anche il resto della pagina esce dal Tab: prima Shift+Tab usciva sotto
+    // il modale, sullo skip link.
+    const behind = [...document.querySelectorAll<HTMLElement>('#main-content, footer, a[href="#main-content"]')];
+    behind.forEach((el) => { el.inert = true; });
+
     // Dialog modale: la pagina sotto non scorre.
     const root = document.documentElement;
     const previousOverflow = root.style.overflow;
     root.style.overflow = "hidden";
 
-    drawerCloseRef.current?.focus();
+    // Si aspetta che la X sia davvero visibile prima di darle il focus: con
+    // prefers-reduced-motion al primo frame è ancora visibility:hidden e
+    // focus() viene ignorato (misurato, 26/09/2026). Al massimo ~20 frame.
+    let focusFrame = 0;
+    let focusTries = 0;
+    const focusClose = () => {
+      const close = drawerCloseRef.current;
+      if (close && getComputedStyle(close).visibility === "visible") close.focus();
+      else if (focusTries++ < 20) focusFrame = requestAnimationFrame(focusClose);
+    };
+    focusClose();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -81,7 +96,9 @@ export const Navigation = () => {
     };
     document.addEventListener("keydown", onKeyDown);
     return () => {
+      cancelAnimationFrame(focusFrame);
       root.style.overflow = previousOverflow;
+      behind.forEach((el) => { el.inert = false; });
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [isMobileMenuOpen, closeMenu]);
@@ -111,7 +128,7 @@ export const Navigation = () => {
           rimpicciolivano insieme: tre animazioni in contemporanea (§7). */}
       <nav
         ref={navRef}
-        className={`fixed left-0 right-0 top-0 z-50 h-[60px] transition-colors duration-base ease-in-out before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:transition-opacity before:duration-base before:content-[''] md:h-auto md:py-2 ${
+        className={`fixed left-0 right-0 top-0 z-50 h-[calc(60px+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] transition-colors duration-base ease-in-out before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:transition-opacity before:duration-base before:content-[''] md:h-auto md:py-2 ${
           isHeroOverlay
             ? "border-b border-transparent bg-transparent before:opacity-100"
             : "border-b border-border bg-nav-surface backdrop-blur before:opacity-0"
@@ -156,7 +173,7 @@ export const Navigation = () => {
             <span className={`block max-w-[7.5rem] truncate font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base sm:hidden ${isHeroOverlay ? "text-background" : "text-foreground"}`}>
               {activeNavLabel}
             </span>
-            <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
+            <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_hsl(var(--navy-500)/0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
               My Secret Garden
             </span>
           </Link>
@@ -184,7 +201,7 @@ export const Navigation = () => {
                     <Link
                       to={lp(link.to)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
+                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_hsl(var(--navy-500)/0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
@@ -243,12 +260,14 @@ export const Navigation = () => {
 
 
       {/* Mobile Menu Drawer */}
-      {/* Visibile subito all'apertura (duration-0), altrimenti per il primo
-          frame resta visibility:hidden e il focus non entra nel drawer.
-          In chiusura resta visibile per la durata della transizione. */}
+      {/* Visibile subito all'apertura, senza transizione: altrimenti per il
+          primo frame resta visibility:hidden e il focus non entra nel drawer.
+          transition-none e non duration-0, perché con prefers-reduced-motion
+          index.css forza 100ms !important su ogni durata. In chiusura resta
+          visibile quanto dura lo slide del pannello (duration-slow). */}
       <div
-        className={`fixed inset-0 z-[70] lg:hidden transition-[visibility] ease-out ${
-          isMobileMenuOpen ? "visible duration-0" : "invisible duration-base"
+        className={`fixed inset-0 z-[70] lg:hidden ${
+          isMobileMenuOpen ? "visible transition-none" : "invisible transition-[visibility] duration-slow ease-out"
         }`}
       >
         {/* Backdrop */}
@@ -273,7 +292,9 @@ export const Navigation = () => {
           }`}
         >
           {/* Drawer Header */}
-          <div className="p-6 border-b border-border flex items-center justify-between">
+          {/* Alto come la barra (60px) e sullo stesso filo di 20px: la X sta
+              sulla stessa riga dell'hamburger che ha aperto il pannello. */}
+          <div className="flex h-[calc(60px+env(safe-area-inset-top))] shrink-0 items-center justify-between border-b border-border px-5 pt-[env(safe-area-inset-top)]">
             <Link 
               to={lp("/")} 
               onClick={() => setIsMobileMenuOpen(false)} 
@@ -297,7 +318,7 @@ export const Navigation = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex-1 p-6 space-y-1 overflow-y-auto">
+          <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-4">
             {navLinks.map((link) => {
               const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
 
@@ -311,7 +332,7 @@ export const Navigation = () => {
                   to={lp(link.to)}
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base hover:bg-muted ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
+                  className={`relative block rounded-full px-3 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base hover:bg-muted ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
                 >
                   {isActive && (
                     <span aria-hidden="true" className="absolute left-1 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent" />
@@ -323,7 +344,7 @@ export const Navigation = () => {
           </nav>
 
           {/* Language switcher inside drawer */}
-          <div className="border-t border-border p-6 flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 border-t border-border px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
             <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {language === "de" ? "Sprache" : "Language"}
             </span>

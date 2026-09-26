@@ -221,7 +221,9 @@ EMDASH=$(count_nc '—' "${F_VOICE[@]}")
 [ "$EMDASH" -gt 3 ] && warn "VOICE em dash" "${EMDASH}× — controlla che non sia il connettore principale"
 
 # --- token: hex e colori Tailwind di default --------------------------------
-HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
+# Anche il nero puro scritto in rgba (drop-shadow arbitrari): "mai #000000"
+# vale in ogni notazione, e prima passava inosservato (critico cieco 26/09/2026).
+HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b|rgba?\(0,[ _]*0,[ _]*0\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
 [ -n "$HEX" ] && { hit "TOKEN hex hardcoded" "solo token semantici nei componenti"; echo "$HEX" | sed 's/^/      /'; } || ok "TOKEN hex hardcoded"
 
 TWCOLORS=$(grep -rnoE '\b(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]{2,3}\b' "${F_TOKEN[@]}" 2>/dev/null || true)

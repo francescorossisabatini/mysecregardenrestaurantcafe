@@ -7,6 +7,7 @@ import { BrowserRouter, Navigate, Routes, Route, useLocation } from "react-route
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { MobileMenuProvider } from "@/contexts/MobileMenuContext";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
+import { useFocusMainOnRouteChange } from "@/hooks/useFocusMainOnRouteChange";
 import { CookieConsent } from "@/components/CookieConsent";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -61,6 +62,7 @@ const RouteAnalytics = () => {
 
 function AppContent() {
   useHtmlLang();
+  useFocusMainOnRouteChange();
 
   return <AppRoutes />;
 }

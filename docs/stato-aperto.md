@@ -14,11 +14,13 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | Cosa | Chi | Stato |
 |---|---|---|
 | Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → **49** (l'ultimo giro ha allargato l'ambito a drawer e selettore lingua). Gate a11y ancora rosso. Piano sotto |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → **50**. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
-**Giro 1, senza decisioni di F:**
+**Fatto (giro 2, voto di partenza 50):** focus su `<main>` a ogni cambio di route; drawer accessibile anche con "riduci movimento"; pagina sotto il drawer `inert`; nero puro tolto dai `drop-shadow`; logo non più ovale a 320px; header del drawer alto 60px con la X alla stessa altezza dell'hamburger; filo sinistro unico a 20px; safe area per la PWA installata.
+
+**Fatto (giro 1, voto di partenza 49):**
 1. `LanguageSwitcher.tsx`: via bordo + ombra (fallimento duro), token pieni, pulsanti 44px
 2. Focus del logo sull'hero: 1.14:1, invisibile. Come per i dischi, portarlo a ≥3:1
 3. La barra non deve cambiare colore sotto il drawer aperto (`isHeroOverlay` senza `!isMobileMenuOpen`)
@@ -28,10 +30,13 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 7. Barra scrollata allineata a DESIGN_SYSTEM §6 (superficie, soglia di scroll, scrim in dissolvenza)
 8. `check-tells.sh`: la regex U2 non vede i `className={`...`}`, quindi il controllo bordo + ombra era un falso verde
 
-**Giro 2, servono decisioni di F:**
-- **A.** Etichetta di pagina accanto al logo ("HOME", "SPEISEKARTE"): duplica l'h1, viene troncata a 320–360px, fa saltare il logo tra le route. Proposta: toglierla su mobile.
+**Servono decisioni di F:**
+- **A.** Etichetta di pagina accanto al logo ("HOME", "SPEISEKARTE"): duplica l'h1, viene troncata già a 390px ("UNSERE GESCHI…"), fa saltare il logo fino a 40px tra le route, e fallisce **WCAG 2.5.3** (livello A): si legge "SPEISEKARTE" ma il nome accessibile è "Zur Startseite", e porta alla home. Proposta: toglierla su mobile.
 - **B.** Telefono nel drawer (oggi assente su mobile, presente su desktop). Proposta: link testuale col numero, non bottone verde.
-- Copy minore: "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", aria-label del selettore lingua in inglese anche in DE.
+- **C.** Ordine delle voci del drawer: oggi Galerie sta prima di Besuche uns. Per chi decide se venire oggi, "Besuche uns" è più utile.
+- Copy minore: "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", aria-label del selettore lingua in inglese anche in DE ("Sprache wählen"?), "Visit" contro "Besuche uns" (peso ritmico), nome del logo nel drawer ("My Secret Garden, Startseite").
+
+**Trovato fuori ambito (26/09/2026):** `check-tells.sh` ora vede il nero puro anche in `rgba(0,0,0,…)` e segnala `Hero.tsx` (text-shadow), `MobileStickyBar.tsx:106` e `MenuFloatingPill.tsx:89`. Da portare su `--navy-500` in un giro dedicato.
 
 ---
 
