@@ -292,12 +292,15 @@ export const CookieConsent = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-slow ${
+      // pointer-events-none: il contenitore è largo tutto lo schermo e in
+      // orizzontale intercettava il tocco sull'hamburger. I tocchi li riceve
+      // solo la card (critico cieco, 26/09/2026).
+      className={`pointer-events-none fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-slow ${
         isClosing ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
       }`}
       style={{ paddingBottom: mobileBottomOffset }}
     >
-      <div className="container mx-auto max-w-2xl md:mr-0 md:max-w-xl lg:max-w-2xl">
+      <div className="pointer-events-auto container mx-auto max-w-2xl md:mr-0 md:max-w-xl lg:max-w-2xl">
         <div
           ref={dialogRef}
           role="dialog"

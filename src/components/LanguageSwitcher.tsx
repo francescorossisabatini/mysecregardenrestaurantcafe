@@ -15,6 +15,8 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
       // divergence-ledger 26/09/2026). Prima: bordo + ombra nera + blur, h-10.
       <div className="inline-flex h-[52px] shrink-0 items-center rounded-full border border-border bg-card p-1" role="group" aria-label={language === "de" ? "Sprache wählen" : "Choose language"}>
         <button
+          type="button"
+          lang="de"
           onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
           className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
             language === "de"
@@ -27,6 +29,8 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
           DE
         </button>
         <button
+          type="button"
+          lang="en"
           onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
           className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
             language === "en"
@@ -46,11 +50,13 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
   return (
     <div className={`flex shrink-0 items-center gap-1 rounded-full border border-border/70 p-1 ${isOverlay ? "bg-card/90 backdrop-blur-md" : "bg-muted/70"}`} role="group" aria-label={language === "de" ? "Sprache wählen" : "Choose language"}>
       <button
+        type="button"
+        lang="de"
         onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
           language === "de"
             ? "bg-primary text-primary-foreground"
-            : "text-primary hover:text-primary"
+            : "text-primary"
         }`}
         aria-pressed={language === "de"}
         aria-label="Deutsch"
@@ -58,11 +64,13 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
         DE
       </button>
       <button
+        type="button"
+        lang="en"
         onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
           language === "en"
             ? "bg-primary text-primary-foreground"
-            : "text-primary hover:text-primary"
+            : "text-primary"
         }`}
         aria-pressed={language === "en"}
         aria-label="English"

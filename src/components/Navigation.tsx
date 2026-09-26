@@ -298,7 +298,7 @@ export const Navigation = () => {
           role="dialog"
           aria-modal="true"
           aria-label={language === "de" ? "Menü" : "Menu"}
-          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background transform transition-transform duration-slow ease-out flex flex-col border-r border-border ${
+          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] overflow-y-auto overscroll-contain bg-background transform transition-transform duration-slow ease-out flex flex-col border-r border-border ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -372,7 +372,7 @@ export const Navigation = () => {
           <div className="flex-1" aria-hidden="true" />
 
           {/* Language switcher inside drawer */}
-          <div className="flex items-center justify-between gap-4 border-t border-border px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+          <div className="flex items-center justify-between gap-4 px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
             <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {language === "de" ? "Sprache" : "Language"}
             </span>

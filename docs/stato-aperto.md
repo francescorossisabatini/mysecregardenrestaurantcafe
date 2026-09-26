@@ -14,7 +14,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | Cosa | Chi | Stato |
 |---|---|---|
 | Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → **56**. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → **55** (stabile: servono decisioni, vedi sotto). Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
@@ -33,6 +33,15 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 **Fatto (giro 3, decisioni A, B, C approvate il 26/09/2026):** etichetta di pagina tolta su mobile (chiude WCAG 2.5.3), logo 44px fermo e centrato su ogni route, telefono come link testuale nel drawer, voci in ordine Home, Speisekarte, Besuche uns, Galerie, Unsere Geschichte (anche su desktop), `aria-label` "Sprache wählen" e "My Secret Garden, Startseite".
 
 **Fatto (giro 4, voto di partenza 56):** tocco sulla pagina corrente senza perdita di focus, link logo grande quanto il logo (prima 230px di barra portavano alla home), backdrop e pannello con la stessa durata, logo del drawer 44px, telefono subito sotto le voci, un solo segnale di hover, token semantici al posto di primitivi e `text-white`, `check-tells.sh` che vede primitivi e bianco di default.
+
+**Fatto (giro 5, voto di partenza 55):** drawer scorrevole (in orizzontale e con testo al 200% il selettore lingua era irraggiungibile), banner cookie che non blocca più l'hamburger in orizzontale, filetto inutile sopra "Sprache" tolto, `lang` e `type` sui pulsanti DE/EN.
+
+**Leve per superare 55, tutte con una decisione di F:**
+1. *Stato di oggi nel drawer* ("Heute bis 19:00 geöffnet", stesso dato del badge dell'hero) nello spazio vuoto. È la voce che pesa di più (genericità ×3): senza, barra e drawer restano "lo schema di chiunque". Copy nuovo.
+2. *Header del drawer*: X a sinistra, dove c'era l'hamburger, e niente link logo. Chiude la trappola del doppio tocco (ritoccare lo stesso punto porta alla home), il doppione logo/"Home" e la collisione a 320px.
+3. *Nav desktop* sopra l'hero: voci e "Anrufen" sotto 4.5:1 sulla foto (3.3–4.2:1), vetro e anello al 50% già scartati su mobile. Allarga l'ambito al desktop.
+4. *Copy*: "Besuche uns"/"Besuch uns", EN "Visit" → "Visit us", "Home" → "Startseite", telefono "Ruf an: …" / "Call: …".
+5. *Fuori ambito*: h1 di /menu (x=24) e /visit (x=16) sul filo di 20px della barra; nero puro in `Hero.tsx` e `MobileStickyBar.tsx`.
 
 **Da decidere (copy, emersi dal critico):** nel drawer "Home" è un doppione del logo e in DE convive con "Startseite" (toglierlo dal drawer?); la voce "Besuche uns" contro l'h1 "Besuch uns" di /visit; una parola accanto al numero di telefono ("Ruf uns an"?).
 
