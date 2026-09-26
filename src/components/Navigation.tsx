@@ -110,15 +110,17 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", updateScrolled);
   }, [location.pathname]);
 
-  // Primary navigation labels
+  // Ordine per domanda del profilo A ("vengo oggi?"): Besuche uns prima di
+  // Galerie. Stessa lista per drawer e nav desktop (ledger, 26/09/2026).
   const navLinks = [
     { to: "/", label: language === "de" ? "Home" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
+    { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
     { to: "/gallery", label: language === "de" ? "Galerie" : "Gallery" },
     { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
-    { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
-  const activeNavLabel = navLinks.find((link) => link.to === "/" ? basePath === "/" : basePath.startsWith(link.to))?.label ?? "";
+  // Contiene il testo visibile del wordmark ("My Secret Garden"): WCAG 2.5.3.
+  const homeLinkLabel = language === "de" ? "My Secret Garden, Startseite" : "My Secret Garden, home";
 
   return (
     <>
@@ -163,16 +165,13 @@ export const Navigation = () => {
             // Focus dalla regola globale §8; sull'hero l'anello navy spariva sullo
             // scrim (1.14:1), quindi lì diventa chiaro.
             className={`group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 lg:flex-initial lg:justify-start lg:gap-3 ${isHeroOverlay ? "focus-visible:outline-primary-foreground" : ""}`}
-            aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
+            aria-label={homeLinkLabel}
           >
             <Logo
-              className="h-10 w-10 flex-shrink-0 lg:h-11 lg:w-11"
+              className="h-11 w-11 flex-shrink-0"
               showTagline={false}
               aria-hidden="true"
             />
-            <span className={`block max-w-[7.5rem] truncate font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base sm:hidden ${isHeroOverlay ? "text-background" : "text-foreground"}`}>
-              {activeNavLabel}
-            </span>
             <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_hsl(var(--navy-500)/0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
               My Secret Garden
             </span>
@@ -299,7 +298,7 @@ export const Navigation = () => {
               to={lp("/")} 
               onClick={() => setIsMobileMenuOpen(false)} 
               className="flex min-h-11 items-center gap-3 rounded-lg"
-              aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
+              aria-label={homeLinkLabel}
             >
               <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
@@ -342,6 +341,19 @@ export const Navigation = () => {
               );
             })}
           </nav>
+
+          {/* Il telefono è il canale suggerito (CLAUDE.md) e su mobile, prima
+              della MobileStickyBar, non c'era da nessuna parte. Link testuale:
+              l'azione primaria verde resta quella della barra fissa. */}
+          <div className="shrink-0 px-5 pb-6">
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              data-call-source="drawer"
+              className="inline-flex min-h-11 items-center font-work text-sm font-medium tracking-[0.04em] text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
+            >
+              {SITE.phoneDisplay}
+            </a>
+          </div>
 
           {/* Language switcher inside drawer */}
           <div className="flex items-center justify-between gap-4 border-t border-border px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">

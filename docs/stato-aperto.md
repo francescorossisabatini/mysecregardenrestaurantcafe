@@ -30,11 +30,9 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 7. Barra scrollata allineata a DESIGN_SYSTEM §6 (superficie, soglia di scroll, scrim in dissolvenza)
 8. `check-tells.sh`: la regex U2 non vede i `className={`...`}`, quindi il controllo bordo + ombra era un falso verde
 
-**Servono decisioni di F:**
-- **A.** Etichetta di pagina accanto al logo ("HOME", "SPEISEKARTE"): duplica l'h1, viene troncata già a 390px ("UNSERE GESCHI…"), fa saltare il logo fino a 40px tra le route, e fallisce **WCAG 2.5.3** (livello A): si legge "SPEISEKARTE" ma il nome accessibile è "Zur Startseite", e porta alla home. Proposta: toglierla su mobile.
-- **B.** Telefono nel drawer (oggi assente su mobile, presente su desktop). Proposta: link testuale col numero, non bottone verde.
-- **C.** Ordine delle voci del drawer: oggi Galerie sta prima di Besuche uns. Per chi decide se venire oggi, "Besuche uns" è più utile.
-- Copy minore: "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", aria-label del selettore lingua in inglese anche in DE ("Sprache wählen"?), "Visit" contro "Besuche uns" (peso ritmico), nome del logo nel drawer ("My Secret Garden, Startseite").
+**Fatto (giro 3, decisioni A, B, C approvate il 26/09/2026):** etichetta di pagina tolta su mobile (chiude WCAG 2.5.3), logo 44px fermo e centrato su ogni route, telefono come link testuale nel drawer, voci in ordine Home, Speisekarte, Besuche uns, Galerie, Unsere Geschichte (anche su desktop), `aria-label` "Sprache wählen" e "My Secret Garden, Startseite".
+
+**Copy ancora aperto:** "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", "Visit" contro "Besuche uns" (peso ritmico).
 
 **Trovato fuori ambito (26/09/2026):** `check-tells.sh` ora vede il nero puro anche in `rgba(0,0,0,…)` e segnala `Hero.tsx` (text-shadow), `MobileStickyBar.tsx:106` e `MenuFloatingPill.tsx:89`. Da portare su `--navy-500` in un giro dedicato.
 
