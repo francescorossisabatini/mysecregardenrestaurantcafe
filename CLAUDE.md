@@ -208,6 +208,14 @@ non quello dopo le correzioni.
 - Lead time standard: *Mindestens 24h im Voraus.*
 - CTA: *Bestellung senden*
 
+**SEO EN (default di `SEOHead.tsx`, approvato in chat il 26 settembre 2026)**
+- Title: *My Secret Garden Vegetarian & Vegan Restaurant Vienna* · suffisso: *My Secret Garden Vienna*
+- Description: *Vegetarian & vegan restaurant in Vienna. Organic, fair, regional and seasonal.*
+
+**Top bar mobile, etichette per screen reader (approvate il 26 settembre 2026)**
+- Pulsante "EN": *English version*
+- Chiusura del menu: *Menü schließen* / *Close menu* (una sola forma, prima c'era anche "Close navigation menu")
+
 ---
 
 ## Debito tecnico noto

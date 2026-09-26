@@ -242,6 +242,8 @@ MobileStickyBar (Anrufen + Besuchen): bg-accent / outline · text bianco / prima
 
 Stati: hover → tono più scuro · active → `scale(0.98)` · disabled → 40% opacity · loading → spinner bianco.
 
+> Contraddizione aperta, da decidere: `active → scale(0.98)` qui sopra è uno zoom, che §7 vieta ("mai zoom"). I controlli della top bar (26/09/2026) seguono §7 e non lo hanno; `ui/button.tsx`, `MobileStickyBar` e `/link` lo hanno ancora.
+
 **Copy rule:** il label nomina il **risultato**, non l'azione.
 ✅ "Was gibt's heute?" · "Den Weg finden" · "Anfrage senden"
 ❌ "Klick hier" · "Mehr erfahren" · "Absenden"
@@ -296,7 +298,18 @@ h-[60px] · px-5
 Su hero (scrollY = 0): transparent, logo e testo bianchi
 Scrollata (scrollY > 150px): .bg-nav-surface + backdrop-blur + border-b tenue
 Transizione 250ms ease, solo background
+Controlli mobile (hamburger, "EN", X del drawer): disco 44×44 · rounded-full ·
+  border border-border · bg-card · text-foreground · focus-visible:outline-offset-0
 ```
+
+Dal 26/09/2026: altezza e misura del logo identiche nei due stati; cambiano
+solo i colori, in una transizione sola (prima la barra passava da 72 a 60px e
+tre cose si animavano insieme, contro §7). I controlli mobile restano dischi
+crema pieni anche sull'hero: sul vetro il testo "EN" dava 3.0:1. L'offset 0
+dell'anello di focus vale solo per loro, perché con 2px l'anello cadeva sullo
+scrim scuro dell'hero (1.6:1). L'hamburger non ha stato X: si chiude dalla X del
+drawer, che è un dialog modale (focus dentro, Escape, barra `inert`). Vedi
+divergence-ledger.
 
 ### MobileStickyBar (non è una tab bar — vedi nota sotto)
 

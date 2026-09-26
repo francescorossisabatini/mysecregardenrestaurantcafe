@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
@@ -26,10 +26,55 @@ export const Navigation = () => {
   const isHome = basePath === "/";
   const isHeroOverlay = isHome && !isScrolled && !isMobileMenuOpen;
 
+  const navRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const drawerCloseRef = useRef<HTMLButtonElement>(null);
+
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname, setIsMobileMenuOpen]);
+
+  // Chiusura dall'utente (X, backdrop, Escape): il focus torna all'hamburger.
+  // Il cambio di route invece chiude senza toccare il focus, che lì va in
+  // cima al nuovo contenuto (DESIGN_SYSTEM §8).
+  const closeMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+    requestAnimationFrame(() => menuButtonRef.current?.focus());
+  }, [setIsMobileMenuOpen]);
+
+  // Drawer come dialog modale (WCAG 2.2 AA 2.4.11, critico cieco 26/09/2026):
+  // prima il focus restava sull'hamburger coperto dal pannello, Escape non
+  // chiudeva, e il Tab passava da logo e "EN" sotto il backdrop.
+  useEffect(() => {
+    // React 18 non conosce l'attributo inert: si usa la proprietà DOM.
+    if (navRef.current) navRef.current.inert = isMobileMenuOpen;
+    if (!isMobileMenuOpen) return;
+
+    drawerCloseRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+      if (event.key !== "Tab" || !drawerRef.current) return;
+      const focusable = drawerRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenuOpen, closeMenu]);
 
   useEffect(() => {
     const updateScrolled = () => setIsScrolled(window.scrollY > 28);
@@ -50,31 +95,38 @@ export const Navigation = () => {
 
   return (
     <>
+      {/* Stessa altezza su hero e a nav scrollata (60px su mobile, §6 Top
+          bar): cambiano solo i colori, in un'unica transizione da 250ms.
+          Prima la barra passava da 72 a 60px e logo e wordmark si
+          rimpicciolivano insieme: tre animazioni in contemporanea (§7). */}
       <nav
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-slow ease-in-out ${
+        ref={navRef}
+        className={`fixed left-0 right-0 top-0 z-50 h-[60px] transition-colors duration-base ease-in-out md:h-auto md:py-2 ${
           isHeroOverlay
-            ? "bg-transparent py-2 md:py-2.5 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:content-['']"
-            : "border-b border-border/60 bg-background py-1.5 backdrop-blur-2xl md:py-2"
+            ? "border-b border-transparent bg-transparent before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:content-['']"
+            : "border-b border-border/60 bg-background backdrop-blur-2xl"
         }`}
       >
-        <div className={`relative mx-auto flex w-full max-w-[1240px] items-center gap-4 px-4 transition-all duration-slow sm:px-6 lg:gap-8 lg:px-8 ${isHeroOverlay ? "min-h-14 lg:min-h-16" : "min-h-12 md:min-h-14"}`}>
+        <div className="relative mx-auto flex h-full w-full max-w-[1240px] items-center gap-4 px-5 sm:px-6 md:h-auto md:min-h-14 lg:gap-8 lg:px-8">
           {/* Mobile Menu Trigger (left, mobile only) */}
           <div className="flex items-center lg:hidden">
             <button
+              ref={menuButtonRef}
               type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => setIsMobileMenuOpen(true)}
               // Stessa superficie su hero e a nav scrollata, gemella del
               // pulsante "EN": token pieni di DESIGN_SYSTEM §3, focus dalla
               // regola globale §8. Offset 0: con i 2px di default l'anello
               // cade sullo scrim scuro dell'hero (1.6:1), appoggiato al disco
               // crema regge (vedi divergence-ledger, 26/09/2026).
               className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0"
-              aria-label={isMobileMenuOpen
-                ? (language === "de" ? "Menü schließen" : "Close menu")
-                : (language === "de" ? "Menü öffnen" : "Open menu")}
+              // Niente stato X: a drawer aperto il pulsante sta sotto il
+              // pannello e non si vede. Si chiude dalla X del drawer.
+              aria-label={language === "de" ? "Menü öffnen" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <Menu className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
 
@@ -85,14 +137,14 @@ export const Navigation = () => {
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
-              className={`flex-shrink-0 transition-[height,width] duration-slow ${isHeroOverlay ? "h-10 w-10 lg:h-11 lg:w-11" : "h-9 w-9 lg:h-9 lg:w-9"}`}
+              className="h-10 w-10 flex-shrink-0 lg:h-11 lg:w-11"
               showTagline={false}
               aria-hidden="true"
             />
-            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] sm:hidden ${isHeroOverlay ? "text-background" : "text-primary/85"}`}>
+            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] transition-colors duration-base sm:hidden ${isHeroOverlay ? "text-background" : "text-primary/85"}`}>
               {activeNavLabel}
             </span>
-            <span className={`hidden min-w-0 truncate font-cormorant font-bold leading-none transition-[font-size,color] duration-slow sm:block ${isHeroOverlay ? "text-background text-xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90 lg:text-[22px]" : "text-foreground text-lg group-hover:text-primary lg:text-xl"}`}>
+            <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
               My Secret Garden
             </span>
           </Link>
@@ -120,7 +172,7 @@ export const Navigation = () => {
                     <Link
                       to={lp(link.to)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
+                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
@@ -165,7 +217,7 @@ export const Navigation = () => {
                 requestAnimationFrame(() => document.getElementById("main-content")?.focus());
               }}
               lang="en"
-              aria-label="English"
+              aria-label="English version"
               className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border bg-card font-work text-[11px] font-bold tracking-[0.08em] text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0 lg:hidden"
             >
               EN
@@ -179,9 +231,12 @@ export const Navigation = () => {
 
 
       {/* Mobile Menu Drawer */}
+      {/* Visibile subito all'apertura (duration-0), altrimenti per il primo
+          frame resta visibility:hidden e il focus non entra nel drawer.
+          In chiusura resta visibile per la durata della transizione. */}
       <div
-        className={`fixed inset-0 z-[70] lg:hidden transition-all duration-base ease-out ${
-          isMobileMenuOpen ? "visible" : "invisible"
+        className={`fixed inset-0 z-[70] lg:hidden transition-[visibility] ease-out ${
+          isMobileMenuOpen ? "visible duration-0" : "invisible duration-base"
         }`}
       >
         {/* Backdrop */}
@@ -189,12 +244,19 @@ export const Navigation = () => {
           className={`absolute inset-0 bg-foreground/50 transition-opacity duration-base ease-out ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
-          onClick={() => setIsMobileMenuOpen(false)}
+          onClick={closeMenu}
         />
 
         {/* Drawer */}
+        {/* Solo bordo, niente ombra: bordo + ombra sulla stessa superficie
+            è un fallimento duro del direction lock. Il backdrop stacca già. */}
         <div
-          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background shadow-2xl transform transition-transform duration-slow ease-out flex flex-col border-r border-border/75 ${
+          ref={drawerRef}
+          id="mobile-nav-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label={language === "de" ? "Menü" : "Menu"}
+          className={`absolute left-0 top-0 h-dvh w-80 max-w-[85vw] bg-background transform transition-transform duration-slow ease-out flex flex-col border-r border-border ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -203,18 +265,22 @@ export const Navigation = () => {
             <Link 
               to={lp("/")} 
               onClick={() => setIsMobileMenuOpen(false)} 
-              className="flex items-center gap-3 focus:outline-hidden focus:ring-2 focus:ring-primary/50 rounded-lg"
+              className="flex items-center gap-3 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
             >
               <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
             </Link>
+            {/* Stesso disco dell'hamburger: apertura e chiusura dello stesso
+                pannello hanno la stessa forma. Focus dalla regola globale §8. */}
             <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-high-contrast hover:text-foreground hover:bg-muted/30 transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50"
-              aria-label={language === "de" ? "Menü schließen" : "Close navigation menu"}
+              ref={drawerCloseRef}
+              type="button"
+              onClick={closeMenu}
+              className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0"
+              aria-label={language === "de" ? "Menü schließen" : "Close menu"}
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
 
