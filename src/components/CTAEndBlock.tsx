@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
 
 interface CTAEndBlockProps {
@@ -18,6 +18,7 @@ export const CTAEndBlock = ({
   title
 }: CTAEndBlockProps) => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
 
   const defaultTitle = language === "de" ? "Besuche uns" : "Visit Us";
 
@@ -75,7 +76,7 @@ export const CTAEndBlock = ({
                 className="w-full justify-center py-6 text-base font-work border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground sm:w-auto sm:px-10"
                 asChild
               >
-                <Link to="/menu">
+                <Link to={lp("/menu")}>
                   {language === "de" ? "Wochenmenü" : "Weekly Specials"}
                 </Link>
               </Button>
@@ -87,7 +88,7 @@ export const CTAEndBlock = ({
                 className="w-full justify-center py-6 text-base font-work border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground sm:w-auto sm:px-10"
                 asChild
               >
-                <Link to="/menu">
+                <Link to={lp("/menu")}>
                   {language === "de" ? "Speisekarte" : "Menu"}
                 </Link>
               </Button>

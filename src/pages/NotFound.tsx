@@ -4,7 +4,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 
 // Prima era il default di scaffold ("Oops! Page not found", solo inglese,
 // zero token del design system) — mai toccato da quando il sito è stato
@@ -16,6 +16,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const NotFound = () => {
   const location = useLocation();
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const isGerman = language === "de";
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const NotFound = () => {
           </p>
           <div className="pt-2">
             <Button asChild size="lg">
-              <Link to="/">{isGerman ? "Zur Startseite" : "Back to Home"}</Link>
+              <Link to={lp("/")}>{isGerman ? "Zur Startseite" : "Back to Home"}</Link>
             </Button>
           </div>
         </div>

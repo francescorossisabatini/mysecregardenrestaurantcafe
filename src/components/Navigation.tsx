@@ -2,17 +2,28 @@ import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
+import { deviceLanguageIsNotGerman, stripLanguagePrefix } from "@/lib/i18nRoutes";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SITE } from "@/config/site";
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
-  const { language } = useLanguage();
+  const { language, setLanguage, hasChosenLanguage } = useLanguage();
+  // Livello 3 del rilevamento lingua (docs/ux/divergence-ledger.md): su
+  // mobile il selettore DE/EN sta solo nel drawer, invisibile a chi atterra.
+  // Per chi ha il dispositivo non in tedesco e non ha ancora scelto, "EN"
+  // compare nella top bar. Non reindirizza nessuno: Googlebot (en-US) vede
+  // il pulsante ma resta sulla pagina tedesca.
+  const showEnglishHint = language === "de" && !hasChosenLanguage && deviceLanguageIsNotGerman();
   const location = useLocation();
+  const lp = useLocalizedPath();
+  // /en/menu e /menu sono la stessa voce di menu: si confronta il percorso
+  // senza prefisso lingua.
+  const basePath = stripLanguagePrefix(location.pathname);
   const [isScrolled, setIsScrolled] = useState(false);
-  const isHome = location.pathname === "/";
+  const isHome = basePath === "/";
   const isHeroOverlay = isHome && !isScrolled && !isMobileMenuOpen;
 
   // Close mobile menu on route change
@@ -35,7 +46,7 @@ export const Navigation = () => {
     { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
     { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
   ];
-  const activeNavLabel = navLinks.find((link) => link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to))?.label ?? "";
+  const activeNavLabel = navLinks.find((link) => link.to === "/" ? basePath === "/" : basePath.startsWith(link.to))?.label ?? "";
 
   return (
     <>
@@ -63,7 +74,7 @@ export const Navigation = () => {
 
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
           <Link
-            to="/"
+            to={lp("/")}
             className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
@@ -84,7 +95,7 @@ export const Navigation = () => {
           <div className="ml-auto hidden items-center gap-6 lg:flex xl:gap-8">
             <ul className="flex items-center gap-6 xl:gap-8">
               {navLinks.map((link) => {
-                const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
+                const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
                 const baseColor = isHeroOverlay
                   ? isActive
                     ? "text-background"
@@ -101,7 +112,7 @@ export const Navigation = () => {
                       />
                     )}
                     <Link
-                      to={link.to}
+                      to={lp(link.to)}
                       aria-current={isActive ? "page" : undefined}
                       className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : ""}`}
                     >
@@ -133,8 +144,21 @@ export const Navigation = () => {
             </a>
           </div>
 
-          {/* Spacer to balance mobile menu button */}
-          <div className="w-11 lg:hidden" aria-hidden="true" />
+          {/* A destra su mobile: "EN" per chi può non leggere il tedesco,
+              altrimenti lo spazio che tiene il logo centrato. */}
+          {showEnglishHint ? (
+            <button
+              type="button"
+              onClick={() => setLanguage("en")}
+              lang="en"
+              aria-label="English"
+              className={`inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border shadow-xs font-work text-[11px] font-semibold tracking-[0.08em] transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 lg:hidden ${isHeroOverlay ? "border-background/40 bg-background/25 text-background backdrop-blur-md hover:bg-background/35" : "border-border/75 bg-card/90 text-primary hover:bg-muted"}`}
+            >
+              EN
+            </button>
+          ) : (
+            <div className="w-11 lg:hidden" aria-hidden="true" />
+          )}
         </div>
       </nav>
 
@@ -163,7 +187,7 @@ export const Navigation = () => {
           {/* Drawer Header */}
           <div className="p-6 border-b border-border/75 flex items-center justify-between">
             <Link 
-              to="/" 
+              to={lp("/")} 
               onClick={() => setIsMobileMenuOpen(false)} 
               className="flex items-center gap-3 focus:outline-hidden focus:ring-2 focus:ring-primary/50 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
@@ -183,12 +207,12 @@ export const Navigation = () => {
           {/* Navigation Links */}
           <nav className="flex-1 p-6 space-y-1 overflow-y-auto">
             {navLinks.map((link) => {
-              const isActive = link.to === "/" ? location.pathname === "/" : location.pathname.startsWith(link.to);
+              const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
 
               return (
                 <Link
                   key={link.to}
-                  to={link.to}
+                  to={lp(link.to)}
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
                   className={`block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors hover:bg-muted hover:text-primary ${isActive ? "bg-muted text-primary" : "text-primary/85"}`}

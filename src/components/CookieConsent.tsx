@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { ChevronDown, ChevronUp, Lock } from "lucide-react";
@@ -183,6 +183,7 @@ const ConsentRow = ({
 
 export const CookieConsent = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const labels = copy[language];
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
@@ -321,11 +322,11 @@ export const CookieConsent = () => {
               </p>
               <p className="font-work text-[11px] leading-relaxed text-muted-high-contrast md:text-xs">
                 {labels.legal}{" "}
-                <a href="/privacy" className="underline underline-offset-2 hover:text-foreground">
+                <a href={lp("/privacy")} className="underline underline-offset-2 hover:text-foreground">
                   {labels.privacy}
                 </a>
                 {" · "}
-                <a href="/impressum" className="underline underline-offset-2 hover:text-foreground">
+                <a href={lp("/impressum")} className="underline underline-offset-2 hover:text-foreground">
                   {labels.imprint}
                 </a>
                 .
@@ -397,7 +398,7 @@ export const CookieConsent = () => {
 
           <div className="mt-3 flex items-center justify-end">
             <a
-              href="/privacy"
+              href={lp("/privacy")}
               className="font-work text-xs text-muted-high-contrast underline underline-offset-2 hover:text-foreground"
             >
               {labels.privacy}

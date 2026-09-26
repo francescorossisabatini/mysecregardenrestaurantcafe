@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Info } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
 import { getTodayHoliday } from "@/data/holidaysData";
@@ -21,6 +21,7 @@ const isValidMenuText = (text?: string) => {
 
 export const HomeMenuPreview = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const { menu, loadedAt, isLoading } = useWeeklyMenu();
   const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
 
@@ -235,7 +236,7 @@ export const HomeMenuPreview = () => {
             {/* Secondario, non verde pieno: la barra fissa porta già l'unica
                 azione primaria del viewport (CLAUDE.md, una CTA per viewport). */}
             <Button size="lg" variant="outline" className="font-work" asChild>
-              <Link to="/menu">{language === "de" ? "Zur Speisekarte" : "Go to menu"}</Link>
+              <Link to={lp("/menu")}>{language === "de" ? "Zur Speisekarte" : "Go to menu"}</Link>
             </Button>
           </div>
         </div>

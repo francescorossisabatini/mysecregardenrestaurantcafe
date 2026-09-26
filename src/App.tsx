@@ -12,6 +12,7 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { lazyWithRetry } from "@/lib/lazyWithRetry";
 import { attachTelClickTracking } from "@/lib/trackTelClicks";
+import { stripLanguagePrefix } from "@/lib/i18nRoutes";
 
 // Critical: Load Index immediately for fast FCP
 import Index from "./pages/Index";
@@ -61,12 +62,33 @@ const RouteAnalytics = () => {
 function AppContent() {
   useHtmlLang();
 
-  return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  );
+  return <AppRoutes />;
 }
+
+// Stesse pagine in due lingue: tedesco alla radice, inglese sotto /en.
+// La lingua la decide l'URL (src/lib/i18nRoutes.ts). /login e le pagine
+// tecniche esistono solo una volta.
+const withLoader = (node: React.ReactNode) => <Suspense fallback={<PageLoader />}>{node}</Suspense>;
+
+const localizedPages: { path: string; element: React.ReactNode }[] = [
+  { path: "", element: <Index /> },
+  { path: "about", element: withLoader(<AboutUs />) },
+  { path: "visit", element: withLoader(<ContactPage />) },
+  { path: "menu", element: withLoader(<MenuPage />) },
+  { path: "gallery", element: withLoader(<GalleryPage />) },
+  { path: "privacy", element: withLoader(<Privacy />) },
+  { path: "impressum", element: withLoader(<Impressum />) },
+  { path: "link", element: withLoader(<LinkPage />) },
+];
+
+// Vecchi indirizzi ancora linkati da fuori (TripAdvisor usa /speisekarte/).
+const legacyRedirects: { from: string; to: string }[] = [
+  { from: "contact", to: "visit" },
+  { from: "wochenkarte", to: "menu" },
+  { from: "speisekarte", to: "menu" },
+];
+
+const LANGUAGE_BASES = ["", "/en"] as const;
 
 function AppRoutes() {
   const location = useLocation();
@@ -113,7 +135,7 @@ function AppRoutes() {
       const sections = Array.from(document.querySelectorAll("section"));
       sections.forEach((section, index) => {
         if (observed.has(section)) return;
-        if (location.pathname === "/" && index === 0) return;
+        if (stripLanguagePrefix(location.pathname) === "/" && index === 0) return;
 
         section.classList.add("section-animate");
         observed.add(section);
@@ -142,20 +164,17 @@ function AppRoutes() {
       <ScrollToTop />
       
       <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/about" element={<Suspense fallback={<PageLoader />}><AboutUs /></Suspense>} />
-        <Route path="/visit" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
-        <Route path="/contact" element={<Navigate to="/visit" replace />} />
-        <Route path="/menu" element={<Suspense fallback={<PageLoader />}><MenuPage /></Suspense>} />
-        <Route path="/gallery" element={<Suspense fallback={<PageLoader />}><GalleryPage /></Suspense>} />
-        <Route path="/login" element={<Suspense fallback={<PageLoader />}><Login /></Suspense>} />
-        <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
-        <Route path="/impressum" element={<Suspense fallback={<PageLoader />}><Impressum /></Suspense>} />
-        <Route path="/wochenkarte" element={<Navigate to="/menu" replace />} />
-        <Route path="/speisekarte" element={<Navigate to="/menu" replace />} />
-        <Route path="/.lovable/oauth/consent" element={<Suspense fallback={<PageLoader />}><OAuthConsent /></Suspense>} />
-        <Route path="/link" element={<Suspense fallback={<PageLoader />}><LinkPage /></Suspense>} />
-        <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
+        {LANGUAGE_BASES.flatMap((base) => [
+          ...localizedPages.map(({ path, element }) => (
+            <Route key={`${base}/${path}`} path={`${base}/${path}`} element={element} />
+          )),
+          ...legacyRedirects.map(({ from, to }) => (
+            <Route key={`${base}/${from}`} path={`${base}/${from}`} element={<Navigate to={`${base}/${to}`} replace />} />
+          )),
+        ])}
+        <Route path="/login" element={withLoader(<Login />)} />
+        <Route path="/.lovable/oauth/consent" element={withLoader(<OAuthConsent />)} />
+        <Route path="*" element={withLoader(<NotFound />)} />
       </Routes>
       <CookieConsent />
       <InstallPrompt />
@@ -174,15 +193,18 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <MobileMenuProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <AppContent />
-          </TooltipProvider>
-        </MobileMenuProvider>
-      </LanguageProvider>
+      {/* Il router sta fuori dal LanguageProvider: la lingua si legge dall'URL. */}
+      <BrowserRouter>
+        <LanguageProvider>
+          <MobileMenuProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <AppContent />
+            </TooltipProvider>
+          </MobileMenuProvider>
+        </LanguageProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
