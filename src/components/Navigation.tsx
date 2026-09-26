@@ -61,11 +61,14 @@ export const Navigation = () => {
           {/* Mobile Menu Trigger (left, mobile only) */}
           <div className="flex items-center lg:hidden">
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               // Stessa superficie su hero e a nav scrollata, gemella del
               // pulsante "EN": token pieni di DESIGN_SYSTEM §3, focus dalla
-              // regola globale §8 (vedi divergence-ledger, 26/09/2026).
-              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors duration-base hover:bg-muted"
+              // regola globale §8. Offset 0: con i 2px di default l'anello
+              // cade sullo scrim scuro dell'hero (1.6:1), appoggiato al disco
+              // crema regge (vedi divergence-ledger, 26/09/2026).
+              className="inline-flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0"
               aria-label={isMobileMenuOpen
                 ? (language === "de" ? "Menü schließen" : "Close menu")
                 : (language === "de" ? "Menü öffnen" : "Open menu")}
@@ -163,7 +166,7 @@ export const Navigation = () => {
               }}
               lang="en"
               aria-label="English"
-              className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border bg-card font-work text-[11px] font-semibold tracking-[0.08em] text-foreground transition-colors duration-base hover:bg-muted lg:hidden"
+              className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border bg-card font-work text-[11px] font-bold tracking-[0.08em] text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0 lg:hidden"
             >
               EN
             </button>
