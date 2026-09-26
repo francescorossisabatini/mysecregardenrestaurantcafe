@@ -296,7 +296,7 @@ Nessun bordo, nessuno sfondo, nessun radius
 ```
 h-[60px] · px-5
 Su hero (scrollY = 0): transparent, logo e testo bianchi
-Scrollata (scrollY > 150px): .bg-nav-surface + backdrop-blur + border-b tenue
+Scrollata (scrollY > 28px): .bg-nav-surface + backdrop-blur + border-b border-border
 Transizione 250ms ease, solo background
 Controlli mobile (hamburger, "EN", X del drawer): disco 44×44 · rounded-full ·
   border border-border · bg-card · text-foreground · focus-visible:outline-offset-0
@@ -308,7 +308,10 @@ tre cose si animavano insieme, contro §7). I controlli mobile restano dischi
 crema pieni anche sull'hero: sul vetro il testo "EN" dava 3.0:1. L'offset 0
 dell'anello di focus vale solo per loro, perché con 2px l'anello cadeva sullo
 scrim scuro dell'hero (1.6:1). L'hamburger non ha stato X: si chiude dalla X del
-drawer, che è un dialog modale (focus dentro, Escape, barra `inert`). Vedi
+drawer, che è un dialog modale (focus dentro, Escape, barra `inert`, pagina
+sotto bloccata). La soglia di scroll era scritta 150px ma nel codice è sempre
+stata 28px: corretto il documento, non il comportamento. Lo scrim dell'hero sfuma
+in opacità insieme allo sfondo invece di sparire di colpo. Vedi
 divergence-ledger.
 
 ### MobileStickyBar (non è una tab bar — vedi nota sotto)

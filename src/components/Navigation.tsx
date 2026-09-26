@@ -24,7 +24,9 @@ export const Navigation = () => {
   const basePath = stripLanguagePrefix(location.pathname);
   const [isScrolled, setIsScrolled] = useState(false);
   const isHome = basePath === "/";
-  const isHeroOverlay = isHome && !isScrolled && !isMobileMenuOpen;
+  // La barra non cambia stato quando si apre il drawer: sta sotto il
+  // backdrop ed è inert, e cambiarla aggiungeva una terza animazione (§7).
+  const isHeroOverlay = isHome && !isScrolled;
 
   const navRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -52,6 +54,11 @@ export const Navigation = () => {
     if (navRef.current) navRef.current.inert = isMobileMenuOpen;
     if (!isMobileMenuOpen) return;
 
+    // Dialog modale: la pagina sotto non scorre.
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = "hidden";
+
     drawerCloseRef.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -73,7 +80,10 @@ export const Navigation = () => {
       }
     };
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    return () => {
+      root.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [isMobileMenuOpen, closeMenu]);
 
   useEffect(() => {
@@ -101,10 +111,10 @@ export const Navigation = () => {
           rimpicciolivano insieme: tre animazioni in contemporanea (§7). */}
       <nav
         ref={navRef}
-        className={`fixed left-0 right-0 top-0 z-50 h-[60px] transition-colors duration-base ease-in-out md:h-auto md:py-2 ${
+        className={`fixed left-0 right-0 top-0 z-50 h-[60px] transition-colors duration-base ease-in-out before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:transition-opacity before:duration-base before:content-[''] md:h-auto md:py-2 ${
           isHeroOverlay
-            ? "border-b border-transparent bg-transparent before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-[120%] before:bg-linear-to-b before:from-foreground/72 before:via-foreground/40 before:to-transparent before:content-['']"
-            : "border-b border-border/60 bg-background backdrop-blur-2xl"
+            ? "border-b border-transparent bg-transparent before:opacity-100"
+            : "border-b border-border bg-nav-surface backdrop-blur before:opacity-0"
         }`}
       >
         <div className="relative mx-auto flex h-full w-full max-w-[1240px] items-center gap-4 px-5 sm:px-6 md:h-auto md:min-h-14 lg:gap-8 lg:px-8">
@@ -133,7 +143,9 @@ export const Navigation = () => {
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
           <Link
             to={lp("/")}
-            className="group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 lg:flex-initial lg:justify-start lg:gap-3"
+            // Focus dalla regola globale §8; sull'hero l'anello navy spariva sullo
+            // scrim (1.14:1), quindi lì diventa chiaro.
+            className={`group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 lg:flex-initial lg:justify-start lg:gap-3 ${isHeroOverlay ? "focus-visible:outline-primary-foreground" : ""}`}
             aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
           >
             <Logo
@@ -141,7 +153,7 @@ export const Navigation = () => {
               showTagline={false}
               aria-hidden="true"
             />
-            <span className={`block max-w-[7.5rem] truncate font-work text-[10px] font-medium uppercase tracking-[0.14em] transition-colors duration-base sm:hidden ${isHeroOverlay ? "text-background" : "text-primary/85"}`}>
+            <span className={`block max-w-[7.5rem] truncate font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base sm:hidden ${isHeroOverlay ? "text-background" : "text-foreground"}`}>
               {activeNavLabel}
             </span>
             <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
@@ -261,11 +273,11 @@ export const Navigation = () => {
           }`}
         >
           {/* Drawer Header */}
-          <div className="p-6 border-b border-border/75 flex items-center justify-between">
+          <div className="p-6 border-b border-border flex items-center justify-between">
             <Link 
               to={lp("/")} 
               onClick={() => setIsMobileMenuOpen(false)} 
-              className="flex items-center gap-3 rounded-lg"
+              className="flex min-h-11 items-center gap-3 rounded-lg"
               aria-label={language === "de" ? "Zur Startseite" : "Go to homepage"}
             >
               <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
@@ -290,13 +302,20 @@ export const Navigation = () => {
               const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
 
               return (
+                // "Sei qui" con la lineetta verde da 2px della nav desktop (§3,
+                // nav attivo) più il peso. Il testo resta navy: text-accent su
+                // questo sfondo è 4.37:1, sotto AA a 14px. La pill bg-muted
+                // di prima era 1.07:1.
                 <Link
                   key={link.to}
                   to={lp(link.to)}
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors hover:bg-muted hover:text-primary ${isActive ? "bg-muted text-primary" : "text-primary/85"}`}
+                  className={`relative block rounded-full px-4 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base hover:bg-muted ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
                 >
+                  {isActive && (
+                    <span aria-hidden="true" className="absolute left-1 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent" />
+                  )}
                   {link.label}
                 </Link>
               );
@@ -304,8 +323,8 @@ export const Navigation = () => {
           </nav>
 
           {/* Language switcher inside drawer */}
-          <div className="border-t border-border/75 p-6 flex items-center justify-between gap-4">
-            <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-high-contrast">
+          <div className="border-t border-border p-6 flex items-center justify-between gap-4">
+            <span className="font-work text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {language === "de" ? "Sprache" : "Language"}
             </span>
             <LanguageSwitcher variant="mobile" />

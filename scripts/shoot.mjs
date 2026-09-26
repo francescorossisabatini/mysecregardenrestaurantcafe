@@ -145,6 +145,21 @@ const STATES = [
     setup: async () => {},
   },
   {
+    // Drawer di navigazione aperto: prima non era mai stato fotografato, e
+    // il critico cieco lo giudicava solo su render senza i font veri.
+    slug: 'home--drawer-aperto',
+    path: '/',
+    mobileOnly: true,
+    setup: async () => {},
+    after: async (page) => {
+      await page.locator('button[aria-controls="mobile-nav-drawer"]').click();
+      // Il puntatore del clic resterebbe sopra il logo del drawer e lo
+      // scatto mostrerebbe un hover che su un telefono non esiste.
+      await page.mouse.move(385, 800);
+      await page.waitForTimeout(700);
+    },
+  },
+  {
     slug: 'menu--dispositivo-it',
     path: '/menu',
     locale: 'it-IT',
@@ -170,7 +185,8 @@ const STATES = [
 
 const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 12);
 
-async function shoot(browser, { path, slug, setup, locale = 'de-AT' }, size) {
+async function shoot(browser, { path, slug, setup, after, locale = 'de-AT', mobileOnly = false }, size) {
+  if (mobileOnly && !size.mobile) return null;
   const context = await browser.newContext({
     viewport: { width: size.w, height: size.h },
     deviceScaleFactor: 2,
@@ -231,8 +247,12 @@ async function shoot(browser, { path, slug, setup, locale = 'de-AT' }, size) {
     return [...document.fonts].some((f) => f.status === 'loaded');
   }).catch(() => false);
 
+  // Stati che esistono solo dopo un'interazione (drawer aperto): lo scatto
+  // è del viewport, non della pagina intera, perché il drawer è fixed.
+  if (after) await after(page);
+
   const file = `${OUT}/${slug}--${size.label}.png`;
-  const buf = await page.screenshot({ fullPage: true });
+  const buf = await page.screenshot({ fullPage: !after });
   await writeFile(file, buf);
   await context.close();
   return { file, hash: hashOf(buf), errors, fontsOk };
@@ -253,6 +273,7 @@ const main = async () => {
     for (const size of WIDTHS) {
       try {
         const r = await shoot(browser, t, size);
+        if (!r) continue;
         results.push({ slug: `${t.slug}--${size.label}`, ...r });
         console.log(`  ${r.file}  ${r.hash}${r.fontsOk ? '' : '  ⚠ FONT NON CARICATI'}${r.errors.length ? `  ⚠ ${r.errors.length} errori console` : ''}`);
       } catch (e) {

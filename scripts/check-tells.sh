@@ -149,7 +149,12 @@ else
 fi
 
 # --- U2 · bordo + ombra sulla stessa superficie -----------------------------
-BS=$(grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${F_U2[@]}" 2>/dev/null | grep -v 'border-0' || true)
+# Anche i template literal className={`...`}: senza, il controllo era cieco a
+# ogni classe condizionale (tutta la Navigation) e il suo verde era falso
+# (critico cieco, 26/09/2026). Su una sola riga: basta per il codice di qui.
+BS=$( { grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${F_U2[@]}" 2>/dev/null
+        grep -rnE 'className=\{`[^`]*\bborder\b[^`]*\bshadow-|className=\{`[^`]*\bshadow-[^`]*\bborder\b' "${F_U2[@]}" 2>/dev/null
+      } | grep -v 'border-0' || true)
 if [ -n "$BS" ]; then
   hit "U2 bordo + ombra" "stessa superficie con entrambi — su cream vince il bordo"
   echo "$BS" | cut -c1-140 | sed 's/^/      /'
