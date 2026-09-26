@@ -14,7 +14,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | Cosa | Chi | Stato |
 |---|---|---|
 | Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → **50**. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → **56**. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
@@ -31,6 +31,12 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 8. `check-tells.sh`: la regex U2 non vede i `className={`...`}`, quindi il controllo bordo + ombra era un falso verde
 
 **Fatto (giro 3, decisioni A, B, C approvate il 26/09/2026):** etichetta di pagina tolta su mobile (chiude WCAG 2.5.3), logo 44px fermo e centrato su ogni route, telefono come link testuale nel drawer, voci in ordine Home, Speisekarte, Besuche uns, Galerie, Unsere Geschichte (anche su desktop), `aria-label` "Sprache wählen" e "My Secret Garden, Startseite".
+
+**Fatto (giro 4, voto di partenza 56):** tocco sulla pagina corrente senza perdita di focus, link logo grande quanto il logo (prima 230px di barra portavano alla home), backdrop e pannello con la stessa durata, logo del drawer 44px, telefono subito sotto le voci, un solo segnale di hover, token semantici al posto di primitivi e `text-white`, `check-tells.sh` che vede primitivi e bianco di default.
+
+**Da decidere (copy, emersi dal critico):** nel drawer "Home" è un doppione del logo e in DE convive con "Startseite" (toglierlo dal drawer?); la voce "Besuche uns" contro l'h1 "Besuch uns" di /visit; una parola accanto al numero di telefono ("Ruf uns an"?).
+
+**Trovato adiacente:** a 320×640 il banner cookie copre la barra e l'hamburger non si tocca finché non si dà il consenso.
 
 **Copy ancora aperto:** "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", "Visit" contro "Besuche uns" (peso ritmico).
 

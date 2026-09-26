@@ -46,6 +46,14 @@ export const Navigation = () => {
     requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, [setIsMobileMenuOpen]);
 
+  // Voce del drawer verso la pagina in cui sei già: il percorso non cambia,
+  // quindi il focus non andrebbe su <main> e finirebbe su <body>. Si chiude
+  // come con la X e il focus torna all'hamburger.
+  const closeOrStay = (to: string) => {
+    if (location.pathname === lp(to)) closeMenu();
+    else setIsMobileMenuOpen(false);
+  };
+
   // Drawer come dialog modale (WCAG 2.2 AA 2.4.11, critico cieco 26/09/2026):
   // prima il focus restava sull'hamburger coperto dal pannello, Escape non
   // chiudeva, e il Tab passava da logo e "EN" sotto il backdrop.
@@ -160,11 +168,14 @@ export const Navigation = () => {
           </div>
 
           {/* Logo + Wordmark (left on desktop, centered on mobile) */}
+          {/* flex-1 sul contenitore, non sul link: prima il link copriva
+              230px di barra vuota e un tocco lì portava alla home. */}
+          <div className="flex min-w-0 flex-1 justify-center lg:flex-initial lg:justify-start">
           <Link
             to={lp("/")}
             // Focus dalla regola globale §8; sull'hero l'anello navy spariva sullo
             // scrim (1.14:1), quindi lì diventa chiaro.
-            className={`group flex min-w-0 flex-1 items-center justify-center gap-2.5 rounded-lg py-1 lg:flex-initial lg:justify-start lg:gap-3 ${isHeroOverlay ? "focus-visible:outline-primary-foreground" : ""}`}
+            className={`group flex min-w-0 items-center gap-2.5 rounded-lg py-1 lg:gap-3 ${isHeroOverlay ? "focus-visible:outline-primary-foreground" : ""}`}
             aria-label={homeLinkLabel}
           >
             <Logo
@@ -172,10 +183,11 @@ export const Navigation = () => {
               showTagline={false}
               aria-hidden="true"
             />
-            <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-background drop-shadow-[0_1px_2px_hsl(var(--navy-500)/0.35)] group-hover:text-background/90" : "text-foreground group-hover:text-primary"}`}>
+            <span className={`hidden min-w-0 truncate font-cormorant text-xl font-bold leading-none transition-colors duration-base sm:block lg:text-[22px] ${isHeroOverlay ? "text-primary-foreground drop-shadow-[0_1px_2px_hsl(var(--foreground)/0.35)] group-hover:text-primary-foreground/90" : "text-foreground group-hover:text-primary"}`}>
               My Secret Garden
             </span>
           </Link>
+          </div>
 
           {/* Desktop Nav Links + Language (right) */}
           <div className="ml-auto hidden items-center gap-6 lg:flex xl:gap-8">
@@ -184,8 +196,8 @@ export const Navigation = () => {
                 const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
                 const baseColor = isHeroOverlay
                   ? isActive
-                    ? "text-background"
-                    : "text-background/85 hover:text-background"
+                    ? "text-primary-foreground"
+                    : "text-primary-foreground/85 hover:text-primary-foreground"
                   : isActive
                     ? "text-accent"
                     : "text-foreground/85 hover:text-accent";
@@ -200,7 +212,7 @@ export const Navigation = () => {
                     <Link
                       to={lp(link.to)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_hsl(var(--navy-500)/0.35)]" : ""}`}
+                      className={`inline-flex min-h-[28px] items-center whitespace-nowrap font-work text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 rounded-lg ${baseColor} ${isHeroOverlay ? "drop-shadow-[0_1px_2px_hsl(var(--foreground)/0.35)]" : ""}`}
                     >
                       {link.label}
                     </Link>
@@ -221,7 +233,7 @@ export const Navigation = () => {
               data-call-source="nav-desktop"
               className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 font-work text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors duration-base focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${
                 isHeroOverlay
-                  ? "bg-background/20 text-background backdrop-blur-md hover:bg-background/30"
+                  ? "bg-background/20 text-primary-foreground backdrop-blur-md hover:bg-background/30"
                   : "bg-accent text-accent-foreground hover:bg-accent/90"
               }`}
             >
@@ -271,7 +283,7 @@ export const Navigation = () => {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-foreground/50 transition-opacity duration-base ease-out ${
+          className={`absolute inset-0 bg-foreground/50 transition-opacity duration-slow ease-out ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0"
           }`}
           onClick={closeMenu}
@@ -296,11 +308,11 @@ export const Navigation = () => {
           <div className="flex h-[calc(60px+env(safe-area-inset-top))] shrink-0 items-center justify-between border-b border-border px-5 pt-[env(safe-area-inset-top)]">
             <Link 
               to={lp("/")} 
-              onClick={() => setIsMobileMenuOpen(false)} 
+              onClick={() => closeOrStay("/")} 
               className="flex min-h-11 items-center gap-3 rounded-lg"
               aria-label={homeLinkLabel}
             >
-              <Logo className="w-10 h-10" showTagline={false} aria-hidden="true" />
+              <Logo className="h-11 w-11" showTagline={false} aria-hidden="true" />
               <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
             </Link>
             {/* Stesso disco dell'hamburger: apertura e chiusura dello stesso
@@ -317,7 +329,7 @@ export const Navigation = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-4">
+          <nav className="space-y-1 px-2 py-4">
             {navLinks.map((link) => {
               const isActive = link.to === "/" ? basePath === "/" : basePath.startsWith(link.to);
 
@@ -329,9 +341,9 @@ export const Navigation = () => {
                 <Link
                   key={link.to}
                   to={lp(link.to)}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => closeOrStay(link.to)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative block rounded-full px-3 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base hover:bg-muted ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
+                  className={`relative block rounded-full px-3 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
                 >
                   {isActive && (
                     <span aria-hidden="true" className="absolute left-1 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent" />
@@ -345,7 +357,7 @@ export const Navigation = () => {
           {/* Il telefono è il canale suggerito (CLAUDE.md) e su mobile, prima
               della MobileStickyBar, non c'era da nessuna parte. Link testuale:
               l'azione primaria verde resta quella della barra fissa. */}
-          <div className="shrink-0 px-5 pb-6">
+          <div className="shrink-0 px-5">
             <a
               href={`tel:${SITE.phoneTel}`}
               data-call-source="drawer"
@@ -354,6 +366,10 @@ export const Navigation = () => {
               {SITE.phoneDisplay}
             </a>
           </div>
+
+          {/* Lo spazio flessibile sta qui, sotto le cose che contano: prima
+              spingeva il telefono in fondo, 367px sotto l'ultima voce. */}
+          <div className="flex-1" aria-hidden="true" />
 
           {/* Language switcher inside drawer */}
           <div className="flex items-center justify-between gap-4 border-t border-border px-5 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
