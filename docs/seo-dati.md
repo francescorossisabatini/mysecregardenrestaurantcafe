@@ -14,6 +14,44 @@
 
 ---
 
+## 28/09/2026: quanti siti linkano i ristoranti vegani di Vienna (Lovable/Semrush)
+
+**Domanda di Francesco a Lovable:** quanti siti linkano i siti dei ristoranti vegani più noti?
+
+**Risposta di Lovable** (Semrush, dati di luglio 2026). Livello: **stima**.
+
+| Sito | Domini che linkano | Link totali | Authority Score |
+|---|---|---|---|
+| Veggiezz | ~874 | 1.765 | 16 |
+| **My Secret Garden** | ~355 | 10.906 | 25 |
+| Jola | ~318 | 847 | 23 |
+| Velani | ~244 | 583 | 30 |
+| Tian | ~124 | 152 | 2 |
+| Shiyu | ~43 | 56 | 0 |
+| Sattva Vegan | n.d. | n.d. | n.d. |
+
+Secondo Lovable:
+- quasi 10.000 dei nostri link vengono da una rete di spam turca e indonesiana (ancore tipo "betcio", "casino"), la stessa che colpisce Velani, Veggiezz, Tian e Shiyu;
+- l'autorità la fanno i link editoriali veri:
+  - Velani: vegan.at, 1000thingsmagazine.com, falstaff.com, wanderlog.com;
+  - Jola: austria.info (autorità 60), vegan.at, 1000things.
+
+**Lettura critica (nostra):**
+- **I numeri non tornano con quelli del 24/09.** Il 24/09 Semrush dava a Velani 343 domini referenti e a noi 229. Oggi dà Velani ~244 e noi ~355. Cambia l'istantanea o la metrica (domini con link attivi, o anche persi). Le Authority Score (25 noi, 30 Velani) invece coincidono. Conclusione: i conteggi di domini di Semrush non si confrontano tra date diverse. Vale la classifica relativa dello stesso giorno.
+- **Lo spam non va "ripulito" per forza.** Google dichiara di ignorare in gran parte i link spam automatici. Il disavow serve solo in caso di azione manuale. Da controllare in Search Console → Sicurezza e azioni manuali → Azioni manuali: deve dire "Nessun problema rilevato". Se è così, non si fa niente.
+- **Per il nostro sito la misura è Search Console, non Semrush.** Search Console → Link → "Siti con più link" elenca i domini che Google ha davvero trovato. È gratis, misurato, e risponde alla domanda di Lovable ("vuoi che controlli se vegan.at, 1000things, Falstaff e Wanderlog ci linkano?") meglio di una stima.
+- **Uno lo sappiamo già da GA4:** 1000thingsmagazine.com ci ha mandato 30 sessioni e falter.at 14 (24/06–21/09). Un referral vuol dire che su quei siti c'è almeno un link a noi. 1000things quindi ci linka già da qualche pagina. L'email alla redazione va riformulata: non "scriveteci per la prima volta", ma aggiornare o aggiungere una menzione. Prima va trovata la pagina che ci linka (GA4 → Acquisizione traffico → sorgente 1000thingsmagazine.com → pagina di riferimento).
+- **"Falstaff e HappyCow sono partner, quindi è probabile che linkino" è un'ipotesi di Lovable.** Si verifica nel rapporto Link di Search Console.
+- **Wanderlog non si "ottiene".** Sono liste di viaggio scritte dagli utenti: ci si entra se i visitatori ci aggiungono. Non è un contatto redazionale.
+- **Nuovo obiettivo emerso: austria.info** (Österreich Werbung, autorità 60). Linka Jola. È il link editoriale di maggior peso della lista, e va aggiunto accanto a vegan.at e Wien.info.
+
+**Prossimi passi (Francesco, circa 15 minuti in tutto):**
+1. Search Console → Azioni manuali: annotare qui l'esito.
+2. Search Console → Link → Siti con più link: annotare qui i primi 10 e controllare se ci sono vegan.at, 1000things, falstaff, happycow, falter.
+3. GA4: trovare la pagina di 1000things che ci linka.
+
+---
+
 ## 27/09/2026: quota mobile delle ricerche "vegan food" (Lovable/Semrush)
 
 **Domanda di Francesco a Lovable:** che percentuale delle ricerche "vegan food" viene da mobile?
@@ -91,7 +129,7 @@ Livello: **misurato**, senza campionamento.
    - foto aggiornate;
    - risposte alle recensioni;
    - orari speciali per i festivi.
-3. **Menzioni editoriali** (vegan.at, 1000things, Falter): colmano il divario di notorietà con Velani. Le bozze delle email sono pronte da chiedere.
+3. **Menzioni editoriali**: colmano il divario di notorietà con Velani. Obiettivi: vegan.at, austria.info (autorità 60, linka Jola) e Wien.info. 1000things e Falter ci linkano già (referral in GA4): lì si chiede un aggiornamento, non una prima menzione. Le bozze delle email sono pronte da chiedere, dopo aver letto il rapporto Link di Search Console.
 4. **Misurare prima di aggiungere.** Scheda Dispositivi per query in Search Console (sopra) e controllo della posizione il 15/10 (promemoria già programmato).
 5. **Prerendering per i crawler AI** (ChatGPT porta il traffico migliore): da provare su un branch di test. Oggi GPTBot vede solo il `<head>`.
 

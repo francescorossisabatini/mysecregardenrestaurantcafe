@@ -86,6 +86,10 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Fuori dal sito
 
+- [ ] **Search Console, 15 minuti (F):** Azioni manuali (deve dire "nessun problema") · Link → Siti con più link (primi 10) · Rendimento → "vegetarisches restaurant wien" → scheda Dispositivi. Annotare in `docs/seo-dati.md`
+- [ ] **1000things ci linka già** (30 sessioni da referral in GA4): trovare la pagina e cambiare l'email da "prima menzione" ad "aggiornamento"
+- [ ] **austria.info** (Österreich Werbung): nuovo obiettivo di link editoriale, emerso dal confronto con Jola
+
 - [ ] **TripAdvisor** (C): il link al sito è `http://`, il link menu è `/speisekarte/`. Passare a `https://` e `/menu`
 - [ ] **vegan.at** (F): scrivere a `restaurants@vegan.at` (database comunitario). Bozza da chiedere a Claude
 - [ ] **1000things** (F): redazione `redaktion@1000thingsmagazine.com`. Bozza da chiedere a Claude
