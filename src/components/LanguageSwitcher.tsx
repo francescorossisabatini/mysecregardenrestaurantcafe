@@ -7,6 +7,14 @@ interface LanguageSwitcherProps {
 
 export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: LanguageSwitcherProps) => {
   const { language, setLanguage } = useLanguage();
+  // L'etichetta viene dal pulsante premuto, e sulla lingua già attiva non
+  // parte nessun evento: prima toccare DE su una pagina DE registrava
+  // "switch_to_en" (critico cieco, 28/09/2026).
+  const choose = (next: "de" | "en") => {
+    if (next === language) return;
+    window.gtag?.("event", "language_switch", { event_category: "engagement", event_label: `switch_to_${next}` });
+    setLanguage(next);
+  };
   const isOverlay = tone === "overlay";
 
   if (variant === "mobile") {
@@ -17,8 +25,8 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
         <button
           type="button"
           lang="de"
-          onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
-          className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
+          onClick={() => choose("de")}
+          className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-[background-color,color] duration-base whitespace-nowrap focus-visible:outline-offset-0 ${
             language === "de"
               ? "bg-primary text-primary-foreground"
               : "text-foreground hover:bg-muted"
@@ -31,8 +39,8 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
         <button
           type="button"
           lang="en"
-          onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
-          className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
+          onClick={() => choose("en")}
+          className={`flex h-11 min-w-11 items-center justify-center rounded-full px-2.5 font-work text-[11px] font-semibold tracking-[0.08em] transition-[background-color,color] duration-base whitespace-nowrap focus-visible:outline-offset-0 ${
             language === "en"
               ? "bg-primary text-primary-foreground"
               : "text-foreground hover:bg-muted"
@@ -52,7 +60,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
       <button
         type="button"
         lang="de"
-        onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("de"); }}
+        onClick={() => choose("de")}
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
           language === "de"
             ? "bg-primary text-primary-foreground"
@@ -66,7 +74,7 @@ export const LanguageSwitcher = ({ variant = "navbar", tone = "default" }: Langu
       <button
         type="button"
         lang="en"
-        onClick={() => { window.gtag?.('event', 'language_switch', { event_category: 'engagement', event_label: language === 'de' ? 'switch_to_en' : 'switch_to_de' }); setLanguage("en"); }}
+        onClick={() => choose("en")}
         className={`rounded-full px-2.5 py-1 font-work text-[11px] font-semibold tracking-[0.08em] transition-colors duration-base whitespace-nowrap ${
           language === "en"
             ? "bg-primary text-primary-foreground"

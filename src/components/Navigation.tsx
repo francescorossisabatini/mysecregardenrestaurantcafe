@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
@@ -40,14 +40,15 @@ const isDishText = (text?: string) => {
  * è già letto (cache di 5 minuti) e niente salta sotto il pollice. Prima lo
  * spazio riservato era 84px contro 118 reali, e il telefono si spostava.
  */
-const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en"; menuHref: string; onMenuClick: () => void }) => {
-  const { isClosed: isClosedToday, isLoading, todayMenu, loadedAt } = useTodayClosed();
+const DrawerToday = ({ language, menuHref, onMenuClick, phone }: { language: "de" | "en"; menuHref: string; onMenuClick: () => void; phone: ReactNode }) => {
+  const { isClosed: isClosedToday, isLoading, todayMenu, loadedAt, error } = useTodayClosed();
   const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
   const now = new Date();
   const status = getOpenStatus(SITE.openingHours, now);
 
-  // Raro, ormai: solo se apri il drawer prima che la pagina abbia letto il menu.
-  if (isLoading) return <p className="min-h-11" aria-hidden="true" />;
+  // Mentre il menu carica: solo la riga di stato riservata. Il telefono sta
+  // subito sotto lo stato, quindi non si muove quando arrivano i piatti.
+  if (isLoading) return <><p className="min-h-11" aria-hidden="true" />{phone}</>;
 
   const isOpen = status.isOpen && !isClosedToday;
   const next = getNextOpening(SITE.openingHours, now, (date) => getHolidayForDate(date) !== null);
@@ -77,16 +78,21 @@ const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en
 
   // Aperto oggi, ma il foglio non ha ancora i piatti: lo stato vuoto di
   // voice-spec, senza telefono perché il telefono sta subito sotto.
-  const menuNotOnline = !isClosedToday && !status.isAfterClosing && dishNames.length === 0;
+  // Solo se il foglio è stato letto davvero: con un errore di rete la karte
+  // può essere online, siamo noi a non raggiungerla.
+  const menuNotOnline = !error && !isClosedToday && !status.isAfterClosing && dishNames.length === 0;
   // Pallino: verde aperto, neutro "apre alle 11", rosso chiuso (§6, 6px).
   const dot = isOpen ? "bg-success" : !isClosedToday && status.opensAt ? "bg-muted-foreground" : "bg-destructive";
 
   return (
     <>
-      <p className="flex min-h-11 items-start gap-2.5 py-2.5 font-work text-sm font-medium text-foreground">
-        <span aria-hidden="true" className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${dot}`} />
+      {/* Pallino fuori dal filo (x≈12, l'asse della lineetta della voce
+          attiva): il testo resta a 20px come tutto il resto del drawer. */}
+      <p className="relative min-h-11 py-2.5 font-work text-sm font-medium text-foreground">
+        <span aria-hidden="true" className={`absolute -left-2.5 top-[18px] h-1.5 w-1.5 rounded-full ${dot}`} />
         {label}
       </p>
+      {phone}
       {dishNames.length > 0 && (
         // -mx-2 px-2: l'anello di focus non tocca le lettere. min-h-11 per
         // i giorni con un piatto solo. Sottolineati come il telefono: si
@@ -101,7 +107,7 @@ const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en
       )}
       {menuNotOnline && (
         <p className="py-1 font-cormorant text-xl italic leading-snug text-muted-foreground">
-          {language === "de" ? "Die Karte von heute steht noch nicht online." : "Today's menu isn't online yet."}
+          {language === "de" ? "Die Karte von heute steht noch nicht online. Wir schreiben sie jeden Morgen." : "Today's menu isn't online yet. We write it every morning."}
         </p>
       )}
     </>
@@ -423,16 +429,22 @@ export const Navigation = () => {
               pagina porta (direction lock). Il profilo B li vede aprendo il
               drawer, senza passare da "Speisekarte". */}
           <div className="shrink-0 px-5 pb-2">
-            <DrawerToday language={language} menuHref={lp("/menu")} onMenuClick={() => closeOrStay("/menu")} />
-            {/* Il telefono è il canale suggerito (CLAUDE.md): link testuale,
-                perché l'azione primaria verde resta quella della barra fissa. */}
-            <a
-              href={`tel:${SITE.phoneTel}`}
-              data-call-source="drawer"
-              className="inline-flex min-h-11 items-center font-work text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
-            >
-              {language === "de" ? "Ruf an: " : "Call: "}{SITE.phoneDisplay}
-            </a>
+            <DrawerToday
+              language={language}
+              menuHref={lp("/menu")}
+              onMenuClick={() => closeOrStay("/menu")}
+              // Il telefono è il canale suggerito (CLAUDE.md): link testuale,
+              // perché l'azione primaria verde resta quella della barra fissa.
+              phone={
+                <a
+                  href={`tel:${SITE.phoneTel}`}
+                  data-call-source="drawer"
+                  className="inline-flex min-h-11 items-center font-work text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
+                >
+                  {language === "de" ? "Ruf an: " : "Call: "}{SITE.phoneDisplay}
+                </a>
+              }
+            />
           </div>
 
           {/* Navigation Links */}

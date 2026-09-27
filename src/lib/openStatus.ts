@@ -111,8 +111,14 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
  */
 export function getNextOpening(hours: OpeningHours, now = new Date(), isClosedDate?: (date: Date) => boolean) {
   const order: (keyof OpeningHours)[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  // Giorni di calendario, non N×24h: nella notte del cambio d'ora (23 o 25
+  // ore) sommare 24h saltava o ripeteva un giorno (sab 27/03/2027 alle 23:30
+  // diceva "domani" per lunedì). Si parte da mezzogiorno UTC della data di
+  // Vienna di oggi: a mezzogiorno nessun cambio d'ora sposta la data.
+  const [y, m, d] = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Vienna", year: "numeric", month: "2-digit", day: "2-digit" })
+    .format(now).split("-").map(Number);
   for (let daysAhead = 1; daysAhead <= 14; daysAhead++) {
-    const candidate = new Date(now.getTime() + daysAhead * 24 * 60 * 60 * 1000);
+    const candidate = new Date(Date.UTC(y, m - 1, d + daysAhead, 12));
     const key = weekdayKey(getViennaParts(candidate).weekday);
     const slot = hours[key];
     if (!slot || isClosedDate?.(candidate)) continue;

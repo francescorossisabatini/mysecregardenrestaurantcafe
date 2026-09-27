@@ -13,6 +13,8 @@ interface TodayClosedResult {
   hasMenuToday: boolean;
   todayMenu?: WeeklyMenuData["days"][number];
   loadedAt: string | null;
+  /** Il foglio non si è potuto leggere: non vuol dire menu vuoto. */
+  error: string | null;
   holidayName?: { de: string; en: string };
   holidayMessage?: { de: string; en: string };
 }
@@ -27,11 +29,11 @@ interface TodayClosedResult {
  * straordinaria va segnata in holidaysData.
  */
 export function useTodayClosed(): TodayClosedResult {
-  const { menu, isLoading, loadedAt } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt, error } = useWeeklyMenu();
 
   return useMemo(() => {
     if (isLoading) {
-      return { isClosed: false, isLoading: true, reason: null, hasMenuToday: false, loadedAt: null };
+      return { isClosed: false, isLoading: true, reason: null, hasMenuToday: false, loadedAt: null, error: null };
     }
 
     // Giorno di Vienna, come gli orari (getOpenStatus).
@@ -47,6 +49,7 @@ export function useTodayClosed(): TodayClosedResult {
         reason: "holiday",
         hasMenuToday: false,
         loadedAt,
+        error,
         holidayName: todayHoliday.name,
         holidayMessage: todayHoliday.message,
       };
@@ -54,7 +57,7 @@ export function useTodayClosed(): TodayClosedResult {
 
     // Check for Sunday
     if (isSunday) {
-      return { isClosed: true, isLoading: false, reason: "sunday", hasMenuToday: false, loadedAt };
+      return { isClosed: true, isLoading: false, reason: "sunday", hasMenuToday: false, loadedAt, error };
     }
 
     // Check if today's menu is empty (no data from Google Sheets)
@@ -75,6 +78,6 @@ export function useTodayClosed(): TodayClosedResult {
       isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
     );
 
-    return { isClosed: false, isLoading: false, reason: null, hasMenuToday: hasMenuData, todayMenu, loadedAt };
-  }, [menu, isLoading, loadedAt]);
+    return { isClosed: false, isLoading: false, reason: null, hasMenuToday: hasMenuData, todayMenu, loadedAt, error };
+  }, [menu, isLoading, loadedAt, error]);
 }

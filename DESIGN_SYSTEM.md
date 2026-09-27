@@ -266,6 +266,8 @@ Text: bianco · font-work font-bold text-[11px] · dot w-1.5 h-1.5 rounded-full
 Shape pill · aria-live="polite"
 ```
 
+**Variante "riga di stato"** (drawer mobile, dal 28/09/2026): pallino `h-1.5 w-1.5 rounded-full` fuori dal filo del testo (`absolute -left-2.5`) e testo `font-work text-sm font-medium text-foreground`, senza pill. Pallino: `bg-success` aperto, `bg-muted-foreground` prima dell'apertura, `bg-destructive` chiuso. Il testo porta l'orario ("Heute bis 19:00 geöffnet") e, da chiuso, la riapertura. Il badge a pill dell'hero resta com'è: unificarli è una decisione aperta (`docs/stato-aperto.md`).
+
 ### Menu card
 
 ```
