@@ -7,36 +7,97 @@ import { deviceLanguageIsNotGerman, stripLanguagePrefix } from "@/lib/i18nRoutes
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SITE } from "@/config/site";
-import { getOpenStatus } from "@/lib/openStatus";
+import { getNextOpening, getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
+import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
+import { getTodayHoliday } from "@/data/holidaysData";
+import { splitDishText } from "@/lib/splitDishText";
+import { cleanDisplayText } from "@/lib/displayText";
+
+const WEEKDAYS = {
+  de: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+};
+
+const isDishText = (text?: string) => {
+  const t = (text ?? "").trim();
+  return !!t && !/^#(VALUE!?|N\/A|REF!|DIV\/0!|NAME\?|NULL!|NUM!)/i.test(t);
+};
 
 /**
- * Lo stato di oggi nel drawer: stesso calcolo del badge dell'hero (orari,
- * domenica, festivi, menu vuoto). Montato solo a drawer aperto, così il menu
- * si legge (cache di 5 minuti) solo quando serve. Mentre carica non mostra
- * niente: meglio nessuna riga che uno stato sbagliato.
+ * Il blocco di oggi in cima al drawer: stato, piatti, telefono.
+ *
+ * Lo stato viene dallo stesso calcolo del badge dell'hero. Chiuso vuol dire
+ * solo domenica, festivo o fuori orario: un foglio non ancora aggiornato non
+ * chiude il locale (bug del 27/09/2026, vedi useTodayClosed). Da chiuso dice
+ * quando si riapre (voice-spec, "Heute geschlossen. Morgen ab 11:00 wieder da.").
+ *
+ * I piatti sono il dato che Google non ha (direction lock): in Cormorant, più
+ * pesanti delle voci, come un solo link a /menu. Mentre il menu carica si
+ * tiene il loro spazio, così le voci sotto non saltano; nei giorni già noti
+ * come chiusi lo spazio non si riserva.
+ *
+ * Montato solo a drawer aperto: il menu si legge (cache di 5 minuti) solo
+ * quando serve.
  */
-const DrawerTodayStatus = ({ language }: { language: "de" | "en" }) => {
-  const { isClosed: isClosedToday, isLoading } = useTodayClosed();
-  // Riga vuota della stessa altezza mentre carica: senza, il telefono sotto
-  // saltava di 44px proprio mentre il pollice ci andava sopra.
-  if (isLoading) return <p className="min-h-11" aria-hidden="true" />;
-  const status = getOpenStatus(SITE.openingHours, new Date());
+const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en"; menuHref: string; onMenuClick: () => void }) => {
+  const { isClosed: isClosedToday, isLoading, todayMenu, loadedAt } = useTodayClosed();
+  const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
+  const now = new Date();
+  const status = getOpenStatus(SITE.openingHours, now);
+  const knownClosedDay = status.isClosed || getTodayHoliday() !== null;
+
+  if (isLoading) {
+    return (
+      <div aria-hidden="true">
+        <p className="min-h-11" />
+        {!knownClosedDay && !status.isAfterClosing && <div className="h-[5.25rem]" />}
+      </div>
+    );
+  }
+
   const isOpen = status.isOpen && !isClosedToday;
+  const next = getNextOpening(SITE.openingHours, now);
+  const reopen = !next
+    ? ""
+    : next.daysAhead === 1
+      ? language === "de" ? ` Morgen ab ${next.open} wieder da.` : ` Back tomorrow from ${next.open}.`
+      : language === "de" ? ` Am ${WEEKDAYS.de[next.weekday]} ab ${next.open} wieder da.` : ` Back ${WEEKDAYS.en[next.weekday]} from ${next.open}.`;
 
   const label = isOpen && status.closesAt
     ? language === "de" ? `Heute bis ${status.closesAt} geöffnet` : `Open today until ${status.closesAt}`
     : !isClosedToday && status.opensAt
       ? language === "de" ? `Heute ab ${status.opensAt} geöffnet` : `Open today from ${status.opensAt}`
       : isClosedToday
-        ? language === "de" ? "Heute geschlossen" : "Closed today"
-        : language === "de" ? "Jetzt geschlossen" : "Closed now";
+        ? (language === "de" ? "Heute geschlossen." : "Closed today.") + reopen
+        : (language === "de" ? "Jetzt geschlossen." : "Closed now.") + reopen;
+
+  // Piatti solo per oggi e solo finché ha senso venire: non da chiusi, non
+  // dopo la chiusura, non se il foglio è ancora quello della settimana scorsa.
+  const showDishes = !isClosedToday && !status.isAfterClosing && weeklyMenuAvailable && !!todayMenu;
+  const dishNames = showDishes
+    ? (["soup", "green", "blue"] as const)
+        .map((key) => ({ key, text: todayMenu[key]?.[language] }))
+        .filter((dish) => isDishText(dish.text))
+        .map((dish) => cleanDisplayText(splitDishText(dish.text as string, language, dish.key).name))
+    : [];
 
   return (
-    <p className="flex min-h-11 items-center gap-2.5 font-work text-sm font-medium text-foreground">
-      <span aria-hidden="true" className={`h-2 w-2 shrink-0 rounded-full ${isOpen ? "bg-success" : "bg-destructive"}`} />
-      {label}
-    </p>
+    <>
+      <p className="flex min-h-11 items-start gap-2.5 py-2.5 font-work text-sm font-medium text-foreground">
+        <span aria-hidden="true" className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${isOpen ? "bg-success" : "bg-destructive"}`} />
+        {label}
+      </p>
+      {dishNames.length > 0 && (
+        <Link to={menuHref} onClick={onMenuClick} className="block rounded-lg py-1">
+          {dishNames.map((name) => (
+            <span key={name} className="block font-cormorant text-xl font-semibold leading-snug text-foreground">
+              {name}
+            </span>
+          ))}
+        </Link>
+      )}
+    </>
   );
 };
 
@@ -351,6 +412,24 @@ export const Navigation = () => {
             </button>
           </div>
 
+          {/* Oggi, prima delle voci: stato e piatti sono il dato che la
+              pagina porta (direction lock). Il profilo B li vede aprendo il
+              drawer, senza passare da "Speisekarte". */}
+          <div className="shrink-0 px-5 pb-2">
+            {isMobileMenuOpen && (
+              <DrawerToday language={language} menuHref={lp("/menu")} onMenuClick={() => closeOrStay("/menu")} />
+            )}
+            {/* Il telefono è il canale suggerito (CLAUDE.md): link testuale,
+                perché l'azione primaria verde resta quella della barra fissa. */}
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              data-call-source="drawer"
+              className="inline-flex min-h-11 items-center font-work text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
+            >
+              {language === "de" ? "Ruf an: " : "Call: "}{SITE.phoneDisplay}
+            </a>
+          </div>
+
           {/* Navigation Links */}
           <nav className="space-y-1 px-2 py-4">
             {navLinks.map((link) => {
@@ -377,23 +456,7 @@ export const Navigation = () => {
             })}
           </nav>
 
-          {/* Il dato di oggi: l'unica cosa che solo questo sito sa e che cambia
-              ogni giorno (direction lock, "la pagina la porta il dato"). Il
-              telefono è il canale suggerito (CLAUDE.md); link testuale, perché
-              l'azione primaria verde resta quella della barra fissa. */}
-          <div className="shrink-0 px-5 pt-2">
-            {isMobileMenuOpen && <DrawerTodayStatus language={language} />}
-            <a
-              href={`tel:${SITE.phoneTel}`}
-              data-call-source="drawer"
-              className="inline-flex min-h-11 items-center font-work text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
-            >
-              {language === "de" ? "Ruf an: " : "Call: "}{SITE.phoneDisplay}
-            </a>
-          </div>
-
-          {/* Lo spazio flessibile sta qui, sotto le cose che contano: prima
-              spingeva il telefono in fondo, 367px sotto l'ultima voce. */}
+          {/* Lo spazio flessibile sta qui, sotto le cose che contano. */}
           <div className="flex-1" aria-hidden="true" />
 
           {/* Language switcher inside drawer */}

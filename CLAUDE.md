@@ -115,7 +115,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 **Navigazione:**
 - Top bar mobile: hamburger (apre drawer con tutti i link) + logo + a destra "EN" solo per dispositivi non in tedesco che non hanno ancora scelto una lingua (altrimenti spazio vuoto). Il selettore DE/EN completo sta nel drawer
 - MobileStickyBar (fixed, appare dopo ~300px di scroll, nascosta sopra il footer): 2 bottoni — Anrufen (verde) + Besuchen/Route (outline). Non 3 tab + call pill come descritto in una versione precedente di questo file: decisione confermata in chat il 20 settembre 2026, coerente con "una sola CTA primaria" — chiamare e trovarci sono le due azioni che contano.
-- Drawer hamburger (dal 27/09/2026): in alto solo la X, nel punto dell'hamburger; voci Startseite, Speisekarte, Besuch uns, Galerie, Unsere Geschichte (stesso ordine della nav desktop); sotto, lo stato di oggi (stesso calcolo del badge dell'hero) e "Ruf an: +43 1 586 28 39"; in fondo il selettore DE/EN. È un dialog modale: focus sulla X, Tab confinato, Escape chiude
+- Drawer hamburger (dal 27/09/2026): in alto solo la X, nel punto dell'hamburger; voci Startseite, Speisekarte, Besuch uns, Galerie, Unsere Geschichte (stesso ordine della nav desktop); subito sotto la X il blocco di oggi: stato (stesso calcolo del badge dell'hero), nomi dei piatti del giorno come link a /menu, "Ruf an: +43 1 586 28 39"; poi le voci; in fondo il selettore DE/EN. È un dialog modale: focus sulla X, Tab confinato, Escape chiude
 
 
 ---
@@ -221,7 +221,8 @@ non quello dopo le correzioni.
 **Navigazione e drawer (approvato in chat il 26–27 settembre 2026)**
 - Voci DE: *Startseite · Speisekarte · Besuch uns · Galerie · Unsere Geschichte* (era "Home" e "Besuche uns")
 - Voci EN: *Home · Menu · Visit us · Gallery · Our Story* (era "Visit")
-- Stato di oggi: *Heute bis 19:00 geöffnet* / *Open today until 19:00*; *Heute ab 11:00 geöffnet* / *Open today from 11:00*; *Heute geschlossen* / *Closed today*; *Jetzt geschlossen* / *Closed now* (gli ultimi due sono già quelli del badge dell'hero)
+- Stato di oggi: *Heute bis 19:00 geöffnet* / *Open today until 19:00*; *Heute ab 11:00 geöffnet* / *Open today from 11:00*; *Heute geschlossen. Morgen ab 11:00 wieder da.* / *Closed today. Back tomorrow from 11:00.*; *Jetzt geschlossen. Am Montag ab 11:00 wieder da.* / *Closed now. Back Monday from 11:00.* (il giorno di riapertura viene dagli orari)
+- Menu del giorno non ancora nel foglio (giorno aperto): *Die Karte von heute steht noch nicht online. Wir schreiben sie jeden Morgen — ruf an: +43 1 586 28 39* (voice-spec) / *Today's menu isn't online yet. We write it every morning — call: +43 1 586 28 39*. **Menu vuoto non vuol dire chiuso** (bug corretto il 27/09/2026): chiuso è solo domenica, festivo (`holidaysData`) o fuori orario
 - Telefono: *Ruf an: +43 1 586 28 39* / *Call: +43 1 586 28 39*
 
 ---

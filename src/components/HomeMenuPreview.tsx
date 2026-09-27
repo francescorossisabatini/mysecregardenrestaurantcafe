@@ -11,6 +11,7 @@ import { getAllergenByCode } from "@/data/allergensData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText, joinDisplayText } from "@/lib/displayText";
 import { DietaryBadges } from "@/components/menu/DietaryBadges";
+import { SITE } from "@/config/site";
 
 const isValidMenuText = (text?: string) => {
   const t = (text ?? "").trim();
@@ -48,7 +49,10 @@ export const HomeMenuPreview = () => {
     isValidMenuText(todayMenu.green?.[language]) ||
     isValidMenuText(todayMenu.blue?.[language])
   );
-  const isClosed = dayIndex === 0 || todayHoliday !== null || !hasMenuData || currentHour >= 19;
+  // Chiuso = domenica, festivo o dopo le 19. Il foglio vuoto non chiude il
+  // locale: fino al 27/09/2026 un lunedì alle 10 questa card diceva "Heute
+  // geschlossen" e il locale apriva alle 11 (divergence-ledger).
+  const isClosed = dayIndex === 0 || todayHoliday !== null || currentHour >= 19;
 
 
   // Griglia dei piatti — due decisioni che vivono nel CSS, non qui:
@@ -159,7 +163,19 @@ export const HomeMenuPreview = () => {
             );
           })()}
 
-          {isLoading ? null : !isClosed && dishes.length > 0 ? null : showPending ? (
+          {isLoading ? null : !isClosed && dishes.length > 0 ? null : !isClosed && !hasMenuData && !showPending ? (
+            // Giorno aperto, foglio non ancora aggiornato: lo stato vuoto di
+            // voice-spec, con il telefono come canale.
+            <div className="rounded-lg border p-8 surface-card">
+              <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
+                {language === "de" ? "Die Karte von heute steht noch nicht online." : "Today's menu isn't online yet."}
+              </p>
+              <p className="mt-3 max-w-md font-work text-sm text-muted-high-contrast">
+                {language === "de" ? "Wir schreiben sie jeden Morgen — ruf an: " : "We write it every morning — call: "}
+                <a href={`tel:${SITE.phoneTel}`} data-call-source="menu-empty" className="text-foreground underline underline-offset-4">{SITE.phoneDisplay}</a>
+              </p>
+            </div>
+          ) : showPending ? (
             <div className="rounded-lg border p-8 surface-card">
               <p className="font-cormorant text-2xl italic text-foreground/85 md:text-3xl">
                 {language === "de" ? "Der Wochenplan wird gerade aktualisiert." : "The weekly menu is being updated."}

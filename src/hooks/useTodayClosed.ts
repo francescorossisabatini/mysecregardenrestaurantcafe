@@ -2,24 +2,35 @@ import { useMemo } from "react";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getTodayHoliday } from "@/data/holidaysData";
 
+type WeeklyMenuData = ReturnType<typeof useWeeklyMenu>["menu"];
+
 interface TodayClosedResult {
   isClosed: boolean;
   isLoading: boolean;
-  reason: "sunday" | "holiday" | "no-menu" | null;
+  reason: "sunday" | "holiday" | null;
+  /** Il foglio ha almeno un piatto valido per oggi. Non decide se siamo chiusi. */
+  hasMenuToday: boolean;
+  todayMenu?: WeeklyMenuData["days"][number];
+  loadedAt: string | null;
   holidayName?: { de: string; en: string };
   holidayMessage?: { de: string; en: string };
 }
 
 /**
- * Hook to determine if the restaurant is closed today.
- * Checks: Sunday, holiday, or no menu data from Google Sheets.
+ * Siamo chiusi oggi? Solo domenica e festivi (holidaysData).
+ *
+ * Fino al 27/09/2026 anche "il foglio non ha ancora i piatti di oggi" contava
+ * come chiuso: un lunedì alle 10, prima dell'aggiornamento dello staff, il
+ * sito diceva "Heute geschlossen" e il locale apriva alle 11. Il menu vuoto
+ * ora è solo `hasMenuToday: false` (docs/ux/divergence-ledger.md). Una chiusura
+ * straordinaria va segnata in holidaysData.
  */
 export function useTodayClosed(): TodayClosedResult {
-  const { menu, isLoading } = useWeeklyMenu();
+  const { menu, isLoading, loadedAt } = useWeeklyMenu();
 
   return useMemo(() => {
     if (isLoading) {
-      return { isClosed: false, isLoading: true, reason: null };
+      return { isClosed: false, isLoading: true, reason: null, hasMenuToday: false, loadedAt: null };
     }
 
     const today = new Date();
@@ -32,6 +43,8 @@ export function useTodayClosed(): TodayClosedResult {
         isClosed: true,
         isLoading: false,
         reason: "holiday",
+        hasMenuToday: false,
+        loadedAt,
         holidayName: todayHoliday.name,
         holidayMessage: todayHoliday.message,
       };
@@ -39,7 +52,7 @@ export function useTodayClosed(): TodayClosedResult {
 
     // Check for Sunday
     if (isSunday) {
-      return { isClosed: true, isLoading: false, reason: "sunday" };
+      return { isClosed: true, isLoading: false, reason: "sunday", hasMenuToday: false, loadedAt };
     }
 
     // Check if today's menu is empty (no data from Google Sheets)
@@ -54,17 +67,12 @@ export function useTodayClosed(): TodayClosedResult {
       return true;
     };
 
-    // If no menu found OR all dishes are empty/invalid, treat as closed
     const hasMenuData = !!todayMenu && (
       isValidMenuText(todayMenu.soup?.de) || isValidMenuText(todayMenu.soup?.en) ||
       isValidMenuText(todayMenu.green?.de) || isValidMenuText(todayMenu.green?.en) ||
       isValidMenuText(todayMenu.blue?.de) || isValidMenuText(todayMenu.blue?.en)
     );
 
-    if (!hasMenuData) {
-      return { isClosed: true, isLoading: false, reason: "no-menu" };
-    }
-
-    return { isClosed: false, isLoading: false, reason: null };
-  }, [menu, isLoading]);
+    return { isClosed: false, isLoading: false, reason: null, hasMenuToday: hasMenuData, todayMenu, loadedAt };
+  }, [menu, isLoading, loadedAt]);
 }

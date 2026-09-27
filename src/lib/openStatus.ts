@@ -84,3 +84,21 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
     tomorrowClosed: !nextDaySlot,
   };
 }
+
+/**
+ * Prossima apertura dopo oggi, dagli orari (non da un "+1" fisso): domani se
+ * domani ha un orario, altrimenti il primo giorno che ce l'ha. `weekday` è
+ * l'indice di Date#getDay() (0 = domenica), per scegliere il nome del giorno.
+ * I festivi non sono negli orari: se domani è festivo lo dice holidaysData.
+ */
+export function getNextOpening(hours: OpeningHours, now = new Date()) {
+  const { weekday } = getViennaParts(now);
+  const order: (keyof OpeningHours)[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const today = order.indexOf(weekdayKey(weekday));
+  for (let daysAhead = 1; daysAhead <= 7; daysAhead++) {
+    const index = (today + daysAhead) % 7;
+    const slot = hours[order[index]];
+    if (slot) return { daysAhead, weekday: index, open: slot.open };
+  }
+  return null;
+}

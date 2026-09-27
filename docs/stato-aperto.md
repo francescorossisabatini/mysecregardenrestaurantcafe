@@ -38,11 +38,11 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 **Fatto (giro 6, 27/09/2026):** stato di oggi nel drawer (stesso calcolo del badge dell'hero), X al posto dell'hamburger senza logo nell'header, copy approvato (Startseite, Besuch uns, Visit us, Ruf an / Call).
 
-**⚠ Bug in produzione (trovato il 27/09/2026, confermato):** se il foglio del menu non ha ancora i piatti di oggi (per esempio lunedì mattina prima che lo staff lo aggiorni), il badge dell'hero dice **"Heute geschlossen"** anche se il locale apre alle 11. Causa: `useTodayClosed.ts` tratta "menu vuoto" come "chiuso" (`reason: "no-menu"`). Chi guarda il sito a quell'ora pensa che il locale sia chiuso e non viene. È logica di business: serve l'ok di F. Proposta: menu vuoto ≠ chiuso nei giorni feriali; lo stato segue l'orario, e la card del menu usa il testo della voice-spec per il menu vuoto.
+**✓ Bug "chiuso col foglio vuoto" corretto sul branch il 27/09/2026** (hero, card della home, /menu, drawer). Va in produzione col merge. Una chiusura straordinaria ora va segnata in `holidaysData`: il foglio vuoto non basta più.
 
 **Leve per superare 59 (decisioni di F):**
-- *Il menu di oggi nel drawer* al posto del solo orario: i tre piatti, dal menu già caricato, come link a /menu, con più peso visivo delle voci. È il dato che "Google non ha" (direction lock). È la leva più forte.
-- *Stato chiuso che dice quando si riapre*: "Heute geschlossen. Morgen ab 11:00 wieder da." (la coppia BENE di voice-spec, riga 89), e "Jetzt geschlossen" con la riapertura. Il calcolo esiste già in `HomeMenuPreview.tsx`.
+- ✓ (27/09) *Il menu di oggi nel drawer* al posto del solo orario: i tre piatti, dal menu già caricato, come link a /menu, con più peso visivo delle voci. È il dato che "Google non ha" (direction lock). È la leva più forte.
+- ✓ (27/09) *Stato chiuso che dice quando si riapre*: "Heute geschlossen. Morgen ab 11:00 wieder da." (la coppia BENE di voice-spec, riga 89), e "Jetzt geschlossen" con la riapertura. Il calcolo esiste già in `HomeMenuPreview.tsx`.
 - *Zona del pollice*: blocco oggi + telefono in basso, sopra la lingua.
 - *Un solo indicatore aperto/chiuso* tra hero e drawer (oggi due verdi e due misure), registrato in DS §6.
 - *Selettore lingua*: stato selezionato meno pesante (contorno invece del disco pieno) e nome accessibile con "DE"/"EN" dentro ("EN, English version"), per WCAG 2.5.3.

@@ -1,3 +1,4 @@
+import { SITE } from "@/config/site";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { klassikerMenu, KlassikerItem } from "@/data/klassikerData";
@@ -401,7 +402,9 @@ export const MenuSection = () => {
                       : dateInfo.isAfterClosing
                         ? (language === "de" ? "Für heute geschlossen" : "Closed for today")
                         : isNoMenuDay
-                          ? (language === "de" ? "Heute geschlossen" : "Closed Today")
+                          // Foglio non ancora aggiornato, locale aperto: prima
+                          // qui c'era "Heute geschlossen" (bug del 27/09/2026).
+                          ? (language === "de" ? "Die Karte von heute steht noch nicht online." : "Today's menu isn't online yet.")
                           : (language === "de" ? "Sonntag. Heute bleibt es still" : "Sunday. A quiet day here")}
                   </p>
                   <p className="text-muted-high-contrast font-work text-sm max-w-md">
@@ -412,14 +415,15 @@ export const MenuSection = () => {
                             ? "Die Töpfe sind für heute leer. Unten siehst du schon, was morgen geplant ist."
                             : "The pots are done for today. Below you can see what is planned for tomorrow.")
                         : isNoMenuDay
-                          ? (language === "de"
-                              ? "Heute bleibt die Küche zu. Schau gern später noch einmal vorbei."
-                              : "The kitchen is closed today. Feel free to check back later.")
+                          ? (<>
+                              {language === "de" ? "Wir schreiben sie jeden Morgen — ruf an: " : "We write it every morning — call: "}
+                              <a href={`tel:${SITE.phoneTel}`} data-call-source="menu-empty" className="text-foreground underline underline-offset-4">{SITE.phoneDisplay}</a>
+                            </>)
                           : (language === "de"
                               ? "Sonntag ist bei uns Pause. Morgen riecht es hier wieder nach Reis, Gewürzen und frischem Kaffee."
                               : "Sunday is our pause. Tomorrow it will smell of rice, spices and fresh coffee again.")}
                   </p>
-                  {!dateInfo.todayHoliday && (
+                  {!dateInfo.todayHoliday && !isNoMenuDay && (
                     <p className="text-muted-high-contrast font-work text-xs mt-2">
                       {language === "de"
                         ? reopensTomorrow ? "Morgen ab 11:00 wieder da." : `Am ${reopenDayName.de} ab 11:00 wieder da.`
@@ -429,7 +433,7 @@ export const MenuSection = () => {
                 </div>
                 
                 {/* Next day preview - when closed */}
-                {isClosed && nextDayMenu && (
+                {isClosed && !isNoMenuDay && nextDayMenu && (
                   <div className="pt-4 border-t border-border/30">
                     <p className="text-xs uppercase tracking-wider text-muted-high-contrast font-work mb-4">
                       {language === "de" ? `Vorschau auf ${nextDayName.de}` : `Preview of ${nextDayName.en}`}
