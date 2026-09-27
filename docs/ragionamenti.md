@@ -132,6 +132,8 @@ nella nav desktop (24/09).
 
 ## 8. SEO — cosa si è fatto e cosa si è scartato
 
+> I dati grezzi (volumi, posizioni, dispositivi) e le nuove domande a Lovable stanno in [`seo-dati.md`](./seo-dati.md), in ordine di data.
+
 **Fatto**
 - JSON-LD `Restaurant`: `hasMenu` su `/menu` (prima `/speisekarte/`), Instagram in `sameAs`, rating
 - `robots.txt`: `Disallow: /login` ripetuto in ogni blocco `User-agent`
