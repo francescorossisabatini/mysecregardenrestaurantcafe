@@ -14,6 +14,41 @@
 
 ---
 
+## 28/09/2026: chi dei portali editoriali ci linka davvero (verifica di Francesco)
+
+Livello: **misurato** per vegan.at e Wanderlog (pagine aperte e link visti); **non concluso** per 1000things e Falstaff.
+
+| Sito | Ci linka? | Evidenza |
+|---|---|---|
+| vegan.at | ✅ sì | scheda completa: link al sito, orari, descrizione, telefono |
+| Wanderlog | ✅ sì | scheda nella lista "The 50 best vegetarian restaurants in Vienna", con due link al sito |
+| 1000things | ❌ nessuna copertura trovata | la ricerca interna non trova niente; l'unico articolo vicino ("Viennese Secrets") non cita né il nome né il Raimundhof |
+| Falstaff | ⚠️ non verificabile in automatico | Cloudflare blocca le richieste automatiche; nessuna pagina indicizzata su Google |
+
+Scoperto lungo la strada (fonte Semrush, **stima**):
+- dei 10.906 link, circa 9.500 hanno l'ancora "betcio" (casinò turchi);
+- i primi domini referenti sono reti di siti (PBN) turche e indonesiane, con autorità da 2 a 17;
+- vegan.at e Wanderlog non compaiono tra i primi 10.
+
+**Lettura critica (nostra):**
+- **1000things contraddice GA4.** GA4 registra 30 sessioni con sorgente 1000thingsmagazine.com (24/06–21/09), e un referral richiede una pagina con un link. Le spiegazioni possibili sono tre:
+  - un articolo vecchio che la loro ricerca interna non trova;
+  - una pagina di elenco o una mappa;
+  - uno spam di referral che finge quella sorgente.
+
+  Prima di scrivere alla redazione conviene sapere quale. In GA4, Esplora → dimensione "Referrer della pagina" filtrata su 1000thingsmagazine.com dà l'URL esatto. Se è spam di referral, l'URL non esiste o non ci nomina.
+- **Falstaff va controllato a mano.** Da un browser normale: falstaff.com → cerca "My Secret Garden" oppure "Mariahilferstraße 45". CLAUDE.md elenca Falstaff 2025 tra i partner confermati, quindi una scheda potrebbe esistere ma non essere indicizzata. In quel caso il passo giusto è chiedere a Falstaff di renderla pubblica o di aggiungere il link al sito.
+- **"L'Authority Score 25 è sostenuta in parte dallo spam" è un'ipotesi.** Semrush non dice quanto pesa ciascun dominio sul punteggio. Resta vero che il confronto con Velani (30) conta poco: loro hanno più link editoriali, noi più rumore.
+- **Resta la misura vera:** Search Console → Link → Siti con più link. Mostra cosa ha trovato Google, spam compreso. Non è stata ancora letta.
+
+**Obiettivi di link aggiornati, per valore/costo:**
+1. **Falstaff:** verificare a mano che la scheda esista e abbia il link al sito. È un partner, quindi la richiesta è facile.
+2. **1000things:** prima capire da dove vengono le 30 sessioni (GA4). Poi usare il form per locali, come prima menzione oppure come aggiornamento.
+3. **austria.info:** nuovo obiettivo, autorità 60.
+4. vegan.at e Wanderlog ci sono già: niente da fare, al massimo controllare che orari e telefono siano giusti.
+
+---
+
 ## 28/09/2026: quanti siti linkano i ristoranti vegani di Vienna (Lovable/Semrush)
 
 **Domanda di Francesco a Lovable:** quanti siti linkano i siti dei ristoranti vegani più noti?
@@ -129,7 +164,7 @@ Livello: **misurato**, senza campionamento.
    - foto aggiornate;
    - risposte alle recensioni;
    - orari speciali per i festivi.
-3. **Menzioni editoriali**: colmano il divario di notorietà con Velani. Obiettivi: vegan.at, austria.info (autorità 60, linka Jola) e Wien.info. 1000things e Falter ci linkano già (referral in GA4): lì si chiede un aggiornamento, non una prima menzione. Le bozze delle email sono pronte da chiedere, dopo aver letto il rapporto Link di Search Console.
+3. **Menzioni editoriali**: colmano il divario di notorietà con Velani. vegan.at e Wanderlog ci linkano già (verificato il 28/09). I buchi sono Falstaff (verificare la scheda a mano), 1000things (prima chiarire le 30 sessioni da referral in GA4) e austria.info (autorità 60, linka Jola). Le bozze delle email sono pronte da chiedere.
 4. **Misurare prima di aggiungere.** Scheda Dispositivi per query in Search Console (sopra) e controllo della posizione il 15/10 (promemoria già programmato).
 5. **Prerendering per i crawler AI** (ChatGPT porta il traffico migliore): da provare su un branch di test. Oggi GPTBot vede solo il `<head>`.
 
