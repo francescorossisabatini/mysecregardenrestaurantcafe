@@ -31,6 +31,23 @@ function getViennaParts(date = new Date()): { weekday: string; minutes: number }
   return { weekday, minutes: hour * 60 + minute };
 }
 
+/**
+ * Data di Vienna ("MM-DD") e giorno della settimana (0 = domenica) per un
+ * istante. Festivi e "è domenica?" devono usare questa, non l'ora del
+ * telefono: da New York alle 19:00 di mercoledì a Vienna è già giovedì.
+ */
+export function getViennaDate(date = new Date()): { monthDay: string; weekdayIndex: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Vienna",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+  }).formatToParts(date);
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  const order = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return { monthDay: `${get("month")}-${get("day")}`, weekdayIndex: Math.max(0, order.indexOf(get("weekday"))) };
+}
+
 function weekdayKey(weekdayShort: string): keyof OpeningHours {
   const map: Record<string, keyof OpeningHours> = {
     Mon: "mon",
@@ -86,19 +103,20 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
 }
 
 /**
- * Prossima apertura dopo oggi, dagli orari (non da un "+1" fisso): domani se
- * domani ha un orario, altrimenti il primo giorno che ce l'ha. `weekday` è
- * l'indice di Date#getDay() (0 = domenica), per scegliere il nome del giorno.
- * I festivi non sono negli orari: se domani è festivo lo dice holidaysData.
+ * Prossima apertura dopo oggi, dagli orari (non da un "+1" fisso): il primo
+ * giorno che ha un orario e non è chiuso per `isClosedDate` (i festivi di
+ * holidaysData). `weekday` è 0 = domenica, per scegliere il nome del giorno.
+ * Fino al 28/09/2026 i festivi non contavano: il 24/12 diceva "Morgen ab
+ * 11:00" con il 25 chiuso.
  */
-export function getNextOpening(hours: OpeningHours, now = new Date()) {
-  const { weekday } = getViennaParts(now);
+export function getNextOpening(hours: OpeningHours, now = new Date(), isClosedDate?: (date: Date) => boolean) {
   const order: (keyof OpeningHours)[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  const today = order.indexOf(weekdayKey(weekday));
-  for (let daysAhead = 1; daysAhead <= 7; daysAhead++) {
-    const index = (today + daysAhead) % 7;
-    const slot = hours[order[index]];
-    if (slot) return { daysAhead, weekday: index, open: slot.open };
+  for (let daysAhead = 1; daysAhead <= 14; daysAhead++) {
+    const candidate = new Date(now.getTime() + daysAhead * 24 * 60 * 60 * 1000);
+    const key = weekdayKey(getViennaParts(candidate).weekday);
+    const slot = hours[key];
+    if (!slot || isClosedDate?.(candidate)) continue;
+    return { daysAhead, weekday: order.indexOf(key), open: slot.open };
   }
   return null;
 }

@@ -10,7 +10,7 @@ import { SITE } from "@/config/site";
 import { getNextOpening, getOpenStatus } from "@/lib/openStatus";
 import { useTodayClosed } from "@/hooks/useTodayClosed";
 import { useWeeklyMenuAvailable } from "@/hooks/useWeeklyMenuAvailable";
-import { getTodayHoliday } from "@/data/holidaysData";
+import { getHolidayForDate } from "@/data/holidaysData";
 import { splitDishText } from "@/lib/splitDishText";
 import { cleanDisplayText } from "@/lib/displayText";
 
@@ -33,31 +33,24 @@ const isDishText = (text?: string) => {
  * quando si riapre (voice-spec, "Heute geschlossen. Morgen ab 11:00 wieder da.").
  *
  * I piatti sono il dato che Google non ha (direction lock): in Cormorant, più
- * pesanti delle voci, come un solo link a /menu. Mentre il menu carica si
- * tiene il loro spazio, così le voci sotto non saltano; nei giorni già noti
- * come chiusi lo spazio non si riserva.
+ * pesanti delle voci, come un solo link a /menu. Se oggi siamo aperti ma il
+ * foglio non ha ancora i piatti, lo dice (voice-spec, stato vuoto).
  *
- * Montato solo a drawer aperto: il menu si legge (cache di 5 minuti) solo
- * quando serve.
+ * Montato con la Navigation, non all'apertura: quando apri il drawer il menu
+ * è già letto (cache di 5 minuti) e niente salta sotto il pollice. Prima lo
+ * spazio riservato era 84px contro 118 reali, e il telefono si spostava.
  */
 const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en"; menuHref: string; onMenuClick: () => void }) => {
   const { isClosed: isClosedToday, isLoading, todayMenu, loadedAt } = useTodayClosed();
   const weeklyMenuAvailable = useWeeklyMenuAvailable(loadedAt);
   const now = new Date();
   const status = getOpenStatus(SITE.openingHours, now);
-  const knownClosedDay = status.isClosed || getTodayHoliday() !== null;
 
-  if (isLoading) {
-    return (
-      <div aria-hidden="true">
-        <p className="min-h-11" />
-        {!knownClosedDay && !status.isAfterClosing && <div className="h-[5.25rem]" />}
-      </div>
-    );
-  }
+  // Raro, ormai: solo se apri il drawer prima che la pagina abbia letto il menu.
+  if (isLoading) return <p className="min-h-11" aria-hidden="true" />;
 
   const isOpen = status.isOpen && !isClosedToday;
-  const next = getNextOpening(SITE.openingHours, now);
+  const next = getNextOpening(SITE.openingHours, now, (date) => getHolidayForDate(date) !== null);
   const reopen = !next
     ? ""
     : next.daysAhead === 1
@@ -82,20 +75,34 @@ const DrawerToday = ({ language, menuHref, onMenuClick }: { language: "de" | "en
         .map((dish) => cleanDisplayText(splitDishText(dish.text as string, language, dish.key).name))
     : [];
 
+  // Aperto oggi, ma il foglio non ha ancora i piatti: lo stato vuoto di
+  // voice-spec, senza telefono perché il telefono sta subito sotto.
+  const menuNotOnline = !isClosedToday && !status.isAfterClosing && dishNames.length === 0;
+  // Pallino: verde aperto, neutro "apre alle 11", rosso chiuso (§6, 6px).
+  const dot = isOpen ? "bg-success" : !isClosedToday && status.opensAt ? "bg-muted-foreground" : "bg-destructive";
+
   return (
     <>
       <p className="flex min-h-11 items-start gap-2.5 py-2.5 font-work text-sm font-medium text-foreground">
-        <span aria-hidden="true" className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${isOpen ? "bg-success" : "bg-destructive"}`} />
+        <span aria-hidden="true" className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${dot}`} />
         {label}
       </p>
       {dishNames.length > 0 && (
-        <Link to={menuHref} onClick={onMenuClick} className="block rounded-lg py-1">
+        // -mx-2 px-2: l'anello di focus non tocca le lettere. min-h-11 per
+        // i giorni con un piatto solo. Sottolineati come il telefono: si
+        // capisce che si toccano.
+        <Link to={menuHref} onClick={onMenuClick} className="-mx-2 block min-h-11 space-y-1.5 rounded-lg px-2 py-1">
           {dishNames.map((name) => (
-            <span key={name} className="block font-cormorant text-xl font-semibold leading-snug text-foreground">
+            <span key={name} className="block font-cormorant text-xl font-semibold leading-snug text-foreground underline decoration-border underline-offset-4">
               {name}
             </span>
           ))}
         </Link>
+      )}
+      {menuNotOnline && (
+        <p className="py-1 font-cormorant text-xl italic leading-snug text-muted-foreground">
+          {language === "de" ? "Die Karte von heute steht noch nicht online." : "Today's menu isn't online yet."}
+        </p>
       )}
     </>
   );
@@ -416,9 +423,7 @@ export const Navigation = () => {
               pagina porta (direction lock). Il profilo B li vede aprendo il
               drawer, senza passare da "Speisekarte". */}
           <div className="shrink-0 px-5 pb-2">
-            {isMobileMenuOpen && (
-              <DrawerToday language={language} menuHref={lp("/menu")} onMenuClick={() => closeOrStay("/menu")} />
-            )}
+            <DrawerToday language={language} menuHref={lp("/menu")} onMenuClick={() => closeOrStay("/menu")} />
             {/* Il telefono è il canale suggerito (CLAUDE.md): link testuale,
                 perché l'azione primaria verde resta quella della barra fissa. */}
             <a

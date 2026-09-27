@@ -59,6 +59,10 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 **Trovato adiacente:** a 320×640 il banner cookie copre la barra e l'hamburger non si tocca finché non si dà il consenso.
 
+**Giro 9 (28/09, voto di partenza 63):** riapertura che salta i festivi, festivi e domenica sull'ora di Vienna, niente salto del telefono al caricamento, piatti separati e sottolineati, pallino neutro prima dell'apertura, "Die Karte von heute steht noch nicht online." nel drawer.
+**Ancora da fare (fuso orario):** le card del menu (`HomeMenuPreview`, `MenuSection`) usano l'ora del telefono, non quella di Vienna.
+**Copy da approvare (critico, giro 8):** nome accessibile del link dei piatti che dica dove porta ("Speisekarte: …"); aria-label "EN, English version" sul pulsante EN (WCAG 2.5.3).
+
 **Copy ancora aperto:** "Menu" EN ambiguo accanto all'hamburger, "Home" vs "Startseite", "Visit" contro "Besuche uns" (peso ritmico).
 
 **Trovato fuori ambito (26/09/2026):** `check-tells.sh` ora vede il nero puro anche in `rgba(0,0,0,…)` e segnala `Hero.tsx` (text-shadow), `MobileStickyBar.tsx:106` e `MenuFloatingPill.tsx:89`. Da portare su `--navy-500` in un giro dedicato.

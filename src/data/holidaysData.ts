@@ -1,3 +1,4 @@
+import { getViennaDate } from "@/lib/openStatus";
 // List of holidays when the restaurant is closed
 // Format: month-day (1-indexed, e.g., "12-24" for December 24th)
 
@@ -58,11 +59,10 @@ export function getTodayHoliday(): Holiday | null {
 }
 
 // Helper: get holiday for a given Date
+// Data di Vienna, non del telefono: i festivi sono quelli del locale.
 export function getHolidayForDate(date: Date): Holiday | null {
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const dateString = `${month}-${day}`;
-  return holidays.find((h) => h.date === dateString) || null;
+  const { monthDay } = getViennaDate(date);
+  return holidays.find((h) => h.date === monthDay) || null;
 }
 
 function parseMonthNameToNumber(monthNameRaw: string): number | null {

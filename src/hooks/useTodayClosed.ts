@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useWeeklyMenu } from "@/hooks/useWeeklyMenu";
 import { getTodayHoliday } from "@/data/holidaysData";
+import { getViennaDate } from "@/lib/openStatus";
 
 type WeeklyMenuData = ReturnType<typeof useWeeklyMenu>["menu"];
 
@@ -33,8 +34,9 @@ export function useTodayClosed(): TodayClosedResult {
       return { isClosed: false, isLoading: true, reason: null, hasMenuToday: false, loadedAt: null };
     }
 
-    const today = new Date();
-    const isSunday = today.getDay() === 0;
+    // Giorno di Vienna, come gli orari (getOpenStatus).
+    const { weekdayIndex } = getViennaDate();
+    const isSunday = weekdayIndex === 0;
     const todayHoliday = getTodayHoliday();
 
     // Check for holiday first
@@ -57,7 +59,7 @@ export function useTodayClosed(): TodayClosedResult {
 
     // Check if today's menu is empty (no data from Google Sheets)
     const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-    const todayName = dayNames[today.getDay()];
+    const todayName = dayNames[weekdayIndex];
     const todayMenu = menu.days.find((day) => day.day.de === todayName);
 
     const isValidMenuText = (text?: string) => {
