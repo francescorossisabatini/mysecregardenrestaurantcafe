@@ -18,7 +18,9 @@ import { useTodayClosed } from "@/hooks/useTodayClosed";
  */
 const DrawerTodayStatus = ({ language }: { language: "de" | "en" }) => {
   const { isClosed: isClosedToday, isLoading } = useTodayClosed();
-  if (isLoading) return null;
+  // Riga vuota della stessa altezza mentre carica: senza, il telefono sotto
+  // saltava di 44px proprio mentre il pollice ci andava sopra.
+  if (isLoading) return <p className="min-h-11" aria-hidden="true" />;
   const status = getOpenStatus(SITE.openingHours, new Date());
   const isOpen = status.isOpen && !isClosedToday;
 
@@ -364,7 +366,7 @@ export const Navigation = () => {
                   to={lp(link.to)}
                   onClick={() => closeOrStay(link.to)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative block rounded-full px-3 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
+                  className={`relative block rounded-full px-3 py-3 font-work text-sm font-medium uppercase tracking-[0.08em] transition-colors duration-base hover:bg-muted active:bg-muted ${isActive ? "font-semibold text-foreground" : "text-foreground"}`}
                 >
                   {isActive && (
                     <span aria-hidden="true" className="absolute left-1 top-1/2 h-3 w-[2px] -translate-y-1/2 bg-accent" />

@@ -14,7 +14,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | Cosa | Chi | Stato |
 |---|---|---|
 | Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55. Giro 6 (leve 1, 2 e copy approvati il 27/09) in valutazione. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → **59**. Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
@@ -38,7 +38,17 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 **Fatto (giro 6, 27/09/2026):** stato di oggi nel drawer (stesso calcolo del badge dell'hero), X al posto dell'hamburger senza logo nell'header, copy approvato (Startseite, Besuch uns, Visit us, Ruf an / Call).
 
-**Leve per superare 55 (1, 2 e 4 fatte il 27/09):**
+**⚠ Bug in produzione (trovato il 27/09/2026, confermato):** se il foglio del menu non ha ancora i piatti di oggi (per esempio lunedì mattina prima che lo staff lo aggiorni), il badge dell'hero dice **"Heute geschlossen"** anche se il locale apre alle 11. Causa: `useTodayClosed.ts` tratta "menu vuoto" come "chiuso" (`reason: "no-menu"`). Chi guarda il sito a quell'ora pensa che il locale sia chiuso e non viene. È logica di business: serve l'ok di F. Proposta: menu vuoto ≠ chiuso nei giorni feriali; lo stato segue l'orario, e la card del menu usa il testo della voice-spec per il menu vuoto.
+
+**Leve per superare 59 (decisioni di F):**
+- *Il menu di oggi nel drawer* al posto del solo orario: i tre piatti, dal menu già caricato, come link a /menu, con più peso visivo delle voci. È il dato che "Google non ha" (direction lock). È la leva più forte.
+- *Stato chiuso che dice quando si riapre*: "Heute geschlossen. Morgen ab 11:00 wieder da." (la coppia BENE di voice-spec, riga 89), e "Jetzt geschlossen" con la riapertura. Il calcolo esiste già in `HomeMenuPreview.tsx`.
+- *Zona del pollice*: blocco oggi + telefono in basso, sopra la lingua.
+- *Un solo indicatore aperto/chiuso* tra hero e drawer (oggi due verdi e due misure), registrato in DS §6.
+- *Selettore lingua*: stato selezionato meno pesante (contorno invece del disco pieno) e nome accessibile con "DE"/"EN" dentro ("EN, English version"), per WCAG 2.5.3.
+- *Gutter delle pagine* (/visit, /about, /menu) sul filo di 20px della barra.
+
+**Leve del giro 5 (1, 2 e 4 fatte il 27/09):**
 1. *Stato di oggi nel drawer* ("Heute bis 19:00 geöffnet", stesso dato del badge dell'hero) nello spazio vuoto. È la voce che pesa di più (genericità ×3): senza, barra e drawer restano "lo schema di chiunque". Copy nuovo.
 2. *Header del drawer*: X a sinistra, dove c'era l'hamburger, e niente link logo. Chiude la trappola del doppio tocco (ritoccare lo stesso punto porta alla home), il doppione logo/"Home" e la collisione a 320px.
 3. *Nav desktop* sopra l'hero: voci e "Anrufen" sotto 4.5:1 sulla foto (3.3–4.2:1), vetro e anello al 50% già scartati su mobile. Allarga l'ambito al desktop.

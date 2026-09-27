@@ -570,3 +570,6 @@ Scritto per pari ritmo, non come traduzione letterale:
     - il telefono diventa "Ruf an: +43 1 586 28 39" / "Call: +43 1 586 28 39", con la forma di voice-spec.
 
     Le voci valgono anche per la nav desktop, che usa la stessa lista.
+- [x] **Drawer, giro 7 (27/09/2026, scritto prima del codice).** Critico cieco: **59/100** (giro prima 55). Due correzioni oggettive; il resto va a Francesco (`docs/stato-aperto.md`).
+  - *Riga dello stato mentre carica.* **Default:** `return null` durante il caricamento del menu. **Invece:** una riga vuota alta come quella vera (`min-h-11`, `aria-hidden`). **Perché:** con il menu lento il telefono stava a y=336 e saltava a y=380 quando arrivava lo stato, proprio mentre il pollice ci andava sopra.
+  - *Feedback al tocco sulle voci.* **Default:** nessun hover né active (il ledger del giro 1 diceva "resta `hover:bg-muted`", ma il giro 4 l'aveva tolto: deriva tra ledger e codice). **Invece:** `active:bg-muted` e `hover:bg-muted`, senza scale (§7). **Perché:** tra il tocco e l'arrivo della pagina lazy non succedeva niente di visibile. Qui `bg-muted` non segna uno stato ma dà un riscontro momentaneo, quindi il suo 1.07:1 non è un problema.
