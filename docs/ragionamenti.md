@@ -149,8 +149,8 @@ nella nav desktop (24/09).
 
 **Semrush** (stime via Lovable, non verificate):
 - Posizioni: vegetarisches restaurant wien 12 (720/mese), vegane restaurants wien 14 (1.900/mese), vegetarian restaurant vienna 8. Sul brand, posizione 1.
-- Velani, il competitor più vicino, ha più domini referenti (343 contro 229).
-- Lettura: il divario è di **notorietà**, non di SEO tecnica. Da qui le menzioni editoriali.
+- Velani, il competitor più vicino, ha più traffico e più autorità (Authority 30 contro 25), ma **meno** domini referenti (229 contro i nostri 343). *(Corretto il 28/09: prima era scritto al contrario. Vedi `seo-dati.md`.)*
+- Lettura (rivista il 28/09): Velani vince le poche query con volume, noi siamo presenti su molte ma più in basso. Contano sia la notorietà (link editoriali) sia il fatto che Google leggeva il sito in inglese (§2).
 
 ---
 

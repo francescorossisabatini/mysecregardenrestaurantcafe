@@ -90,6 +90,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Fuori dal sito
 
+- [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S4 dopo il merge; S5 il 15/10
 - [ ] **Search Console, 15 minuti (F):** Azioni manuali (deve dire "nessun problema") · Link → Siti con più link (primi 10) · Rendimento → "vegetarisches restaurant wien" → scheda Dispositivi. Annotare in `docs/seo-dati.md`
 - [ ] **1000things:** la ricerca sul loro sito non trova niente, ma GA4 registra 30 sessioni arrivate da lì. GA4 → Esplora → "Referrer della pagina" filtrato su 1000thingsmagazine.com: articolo vecchio, pagina di elenco o spam di referral? Poi il form per locali
 - [ ] **Falstaff:** da un browser normale, cercare "My Secret Garden" su falstaff.com. È un partner: se la scheda c'è ma non ha il link, chiederlo

@@ -14,6 +14,41 @@
 
 ---
 
+## 27/09/2026: confronto con i concorrenti (Semrush, mercato austriaco)
+
+Livello: **stima**. Estratto il 27/09/2026.
+
+| Locale | Keyword organiche | Traffico stimato/mese | Authority Score | Domini che linkano |
+|---|---|---|---|---|
+| **Secret Garden (noi)** | **357** | 8.212 | 25 | 355 |
+| Veggiezz (catena, 4 sedi) | 279 | 17.820 | 32 | 240 |
+| Velani | 269 | 14.320 | 30 | 229 |
+| Tian (fine dining veg) | 576 | 15.838 | n.d. | n.d. |
+| Shiyu (vegano asiatico) | 202 | 3.910 | n.d. | n.d. |
+| Sattva Vegan | 212 | 1.803 | 21 | 210 |
+| Jola (Neubau) | 198 | 920 | 23 | 318 |
+
+Fuori confronto: freiraum117.at (~30k) e zumwohl-gastro (~20k). Sono ristoranti generici con ricerche molto più ampie.
+
+**Lettura di Lovable:**
+- tra i locali piccoli e indipendenti nessuno ha più visibilità organica di noi;
+- il divario è di notorietà e di link editoriali;
+- chiudere 1000things e Falstaff "ci metterebbe subito al livello di Velani".
+
+**Lettura critica (nostra):**
+- **Il dato che conta è il rapporto tra keyword e traffico.** Noi siamo presenti per 357 keyword ma prendiamo 8.212 visite stimate. Velani, con 269, ne prende 14.320. Vuol dire che Velani sta più in alto sulle poche query che portano volume ("veganes restaurant wien", 1.900/mese, dove noi siamo 14°), e noi in basso su molte. Il traffico si concentra nelle prime 3 posizioni.
+- **I link da soli non fanno traffico.** Jola ha 318 domini che la linkano (quasi quanti noi) e 920 visite. Quindi "chiudere 1000things e Falstaff e arrivare al livello di Velani" è un'ipotesi ottimistica: aiuta l'autorità, ma non garantisce le posizioni.
+- **La leva più diretta sulle query tedesche è già pronta.** Fino a oggi Google leggeva il sito in inglese (Controllo URL, 26/09). Per "veganes / vegetarisches restaurant wien" competevamo con una pagina che per Google non era tedesca. Il merge della struttura `/en/` è la prima cosa da misurare: posizione di "vegetarisches restaurant wien" (12) e "vegane restaurants wien" (14) prima e dopo, al controllo del 15/10.
+- **"La tua Authority Score reale è più vicina a Sattva" è un'ipotesi.** Semrush non mostra quanto pesa ciascun link. Coerenza con i dati precedenti: noi 25 e Velani 30, uguali al 24/09.
+- **Tian (576 keyword) è il riferimento per i contenuti.** Ha più keyword di tutti. Vale la pena guardare, in un giro dedicato, per quali query compare: se sono piatti e ingredienti, è lo spazio che il nostro menu del giorno potrebbe coprire, perché è testo nuovo ogni giorno.
+
+**Cosa ne ricaviamo, in ordine:**
+1. Merge `/en/`, richiesta di indicizzazione, poi misura delle 2 query tedesche principali al 15/10.
+2. Link editoriali: Falstaff (partner, da verificare) e 1000things (prima chiarire il referral).
+3. Da capire in seguito: le keyword di Tian e di Velani su cui noi non compariamo (keyword gap di Semrush). Una sola estrazione, 5 minuti.
+
+---
+
 ## 28/09/2026: chi dei portali editoriali ci linka davvero (verifica di Francesco)
 
 Livello: **misurato** per vegan.at e Wanderlog (pagine aperte e link visti); **non concluso** per 1000things e Falstaff.
@@ -72,7 +107,7 @@ Secondo Lovable:
   - Jola: austria.info (autorità 60), vegan.at, 1000things.
 
 **Lettura critica (nostra):**
-- **I numeri non tornano con quelli del 24/09.** Il 24/09 Semrush dava a Velani 343 domini referenti e a noi 229. Oggi dà Velani ~244 e noi ~355. Cambia l'istantanea o la metrica (domini con link attivi, o anche persi). Le Authority Score (25 noi, 30 Velani) invece coincidono. Conclusione: i conteggi di domini di Semrush non si confrontano tra date diverse. Vale la classifica relativa dello stesso giorno.
+- ~~I numeri non tornano con quelli del 24/09.~~ **Correzione del 28/09: tornano.** L'errore era nostro: il 24/09 avevamo letto la riga di Velani al contrario (vedi sotto). Il 24/09 i domini referenti erano noi 343 e Velani 229, oggi sono noi ~355 e Velani ~244. Sono coerenti, con piccole variazioni.
 - **Lo spam non va "ripulito" per forza.** Google dichiara di ignorare in gran parte i link spam automatici. Il disavow serve solo in caso di azione manuale. Da controllare in Search Console → Sicurezza e azioni manuali → Azioni manuali: deve dire "Nessun problema rilevato". Se è così, non si fa niente.
 - **Per il nostro sito la misura è Search Console, non Semrush.** Search Console → Link → "Siti con più link" elenca i domini che Google ha davvero trovato. È gratis, misurato, e risponde alla domanda di Lovable ("vuoi che controlli se vegan.at, 1000things, Falstaff e Wanderlog ci linkano?") meglio di una stima.
 - **Uno lo sappiamo già da GA4:** 1000thingsmagazine.com ci ha mandato 30 sessioni e falter.at 14 (24/06–21/09). Un referral vuol dire che su quei siti c'è almeno un link a noi. 1000things quindi ci linka già da qualche pagina. L'email alla redazione va riformulata: non "scriveteci per la prima volta", ma aggiornare o aggiungere una menzione. Prima va trovata la pagina che ci linka (GA4 → Acquisizione traffico → sorgente 1000thingsmagazine.com → pagina di riferimento).
@@ -139,8 +174,8 @@ Livello: **stima**.
 | "Secret Garden Wien" / "My Secret Garden" (brand) | 1 | ~880 / ~390 |
 
 - Competitor: Velani, Veggiezz, Tian, Hollerei, Sattva, Shiyu, Jola.
-- Velani contro noi: keyword 361 contro 265, traffico stimato 8.639 contro 14.142, Authority 25 contro 30, domini referenti 343 contro 229.
-- **Lettura:** il divario è di **notorietà** (link e citazioni), non di SEO tecnica. Per questo le menzioni editoriali (vegan.at, 1000things, Falter) e non pagine clone per keyword (vedi `ragionamenti.md` §8).
+- **Noi** contro Velani: keyword 361 contro 265, traffico stimato 8.639 contro 14.142, Authority 25 contro 30, domini referenti 343 contro 229. *(Corretto il 28/09: prima era scritto "Velani contro noi", invertito. L'Authority 25 è la nostra, e l'ordine si ricava da lì. Il confronto del 27/09, sotto, lo conferma.)*
+- **Lettura (rivista il 28/09):** noi abbiamo più keyword e più domini, Velani più traffico e più autorità. Il divario non è nella quantità di link, ma in quali query si vincono e con quali link (vedi 27/09). Per questo le menzioni editoriali (vegan.at, 1000things, Falter) e non pagine clone per keyword (vedi `ragionamenti.md` §8).
 - Le posizioni EN migliori di quelle DE si spiegano con il punto del 26/09: Google vedeva il sito in inglese.
 
 ## 22–24/09/2026: da dove arrivano le persone (GA4, 24/06–21/09)

@@ -1,7 +1,7 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
 > Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
-> Cosa è aperto e chi lo fa: [`docs/stato-aperto.md`](./docs/stato-aperto.md) · il perché delle decisioni: [`docs/ragionamenti.md`](./docs/ragionamenti.md) · dati SEO e trovabilità: [`docs/seo-dati.md`](./docs/seo-dati.md).
+> Cosa è aperto e chi lo fa: [`docs/stato-aperto.md`](./docs/stato-aperto.md) · il perché delle decisioni: [`docs/ragionamenti.md`](./docs/ragionamenti.md) · dati SEO e trovabilità: [`docs/seo-dati.md`](./docs/seo-dati.md) · script per Claude in Chrome: [`docs/script-browser.md`](./docs/script-browser.md).
 > Ultimo aggiornamento: 20 settembre 2026 (riallineato al codice)
 
 
@@ -387,6 +387,7 @@ col metodo Tag HTML.
 - **Non cambiare copy** senza che io l'abbia approvato in chat
 - **Non fare push su `main`** senza che io lo confermi
 - **Documenta** ogni decisione non ovvia con un commento nel codice
+- **Compiti meccanici fuori dal repo** (Search Console, GA4, schede esterne, Falstaff, TripAdvisor…): se Claude in Chrome può farli, oltre a spiegarmeli dammi lo **script pronto da incollare**. Ogni script ha obiettivo, passi numerati, limiti (solo lettura salvo le azioni dichiarate, stop su login e captcha), formato di uscita (tabella, `NON_DISPONIBILE` e mai `0`). Gli script stanno in [`docs/script-browser.md`](./docs/script-browser.md); quelli per Semrush vanno a Lovable.
 
 ---
 
