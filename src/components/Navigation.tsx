@@ -7,6 +7,36 @@ import { deviceLanguageIsNotGerman, stripLanguagePrefix } from "@/lib/i18nRoutes
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SITE } from "@/config/site";
+import { getOpenStatus } from "@/lib/openStatus";
+import { useTodayClosed } from "@/hooks/useTodayClosed";
+
+/**
+ * Lo stato di oggi nel drawer: stesso calcolo del badge dell'hero (orari,
+ * domenica, festivi, menu vuoto). Montato solo a drawer aperto, così il menu
+ * si legge (cache di 5 minuti) solo quando serve. Mentre carica non mostra
+ * niente: meglio nessuna riga che uno stato sbagliato.
+ */
+const DrawerTodayStatus = ({ language }: { language: "de" | "en" }) => {
+  const { isClosed: isClosedToday, isLoading } = useTodayClosed();
+  if (isLoading) return null;
+  const status = getOpenStatus(SITE.openingHours, new Date());
+  const isOpen = status.isOpen && !isClosedToday;
+
+  const label = isOpen && status.closesAt
+    ? language === "de" ? `Heute bis ${status.closesAt} geöffnet` : `Open today until ${status.closesAt}`
+    : !isClosedToday && status.opensAt
+      ? language === "de" ? `Heute ab ${status.opensAt} geöffnet` : `Open today from ${status.opensAt}`
+      : isClosedToday
+        ? language === "de" ? "Heute geschlossen" : "Closed today"
+        : language === "de" ? "Jetzt geschlossen" : "Closed now";
+
+  return (
+    <p className="flex min-h-11 items-center gap-2.5 font-work text-sm font-medium text-foreground">
+      <span aria-hidden="true" className={`h-2 w-2 shrink-0 rounded-full ${isOpen ? "bg-success" : "bg-destructive"}`} />
+      {label}
+    </p>
+  );
+};
 
 export const Navigation = () => {
   const { isOpen: isMobileMenuOpen, setIsOpen: setIsMobileMenuOpen } = useMobileMenu();
@@ -121,9 +151,9 @@ export const Navigation = () => {
   // Ordine per domanda del profilo A ("vengo oggi?"): Besuche uns prima di
   // Galerie. Stessa lista per drawer e nav desktop (ledger, 26/09/2026).
   const navLinks = [
-    { to: "/", label: language === "de" ? "Home" : "Home" },
+    { to: "/", label: language === "de" ? "Startseite" : "Home" },
     { to: "/menu", label: language === "de" ? "Speisekarte" : "Menu" },
-    { to: "/visit", label: language === "de" ? "Besuche uns" : "Visit" },
+    { to: "/visit", label: language === "de" ? "Besuch uns" : "Visit us" },
     { to: "/gallery", label: language === "de" ? "Galerie" : "Gallery" },
     { to: "/about", label: language === "de" ? "Unsere Geschichte" : "Our Story" },
   ];
@@ -302,21 +332,12 @@ export const Navigation = () => {
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {/* Drawer Header */}
-          {/* Alto come la barra (60px) e sullo stesso filo di 20px: la X sta
-              sulla stessa riga dell'hamburger che ha aperto il pannello. */}
-          <div className="flex h-[calc(60px+env(safe-area-inset-top))] shrink-0 items-center justify-between border-b border-border px-5 pt-[env(safe-area-inset-top)]">
-            <Link 
-              to={lp("/")} 
-              onClick={() => closeOrStay("/")} 
-              className="flex min-h-11 items-center gap-3 rounded-lg"
-              aria-label={homeLinkLabel}
-            >
-              <Logo className="h-11 w-11" showTagline={false} aria-hidden="true" />
-              <span className="font-cormorant text-lg font-bold text-foreground">My Secret Garden</span>
-            </Link>
-            {/* Stesso disco dell'hamburger: apertura e chiusura dello stesso
-                pannello hanno la stessa forma. Focus dalla regola globale §8. */}
+          {/* Header: solo la X, nel punto esatto in cui c'era l'hamburger.
+              Prima qui c'era il logo cliccabile: ritoccare lo stesso punto per
+              chiudere portava alla home, ed era un doppione di "Startseite". */}
+          {/* border-b trasparente: stessa scatola della barra (60px bordo
+              compreso), così la X cade al pixel sull'hamburger. */}
+          <div className="flex h-[calc(60px+env(safe-area-inset-top))] shrink-0 items-center border-b border-transparent px-5 pt-[env(safe-area-inset-top)]">
             <button
               ref={drawerCloseRef}
               type="button"
@@ -354,16 +375,18 @@ export const Navigation = () => {
             })}
           </nav>
 
-          {/* Il telefono è il canale suggerito (CLAUDE.md) e su mobile, prima
-              della MobileStickyBar, non c'era da nessuna parte. Link testuale:
+          {/* Il dato di oggi: l'unica cosa che solo questo sito sa e che cambia
+              ogni giorno (direction lock, "la pagina la porta il dato"). Il
+              telefono è il canale suggerito (CLAUDE.md); link testuale, perché
               l'azione primaria verde resta quella della barra fissa. */}
-          <div className="shrink-0 px-5">
+          <div className="shrink-0 px-5 pt-2">
+            {isMobileMenuOpen && <DrawerTodayStatus language={language} />}
             <a
               href={`tel:${SITE.phoneTel}`}
               data-call-source="drawer"
-              className="inline-flex min-h-11 items-center font-work text-sm font-medium tracking-[0.04em] text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
+              className="inline-flex min-h-11 items-center font-work text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-base hover:decoration-foreground"
             >
-              {SITE.phoneDisplay}
+              {language === "de" ? "Ruf an: " : "Call: "}{SITE.phoneDisplay}
             </a>
           </div>
 

@@ -150,7 +150,12 @@ const STATES = [
     slug: 'home--drawer-aperto',
     path: '/',
     mobileOnly: true,
-    setup: async () => {},
+    // Menu finto e ora fissa (mercoledì 12:30): lo stato di oggi nel drawer
+    // dipende da entrambi, e senza il menu risulterebbe sempre "geschlossen".
+    setup: async (page) => {
+      await page.clock.setFixedTime(MENU_FIXTURE_TIME);
+      await routeMenuFixture(page);
+    },
     after: async (page) => {
       await page.locator('button[aria-controls="mobile-nav-drawer"]').click();
       // Il puntatore del clic resterebbe sopra il logo del drawer e lo

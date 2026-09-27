@@ -14,7 +14,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | Cosa | Chi | Stato |
 |---|---|---|
 | Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → **55** (stabile: servono decisioni, vedi sotto). Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55. Giro 6 (leve 1, 2 e copy approvati il 27/09) in valutazione. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
@@ -36,7 +36,9 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 **Fatto (giro 5, voto di partenza 55):** drawer scorrevole (in orizzontale e con testo al 200% il selettore lingua era irraggiungibile), banner cookie che non blocca più l'hamburger in orizzontale, filetto inutile sopra "Sprache" tolto, `lang` e `type` sui pulsanti DE/EN.
 
-**Leve per superare 55, tutte con una decisione di F:**
+**Fatto (giro 6, 27/09/2026):** stato di oggi nel drawer (stesso calcolo del badge dell'hero), X al posto dell'hamburger senza logo nell'header, copy approvato (Startseite, Besuch uns, Visit us, Ruf an / Call).
+
+**Leve per superare 55 (1, 2 e 4 fatte il 27/09):**
 1. *Stato di oggi nel drawer* ("Heute bis 19:00 geöffnet", stesso dato del badge dell'hero) nello spazio vuoto. È la voce che pesa di più (genericità ×3): senza, barra e drawer restano "lo schema di chiunque". Copy nuovo.
 2. *Header del drawer*: X a sinistra, dove c'era l'hamburger, e niente link logo. Chiude la trappola del doppio tocco (ritoccare lo stesso punto porta alla home), il doppione logo/"Home" e la collisione a 320px.
 3. *Nav desktop* sopra l'hero: voci e "Anrufen" sotto 4.5:1 sulla foto (3.3–4.2:1), vetro e anello al 50% già scartati su mobile. Allarga l'ambito al desktop.

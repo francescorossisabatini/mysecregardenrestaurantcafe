@@ -115,7 +115,7 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 **Navigazione:**
 - Top bar mobile: hamburger (apre drawer con tutti i link) + logo + a destra "EN" solo per dispositivi non in tedesco che non hanno ancora scelto una lingua (altrimenti spazio vuoto). Il selettore DE/EN completo sta nel drawer
 - MobileStickyBar (fixed, appare dopo ~300px di scroll, nascosta sopra il footer): 2 bottoni — Anrufen (verde) + Besuchen/Route (outline). Non 3 tab + call pill come descritto in una versione precedente di questo file: decisione confermata in chat il 20 settembre 2026, coerente con "una sola CTA primaria" — chiamare e trovarci sono le due azioni che contano.
-- Drawer hamburger: tutti i link di navigazione (Home, Speisekarte, Galerie, Unsere Geschichte, Besuche uns) + language switch
+- Drawer hamburger (dal 27/09/2026): in alto solo la X, nel punto dell'hamburger; voci Startseite, Speisekarte, Besuch uns, Galerie, Unsere Geschichte (stesso ordine della nav desktop); sotto, lo stato di oggi (stesso calcolo del badge dell'hero) e "Ruf an: +43 1 586 28 39"; in fondo il selettore DE/EN. È un dialog modale: focus sulla X, Tab confinato, Escape chiude
 
 
 ---
@@ -216,6 +216,13 @@ non quello dopo le correzioni.
 **Top bar mobile, etichette per screen reader (approvate il 26 settembre 2026)**
 - Pulsante "EN": *English version*
 - Chiusura del menu: *Menü schließen* / *Close menu* (una sola forma, prima c'era anche "Close navigation menu")
+- Link logo: *My Secret Garden, Startseite* / *My Secret Garden, home* · selettore lingua: *Sprache wählen* / *Choose language*
+
+**Navigazione e drawer (approvato in chat il 26–27 settembre 2026)**
+- Voci DE: *Startseite · Speisekarte · Besuch uns · Galerie · Unsere Geschichte* (era "Home" e "Besuche uns")
+- Voci EN: *Home · Menu · Visit us · Gallery · Our Story* (era "Visit")
+- Stato di oggi: *Heute bis 19:00 geöffnet* / *Open today until 19:00*; *Heute ab 11:00 geöffnet* / *Open today from 11:00*; *Heute geschlossen* / *Closed today*; *Jetzt geschlossen* / *Closed now* (gli ultimi due sono già quelli del badge dell'hero)
+- Telefono: *Ruf an: +43 1 586 28 39* / *Call: +43 1 586 28 39*
 
 ---
 
