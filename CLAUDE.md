@@ -214,7 +214,8 @@ non quello dopo le correzioni.
 - Description: *Vegetarian & vegan restaurant in Vienna. Organic, fair, regional and seasonal.*
 
 **Top bar mobile, etichette per screen reader (approvate il 26 settembre 2026)**
-- Pulsante "EN": *English version*
+- Pulsante "EN": *EN, English version* (dal 28/09/2026: il nome contiene il testo visibile, per il controllo vocale)
+- Link dei piatti nel drawer: prefisso per screen reader *Speisekarte:* / *Menu:*
 - Chiusura del menu: *Menü schließen* / *Close menu* (una sola forma, prima c'era anche "Close navigation menu")
 - Link logo: *My Secret Garden, Startseite* / *My Secret Garden, home* · selettore lingua: *Sprache wählen* / *Choose language*
 

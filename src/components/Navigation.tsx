@@ -98,6 +98,9 @@ const DrawerToday = ({ language, menuHref, onMenuClick, phone }: { language: "de
         // i giorni con un piatto solo. Sottolineati come il telefono: si
         // capisce che si toccano.
         <Link to={menuHref} onClick={onMenuClick} className="-mx-2 block min-h-11 space-y-1.5 rounded-lg px-2 py-1">
+          {/* Detto solo allo screen reader: il link porta alla Speisekarte
+              (WCAG 2.4.4). A vista i piatti bastano. */}
+          <span className="sr-only">{language === "de" ? "Speisekarte: " : "Menu: "}</span>
           {dishNames.map((name) => (
             <span key={name} className="block font-cormorant text-xl font-semibold leading-snug text-foreground underline decoration-border underline-offset-4">
               {name}
@@ -363,7 +366,7 @@ export const Navigation = () => {
                 requestAnimationFrame(() => document.getElementById("main-content")?.focus());
               }}
               lang="en"
-              aria-label="English version"
+              aria-label="EN, English version"
               className="inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-border bg-card font-work text-[11px] font-bold tracking-[0.08em] text-foreground transition-colors duration-base hover:bg-muted focus-visible:outline-offset-0 lg:hidden"
             >
               EN

@@ -307,7 +307,11 @@ export const CookieConsent = () => {
           aria-modal="true"
           aria-labelledby="cookie-consent-title"
           aria-describedby="cookie-consent-description"
-          className="surface-card rounded-lg border p-4 shadow-design-elevated md:p-6"
+          // Altezza massima: la card si ferma sotto la top bar (60px + safe
+          // area + margini) e scorre dentro. Senza, a 320–375px copriva
+          // l'hamburger e alla prima visita il menu non si apriva
+          // (critico cieco, 28/09/2026).
+          className="surface-card max-h-[calc(100dvh-60px-2.5rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain rounded-lg border p-4 shadow-design-elevated md:max-h-[calc(100dvh-9rem)] md:p-6"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
