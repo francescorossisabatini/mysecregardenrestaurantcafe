@@ -83,6 +83,8 @@ Quando: **solo dopo** che il merge è in produzione (Lovable ha pubblicato). Que
 ```text
 Lavora in Google Search Console, proprietà https://secretgardenrestaurant.at. Le uniche azioni consentite sono "Richiedi indicizzazione" e "Invia" della sitemap, come indicato sotto. Non cambiare nient'altro. Se ti chiede un login o un captcha, fermati e dimmelo.
 
+0. Prima di tutto verifica che la nuova versione sia online. Apri in una scheda normale https://secretgardenrestaurant.at/en/menu: deve mostrare la pagina del menu in inglese (titoli in inglese, non una pagina "404" e non la versione tedesca). Poi apri https://secretgardenrestaurant.at/sitemap.xml: deve contenere indirizzi con "/en". Se una delle due verifiche fallisce, FERMATI senza richiedere nessuna indicizzazione e dimmi cosa hai visto: il deploy non è ancora pubblicato.
+
 1. Per ciascuno di questi URL, uno alla volta:
    https://secretgardenrestaurant.at/
    https://secretgardenrestaurant.at/menu
