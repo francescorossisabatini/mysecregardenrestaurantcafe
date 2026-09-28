@@ -49,6 +49,31 @@ Fuori confronto: freiraum117.at (~30k) e zumwohl-gastro (~20k). Sono ristoranti 
 
 ---
 
+## 28/09/2026: dopo il merge, Controllo URL in Search Console (script S4)
+
+Livello: **misurato**, test live, versione in produzione dopo [PR #19](https://github.com/francescorossisabatini/mysecregardenrestaurantcafe/pull/19).
+
+Passo 0: la nuova versione è online. `/en/menu` è in inglese con `lang="en"`, e la sitemap pubblica ha 14 URL, compresi quelli `/en`.
+
+| URL | lang | canonical | hreflang | Indicizzazione |
+|---|---|---|---|---|
+| `/` | de | `/` (uno solo) | de → `/`, en → `/en`, x-default → `/` | richiesta ✓ |
+| `/menu` | de | `/menu` (uno solo) | de → `/menu`, en → `/en/menu`, x-default → `/menu` | richiesta ✓ |
+| `/visit` | de | `/visit` (uno solo) | de → `/visit`, en → `/en/visit`, x-default → `/visit` | richiesta ✓ |
+| `/about` | de | `/about` (uno solo) | de → `/about`, en → `/en/about`, x-default → `/about` | richiesta ✓ |
+| `/gallery` | de | `/gallery` (uno solo) | de → `/gallery`, en → `/en/gallery`, x-default → `/gallery` | richiesta ✓ |
+| `/en` | da fare | | | |
+| `/en/menu` | da fare | | | |
+
+Sitemap: ancora da reinviare.
+
+**Lettura:**
+- Il problema del 26/09 è risolto in produzione. Google ora vede il tedesco sulle pagine tedesche, un solo canonical per pagina e le coppie hreflang reciproche.
+- La copia di `/gallery` che Google ha ancora in indice è quella vecchia (`lang="en"`, due canonical, uno verso la home). È normale: si aggiorna quando Google riscansiona la pagina, cosa che la richiesta di indicizzazione accelera.
+- Controllo fra una settimana: Search Console → Pagine → verificare che `/menu`, `/visit`, `/about` e `/gallery` non siano più tra "Rilevata, ma non indicizzata" o "Duplicata".
+
+---
+
 ## 28/09/2026: chi dei portali editoriali ci linka davvero (verifica di Francesco)
 
 Livello: **misurato** per vegan.at e Wanderlog (pagine aperte e link visti); **non concluso** per 1000things e Falstaff.
