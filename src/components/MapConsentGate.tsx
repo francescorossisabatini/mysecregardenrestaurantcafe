@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
 
@@ -21,6 +21,7 @@ type Props = {
  */
 export const MapConsentGate = ({ src, title, className, style }: Props) => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const isMobile = useIsMobile();
   const [accepted, setAccepted] = useState(false);
 
@@ -104,7 +105,7 @@ export const MapConsentGate = ({ src, title, className, style }: Props) => {
           </Button>
         )}
       </div>
-      <a href="/privacy" className="inline-flex min-h-[44px] items-center font-work text-xs text-muted-high-contrast underline underline-offset-2 hover:text-foreground">
+      <a href={lp("/privacy")} className="inline-flex min-h-[44px] items-center font-work text-xs text-muted-high-contrast underline underline-offset-2 hover:text-foreground">
         {copy.more}
       </a>
     </div>

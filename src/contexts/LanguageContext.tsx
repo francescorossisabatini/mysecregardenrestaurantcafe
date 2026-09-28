@@ -1,10 +1,20 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
-type Language = "de" | "en";
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  EN_PREFIX,
+  getLanguageFromPath,
+  getStoredLanguageChoice,
+  isLocalizedPath,
+  localizePath,
+  storeLanguageChoice,
+  type Language,
+} from "@/lib/i18nRoutes";
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
+  /** true se l'utente ha toccato DE/EN almeno una volta (su questo dispositivo). */
+  hasChosenLanguage: boolean;
   t: (key: string) => string;
 }
 
@@ -227,43 +237,50 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const LANGUAGE_KEY = "preferred_language";
-
-const getInitialLanguage = (): Language => {
-  // Check localStorage first (user's explicit choice)
-  if (typeof window !== "undefined") {
-    const stored = localStorage.getItem(LANGUAGE_KEY);
-    if (stored === "de" || stored === "en") {
-      return stored;
-    }
-    
-    // Detect browser language for first-time visitors
-    const browserLang = navigator.language || (navigator as any).userLanguage || "";
-    const langCode = browserLang.split("-")[0].toLowerCase();
-    
-    // If browser is English, use English; otherwise default to German
-    if (langCode === "en") {
-      return "en";
-    }
-  }
-  // Default to German (restaurant is in Vienna)
-  return "de";
-};
-
+/**
+ * La lingua viene dall'URL (/menu = de, /en/menu = en), non più da
+ * localStorage o dal browser: vedi src/lib/i18nRoutes.ts per il perché.
+ * Per questo il provider deve stare DENTRO il BrowserRouter (App.tsx).
+ */
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const localized = isLocalizedPath(location.pathname);
 
-  // Save language preference to localStorage when it changes
-  useEffect(() => {
-    localStorage.setItem(LANGUAGE_KEY, language);
-  }, [language]);
+  // Solo per le pagine senza versione doppia (404, /login): lì cambiare
+  // lingua non può cambiare URL, quindi la scelta resta in memoria locale.
+  const [override, setOverride] = useState<Language | null>(null);
+  const [hasChosenLanguage, setHasChosenLanguage] = useState(() => getStoredLanguageChoice() !== null);
+  useEffect(() => setOverride(null), [location.pathname]);
+
+  const language: Language = localized
+    ? getLanguageFromPath(location.pathname)
+    : override ?? (location.pathname.startsWith(`${EN_PREFIX}/`) ? "en" : getStoredLanguageChoice() ?? "de");
+
+  const setLanguage = useCallback(
+    (next: Language) => {
+      storeLanguageChoice(next);
+      setHasChosenLanguage(true);
+      if (!localized) {
+        setOverride(next);
+        return;
+      }
+      const current = `${location.pathname}${location.search}${location.hash}`;
+      const target = localizePath(current, next);
+      // replace, non push: cambiare lingua è un'impostazione, non una pagina
+      // nuova. Il tasto indietro torna alla pagina precedente, non alla
+      // stessa pagina nell'altra lingua.
+      if (target !== current) navigate(target, { replace: true });
+    },
+    [localized, location.pathname, location.search, location.hash, navigate],
+  );
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.de] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, hasChosenLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -275,4 +292,14 @@ export const useLanguage = () => {
     throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
+};
+
+/**
+ * Per ogni link interno: lp("/menu") → "/menu" in tedesco, "/en/menu" in
+ * inglese. Un <Link to="/menu"> nudo su una pagina inglese riporterebbe
+ * l'utente al tedesco a metà navigazione.
+ */
+export const useLocalizedPath = () => {
+  const { language } = useLanguage();
+  return useCallback((path: string) => localizePath(path, language), [language]);
 };

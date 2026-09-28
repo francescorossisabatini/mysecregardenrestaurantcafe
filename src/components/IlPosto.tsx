@@ -1,4 +1,4 @@
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import gardenCourtyard from "@/assets/photos/garden-courtyard.jpg";
@@ -44,6 +44,7 @@ const steps = [
 
 export const IlPosto = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
 
   return (
     <section className="bg-background py-28 md:py-36" aria-labelledby="il-posto-heading">
@@ -94,7 +95,7 @@ export const IlPosto = () => {
             {/* Una sola azione: trovarci e chiamarci sono già permanenti altrove. */}
             <div className="pt-1">
               <Button variant="outline" size="lg" className="font-work" asChild>
-                <Link to="/about">
+                <Link to={lp("/about")}>
                   {language === "de" ? "Unsere Geschichte lesen" : "Read our story"}
                 </Link>
               </Button>

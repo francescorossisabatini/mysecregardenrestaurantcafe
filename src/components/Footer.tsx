@@ -1,10 +1,11 @@
 import { Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
 
 export const Footer = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
 
   return (
     <footer className="bg-primary text-primary-foreground py-8 pb-24 md:pb-8">
@@ -23,7 +24,7 @@ export const Footer = () => {
           
           {/* Address — clickable link to /visit */}
           <Link
-            to="/visit"
+            to={lp("/visit")}
             className="inline-flex min-h-[44px] items-center justify-center px-3 text-sm text-primary-foreground font-work hover:underline underline-offset-2 transition-colors focus:outline-hidden focus:ring-2 focus:ring-primary-foreground/50 rounded"
             aria-label={language === "de" ? "So findest du uns" : "How to find us"}
           >
@@ -56,21 +57,21 @@ export const Footer = () => {
           {/* Required Legal Links - MUST be on every page */}
           <div className="flex items-center justify-center gap-4 text-sm flex-wrap">
             <Link 
-              to="/contact" 
+              to={lp("/contact")} 
               className="inline-flex min-h-[44px] items-center px-2 font-work text-primary-foreground hover:text-primary-foreground transition-colors duration-base underline-offset-2 hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Kontakt" : "Contact Us"}
             >
               {language === "de" ? "Kontakt" : "Contact Us"}
             </Link>
             <Link 
-              to="/impressum" 
+              to={lp("/impressum")} 
               className="inline-flex min-h-[44px] items-center px-2 font-work text-primary-foreground hover:text-primary-foreground transition-colors duration-base underline-offset-2 hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Impressum" : "Legal Notice"}
             >
               {language === "de" ? "Impressum" : "Legal Notice"}
             </Link>
             <Link 
-              to="/privacy" 
+              to={lp("/privacy")} 
               className="inline-flex min-h-[44px] items-center px-2 font-work text-primary-foreground hover:text-primary-foreground transition-colors duration-base underline-offset-2 hover:underline focus:outline-hidden focus:ring-2 focus:ring-primary-foreground/50 rounded"
               aria-label={language === "de" ? "Datenschutz" : "Privacy Policy"}
             >

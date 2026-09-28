@@ -1,38 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  Ogni pagina esiste in tedesco (radice) e in inglese (/en). Ogni <url> elenca
+  sé stessa e la sua coppia con xhtml:link, più x-default sul tedesco: stesse
+  coppie dichiarate da SEOHead.tsx nel <head>, che devono restare identiche.
+  Aggiunta una pagina? Due <url> qui, uno per lingua, con le tre alternate.
+  /link e /login non sono qui di proposito (hub social e area staff).
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://secretgardenrestaurant.at/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://secretgardenrestaurant.at/menu</loc>
+    <loc>https://secretgardenrestaurant.at/en</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://secretgardenrestaurant.at/menu</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/menu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/menu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/menu"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://secretgardenrestaurant.at/en/menu</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/menu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/menu"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/menu"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://secretgardenrestaurant.at/visit</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/visit"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/visit"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/visit"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://secretgardenrestaurant.at/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://secretgardenrestaurant.at/gallery</loc>
+    <loc>https://secretgardenrestaurant.at/en/visit</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/visit"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/visit"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/visit"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://secretgardenrestaurant.at/about</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/about"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://secretgardenrestaurant.at/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/about"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://secretgardenrestaurant.at/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/gallery"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://secretgardenrestaurant.at/en/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/gallery"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://secretgardenrestaurant.at/impressum</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/impressum"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://secretgardenrestaurant.at/en/impressum</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/impressum"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/impressum"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/impressum"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
     <loc>https://secretgardenrestaurant.at/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/privacy"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://secretgardenrestaurant.at/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://secretgardenrestaurant.at/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://secretgardenrestaurant.at/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://secretgardenrestaurant.at/privacy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>

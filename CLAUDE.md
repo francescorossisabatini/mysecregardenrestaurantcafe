@@ -1,6 +1,7 @@
 # CLAUDE.md — My Secret Garden
 > Leggi questo file prima di toccare qualsiasi cosa nel repo.
 > Per token, tipografia, componenti, motion e accessibilità: [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md).
+> Cosa è aperto e chi lo fa: [`docs/stato-aperto.md`](./docs/stato-aperto.md) · il perché delle decisioni: [`docs/ragionamenti.md`](./docs/ragionamenti.md) · dati SEO e trovabilità: [`docs/seo-dati.md`](./docs/seo-dati.md) · script per Claude in Chrome: [`docs/script-browser.md`](./docs/script-browser.md).
 > Ultimo aggiornamento: 20 settembre 2026 (riallineato al codice)
 
 
@@ -101,12 +102,20 @@ Questo vincola ogni decisione di feature, flusso e copy. In pratica:
 | `/login` | Area staff (login Supabase) — il percorso reale è `/login`, non `/staff/login`. `robots.txt` la esclude (`Disallow: /login`) dal 24/09/2026, ripetuto in ogni blocco `User-agent` | ✅ Attiva |
 
 
-**Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit`
+**Redirect:** `/wochenkarte` → `/menu` · `/speisekarte` → `/menu` · `/contact` → `/visit` (e gli stessi sotto `/en/`)
+
+**Lingue negli URL (dal 26/09/2026):** tedesco alla radice (`/menu`), inglese sotto `/en/` (`/en/menu`). Ogni route della tabella sopra esiste in entrambe, tranne `/login`. **La lingua di una pagina la decide solo l'URL** (`src/lib/i18nRoutes.ts`), non il browser né localStorage: prima Googlebot (Chrome in `en-US`) vedeva solo l'inglese anche per il mercato austriaco. Canonical e hreflang de/en/x-default li scrive `SEOHead.tsx`, la sitemap li ripete.
+
+**Regole per non rompere la struttura (anche per modifiche fatte da Lovable):**
+- Pagina nuova → entra in `localizedPages` (App.tsx), in `LOCALIZED_PATHS` (i18nRoutes.ts) e due volte in `public/sitemap.xml`, una per lingua con le tre alternate.
+- Link interno → sempre `lp("/percorso")` da `useLocalizedPath()`, mai `to="/percorso"` nudo: su una pagina inglese riporterebbe al tedesco.
+- Mai redirect basato sulla lingua del dispositivo: rimanderebbe anche Googlebot. Il dispositivo può solo suggerire (pulsante "EN" nella top bar mobile); redirige solo una scelta esplicita salvata (`msg_language_choice`).
+- Mai canonical, `og:url` o `og:locale` statici in `index.html`: è lo stesso guscio per ogni route.
 
 **Navigazione:**
-- Top bar mobile: hamburger (apre drawer con tutti i link) + logo + language switch DE/EN
+- Top bar mobile: hamburger (apre drawer con tutti i link) + logo + a destra "EN" solo per dispositivi non in tedesco che non hanno ancora scelto una lingua (altrimenti spazio vuoto). Il selettore DE/EN completo sta nel drawer
 - MobileStickyBar (fixed, appare dopo ~300px di scroll, nascosta sopra il footer): 2 bottoni — Anrufen (verde) + Besuchen/Route (outline). Non 3 tab + call pill come descritto in una versione precedente di questo file: decisione confermata in chat il 20 settembre 2026, coerente con "una sola CTA primaria" — chiamare e trovarci sono le due azioni che contano.
-- Drawer hamburger: tutti i link di navigazione (Home, Speisekarte, Galerie, Unsere Geschichte, Besuche uns) + language switch
+- Drawer hamburger (dal 27/09/2026): in alto solo la X, nel punto dell'hamburger; voci Startseite, Speisekarte, Besuch uns, Galerie, Unsere Geschichte (stesso ordine della nav desktop); subito sotto la X il blocco di oggi: stato (stesso calcolo del badge dell'hero), "Ruf an: +43 1 586 28 39" (sta sopra i piatti, così non si sposta quando il menu arriva), nomi dei piatti del giorno come link a /menu; poi le voci. Con il foglio non ancora aggiornato: *Die Karte von heute steht noch nicht online. Wir schreiben sie jeden Morgen.*; con errore di rete nessuna riga; in fondo il selettore DE/EN. È un dialog modale: focus sulla X, Tab confinato, Escape chiude
 
 
 ---
@@ -200,6 +209,23 @@ non quello dopo le correzioni.
 - Lead time standard: *Mindestens 24h im Voraus.*
 - CTA: *Bestellung senden*
 
+**SEO EN (default di `SEOHead.tsx`, approvato in chat il 26 settembre 2026)**
+- Title: *My Secret Garden Vegetarian & Vegan Restaurant Vienna* · suffisso: *My Secret Garden Vienna*
+- Description: *Vegetarian & vegan restaurant in Vienna. Organic, fair, regional and seasonal.*
+
+**Top bar mobile, etichette per screen reader (approvate il 26 settembre 2026)**
+- Pulsante "EN": *EN, English version* (dal 28/09/2026: il nome contiene il testo visibile, per il controllo vocale)
+- Link dei piatti nel drawer: prefisso per screen reader *Speisekarte:* / *Menu:*
+- Chiusura del menu: *Menü schließen* / *Close menu* (una sola forma, prima c'era anche "Close navigation menu")
+- Link logo: *My Secret Garden, Startseite* / *My Secret Garden, home* · selettore lingua: *Sprache wählen* / *Choose language*
+
+**Navigazione e drawer (approvato in chat il 26–27 settembre 2026)**
+- Voci DE: *Startseite · Speisekarte · Besuch uns · Galerie · Unsere Geschichte* (era "Home" e "Besuche uns")
+- Voci EN: *Home · Menu · Visit us · Gallery · Our Story* (era "Visit")
+- Stato di oggi: *Heute bis 19:00 geöffnet* / *Open today until 19:00*; *Heute ab 11:00 geöffnet* / *Open today from 11:00*; *Heute geschlossen. Morgen ab 11:00 wieder da.* / *Closed today. Back tomorrow from 11:00.*; *Jetzt geschlossen. Am Montag ab 11:00 wieder da.* / *Closed now. Back Monday from 11:00.* (il giorno di riapertura viene dagli orari)
+- Menu del giorno non ancora nel foglio (giorno aperto): *Die Karte von heute steht noch nicht online. Wir schreiben sie jeden Morgen — ruf an: +43 1 586 28 39* (voice-spec) / *Today's menu isn't online yet. We write it every morning — call: +43 1 586 28 39*. **Menu vuoto non vuol dire chiuso** (bug corretto il 27/09/2026): chiuso è solo domenica, festivo (`holidaysData`) o fuori orario
+- Telefono: *Ruf an: +43 1 586 28 39* / *Call: +43 1 586 28 39*
+
 ---
 
 ## Debito tecnico noto
@@ -283,6 +309,8 @@ rischiavano lo stesso `(direct)` della scheda Google.
 foodsharing.at, Falstaff, Wien wie es isst, Supermind Kaffee — verificati
 il 22-23/09/2026, esclusi dallo scope su decisione di Francesco.
 
+**Pagine per lingua (dal 26/09/2026):** le visite inglesi ora hanno percorsi propri (`/en/menu` invece di `/menu`). Nei report per pagina di GA4 le due lingue sono righe separate: per il totale di una pagina vanno sommate. Prima di quella data `/menu` conteneva entrambe le lingue.
+
 ---
 
 ## Search Console
@@ -360,6 +388,7 @@ col metodo Tag HTML.
 - **Non cambiare copy** senza che io l'abbia approvato in chat
 - **Non fare push su `main`** senza che io lo confermi
 - **Documenta** ogni decisione non ovvia con un commento nel codice
+- **Compiti meccanici fuori dal repo** (Search Console, GA4, schede esterne, Falstaff, TripAdvisor…): se Claude in Chrome può farli, oltre a spiegarmeli dammi lo **script pronto da incollare**. Ogni script ha obiettivo, passi numerati, limiti (solo lettura salvo le azioni dichiarate, stop su login e captcha), formato di uscita (tabella, `NON_DISPONIBILE` e mai `0`). Gli script stanno in [`docs/script-browser.md`](./docs/script-browser.md); quelli per Semrush vanno a Lovable.
 
 ---
 

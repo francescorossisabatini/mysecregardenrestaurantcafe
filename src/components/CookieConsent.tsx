@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { ChevronDown, ChevronUp, Lock } from "lucide-react";
@@ -183,6 +183,7 @@ const ConsentRow = ({
 
 export const CookieConsent = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const labels = copy[language];
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
@@ -291,19 +292,26 @@ export const CookieConsent = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-slow ${
+      // pointer-events-none: il contenitore è largo tutto lo schermo e in
+      // orizzontale intercettava il tocco sull'hamburger. I tocchi li riceve
+      // solo la card (critico cieco, 26/09/2026).
+      className={`pointer-events-none fixed bottom-0 left-0 right-0 z-[60] px-3 pt-3 md:p-6 transition-all duration-slow ${
         isClosing ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
       }`}
       style={{ paddingBottom: mobileBottomOffset }}
     >
-      <div className="container mx-auto max-w-2xl md:mr-0 md:max-w-xl lg:max-w-2xl">
+      <div className="pointer-events-auto container mx-auto max-w-2xl md:mr-0 md:max-w-xl lg:max-w-2xl">
         <div
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby="cookie-consent-title"
           aria-describedby="cookie-consent-description"
-          className="surface-card rounded-lg border p-4 shadow-design-elevated md:p-6"
+          // Altezza massima: la card si ferma sotto la top bar (60px + safe
+          // area + margini) e scorre dentro. Senza, a 320–375px copriva
+          // l'hamburger e alla prima visita il menu non si apriva
+          // (critico cieco, 28/09/2026).
+          className="surface-card max-h-[calc(100dvh-60px-2.5rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain rounded-lg border p-4 shadow-design-elevated md:max-h-[calc(100dvh-9rem)] md:p-6"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
@@ -321,11 +329,11 @@ export const CookieConsent = () => {
               </p>
               <p className="font-work text-[11px] leading-relaxed text-muted-high-contrast md:text-xs">
                 {labels.legal}{" "}
-                <a href="/privacy" className="underline underline-offset-2 hover:text-foreground">
+                <a href={lp("/privacy")} className="underline underline-offset-2 hover:text-foreground">
                   {labels.privacy}
                 </a>
                 {" · "}
-                <a href="/impressum" className="underline underline-offset-2 hover:text-foreground">
+                <a href={lp("/impressum")} className="underline underline-offset-2 hover:text-foreground">
                   {labels.imprint}
                 </a>
                 .
@@ -397,7 +405,7 @@ export const CookieConsent = () => {
 
           <div className="mt-3 flex items-center justify-end">
             <a
-              href="/privacy"
+              href={lp("/privacy")}
               className="font-work text-xs text-muted-high-contrast underline underline-offset-2 hover:text-foreground"
             >
               {labels.privacy}

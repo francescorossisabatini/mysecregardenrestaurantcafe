@@ -2,7 +2,8 @@ import { Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SITE } from "@/config/site";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
+import { stripLanguagePrefix } from "@/lib/i18nRoutes";
 import { useMobileMenu } from "@/contexts/MobileMenuContext";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { getConsent, CONSENT_EVENT } from "@/components/CookieConsent";
@@ -12,6 +13,7 @@ export const MobileStickyBar = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
   const { isOpen: isMobileMenuOpen } = useMobileMenu();
   const [isScrolled, setIsScrolled] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
@@ -73,7 +75,8 @@ export const MobileStickyBar = () => {
 
   const callLabel = language === "de" ? "Anrufen" : "Call";
   const callAriaLabel = language === "de" ? "Restaurant anrufen" : "Call the restaurant";
-  const isVisitPage = location.pathname === "/visit" || location.pathname === "/contact";
+  const basePath = stripLanguagePrefix(location.pathname);
+  const isVisitPage = basePath === "/visit" || basePath === "/contact";
   const visitLabel = isVisitPage
     ? language === "de" ? "Route" : "Directions"
     : language === "de" ? "Besuchen" : "Visit";
@@ -150,7 +153,7 @@ export const MobileStickyBar = () => {
           </a>
         ) : (
           <Link
-            to="/visit"
+            to={lp("/visit")}
             onClick={() => trackHeroAbEvent('click_visit', { event_category: 'engagement', event_label: 'mobile_sticky_bar' }, heroVariant)}
             className={visitClasses}
             aria-label={visitAriaLabel}

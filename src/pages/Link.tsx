@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useLocalizedPath } from "@/contexts/LanguageContext";
 import { SITE } from "@/config/site";
 import { Phone, MapPin, CalendarDays, UtensilsCrossed } from "lucide-react";
 import { Logo } from "@/components/Logo";
@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 
 const LinkPage = () => {
   const { language } = useLanguage();
+  const lp = useLocalizedPath();
 
   const links = [
     { href: `tel:${SITE.phoneTel}`, label: { de: SITE.phoneDisplay, en: "Call Now" }, icon: Phone, isTel: true, primary: true },
@@ -51,7 +52,7 @@ const LinkPage = () => {
                 </a>
               );
             }
-            return <Link key={`${link.href}-${link.label.de}`} to={link.href} className="block">{content}</Link>;
+            return <Link key={`${link.href}-${link.label.de}`} to={lp(link.href)} className="block">{content}</Link>;
           })}
         </div>
       </div>

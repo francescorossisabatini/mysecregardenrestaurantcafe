@@ -149,7 +149,12 @@ else
 fi
 
 # --- U2 · bordo + ombra sulla stessa superficie -----------------------------
-BS=$(grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${F_U2[@]}" 2>/dev/null | grep -v 'border-0' || true)
+# Anche i template literal className={`...`}: senza, il controllo era cieco a
+# ogni classe condizionale (tutta la Navigation) e il suo verde era falso
+# (critico cieco, 26/09/2026). Su una sola riga: basta per il codice di qui.
+BS=$( { grep -rnE 'className="[^"]*\bborder\b[^"]*\bshadow-|className="[^"]*\bshadow-[^"]*\bborder\b' "${F_U2[@]}" 2>/dev/null
+        grep -rnE 'className=\{`[^`]*\bborder\b[^`]*\bshadow-|className=\{`[^`]*\bshadow-[^`]*\bborder\b' "${F_U2[@]}" 2>/dev/null
+      } | grep -v 'border-0' || true)
 if [ -n "$BS" ]; then
   hit "U2 bordo + ombra" "stessa superficie con entrambi — su cream vince il bordo"
   echo "$BS" | cut -c1-140 | sed 's/^/      /'
@@ -216,7 +221,13 @@ EMDASH=$(count_nc '—' "${F_VOICE[@]}")
 [ "$EMDASH" -gt 3 ] && warn "VOICE em dash" "${EMDASH}× — controlla che non sia il connettore principale"
 
 # --- token: hex e colori Tailwind di default --------------------------------
-HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
+# Anche il nero puro scritto in rgba (drop-shadow arbitrari): "mai #000000"
+# vale in ogni notazione, e prima passava inosservato (critico cieco 26/09/2026).
+HEX=$(grep -rHnE '#[0-9a-fA-F]{6}\b|rgba?\(0,[ _]*0,[ _]*0\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
+# Token primitivi e bianco di default dentro le classi: "solo token semantici".
+# Prima un drop-shadow su var(--navy-500) e un text-white passavano verdi.
+PRIM=$(grep -rHnE 'var\(--(navy|verde|cream)-[0-9]+\)|\btext-white\b|\bbg-white\b' "${F_TOKEN[@]}" 2>/dev/null | grep -vE "$NOCOMMENT" | cut -c1-140 || true)
+[ -n "$PRIM" ] && { hit "TOKEN primitivo o bianco di default" "usa il token semantico (--foreground, text-primary-foreground…)"; echo "$PRIM" | sed 's/^/      /'; } || ok "TOKEN primitivo o bianco di default"
 [ -n "$HEX" ] && { hit "TOKEN hex hardcoded" "solo token semantici nei componenti"; echo "$HEX" | sed 's/^/      /'; } || ok "TOKEN hex hardcoded"
 
 TWCOLORS=$(grep -rnoE '\b(bg|text|border)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]{2,3}\b' "${F_TOKEN[@]}" 2>/dev/null || true)

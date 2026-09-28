@@ -48,7 +48,8 @@ const Privacy = () => {
       
       <main 
         id="main-content"
-        className="container mx-auto px-4 py-24 max-w-3xl"
+        tabIndex={-1}
+        className="container mx-auto px-4 py-24 max-w-3xl focus:outline-hidden"
         role="main"
         aria-labelledby="page-title"
       >

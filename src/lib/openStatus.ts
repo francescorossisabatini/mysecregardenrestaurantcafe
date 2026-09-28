@@ -31,6 +31,23 @@ function getViennaParts(date = new Date()): { weekday: string; minutes: number }
   return { weekday, minutes: hour * 60 + minute };
 }
 
+/**
+ * Data di Vienna ("MM-DD") e giorno della settimana (0 = domenica) per un
+ * istante. Festivi e "è domenica?" devono usare questa, non l'ora del
+ * telefono: da New York alle 19:00 di mercoledì a Vienna è già giovedì.
+ */
+export function getViennaDate(date = new Date()): { monthDay: string; weekdayIndex: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Vienna",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+  }).formatToParts(date);
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  const order = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return { monthDay: `${get("month")}-${get("day")}`, weekdayIndex: Math.max(0, order.indexOf(get("weekday"))) };
+}
+
 function weekdayKey(weekdayShort: string): keyof OpeningHours {
   const map: Record<string, keyof OpeningHours> = {
     Mon: "mon",
@@ -83,4 +100,29 @@ export function getOpenStatus(hours: OpeningHours, now = new Date()) {
     tomorrowOpensAt: nextDaySlot?.open ?? null,
     tomorrowClosed: !nextDaySlot,
   };
+}
+
+/**
+ * Prossima apertura dopo oggi, dagli orari (non da un "+1" fisso): il primo
+ * giorno che ha un orario e non è chiuso per `isClosedDate` (i festivi di
+ * holidaysData). `weekday` è 0 = domenica, per scegliere il nome del giorno.
+ * Fino al 28/09/2026 i festivi non contavano: il 24/12 diceva "Morgen ab
+ * 11:00" con il 25 chiuso.
+ */
+export function getNextOpening(hours: OpeningHours, now = new Date(), isClosedDate?: (date: Date) => boolean) {
+  const order: (keyof OpeningHours)[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  // Giorni di calendario, non N×24h: nella notte del cambio d'ora (23 o 25
+  // ore) sommare 24h saltava o ripeteva un giorno (sab 27/03/2027 alle 23:30
+  // diceva "domani" per lunedì). Si parte da mezzogiorno UTC della data di
+  // Vienna di oggi: a mezzogiorno nessun cambio d'ora sposta la data.
+  const [y, m, d] = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Vienna", year: "numeric", month: "2-digit", day: "2-digit" })
+    .format(now).split("-").map(Number);
+  for (let daysAhead = 1; daysAhead <= 14; daysAhead++) {
+    const candidate = new Date(Date.UTC(y, m - 1, d + daysAhead, 12));
+    const key = weekdayKey(getViennaParts(candidate).weekday);
+    const slot = hours[key];
+    if (!slot || isClosedDate?.(candidate)) continue;
+    return { daysAhead, weekday: order.indexOf(key), open: slot.open };
+  }
+  return null;
 }
