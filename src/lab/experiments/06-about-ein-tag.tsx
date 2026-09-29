@@ -60,7 +60,7 @@ const COPY = {
 const Hour = ({ time, title, children }: { time: string; title: string; children: React.ReactNode }) => (
   <section className="py-20 md:py-28">
     <div className="mx-auto grid max-w-6xl grid-cols-1 px-5 md:grid-cols-[7rem_minmax(0,62ch)] md:gap-x-8">
-      <h2 className="flex flex-col gap-2 md:col-span-2 md:grid md:grid-cols-subgrid md:items-baseline md:gap-0">
+      <h2 className="flex flex-col gap-2 md:col-span-2 md:grid md:grid-cols-subgrid md:items-baseline md:gap-x-8 md:gap-y-0">
         <time className="font-work text-sm font-semibold tabular-nums tracking-[0.04em] text-muted-foreground">{time}</time>
         <span className="text-balance font-cormorant text-3xl font-semibold leading-tight text-foreground md:text-4xl">{title}</span>
       </h2>
