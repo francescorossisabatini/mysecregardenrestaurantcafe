@@ -3,6 +3,7 @@ import { containerQueriesExperiment } from "./02-container-queries";
 import { hasExperiment } from "./03-has";
 import { startingStyleExperiment } from "./04-starting-style";
 import { textPrettyExperiment } from "./05-text-pretty";
+import { aboutEinTagExperiment } from "./06-about-ein-tag";
 import type { Experiment } from "./types";
 
 /**
@@ -16,4 +17,5 @@ export const experiments: Experiment[] = [
   containerQueriesExperiment,
   textPrettyExperiment,
   startingStyleExperiment,
+  aboutEinTagExperiment,
 ];
