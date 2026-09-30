@@ -140,6 +140,24 @@ Formato di uscita: una tabella per punto, con il dato e la pagina da cui l'hai l
 
 ---
 
+## S7 · Scheda Google: le due correzioni sicure (circa 3 minuti, AGISCE)
+
+Quando: dopo la lettura S6 del 30/09/2026. Solo le correzioni che non richiedono decisioni: link al menu e servizio al tavolo. Festivi, nome e descrizione aspettano Carlo.
+
+```text
+Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien, dal pannello "La tua attività su Google" nella Ricerca Google. Le uniche due azioni consentite sono quelle segnate AZIONE. Non toccare nessun altro campo, non rispondere alle recensioni, non caricare foto. Se ti chiede un login, un captcha o una nuova verifica dell'attività, fermati e dimmelo senza procedere.
+
+1. Modifica profilo → Contatto → Link al menu. Riporta il valore attuale.
+   AZIONE: sostituiscilo con https://secretgardenrestaurant.at/menu?utm_source=google-business&utm_medium=referral&utm_campaign=scheda-google&utm_content=menu e salva.
+2. Modifica profilo → Altro → sezione Ristorazione (o Opzioni di servizio). Riporta gli attributi attuali.
+   AZIONE: imposta "Servizio al tavolo" su No. Lascia "Servizio al banco" su Sì. Non toccare brunch, prenotazioni o altri attributi. Salva.
+3. Ricarica il pannello e rileggi i due campi.
+
+Formato di uscita: una tabella con campo, valore prima, valore dopo, stato ("salvato", "in revisione da Google" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
+```
+
+---
+
 ## Per Lovable (Semrush), non per il browser
 
 Semrush lo usa Lovable, non Claude in Chrome. Da incollare a Lovable quando serve.

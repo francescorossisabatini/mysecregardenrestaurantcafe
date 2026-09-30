@@ -88,6 +88,15 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | DESIGN_SYSTEM §6 "active → scale(0.98)" contro §7 "mai zoom" | F | La top bar segue §7; `ui/button.tsx`, `MobileStickyBar`, `/link` hanno ancora lo scale |
 | Hosting reale (Lovable? Vercel?) | F | Serve per i redirect 301 lato server. `vercel.json` nel repo l'ha scritto Claude, non prova niente |
 
+## Scheda Google (lettura S6 del 30/09/2026, dettagli in `seo-dati.md`)
+
+- [ ] **S7** (F, 3 minuti): link al menu su `/menu`, "servizio al tavolo" su No
+- [ ] **Festivi** (C): lista dei giorni di chiusura 2026–27. Il 26/10 è tra meno di 4 settimane. Poi Claude allinea `holidaysData.ts` e S8 li mette nella scheda
+- [ ] **Risposte alle recensioni** (C): 0 su 952. Decidere chi risponde e con che ritmo; Claude può scrivere 3–4 risposte tipo in du
+- [ ] **Nome della scheda** (C): parole chiave nel nome, contro le linee guida Google. Tenere o tornare a "My Secret Garden"
+- [ ] **Descrizione** (F): riscrittura con umlaut e senza il numero di recensioni fermo. Bozza da chiedere a Claude, approvazione in chat
+- [ ] **Foto** (C): menu e arco d'ingresso, col photoshoot
+
 ## Fuori dal sito
 
 - [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S4 (indicizzazione, merge fatto), S6 (scheda Google), S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S5 il 15/10
