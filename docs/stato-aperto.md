@@ -13,7 +13,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 | Cosa | Chi | Stato |
 |---|---|---|
-| Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
+| Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | ✓ Su main dal 28/09/2026 (PR #19). Restano i passi in Search Console qui sotto (script S4) |
 | Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → **59**. Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
@@ -90,7 +90,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Fuori dal sito
 
-- [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S4 dopo il merge; S5 il 15/10
+- [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S4 (indicizzazione, merge fatto), S6 (scheda Google), S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S5 il 15/10
 - [ ] **Search Console, 15 minuti (F):** Azioni manuali (deve dire "nessun problema") · Link → Siti con più link (primi 10) · Rendimento → "vegetarisches restaurant wien" → scheda Dispositivi. Annotare in `docs/seo-dati.md`
 - [ ] **1000things:** la ricerca sul loro sito non trova niente, ma GA4 registra 30 sessioni arrivate da lì. GA4 → Esplora → "Referrer della pagina" filtrato su 1000thingsmagazine.com: articolo vecchio, pagina di elenco o spam di referral? Poi il form per locali
 - [ ] **Falstaff:** da un browser normale, cercare "My Secret Garden" su falstaff.com. È un partner: se la scheda c'è ma non ha il link, chiederlo

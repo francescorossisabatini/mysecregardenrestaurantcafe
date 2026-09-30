@@ -78,11 +78,12 @@ Formato di uscita: una tabella con URL, dati trovati, link al sito sì/no e URL 
 
 ## S4 · Dopo il merge su main: indicizzazione e sitemap (circa 10 minuti)
 
-Quando: **solo dopo** che il merge è in produzione (Lovable ha pubblicato). Questo script **agisce**: chiede l'indicizzazione e reinvia la sitemap. Sono le sole due azioni consentite.
+Quando: **adesso**. Il merge è su main dal 28/09/2026 ([PR #19](https://github.com/francescorossisabatini/mysecregardenrestaurantcafe/pull/19)). Il passo 0 controlla che Lovable l'abbia pubblicato. Questo script **agisce**: chiede l'indicizzazione e reinvia la sitemap. Sono le sole due azioni consentite.
 
 ```text
 Lavora in Google Search Console, proprietà https://secretgardenrestaurant.at. Le uniche azioni consentite sono "Richiedi indicizzazione" e "Invia" della sitemap, come indicato sotto. Non cambiare nient'altro. Se ti chiede un login o un captcha, fermati e dimmelo.
 
+0. Prima di tutto apri https://secretgardenrestaurant.at/sitemap.xml e conta i tag <loc>. Poi apri https://secretgardenrestaurant.at/en/menu. Se i <loc> non sono 14 o /en/menu non mostra il menu in inglese, fermati e dimmelo: la versione nuova non è ancora online.
 1. Per ciascuno di questi URL, uno alla volta:
    https://secretgardenrestaurant.at/
    https://secretgardenrestaurant.at/menu
@@ -116,6 +117,25 @@ Lavora solo in lettura in Google Search Console, proprietà https://secretgarden
 4. Scheda Paesi: riporta i primi 5 paesi per clic.
 
 Formato di uscita: una tabella per punto, con i due periodi affiancati. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0.
+```
+
+---
+
+## S6 · Scheda Google: controllo completo (circa 10 minuti)
+
+Quando: adesso. Per le ricerche "vegan in meiner Nähe" e per Maps conta la scheda più del sito (vedi `seo-dati.md`, 27/09). Solo lettura: le correzioni le decide Francesco dopo aver visto la tabella.
+
+```text
+Lavora solo in lettura sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien. Non modificare nessun campo, non rispondere alle recensioni, non pubblicare post, non caricare foto. Se ti chiede un login o un captcha, fermati e dimmelo.
+
+1. Apri https://business.google.com e seleziona "My Secret Garden". Se non c'è o l'account non ha accesso, cerca "My Secret Garden Wien" su google.com e usa il pannello "Il tuo profilo dell'attività"; se non compare neanche quello, dimmelo e fermati.
+2. Modifica profilo → Informazioni: riporta categoria principale e categorie secondarie, descrizione (testo esatto), sito web (URL completo, con eventuali parametri utm), link al menu, telefono, indirizzo.
+3. Orari: riporta gli orari settimanali e gli orari speciali già inseriti per i prossimi 3 mesi (in Austria: 8 dicembre, 24–26 dicembre, 31 dicembre, 1 e 6 gennaio). Segnala i festivi senza orario speciale.
+4. Attributi: riporta quelli attivi. Dimmi sì/no per: opzioni vegane, opzioni vegetariane, senza glutine, posti a sedere all'aperto, accesso in sedia a rotelle, pagamento con carta, asporto.
+5. Recensioni: riporta il punteggio medio e il numero totale. Delle ultime 20 recensioni, quante hanno una risposta del proprietario; data della recensione più recente senza risposta.
+6. Foto: numero totale di foto del proprietario, data della più recente caricata dal proprietario, se c'è una foto del menu e una dell'ingresso (l'arco).
+
+Formato di uscita: una tabella per punto, con il dato e la pagina da cui l'hai letto. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Alla fine, separata, una lista di al massimo 5 differenze rispetto a questi dati attesi: orari lun–sab 11:00–19:00, domenica chiuso, telefono +43 1 586 28 39, sito https://secretgardenrestaurant.at con utm_source=google-business&utm_medium=referral, link al menu https://secretgardenrestaurant.at/menu.
 ```
 
 ---
