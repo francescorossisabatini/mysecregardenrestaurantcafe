@@ -79,7 +79,7 @@ const COPY = {
     newTab: "öffnet in neuem Tab",
     alt: {
       tavolata: "Ein langer Tisch von oben, mit Tellern vom Tagesmenü",
-      torta: "Ein Stück hausgemachter Kuchen",
+      torta: "Ein hausgemachter Beerenkuchen mit einem Herz aus Kokosraspeln",
       courtyard: "Der Innenhof im Raimundhof, mit Pflanzen und Tischen",
     },
     find: "Wie du uns findest",
@@ -115,7 +115,7 @@ const COPY = {
     newTab: "opens in a new tab",
     alt: {
       tavolata: "A long table from above, with plates from the daily menu",
-      torta: "A slice of homemade cake",
+      torta: "A homemade berry cake with a heart of grated coconut",
       courtyard: "The Raimundhof courtyard, with plants and tables",
     },
     find: "How to find us",
@@ -158,8 +158,10 @@ const useReveal = <T extends HTMLElement>() => {
   return [ref, shown] as const;
 };
 
+/* Tailwind v4: translate-y-* scrive la proprietà `translate`, non `transform`.
+   Con transition-[opacity,transform] lo spostamento scattava e restava solo la dissolvenza. */
 const reveal = (shown: boolean, quiet = false) =>
-  `transition-[opacity,transform] duration-slow ease-out motion-reduce:transition-none ${
+  `transition-[opacity,translate] duration-slow ease-out motion-reduce:transition-none ${
     shown ? "opacity-100 translate-y-0" : quiet ? "opacity-0" : "opacity-0 translate-y-2"
   }`;
 
@@ -229,7 +231,7 @@ const Idee = () => {
 
       <Chapter mark={<time className={label}>{afternoon.time}</time>} title={afternoon.title}>
         <p className={body}>{afternoon.body}</p>
-        <img src={torta} alt={t.alt.torta} className="-mr-5 aspect-[4/3] w-[calc(100%+1.25rem)] max-w-md rounded-lg object-cover md:-mr-24 md:aspect-[4/5] md:w-[calc(100%+6rem)]" loading="lazy" decoding="async" />
+        <img src={torta} alt={t.alt.torta} className="-mr-5 aspect-square w-[calc(100%+1.25rem)] max-w-md rounded-lg object-cover md:-mr-24 md:w-[calc(100%+6rem)]" loading="lazy" decoding="async" />
       </Chapter>
 
       <Chapter mark={<time className={label}>{evening.time}</time>} title={evening.title}>

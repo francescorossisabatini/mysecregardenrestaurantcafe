@@ -96,7 +96,7 @@ La B aveva tolto quasi tutto il contenuto su Sri Chinmoy. Francesco ha chiesto p
 ### Da far decidere a Francesco prima del codice
 
 - [ ] **Eccezione in voice-spec per /about:** "su /about il racconto dell'ispirazione è ammesso, con fatti e senza aggettivi". Senza questa eccezione la strada 2 viola voice-spec.
-- [ ] **La poesia del giorno sostituisce la citazione fissa** „To serve and never be tired is love." **o si aggiunge?** CLAUDE.md dice una sola citazione per pagina.
+- [x] **(Approvato da Francesco in chat il 30/09/2026: la poesia del giorno va bene, sostituisce la citazione.) La poesia del giorno sostituisce la citazione fissa** „To serve and never be tired is love." **o si aggiunge?** CLAUDE.md dice una sola citazione per pagina.
 - [ ] **Approvazione del copy della B** (bozze DE ed EN in `06-about-ein-tag.tsx`) e del copy nuovo del capitolo "Die Idee dahinter".
 - [ ] **Fatti da confermare col proprietario:** giardino dal 2018; caffè Supermind tostato ogni settimana a Vienna; una cartolina con una poesia a ogni caffè; "mit ins Büro"; la cucina scrive tre piatti al giorno (Suppe, grün, blau).
 
