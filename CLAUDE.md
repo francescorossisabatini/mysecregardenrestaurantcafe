@@ -389,6 +389,13 @@ col metodo Tag HTML.
 - **Non fare push su `main`** senza che io lo confermi
 - **Documenta** ogni decisione non ovvia con un commento nel codice
 - **Compiti meccanici fuori dal repo** (Search Console, GA4, schede esterne, Falstaff, TripAdvisor…): se Claude in Chrome può farli, oltre a spiegarmeli dammi lo **script pronto da incollare**. Ogni script ha obiettivo, passi numerati, limiti (solo lettura salvo le azioni dichiarate, stop su login e captcha), formato di uscita (tabella, `NON_DISPONIBILE` e mai `0`). Gli script stanno in [`docs/script-browser.md`](./docs/script-browser.md); quelli per Semrush vanno a Lovable.
+- **Dimmi quando conviene aprire una sessione nuova.** Ogni messaggio rimanda tutta la conversazione. In una sessione lunga la maggior parte dei token serve solo a ricordare il passato. Segnalalo con una riga in fondo alla risposta quando succede una di queste cose:
+  - il contesto è già stato riassunto una volta;
+  - si chiude una fase (merge, prototipo visto, decisione presa) e il passo dopo è un lavoro diverso;
+  - si passa a un'altra pagina o area del sito;
+  - la sessione ha letto molti screenshot (le immagini pesano più del testo).
+  
+  Prima di chiudere aggiorna `docs/stato-aperto.md` e il documento del lavoro in corso, fai commit e push, e dammi la frase con cui aprire la sessione nuova. Non continuare una sessione pesante solo per non perdere il filo: il filo deve stare nei file.
 
 ---
 

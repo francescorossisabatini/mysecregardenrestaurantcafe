@@ -191,3 +191,11 @@ Lezioni dei giri:
 - Una correzione può spostare il problema: togliere un anello di focus locale per usare quello globale l'ha fatto cadere sullo scrim scuro dell'hero (1.6:1). Si misura dopo ogni modifica.
 - `check-tells.sh` non vede i `className={`...`}`: un verde del controllo automatico non basta.
 - Nel design system ci sono contraddizioni vere (§6 "active → scale" contro §7 "mai zoom"). Si scrivono e si fanno decidere, non si risolvono in silenzio.
+
+## 12. Regole di voce: per chi sono scritte (29/09/2026)
+
+Nel prototipo B di /about il contenuto su Sri Chinmoy era quasi sparito. Il motivo: voice-spec ("mai spiegare Sri Chinmoy, massimo un riferimento per pagina") e CLAUDE.md ("si sente, non si spiega") applicati alla lettera. Quelle regole servono a tenere la spiritualità fuori dal copy di vendita (home, menu, hero). /about invece è la pagina che il profilo D (Curious) apre proprio per capire chi c'è dietro, e raccontarlo è una scelta del proprietario.
+
+Lezione: prima di applicare un divieto, chiedersi per quale pagina e per quale lettore è stato scritto (vedi §1, vincolo del sistema o regola nostra?). Dove una regola non si adatta, si propone un'eccezione scritta e la si fa approvare, invece di tagliare il contenuto in silenzio. Proposta aperta: "su /about il racconto dell'ispirazione è ammesso, con fatti e senza aggettivi".
+
+Seconda lezione, dalla strada 3: togliere le card non basta. Senza contenitori il copy si legge di più, e con lui i suoi difetti. Il redesign di una pagina di racconto è anche un giro di copy.

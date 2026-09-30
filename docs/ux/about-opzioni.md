@@ -45,3 +45,59 @@ Regole comuni a tutte e tre:
 - Sri Chinmoy in un punto solo, con il link a srichinmoy.org;
 - niente icone decorative;
 - tre densità verticali.
+
+---
+
+## Stato al 30/09/2026 — da qui riparte la prossima sessione
+
+**Scelta di Francesco:** strada 2. Prima ha voluto vedere la 3.
+
+**Nel banco** (`lab.html`, solo in sviluppo):
+
+| Prototipo | File | Indirizzo |
+|---|---|---|
+| B "Ein Tag" (strada 1, minima) | `src/lab/experiments/06-about-ein-tag.tsx` | `lab.html?exp=about-ein-tag&variant=after` |
+| Strada 3, contenuto di oggi senza card | `src/lab/experiments/07-about-senza-card.tsx` | `lab.html?exp=about-senza-card&variant=after` |
+
+Aggiungendo `&lang=en` si vede la versione inglese; `variant=before` mostra l'estratto di com'è oggi. `src/pages/AboutUs.tsx` (la pagina vera) non è stato toccato.
+
+### Le tre strade per il contenuto su Sri Chinmoy (29/09)
+
+La B aveva tolto quasi tutto il contenuto su Sri Chinmoy. Francesco ha chiesto perché. La risposta è che voice-spec ("mai spiegare Sri Chinmoy, massimo un riferimento") e CLAUDE.md ("si sente, non si spiega") erano stati applicati troppo alla lettera. Quelle regole sono scritte per il sito e per il copy sul cibo. /about invece è la pagina dove il profilo D (Curious) va a cercare proprio questo, ed è una convinzione del proprietario.
+
+1. **Minima:** la B così com'è, un solo riferimento.
+2. **Scelta.** La B, più un capitolo "Die Idee dahinter" dopo le 18:45, con:
+   - una biografia di 3–4 frasi di soli fatti (1931–2007, poeta, artista, musicista, meditazioni per la pace all'ONU);
+   - i Soul-Birds come un'unica immagine a piena larghezza;
+   - una **poesia del giorno**, che ruota ogni giorno tra le 5, al posto del carosello;
+   - caffè gemelli e fonti come elenchi di link di testo.
+3. **Com'è oggi, senza card:** il prototipo 07.
+
+### Cosa ha mostrato la strada 3 (29–30/09)
+
+- Senza contenitori il contenuto su Sri Chinmoy si legge bene: il problema erano le card, non la quantità.
+- **Su mobile è lunga.** Circa 9.400px, una decina di schermate. L'82% delle sessioni è mobile, con 58 secondi di media.
+- Senza la navigazione a chip non c'è modo di saltare a Sri Chinmoy.
+- Il ritratto occupa mezza schermata.
+- Cinque poesie di fila sono circa due schermate e mezza.
+- Senza card il copy di oggi si nota di più, compresi i divieti di voice-spec: "kein lautes Konzept", "nicht dekorativ", "Ein Teller kann den Tag nicht lösen…", "Weiterlesen".
+
+### Piano per la strada 2, partendo dal mobile
+
+1. Si parte dalla B (06), con un nuovo esperimento `08-about-idee.tsx`, o estendendo la 06.
+2. **Mobile prima**, con l'obiettivo di 5–6 schermate a 390px. Decisioni:
+   - una riga di link di testo in alto per saltare ai capitoli (senza chip, senza bordi);
+   - una sola poesia (quella del giorno), non cinque;
+   - il ritratto piccolo, accanto alle date, non a tutta larghezza;
+   - spazi tra le sezioni più corti su mobile (`normale` resta `py-20`; valutare `stretta` tra i capitoli brevi).
+3. Ledger prima del codice (`docs/ux/divergence-ledger.md`).
+4. Poi `shoot`, `check-tells` e il critico cieco `tell-critic`. Il suo voto è il numero del giro.
+
+### Da far decidere a Francesco prima del codice
+
+- [ ] **Eccezione in voice-spec per /about:** "su /about il racconto dell'ispirazione è ammesso, con fatti e senza aggettivi". Senza questa eccezione la strada 2 viola voice-spec.
+- [ ] **La poesia del giorno sostituisce la citazione fissa** „To serve and never be tired is love." **o si aggiunge?** CLAUDE.md dice una sola citazione per pagina.
+- [ ] **Approvazione del copy della B** (bozze DE ed EN in `06-about-ein-tag.tsx`) e del copy nuovo del capitolo "Die Idee dahinter".
+- [ ] **Fatti da confermare col proprietario:** giardino dal 2018; caffè Supermind tostato ogni settimana a Vienna; una cartolina con una poesia a ogni caffè; "mit ins Büro"; la cucina scrive tre piatti al giorno (Suppe, grün, blau).
+
+Poi si porta in `src/pages/AboutUs.tsx`. Il ledger ha una deroga aperta per quel file (S3, U1, U2, C1, VOICE): si chiude con questo giro.

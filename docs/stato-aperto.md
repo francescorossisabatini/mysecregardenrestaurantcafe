@@ -3,7 +3,7 @@
 > Cosa resta da fare, chi lo fa, da quando. Aggiornato alla fine di ogni
 > sessione. Il *perché* delle decisioni sta in [`ragionamenti.md`](./ragionamenti.md),
 > le decisioni di design in [`ux/divergence-ledger.md`](./ux/divergence-ledger.md).
-> Ultimo aggiornamento: 26/09/2026.
+> Ultimo aggiornamento: 30/09/2026.
 
 Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di codice.
 
@@ -13,8 +13,10 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 | Cosa | Chi | Stato |
 |---|---|---|
-| Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
-| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → **59**. Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
+| **Redesign /about "Unsere Geschichte"** | Claude + F | **Priorità della prossima sessione.** Scelta la strada 2 (giornata nel cortile più il capitolo "Die Idee dahinter"), partendo dal mobile. Piano, prototipi e decisioni da prendere in [`ux/about-opzioni.md`](./ux/about-opzioni.md) § "Stato al 30/09/2026" |
+| Struttura `/en/`, bug "chiuso", drawer, banner cookie | — | **In produzione** con la PR #19 (merge del 28/09) |
+| Branch `claude/adoring-newton-sm1p4c` | F | Contiene solo documenti e prototipi nel banco, dopo la PR #19. Niente che cambi il sito. Merge solo su conferma di F |
+| Top bar e drawer mobile verso ≥70 al critico cieco | Claude | In pausa. Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → 59 → 63 → **61** (giro 10). Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
 
@@ -71,7 +73,8 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Dopo il merge su main (F)
 
-- [ ] Search Console → Controllo URL → **Richiedi indicizzazione** su `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu`
+- [x] Search Console → Controllo URL → **Richiedi indicizzazione** su `/`, `/menu`, `/visit`, `/about`, `/gallery` (28/09, script S4: lang, canonical e hreflang corretti)
+- [ ] Stessa cosa su `/en` e `/en/menu`: Claude in Chrome aveva perso il focus della scheda. Rilanciare S4 da `docs/script-browser.md`
 - [ ] Search Console → Sitemap → reinviare `sitemap.xml` (ora 14 URL, DE + EN)
 - [ ] Da ~1 settimana dopo: Controllo URL su `/` → HTML renderizzato deve avere `lang="de"`; su `/en` `lang="en"`
 
