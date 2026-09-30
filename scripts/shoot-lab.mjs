@@ -19,6 +19,7 @@ const SHOTS = [
   { exp: 'container-queries', widths: [1100] },
   { exp: 'text-pretty', widths: [390, 700] },
   { exp: 'starting-style', widths: [560] },
+  { exp: 'about-idee', widths: [390, 1280] },
 ];
 
 const main = async () => {

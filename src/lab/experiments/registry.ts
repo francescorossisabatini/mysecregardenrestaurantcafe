@@ -5,6 +5,7 @@ import { startingStyleExperiment } from "./04-starting-style";
 import { textPrettyExperiment } from "./05-text-pretty";
 import { aboutEinTagExperiment } from "./06-about-ein-tag";
 import { aboutSenzaCardExperiment } from "./07-about-senza-card";
+import { aboutIdeeExperiment } from "./08-about-idee";
 import type { Experiment } from "./types";
 
 /**
@@ -20,4 +21,5 @@ export const experiments: Experiment[] = [
   startingStyleExperiment,
   aboutEinTagExperiment,
   aboutSenzaCardExperiment,
+  aboutIdeeExperiment,
 ];

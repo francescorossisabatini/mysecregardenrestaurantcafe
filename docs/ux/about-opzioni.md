@@ -101,3 +101,9 @@ La B aveva tolto quasi tutto il contenuto su Sri Chinmoy. Francesco ha chiesto p
 - [ ] **Fatti da confermare col proprietario:** giardino dal 2018; caffè Supermind tostato ogni settimana a Vienna; una cartolina con una poesia a ogni caffè; "mit ins Büro"; la cucina scrive tre piatti al giorno (Suppe, grün, blau).
 
 Poi si porta in `src/pages/AboutUs.tsx`. Il ledger ha una deroga aperta per quel file (S3, U1, U2, C1, VOICE): si chiude con questo giro.
+
+### 30/09, prototipo della strada 2 nel banco
+
+`src/lab/experiments/08-about-idee.tsx`, `lab.html?exp=about-idee&variant=after` (`&lang=en` per l'inglese). A 390px sono 4.223px, circa 5 schermate (la strada 3 ne faceva 11). Voto cieco del giro 1: 6/10. Correzioni e punti aperti nel ledger, sezione "strada 2". Il movimento segue il direction lock e la discussione Notion del 20/04, non la spec del 5/04 (niente testo parola per parola, niente parallax).
+
+Le quattro decisioni sopra restano aperte. Il prototipo assume l'eccezione voice-spec e la poesia al posto della citazione.
