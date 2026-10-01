@@ -14,6 +14,23 @@
 
 ---
 
+## 01/10/2026: correzioni sulla scheda Google (script S7)
+
+Livello: **misurato**.
+
+| Campo | Prima | Dopo | Stato |
+|---|---|---|---|
+| Link al menu | `/wochenkarte/` | `/menu?utm_source=google-business&utm_medium=referral&utm_campaign=scheda-google&utm_content=menu` | salvato e visibile |
+| Servizio al tavolo | Sì (aggiunto da Google) | No | in attesa |
+| Servizio al banco | Sì (aggiunto da Google) | Sì, impostato dal proprietario | in attesa |
+| Brunch | Sì (aggiunto da Google) | tolto (il campo era vuoto nel modulo) | in attesa |
+
+Sulla sezione Ristorazione Google mostra "La tua modifica sta impiegando più tempo del previsto". **Scoperto:** gli attributi aggiunti da Google stanno vuoti nel modulo, quindi salvare una sezione toglie quelli non confermati. Prima di salvare una sezione, impostare a mano ogni attributo che deve restare.
+
+**Brunch:** decide Carlo se va dichiarato (apertura alle 11, nessuna colazione). Se sì, si riaggiunge con una modifica separata solo dopo che quella in attesa è chiusa.
+
+---
+
 ## 01/10/2026: indicizzazione dopo il merge `/en/` (script S4)
 
 Livello: **misurato** (Search Console, test live dalle 11:27 alle 11:41).
