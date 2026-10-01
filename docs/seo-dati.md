@@ -14,6 +14,19 @@
 
 ---
 
+## 01/10/2026: indicizzazione dopo il merge `/en/` (script S4)
+
+Livello: **misurato** (Search Console, test live dalle 11:27 alle 11:41).
+
+- Sitemap live: 14 `<loc>`. `/en/menu` mostra il menu in inglese.
+- 7 URL testati (`/`, `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu`): `lang` giusto (de senza `/en`, en con `/en`), un solo canonical uguale all'URL, hreflang de/en/x-default corretti. Indicizzazione richiesta su tutti.
+- Sitemap reinviata il 01/10, stato "Riuscita". Pagine rilevate **7**: è ancora la lettura del 24/09, Google non ha riletto la versione da 14.
+- Non richiesti a mano: `/en/visit`, `/en/about`, `/en/gallery` (arrivano dalla sitemap).
+
+**Da controllare dall'08/10:** Sitemap → pagine rilevate 14; Pagine → `/en/…` tra le indicizzate. Se dopo 2 settimane restano 7, reinviare.
+
+---
+
 ## 30/09/2026: la scheda Google letta da dentro (script S6)
 
 Livello: **misurato** (pannello "La tua attività su Google", letto da Claude in Chrome, nessuna modifica).

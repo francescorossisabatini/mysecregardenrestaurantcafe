@@ -71,9 +71,10 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Dopo il merge su main (F)
 
-- [ ] Search Console → Controllo URL → **Richiedi indicizzazione** su `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu`
-- [ ] Search Console → Sitemap → reinviare `sitemap.xml` (ora 14 URL, DE + EN)
-- [ ] Da ~1 settimana dopo: Controllo URL su `/` → HTML renderizzato deve avere `lang="de"`; su `/en` `lang="en"`
+- [x] Search Console → Controllo URL → **Richiedi indicizzazione** su `/`, `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu` (01/10/2026, S4)
+- [x] Search Console → Sitemap → reinviare `sitemap.xml` (01/10/2026: "Riuscita", ma ancora 7 rilevate dalla lettura del 24/09)
+- [ ] Dall'08/10: Sitemap → pagine rilevate devono essere 14
+- [x] Controllo URL: `lang="de"` su `/`, `lang="en"` su `/en` (01/10/2026, test live)
 
 ## Da decidere
 
