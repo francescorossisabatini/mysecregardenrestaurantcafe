@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import courtyard from "@/assets/photos/garden-courtyard.jpg";
+import entrance from "@/assets/photos/entrance-doorway.jpg";
 import portrait from "@/assets/sri-chinmoy-portrait.jpg";
 import soulBirds from "@/assets/sri-chinmoy-birds.jpg";
 import { dishes } from "./sampleDishes";
-import { cafes, poemOfTheDay, reveal, sources, useReveal } from "./08-about-idee";
+import { poemOfTheDay, reveal, useReveal } from "./08-about-idee";
 import type { Experiment } from "./types";
 
 /**
@@ -22,13 +23,14 @@ const COPY = {
     lede: "Ein vegetarisches und veganes Restaurant im Raimundhof, Mariahilferstraße 45.",
     missing: "Fehlt",
     start: {
-      mark: "20__",
+      mark: "2018",
       title: "Wie es angefangen hat",
-      missingText: "Wer hat eröffnet, in welchem Jahr, und warum hier: zwei, drei Sätze vom Inhaber.",
+      body: "Im Februar 2018 haben Ashru Reichel und Chintamani Nerdmeyer My Secret Garden im Raimundhof eröffnet. Das Haus stammt aus dem 19. Jahrhundert, der Garten liegt im Hof dahinter.",
+      missingWhy: "Warum hier, warum ein Restaurant: ein, zwei Sätze von Ashru und Chintamani.",
       missingPhoto: "Foto: die Menschen, die hier kochen und am Tresen stehen.",
+      entranceAlt: "Der Eingang zu My Secret Garden im Raimundhof",
     },
     kitchen: {
-      mark: "Jeden Morgen",
       title: "Was wir kochen",
       body: "Vegetarisch und vegan, bio, fair, regional und saisonal. Die Karte schreiben wir jeden Morgen neu: eine Suppe und zwei Gerichte. Das ist sie heute:",
       todayLabel: "Heute auf der Karte",
@@ -38,11 +40,9 @@ const COPY = {
       closed: "Heute geschlossen. Morgen ab 11:00 wieder da.",
     },
     place: {
-      mark: "Mittags",
       title: "Der Hof",
       body: "Du gehst durch den Bogen an der Mariahilferstraße 45 und stehst im Raimundhof. Bestellt wird am Tresen, dann suchst du dir einen Platz im Hof. Der Kaffee kommt von Supermind. Fleisch und Alkohol gibt es bei uns nicht.",
-      awards: ["Falstaff 2025", "Wien wie es isst 2025"],
-      awardsNote: "Empfohlen in",
+      awards: [{ label: "Falstaff Streetfood Guide", value: "94 Punkte" }, { label: "Wien, wie es isst", value: "2025" }],
       alt: "Der Innenhof im Raimundhof, mit Pflanzen, Holztischen und gelben Schirmen",
     },
     idea: {
@@ -51,12 +51,12 @@ const COPY = {
       name: "Sri Chinmoy",
       years: "1931–2007",
       body: "Das Restaurant folgt der Idee von Sri Chinmoy. Er kam aus Bengalen und lebte ab 1964 in New York. Er schrieb Gedichte, malte und komponierte, und ab 1970 leitete er Meditationen für den Frieden bei den Vereinten Nationen.",
-      missingLink: "Was diese Idee hier im Alltag heißt: ein Satz vom Inhaber.",
+      daily: "Ashru und Chintamani haben bei ihm gelernt. Vor jeder Schicht meditiert das Team gemeinsam in einem eigenen Raum.",
+      cafes: "Cafés mit derselben Idee",
+      cafesAfter: "gibt es auch in Salzburg, Berlin, Zürich, New York und Canberra.",
       portraitAlt: "Porträt von Sri Chinmoy",
     },
     poem: { label: "Das Gedicht von heute", next: "Morgen steht hier ein anderes.", birdsAlt: "Soul-Birds von Sri Chinmoy, schnelle Tuschezeichnungen von Vögeln" },
-    cafesTitle: "Cafés mit derselben Idee",
-    sourcesTitle: "Über Sri Chinmoy",
     newTab: "öffnet in neuem Tab",
     find: "Wie du uns findest",
     draft: "Bozza di copy, da approvare",
@@ -66,13 +66,14 @@ const COPY = {
     lede: "A vegetarian and vegan restaurant in the Raimundhof, Mariahilferstraße 45.",
     missing: "Missing",
     start: {
-      mark: "20__",
+      mark: "2018",
       title: "How it started",
-      missingText: "Who opened it, in which year, and why here: two or three sentences from the owner.",
+      body: "In February 2018, Ashru Reichel and Chintamani Nerdmeyer opened My Secret Garden in the Raimundhof. The house dates from the 19th century, and the garden sits in the courtyard behind it.",
+      missingWhy: "Why here, why a restaurant: one or two sentences from Ashru and Chintamani.",
       missingPhoto: "Photo: the people who cook here and work the counter.",
+      entranceAlt: "The entrance to My Secret Garden in the Raimundhof",
     },
     kitchen: {
-      mark: "Every morning",
       title: "What we cook",
       body: "Vegetarian and vegan, organic, fair, regional and seasonal. We write the menu fresh every morning: one soup and two dishes. Here it is today:",
       todayLabel: "On the menu today",
@@ -82,11 +83,9 @@ const COPY = {
       closed: "Closed today. Back tomorrow from 11:00.",
     },
     place: {
-      mark: "At noon",
       title: "The courtyard",
       body: "You walk through the arch at Mariahilferstraße 45 and you're in the Raimundhof. You order at the counter, then pick a seat in the courtyard. The coffee comes from Supermind. There's no meat here, and no alcohol.",
-      awards: ["Falstaff 2025", "Wien wie es isst 2025"],
-      awardsNote: "Recommended in",
+      awards: [{ label: "Falstaff Street Food Guide", value: "94 points" }, { label: "Wien, wie es isst", value: "2025" }],
       alt: "The Raimundhof courtyard, with plants, wooden tables and yellow umbrellas",
     },
     idea: {
@@ -95,12 +94,12 @@ const COPY = {
       name: "Sri Chinmoy",
       years: "1931–2007",
       body: "The restaurant follows the idea of Sri Chinmoy. He came from Bengal and lived in New York from 1964. He wrote poems, painted and composed, and from 1970 he led meditations for peace at the United Nations.",
-      missingLink: "What this idea means here day to day: one sentence from the owner.",
+      daily: "Ashru and Chintamani studied with him. Before every shift, the team meditates together in a room of its own.",
+      cafes: "Cafés with the same idea",
+      cafesAfter: "also exist in Salzburg, Berlin, Zürich, New York and Canberra.",
       portraitAlt: "Portrait of Sri Chinmoy",
     },
     poem: { label: "Today's poem", next: "Tomorrow there's a different one.", birdsAlt: "Soul-Birds by Sri Chinmoy, quick ink drawings of birds" },
-    cafesTitle: "Cafés with the same idea",
-    sourcesTitle: "About Sri Chinmoy",
     newTab: "opens in a new tab",
     find: "How to find us",
     draft: "Draft copy, pending approval",
@@ -112,7 +111,6 @@ const dishLabel = { soup: { de: "Suppe", en: "Soup" }, green: { de: "Grünes Ger
 
 const body = "max-w-[62ch] text-pretty font-lora text-lg leading-relaxed";
 const label = "font-work text-sm font-semibold tabular-nums tracking-[0.04em]";
-const textLink = "inline-block py-2.5 font-work text-base text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground";
 const grid = "md:grid-cols-[7rem_minmax(0,62ch)] md:gap-x-8 lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12";
 
 /** Un fatto che non abbiamo: si vede che manca, non si inventa. */
@@ -138,7 +136,7 @@ const Note = ({ children }: { children: ReactNode }) => {
  * Capitolo: etichetta del tempo in margine, titolo, testo; la nota va in col 3 da lg.
  * Mobile `stretta` (py-10), da md `normale`. `dark`: superficie navy, solo opacità.
  */
-const Chapter = ({ id, mark, title, dark, note, children }: { id?: string; mark: ReactNode; title: string; dark?: boolean; note?: ReactNode; children: ReactNode }) => {
+const Chapter = ({ id, mark, title, dark, note, lead, children }: { id?: string; mark?: ReactNode; title: string; dark?: boolean; note?: ReactNode; lead?: ReactNode; children: ReactNode }) => {
   const [ref, shown] = useReveal<HTMLElement>();
   return (
     <section
@@ -146,9 +144,12 @@ const Chapter = ({ id, mark, title, dark, note, children }: { id?: string; mark:
       id={id}
       className={`scroll-mt-4 ${dark ? "bg-primary py-20 text-primary-foreground md:py-28" : "py-10 md:py-28"} ${reveal(shown, dark)}`}
     >
+      {/* `lead`: il capitolo entra dalla foto, non dall'etichetta (giro 1, punto 1 approvato). */}
+      {lead && <div className={`mx-auto mb-8 grid max-w-6xl grid-cols-1 md:px-5 ${grid}`}>{lead}</div>}
       <div className={`mx-auto grid max-w-6xl grid-cols-1 px-5 ${grid}`}>
         <h2 className="flex flex-col gap-2 md:col-span-2 md:grid md:grid-cols-subgrid md:items-baseline md:gap-x-8 md:gap-y-0 lg:gap-x-12">
-          <span className={`${label} ${dark ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{mark}</span>
+          {/* Etichetta solo dove porta un dato (l'anno, il perché); senza, la colonna resta e il titolo non si sposta. */}
+          {mark ? <span className={`${label} ${dark ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{mark}</span> : <span aria-hidden="true" className="hidden md:block" />}
           <span className={`text-balance font-cormorant text-3xl font-semibold leading-tight md:text-4xl ${dark ? "text-primary-foreground" : "text-foreground"}`}>{title}</span>
         </h2>
         <div className="mt-4 space-y-6 md:col-start-2">{children}</div>
@@ -157,13 +158,6 @@ const Chapter = ({ id, mark, title, dark, note, children }: { id?: string; mark:
     </section>
   );
 };
-
-const Out = ({ href, hint, children }: { href: string; hint: string; children: ReactNode }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className={textLink}>
-    {children}
-    <span className="sr-only"> ({hint})</span>
-  </a>
-);
 
 const Racconto = () => {
   const l = lang();
@@ -183,23 +177,24 @@ const Racconto = () => {
         <p className={`mt-6 ${body}`}>{t.lede}</p>
       </header>
 
-      {/* 1 · Come è nato. Tutto quello che serve qui deve venire dal proprietario. */}
+      {/* 1 · Come è nato. Fatti da fonti pubbliche (falter, stadtbekannt, blog del locale 2022), da confermare col proprietario. */}
       <Chapter
         mark={t.start.mark}
         title={t.start.title}
         note={
-          /* Da lg la foto delle persone sta nella colonna delle note: niente colonna 3 vuota. */
-          <div className="mt-6 md:col-start-2 lg:col-start-3 lg:row-start-2 lg:mt-4">
-            <Missing tag={t.missing} tall>{t.start.missingPhoto}</Missing>
+          /* Da lg la foto sta nella colonna delle note. L'ingresso finché non c'è la foto delle persone. */
+          <div className="mt-6 space-y-3 md:col-start-2 lg:col-start-3 lg:row-start-2 lg:mt-4">
+            <img src={entrance} alt={t.start.entranceAlt} className="aspect-[4/3] w-full rounded-lg object-cover" loading="lazy" decoding="async" />
+            <Missing tag={t.missing}>{t.start.missingPhoto}</Missing>
           </div>
         }
       >
-        <Missing tag={t.missing}>{t.start.missingText}</Missing>
+        <p className={body}>{t.start.body}</p>
+        <Missing tag={t.missing}>{t.start.missingWhy}</Missing>
       </Chapter>
 
       {/* 2 · Cosa cuciniamo: i piatti di oggi come dato, la prova a margine. */}
       <Chapter
-        mark={t.kitchen.mark}
         title={t.kitchen.title}
         note={
           <Note>
@@ -234,22 +229,25 @@ const Racconto = () => {
 
       {/* 3 · Il posto: il cortile grande, la prova (guide) a margine. */}
       <Chapter
-        mark={t.place.mark}
         title={t.place.title}
+        lead={
+          /* Il capitolo entra dalla foto: a filo su mobile, nella colonna del testo e delle note da md. */
+          <img src={courtyard} alt={t.place.alt} className="aspect-[4/3] w-full object-cover md:col-start-2 md:rounded-lg lg:col-span-2 lg:aspect-[21/9]" loading="lazy" decoding="async" />
+        }
         note={
           <Note>
-            <p className="font-work text-sm text-muted-foreground">{t.place.awardsNote}</p>
-            <ul className="space-y-1">
+            <ul className="space-y-6">
               {t.place.awards.map((a) => (
-                <li key={a} className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{a}</li>
+                <li key={a.label}>
+                  <p className="font-work text-sm text-muted-foreground">{a.label}</p>
+                  <p className="mt-3 font-cormorant text-3xl font-semibold leading-none md:text-4xl">{a.value}</p>
+                </li>
               ))}
             </ul>
           </Note>
         }
       >
         <p className={body}>{t.place.body}</p>
-        {/* Mobile: a piena larghezza (esce dal padding). Da md resta nella colonna del testo. */}
-        <img src={courtyard} alt={t.place.alt} className="-mx-5 aspect-[4/3] w-[calc(100%+2.5rem)] max-w-none object-cover md:mx-0 md:w-full md:rounded-lg" loading="lazy" decoding="async" />
       </Chapter>
 
       {/* 4 · Perché: la superficie navy, il 30% del lock come superficie. Ritratto piccolo accanto alle date. */}
@@ -262,15 +260,22 @@ const Racconto = () => {
           <div className="mt-8 flex items-center gap-4 md:col-start-2 lg:col-start-3 lg:row-start-2 lg:mt-4 lg:flex-col lg:items-start">
             <img src={portrait} alt={t.idea.portraitAlt} className="size-16 rounded-lg object-cover lg:size-24" loading="lazy" decoding="async" />
             <p className={label}>
-              <span className="block">{t.idea.name}</span>
+              <a href="https://www.srichinmoy.org/" target="_blank" rel="noopener noreferrer" className="block underline decoration-primary-foreground/50 underline-offset-4 hover:decoration-primary-foreground">
+                {t.idea.name}<span className="sr-only"> ({t.newTab})</span>
+              </a>
               <span className="text-primary-foreground/80">{t.idea.years}</span>
             </p>
           </div>
         }
       >
         <p className={body}>{t.idea.body}</p>
-        <p className="rounded-lg border border-dashed border-primary-foreground/60 p-4 font-work text-sm text-primary-foreground/80">
-          <span className="font-semibold uppercase tracking-[0.08em]">{t.missing}:</span> {t.idea.missingLink}
+        <p className={body}>{t.idea.daily}</p>
+        {/* Una sola uscita per tema (giro 1, punto 2): al posto di 10 link, il nome e una riga. */}
+        <p className={body}>
+          <a href="https://www.srichinmoycentre.org/enterprises" target="_blank" rel="noopener noreferrer" className="underline decoration-primary-foreground/50 underline-offset-4 hover:decoration-primary-foreground">
+            {t.idea.cafes}<span className="sr-only"> ({t.newTab})</span>
+          </a>{" "}
+          {t.idea.cafesAfter}
         </p>
       </Chapter>
 
@@ -291,28 +296,8 @@ const Racconto = () => {
         </figure>
       </section>
 
-      {/* Caffè gemelli e fonti: `stretta`, link di testo, sulla stessa griglia da lg. */}
-      <section className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-2 md:gap-x-8 md:py-14 lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
-        <div className="lg:col-start-2">
-          <h2 className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{t.cafesTitle}</h2>
-          <ul className="mt-2">
-            {cafes.map((c) => (
-              <li key={c.href}><Out href={c.href} hint={t.newTab}>{c.name}, {c.place}</Out></li>
-            ))}
-          </ul>
-        </div>
-        <div className="lg:col-start-3">
-          <h2 className="font-cormorant text-3xl font-semibold leading-tight md:text-4xl">{t.sourcesTitle}</h2>
-          <ul className="mt-2">
-            {sources.filter((s) => !s.href.includes("enterprises")).map((s) => (
-              <li key={s.href}><Out href={s.href} hint={t.newTab}>{s.label[l]}</Out></li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       {/* Chiusura `stretta`: la domanda operativa. Unica freccia della pagina. */}
-      <footer className="mx-auto max-w-6xl px-5 pb-10 md:pb-14 lg:grid lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
+      <footer className="mx-auto max-w-6xl px-5 py-10 md:py-14 lg:grid lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
         <a href={visit} className="inline-flex min-h-11 items-center font-work text-sm font-semibold uppercase tracking-[0.08em] text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground lg:col-start-2 lg:justify-self-start">
           {t.find} →
         </a>
