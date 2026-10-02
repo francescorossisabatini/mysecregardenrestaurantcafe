@@ -42,7 +42,7 @@ const COPY = {
     place: {
       title: "Der Hof",
       body: "Du gehst durch den Bogen an der Mariahilferstraße 45 und stehst im Raimundhof. Bestellt wird am Tresen, dann suchst du dir einen Platz im Hof. Der Kaffee kommt von Supermind. Fleisch und Alkohol gibt es bei uns nicht.",
-      awards: [{ label: "Falstaff Streetfood Guide", value: "94 Punkte" }, { label: "Wien, wie es isst", value: "2025" }],
+      awards: [{ label: "Falstaff Streetfood Guide 2025", value: "94 Punkte" }, { label: "Wien, wie es isst", value: "2025" }],
       alt: "Der Innenhof im Raimundhof, mit Pflanzen, Holztischen und gelben Schirmen",
     },
     idea: {
@@ -51,7 +51,7 @@ const COPY = {
       name: "Sri Chinmoy",
       years: "1931–2007",
       body: "Das Restaurant folgt der Idee von Sri Chinmoy. Er kam aus Bengalen und lebte ab 1964 in New York. Er schrieb Gedichte, malte und komponierte, und ab 1970 leitete er Meditationen für den Frieden bei den Vereinten Nationen.",
-      daily: "Ashru und Chintamani haben bei ihm gelernt. Vor jeder Schicht meditiert das Team gemeinsam in einem eigenen Raum.",
+      daily: "Ashru und Chintamani haben bei ihm gelernt. Wer hier arbeitet, meditiert.",
       cafes: "Cafés mit derselben Idee",
       cafesAfter: "gibt es auch in Salzburg, Berlin, Zürich, New York und Canberra.",
       portraitAlt: "Porträt von Sri Chinmoy",
@@ -85,7 +85,7 @@ const COPY = {
     place: {
       title: "The courtyard",
       body: "You walk through the arch at Mariahilferstraße 45 and you're in the Raimundhof. You order at the counter, then pick a seat in the courtyard. The coffee comes from Supermind. There's no meat here, and no alcohol.",
-      awards: [{ label: "Falstaff Street Food Guide", value: "94 points" }, { label: "Wien, wie es isst", value: "2025" }],
+      awards: [{ label: "Falstaff Street Food Guide 2025", value: "94 points" }, { label: "Wien, wie es isst", value: "2025" }],
       alt: "The Raimundhof courtyard, with plants, wooden tables and yellow umbrellas",
     },
     idea: {
@@ -94,7 +94,7 @@ const COPY = {
       name: "Sri Chinmoy",
       years: "1931–2007",
       body: "The restaurant follows the idea of Sri Chinmoy. He came from Bengal and lived in New York from 1964. He wrote poems, painted and composed, and from 1970 he led meditations for peace at the United Nations.",
-      daily: "Ashru and Chintamani studied with him. Before every shift, the team meditates together in a room of its own.",
+      daily: "Ashru and Chintamani studied with him. The people who work here meditate.",
       cafes: "Cafés with the same idea",
       cafesAfter: "also exist in Salzburg, Berlin, Zürich, New York and Canberra.",
       portraitAlt: "Portrait of Sri Chinmoy",

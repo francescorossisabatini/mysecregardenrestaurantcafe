@@ -153,6 +153,26 @@ Dopo: carica i file scelti in chat. Claude li mette in `src/assets/`, scrive l'a
 
 ---
 
+## S7 · Google Maps: una recensione da citare e una foto dei gestori (circa 10 minuti)
+
+Quando: per /about, variante B (prototipo `09-about-racconto.tsx`). Servono una frase vera da una recensione Google, da mettere accanto al 4,7, e una foto di Ashru Reichel e Chintamani Nerdmeyer per il capitolo "Wie es angefangen hat". Per pubblicarle servono comunque il sì dei gestori (per la foto) e, per la recensione, almeno il nome come lo mostra Google.
+
+```text
+Lavora in lettura su Google Maps. L'unica AZIONE ammessa è scaricare file immagine nella cartella Download. Non scrivere recensioni, non rispondere, non segnalare niente. Se compare un login o un captcha, fermati e dimmelo.
+
+1. Apri Google Maps e cerca "My Secret Garden, Mariahilfer Straße 45, 1060 Wien". Apri la scheda del locale.
+2. Recensioni → ordina per "Più pertinenti". Leggi le prime 40 recensioni con 5 stelle. Scegli fino a 5 frasi che dicono un FATTO sul locale (un piatto, il cortile, il banco, il personale, la torta), non solo "super" o "consigliato". Per ognuna riporta: la frase esatta copiata, nome dell'autore come lo mostra Google, data, lingua, numero di stelle.
+3. Foto → filtra "Dal proprietario" (se c'è). Cerca foto in cui si vedono persone dello staff o i gestori. Per ognuna riporta: link, chi l'ha caricata (proprietario o utente), data, cosa si vede.
+4. AZIONE: scarica solo le foto caricate dal proprietario in cui si vedono persone, alla massima risoluzione. Massimo 4. Nome file: msg-persone-1.jpg, msg-persone-2.jpg…
+5. Nella scheda, riporta anche: numero esatto di recensioni e media mostrata oggi.
+
+Formato di uscita: tabella A (frasi: n., frase esatta, autore, data, lingua, stelle) e tabella B (foto: n., link, caricata da, data, cosa si vede, scaricata sì/no). Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Le foto caricate da utenti le elenchi ma non le scarichi.
+```
+
+Dopo: incolla le tabelle in chat e carica le foto scaricate. Claude sceglie la frase più concreta e la propone a Francesco; la foto va confermata dai gestori prima della produzione.
+
+---
+
 ## Per Lovable (Semrush), non per il browser
 
 Semrush lo usa Lovable, non Claude in Chrome. Da incollare a Lovable quando serve.
