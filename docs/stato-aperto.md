@@ -74,6 +74,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 - [x] Search Console → Controllo URL → **Richiedi indicizzazione** su `/`, `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu` (01/10/2026, S4)
 - [x] Search Console → Sitemap → reinviare `sitemap.xml` (01/10/2026: "Riuscita", ma ancora 7 rilevate dalla lettura del 24/09)
 - [ ] Dall'08/10: Sitemap → pagine rilevate devono essere 14
+- [ ] **S9** (F, 02/10/2026, script pronto): Sitemap + Pagine con i motivi di non indicizzazione + Controllo URL dei 10 URL principali. Ripetere dall'08/10
 - [x] Controllo URL: `lang="de"` su `/`, `lang="en"` su `/en` (01/10/2026, test live)
 
 ## Da decidere

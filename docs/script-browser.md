@@ -34,7 +34,7 @@ Lavora solo in lettura in Google Search Console, proprietà https://secretgarden
 2. Link → "Siti con più link" (link esterni) → "Altro". Riporta i primi 15 domini con il numero di link di ciascuno. Poi dimmi sì/no per ognuno di questi, anche se non sono tra i primi 15 (usa la ricerca o scorri l'elenco completo): vegan.at, wanderlog.com, 1000thingsmagazine.com, falstaff.com (o .at), falter.at, happycow.net, tripadvisor.at / tripadvisor.com, austria.info, wien.info.
 3. Link → "Testo di link più frequente" → riporta i primi 10 testi di ancoraggio.
 4. Rendimento → Risultati di ricerca → intervallo "Ultimi 3 mesi". Aggiungi il filtro Query = "vegetarisches restaurant wien" (corrispondenza esatta). Apri la scheda "Dispositivi" e riporta clic, impressioni, CTR e posizione media per Mobile, Desktop, Tablet.
-5. Ripeti il punto 4 con Query = "vegane restaurants wien" e con Query = "vegan restaurant vienna".
+5. Ripeti il punto 4 con Query = "vegane restaurants wien", con Query = "restaurant mariahilferstraße" e con Query = "vegan restaurant vienna".
 
 Formato di uscita: una tabella per ogni punto. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Sotto ogni tabella indica la pagina e il filtro che hai usato.
 ```
@@ -175,6 +175,43 @@ Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstra�
 
 Formato di uscita: una tabella con data, stato prima, stato dopo, esito ("salvato", "in attesa" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
 ```
+
+---
+
+## S9 · Search Console: stato dell'indicizzazione (circa 15 minuti, una sola AZIONE)
+
+Quando: adesso, poi di nuovo dall'08/10. Risponde a "Google ha letto la sitemap da 14 e quante pagine sono davvero nell'indice?". Aggiunto il 02/10/2026.
+L'unica azione consentita è "Richiedi indicizzazione" sui 3 URL inglesi mai richiesti, e solo se Google dice che non sono su Google.
+
+```text
+Lavora in Google Search Console, proprietà https://secretgardenrestaurant.at. Solo lettura, tranne l'azione segnata AZIONE al punto 4. Non rimuovere sitemap, non avviare convalide, non cambiare impostazioni. Se ti chiede un login o un captcha, fermati e dimmelo.
+
+1. Indicizzazione → Sitemap. Per ogni riga della tabella "Sitemap inviate" riporta: sitemap, tipo, data di invio, data ultima lettura, stato, pagine rilevate. Poi clicca sulla riga di sitemap.xml → "Visualizza indicizzazione pagine" e riporta: pagine indicizzate e non indicizzate per gli URL della sitemap, con la data di aggiornamento del rapporto.
+2. Indicizzazione → Pagine. In alto, menu a tendina: prima "Tutte le pagine note", poi "Tutti gli URL inviati". Per ciascuno dei due riporta: numero di pagine indicizzate, numero di non indicizzate, data "Ultimo aggiornamento".
+3. Sempre in Pagine, con "Tutte le pagine note": tabella "Perché le pagine non sono indicizzate". Per ogni riga riporta motivo, origine, convalida, pagine. Poi clicca ogni motivo e riporta tutti gli URL elencati (massimo 20 per motivo) con la data "Ultima scansione". Torna indietro e fai lo stesso con la tabella delle pagine indicizzate ("Visualizza dati sulle pagine indicizzate"): riporta tutti gli URL.
+4. Controllo URL (barra "Controlla qualsiasi URL" in alto). Per ciascuno di questi 10 URL, uno alla volta, SENZA "Testa URL live" (serve il dato dell'indice, non quello live):
+   https://secretgardenrestaurant.at/
+   https://secretgardenrestaurant.at/menu
+   https://secretgardenrestaurant.at/visit
+   https://secretgardenrestaurant.at/about
+   https://secretgardenrestaurant.at/gallery
+   https://secretgardenrestaurant.at/en
+   https://secretgardenrestaurant.at/en/menu
+   https://secretgardenrestaurant.at/en/visit
+   https://secretgardenrestaurant.at/en/about
+   https://secretgardenrestaurant.at/en/gallery
+   a. Riporta il titolo dello stato ("L'URL è su Google" o "L'URL non è su Google") e il sottotitolo.
+   b. Apri "Indicizzazione della pagina" e riporta: rilevamento (sitemap e pagine di riferimento), ultima scansione (data e ora), scansione eseguita come (smartphone o desktop), canonical dichiarato dall'utente, canonical selezionato da Google.
+   c. Solo per /en/visit, /en/about e /en/gallery, e solo se lo stato è "L'URL non è su Google": AZIONE "Richiedi indicizzazione". Se dice che la quota giornaliera è esaurita, fermati e dimmelo.
+
+Formato di uscita: una tabella per punto. Per il punto 4 una tabella con URL, stato, ultima scansione, scansione come, canonical utente, canonical Google, richiesta fatta sì/no. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Sotto ogni tabella indica la pagina e il filtro che hai usato. Non interpretare i dati.
+```
+
+**Come si legge (per Claude di sessione, non per lo script):**
+- *Pagina alternativa con tag canonical appropriato* e *Pagina con reindirizzamento* sono attesi per i vecchi URL (`/wochenkarte`, `/speisekarte`, `www.`).
+- *Duplicata, Google ha scelto una pagina canonica diversa* su un URL della sitemap è un problema: Google non crede al nostro canonical.
+- *Rilevata/Scansionata, ma attualmente non indicizzata* su un URL della sitemap: Google la conosce ma non la ritiene utile o non l'ha ancora renderizzata. È il caso in cui il prerendering (punto 4 della sessione SEO) aiuta.
+- *Soft 404* sui vecchi URL: i redirect via JavaScript visti come pagina vuota. Si chiude con i 301 lato server, quando l'hosting è noto.
 
 ---
 
