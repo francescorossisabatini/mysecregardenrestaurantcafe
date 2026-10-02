@@ -14,6 +14,65 @@
 
 ---
 
+## 02/10/2026: festivi nella scheda Google (script S8)
+
+Livello: **misurato**. Salvati come "Chiuso" e visibili dopo il ricaricamento: 26/10, 8/12, 24/12, 25/12, 26/12, 31/12/2026, 1/1 e 6/1/2027. Resta il 27/08/2026 (passato). 1/11 non inserito: è domenica. Ristorazione (S7) ancora "in attesa".
+
+---
+
+## 01/10/2026: correzioni sulla scheda Google (script S7)
+
+Livello: **misurato**.
+
+| Campo | Prima | Dopo | Stato |
+|---|---|---|---|
+| Link al menu | `/wochenkarte/` | `/menu?utm_source=google-business&utm_medium=referral&utm_campaign=scheda-google&utm_content=menu` | salvato e visibile |
+| Servizio al tavolo | Sì (aggiunto da Google) | No | in attesa |
+| Servizio al banco | Sì (aggiunto da Google) | Sì, impostato dal proprietario | in attesa |
+| Brunch | Sì (aggiunto da Google) | tolto (il campo era vuoto nel modulo) | in attesa |
+
+Sulla sezione Ristorazione Google mostra "La tua modifica sta impiegando più tempo del previsto". **Scoperto:** gli attributi aggiunti da Google stanno vuoti nel modulo, quindi salvare una sezione toglie quelli non confermati. Prima di salvare una sezione, impostare a mano ogni attributo che deve restare.
+
+**Brunch:** decide Carlo se va dichiarato (apertura alle 11, nessuna colazione). Se sì, si riaggiunge con una modifica separata solo dopo che quella in attesa è chiusa.
+
+---
+
+## 01/10/2026: indicizzazione dopo il merge `/en/` (script S4)
+
+Livello: **misurato** (Search Console, test live dalle 11:27 alle 11:41).
+
+- Sitemap live: 14 `<loc>`. `/en/menu` mostra il menu in inglese.
+- 7 URL testati (`/`, `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu`): `lang` giusto (de senza `/en`, en con `/en`), un solo canonical uguale all'URL, hreflang de/en/x-default corretti. Indicizzazione richiesta su tutti.
+- Sitemap reinviata il 01/10, stato "Riuscita". Pagine rilevate **7**: è ancora la lettura del 24/09, Google non ha riletto la versione da 14.
+- Non richiesti a mano: `/en/visit`, `/en/about`, `/en/gallery` (arrivano dalla sitemap).
+
+**Da controllare dall'08/10:** Sitemap → pagine rilevate 14; Pagine → `/en/…` tra le indicizzate. Se dopo 2 settimane restano 7, reinviare.
+
+---
+
+## 30/09/2026: la scheda Google letta da dentro (script S6)
+
+Livello: **misurato** (pannello "La tua attività su Google", letto da Claude in Chrome, nessuna modifica).
+
+| Voce | Cosa c'è | Problema |
+|---|---|---|
+| Recensioni | 4,7 · **952** | **0 risposte** su 952 ("Non hai ancora risposto ad alcuna recensione") |
+| Nome | "My Secret Garden - Vegetarian Café & Restaurant Vienna" | parole chiave nel nome: le linee guida Google lo vietano, rischio sospensione |
+| Link al menu | `/wochenkarte/` | redirect via JavaScript (200 + JS), non `/menu` |
+| Sito web | `https://www.…/?utm_source=google-business&utm_medium=referral&utm_campaign=scheda-google` | UTM giusti; `www` aperto (decisione www/senza www) |
+| Orari speciali | solo 27/08/2026 (passato) | nessun festivo inserito; Google chiede già di confermare il 26/10 |
+| Attributi aggiunti da Google | servizio al tavolo, brunch, fasciatoio no, parcheggio in strada | "servizio al tavolo" è falso: counter service only |
+| Descrizione | umlaut scritti come ae/oe/ue ("Taeglich", "Gaesten", "uber"), "936 Gaesten" fermo | copy da riscrivere, con approvazione |
+| Foto | 18 del proprietario, nessuna del menu, nessuna dell'arco | l'ingresso nascosto è la prima incertezza di chi arriva |
+| Categorie | Ristorante vegetariano · Caffè · Giardino | ok; "Ristorante vegano" come secondaria da valutare |
+| Telefono / indirizzo | 01 5862839 · Mariahilfer Straße 45 | stesso numero e indirizzo, formati diversi: ok |
+
+**Festivi: sito e scheda non dicono la stessa cosa.** CLAUDE.md dice "festivi chiuso". `src/data/holidaysData.ts` chiude solo 14/05, 27/08, 24–26/12. La scheda non ha nessun festivo. Mancano in entrambi: 26/10, 8/12, 1/1, 6/1. Serve la lista di Carlo, poi si allineano sito e scheda insieme.
+
+**Lettura (nostra):** per le ricerche "near me" e il pacchetto locale le risposte alle recensioni e gli orari corretti sono i segnali che controlliamo noi. Zero risposte su 952 è il buco più grande. Il nome con le parole chiave probabilmente aiuta oggi, ma è una violazione: se un concorrente la segnala, la scheda può essere sospesa. Decisione di Carlo.
+
+---
+
 ## 27/09/2026: confronto con i concorrenti (Semrush, mercato austriaco)
 
 Livello: **stima**. Estratto il 27/09/2026.

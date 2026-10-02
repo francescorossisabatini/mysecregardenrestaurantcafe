@@ -78,11 +78,12 @@ Formato di uscita: una tabella con URL, dati trovati, link al sito sì/no e URL 
 
 ## S4 · Dopo il merge su main: indicizzazione e sitemap (circa 10 minuti)
 
-Quando: **solo dopo** che il merge è in produzione (Lovable ha pubblicato). Questo script **agisce**: chiede l'indicizzazione e reinvia la sitemap. Sono le sole due azioni consentite.
+Quando: **adesso**. Il merge è su main dal 28/09/2026 ([PR #19](https://github.com/francescorossisabatini/mysecregardenrestaurantcafe/pull/19)). Il passo 0 controlla che Lovable l'abbia pubblicato. Questo script **agisce**: chiede l'indicizzazione e reinvia la sitemap. Sono le sole due azioni consentite.
 
 ```text
 Lavora in Google Search Console, proprietà https://secretgardenrestaurant.at. Le uniche azioni consentite sono "Richiedi indicizzazione" e "Invia" della sitemap, come indicato sotto. Non cambiare nient'altro. Se ti chiede un login o un captcha, fermati e dimmelo.
 
+0. Prima di tutto apri https://secretgardenrestaurant.at/sitemap.xml e conta i tag <loc>. Poi apri https://secretgardenrestaurant.at/en/menu. Se i <loc> non sono 14 o /en/menu non mostra il menu in inglese, fermati e dimmelo: la versione nuova non è ancora online.
 1. Per ciascuno di questi URL, uno alla volta:
    https://secretgardenrestaurant.at/
    https://secretgardenrestaurant.at/menu
@@ -116,6 +117,63 @@ Lavora solo in lettura in Google Search Console, proprietà https://secretgarden
 4. Scheda Paesi: riporta i primi 5 paesi per clic.
 
 Formato di uscita: una tabella per punto, con i due periodi affiancati. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0.
+```
+
+---
+
+## S6 · Scheda Google: controllo completo (circa 10 minuti)
+
+Quando: adesso. Per le ricerche "vegan in meiner Nähe" e per Maps conta la scheda più del sito (vedi `seo-dati.md`, 27/09). Solo lettura: le correzioni le decide Francesco dopo aver visto la tabella.
+
+```text
+Lavora solo in lettura sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien. Non modificare nessun campo, non rispondere alle recensioni, non pubblicare post, non caricare foto. Se ti chiede un login o un captcha, fermati e dimmelo.
+
+1. Apri https://business.google.com e seleziona "My Secret Garden". Se non c'è o l'account non ha accesso, cerca "My Secret Garden Wien" su google.com e usa il pannello "Il tuo profilo dell'attività"; se non compare neanche quello, dimmelo e fermati.
+2. Modifica profilo → Informazioni: riporta categoria principale e categorie secondarie, descrizione (testo esatto), sito web (URL completo, con eventuali parametri utm), link al menu, telefono, indirizzo.
+3. Orari: riporta gli orari settimanali e gli orari speciali già inseriti per i prossimi 3 mesi (in Austria: 8 dicembre, 24–26 dicembre, 31 dicembre, 1 e 6 gennaio). Segnala i festivi senza orario speciale.
+4. Attributi: riporta quelli attivi. Dimmi sì/no per: opzioni vegane, opzioni vegetariane, senza glutine, posti a sedere all'aperto, accesso in sedia a rotelle, pagamento con carta, asporto.
+5. Recensioni: riporta il punteggio medio e il numero totale. Delle ultime 20 recensioni, quante hanno una risposta del proprietario; data della recensione più recente senza risposta.
+6. Foto: numero totale di foto del proprietario, data della più recente caricata dal proprietario, se c'è una foto del menu e una dell'ingresso (l'arco).
+
+Formato di uscita: una tabella per punto, con il dato e la pagina da cui l'hai letto. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Alla fine, separata, una lista di al massimo 5 differenze rispetto a questi dati attesi: orari lun–sab 11:00–19:00, domenica chiuso, telefono +43 1 586 28 39, sito https://secretgardenrestaurant.at con utm_source=google-business&utm_medium=referral, link al menu https://secretgardenrestaurant.at/menu.
+```
+
+---
+
+## S7 · Scheda Google: le due correzioni sicure (circa 3 minuti, AGISCE)
+
+Quando: dopo la lettura S6 del 30/09/2026. Solo le correzioni che non richiedono decisioni: link al menu e servizio al tavolo. Festivi, nome e descrizione aspettano Carlo.
+
+```text
+Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien, dal pannello "La tua attività su Google" nella Ricerca Google. Le uniche due azioni consentite sono quelle segnate AZIONE. Non toccare nessun altro campo, non rispondere alle recensioni, non caricare foto. Se ti chiede un login, un captcha o una nuova verifica dell'attività, fermati e dimmelo senza procedere.
+
+1. Modifica profilo → Contatto → Link al menu. Riporta il valore attuale.
+   AZIONE: sostituiscilo con https://secretgardenrestaurant.at/menu?utm_source=google-business&utm_medium=referral&utm_campaign=scheda-google&utm_content=menu e salva.
+2. Modifica profilo → Altro → sezione Ristorazione (o Opzioni di servizio). Riporta gli attributi attuali.
+   AZIONE: imposta "Servizio al tavolo" su No. Lascia "Servizio al banco" su Sì. Non toccare brunch, prenotazioni o altri attributi. Salva.
+3. Ricarica il pannello e rileggi i due campi.
+
+Formato di uscita: una tabella con campo, valore prima, valore dopo, stato ("salvato", "in revisione da Google" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
+```
+
+---
+
+## S8 · Scheda Google: festivi chiusi (circa 5 minuti, AGISCE)
+
+Quando: subito, il primo è il 26/10. Lista confermata da Carlo il 02/10/2026 ("segnali come chiusi"). Gli stessi giorni sono in `src/data/holidaysData.ts`.
+
+```text
+Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien, dal pannello "La tua attività su Google" nella Ricerca Google. L'unica azione consentita è aggiungere orari speciali "Chiuso" nelle date sotto. Non toccare gli orari settimanali, gli attributi o altri campi. Se ti chiede un login, un captcha o una nuova verifica, fermati e dimmelo.
+
+0. Modifica profilo → Altro (o Ristorazione): riporta se la modifica di "Servizio al tavolo / al banco" è ancora "in attesa". Non toccarla.
+1. Modifica profilo → Orario → Orari speciali.
+2. AZIONE: aggiungi queste date, ciascuna come "Chiuso":
+   26 ottobre 2026, 8 dicembre 2026, 24 dicembre 2026, 25 dicembre 2026, 26 dicembre 2026, 31 dicembre 2026, 1 gennaio 2027, 6 gennaio 2027.
+   Se Google propone da solo una di queste date ("Conferma l'orario festivo"), usa quella proposta e impostala su Chiuso.
+   Salva dopo ogni 2–3 date: il 02/10/2026 il modulo si è bloccato a metà e le 5 date compilate non salvate sono andate perse. Controlla che la data di ogni riga nuova sia quella giusta: Google la precompila con un giorno a caso (per il 31/12 ha messo 27/12).
+3. Ricarica il pannello e rileggi l'elenco degli orari speciali.
+
+Formato di uscita: una tabella con data, stato prima, stato dopo, esito ("salvato", "in attesa" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
 ```
 
 ---

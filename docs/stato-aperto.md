@@ -13,7 +13,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 | Cosa | Chi | Stato |
 |---|---|---|
-| Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | Sul branch `claude/adoring-newton-sm1p4c`, **non su main**. Merge solo su conferma di F |
+| Struttura `/en/` + rilevamento lingua a 3 livelli | Claude | ✓ Su main dal 28/09/2026 (PR #19). Restano i passi in Search Console qui sotto (script S4) |
 | Top bar e drawer mobile verso ≥70 al critico cieco | Claude | Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → **59**. Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |
 
 ### Piano per la top bar (brief del critico, 26/09/2026)
@@ -71,9 +71,10 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 ## Dopo il merge su main (F)
 
-- [ ] Search Console → Controllo URL → **Richiedi indicizzazione** su `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu`
-- [ ] Search Console → Sitemap → reinviare `sitemap.xml` (ora 14 URL, DE + EN)
-- [ ] Da ~1 settimana dopo: Controllo URL su `/` → HTML renderizzato deve avere `lang="de"`; su `/en` `lang="en"`
+- [x] Search Console → Controllo URL → **Richiedi indicizzazione** su `/`, `/menu`, `/visit`, `/about`, `/gallery`, `/en`, `/en/menu` (01/10/2026, S4)
+- [x] Search Console → Sitemap → reinviare `sitemap.xml` (01/10/2026: "Riuscita", ma ancora 7 rilevate dalla lettura del 24/09)
+- [ ] Dall'08/10: Sitemap → pagine rilevate devono essere 14
+- [x] Controllo URL: `lang="de"` su `/`, `lang="en"` su `/en` (01/10/2026, test live)
 
 ## Da decidere
 
@@ -88,9 +89,22 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 | DESIGN_SYSTEM §6 "active → scale(0.98)" contro §7 "mai zoom" | F | La top bar segue §7; `ui/button.tsx`, `MobileStickyBar`, `/link` hanno ancora lo scale |
 | Hosting reale (Lovable? Vercel?) | F | Serve per i redirect 301 lato server. `vercel.json` nel repo l'ha scritto Claude, non prova niente |
 
+## Scheda Google (lettura S6 del 30/09/2026, dettagli in `seo-dati.md`)
+
+- [x] **S7** (01/10/2026): link al menu salvato; tavolo No e banco Sì in revisione da Google
+- [x] **Brunch** (C, 02/10/2026): non lo servono più. La modifica S7 che lo toglie è giusta
+- [ ] Dal 03/10 (F): Ristorazione ancora "in attesa"? Solo allora contattare l'assistenza
+- [x] **Festivi** (C, 02/10/2026): chiusi 26/10, 8/12, 24–26/12, 31/12, 1/1, 6/1. In `holidaysData.ts` sul branch (va in produzione col merge)
+- [x] **S8** (02/10/2026): 8 festivi salvati come "Chiuso" nella scheda Google. Orari settimanali invariati
+- [ ] Festivi mobili (Ostermontag, Christi Himmelfahrt, Pfingstmontag, Fronleichnam) e 1/5, 15/8, 1/11: chiedere a Carlo prima di aprile 2027. Il 14/05 in `holidaysData.ts` era Christi Himmelfahrt 2026 e si ripete ogni anno sbagliato
+- [ ] **Risposte alle recensioni** (C): 0 su 952. Decidere chi risponde e con che ritmo; Claude può scrivere 3–4 risposte tipo in du
+- [ ] **Nome della scheda** (C): parole chiave nel nome, contro le linee guida Google. Tenere o tornare a "My Secret Garden"
+- [ ] **Descrizione** (F): riscrittura con umlaut e senza il numero di recensioni fermo. Bozza da chiedere a Claude, approvazione in chat
+- [ ] **Foto** (C): menu e arco d'ingresso, col photoshoot
+
 ## Fuori dal sito
 
-- [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S4 dopo il merge; S5 il 15/10
+- [ ] **Script pronti per Claude in Chrome** in `docs/script-browser.md`: S4 (indicizzazione, merge fatto), S6 (scheda Google), S1 (Search Console), S2 (GA4, 1000things), S3 (Falstaff) adesso; S5 il 15/10
 - [ ] **Search Console, 15 minuti (F):** Azioni manuali (deve dire "nessun problema") · Link → Siti con più link (primi 10) · Rendimento → "vegetarisches restaurant wien" → scheda Dispositivi. Annotare in `docs/seo-dati.md`
 - [ ] **1000things:** la ricerca sul loro sito non trova niente, ma GA4 registra 30 sessioni arrivate da lì. GA4 → Esplora → "Referrer della pagina" filtrato su 1000thingsmagazine.com: articolo vecchio, pagina di elenco o spam di referral? Poi il form per locali
 - [ ] **Falstaff:** da un browser normale, cercare "My Secret Garden" su falstaff.com. È un partner: se la scheda c'è ma non ha il link, chiederlo

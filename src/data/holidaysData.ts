@@ -9,6 +9,24 @@ interface Holiday {
 }
 
 export const holidays: Holiday[] = [
+  // Feiertage confermati da Carlo il 02/10/2026 ("segnali come chiusi"):
+  // usano il testo generico già approvato del 14/05, nessun copy nuovo.
+  {
+    date: "01-01",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
+    },
+  },
+  {
+    date: "01-06",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
+    },
+  },
   {
     date: "05-14",
     name: { de: "Heute geschlossen", en: "Closed today" },
@@ -26,6 +44,22 @@ export const holidays: Holiday[] = [
     },
   },
 
+  {
+    date: "10-26",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
+    },
+  },
+  {
+    date: "12-08",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
+    },
+  },
   {
     date: "12-24",
     name: { de: "Heiligabend", en: "Christmas Eve" },
@@ -48,6 +82,14 @@ export const holidays: Holiday[] = [
     message: { 
       de: "Wir genießen die Ruhe zwischen den Jahren und freuen uns, dich bald wiederzusehen.", 
       en: "We're enjoying the quiet between the years and look forward to seeing you soon." 
+    },
+  },
+  {
+    date: "12-31",
+    name: { de: "Heute geschlossen", en: "Closed today" },
+    message: {
+      de: "Heute haben wir geschlossen. Wir freuen uns, dich bald wiederzusehen.",
+      en: "We're closed today. We look forward to seeing you again soon.",
     },
   },
 ];
