@@ -13,7 +13,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 
 | Cosa | Chi | Stato |
 |---|---|---|
-| **Redesign /about "Unsere Geschichte"** | Claude + F | **Priorità della prossima sessione.** Strada 2 nel banco: `src/lab/experiments/08-about-idee.tsx`, `lab.html?exp=about-idee&variant=after`. Mobile approvato da Francesco ("funziona", 02/10); desktop rifatto il 02/10 su una griglia a tre colonne (foto a destra del testo), voto cieco 6/10, da far vedere a Francesco. Poesia del giorno approvata. Aperte: eccezione voice-spec, copy in bozza, fatti col proprietario, proposte del critico sul desktop. Tutto in [`ux/about-opzioni.md`](./ux/about-opzioni.md) § "Stato al 02/10/2026" |
+| **Redesign /about "Unsere Geschichte"** | Claude + F | **Priorità della prossima sessione.** Scelta la variante B "Racconto" (02/10): prototipo `src/lab/experiments/09-about-racconto.tsx`, `lab.html?exp=about-racconto&variant=after`, voto cieco 6/10. Servono i fatti del proprietario (chi, quando, foto persone, recensione, premi). Poesia del giorno approvata. Tutto in [`ux/about-opzioni.md`](./ux/about-opzioni.md) § "Stato al 02/10/2026, sera" |
 | Struttura `/en/`, bug "chiuso", drawer, banner cookie | — | **In produzione** con la PR #19 (merge del 28/09) |
 | Branch `claude/adoring-newton-sm1p4c` | F | Contiene solo documenti e prototipi nel banco, dopo la PR #19. Niente che cambi il sito. Merge solo su conferma di F |
 | Top bar e drawer mobile verso ≥70 al critico cieco | Claude | In pausa. Voti dei giri: 57 → 61 → 49 → 50 → 56 → 55 → 59 → 63 → **61** (giro 10). Per 70 servono le decisioni qui sotto. Giri 1 e 2 del piano fatti. Resta rosso WCAG 2.5.3 (Label in Name), che dipende dalla decisione A |

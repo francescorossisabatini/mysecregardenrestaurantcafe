@@ -119,3 +119,9 @@ Le quattro decisioni sopra restano aperte. Il prototipo assume l'eccezione voice
   4. Testo centrato in verticale sulla foto (`lg:items-center`).
   5. Una sola ancora in alto (la poesia) e via "Die Gedichte … sind von Sri Chinmoy" dalle 18:45 (copy).
 - **Ancora aperte da prima:** eccezione voice-spec per /about; copy della B e del capitolo "Die Idee dahinter"; fatti col proprietario (giardino dal 2018, caffè tostato ogni settimana, cartolina col caffè, ONU "zweimal pro Woche ab 1970"); "ein grünes und ein blaues" è gergo interno; cosa collega Sri Chinmoy al locale.
+
+## Stato al 02/10/2026, sera: variante B "Racconto"
+
+Francesco: la strada 2 parlava poco del ristorante. Nuova scaletta (chi siamo, cosa cuciniamo, il posto, chi lo dice, l'idea), tre wireframe in `docs/ux/wireframes/about-lofi.html`, scelta la **B**. Prototipo `src/lab/experiments/09-about-racconto.tsx`, `lab.html?exp=about-racconto&variant=after`. Voto cieco giro 1: 6/10, correzioni e punti aperti nel ledger. La strada 2 (08) resta nel banco come riferimento.
+
+Da chiedere al proprietario prima di andare avanti: chi ha aperto e quando, una foto delle persone, una recensione citabile con permesso, cosa sono esattamente Falstaff 2025 e Wien wie es isst 2025, cosa vuol dire l'idea nel locale.

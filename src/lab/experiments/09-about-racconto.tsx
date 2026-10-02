@@ -34,6 +34,8 @@ const COPY = {
       todayLabel: "Heute auf der Karte",
       ratingOf: "von 5, aus 936 Bewertungen auf Google",
       missingQuote: "Ein Satz aus einer echten Bewertung, mit Erlaubnis.",
+      empty: "Die Karte von heute steht noch nicht online. Wir schreiben sie jeden Morgen — ruf an:",
+      closed: "Heute geschlossen. Morgen ab 11:00 wieder da.",
     },
     place: {
       mark: "Mittags",
@@ -76,6 +78,8 @@ const COPY = {
       todayLabel: "On the menu today",
       ratingOf: "out of 5, from 936 reviews on Google",
       missingQuote: "One sentence from a real review, with permission.",
+      empty: "Today's menu isn't online yet. We write it every morning — call:",
+      closed: "Closed today. Back tomorrow from 11:00.",
     },
     place: {
       mark: "At noon",
@@ -167,6 +171,7 @@ const Racconto = () => {
   const visit = l === "de" ? "/visit" : "/en/visit";
   const poem = poemOfTheDay();
   const [poemRef, poemShown] = useReveal<HTMLElement>();
+  const menuState = new URLSearchParams(window.location.search).get("menu");
 
   return (
     <article lang={l} className="bg-background text-foreground">
@@ -179,9 +184,17 @@ const Racconto = () => {
       </header>
 
       {/* 1 · Come è nato. Tutto quello che serve qui deve venire dal proprietario. */}
-      <Chapter mark={t.start.mark} title={t.start.title}>
+      <Chapter
+        mark={t.start.mark}
+        title={t.start.title}
+        note={
+          /* Da lg la foto delle persone sta nella colonna delle note: niente colonna 3 vuota. */
+          <div className="mt-6 md:col-start-2 lg:col-start-3 lg:row-start-2 lg:mt-4">
+            <Missing tag={t.missing} tall>{t.start.missingPhoto}</Missing>
+          </div>
+        }
+      >
         <Missing tag={t.missing}>{t.start.missingText}</Missing>
-        <Missing tag={t.missing} tall>{t.start.missingPhoto}</Missing>
       </Chapter>
 
       {/* 2 · Cosa cuciniamo: i piatti di oggi come dato, la prova a margine. */}
@@ -190,6 +203,7 @@ const Racconto = () => {
         title={t.kitchen.title}
         note={
           <Note>
+            <p className="font-work text-sm text-muted-foreground">Google</p>
             <p className="font-cormorant text-3xl font-semibold leading-none md:text-4xl">4,7</p>
             <p className="font-work text-sm text-muted-foreground">{t.kitchen.ratingOf}</p>
             <Missing tag={t.missing}>{t.kitchen.missingQuote}</Missing>
@@ -197,6 +211,15 @@ const Racconto = () => {
         }
       >
         <p className={body}>{t.kitchen.body}</p>
+        {/* Stati del dato vivo, stringhe approvate. Nel banco: &menu=empty o &menu=closed. */}
+        {menuState === "closed" ? (
+          <p className={body}>{t.kitchen.closed}</p>
+        ) : menuState === "empty" ? (
+          <p className={body}>
+            {t.kitchen.empty}{" "}
+            <a href="tel:+4315862839" className="underline decoration-border underline-offset-4 hover:decoration-foreground">+43 1 586 28 39</a>
+          </p>
+        ) : (
         <dl aria-label={t.kitchen.todayLabel} className="max-w-[62ch] divide-y divide-border border-y border-border">
           {dishes.map((d) => (
             <div key={d.key} className="grid grid-cols-[1fr_auto] gap-x-4 py-4">
@@ -206,6 +229,7 @@ const Racconto = () => {
             </div>
           ))}
         </dl>
+        )}
       </Chapter>
 
       {/* 3 · Il posto: il cortile grande, la prova (guide) a margine. */}
@@ -255,8 +279,11 @@ const Racconto = () => {
         <figure className={`mx-auto max-w-6xl px-5 lg:grid ${grid}`}>
           <img src={soulBirds} alt={t.poem.birdsAlt} width={262} height={193} className="mb-10 w-full max-w-[262px] mix-blend-multiply lg:col-start-3 lg:row-span-3 lg:row-start-1 lg:mb-0 lg:self-center" loading="lazy" decoding="async" />
           <p className={`${label} text-muted-foreground lg:col-start-2 lg:row-start-1`}>{t.poem.label}</p>
-          <blockquote lang={l} className="mt-6 max-w-[34ch] whitespace-pre-line font-cormorant text-3xl italic leading-snug text-foreground md:text-4xl lg:col-start-2 lg:row-start-2">
-            {poem[l]}
+          <blockquote lang={l} className="mt-6 max-w-[34ch] font-cormorant text-3xl italic leading-snug text-foreground md:text-4xl lg:col-start-2 lg:row-start-2">
+            {/* Un verso per blocco, con rientro sospeso: se a 390px un verso va a capo, si legge come continuazione. */}
+            {poem[l].split("\n").map((line) => (
+              <span key={line} className="block pl-6 -indent-6">{line}</span>
+            ))}
           </blockquote>
           <figcaption className="mt-6 font-work text-sm text-muted-foreground lg:col-start-2 lg:row-start-3">
             Sri Chinmoy. {t.poem.next}
