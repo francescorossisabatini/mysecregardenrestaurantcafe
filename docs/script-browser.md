@@ -122,6 +122,37 @@ Formato di uscita: una tabella per punto, con i due periodi affiancati. Un dato 
 
 ---
 
+## S6 · Foto di Sri Chinmoy e Soul-Birds con licenza utilizzabile (circa 15 minuti)
+
+Quando: prima di portare /about in produzione. Le foto attuali sono deboli: `sri-chinmoy-birds.jpg` è 262×193px, e la licenza delle due immagini nel repo non è documentata. Il sito è di un'attività commerciale: servono licenze che permettano l'uso commerciale. Il ritratto viene ritagliato a quadrato (`object-cover`), quindi serve anche il permesso di modificare. Va bene **CC BY 4.0**. **CC BY-ND** non permette il ritaglio. Le licenze **NC** (non commerciale) non vanno bene.
+
+Fonti trovate il 02/10/2026 (dal container cloud non erano raggiungibili, vanno aperte nel browser):
+- Sri Chinmoy Centre, Gallery Commons, foto scelte in CC BY 4.0: https://www.srichinmoycentre.org/gallery-commons
+- Sri Chinmoy Centre, foto di Sri Chinmoy (dichiarate CC BY-ND 4.0): https://www.srichinmoycentre.org/photos-sri-chinmoy
+- Galleria del Centre (CC BY-NC-ND salvo indicazione sulla singola foto): https://gallery.srichinmoycentre.org/index.php/sri_chinmoy
+- Soul-Birds: https://www.srichinmoycentre.org/news/art/sri-chinmoys-soul-bird-drawings e https://www.srichinmoyart.com/
+- Note di copyright: https://www.srichinmoycentre.org/copyright
+
+```text
+Lavora in lettura nel browser. L'unica AZIONE ammessa è scaricare file immagine nella cartella Download. Non creare account, non compilare moduli, non scrivere a nessuno. Se compare un login o un captcha, fermati e dimmelo.
+
+Cerco due immagini per il sito di un ristorante (uso commerciale):
+A) un ritratto di Sri Chinmoy, viso ben leggibile, sfondo calmo, almeno 800×800px; verrà ritagliato a quadrato;
+B) un disegno di Soul-Birds (uccelli a tratto), almeno 1200px di lato lungo, su fondo chiaro.
+
+1. Apri https://www.srichinmoycentre.org/copyright e riporta il testo esatto su licenze e uso commerciale.
+2. Apri https://www.srichinmoycentre.org/gallery-commons. Per ogni foto che può fare da A, riporta: link alla pagina, licenza scritta sulla pagina della foto, autore o fotografo, dimensione del file originale, anno se indicato. Massimo 8 foto.
+3. Apri https://www.srichinmoycentre.org/photos-sri-chinmoy e fai lo stesso. Massimo 5 foto.
+4. Cerca disegni di Soul-Birds (B) su https://www.srichinmoycentre.org/news/art/sri-chinmoys-soul-bird-drawings e https://www.srichinmoyart.com/. Riporta le stesse colonne. Massimo 5.
+5. AZIONE: scarica nella cartella Download solo i file con licenza CC BY 4.0 (o CC0 / pubblico dominio), alla risoluzione più alta disponibile. Massimo 3 per A e 3 per B. Nome del file: msg-ritratto-1.jpg, msg-soulbirds-1.jpg, e così via.
+
+Formato di uscita: due tabelle (A e B) con colonne: n., link, licenza esatta, autore, dimensione in px, scaricato sì/no, nome file. Sotto, il testo di attribuzione da usare per ogni file scaricato, copiato dalla pagina. Un dato che non trovi lo scrivi NON_DISPONIBILE, mai 0. Le foto con licenza NC o ND le elenchi ma non le scarichi.
+```
+
+Dopo: carica i file scelti in chat. Claude li mette in `src/assets/`, scrive l'attribuzione accanto all'import e una riga nel ledger. Se nessuna foto in CC BY va bene, la strada più semplice è chiedere al proprietario: il locale è legato al Centre, che può dare il permesso per iscritto.
+
+---
+
 ## Per Lovable (Semrush), non per il browser
 
 Semrush lo usa Lovable, non Claude in Chrome. Da incollare a Lovable quando serve.
