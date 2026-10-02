@@ -107,3 +107,15 @@ Poi si porta in `src/pages/AboutUs.tsx`. Il ledger ha una deroga aperta per quel
 `src/lab/experiments/08-about-idee.tsx`, `lab.html?exp=about-idee&variant=after` (`&lang=en` per l'inglese). A 390px sono 4.223px, circa 5 schermate (la strada 3 ne faceva 11). Voto cieco del giro 1: 6/10. Correzioni e punti aperti nel ledger, sezione "strada 2". Il movimento segue il direction lock e la discussione Notion del 20/04, non la spec del 5/04 (niente testo parola per parola, niente parallax).
 
 Le quattro decisioni sopra restano aperte. Il prototipo assume l'eccezione voice-spec e la poesia al posto della citazione.
+
+## Stato al 02/10/2026 — da qui riparte la prossima sessione
+
+- **Mobile:** Francesco, "in mobile funziona la struttura di ora". Non toccarlo: ogni modifica al desktop va verificata misurando che i blocchi a 390px restino uguali (`SECTION 547, 451, 670, 279, 410, 783, 675`).
+- **Desktop (da `lg`):** griglia unica `7rem / 52ch / 1fr`, gap 48px. Le foto di 10:30, 12:30 e 15:00 stanno nella terza colonna, accanto al loro testo (4:3, la torta quadrata). Poesia e liste sulla stessa griglia. A 1280: margine a 84px, testo a 244, terza colonna a 708. Voto cieco del giro: **6/10**. Francesco non l'ha ancora visto.
+- **Proposte del critico non applicate (decide Francesco):**
+  1. Ritratto grande nella terza colonna di "Die Idee dahinter" (contraddice la tua richiesta "ritratto piccolo accanto alle date").
+  2. Ritmo che si stringe verso sera: `py-20` per 15:00 e 18:45 invece di `py-28`.
+  3. Foto del cortile a tutta larghezza sotto le 12:30 invece che a destra.
+  4. Testo centrato in verticale sulla foto (`lg:items-center`).
+  5. Una sola ancora in alto (la poesia) e via "Die Gedichte … sind von Sri Chinmoy" dalle 18:45 (copy).
+- **Ancora aperte da prima:** eccezione voice-spec per /about; copy della B e del capitolo "Die Idee dahinter"; fatti col proprietario (giardino dal 2018, caffè tostato ogni settimana, cartolina col caffè, ONU "zweimal pro Woche ab 1970"); "ein grünes und ein blaues" è gergo interno; cosa collega Sri Chinmoy al locale.

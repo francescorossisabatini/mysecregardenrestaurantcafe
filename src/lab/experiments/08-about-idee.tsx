@@ -168,17 +168,20 @@ const reveal = (shown: boolean, quiet = false) =>
 /**
  * Capitolo con etichetta in margine (l'ora, o le date col ritratto).
  * Mobile: valori di `stretta` (py-10) per stare in 5–6 schermate; da md `normale`.
+ * `aside`: la foto del capitolo. Fino a md resta sotto il testo come prima;
+ * da lg va in una terza colonna a destra (ledger 02/10/2026).
  */
-const Chapter = ({ id, mark, title, quiet, children }: { id?: string; mark: ReactNode; title: string; quiet?: boolean; children: ReactNode }) => {
+const Chapter = ({ id, mark, title, quiet, aside, children }: { id?: string; mark: ReactNode; title: string; quiet?: boolean; aside?: ReactNode; children: ReactNode }) => {
   const [ref, shown] = useReveal<HTMLElement>();
   return (
     <section ref={ref} id={id} className={`scroll-mt-4 py-10 md:py-28 ${reveal(shown, quiet)}`}>
-      <div className="mx-auto grid max-w-6xl grid-cols-1 px-5 md:grid-cols-[7rem_minmax(0,62ch)] md:gap-x-8">
-        <h2 className="flex flex-col gap-2 md:col-span-2 md:grid md:grid-cols-subgrid md:items-baseline md:gap-x-8 md:gap-y-0">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 px-5 md:grid-cols-[7rem_minmax(0,62ch)] md:gap-x-8 lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-12">
+        <h2 className="flex flex-col gap-2 md:col-span-2 md:grid md:grid-cols-subgrid md:items-baseline md:gap-x-8 md:gap-y-0 lg:gap-x-12">
           {mark}
           <span className="text-balance font-cormorant text-3xl font-semibold leading-tight text-foreground md:text-4xl">{title}</span>
         </h2>
         <div className="mt-4 space-y-6 md:col-start-2">{children}</div>
+        {aside}
       </div>
     </section>
   );
@@ -216,22 +219,31 @@ const Idee = () => {
         </nav>
       </header>
 
-      <Chapter mark={<time className={label}>{morning.time}</time>} title={morning.title}>
+      {/* Foto a piena larghezza fino a md: -mx-5 e -mb-* le fanno occupare lo stesso posto
+          di quando stavano fuori dalla sezione, così il mobile resta identico. */}
+      <Chapter
+        mark={<time className={label}>{morning.time}</time>}
+        title={morning.title}
+        aside={<img src={tavolata} alt={t.alt.tavolata} className="-mx-5 -mb-10 mt-10 aspect-[16/9] w-[calc(100%+2.5rem)] max-w-none object-cover md:col-span-2 md:-mb-28 md:mt-28 md:aspect-[21/9] lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:m-0 lg:aspect-[4/3] lg:w-full lg:rounded-lg" loading="lazy" decoding="async" />}
+      >
         <p className={body}>{morning.body}</p>
       </Chapter>
 
-      <img src={tavolata} alt={t.alt.tavolata} className="aspect-[16/9] w-full object-cover md:aspect-[21/9]" loading="lazy" decoding="async" />
-
-      <Chapter mark={<time className={label}>{noon.time}</time>} title={noon.title}>
+      {/* Il cortile accanto alle 12:30, dove il testo dice "suchst dir einen Platz im Hof". */}
+      <Chapter
+        mark={<time className={label}>{noon.time}</time>}
+        title={noon.title}
+        aside={<img src={courtyard} alt={t.alt.courtyard} className="-mx-5 -mb-10 mt-10 aspect-[16/9] w-[calc(100%+2.5rem)] max-w-none object-cover md:col-span-2 md:-mb-28 md:mt-28 md:aspect-[21/9] lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:m-0 lg:aspect-[4/3] lg:w-full lg:rounded-lg" loading="lazy" decoding="async" />}
+      >
         <p className={body}>{noon.body}</p>
       </Chapter>
 
-      {/* Il cortile sotto le 12:30, dove il testo dice "suchst dir einen Platz im Hof". */}
-      <img src={courtyard} alt={t.alt.courtyard} className="aspect-[16/9] w-full object-cover md:aspect-[21/9]" loading="lazy" decoding="async" />
-
-      <Chapter mark={<time className={label}>{afternoon.time}</time>} title={afternoon.title}>
+      <Chapter
+        mark={<time className={label}>{afternoon.time}</time>}
+        title={afternoon.title}
+        aside={<img src={torta} alt={t.alt.torta} className="-mr-5 mt-6 aspect-square w-[calc(100%+1.25rem)] max-w-md rounded-lg object-cover md:col-start-2 md:-mr-24 md:w-[calc(100%+6rem)] lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:m-0 lg:w-full lg:max-w-none" loading="lazy" decoding="async" />}
+      >
         <p className={body}>{afternoon.body}</p>
-        <img src={torta} alt={t.alt.torta} className="-mr-5 aspect-square w-[calc(100%+1.25rem)] max-w-md rounded-lg object-cover md:-mr-24 md:w-[calc(100%+6rem)]" loading="lazy" decoding="async" />
       </Chapter>
 
       <Chapter mark={<time className={label}>{evening.time}</time>} title={evening.title}>
@@ -260,23 +272,24 @@ const Idee = () => {
 
       {/* Il solo momento `ampio`: la poesia del giorno, al posto della citazione fissa e del carosello. */}
       <section ref={poemRef} id="gedicht" className={`scroll-mt-4 bg-card py-32 md:py-40 ${reveal(poemShown, true)}`}>
-        <figure className="mx-auto max-w-6xl px-5">
+        {/* Da lg stessa griglia dei capitoli: testo in col 2, Soul-Birds in col 3. */}
+        <figure className="mx-auto max-w-6xl px-5 lg:grid lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
           {/* Soul-Birds alla misura del file (262px): a piena larghezza sgranava.
               multiply fa sparire il fondo bianco del jpg sulla superficie bg-card. */}
-          <img src={soulBirds} alt={t.idea.birdsAlt} width={262} height={193} className="mb-10 w-full max-w-[262px] mix-blend-multiply" loading="lazy" decoding="async" />
-          <p className={label}>{t.poem.label}</p>
-          <blockquote lang={l} className="mt-6 max-w-[28ch] whitespace-pre-line font-cormorant text-3xl italic leading-snug text-foreground md:text-4xl">
+          <img src={soulBirds} alt={t.idea.birdsAlt} width={262} height={193} className="mb-10 w-full max-w-[262px] mix-blend-multiply lg:col-start-3 lg:row-span-3 lg:row-start-1 lg:mb-0 lg:self-center" loading="lazy" decoding="async" />
+          <p className={`${label} lg:col-start-2 lg:row-start-1`}>{t.poem.label}</p>
+          <blockquote lang={l} className="mt-6 lg:col-start-2 lg:row-start-2 max-w-[34ch] whitespace-pre-line font-cormorant text-3xl italic leading-snug text-foreground md:text-4xl">
             {poem[l]}
           </blockquote>
-          <figcaption className="mt-6 font-work text-sm text-muted-foreground">
+          <figcaption className="mt-6 lg:col-start-2 lg:row-start-3 font-work text-sm text-muted-foreground">
             Sri Chinmoy. {t.poem.next}
           </figcaption>
         </figure>
       </section>
 
-      {/* Caffè gemelli e fonti: `stretta`, link di testo. Affiancati da md. */}
-      <section className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-2 md:gap-x-8 md:py-14">
-        <div>
+      {/* Caffè gemelli e fonti: `stretta`, link di testo. Affiancati da md; da lg sulla griglia dei capitoli. */}
+      <section className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-2 md:gap-x-8 md:py-14 lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
+        <div className="lg:col-start-2">
           <h2 className="font-cormorant text-3xl font-semibold leading-tight text-foreground md:text-4xl">{t.cafesTitle}</h2>
           <ul className="mt-2">
             {cafes.map((c) => (
@@ -286,7 +299,7 @@ const Idee = () => {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="lg:col-start-3">
           <h2 className="font-cormorant text-3xl font-semibold leading-tight text-foreground md:text-4xl">{t.sourcesTitle}</h2>
           <ul className="mt-2">
             {sources.map((s) => (
@@ -299,8 +312,8 @@ const Idee = () => {
       </section>
 
       {/* Chiusura `stretta`: la domanda operativa. Unica freccia della pagina. */}
-      <footer className="mx-auto max-w-6xl px-5 pb-10 md:pb-14">
-        <a href={visit} className="inline-flex min-h-11 items-center font-work text-sm font-semibold uppercase tracking-[0.08em] text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground">
+      <footer className="mx-auto max-w-6xl px-5 pb-10 md:pb-14 lg:grid lg:grid-cols-[7rem_minmax(0,52ch)_minmax(0,1fr)] lg:gap-x-12">
+        <a href={visit} className="lg:col-start-2 lg:justify-self-start inline-flex min-h-11 items-center font-work text-sm font-semibold uppercase tracking-[0.08em] text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground">
           {t.find} →
         </a>
       </footer>
