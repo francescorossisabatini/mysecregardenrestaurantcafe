@@ -170,7 +170,8 @@ Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstra�
 2. AZIONE: aggiungi queste date, ciascuna come "Chiuso":
    26 ottobre 2026, 8 dicembre 2026, 24 dicembre 2026, 25 dicembre 2026, 26 dicembre 2026, 31 dicembre 2026, 1 gennaio 2027, 6 gennaio 2027.
    Se Google propone da solo una di queste date ("Conferma l'orario festivo"), usa quella proposta e impostala su Chiuso.
-3. Salva, ricarica il pannello e rileggi l'elenco degli orari speciali.
+   Salva dopo ogni 2–3 date: il 02/10/2026 il modulo si è bloccato a metà e le 5 date compilate non salvate sono andate perse. Controlla che la data di ogni riga nuova sia quella giusta: Google la precompila con un giorno a caso (per il 31/12 ha messo 27/12).
+3. Ricarica il pannello e rileggi l'elenco degli orari speciali.
 
 Formato di uscita: una tabella con data, stato prima, stato dopo, esito ("salvato", "in attesa" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
 ```
