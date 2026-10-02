@@ -158,6 +158,25 @@ Formato di uscita: una tabella con campo, valore prima, valore dopo, stato ("sal
 
 ---
 
+## S8 · Scheda Google: festivi chiusi (circa 5 minuti, AGISCE)
+
+Quando: subito, il primo è il 26/10. Lista confermata da Carlo il 02/10/2026 ("segnali come chiusi"). Gli stessi giorni sono in `src/data/holidaysData.ts`.
+
+```text
+Lavora sul Profilo dell'attività Google di "My Secret Garden", Mariahilferstraße 45, 1060 Wien, dal pannello "La tua attività su Google" nella Ricerca Google. L'unica azione consentita è aggiungere orari speciali "Chiuso" nelle date sotto. Non toccare gli orari settimanali, gli attributi o altri campi. Se ti chiede un login, un captcha o una nuova verifica, fermati e dimmelo.
+
+0. Modifica profilo → Altro (o Ristorazione): riporta se la modifica di "Servizio al tavolo / al banco" è ancora "in attesa". Non toccarla.
+1. Modifica profilo → Orario → Orari speciali.
+2. AZIONE: aggiungi queste date, ciascuna come "Chiuso":
+   26 ottobre 2026, 8 dicembre 2026, 24 dicembre 2026, 25 dicembre 2026, 26 dicembre 2026, 31 dicembre 2026, 1 gennaio 2027, 6 gennaio 2027.
+   Se Google propone da solo una di queste date ("Conferma l'orario festivo"), usa quella proposta e impostala su Chiuso.
+3. Salva, ricarica il pannello e rileggi l'elenco degli orari speciali.
+
+Formato di uscita: una tabella con data, stato prima, stato dopo, esito ("salvato", "in attesa" o il messaggio esatto). Un dato che non trovi lo scrivi NON_DISPONIBILE.
+```
+
+---
+
 ## Per Lovable (Semrush), non per il browser
 
 Semrush lo usa Lovable, non Claude in Chrome. Da incollare a Lovable quando serve.

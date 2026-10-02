@@ -92,9 +92,11 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 ## Scheda Google (lettura S6 del 30/09/2026, dettagli in `seo-dati.md`)
 
 - [x] **S7** (01/10/2026): link al menu salvato; tavolo No e banco Sì in revisione da Google
-- [ ] **Brunch** (C): lo dichiariamo? La modifica S7 lo toglie. Se sì, riaggiungerlo dopo che la revisione è chiusa
+- [x] **Brunch** (C, 02/10/2026): non lo servono più. La modifica S7 che lo toglie è giusta
 - [ ] Dal 03/10 (F): Ristorazione ancora "in attesa"? Solo allora contattare l'assistenza
-- [ ] **Festivi** (C): lista dei giorni di chiusura 2026–27. Il 26/10 è tra meno di 4 settimane. Poi Claude allinea `holidaysData.ts` e S8 li mette nella scheda
+- [x] **Festivi** (C, 02/10/2026): chiusi 26/10, 8/12, 24–26/12, 31/12, 1/1, 6/1. In `holidaysData.ts` sul branch (va in produzione col merge)
+- [ ] **S8** (F, 5 minuti): gli stessi festivi come orari speciali nella scheda Google
+- [ ] Festivi mobili (Ostermontag, Christi Himmelfahrt, Pfingstmontag, Fronleichnam) e 1/5, 15/8, 1/11: chiedere a Carlo prima di aprile 2027. Il 14/05 in `holidaysData.ts` era Christi Himmelfahrt 2026 e si ripete ogni anno sbagliato
 - [ ] **Risposte alle recensioni** (C): 0 su 952. Decidere chi risponde e con che ritmo; Claude può scrivere 3–4 risposte tipo in du
 - [ ] **Nome della scheda** (C): parole chiave nel nome, contro le linee guida Google. Tenere o tornare a "My Secret Garden"
 - [ ] **Descrizione** (F): riscrittura con umlaut e senza il numero di recensioni fermo. Bozza da chiedere a Claude, approvazione in chat
