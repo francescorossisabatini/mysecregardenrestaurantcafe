@@ -20,6 +20,7 @@ const SHOTS = [
   { exp: 'text-pretty', widths: [390, 700] },
   { exp: 'starting-style', widths: [560] },
   { exp: 'about-idee', widths: [390, 1280] },
+  { exp: 'about-racconto', widths: [390, 1280] },
 ];
 
 const main = async () => {

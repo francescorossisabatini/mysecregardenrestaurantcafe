@@ -17,7 +17,7 @@ type Lang = "de" | "en";
 const lang = (): Lang => (new URLSearchParams(window.location.search).get("lang") === "en" ? "en" : "de");
 
 /* Le cinque poesie di AboutUs.tsx, invariate. Ne compare una al giorno. */
-const poems = [
+export const poems = [
   { en: "World peace can be achieved\nWhen the power of love\nReplaces the love of power.", de: "Weltfrieden kann erreicht werden,\nwenn die Kraft der Liebe\ndie Liebe zur Macht ersetzt." },
   { en: "Try not to change the world.\nYou will fail.\nTry to love the world.\nLo, the world is changed\nForever.", de: "Versuche nicht, die Welt zu ändern.\nDu wirst scheitern.\nVersuche, die Welt zu lieben.\nSiehe, die Welt ist verändert\nFür immer." },
   { en: "If you have inner peace,\nNobody can force you to be\nA slave to the outer reality.", de: "Wenn du inneren Frieden hast,\nkann dich niemand zwingen,\nein Sklave der äußeren Realität zu sein." },
@@ -26,13 +26,13 @@ const poems = [
 ];
 
 /** Giorno dell'anno, così la poesia cambia a mezzanotte e resta la stessa per tutto il giorno. */
-const poemOfTheDay = (date = new Date()) => {
+export const poemOfTheDay = (date = new Date()) => {
   const start = new Date(date.getFullYear(), 0, 0);
   const day = Math.floor((date.getTime() - start.getTime()) / 86_400_000);
   return poems[day % poems.length];
 };
 
-const cafes = [
+export const cafes = [
   { href: "https://www.heartofjoy.at/en/", name: "The Heart of Joy", place: "Salzburg" },
   { href: "https://www.happiness-heart-cafe.de/", name: "Happiness-Heart Café", place: "Berlin" },
   { href: "https://vegelateria.ch/", name: "The Sacred / Vegelateria", place: "Zürich" },
@@ -40,7 +40,7 @@ const cafes = [
   { href: "https://myrainbowdreams.org/our-story", name: "My Rainbow-Dreams", place: "Canberra" },
 ];
 
-const sources = [
+export const sources = [
   { href: "https://srichinmoy.org/sri_chinmoy/biography/", label: { de: "Offizielle Biografie", en: "Official biography" } },
   { href: "https://srichinmoy.org/", label: { de: "Offizielle Website", en: "Official site" } },
   { href: "https://www.srichinmoy.org/sri_chinmoy/landmarks/cultural_offerings/", label: { de: "Kulturelle Werke", en: "Cultural offerings" } },
@@ -133,7 +133,7 @@ const textLink = "inline-block py-2.5 font-work text-base text-foreground underl
  * `quiet` = solo opacità (capitolo sull'idea e poesia, discussione del 20/04/2026).
  * Con prefers-reduced-motion il blocco è visibile subito, senza transizione.
  */
-const useReveal = <T extends HTMLElement>() => {
+export const useReveal = <T extends HTMLElement>() => {
   const ref = useRef<T>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
@@ -160,7 +160,7 @@ const useReveal = <T extends HTMLElement>() => {
 
 /* Tailwind v4: translate-y-* scrive la proprietà `translate`, non `transform`.
    Con transition-[opacity,transform] lo spostamento scattava e restava solo la dissolvenza. */
-const reveal = (shown: boolean, quiet = false) =>
+export const reveal = (shown: boolean, quiet = false) =>
   `transition-[opacity,translate] duration-slow ease-out motion-reduce:transition-none ${
     shown ? "opacity-100 translate-y-0" : quiet ? "opacity-0" : "opacity-0 translate-y-2"
   }`;
