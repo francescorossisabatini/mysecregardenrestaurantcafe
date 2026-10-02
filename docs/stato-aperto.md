@@ -95,7 +95,7 @@ Chi: **F** = Francesco · **C** = Carlo / il capo · **Claude** = sessione di co
 - [x] **Brunch** (C, 02/10/2026): non lo servono più. La modifica S7 che lo toglie è giusta
 - [ ] Dal 03/10 (F): Ristorazione ancora "in attesa"? Solo allora contattare l'assistenza
 - [x] **Festivi** (C, 02/10/2026): chiusi 26/10, 8/12, 24–26/12, 31/12, 1/1, 6/1. In `holidaysData.ts` sul branch (va in produzione col merge)
-- [ ] **S8** (F, 5 minuti): gli stessi festivi come orari speciali nella scheda Google
+- [x] **S8** (02/10/2026): 8 festivi salvati come "Chiuso" nella scheda Google. Orari settimanali invariati
 - [ ] Festivi mobili (Ostermontag, Christi Himmelfahrt, Pfingstmontag, Fronleichnam) e 1/5, 15/8, 1/11: chiedere a Carlo prima di aprile 2027. Il 14/05 in `holidaysData.ts` era Christi Himmelfahrt 2026 e si ripete ogni anno sbagliato
 - [ ] **Risposte alle recensioni** (C): 0 su 952. Decidere chi risponde e con che ritmo; Claude può scrivere 3–4 risposte tipo in du
 - [ ] **Nome della scheda** (C): parole chiave nel nome, contro le linee guida Google. Tenere o tornare a "My Secret Garden"

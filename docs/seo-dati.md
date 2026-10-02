@@ -14,6 +14,12 @@
 
 ---
 
+## 02/10/2026: festivi nella scheda Google (script S8)
+
+Livello: **misurato**. Salvati come "Chiuso" e visibili dopo il ricaricamento: 26/10, 8/12, 24/12, 25/12, 26/12, 31/12/2026, 1/1 e 6/1/2027. Resta il 27/08/2026 (passato). 1/11 non inserito: è domenica. Ristorazione (S7) ancora "in attesa".
+
+---
+
 ## 01/10/2026: correzioni sulla scheda Google (script S7)
 
 Livello: **misurato**.
